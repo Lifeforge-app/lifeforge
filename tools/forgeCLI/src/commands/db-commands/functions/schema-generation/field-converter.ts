@@ -1,0 +1,77 @@
+import CLILoggingService from '@/utils/logging'
+
+import { FIELD_TYPE_MAPPING, type PocketBaseField } from '../../utils'
+
+/**
+ * Converts a PocketBase field to Zod schema string
+ */
+export function convertFieldToZodSchema(field: PocketBaseField): string | null {
+  if (field.name === 'id') {
+    return null // Skip auto-generated fields
+  }
+
+  const converter = FIELD_TYPE_MAPPING[field.type]
+
+  if (!converter) {
+    CLILoggingService.warn(
+      `Unknown field type '${field.type}' for field '${field.name}'. Skipping.`
+    )
+
+    return null
+  }
+
+  return converter(field)
+}
+
+/**
+ * Generates Zod schema for a collection
+ */
+export function generateCollectionSchema(
+  collection: Record<string, unknown>
+): Record<string, string> {
+  const zodSchemaObject: Record<string, string> = {}
+
+  const fields = collection.fields as Array<Record<string, unknown>>
+
+  for (const field of fields.filter(e => !e.hidden)) {
+    const zodSchema = convertFieldToZodSchema(field as PocketBaseField)
+
+    if (zodSchema) {
+      zodSchemaObject[field.name as string] = zodSchema
+    }
+  }
+
+  return zodSchemaObject
+}
+
+/**
+ * Strips collection ID and field IDs from raw config
+ * This prevents migration conflicts when importing to different databases
+ */
+export function stripCollectionIds(
+  collection: Record<string, unknown>
+): Record<string, unknown> {
+  const cleaned = { ...collection }
+
+  // Remove collection-level properties that cause conflicts
+  delete cleaned.id
+  delete cleaned.created
+  delete cleaned.updated
+
+  if ('oauth2' in cleaned) {
+    delete cleaned.oauth2
+  }
+
+  // Remove field IDs
+  if (cleaned.fields && Array.isArray(cleaned.fields)) {
+    cleaned.fields = cleaned.fields.map((field: Record<string, unknown>) => {
+      const cleanedField = { ...field }
+
+      delete cleanedField.id
+
+      return cleanedField
+    })
+  }
+
+  return cleaned
+}

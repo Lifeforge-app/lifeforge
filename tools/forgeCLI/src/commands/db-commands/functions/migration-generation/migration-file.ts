@@ -6,74 +6,15 @@ import prettier from 'prettier'
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import CLILoggingService from '@/utils/logging'
 
-import { MIGRATION_PRETTIER_OPTIONS } from '../utils'
-import type { MigrationResult } from '../utils/types'
-
-/**
- * Migration generation utilities
- */
-
-/**
- * Strips IDs from raw collection config to prevent conflicts
- */
-function stripIdsFromRaw(raw: any): any {
-  const cleaned = { ...raw }
-
-  delete cleaned.id
-  delete cleaned.created
-  delete cleaned.updated
-
-  if (cleaned.fields && Array.isArray(cleaned.fields)) {
-    cleaned.fields = cleaned.fields.map((field: any) => {
-      const cleanedField = { ...field }
-
-      delete cleanedField.id
-
-      return cleanedField
-    })
-  }
-
-  return cleaned
-}
-
-/**
- * Generates migration file content
- */
-export function generateMigrationContent(
-  schema: Record<string, { raw: any }>
-): {
-  upContent: string
-  downContent: string
-} {
-  const upContent =
-    Object.entries(schema)
-      .map(([name, { raw }]) => {
-        const cleanedRaw = stripIdsFromRaw(raw)
-
-        return `  const ${name}Collection = ${JSON.stringify(cleanedRaw, null, 2)};`
-      })
-      .join('\n\n') +
-    '\n\napp.importCollections([' +
-    Object.keys(schema)
-      .map(name => `  ${name}Collection`)
-      .join(',\n') +
-    ']);'
-
-  const downContent = Object.values(schema)
-    .map(({ raw }) => {
-      return `  let ${raw.name}Collection = app.findCollectionByNameOrId("${raw.name}");\n app.delete(${raw.name}Collection);`
-    })
-    .join('\n\n')
-
-  return { upContent, downContent }
-}
+import { MIGRATION_PRETTIER_OPTIONS, type MigrationResult } from '../../utils'
+import { generateMigrationContent } from './migration-content'
 
 /**
  * Creates a migration file for a module
  */
 export async function createMigrationFile(
   moduleName: string,
-  schema: Record<string, { raw: any }>
+  schema: Record<string, { raw: Record<string, unknown> }>
 ): Promise<MigrationResult> {
   try {
     const response = execSync(

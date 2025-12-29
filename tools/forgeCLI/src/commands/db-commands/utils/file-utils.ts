@@ -2,7 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import prettier from 'prettier'
 
-import { CLILoggingService } from '../../../utils/logging'
+import CLILoggingService from '@/utils/logging'
+
 import { PRETTIER_OPTIONS } from './constants'
 
 /**

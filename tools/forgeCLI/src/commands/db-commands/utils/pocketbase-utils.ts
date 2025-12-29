@@ -4,8 +4,8 @@ import fs from 'fs'
 import path from 'path'
 import PocketBase from 'pocketbase'
 
-import { CLILoggingService } from '../../../utils/logging'
-import { PB_BINARY_PATH, PB_DATA_DIR, PB_MIGRATIONS_DIR } from './constants'
+import { PB_BINARY_PATH, PB_KWARGS, PB_MIGRATIONS_DIR } from '@/constants/db'
+import CLILoggingService from '@/utils/logging'
 
 export default async function getPocketbaseInstance(): Promise<PocketBase> {
   const pb = new PocketBase(process.env.PB_HOST)
@@ -40,7 +40,7 @@ export async function cleanupOldMigrations(
     if (!targetModule) {
       fs.rmSync(PB_MIGRATIONS_DIR, { recursive: true, force: true })
       execSync(
-        `${PB_BINARY_PATH} migrate history-sync --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
+        `${PB_BINARY_PATH} migrate history-sync ${PB_KWARGS.join(' ')}`,
         {
           stdio: ['pipe', 'pipe', 'pipe']
         }
@@ -55,7 +55,7 @@ export async function cleanupOldMigrations(
       })
 
       execSync(
-        `${PB_BINARY_PATH} migrate history-sync --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
+        `${PB_BINARY_PATH} migrate history-sync ${PB_KWARGS.join(' ')}`,
         {
           stdio: ['pipe', 'pipe', 'pipe']
         }

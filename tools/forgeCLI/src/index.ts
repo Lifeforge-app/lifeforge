@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { runCLI, setupCLI } from './cli/setup'
-import { CLILoggingService } from './utils/logging'
+import CLILoggingService from './utils/logging'
 
 /**
  * LifeForge Forge - Build and development tool for LifeForge projects

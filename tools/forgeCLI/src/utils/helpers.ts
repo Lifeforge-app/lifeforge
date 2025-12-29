@@ -5,7 +5,7 @@ import path from 'path'
 import prompts from 'prompts'
 
 import type { CommandExecutionOptions } from '../types'
-import { CLILoggingService } from './logging'
+import CLILoggingService from './logging'
 
 /**
  * Validates if the provided projects are valid
@@ -98,7 +98,7 @@ export function executeCommand(
 /**
  * Validates environment variables
  */
-export function validateEnvironment(requiredVars: string[]): void {
+export function ensureEnvExists(requiredVars: string[]): void {
   const missingVars = requiredVars.filter(varName => !process.env[varName])
 
   if (missingVars.length > 0) {
@@ -203,36 +203,6 @@ export function validateFilePaths(
   }
 
   return true
-}
-
-/**
- * Checks for running PocketBase instances
- */
-export function checkRunningPBInstances(exitOnError = true): boolean {
-  try {
-    const result = spawnSync('sh', ['-c', "pgrep -f 'pocketbase serve'"], {
-      stdio: 'pipe',
-      encoding: 'utf8'
-    })
-
-    const pbInstanceNumber = result.stdout?.toString().trim()
-
-    if (pbInstanceNumber) {
-      if (exitOnError) {
-        CLILoggingService.actionableError(
-          `PocketBase is already running (PID: ${pbInstanceNumber})`,
-          'Stop the existing instance with "pkill -f pocketbase" before proceeding'
-        )
-        process.exit(1)
-      }
-
-      return true
-    }
-  } catch {
-    // No existing instance found, continue with the script
-  }
-
-  return false
 }
 
 export function checkPortInUse(port: number): boolean {
