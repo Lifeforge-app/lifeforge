@@ -4,9 +4,6 @@ import { decrypt2, encrypt2 } from '@functions/auth/encryption'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
-import { challenge } from '..'
-import getDecryptedMaster from '../utils/getDecryptedMaster'
-
 const get = forgeController
   .query()
   .description({
@@ -60,14 +57,8 @@ const list = forgeController
     'zh-CN': '获取所有API密钥条目',
     'zh-TW': '獲取所有API密鑰條目'
   })
-  .input({
-    query: z.object({
-      master: z.string()
-    })
-  })
-  .callback(async ({ pb, query: { master } }) => {
-    await getDecryptedMaster(pb, decodeURIComponent(master))
-
+  .input({})
+  .callback(async ({ pb }) => {
     const entries = await pb.getFullList
       .collection('api_keys__entries')
       .sort(['name'])
@@ -105,47 +96,6 @@ const checkKeys = forgeController
       .every(key => allEntries.some(entry => entry.keyId === key))
   })
 
-const decrypt = forgeController
-  .query()
-  .description({
-    en: 'Decrypt and retrieve API key entry',
-    ms: 'Nyahsulitkan dan dapatkan entri kunci API',
-    'zh-CN': '解密并获取API密钥条目',
-    'zh-TW': '解密並獲取API密鑰條目'
-  })
-  .input({
-    query: z.object({
-      id: z.string(),
-      master: z.string()
-    })
-  })
-  .existenceCheck('query', {
-    id: 'api_keys__entries'
-  })
-  .callback(async ({ pb, query: { id, master } }) => {
-    const decryptedMaster = await getDecryptedMaster(
-      pb,
-      decodeURIComponent(master)
-    )
-
-    const entry = await pb.getOne
-      .collection('api_keys__entries')
-      .id(id)
-      .execute()
-
-    if (!entry) {
-      throw new Error('Entry not found')
-    }
-
-    const decryptedKey = decrypt2(entry.key, process.env.MASTER_KEY!)
-
-    const encryptedKey = encrypt2(decryptedKey, decryptedMaster)
-
-    const encryptedSecondTime = encrypt2(encryptedKey, challenge)
-
-    return encryptedSecondTime
-  })
-
 const create = forgeController
   .mutation()
   .description({
@@ -156,38 +106,39 @@ const create = forgeController
   })
   .input({
     body: z.object({
-      data: z.string()
+      keyId: z.string(),
+      name: z.string(),
+      description: z.string(),
+      icon: z.string(),
+      key: z.string(),
+      exposable: z.boolean()
     })
   })
   .statusCode(201)
-  .callback(async ({ pb, body: { data } }) => {
-    const decryptedData = JSON.parse(decrypt2(data, challenge))
+  .callback(
+    async ({
+      pb,
+      body: { keyId, name, description, icon, key, exposable }
+    }) => {
+      const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
 
-    const { keyId, name, description, icon, key, exposable, master } =
-      decryptedData
+      const entry = await pb.create
+        .collection('api_keys__entries')
+        .data({
+          keyId,
+          name,
+          description,
+          icon,
+          exposable,
+          key: encryptedKey
+        })
+        .execute()
 
-    const decryptedMaster = await getDecryptedMaster(pb, master)
+      entry.key = key.slice(-4)
 
-    const decryptedKey = decrypt2(key, decryptedMaster)
-
-    const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!)
-
-    const entry = await pb.create
-      .collection('api_keys__entries')
-      .data({
-        keyId,
-        name,
-        description,
-        icon,
-        exposable,
-        key: encryptedKey
-      })
-      .execute()
-
-    entry.key = decryptedKey.slice(-4)
-
-    return entry
-  })
+      return entry
+    }
+  )
 
 const update = forgeController
   .mutation()
@@ -202,41 +153,44 @@ const update = forgeController
       id: z.string()
     }),
     body: z.object({
-      data: z.string()
+      keyId: z.string(),
+      name: z.string(),
+      description: z.string(),
+      icon: z.string(),
+      key: z.string(),
+      exposable: z.boolean(),
+      overrideKey: z.boolean()
     })
   })
   .existenceCheck('query', {
     id: 'api_keys__entries'
   })
-  .callback(async ({ pb, query: { id }, body: { data } }) => {
-    const decryptedData = JSON.parse(decrypt2(data, challenge))
+  .callback(
+    async ({
+      pb,
+      query: { id },
+      body: { keyId, name, description, icon, key, exposable, overrideKey }
+    }) => {
+      const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
 
-    const { keyId, name, description, icon, key, exposable, master } =
-      decryptedData
+      const updatedEntry = await pb.update
+        .collection('api_keys__entries')
+        .id(id)
+        .data({
+          keyId,
+          name,
+          description,
+          icon,
+          exposable,
+          key: overrideKey ? encryptedKey : undefined
+        })
+        .execute()
 
-    const decryptedMaster = await getDecryptedMaster(pb, master)
+      updatedEntry.key = key.slice(-4)
 
-    const decryptedKey = decrypt2(key, decryptedMaster)
-
-    const encryptedKey = encrypt2(decryptedKey, process.env.MASTER_KEY!)
-
-    const updatedEntry = await pb.update
-      .collection('api_keys__entries')
-      .id(id)
-      .data({
-        keyId,
-        name,
-        description,
-        icon,
-        exposable,
-        key: encryptedKey
-      })
-      .execute()
-
-    updatedEntry.key = decryptedKey.slice(-4)
-
-    return updatedEntry
-  })
+      return updatedEntry
+    }
+  )
 
 const remove = forgeController
   .mutation()
@@ -263,7 +217,6 @@ export default forgeRouter({
   get,
   list,
   checkKeys,
-  decrypt,
   create,
   update,
   remove
