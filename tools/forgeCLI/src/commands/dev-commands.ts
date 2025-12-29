@@ -217,7 +217,7 @@ async function startAllServices(): Promise<void> {
  * Validates if a service is valid
  */
 function validateService(service: string): void {
-  if (!VALID_SERVICES.includes(service as ServiceType)) {
+  if (service && !VALID_SERVICES.includes(service as ServiceType)) {
     CLILoggingService.options(`Invalid service: "${service}"`, [
       ...VALID_SERVICES
     ])
@@ -231,7 +231,7 @@ function validateService(service: string): void {
 export function devHandler(service: string): void {
   validateService(service)
 
-  if (service === 'all') {
+  if (!service) {
     startAllServices()
 
     return
@@ -249,11 +249,4 @@ export function devHandler(service: string): void {
     CLILoggingService.debug(`Error details: ${error}`)
     process.exit(1)
   }
-}
-
-/**
- * Gets the list of available services
- */
-export function getAvailableServices(): readonly ServiceType[] {
-  return VALID_SERVICES
 }
