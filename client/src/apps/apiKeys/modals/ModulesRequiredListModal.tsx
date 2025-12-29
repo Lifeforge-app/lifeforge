@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { Card, ModalHeader, TagChip } from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
 import COLORS from 'tailwindcss/colors'
 
 import ROUTES from '@/routes'
@@ -13,6 +14,8 @@ function ModulesRequiredListModal({
     keyId: string
   }
 }) {
+  const { t } = useTranslation('common.apiKeys')
+
   const modulesRequired = ROUTES.flatMap(cat => cat.items).filter(item =>
     item.apiAccess?.some(access => access.key === keyId)
   )
@@ -21,11 +24,14 @@ function ModulesRequiredListModal({
     <div className="min-w-[40vw] space-y-6">
       <ModalHeader
         icon="tabler:cube"
-        title="Modules Required"
+        namespace="common.apiKeys"
+        title="modulesRequired.title"
         onClose={onClose}
       />
       <p className="text-bg-500">
-        A total of {modulesRequired.length} modules require this API Key.
+        {t('modals.modulesRequired.totalModulesRequire', {
+          count: modulesRequired.length
+        })}
       </p>
       <div className="space-y-3">
         {modulesRequired.map(module => (
