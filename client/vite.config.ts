@@ -25,22 +25,30 @@ export const alias: Alias[] = [
     replacement: '@',
     customResolver: (id, importer, options) => {
       let rootDir = ''
+      const isAppModule =
+        importer?.includes('/apps/') &&
+        importer?.includes('/client/') &&
+        !importer?.includes('/client/src/')
+
       if (importer?.endsWith('manifest.ts')) {
-        rootDir = importer.replace('manifest.ts', '')
+        rootDir = importer.replace('manifest.ts', 'client/')
+      } else if (isAppModule) {
+        const clientMatch = importer?.match(/(.+\/client)\//)
+        rootDir = clientMatch?.[1] || ''
       } else {
-        rootDir = importer?.split('/src/')[0] || ''
+        rootDir = importer?.split('/src/')[0] + '/src' || ''
       }
 
       const matched = globSync([
-        path.resolve(rootDir, 'src', id.slice(2) + '.{tsx,ts,json}'),
-        path.resolve(rootDir, 'src', id.slice(2), 'index.{tsx,ts}'),
-        path.resolve(rootDir, 'src', id.slice(2))
+        path.resolve(rootDir, id.slice(2) + '.{tsx,ts,json}'),
+        path.resolve(rootDir, id.slice(2), 'index.{tsx,ts}'),
+        path.resolve(rootDir, id.slice(2))
       ])
       if (!matched[0]) {
         console.log([
-          path.resolve(rootDir, 'src', id.slice(2) + '.{tsx,ts,json}'),
-          path.resolve(rootDir, 'src', id.slice(2), 'index.{tsx,ts}'),
-          path.resolve(rootDir, 'src', id.slice(2))
+          path.resolve(rootDir, id.slice(2) + '.{tsx,ts,json}'),
+          path.resolve(rootDir, id.slice(2), 'index.{tsx,ts}'),
+          path.resolve(rootDir, id.slice(2))
         ])
         console.log(
           `[vite] failed to resolve import "${id}" from "${importer}"`
