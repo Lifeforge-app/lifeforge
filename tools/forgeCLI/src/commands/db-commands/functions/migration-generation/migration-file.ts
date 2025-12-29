@@ -14,7 +14,7 @@ import { generateMigrationContent } from './migration-content'
  */
 export async function createMigrationFile(
   moduleName: string,
-  schema: Record<string, { raw: Record<string, unknown> }>
+  schema: Record<string, { raw: unknown }>
 ): Promise<{ success: boolean; migrationPath?: string; error?: string }> {
   try {
     const response = execSync(
@@ -49,6 +49,7 @@ export async function createMigrationFile(
 
     let content = fs.readFileSync(migrationFilePath, 'utf-8')
     content = content
+      .replace('../pb_data/types.d.ts', '../types.d.ts')
       .replace('// add up queries...', upContent)
       .replace('// add down queries...', downContent)
 
