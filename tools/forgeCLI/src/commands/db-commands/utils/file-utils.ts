@@ -70,7 +70,10 @@ export function getSchemaFiles(targetModule?: string): string[] {
 export async function importSchemaModules(
   schemaFiles: string[]
 ): Promise<
-  Array<{ moduleName: string; schema: Record<string, { raw: unknown }> }>
+  Array<{
+    moduleName: string
+    schema: Record<string, { raw: Record<string, unknown> }>
+  }>
 > {
   return Promise.all(
     schemaFiles.map(async schemaPath => {
