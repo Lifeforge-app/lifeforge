@@ -11,10 +11,13 @@ import {
   getAvailableCommands
 } from '../commands/project-commands'
 import { PROJECTS_ALLOWED } from '../constants/constants'
+import CLILoggingService from '../utils/logging'
 
 const VERSION_NUMBER = JSON.parse(
   fs.readFileSync('package.json', 'utf-8')
 ).version
+
+const LOG_LEVELS = ['debug', 'info', 'warn', 'error', 'fatal'] as const
 
 /**
  * Sets up the CLI program with all commands
@@ -24,6 +27,18 @@ export function setupCLI(): void {
     .name('bun forge')
     .description('Build and manage the LifeForge ecosystem')
     .version(VERSION_NUMBER)
+    .option(
+      '-l, --log-level <level>',
+      `Set log level (${LOG_LEVELS.join(', ')})`,
+      'info'
+    )
+    .hook('preAction', thisCommand => {
+      const level = thisCommand.opts().logLevel as (typeof LOG_LEVELS)[number]
+
+      if (LOG_LEVELS.includes(level)) {
+        CLILoggingService.setLevel(level)
+      }
+    })
 
   setupProjectCommands()
   setupDevCommand()
@@ -126,20 +141,18 @@ function setupDatabaseCommands(): void {
   command
     .command('init')
     .description('Initialize the PocketBase database')
-    .argument('email', 'Admin email for PocketBase')
-    .argument('password', 'Admin password for PocketBase')
     .action(dbHandlers.initializeDatabaseHandler)
 
   command
-    .command('generate-schemas')
-    .description('Generate Zod schemas from PocketBase collections')
-    .argument('[module]', 'Optional module name to generate schema for')
+    .command('pull')
+    .description('Pull schema from PocketBase into local schema files')
+    .argument('[module]', 'Optional module name to pull schema for')
     .action(dbHandlers.generateSchemaHandler)
 
   command
-    .command('generate-migrations')
-    .description('Generate PocketBase migrations from schema files')
-    .argument('[module]', 'Optional module name to generate migrations for')
+    .command('push')
+    .description('Push local schemas to PocketBase as migrations')
+    .argument('[module]', 'Optional module name to push migrations for')
     .action(dbHandlers.generateMigrationsHandler)
 }
 
