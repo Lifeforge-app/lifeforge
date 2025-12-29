@@ -8,18 +8,6 @@ export {
 export { cleanupOldMigrations } from './pocketbase-utils'
 
 export {
-  buildModuleCollectionsMap,
-  generateModuleSchemaContent,
-  generateMainSchemaContent,
-  processSchemaGeneration
-} from '../functions/schema-generation'
-
-export {
-  generateMigrationContent,
-  createMigrationFile
-} from '../functions/migration-generation'
-
-export {
   FIELD_TYPE_MAPPING,
   PRETTIER_OPTIONS,
   SCHEMA_PATTERNS

@@ -27,7 +27,7 @@ export function stripIdsFromRaw(
  * Generates migration file content
  */
 export function generateMigrationContent(
-  schema: Record<string, { raw: Record<string, unknown> }>
+  schema: Record<string, { raw: unknown }>
 ): {
   upContent: string
   downContent: string
