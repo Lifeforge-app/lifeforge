@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import copy from 'copy-to-clipboard'
@@ -16,9 +15,10 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 import COLORS from 'tailwindcss/colors'
 
+import forgeAPI from '@/utils/forgeAPI'
+
+import type { APIKeysEntry } from '..'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
-import decryptKey from '../utils/decryptKey'
-import type { APIKeysEntry } from './ContentContainer'
 
 function EntryItem({
   entry,
@@ -55,7 +55,13 @@ function EntryItem({
     setIsCopying(true)
 
     try {
-      copy(await decryptKey({ entry, masterPassword }))
+      const key = await forgeAPI.apiKeys.entries.get
+        .input({
+          keyId: entry.id
+        })
+        .query()
+
+      copy(key)
       toast.success('Key copied to clipboard')
     } catch (err) {
       console.error(err)
@@ -70,10 +76,8 @@ function EntryItem({
       open(ModifyAPIKeyModal, {
         type: 'update',
         initialData: {
-          ...entry,
-          key: await decryptKey({ entry, masterPassword })
-        },
-        masterPassword
+          ...entry
+        }
       })
     } catch {
       toast.error('Failed to fetch API Key')
@@ -123,15 +127,17 @@ function EntryItem({
         </span>
       </div>
       <div className="ml-2 flex gap-2">
-        <Button
-          className="shrink-0"
-          icon="tabler:copy"
-          loading={isCopying}
-          variant="plain"
-          onClick={() => {
-            copyKey().catch(console.error)
-          }}
-        />
+        {entry.exposable && (
+          <Button
+            className="shrink-0"
+            icon="tabler:copy"
+            loading={isCopying}
+            variant="plain"
+            onClick={() => {
+              copyKey().catch(console.error)
+            }}
+          />
+        )}
         <ContextMenu>
           <ContextMenuItem
             icon="tabler:pencil"

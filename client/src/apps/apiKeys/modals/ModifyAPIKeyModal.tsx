@@ -1,19 +1,18 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
-import { encrypt } from 'shared'
 
-import type { APIKeysEntry } from '../components/ContentContainer'
+import forgeAPI from '@/utils/forgeAPI'
+
+import type { APIKeysEntry } from '..'
 
 function ModifyAPIKeyModal({
-  data: { type, initialData, masterPassword },
+  data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
     initialData?: APIKeysEntry
-    masterPassword: string
   }
   onClose: () => void
 }) {
@@ -42,6 +41,7 @@ function ModifyAPIKeyModal({
     icon: string
     key: string
     exposable: boolean
+    overrideKey: boolean
   }>({
     icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
     namespace: 'common.apiKeys',
@@ -54,6 +54,7 @@ function ModifyAPIKeyModal({
       name: 'text',
       description: 'text',
       icon: 'icon',
+      overrideKey: 'checkbox',
       key: 'text',
       exposable: 'checkbox'
     })
@@ -81,6 +82,10 @@ function ModifyAPIKeyModal({
         label: 'Key Icon',
         type: 'icon'
       },
+      overrideKey: {
+        label: 'Override Key',
+        icon: 'tabler:refresh'
+      },
       key: {
         required: true,
         isPassword: true,
@@ -90,37 +95,24 @@ function ModifyAPIKeyModal({
       },
       exposable: {
         required: false,
-        label: 'Exposable',
+        label: 'isExposable',
         icon: 'tabler:eye'
       }
+    })
+    .conditionalFields({
+      key: data => (type === 'update' ? data.overrideKey : true),
+      overrideKey: () => type === 'update'
     })
     .initialData({
       keyId: initialData?.keyId || '',
       name: initialData?.name || '',
       description: initialData?.description || '',
       icon: initialData?.icon || '',
-      key: initialData?.key || '',
+      key: '',
       exposable: initialData?.exposable || false
     })
     .onSubmit(async data => {
-      const challenge = await forgeAPI.apiKeys.auth.getChallenge.query()
-
-      const encryptedKey = encrypt(data.key, masterPassword)
-
-      const encryptedMaster = encrypt(masterPassword, challenge)
-
-      const encryptedEverything = encrypt(
-        JSON.stringify({
-          ...data,
-          key: encryptedKey,
-          master: encryptedMaster
-        }),
-        challenge
-      )
-
-      await mutation.mutateAsync({
-        data: encryptedEverything
-      })
+      await mutation.mutateAsync(data)
     })
     .build()
 
