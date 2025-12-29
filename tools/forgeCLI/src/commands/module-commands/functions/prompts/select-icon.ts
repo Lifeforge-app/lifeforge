@@ -4,13 +4,6 @@ import prompts from 'prompts'
 
 import CLILoggingService from '@/utils/logging'
 
-/**
- * Prompts the user to select an icon from Iconify's icon sets.
- * Fetches available icon sets and icons, allowing the user to navigate and select.
- *
- * @returns A promise that resolves to the selected icon in the format "collection:icon".
- * @throws An error if the operation is cancelled or if fetching icons fails.
- */
 export default async function selectIcon(): Promise<string> {
   const iconCollections = (
     await axios.get<
@@ -137,13 +130,11 @@ export default async function selectIcon(): Promise<string> {
 
               const bTitleLower = b.title.toLowerCase()
 
-              // Exact match comes first
               if (aTitleLower === inputLower && bTitleLower !== inputLower)
                 return -1
               if (bTitleLower === inputLower && aTitleLower !== inputLower)
                 return 1
 
-              // Starts with input comes next
               const aStartsWith = aTitleLower.startsWith(inputLower)
 
               const bStartsWith = bTitleLower.startsWith(inputLower)
@@ -151,18 +142,15 @@ export default async function selectIcon(): Promise<string> {
               if (aStartsWith && !bStartsWith) return -1
               if (bStartsWith && !aStartsWith) return 1
 
-              // Earlier position of input comes next
               const aIndex = aTitleLower.indexOf(inputLower)
 
               const bIndex = bTitleLower.indexOf(inputLower)
 
               if (aIndex !== bIndex) return aIndex - bIndex
 
-              // Shorter strings come first (more specific)
               if (a.title.length !== b.title.length)
                 return a.title.length - b.title.length
 
-              // Alphabetical order as final tiebreaker
               return a.title.localeCompare(b.title)
             })
 
