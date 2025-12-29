@@ -1,14 +1,10 @@
 import chalk from 'chalk'
 import fs from 'fs'
 
-import {
-  checkRunningPBInstances,
-  executeCommand,
-  killExistingProcess,
-  validateEnvironment
-} from '../../../utils/helpers'
-import { CLILoggingService } from '../../../utils/logging'
-import { startPocketBaseAndGetPid } from '../../db-commands/functions/database-initialization'
+import { ensureEnvExists, executeCommand } from '@/utils/helpers'
+import CLILoggingService from '@/utils/logging'
+import { startPocketbase } from '@/utils/pocketbase'
+
 import getPocketbaseInstance from '../../db-commands/utils/pocketbase-utils'
 import {
   type LocaleInstallConfig,
@@ -173,9 +169,6 @@ export async function addLocaleHandler(langName: string): Promise<void> {
 
   CLILoggingService.step(`Adding language pack: ${langName}`)
 
-  let pbPid: number | undefined
-  let pbRunning = false
-
   try {
     cloneLocaleRepository(config)
     validateLocaleStructure(config)
@@ -188,13 +181,9 @@ export async function addLocaleHandler(langName: string): Promise<void> {
         'First language pack - setting as default for all users'
       )
 
-      validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
+      ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
 
-      pbRunning = checkRunningPBInstances(false)
-
-      if (!pbRunning) {
-        pbPid = await startPocketBaseAndGetPid()
-      }
+      const killPB = await startPocketbase()
 
       const pb = await getPocketbaseInstance()
 
@@ -207,6 +196,8 @@ export async function addLocaleHandler(langName: string): Promise<void> {
       CLILoggingService.info(
         `Set ${chalk.bold.blue(langName)} as default language for ${chalk.bold.blue(users.length)} user(s)`
       )
+
+      killPB?.()
     }
 
     CLILoggingService.success(
@@ -221,9 +212,5 @@ export async function addLocaleHandler(langName: string): Promise<void> {
     cleanup(config.localeDir)
     cleanupGitmodules(config.localeDir)
     process.exit(1)
-  } finally {
-    if (!pbRunning && pbPid) {
-      killExistingProcess(pbPid)
-    }
   }
 }

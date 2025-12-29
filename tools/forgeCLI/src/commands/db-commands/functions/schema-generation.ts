@@ -3,9 +3,9 @@ import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 
-import { CLILoggingService } from '../../../utils/logging'
-import { FIELD_TYPE_MAPPING } from '../utils/constants'
-import { writeFormattedFile } from '../utils/file-utils'
+import CLILoggingService from '@/utils/logging'
+
+import { FIELD_TYPE_MAPPING, writeFormattedFile } from '../utils'
 import type { ModuleCollectionsMap, PocketBaseField } from '../utils/types'
 
 /**
@@ -169,16 +169,12 @@ export function generateModuleSchemaContent(
 
     const zodSchemaString = `z.object({\n${schemaObjectString}\n})`
 
-    delete collection.created
-    delete collection.updated
-
-    if ('oauth2' in collection) {
-      delete collection.oauth2
-    }
+    // Remove IDs and timestamps to avoid migration conflicts
+    const cleanedCollection = stripCollectionIds(collection)
 
     schemaEntries.push(`  ${collectionName}: {
         schema: ${zodSchemaString},
-        raw: ${JSON.stringify(collection, null, 2)}
+        raw: ${JSON.stringify(cleanedCollection, null, 2)}
       },`)
 
     CLILoggingService.info(
@@ -194,6 +190,36 @@ ${schemaEntries.join('\n')}
 
 export default ${_.camelCase(moduleName)}Schemas
 `
+}
+
+/**
+ * Strips collection ID and field IDs from raw config
+ * This prevents migration conflicts when importing to different databases
+ */
+function stripCollectionIds(collection: any): any {
+  const cleaned = { ...collection }
+
+  // Remove collection-level properties that cause conflicts
+  delete cleaned.id
+  delete cleaned.created
+  delete cleaned.updated
+
+  if ('oauth2' in cleaned) {
+    delete cleaned.oauth2
+  }
+
+  // Remove field IDs
+  if (cleaned.fields && Array.isArray(cleaned.fields)) {
+    cleaned.fields = cleaned.fields.map((field: any) => {
+      const cleanedField = { ...field }
+
+      delete cleanedField.id
+
+      return cleanedField
+    })
+  }
+
+  return cleaned
 }
 
 /**

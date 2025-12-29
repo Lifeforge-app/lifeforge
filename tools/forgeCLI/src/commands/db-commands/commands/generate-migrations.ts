@@ -1,7 +1,9 @@
 import chalk from 'chalk'
 
-import { checkRunningPBInstances, isDockerMode } from '../../../utils/helpers'
-import { CLILoggingService } from '../../../utils/logging'
+import { isDockerMode } from '@/utils/helpers'
+import CLILoggingService from '@/utils/logging'
+import { checkRunningPBInstances } from '@/utils/pocketbase'
+
 import { createMigrationFile } from '../functions/migration-generation'
 import { getSchemaFiles, importSchemaModules } from '../utils/file-utils'
 import { cleanupOldMigrations } from '../utils/pocketbase-utils'

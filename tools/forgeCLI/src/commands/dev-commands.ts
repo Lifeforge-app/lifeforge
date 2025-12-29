@@ -1,6 +1,8 @@
 import concurrently from 'concurrently'
 import fs from 'fs'
 
+import { PB_BINARY_PATH } from '@/constants/db'
+
 import {
   PROJECTS_ALLOWED,
   TOOLS_ALLOWED,
@@ -10,16 +12,11 @@ import type { ConcurrentServiceConfig, ServiceType } from '../types'
 import {
   checkPortInUse,
   delay,
+  ensureEnvExists,
   executeCommand,
-  killExistingProcess,
-  validateEnvironment
+  killExistingProcess
 } from '../utils/helpers'
-import { CLILoggingService } from '../utils/logging'
-import {
-  PB_BINARY_PATH,
-  PB_DATA_DIR,
-  PB_MIGRATIONS_DIR
-} from './db-commands/utils/constants'
+import CLILoggingService from '../utils/logging'
 
 /**
  * Service command configurations
@@ -47,7 +44,14 @@ const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
         process.exit(1)
       }
 
-      return `${PB_BINARY_PATH} serve --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`
+      if (!fs.existsSync(PB_BINARY_PATH)) {
+        CLILoggingService.error(
+          `PocketBase binary does not exist: ${PB_BINARY_PATH}`
+        )
+        process.exit(1)
+      }
+
+      return `${PB_BINARY_PATH} serve ${PB_KWARGS.join(' ')}`
     },
     cwd: () => process.env.PB_DIR!,
     requiresEnv: ['PB_DIR']
@@ -130,7 +134,7 @@ async function getConcurrentServices(): Promise<ConcurrentServiceConfig[]> {
     const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
 
     if (config.requiresEnv) {
-      validateEnvironment(config.requiresEnv)
+      ensureEnvExists(config.requiresEnv)
     }
 
     concurrentServices.push({
@@ -152,7 +156,7 @@ async function startSingleService(service: string): Promise<void> {
     const config = SERVICE_COMMANDS[service]
 
     if (config.requiresEnv) {
-      validateEnvironment(config.requiresEnv)
+      ensureEnvExists(config.requiresEnv)
     }
 
     const command =

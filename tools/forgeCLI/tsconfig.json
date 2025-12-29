@@ -2,8 +2,21 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/tools/forgeCLI",
-    "rootDir": "."
+    "rootDir": ".",
+    "baseUrl": "../..",
+    "paths": {
+      "@/*": [
+        "./tools/forgeCLI/src/*"
+      ],
+      "@server/*": [
+        "./server/src/*"
+      ]
+    }
   },
-  "include": ["./src/**/*.ts"],
-  "exclude": ["./src/templates/**/*"]
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "./src/templates/**/*"
+  ]
 }

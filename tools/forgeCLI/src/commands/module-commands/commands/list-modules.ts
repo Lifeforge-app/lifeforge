@@ -1,4 +1,5 @@
-import { CLILoggingService } from '../../../utils/logging'
+import CLILoggingService from '@/utils/logging'
+
 import { getInstalledModules } from '../utils/file-system'
 
 /**
