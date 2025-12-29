@@ -4,9 +4,6 @@ import fs from 'fs'
 import { PB_BINARY_PATH, PB_DATA_DIR, PB_KWARGS } from '@/constants/db'
 import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
-import { startPocketbase } from '@/utils/pocketbase'
-
-import getPocketbaseInstance from '../../utils/pocketbase-utils'
 
 /**
  * Validates that PocketBase data directory doesn't already exist
@@ -54,51 +51,6 @@ export function createPocketBaseSuperuser(
         error instanceof Error ? error.message : 'Unknown error'
       }`
     )
-    process.exit(1)
-  }
-}
-
-/**
- * Sets up default data in the database
- */
-export async function setupDefaultData(
-  email: string,
-  password: string
-): Promise<void> {
-  const killPB = await startPocketbase()
-
-  const pb = await getPocketbaseInstance()
-
-  CLILoggingService.step(
-    'Pocketbase instance acquired, setting up default data...'
-  )
-
-  try {
-    // Create default user
-    const usersCollection = pb.collection('users')
-
-    await usersCollection.create({
-      email,
-      password,
-      passwordConfirm: password,
-      verified: true,
-      username: email.split('@')[0],
-      name: 'Admin User',
-      theme: 'system',
-      language: 'en',
-      fontScale: 1.0,
-      borderRadiusMultiplier: 1.0
-    })
-
-    CLILoggingService.success('Default data setup completed successfully.')
-    killPB?.()
-  } catch (error) {
-    CLILoggingService.error(
-      `Failed to set up default data: ${
-        error instanceof Error ? error.message : 'Unknown error'
-      }`
-    )
-    killPB?.()
     process.exit(1)
   }
 }
