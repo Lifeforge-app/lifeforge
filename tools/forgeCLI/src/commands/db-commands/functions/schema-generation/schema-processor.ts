@@ -3,14 +3,14 @@ import path from 'path'
 
 import CLILoggingService from '@/utils/logging'
 
-import { type ModuleCollectionsMap, writeFormattedFile } from '../../utils'
+import { writeFormattedFile } from '../../utils'
 import { generateModuleSchemaContent } from './content-generator'
 
 /**
  * Processes schema generation for modules
  */
 export async function processSchemaGeneration(
-  moduleCollectionsMap: ModuleCollectionsMap,
+  moduleCollectionsMap: Record<string, Record<string, unknown>[]>,
   targetModule?: string
 ): Promise<{ moduleSchemas: Record<string, string>; moduleDirs: string[] }> {
   const filteredModuleCollectionsMap = targetModule
