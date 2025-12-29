@@ -125,8 +125,10 @@ async function validateCollections(
       // @ts-expect-error: Lazy to fix :)
       SCHEMAS[collection.split('__')[0]][collection.split('__')[1]].raw
 
+    delete (existingCollection as any)?.id
     delete existingCollection?.updated
     delete existingCollection?.created
+    delete (requiredSchema as any)?.id
     delete requiredSchema?.updated
     delete requiredSchema?.created
 
@@ -180,7 +182,7 @@ export default async function checkDB(): Promise<void> {
 
       if (validationResult.collectionsWithDiscrepancies.length > 0) {
         throw new DatabaseValidationError(
-          `Collections with schema discrepancies: ${validationResult.collectionsWithDiscrepancies.join(', ')}. If the collection has been updated in the database, please run "${chalk.cyan('bun forge db generate-schemas')}" to synchronize the schema. If the collection has been modified outside of LifeForge, please revert the changes to ensure compatibility.`
+          `Collections with schema discrepancies: ${validationResult.collectionsWithDiscrepancies.join(', ')}. If the collection has been updated in the database, please run "${chalk.cyan('bun forge db pull')}" to synchronize the schema. If the collection has been modified outside of LifeForge, please revert the changes to ensure compatibility.`
         )
       }
 
