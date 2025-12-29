@@ -28,6 +28,7 @@ const get = forgeController
         }
       ])
       .execute()
+      .catch(() => null)
 
     if (!entry) {
       throw new ClientError('API Key not found', 404)
