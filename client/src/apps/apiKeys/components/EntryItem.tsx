@@ -15,18 +15,14 @@ import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 import COLORS from 'tailwindcss/colors'
 
+import ROUTES from '@/routes'
 import forgeAPI from '@/utils/forgeAPI'
 
 import type { APIKeysEntry } from '..'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
+import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
 
-function EntryItem({
-  entry,
-  masterPassword
-}: {
-  entry: APIKeysEntry
-  masterPassword: string
-}) {
+function EntryItem({ entry }: { entry: APIKeysEntry }) {
   const queryClient = useQueryClient()
 
   const open = useModalStore(state => state.open)
@@ -50,6 +46,10 @@ function EntryItem({
         }
       })
   )
+
+  const modulesRequiredCount = ROUTES.flatMap(cat => cat.items).filter(item =>
+    item.apiAccess?.some(access => access.key === entry.keyId)
+  ).length
 
   async function copyKey() {
     setIsCopying(true)
@@ -82,7 +82,7 @@ function EntryItem({
     } catch {
       toast.error('Failed to fetch API Key')
     }
-  }, [entry, masterPassword])
+  }, [entry])
 
   const handleDeleteEntry = () =>
     open(ConfirmationModal, {
@@ -97,7 +97,23 @@ function EntryItem({
   return (
     <OptionsColumn
       key={entry.id}
-      description={entry.description}
+      description={
+        modulesRequiredCount > 0 && (
+          <p className="text-bg-500 mt-2 flex items-center gap-1">
+            Required by: {modulesRequiredCount} modules
+            <Button
+              className="p-1!"
+              icon="tabler:info-circle"
+              variant="plain"
+              onClick={() =>
+                open(ModulesRequiredListModal, {
+                  keyId: entry.keyId
+                })
+              }
+            />
+          </p>
+        )
+      }
       icon={entry.icon}
       title={
         <>
