@@ -1,7 +1,9 @@
 import chalk from 'chalk'
 import { spawn, spawnSync } from 'child_process'
+import PocketBase from 'pocketbase'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
+import { getEnvVars } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 
 import { killExistingProcess } from './helpers'
@@ -114,6 +116,39 @@ export async function startPocketbase(): Promise<(() => void) | null> {
       `Failed to start PocketBase server: ${
         error instanceof Error ? error.message : 'Unknown error'
       }`
+    )
+    process.exit(1)
+  }
+}
+
+export default async function getPBInstance(createNewInstance = true): Promise<{
+  pb: PocketBase
+  killPB: (() => void) | null
+}> {
+  const killPB = createNewInstance ? await startPocketbase() : null
+
+  const { PB_HOST, PB_EMAIL, PB_PASSWORD } = getEnvVars([
+    'PB_HOST',
+    'PB_EMAIL',
+    'PB_PASSWORD'
+  ])
+
+  const pb = new PocketBase(PB_HOST)
+
+  try {
+    await pb.collection('_superusers').authWithPassword(PB_EMAIL, PB_PASSWORD)
+
+    if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
+      throw new Error('Invalid credentials or insufficient permissions')
+    }
+
+    return {
+      pb,
+      killPB
+    }
+  } catch (error) {
+    CLILoggingService.error(
+      `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
     )
     process.exit(1)
   }

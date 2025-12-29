@@ -22,10 +22,8 @@ export async function generateMigrationsHandler(
       checkRunningPBInstances()
     }
 
-    // Clean up old migrations
     await cleanupOldMigrations(targetModule)
 
-    // Get and process schema files
     const schemaFiles = getSchemaFiles(targetModule)
 
     CLILoggingService.info(

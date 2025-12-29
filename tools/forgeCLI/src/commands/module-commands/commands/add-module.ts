@@ -1,10 +1,6 @@
 import fs from 'fs'
 
-import {
-  ensureEnvExists,
-  executeCommand,
-  validateFilePaths
-} from '@/utils/helpers'
+import { executeCommand, validateFilePaths } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
@@ -199,7 +195,6 @@ function updateGitSubmodules(): void {
  * Handles adding a new module to the LifeForge system
  */
 export async function addModuleHandler(repoPath: string): Promise<void> {
-  ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
   checkRunningPBInstances()
 
   if (!validateRepositoryPath(repoPath)) {

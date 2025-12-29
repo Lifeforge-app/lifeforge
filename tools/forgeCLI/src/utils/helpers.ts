@@ -98,16 +98,32 @@ export function executeCommand(
 /**
  * Validates environment variables
  */
-export function ensureEnvExists(requiredVars: string[]): void {
-  const missingVars = requiredVars.filter(varName => !process.env[varName])
+export function getEnvVars<const T extends readonly string[]>(
+  requiredVars: T
+): Record<T[number], string> {
+  const vars: Record<string, string> = {}
 
-  if (missingVars.length > 0) {
+  const missing: string[] = []
+
+  for (const varName of requiredVars) {
+    const value = process.env[varName]
+
+    if (value) {
+      vars[varName] = value
+    } else {
+      missing.push(varName)
+    }
+  }
+
+  if (missing.length > 0) {
     CLILoggingService.actionableError(
-      `Missing required environment variables: ${missingVars.join(', ')}`,
+      `Missing required environment variables: ${missing.join(', ')}`,
       'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
     )
     process.exit(1)
   }
+
+  return vars as Record<T[number], string>
 }
 
 /**
