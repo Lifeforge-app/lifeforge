@@ -5,15 +5,27 @@ import path from 'path'
 import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 
-export function updateGitSubmodules(): void {
-  CLILoggingService.progress('Updating git submodules')
+export function updateGitSubmodules(modulePath?: string): void {
+  if (modulePath) {
+    CLILoggingService.progress(`Updating git submodule: ${modulePath}`)
+  } else {
+    CLILoggingService.progress('Updating all git submodules')
+  }
 
   try {
-    executeCommand('git submodule update --init --recursive --remote', {
+    const command = modulePath
+      ? `git submodule update --init --recursive --remote ${modulePath}`
+      : 'git submodule update --init --recursive --remote'
+
+    executeCommand(command, {
       stdio: ['ignore', 'ignore', 'ignore'],
       exitOnError: false
     })
-    CLILoggingService.success('Git submodules updated successfully')
+    CLILoggingService.success(
+      modulePath
+        ? `Git submodule updated: ${modulePath}`
+        : 'Git submodules updated successfully'
+    )
   } catch (error) {
     CLILoggingService.actionableError(
       'Failed to update git submodules',

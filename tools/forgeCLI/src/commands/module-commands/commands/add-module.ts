@@ -44,7 +44,7 @@ export async function addModuleHandler(repoPath: string): Promise<void> {
     cloneModuleRepository(config)
     validateModuleStructure(config)
     moveModuleToApps(config)
-    updateGitSubmodules()
+    updateGitSubmodules(`apps/${config.moduleName}`)
     processServerInjection(config.moduleName)
     installDependencies()
 
