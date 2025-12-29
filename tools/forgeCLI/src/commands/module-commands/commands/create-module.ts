@@ -376,7 +376,7 @@ function installDependencies(): void {
 function generateDatabaseSchemas(): void {
   CLILoggingService.step('Generating database schemas for the new module...')
 
-  executeCommand('bun run forge db generate-schemas', {
+  executeCommand('bun run forge db pull', {
     cwd: process.cwd(),
     stdio: 'ignore'
   })
