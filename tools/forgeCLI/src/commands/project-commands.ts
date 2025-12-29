@@ -7,7 +7,7 @@ import {
   resolveProjects,
   validateProjects
 } from '../utils/helpers'
-import { CLILoggingService } from '../utils/logging'
+import CLILoggingService from '../utils/logging'
 
 /**
  * Executes a command for multiple projects

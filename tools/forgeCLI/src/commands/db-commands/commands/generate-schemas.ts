@@ -1,14 +1,10 @@
 import chalk from 'chalk'
 import path from 'path'
 
-import {
-  checkRunningPBInstances,
-  isDockerMode,
-  killExistingProcess,
-  validateEnvironment
-} from '../../../utils/helpers'
-import { CLILoggingService } from '../../../utils/logging'
-import { startPocketBaseAndGetPid } from '../functions/database-initialization'
+import { ensureEnvExists, isDockerMode } from '@/utils/helpers'
+import CLILoggingService from '@/utils/logging'
+import { startPocketbase } from '@/utils/pocketbase'
+
 import {
   buildModuleCollectionsMap,
   generateMainSchemaContent,
@@ -28,21 +24,12 @@ export async function generateSchemaHandler(
 
     // In Docker mode, PB_DIR is not required - PocketBase is already running externally
     if (isDockerMode()) {
-      validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
+      ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'])
     } else {
-      validateEnvironment(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
+      ensureEnvExists(['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD', 'PB_DIR'])
     }
 
-    let pbPid: number | undefined
-
-    // In Docker mode, PocketBase is already running as a separate service
-    if (!isDockerMode()) {
-      const pbRunning = checkRunningPBInstances(false)
-
-      if (!pbRunning) {
-        pbPid = await startPocketBaseAndGetPid()
-      }
-    }
+    const killPB = !isDockerMode() ? await startPocketbase() : undefined
 
     // Authenticate with PocketBase
     const pb = await getPocketbaseInstance()
@@ -53,7 +40,7 @@ export async function generateSchemaHandler(
     const allCollections = await pb.collections.getFullList()
 
     const userCollections = allCollections.filter(
-      (collection: any) => !collection.system
+      collection => !collection.system
     )
 
     CLILoggingService.info(
@@ -94,10 +81,7 @@ export async function generateSchemaHandler(
         : `Schema generation completed! Created ${moduleCount} module schema files.`
     )
 
-    // Kill PocketBase if we started it
-    if (pbPid) {
-      killExistingProcess(pbPid)
-    }
+    killPB?.()
   } catch (error) {
     CLILoggingService.error(`Schema generation failed: ${error}`)
     process.exit(1)

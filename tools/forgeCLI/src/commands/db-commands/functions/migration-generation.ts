@@ -3,18 +3,38 @@ import { execSync } from 'child_process'
 import fs from 'fs'
 import prettier from 'prettier'
 
-import { CLILoggingService } from '../../../utils/logging'
-import {
-  MIGRATION_PRETTIER_OPTIONS,
-  PB_BINARY_PATH,
-  PB_DATA_DIR,
-  PB_MIGRATIONS_DIR
-} from '../utils/constants'
+import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
+import CLILoggingService from '@/utils/logging'
+
+import { MIGRATION_PRETTIER_OPTIONS } from '../utils'
 import type { MigrationResult } from '../utils/types'
 
 /**
  * Migration generation utilities
  */
+
+/**
+ * Strips IDs from raw collection config to prevent conflicts
+ */
+function stripIdsFromRaw(raw: any): any {
+  const cleaned = { ...raw }
+
+  delete cleaned.id
+  delete cleaned.created
+  delete cleaned.updated
+
+  if (cleaned.fields && Array.isArray(cleaned.fields)) {
+    cleaned.fields = cleaned.fields.map((field: any) => {
+      const cleanedField = { ...field }
+
+      delete cleanedField.id
+
+      return cleanedField
+    })
+  }
+
+  return cleaned
+}
 
 /**
  * Generates migration file content
@@ -28,7 +48,9 @@ export function generateMigrationContent(
   const upContent =
     Object.entries(schema)
       .map(([name, { raw }]) => {
-        return `  const ${name}Collection = ${JSON.stringify(raw, null, 2)};`
+        const cleanedRaw = stripIdsFromRaw(raw)
+
+        return `  const ${name}Collection = ${JSON.stringify(cleanedRaw, null, 2)};`
       })
       .join('\n\n') +
     '\n\napp.importCollections([' +
@@ -39,7 +61,7 @@ export function generateMigrationContent(
 
   const downContent = Object.values(schema)
     .map(({ raw }) => {
-      return `  let ${raw.name}Collection = app.findCollectionByNameOrId("${raw.id}");\n app.delete(${raw.name}Collection);`
+      return `  let ${raw.name}Collection = app.findCollectionByNameOrId("${raw.name}");\n app.delete(${raw.name}Collection);`
     })
     .join('\n\n')
 
@@ -55,7 +77,7 @@ export async function createMigrationFile(
 ): Promise<MigrationResult> {
   try {
     const response = execSync(
-      `${PB_BINARY_PATH} migrate create ${moduleName} --dir=${PB_DATA_DIR} --migrationsDir=${PB_MIGRATIONS_DIR}`,
+      `${PB_BINARY_PATH} migrate create ${moduleName} ${PB_KWARGS.join(' ')}`,
       {
         input: 'y\n',
         stdio: ['pipe', 'pipe', 'pipe']

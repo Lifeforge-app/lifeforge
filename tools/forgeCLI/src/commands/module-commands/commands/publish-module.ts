@@ -1,7 +1,9 @@
 import fs from 'fs'
 
-import { checkRunningPBInstances, executeCommand } from '../../../utils/helpers'
-import { CLILoggingService } from '../../../utils/logging'
+import { executeCommand } from '@/utils/helpers'
+import CLILoggingService from '@/utils/logging'
+import { checkRunningPBInstances } from '@/utils/pocketbase'
+
 import { getInstalledModules } from '../utils/file-system'
 
 function checkGitCleanliness(moduleName: string): void {

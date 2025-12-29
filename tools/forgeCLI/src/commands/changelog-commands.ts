@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import fs from 'fs'
 
-import { CLILoggingService } from '../utils/logging'
+import CLILoggingService from '../utils/logging'
 
 dayjs.extend(weekOfYear)
 
