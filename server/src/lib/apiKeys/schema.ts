@@ -13,7 +13,6 @@ const apiKeysSchemas = {
       updated: z.string()
     }),
     raw: {
-      id: 'zhm94t1hfoq97oa',
       listRule: '@request.auth.id != ""',
       viewRule: '@request.auth.id != ""',
       createRule: '@request.auth.id != ""',
@@ -25,7 +24,6 @@ const apiKeysSchemas = {
         {
           autogeneratePattern: '[a-z0-9]{15}',
           hidden: false,
-          id: 'text3208210256',
           max: 15,
           min: 15,
           name: 'id',
@@ -39,7 +37,6 @@ const apiKeysSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: '4k7c8zdb',
           max: 0,
           min: 0,
           name: 'keyId',
@@ -53,7 +50,6 @@ const apiKeysSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'tcnowiel',
           max: 0,
           min: 0,
           name: 'name',
@@ -67,7 +63,6 @@ const apiKeysSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'l1a35cql',
           max: 0,
           min: 0,
           name: 'description',
@@ -81,7 +76,6 @@ const apiKeysSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'vhho1bhf',
           max: 0,
           min: 0,
           name: 'icon',
@@ -95,7 +89,6 @@ const apiKeysSchemas = {
         {
           autogeneratePattern: '',
           hidden: false,
-          id: 'ddcugsw3',
           max: 0,
           min: 0,
           name: 'key',
@@ -108,7 +101,6 @@ const apiKeysSchemas = {
         },
         {
           hidden: false,
-          id: 'bool3709713248',
           name: 'exposable',
           presentable: false,
           required: false,
@@ -117,7 +109,6 @@ const apiKeysSchemas = {
         },
         {
           hidden: false,
-          id: 'autodate2990389176',
           name: 'created',
           onCreate: true,
           onUpdate: false,
@@ -127,7 +118,6 @@ const apiKeysSchemas = {
         },
         {
           hidden: false,
-          id: 'autodate3332085495',
           name: 'updated',
           onCreate: true,
           onUpdate: true,
