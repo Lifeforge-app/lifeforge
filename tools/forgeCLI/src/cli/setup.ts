@@ -7,11 +7,12 @@ import * as dbHandlers from '../commands/db-commands'
 import { devHandler } from '../commands/dev-commands'
 import * as localeHandlers from '../commands/locale-commands'
 import * as moduleHandlers from '../commands/module-commands'
+import { createCommandHandler } from '../commands/project-commands'
 import {
-  createCommandHandler,
-  getAvailableCommands
-} from '../commands/project-commands'
-import { PROJECTS_ALLOWED, VALID_SERVICES } from '../constants/constants'
+  PROJECTS_ALLOWED,
+  VALID_COMMANDS,
+  VALID_SERVICES
+} from '../constants/constants'
 import CLILoggingService from '../utils/logging'
 
 function getVersion(): string {
@@ -59,9 +60,7 @@ export function setupCLI(): void {
  * Sets up project commands (build, types, lint)
  */
 function setupProjectCommands(): void {
-  const availableCommands = getAvailableCommands()
-
-  for (const commandType of availableCommands) {
+  for (const commandType of VALID_COMMANDS) {
     program
       .command(commandType)
       .description(`Run ${commandType} for specified projects`)

@@ -5,11 +5,9 @@ import { isDockerMode } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 import getPBInstance from '@/utils/pocketbase'
 
-import {
-  buildModuleCollectionsMap,
-  generateMainSchemaContent,
-  processSchemaGeneration
-} from '../functions/schema-generation'
+import { generateMainSchemaContent } from '../functions/schema-generation/content-generator'
+import { buildModuleCollectionsMap } from '../functions/schema-generation/module-mapper'
+import { processSchemaGeneration } from '../functions/schema-generation/schema-processor'
 import { writeFormattedFile } from '../utils/file-utils'
 
 /**
