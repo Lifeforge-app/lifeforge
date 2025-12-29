@@ -6,11 +6,7 @@ import path from 'path'
 import CLILoggingService from '@/utils/logging'
 
 import { FIELD_TYPE_MAPPING, writeFormattedFile } from '../utils'
-import type { ModuleCollectionsMap, PocketBaseField } from '../utils/types'
-
-/**
- * Schema generation utilities
- */
+import type { PocketBaseField } from '../utils/constants'
 
 /**
  * Converts a PocketBase field to Zod schema string
@@ -53,10 +49,12 @@ function generateCollectionSchema(collection: any): Record<string, string> {
 /**
  * Builds mapping of modules to their collections
  */
-export async function buildModuleCollectionsMap(
-  collections: any[]
-): Promise<ModuleCollectionsMap> {
-  const moduleCollectionsMap: ModuleCollectionsMap = {}
+export async function buildModuleCollectionsMap(collections: any[]): Promise<{
+  [moduleName: string]: any[]
+}> {
+  const moduleCollectionsMap: {
+    [moduleName: string]: any[]
+  } = {}
 
   const modulesDirs = [
     './server/src/lib/**/schema.ts',
@@ -257,7 +255,9 @@ export default COLLECTION_SCHEMAS
  * Processes schema generation for modules
  */
 export async function processSchemaGeneration(
-  moduleCollectionsMap: ModuleCollectionsMap,
+  moduleCollectionsMap: {
+    [moduleName: string]: any[]
+  },
   targetModule?: string
 ): Promise<{ moduleSchemas: Record<string, string>; moduleDirs: string[] }> {
   const filteredModuleCollectionsMap = targetModule

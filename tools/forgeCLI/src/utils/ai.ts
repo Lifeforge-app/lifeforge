@@ -4,10 +4,9 @@ import type { ResponseInput } from 'openai/resources/responses/responses.mjs'
 import ora from 'ora'
 import z from 'zod'
 
-import getPocketbaseInstance from '../commands/db-commands/utils/pocketbase-utils'
-import { ensureEnvExists } from './helpers'
+import { getEnvVars } from './helpers'
 import CLILoggingService from './logging'
-import { startPocketbase } from './pocketbase'
+import getPBInstance from './pocketbase'
 import { zodTextFormat } from './zodResponseFormat'
 
 export interface FetchAIParams<T extends z.ZodType<any>> {
@@ -17,19 +16,11 @@ export interface FetchAIParams<T extends z.ZodType<any>> {
 }
 
 export async function getAPIKey(): Promise<string | null> {
-  ensureEnvExists([
-    'PB_DIR',
-    'PB_HOST',
-    'PB_EMAIL',
-    'PB_PASSWORD',
-    'MASTER_KEY'
-  ])
+  const { MASTER_KEY } = getEnvVars(['MASTER_KEY'])
 
-  const killPB = await startPocketbase()
+  const { pb, killPB } = await getPBInstance()
 
-  const pbInstance = await getPocketbaseInstance()
-
-  const apiKey = await pbInstance
+  const apiKey = await pb
     .collection('api_keys__entries')
     .getFirstListItem('keyId="openai"')
     .catch(() => {})
@@ -39,7 +30,7 @@ export async function getAPIKey(): Promise<string | null> {
   }
 
   try {
-    return CryptoJS.AES.decrypt(apiKey.key, process.env.MASTER_KEY!).toString(
+    return CryptoJS.AES.decrypt(apiKey.key, MASTER_KEY).toString(
       CryptoJS.enc.Utf8
     )
   } catch {

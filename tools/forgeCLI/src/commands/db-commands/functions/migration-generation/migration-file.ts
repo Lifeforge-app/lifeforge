@@ -6,7 +6,7 @@ import prettier from 'prettier'
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import CLILoggingService from '@/utils/logging'
 
-import { MIGRATION_PRETTIER_OPTIONS, type MigrationResult } from '../../utils'
+import { PRETTIER_OPTIONS } from '../../utils'
 import { generateMigrationContent } from './migration-content'
 
 /**
@@ -15,7 +15,7 @@ import { generateMigrationContent } from './migration-content'
 export async function createMigrationFile(
   moduleName: string,
   schema: Record<string, { raw: Record<string, unknown> }>
-): Promise<MigrationResult> {
+): Promise<{ success: boolean; migrationPath?: string; error?: string }> {
   try {
     const response = execSync(
       `${PB_BINARY_PATH} migrate create ${moduleName} ${PB_KWARGS.join(' ')}`,
@@ -52,10 +52,7 @@ export async function createMigrationFile(
       .replace('// add up queries...', upContent)
       .replace('// add down queries...', downContent)
 
-    const formattedContent = await prettier.format(
-      content,
-      MIGRATION_PRETTIER_OPTIONS
-    )
+    const formattedContent = await prettier.format(content, PRETTIER_OPTIONS)
 
     fs.writeFileSync(migrationFilePath, formattedContent, 'utf-8')
 

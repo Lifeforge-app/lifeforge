@@ -6,12 +6,13 @@ import prettier from 'prettier'
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import CLILoggingService from '@/utils/logging'
 
-import { MIGRATION_PRETTIER_OPTIONS } from '../utils'
-import type { MigrationResult } from '../utils/types'
+import { PRETTIER_OPTIONS } from '../utils'
 
-/**
- * Migration generation utilities
- */
+interface MigrationResult {
+  success: boolean
+  migrationPath?: string
+  error?: string
+}
 
 /**
  * Strips IDs from raw collection config to prevent conflicts
@@ -111,10 +112,7 @@ export async function createMigrationFile(
       .replace('// add up queries...', upContent)
       .replace('// add down queries...', downContent)
 
-    const formattedContent = await prettier.format(
-      content,
-      MIGRATION_PRETTIER_OPTIONS
-    )
+    const formattedContent = await prettier.format(content, PRETTIER_OPTIONS)
 
     fs.writeFileSync(migrationFilePath, formattedContent, 'utf-8')
 

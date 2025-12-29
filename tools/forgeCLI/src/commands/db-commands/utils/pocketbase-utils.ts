@@ -5,28 +5,10 @@ import path from 'path'
 import PocketBase from 'pocketbase'
 
 import { PB_BINARY_PATH, PB_KWARGS, PB_MIGRATIONS_DIR } from '@/constants/db'
+import { getEnvVars } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 
-export default async function getPocketbaseInstance(): Promise<PocketBase> {
-  const pb = new PocketBase(process.env.PB_HOST)
 
-  try {
-    await pb
-      .collection('_superusers')
-      .authWithPassword(process.env.PB_EMAIL!, process.env.PB_PASSWORD!)
-
-    if (!pb.authStore.isSuperuser || !pb.authStore.isValid) {
-      throw new Error('Invalid credentials or insufficient permissions')
-    }
-
-    return pb
-  } catch (error) {
-    CLILoggingService.error(
-      `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
-    )
-    process.exit(1)
-  }
-}
 
 /**
  * Cleans up old migrations
