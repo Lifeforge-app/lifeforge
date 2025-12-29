@@ -2,7 +2,7 @@ import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
 
-import { getEnvVars, isDockerMode } from '@/utils/helpers'
+import { getEnvVar, isDockerMode } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 
 dotenv.config({
@@ -10,11 +10,7 @@ dotenv.config({
   quiet: true
 })
 
-if (!isDockerMode()) {
-  getEnvVars(['PB_DIR'])
-}
-
-export const PB_DIR = process.env.PB_DIR || ''
+export const PB_DIR = getEnvVar('PB_DIR', isDockerMode() ? '' : 'database')
 
 export const PB_DATA_DIR = isDockerMode()
   ? path.resolve(PB_DIR)
