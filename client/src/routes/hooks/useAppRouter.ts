@@ -1,6 +1,6 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { createBrowserRouter } from 'shared'
+import { Router, createBrowserRouter } from 'shared'
 import { useAuth } from 'shared'
 
 import ROUTES from '..'
@@ -19,25 +19,52 @@ export function useAppRouter() {
 
   const { auth, authLoading } = useAuth()
 
-  const router = useMemo(() => {
-    // If authentication is still loading, return a placeholder router
-    if (authLoading) {
-      return createBrowserRouter(createAuthLoadingConfig())
+  const [appRouter, setAppRouter] = useState<typeof Router | null>(null)
+
+  const loadingRouter = useMemo(
+    () => createBrowserRouter(createAuthLoadingConfig()),
+    []
+  )
+
+  const authRouter = useMemo(
+    () => createBrowserRouter(createAuthRouterConfig()),
+    []
+  )
+
+  useEffect(() => {
+    if (authLoading || !auth) {
+      setAppRouter(null)
+
+      return
     }
 
-    // If user is not authenticated, return auth-only routes
-    if (!auth) {
-      return createBrowserRouter(createAuthRouterConfig())
-    }
+    let cancelled = false
 
-    // If user is authenticated, create full application routes based on enabled modules
-    const routerConfig = createRouterConfig({
+    createRouterConfig({
       routes: ROUTES,
       loadingMessage: t('loadingModule')
+    }).then(routerConfig => {
+      if (!cancelled) {
+        setAppRouter(createBrowserRouter(routerConfig))
+      }
     })
 
-    return createBrowserRouter(routerConfig)
+    return () => {
+      cancelled = true
+    }
   }, [auth, t, authLoading])
+
+  const router = useMemo(() => {
+    if (authLoading) {
+      return loadingRouter
+    }
+
+    if (!auth) {
+      return authRouter
+    }
+
+    return appRouter ?? loadingRouter
+  }, [auth, authLoading, appRouter, loadingRouter, authRouter])
 
   return { router, isAuthenticated: !!auth }
 }
