@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import {
   Controls,
   Description,
@@ -19,6 +18,8 @@ import { ToastProvider } from 'shared'
 import { themes } from 'storybook/theming'
 
 import { ModalManager } from '@components/overlays'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import './i18n'
 import './index.css'
@@ -150,6 +151,7 @@ const preview: Preview = {
       expanded: true
     },
     docs: {
+      codePanel: true,
       theme: themes.dark,
       page: () => (
         <>
