@@ -1,10 +1,19 @@
+import mdxListCounts from 'virtual:mdx-list-counts'
+
 import { components } from '@/components/MdxComponents'
 
 import Version from './Version'
 
+const compiledModules = import.meta.glob('../versions/**/*.mdx', {
+  eager: true
+}) as Record<
+  string,
+  { default: React.ComponentType<{ components: typeof components }> }
+>
+
 const entries = Object.entries(
   Object.groupBy(
-    Object.entries(import.meta.glob('../versions/**/*.mdx', { eager: true })),
+    Object.entries(compiledModules),
     ([path]) => path.match(/\.\.\/versions\/(\d+)\/.*/)![1]
   )
 )
@@ -14,22 +23,28 @@ const entries = Object.entries(
     versions: modules!
       .map(([path, module]) => ({
         week: Number(path.match(/\.\.\/versions\/\d+\/(\d+)\.mdx/)![1]),
-        Component: (module as any).default
+        Component: module.default,
+        liCount: mdxListCounts[path] ?? 0
       }))
       .sort((a, b) => b.week - a.week)
   }))
 
 function ChangelogEntries() {
   return (
-    <>
+    <div className="divide-bg-500/20 divide-y-[1.5px]">
       {entries.map(({ year, versions }) =>
-        versions.map(({ week, Component }) => (
-          <Version key={`${year}-week-${week}`} week={week} year={year}>
+        versions.map(({ week, Component, liCount }) => (
+          <Version
+            key={`${year}-week-${week}`}
+            liCount={liCount}
+            week={week}
+            year={year}
+          >
             <Component components={components} />
           </Version>
         ))
       )}
-    </>
+    </div>
   )
 }
 
