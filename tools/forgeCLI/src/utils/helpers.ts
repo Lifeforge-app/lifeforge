@@ -7,22 +7,7 @@ import prompts from 'prompts'
 import type { CommandExecutionOptions } from '../types'
 import CLILoggingService from './logging'
 
-/**
- * Validates if the provided projects are valid
- */
-export function validateProjects(
-  projects: string[],
-  validProjects: string[]
-): { isValid: boolean; invalidProjects: string[] } {
-  const invalidProjects = projects.filter(
-    project => !validProjects.includes(project)
-  )
 
-  return {
-    isValid: invalidProjects.length === 0,
-    invalidProjects
-  }
-}
 
 /**
  * Executes a shell command with proper error handling

@@ -16,34 +16,7 @@ export const TOOLS_ALLOWED = Object.fromEntries(
     .map(f => [f, `tools/${f}`])
 )
 
-/**
- * All available projects including core packages and tools
- */
-export const PROJECTS_ALLOWED = {
-  shared: 'shared',
-  ui: 'packages/lifeforge-ui',
-  client: 'client',
-  server: 'server',
-  docs: 'docs',
-  ...TOOLS_ALLOWED
-} as const
-
-/**
- * Valid services that can be started in development mode
- */
-export const VALID_SERVICES = [
-  'db',
-  'server',
-  'client',
-  'ui',
-  'docs',
-  ...Object.keys(TOOLS_ALLOWED)
-] as const
-
-/**
- * Valid command types for project operations
- */
-export const VALID_COMMANDS = ['build', 'types', 'lint'] as const
+export const LOG_LEVELS = ['debug', 'info', 'warn', 'error', 'fatal'] as const
 
 export const AVAILABLE_TEMPLATE_MODULE_TYPES = {
   'bare-bones': 'Minimal setup with basic structure',
@@ -52,9 +25,3 @@ export const AVAILABLE_TEMPLATE_MODULE_TYPES = {
   'client-only': 'Client-side only functionality',
   widget: 'Standalone widget component'
 } as const
-
-export type ProjectType = keyof typeof PROJECTS_ALLOWED
-
-export type ServiceType = (typeof VALID_SERVICES)[number]
-
-export type CommandType = (typeof VALID_COMMANDS)[number]
