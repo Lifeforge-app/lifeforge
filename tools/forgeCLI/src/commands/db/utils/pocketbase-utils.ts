@@ -2,10 +2,8 @@ import chalk from 'chalk'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
-import PocketBase from 'pocketbase'
 
 import { PB_BINARY_PATH, PB_KWARGS, PB_MIGRATIONS_DIR } from '@/constants/db'
-import { getEnvVars } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 
 

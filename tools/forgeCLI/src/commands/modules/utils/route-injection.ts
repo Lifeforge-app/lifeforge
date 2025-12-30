@@ -2,6 +2,12 @@ import generate from '@babel/generator'
 import { parse } from '@babel/parser'
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
+import type {
+  ObjectExpression,
+  ObjectMethod,
+  ObjectProperty,
+  SpreadElement
+} from '@babel/types'
 import fs from 'fs'
 import path from 'path'
 
@@ -45,7 +51,7 @@ export function injectModuleRoute(moduleName: string): void {
       plugins: ['typescript']
     })
 
-    let routerObjectPath: any = null
+    let routerObject: ObjectExpression | null = null
 
     // Find the forgeRouter call expression
     traverse(ast, {
@@ -55,15 +61,17 @@ export function injectModuleRoute(moduleName: string): void {
           path.node.arguments.length > 0 &&
           t.isObjectExpression(path.node.arguments[0])
         ) {
-          routerObjectPath = path.get('arguments')[0]
+          routerObject = path.node.arguments[0]
         }
       }
     })
 
     // Check if module already exists and add if not
-    if (routerObjectPath && t.isObjectExpression(routerObjectPath.node)) {
-      const hasExistingProperty = routerObjectPath.node.properties.some(
-        (prop: any) =>
+    if (routerObject) {
+      const obj = routerObject as ObjectExpression
+
+      const hasExistingProperty = obj.properties.some(
+        (prop: ObjectMethod | ObjectProperty | SpreadElement) =>
           t.isObjectProperty(prop) &&
           t.isIdentifier(prop.key) &&
           prop.key.name === moduleName
@@ -77,7 +85,7 @@ export function injectModuleRoute(moduleName: string): void {
           moduleImport
         )
 
-        routerObjectPath.node.properties.push(newProperty)
+        obj.properties.push(newProperty)
       }
     }
 
@@ -129,19 +137,17 @@ export function removeModuleRoute(moduleName: string): void {
 
           const originalLength = routerObject.properties.length
 
-          routerObject.properties = routerObject.properties.filter(
-            (prop: any) => {
-              if (
-                t.isObjectProperty(prop) &&
-                t.isIdentifier(prop.key) &&
-                prop.key.name === moduleName
-              ) {
-                return false // Remove this property
-              }
-
-              return true // Keep other properties
+          routerObject.properties = routerObject.properties.filter(prop => {
+            if (
+              t.isObjectProperty(prop) &&
+              t.isIdentifier(prop.key) &&
+              prop.key.name === moduleName
+            ) {
+              return false // Remove this property
             }
-          )
+
+            return true // Keep other properties
+          })
 
           if (routerObject.properties.length < originalLength) {
             modified = true

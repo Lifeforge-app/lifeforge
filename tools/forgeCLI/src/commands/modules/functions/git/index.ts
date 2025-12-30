@@ -7,6 +7,7 @@ export {
 } from './git-submodule'
 
 export { checkForUpdates, checkGitCleanliness } from './git-status'
+
 export type { CommitInfo } from './git-status'
 
 export {
