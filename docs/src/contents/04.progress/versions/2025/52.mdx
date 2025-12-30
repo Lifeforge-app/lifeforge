@@ -1,6 +1,7 @@
 import Commit from "../../components/Commit";
 import Code from "@/components/Code";
 import PR from "../../components/PR";
+import Issue from "../../components/Issue";
 import GithubUser from "@/components/GithubUser";
 import {Alert} from "lifeforge-ui";
 
@@ -142,3 +143,5 @@ import {Alert} from "lifeforge-ui";
 - <Commit hash="a9f55872bb2b3d41a4d2dfaf7da3d642cd38507f" />: Huge improvement to the README file for the project. Thanks <GithubUser username="lukashow" />~
 - <Commit hash="3d73e29b1d183382b9bc3231ae671137bed41a11" />: Added PR component for displaying pull request links.
 - <Commit hash="8ea871963dc76ab5e19ea3d73a1b9489befdbbe7" />: Reworked changelog page due to the rapid growth of changelog entries. Each version is now displayed in a collapsible card for better readability.
+- <Commit hash="bbfb3b0ab4fd5a7b066e6d404a033c64d56494e6" />, <Commit hash="6e0818b44e26957c9e7d51ae5041957b3a372414" />: Updated documentation for installation and configuration process to suit the latest changes in the codebase architecture. Closed <Issue number={58} />.
+- <Commit hash="11e44d3bdff78d647abd4549f82fb8b1fb177cba" />: Added `Issue` component for linking to GitHub issues in changelog.
