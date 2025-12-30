@@ -1,5 +1,5 @@
-import { generateMigrationsHandler } from '@/commands/db-commands'
-import { cleanupOldMigrations } from '@/commands/db-commands/utils/pocketbase-utils'
+import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
+import { cleanupOldMigrations } from '@/commands/db/utils/pocketbase-utils'
 import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 

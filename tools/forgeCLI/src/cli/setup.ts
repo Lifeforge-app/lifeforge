@@ -1,19 +1,11 @@
-import { program } from 'commander'
+import { Command, program } from 'commander'
 import fs from 'fs'
 import path from 'path'
 
-import { createChangelogHandler } from '../commands/changelog-commands'
-import * as dbHandlers from '../commands/db-commands'
-import { devHandler } from '../commands/dev-commands'
-import * as localeHandlers from '../commands/locale-commands'
-import * as moduleHandlers from '../commands/module-commands'
-import { createCommandHandler } from '../commands/project-commands'
-import {
-  PROJECTS_ALLOWED,
-  VALID_COMMANDS,
-  VALID_SERVICES
-} from '../constants/constants'
+import { LOG_LEVELS } from '@/constants/constants'
+
 import CLILoggingService from '../utils/logging'
+import { configureHelp } from './help'
 
 function getVersion(): string {
   try {
@@ -25,12 +17,27 @@ function getVersion(): string {
   }
 }
 
-const LOG_LEVELS = ['debug', 'info', 'warn', 'error', 'fatal'] as const
+async function setupCommands(program: Command): Promise<void> {
+  const commandsPath = path.resolve(
+    import.meta.dirname.split('src')[0],
+    'src/commands'
+  )
+
+  const commandIndexes = fs.globSync(`${commandsPath}/*/index.ts`)
+
+  for (const index of commandIndexes) {
+    const command = await import(index)
+
+    command.default(program)
+  }
+}
 
 /**
  * Sets up the CLI program with all commands
  */
-export function setupCLI(): void {
+export async function setupCLI(): Promise<void> {
+  configureHelp(program)
+
   program
     .name('bun forge')
     .description('Build and manage the LifeForge ecosystem')
@@ -49,157 +56,7 @@ export function setupCLI(): void {
       }
     })
 
-  setupProjectCommands()
-  setupDevCommand()
-  setupModulesCommand()
-  setupLocalesCommand()
-  setupDatabaseCommands()
-  setupChangelogCommand()
-}
-
-/**
- * Sets up project commands (build, types, lint)
- */
-function setupProjectCommands(): void {
-  for (const commandType of VALID_COMMANDS) {
-    program
-      .command(commandType)
-      .description(`Run ${commandType} for specified projects`)
-      .argument(
-        '[projects...]',
-        `Project names to run ${commandType} on. Leave blank for all projects. Available: ${Object.keys(PROJECTS_ALLOWED).join(', ')}`
-      )
-      .action(createCommandHandler(commandType))
-  }
-}
-
-/**
- * Sets up the dev command for starting services in development mode
- */
-function setupDevCommand(): void {
-  program
-    .command('dev')
-    .description('Start LifeForge services for development')
-    .argument(
-      '[service]',
-      `Service to start. Leave blank for starting db, server, and client. Available: ${VALID_SERVICES.join(', ')}`
-    )
-    .argument('[extraArgs...]', 'Extra arguments to pass to the service')
-    .allowUnknownOption()
-    .action(devHandler)
-}
-
-/**
- * Sets up commands for managing modules
- */
-function setupModulesCommand(): void {
-  const command = program
-    .command('modules')
-    .description('Manage LifeForge modules')
-
-  command
-    .command('list')
-    .description('List all installed modules')
-    .action(moduleHandlers.listModulesHandler)
-  command
-    .command('add')
-    .description('Download and install a module')
-    .argument('<module>', 'Module to add, e.g., lifeforge-app/wallet')
-    .action(moduleHandlers.addModuleHandler)
-  command
-    .command('update')
-    .description('Update an installed module')
-    .argument(
-      '[module]',
-      'Module to update, e.g., wallet (optional, will update all if not provided)'
-    )
-    .action(moduleHandlers.updateModuleHandler)
-  command
-    .command('remove')
-    .description('Remove an installed module')
-    .argument(
-      '[module]',
-      'Module to remove, e.g., wallet (optional, will show list if not provided)'
-    )
-    .action(moduleHandlers.removeModuleHandler)
-  command
-    .command('create')
-    .description('Create a new LifeForge module scaffold')
-    .argument(
-      '[moduleName]',
-      'Name of the module to create. Leave empty to prompt.'
-    )
-    .action(moduleHandlers.createModuleHandler)
-  command
-    .command('publish')
-    .description('Publish a LifeForge module to your GitHub account')
-    .argument('<module>', 'Unpublished installed module to publish')
-    .action(moduleHandlers.publishModuleHandler)
-}
-
-/**
- * Sets up commands for database operations
- */
-function setupDatabaseCommands(): void {
-  const command = program
-    .command('db')
-    .description('Manage database schemas and migrations')
-
-  command
-    .command('init')
-    .description('Initialize the PocketBase database')
-    .action(dbHandlers.initializeDatabaseHandler)
-
-  command
-    .command('pull')
-    .description('Pull schema from PocketBase into local schema files')
-    .argument('[module]', 'Optional module name to pull schema for')
-    .action(dbHandlers.generateSchemaHandler)
-
-  command
-    .command('push')
-    .description('Push local schemas to PocketBase as migrations')
-    .argument('[module]', 'Optional module name to push migrations for')
-    .action(dbHandlers.generateMigrationsHandler)
-}
-
-/**
- * Sets up commands for managing locales
- */
-function setupLocalesCommand(): void {
-  const command = program
-    .command('locales')
-    .description('Manage LifeForge language packs')
-
-  command
-    .command('list')
-    .description('List all installed language packs')
-    .action(localeHandlers.listLocalesHandler)
-
-  command
-    .command('add')
-    .description('Download and install a language pack')
-    .argument('<lang>', 'Language code, e.g., en, ms, zh-CN, zh-TW')
-    .action(localeHandlers.addLocaleHandler)
-
-  command
-    .command('remove')
-    .description('Remove an installed language pack')
-    .argument('<lang>', 'Language code to remove')
-    .action(localeHandlers.removeLocaleHandler)
-}
-
-function setupChangelogCommand(): void {
-  const command = program
-    .command('changelog')
-    .description('Generate changelog for LifeForge releases')
-
-  command
-    .command('create')
-    .description('Create a changelog file in the docs directory')
-    .argument('[year]', 'Year for the changelog, e.g., 2025')
-    .argument('[week]', 'Week number for the changelog, e.g., 42')
-    .action(createChangelogHandler)
+  await setupCommands(program)
 }
 
 /**
