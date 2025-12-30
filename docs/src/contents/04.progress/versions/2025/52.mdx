@@ -89,6 +89,21 @@ import {Alert} from "lifeforge-ui";
 - <Commit hash="cb1d6e95d8aea202d14fddca9cc9baf58f4fe21e" />, <Commit hash="d7707033d090774fcce8d76e714f3eea008d3253" />, <Commit hash="288759f3345db53ae2f70255fbb0daf354e542fd" />, <Commit hash="4e0fb0ed5f10b9b14aab29b515e31b62f22cd751" />: Enhanced server initialization process, user defined route and schema files are now stored as templates and copied to the appropriate directories during server setup to prevent pushing user files to the repository. Added root name check during server initialization to make sure the project folder name is 'lifeforge'.
 
 - <PR number="49" />: Added language support for Turkish (`tr`). Thanks <GithubUser username="tahabugracck" /> for the contribution!
+- <Commit hash="d2905efcce728936f38251a41a35194695ab7f06" />: The `disabled` field in the module manifest now supports dynamic definition of disabled state using a promise function that resolves to a boolean value. This allows for more complex logic to determine whether a module should be disabled or not.
+
+    ```ts
+    export const manifest: ModuleManifest = {
+      ...
+      disabled: async () => {
+        const isSomeConditionMet = await checkSomeCondition();
+        return isSomeConditionMet;
+      },
+      ...
+    };
+    ```
+
+- <Commit hash="d0f0b8675348e8a09be8bb77c15cedb8cea37220" />: Session id is removed from the response of the `verifySessionToken` API endpoint to reduce unnecessary data exposure.
+- <Commit hash="655883bba8615c9b700d825aa97dd11f6d40cbdb" />: Moved `EncryptionProvider` to `shared` package for better reusability across different codebases.
 
 ### 🎨 UI Components & Design System
 
@@ -115,6 +130,8 @@ import {Alert} from "lifeforge-ui";
 - <Commit hash="66e6edd5fea9f597ac45d3574a103a90db09c641" />: Added ability to show suggestions / search results in the `SearchInput` component. You can now provide the `children` prop to render custom suggestion items below the input field. See [the storybook](https://ui.lifeforge.dev/?path=/story/components-inputs-searchinput--with-search-suggestions) for more details. Credit to <GithubUser username="jiahuiiiii" /> for the suggestion!
 
     ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w52-6.webp)
+
+- <Commit hash="3633e0764cda2d08bd0d1df3309a259a7e2ace08" />, <Commit hash="8a3c883323526d5ff01cc3e9ab8b6b5232d17e61" />: Removed `WithOTP` and related components from `lifeforge-ui` package since email-based OTP authentication is no longer supported in LifeForge. Better implementation of OTP authentication will be added in the future.
     
 ### 🐛 Bug Fixes & Chores
 
@@ -145,3 +162,4 @@ import {Alert} from "lifeforge-ui";
 - <Commit hash="8ea871963dc76ab5e19ea3d73a1b9489befdbbe7" />: Reworked changelog page due to the rapid growth of changelog entries. Each version is now displayed in a collapsible card for better readability.
 - <Commit hash="bbfb3b0ab4fd5a7b066e6d404a033c64d56494e6" />, <Commit hash="6e0818b44e26957c9e7d51ae5041957b3a372414" />: Updated documentation for installation and configuration process to suit the latest changes in the codebase architecture. Closed <Issue number={58} />.
 - <Commit hash="11e44d3bdff78d647abd4549f82fb8b1fb177cba" />: Added `Issue` component for linking to GitHub issues in changelog.
+- <Commit hash="72d62894b4f076b1ba7da0f0aa45f3e27feebadf" />: Sunset the old localization manager (basically just completely removed it from the codebase) since it doesn't suit the new dynamic language pack loading engine.
