@@ -33,6 +33,7 @@ export function moveModuleToApps(config: ModuleInstallConfig): void {
 
 export function removeModuleDirectory(moduleName: string): void {
   const modulePath = `apps/${moduleName}`
+
   const moduleDir = path.join(process.cwd(), modulePath)
 
   if (!fs.existsSync(moduleDir)) {

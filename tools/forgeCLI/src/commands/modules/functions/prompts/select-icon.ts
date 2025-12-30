@@ -66,7 +66,9 @@ export default async function selectIcon(): Promise<string> {
 
     const spinner2 = ora('Fetching icons from Iconify...').start()
 
-    let icons: any[] = []
+    let icons: {
+      [key: string]: string[]
+    }[] = []
 
     try {
       icons = (
