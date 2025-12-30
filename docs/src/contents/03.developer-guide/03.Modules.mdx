@@ -16,6 +16,16 @@ LifeForge is your canvas, and modules are the vibrant colors that bring your cre
 
 All the modules in LifeForge's codebase is located in the `apps/` directory at the root of the repository. Each module is contained within its own subdirectory, following a consistent structure to ensure ease of development and maintenance.
 
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">manifest.ts</code></div>
+
+This file is the entry point for the module and contains the module's metadata and configuration. It defines the module's name, icon, routes, and other settings that are used by the LifeForge runtime to properly integrate the module. The manifest is located at the root of the module directory.
+
+<CustomLink text="Learn More" to="#client-manifest" />
+
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">tsconfig.json</code></div>
+
+This file is the TypeScript configuration for the module's manifest file. It extends the client's `tsconfig.json` and provides path aliases for importing module components. The configuration ensures that the `@` alias points to the client's entry point and `@/*` points to files within the client directory.
+
 ### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
 
 This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. Here, you can define the pages, components, and styles specific to your module. A UI library called `lifeforge-ui` is also provided in the `packages/` directory, which you can use to maintain a consistent design language across your module.
@@ -76,12 +86,12 @@ You can choose from several boilerplate templates to kickstart your module devel
 <section id="client-manifest">
 ## Client Manifest
 
-In each module of LifeForge, the client-side codebase contains a special file named `manifest.ts` at the root of the `client/` directory. This file serves as the entry point for the module's client application and defines the module's metadata and configuration.
+In each module of LifeForge, there is a special file named `manifest.ts` at the root of the module directory. This file serves as the entry point for the module and defines the module's metadata and configuration, including its routes, icons, and other settings.
 
 When creating a module using the `ForgeCLI`, a default manifest file will be generated for you with the basic structure and necessary fields. Here's an example of what the manifest file looks like:
 
 ```typescript
-// apps/[module]/client/manifest.ts
+// apps/[module]/manifest.ts
 import { lazy } from 'react'
 import type { ModuleConfig } from 'shared'
 
@@ -89,7 +99,7 @@ export default {
   name: 'My Module',
   icon: 'tabler:cube',
   routes: {
-    'my-module': lazy(() => import('@'))
+    '/': lazy(() => import('@'))
   },
   category: 'Utilities',
 } satisfies ModuleConfig
