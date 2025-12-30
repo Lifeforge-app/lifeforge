@@ -109,7 +109,6 @@ const create = forgeController
     body: z.object({
       keyId: z.string(),
       name: z.string(),
-      description: z.string(),
       icon: z.string(),
       key: z.string(),
       exposable: z.boolean()
@@ -150,7 +149,6 @@ const update = forgeController
     body: z.object({
       keyId: z.string(),
       name: z.string(),
-      description: z.string(),
       icon: z.string(),
       key: z.string(),
       exposable: z.boolean(),
