@@ -1,9 +1,9 @@
 import express from 'express'
 
+import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
-import traceRouteStack from '@functions/utils/traceRouteStack'
 
 import appRoutes from './app.routes'
 import coreRoutes from './core.routes'

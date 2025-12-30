@@ -1,35 +1,24 @@
-import dotenv from 'dotenv'
 import fs from 'fs'
 import { createServer } from 'node:http'
 
 import checkDB from '@functions/database/dbUtils'
 import { ensureKeysExist } from '@functions/encryption'
+import ensureCredentials from '@functions/initialization/ensureCredentials'
+import initRouteAndSchemaFiles from '@functions/initialization/initRouteAndSchemaFiles'
+import { LocaleService } from '@functions/initialization/localeService'
+import traceRouteStack from '@functions/initialization/traceRouteStack'
+import updateLocaleSubmodules from '@functions/initialization/updateLocaleSubmodules'
 import { LoggingService } from '@functions/logging/loggingService'
 import createSocketServer from '@functions/socketio/createSocketServer'
 import ensureRootName from '@functions/utils/ensureRootName'
-import initRouteAndSchemaFiles from '@functions/utils/initRouteAndSchemaFiles'
-import traceRouteStack from '@functions/utils/traceRouteStack'
 
 import app from './core/app'
 
 const PORT = process.env.PORT || 3636
 
-function loadEnv(): void {
-  dotenv.config({ path: '../env/.env.local' })
-}
-
 function ensureDirectories(): void {
   if (!fs.existsSync('./medium')) {
     fs.mkdirSync('./medium')
-  }
-}
-
-function ensureMasterKey(): void {
-  if (!process.env.MASTER_KEY) {
-    LoggingService.error(
-      'Please provide MASTER_KEY in your environment variables.'
-    )
-    process.exit(1)
   }
 }
 
@@ -43,12 +32,12 @@ function startServer(server: ReturnType<typeof createServer>): void {
 }
 
 async function main(): Promise<void> {
-  loadEnv()
+  updateLocaleSubmodules()
+  LocaleService.validateAndLoad()
   ensureRootName()
   initRouteAndSchemaFiles()
   ensureDirectories()
-  ensureKeysExist()
-  ensureMasterKey()
+  ensureCredentials()
   await checkDB()
 
   const server = createSocketServer(app)
