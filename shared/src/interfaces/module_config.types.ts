@@ -10,7 +10,7 @@ export interface ModuleConfig {
     | (() => React.ReactElement)
   >
   hasAI?: boolean
-  apiAccess?: { key: string; usage: string; required: boolean }[]
+  APIKeyAccess?: Record<string, { usage: string; required: boolean }>
   subsection?: {
     label: string
     icon: string
