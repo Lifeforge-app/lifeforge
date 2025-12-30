@@ -62,9 +62,13 @@ export function configureHelp(program: Command): void {
       // Usage
       output.push(formatSectionTitle('Usage'))
 
-      const usage = helper.commandUsage(cmd)
+      const usage = helper
+        .commandUsage(cmd)
+        .replace(/\bforge\b/, chalk.magenta('forge'))
+        .replace(/\[options\]/g, chalk.green('[options]'))
+        .replace(/\[command\]/g, chalk.cyan('[command]'))
 
-      output.push(`   ${chalk.dim('$')} ${chalk.white(usage)}`)
+      output.push(`   ${chalk.dim('$')} ${usage}`)
 
       // Description for subcommands
       if (cmd.parent && cmd.description()) {
