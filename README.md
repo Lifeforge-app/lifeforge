@@ -24,28 +24,28 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
   THIS PROJECT IS STILL IN EARLY DEVELOPMENT. FEATURES AND MODULES ARE SUBJECT TO CHANGE. PLEASE CHECK THE <a href="https://docs.lifeforge.dev/progress/changelog">DOCUMENTATION</a> FOR THE LATEST UPDATES.
 </h3>
 
-<center>
+## 📋 Table of Contents
+
+- [📋 Table of Contents](#-table-of-contents)
+- [🔥 Support the Author](#-support-the-author)
+- [🤔 The Problem](#-the-problem)
+- [✅ The Solution](#-the-solution)
+- [🧱 Modules](#-modules)
+- [🖥 Screenshots](#-screenshots)
+- [⌨️ Setup](#️-setup)
+- [Contributing](#contributing)
+  - [Contributing to Core](#contributing-to-core)
+  - [Creating Modules](#creating-modules)
+  - [Feature Requests \& Bug Reports](#feature-requests--bug-reports)
+  - [Translation](#translation)
+- [💡 Credits](#-credits)
+- [📄 License](#-license)
+
+## 🔥 Support the Author
+
 <a href="https://www.buymeacoffee.com/melvinchiah" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217">
 </a>
-</center>
-
-## 📋 Table of Contents
-
-- [The Problem](#-the-problem)
-- [The Solution](#-the-solution)
-- [Modules](#-modules)
-- [Example Modules](#-example-modules)
-- [Screenshots](#-screenshots)
-- [Setup](#️-setup)
-- [Contributing](#-contributing)
-	- [Contributing to Core](#-contributing-to-core)
-	- [Creating Modules](#-creating-modules)
-	- [Feature Requests & Bug Reports](#-feature-requests--bug-reports)
-	- [Translation](#-translation)
-
-- [Credits](#-credits)
-- [License](#-license)
 
 
 ## 🤔 The Problem
