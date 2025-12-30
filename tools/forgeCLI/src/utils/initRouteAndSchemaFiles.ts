@@ -3,7 +3,10 @@ import path from 'path'
 
 import CLILoggingService from './logging'
 
-const ROOT_DIR = path.resolve(import.meta.dirname.split('tools')[0], 'server')
+const ROOT_DIR = path.resolve(
+  import.meta.dirname.split('tools')[0],
+  'server/src/core'
+)
 
 export default function initRouteAndSchemaFiles(): {
   appRoutesPath: string
