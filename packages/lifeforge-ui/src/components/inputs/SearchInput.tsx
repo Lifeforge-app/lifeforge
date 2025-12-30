@@ -4,6 +4,9 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDivSize } from 'shared'
+
+import { Card } from '@components/layout'
 
 import Button from './Button'
 
@@ -26,6 +29,21 @@ interface SearchInputProps {
   namespace?: string
   /** Optional debounce delay in milliseconds. When set, the onChange callback will be debounced by this amount. */
   debounceMs?: number
+  /** Policy for showing children components.
+   * - "always": Always show children components below the search input.
+   * - "input-focus": Only show children components when the search input is focused.
+   * - "query-not-empty": Only show children components when the search query is not empty.
+   * - "input-focus-query-not-empty": Show children components when the search input is focused and the query is not empty.
+   *
+   * @default "query-not-empty"
+   */
+  showChildrenPolicy?:
+    | 'always'
+    | 'input-focus'
+    | 'query-not-empty'
+    | 'input-focus-query-not-empty'
+  /** Child components to render below the search input, typically used for displaying search results or suggestions. */
+  children?: React.ReactNode
 }
 
 /**
@@ -40,7 +58,9 @@ function SearchInput({
   onKeyUp,
   className,
   namespace,
-  debounceMs
+  debounceMs,
+  showChildrenPolicy = 'query-not-empty',
+  children
 }: SearchInputProps) {
   const { t } = useTranslation([
     'common.misc',
@@ -49,6 +69,8 @@ function SearchInput({
 
   // Internal state for immediate input feedback when debouncing
   const [internalValue, setInternalValue] = useState(value)
+
+  const [isFocused, setIsFocused] = useState(false)
 
   const debouncedValue = useDebounce(internalValue, debounceMs ?? 0)
 
@@ -90,65 +112,115 @@ function SearchInput({
     onChange('')
   }
 
+  const shouldShowChildren = (() => {
+    switch (showChildrenPolicy) {
+      case 'always':
+        return true
+      case 'input-focus':
+        return isFocused
+      case 'query-not-empty':
+        return displayValue.length > 0
+      case 'input-focus-query-not-empty':
+        return isFocused && displayValue.length > 0
+    }
+  })()
+
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const childrenRef = useRef<HTMLDivElement>(null)
+
+  const { height: childrenHeight } = useDivSize(childrenRef)
+
+  const handleBlur = (e: React.FocusEvent) => {
+    // Check if the new focus target is still within our container
+    if (
+      containerRef.current &&
+      !containerRef.current.contains(e.relatedTarget as Node)
+    ) {
+      setIsFocused(false)
+    }
+  }
+
   return (
-    <search
-      className={clsx(
-        'shadow-custom border-bg-500/20 component-bg-with-hover relative flex min-h-14 w-full cursor-text items-center gap-3 rounded-lg p-4 transition-all in-[.bordered]:border-2',
-        className
-      )}
-      onClick={e => {
-        e.currentTarget.querySelector('input')?.focus()
-      }}
+    <div
+      ref={containerRef}
+      className="relative w-full"
+      onBlur={handleBlur}
+      onFocus={() => setIsFocused(true)}
     >
-      <Icon className="text-bg-500 size-5 shrink-0" icon={icon} />
-      <input
-        autoComplete="one-time-code"
-        autoCorrect="off"
+      <search
         className={clsx(
-          'caret-custom-500 placeholder:text-bg-500 w-full bg-transparent',
-          actionButtonProps ? 'pr-20' : 'pr-10'
+          'shadow-custom border-bg-500/20 component-bg-with-hover relative flex min-h-14 w-full cursor-text items-center gap-3 rounded-lg p-4 transition-all in-[.bordered]:border-2',
+          className
         )}
-        data-form-type="other"
-        data-lpignore="true"
-        placeholder={t([`search`, `Search ${searchTarget}`], {
-          item: t([
-            `${namespace}:items.${_.camelCase(searchTarget)}`,
-            `${namespace}:items.${searchTarget}`,
-            `${namespace}:${_.camelCase(searchTarget)}`,
-            `${namespace}:${searchTarget}`,
-            `common.misc:items.${_.camelCase(searchTarget)}`,
-            `common.misc:items.${searchTarget}`,
-            `common.misc:${_.camelCase(searchTarget)}`,
-            `common.misc:${searchTarget}`,
-            searchTarget
-          ])
-        })}
-        type="text"
-        value={displayValue}
-        onChange={e => {
-          handleChange(e.target.value)
+        onClick={e => {
+          e.currentTarget.querySelector('input')?.focus()
         }}
-        onKeyUp={onKeyUp}
-      />
-      <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-2">
-        <Button
+      >
+        <Icon className="text-bg-500 size-5 shrink-0" icon={icon} />
+        <input
+          autoComplete="one-time-code"
+          autoCorrect="off"
           className={clsx(
-            'size-8 p-0',
-            displayValue ? 'visible opacity-100' : 'invisible opacity-0'
+            'caret-custom-500 placeholder:text-bg-500 w-full bg-transparent',
+            actionButtonProps ? 'pr-20' : 'pr-10'
           )}
-          icon="tabler:x"
-          variant="plain"
-          onClick={handleClear}
+          data-form-type="other"
+          data-lpignore="true"
+          placeholder={t([`search`, `Search ${searchTarget}`], {
+            item: t([
+              `${namespace}:items.${_.camelCase(searchTarget)}`,
+              `${namespace}:items.${searchTarget}`,
+              `${namespace}:${_.camelCase(searchTarget)}`,
+              `${namespace}:${searchTarget}`,
+              `common.misc:items.${_.camelCase(searchTarget)}`,
+              `common.misc:items.${searchTarget}`,
+              `common.misc:${_.camelCase(searchTarget)}`,
+              `common.misc:${searchTarget}`,
+              searchTarget
+            ])
+          })}
+          type="text"
+          value={displayValue}
+          onChange={e => {
+            handleChange(e.target.value)
+          }}
+          onKeyUp={onKeyUp}
         />
-        {actionButtonProps && (
+        <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-2">
           <Button
-            {...actionButtonProps}
-            className={clsx('size-8 p-0', actionButtonProps.className)}
-            variant={actionButtonProps.variant || 'plain'}
+            className={clsx(
+              'size-8 p-0',
+              displayValue ? 'visible opacity-100' : 'invisible opacity-0'
+            )}
+            icon="tabler:x"
+            variant="plain"
+            onClick={handleClear}
           />
+          {actionButtonProps && (
+            <Button
+              {...actionButtonProps}
+              className={clsx('size-8 p-0', actionButtonProps.className)}
+              variant={actionButtonProps.variant || 'plain'}
+            />
+          )}
+        </div>
+      </search>
+      <Card
+        className={clsx(
+          'absolute top-2 w-full overflow-hidden p-0! transition-all',
+          shouldShowChildren
+            ? 'visible opacity-100'
+            : 'pointer-events-none invisible opacity-0'
         )}
-      </div>
-    </search>
+        style={{ height: children && shouldShowChildren ? childrenHeight : 0 }}
+        onMouseDown={e => e.preventDefault()}
+      >
+        <div ref={childrenRef} className="p-4">
+          {children}
+        </div>
+      </Card>
+    </div>
   )
 }
 
