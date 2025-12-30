@@ -1,7 +1,7 @@
 import fs from 'fs'
 import _ from 'lodash'
 
-import { runDatabaseMigrations } from '@/commands/db-commands/functions/database-initialization/migrations'
+import { runDatabaseMigrations } from '@/commands/db/functions/database-initialization/migrations'
 import CLILoggingService from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 

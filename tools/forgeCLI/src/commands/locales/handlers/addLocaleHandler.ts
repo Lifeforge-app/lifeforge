@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import fs from 'fs'
 
-import { updateGitSubmodules } from '@/commands/module-commands/functions'
+import { updateGitSubmodules } from '@/commands/modules/functions'
 import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 import getPBInstance from '@/utils/pocketbase'

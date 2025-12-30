@@ -1,8 +1,9 @@
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import fs from 'fs'
+import path from 'path'
 
-import CLILoggingService from '../utils/logging'
+import CLILoggingService from '@/utils/logging'
 
 dayjs.extend(weekOfYear)
 
@@ -18,9 +19,12 @@ import Code from "@/components/Code";
 ### 📖 Documentation & Tooling
 `
 
-const CHANGELOG_PATH = 'docs/src/contents/04.progress/versions'
+const CHANGELOG_PATH = path.resolve(
+  import.meta.dirname.split('tools')[0],
+  'docs/src/contents/04.progress/versions'
+)
 
-export function createChangelogHandler(year?: string, week?: string) {
+export default function createChangelogHandler(year?: string, week?: string) {
   const targetYear = Number(year) || dayjs().year()
 
   const currentWeek = Number(week) || dayjs().week()
