@@ -5,10 +5,11 @@ import * as t from '@babel/types'
 import fs from 'fs'
 import path from 'path'
 
+import initRouteAndSchemaFiles from '@/utils/initRouteAndSchemaFiles'
 import CLILoggingService from '@/utils/logging'
 
 import { createDynamicImport } from './ast-utils'
-import { AST_GENERATION_OPTIONS, SERVER_CONFIG } from './constants'
+import { AST_GENERATION_OPTIONS } from './constants'
 
 /**
  * Route injection utilities for server configuration
@@ -18,12 +19,10 @@ import { AST_GENERATION_OPTIONS, SERVER_CONFIG } from './constants'
  * Injects a module's server route import into the app.routes.ts file
  */
 export function injectModuleRoute(moduleName: string): void {
-  const routesConfigPath = path.resolve(SERVER_CONFIG.ROUTES_FILE)
+  const { appRoutesPath } = initRouteAndSchemaFiles()
 
-  if (!fs.existsSync(routesConfigPath)) {
-    CLILoggingService.warn(
-      `Routes config file not found at ${routesConfigPath}`
-    )
+  if (!fs.existsSync(appRoutesPath)) {
+    CLILoggingService.warn(`Routes config file not found at ${appRoutesPath}`)
 
     return
   }
@@ -38,7 +37,7 @@ export function injectModuleRoute(moduleName: string): void {
     return
   }
 
-  const routesContent = fs.readFileSync(routesConfigPath, 'utf8')
+  const routesContent = fs.readFileSync(appRoutesPath, 'utf8')
 
   try {
     const ast = parse(routesContent, {
@@ -84,10 +83,10 @@ export function injectModuleRoute(moduleName: string): void {
 
     const { code } = generate(ast, AST_GENERATION_OPTIONS)
 
-    fs.writeFileSync(routesConfigPath, code)
+    fs.writeFileSync(appRoutesPath, code)
 
     CLILoggingService.info(
-      `Injected route for module "${moduleName}" into ${SERVER_CONFIG.ROUTES_FILE}`
+      `Injected route for module "${moduleName}" into ${appRoutesPath}`
     )
   } catch (error) {
     CLILoggingService.error(
@@ -100,17 +99,15 @@ export function injectModuleRoute(moduleName: string): void {
  * Removes a module's server route from the app.routes.ts file
  */
 export function removeModuleRoute(moduleName: string): void {
-  const routesConfigPath = path.resolve(SERVER_CONFIG.ROUTES_FILE)
+  const { appRoutesPath } = initRouteAndSchemaFiles()
 
-  if (!fs.existsSync(routesConfigPath)) {
-    CLILoggingService.warn(
-      `Routes config file not found at ${routesConfigPath}`
-    )
+  if (!fs.existsSync(appRoutesPath)) {
+    CLILoggingService.warn(`Routes config file not found at ${appRoutesPath}`)
 
     return
   }
 
-  const routesContent = fs.readFileSync(routesConfigPath, 'utf8')
+  const routesContent = fs.readFileSync(appRoutesPath, 'utf8')
 
   try {
     const ast = parse(routesContent, {
@@ -156,14 +153,14 @@ export function removeModuleRoute(moduleName: string): void {
     if (modified) {
       const { code } = generate(ast, AST_GENERATION_OPTIONS)
 
-      fs.writeFileSync(routesConfigPath, code)
+      fs.writeFileSync(appRoutesPath, code)
 
       CLILoggingService.info(
-        `Removed route for module "${moduleName}" from ${SERVER_CONFIG.ROUTES_FILE}`
+        `Removed route for module "${moduleName}" from ${appRoutesPath}`
       )
     } else {
       CLILoggingService.info(
-        `No route found for module "${moduleName}" in ${SERVER_CONFIG.ROUTES_FILE}`
+        `No route found for module "${moduleName}" in ${appRoutesPath}`
       )
     }
   } catch (error) {

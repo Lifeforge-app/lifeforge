@@ -5,9 +5,10 @@ import * as t from '@babel/types'
 import fs from 'fs'
 import path from 'path'
 
+import initRouteAndSchemaFiles from '@/utils/initRouteAndSchemaFiles'
 import CLILoggingService from '@/utils/logging'
 
-import { AST_GENERATION_OPTIONS, SERVER_CONFIG } from './constants'
+import { AST_GENERATION_OPTIONS } from './constants'
 
 /**
  * Schema injection utilities for server configuration
@@ -17,12 +18,10 @@ import { AST_GENERATION_OPTIONS, SERVER_CONFIG } from './constants'
  * Injects a module's schema import into the schema.ts file
  */
 export function injectModuleSchema(moduleName: string): void {
-  const schemaConfigPath = path.resolve(SERVER_CONFIG.SCHEMA_FILE)
+  const { schemaPath } = initRouteAndSchemaFiles()
 
-  if (!fs.existsSync(schemaConfigPath)) {
-    CLILoggingService.warn(
-      `Schema config file not found at ${schemaConfigPath}`
-    )
+  if (!fs.existsSync(schemaPath)) {
+    CLILoggingService.warn(`Schema config file not found at ${schemaPath}`)
 
     return
   }
@@ -38,7 +37,7 @@ export function injectModuleSchema(moduleName: string): void {
     return
   }
 
-  const schemaContent = fs.readFileSync(schemaConfigPath, 'utf8')
+  const schemaContent = fs.readFileSync(schemaPath, 'utf8')
 
   try {
     const ast = parse(schemaContent, {
@@ -98,10 +97,10 @@ export function injectModuleSchema(moduleName: string): void {
 
     const { code } = generate(ast, AST_GENERATION_OPTIONS)
 
-    fs.writeFileSync(schemaConfigPath, code)
+    fs.writeFileSync(schemaPath, code)
 
     CLILoggingService.info(
-      `Injected schema for module "${moduleName}" into ${SERVER_CONFIG.SCHEMA_FILE}`
+      `Injected schema for module "${moduleName}" into ${schemaPath}`
     )
   } catch (error) {
     CLILoggingService.error(
@@ -114,17 +113,15 @@ export function injectModuleSchema(moduleName: string): void {
  * Removes a module's schema from the schema.ts file
  */
 export function removeModuleSchema(moduleName: string): void {
-  const schemaConfigPath = path.resolve(SERVER_CONFIG.SCHEMA_FILE)
+  const { schemaPath } = initRouteAndSchemaFiles()
 
-  if (!fs.existsSync(schemaConfigPath)) {
-    CLILoggingService.warn(
-      `Schema config file not found at ${schemaConfigPath}`
-    )
+  if (!fs.existsSync(schemaPath)) {
+    CLILoggingService.warn(`Schema config file not found at ${schemaPath}`)
 
     return
   }
 
-  const schemaContent = fs.readFileSync(schemaConfigPath, 'utf8')
+  const schemaContent = fs.readFileSync(schemaPath, 'utf8')
 
   try {
     const ast = parse(schemaContent, {
@@ -183,14 +180,14 @@ export function removeModuleSchema(moduleName: string): void {
     if (modified) {
       const { code } = generate(ast, AST_GENERATION_OPTIONS)
 
-      fs.writeFileSync(schemaConfigPath, code)
+      fs.writeFileSync(schemaPath, code)
 
       CLILoggingService.info(
-        `Removed schema for module "${moduleName}" from ${SERVER_CONFIG.SCHEMA_FILE}`
+        `Removed schema for module "${moduleName}" from ${schemaPath}`
       )
     } else {
       CLILoggingService.info(
-        `No schema found for module "${moduleName}" in ${SERVER_CONFIG.SCHEMA_FILE}`
+        `No schema found for module "${moduleName}" in ${schemaPath}`
       )
     }
   } catch (error) {
