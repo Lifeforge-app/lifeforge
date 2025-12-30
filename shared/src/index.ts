@@ -27,6 +27,7 @@ export { default as ToastProvider } from './providers/ToastProvider'
 export { default as SSOAuthProvider } from './providers/SSOAuthProvider'
 export { default as SocketProvider } from './providers/SocketProvider'
 export { default as NuqsProvider } from './providers/NuqsProvider'
+export { default as EncryptionProvider } from './providers/EncryptionProvider'
 export { type SocketEvent, useSocketContext } from './providers/SocketProvider'
 
 // Useful hooks
@@ -36,21 +37,6 @@ export { default as useDivSize } from './hooks/useDivSize'
 // Useful utility functions
 export { default as anyColorToHex } from './utils/anyColorToHex'
 export { default as forceDown } from './utils/forceDown'
-export {
-  encrypt,
-  decrypt,
-  setServerPublicKey,
-  hasServerPublicKey,
-  clearServerPublicKey,
-  initializeEncryption,
-  createEncryptionSession,
-  encryptRequest,
-  decryptResponse,
-  isEncryptedResponse,
-  type EncryptedPayload,
-  type EncryptedResponse,
-  type EncryptionConfig
-} from './utils/encryption'
 export { default as getFormFileFieldInitialData } from './utils/getFormFileFieldInitialData'
 export { default as getBrowserInfo } from './utils/getBrowserInfo'
 

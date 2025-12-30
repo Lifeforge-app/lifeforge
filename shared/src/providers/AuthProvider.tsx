@@ -96,11 +96,6 @@ export default function AuthProvider({
           return { success: false, userData: null }
         }
 
-        // Update session if refreshed
-        if (verifyData.data.session) {
-          localStorage.setItem('session', verifyData.data.session)
-        }
-
         // Step 2: Fetch user data (encrypted endpoint)
         const userData = await forgeAPI.user.auth.getUserData.query()
 
@@ -131,6 +126,7 @@ export default function AuthProvider({
 
           // Fetch user data separately via encrypted endpoint
           const userData = await forgeAPI.user.auth.getUserData.query()
+
           setUserData(userData)
           setAuth(true)
 
@@ -180,6 +176,7 @@ export default function AuthProvider({
 
           // Fetch user data separately via encrypted endpoint
           const userData = await forgeAPI.user.auth.getUserData.query()
+
           setUserData(userData)
           setAuth(true)
 
