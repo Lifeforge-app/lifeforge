@@ -24,7 +24,7 @@ function SSOAuthProvider({
       // First verify session token (unencrypted)
       const response = await forgeAPI.user.auth.verifySessionToken.mutateRaw({})
 
-      if (response.state !== 'success') {
+      if (!response) {
         throw new Error('Invalid session')
       }
 

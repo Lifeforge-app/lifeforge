@@ -17,7 +17,7 @@ export interface ModuleConfig {
     path: string
   }[]
   hidden?: boolean
-  disabled?: boolean
+  disabled?: boolean | (() => Promise<boolean>)
   category?: string
   clearQueryOnUnmount?: boolean
 }
