@@ -1,39 +1,36 @@
 import { useQuery } from '@tanstack/react-query'
 import { Button, Card, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'shared'
+import { Link, type ModuleConfig } from 'shared'
 
 import forgeAPI from '@/utils/forgeAPI'
 
 function APIKeyStatusProvider({
-  apiKeys,
+  APIKeyAccess,
   children
 }: {
-  apiKeys: {
-    key: string
-    required: boolean
-    usage: string
-  }[]
+  APIKeyAccess: ModuleConfig['APIKeyAccess']
   children: React.ReactNode
 }) {
   const { t } = useTranslation('common.apiKeys')
 
+  const requiredAPIKeys = Object.entries(APIKeyAccess ?? {})
+    .filter(([_, value]) => value.required)
+    .map(([key]) => key)
+
   const hasRequiredAPIKeysQuery = useQuery(
     forgeAPI.apiKeys.entries.checkKeys
       .input({
-        keys: apiKeys
-          .filter(key => key.required)
-          .map(key => key.key)
-          .join(',')
+        keys: requiredAPIKeys.join(',')
       })
       .queryOptions({
-        enabled: apiKeys.length > 0
+        enabled: requiredAPIKeys.length > 0
       })
   )
 
   return (
     <>
-      {apiKeys.length > 0 ? (
+      {requiredAPIKeys.length > 0 ? (
         <WithQuery query={hasRequiredAPIKeysQuery}>
           {hasRequiredAPIKeys =>
             hasRequiredAPIKeys ? (
@@ -48,10 +45,15 @@ function APIKeyStatusProvider({
                       <p className="text-bg-400 dark:text-bg-600 text-center text-lg">
                         {t('missing.description')}
                       </p>
-                      {apiKeys.map((item, index) => (
+                      {requiredAPIKeys.map((key, index) => (
                         <Card key={index} className="w-full">
-                          <code className="text-xl">{item.key}</code>
-                          <p className="text-bg-500 mt-1">{item.usage}</p>
+                          <code className="text-xl">{key}</code>
+                          <p className="text-bg-500 mt-1">
+                            {
+                              APIKeyAccess?.[key as keyof typeof APIKeyAccess]
+                                .usage
+                            }
+                          </p>
                         </Card>
                       ))}
                       <Button

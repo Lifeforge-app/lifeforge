@@ -16,8 +16,8 @@ function ModulesRequiredListModal({
 }) {
   const { t } = useTranslation('common.apiKeys')
 
-  const modulesRequired = ROUTES.flatMap(cat => cat.items).filter(item =>
-    item.apiAccess?.some(access => access.key === keyId)
+  const modulesRequired = ROUTES.flatMap(cat => cat.items).filter(
+    item => item.APIKeyAccess?.[keyId]
   )
 
   return (
@@ -42,11 +42,10 @@ function ModulesRequiredListModal({
                 {module.name}
               </h3>
               <p className="text-bg-500 mt-1">
-                {module.apiAccess?.find(access => access.key === keyId)?.usage}
+                {module.APIKeyAccess?.[keyId].usage}
               </p>
             </div>
-            {module.apiAccess?.find(access => access.key === keyId)
-              ?.required ? (
+            {module.APIKeyAccess?.[keyId].required ? (
               <TagChip
                 color={COLORS.red['500']}
                 icon="tabler:alert-circle"
