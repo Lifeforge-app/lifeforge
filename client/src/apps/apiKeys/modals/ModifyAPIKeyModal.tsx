@@ -37,7 +37,6 @@ function ModifyAPIKeyModal({
   const { formProps } = defineForm<{
     keyId: string
     name: string
-    description: string
     icon: string
     key: string
     exposable: boolean
@@ -52,7 +51,6 @@ function ModifyAPIKeyModal({
     .typesMap({
       keyId: 'text',
       name: 'text',
-      description: 'text',
       icon: 'icon',
       overrideKey: 'checkbox',
       key: 'text',
@@ -70,12 +68,6 @@ function ModifyAPIKeyModal({
         placeholder: 'My API Key',
         label: 'Key Name',
         icon: 'tabler:key'
-      },
-      description: {
-        required: true,
-        placeholder: 'A short description of this key',
-        label: 'Key Description',
-        icon: 'tabler:info-circle'
       },
       icon: {
         required: true,
@@ -106,7 +98,6 @@ function ModifyAPIKeyModal({
     .initialData({
       keyId: initialData?.keyId || '',
       name: initialData?.name || '',
-      description: initialData?.description || '',
       icon: initialData?.icon || '',
       key: '',
       exposable: initialData?.exposable || false
