@@ -1,3 +1,5 @@
+import fs from 'fs'
+
 import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 
@@ -74,7 +76,6 @@ export function replaceRepoWithSubmodule(
   const modulePath = `apps/${moduleName}`
 
   try {
-    const fs = require('fs')
     fs.rmSync(modulePath, { recursive: true, force: true })
     executeCommand(`bun forge modules add ${repoLink}`)
   } catch (error) {

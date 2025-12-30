@@ -1,4 +1,3 @@
-import { TOOLS_ALLOWED } from '@/constants/constants'
 import CLILoggingService from '@/utils/logging'
 
 import { PROJECTS } from '../constants/projects'

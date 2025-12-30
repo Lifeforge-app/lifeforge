@@ -10,7 +10,12 @@ import tseslint from 'typescript-eslint'
 
 export default [
   {
-    ignores: ['**/*.config.js', '**/dist/', 'dist/']
+    ignores: [
+      '**/*.config.js',
+      '**/dist/',
+      'dist/',
+      'tools/forgeCLI/src/templates/**'
+    ]
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],

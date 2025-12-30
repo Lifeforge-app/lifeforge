@@ -2,6 +2,12 @@ import generate from '@babel/generator'
 import { parse } from '@babel/parser'
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
+import type {
+  ObjectExpression,
+  ObjectMethod,
+  ObjectProperty,
+  SpreadElement
+} from '@babel/types'
 import fs from 'fs'
 import path from 'path'
 
@@ -45,7 +51,7 @@ export function injectModuleSchema(moduleName: string): void {
       plugins: ['typescript']
     })
 
-    let schemasObjectPath: any = null
+    let schemasObject: ObjectExpression | null = null
 
     // Find the SCHEMAS object
     traverse(ast, {
@@ -54,12 +60,14 @@ export function injectModuleSchema(moduleName: string): void {
           t.isIdentifier(path.node.id, { name: 'SCHEMAS' }) &&
           t.isObjectExpression(path.node.init)
         ) {
-          schemasObjectPath = path.get('init')
+          schemasObject = path.node.init
         }
       }
     })
 
-    if (schemasObjectPath && t.isObjectExpression(schemasObjectPath.node)) {
+    if (schemasObject) {
+      const obj = schemasObject as ObjectExpression
+
       // Convert module name to snake_case for the key
       const snakeCaseModuleName = moduleName
         .replace(/([A-Z])/g, '_$1')
@@ -67,8 +75,8 @@ export function injectModuleSchema(moduleName: string): void {
         .replace(/^_/, '')
 
       // Check if module is already imported
-      const hasExistingProperty = schemasObjectPath.node.properties.some(
-        (prop: any) =>
+      const hasExistingProperty = obj.properties.some(
+        (prop: ObjectMethod | ObjectProperty | SpreadElement) =>
           t.isObjectProperty(prop) &&
           t.isIdentifier(prop.key) &&
           prop.key.name === snakeCaseModuleName
@@ -91,7 +99,7 @@ export function injectModuleSchema(moduleName: string): void {
           memberExpression
         )
 
-        schemasObjectPath.node.properties.push(newProperty)
+        obj.properties.push(newProperty)
       }
     }
 
@@ -149,7 +157,7 @@ export function removeModuleSchema(moduleName: string): void {
             .replace(/^_/, '')
 
           objectExpression.properties = objectExpression.properties.filter(
-            (prop: any) => {
+            prop => {
               if (
                 t.isObjectProperty(prop) &&
                 t.isIdentifier(prop.key) &&

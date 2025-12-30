@@ -9,7 +9,7 @@ import CLILoggingService from './logging'
 import getPBInstance from './pocketbase'
 import { zodTextFormat } from './zodResponseFormat'
 
-export interface FetchAIParams<T extends z.ZodType<any>> {
+export interface FetchAIParams<T extends z.ZodTypeAny> {
   model: string
   messages: ResponseInput
   structure: T
@@ -42,7 +42,7 @@ export async function getAPIKey(): Promise<string | null> {
   }
 }
 
-export async function fetchAI<T extends z.ZodType<any>>({
+export async function fetchAI<T extends z.ZodTypeAny>({
   model,
   messages,
   structure
