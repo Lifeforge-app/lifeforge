@@ -150,7 +150,10 @@ async function getConcurrentServices(): Promise<ConcurrentServiceConfig[]> {
 /**
  * Starts a single service based on its configuration
  */
-async function startSingleService(service: string): Promise<void> {
+async function startSingleService(
+  service: string,
+  extraArgs: string[] = []
+): Promise<void> {
   // Handle core services
   if (service in SERVICE_COMMANDS) {
     const config = SERVICE_COMMANDS[service]
@@ -166,9 +169,7 @@ async function startSingleService(service: string): Promise<void> {
 
     const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
 
-    executeCommand(command, {
-      cwd
-    })
+    executeCommand(command, { cwd }, extraArgs)
 
     return
   }
@@ -178,7 +179,7 @@ async function startSingleService(service: string): Promise<void> {
     const projectPath =
       PROJECTS_ALLOWED[service as keyof typeof PROJECTS_ALLOWED]
 
-    executeCommand(`cd ${projectPath} && bun run dev`)
+    executeCommand(`cd ${projectPath} && bun run dev`, {}, extraArgs)
 
     return
   }
@@ -228,7 +229,7 @@ function validateService(service: string): void {
 /**
  * Main development command handler
  */
-export function devHandler(service: string): void {
+export function devHandler(service: string, extraArgs: string[] = []): void {
   validateService(service)
 
   if (!service) {
@@ -239,8 +240,12 @@ export function devHandler(service: string): void {
 
   CLILoggingService.progress(`Starting ${service} service`)
 
+  if (extraArgs.length > 0) {
+    CLILoggingService.debug(`Extra arguments: ${extraArgs.join(' ')}`)
+  }
+
   try {
-    startSingleService(service)
+    startSingleService(service, extraArgs)
   } catch (error) {
     CLILoggingService.actionableError(
       `Failed to start ${service} service`,
