@@ -28,8 +28,8 @@ function GithubUser({ username }: { username: string }) {
   }, [username])
 
   return (
-    <div className="inline-flex translate-y-[4px] items-center gap-2">
-      <div className="bg-bg-200 dark:bg-bg-800 relative h-6 w-6">
+    <div className="inline-flex translate-y-[5.5px] items-center gap-2">
+      <div className="bg-bg-200 dark:bg-bg-800 relative h-6 w-6 rounded-full">
         {avatarUrl ? (
           <img
             alt={`${username}'s avatar`}
