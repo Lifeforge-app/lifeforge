@@ -72,13 +72,11 @@ export async function validateCallerAccess(
 
   const module = await import(manifestPath)
 
-  if (!module.default.apiAccess) {
+  if (!module.default.APIKeyAccess) {
     throw new Error(`API access for ${callerModule.id} not found`)
   }
 
-  const access = module.default.apiAccess.find(
-    (access: { key: string }) => access.key === id
-  )
+  const access = module.default.APIKeyAccess[id]
 
   if (!access) {
     throw new Error(`API access for ${id} not found`)

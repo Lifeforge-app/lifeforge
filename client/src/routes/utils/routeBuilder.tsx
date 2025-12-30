@@ -10,11 +10,7 @@ interface RouteBuilderOptions {
   routes: ModuleConfig['routes']
   loadingMessage: string
   isNested?: boolean
-  apiKeys?: {
-    key: string
-    required: boolean
-    usage: string
-  }[]
+  APIKeyAccess?: ModuleConfig['APIKeyAccess']
   config: {
     title: string
     icon: string
@@ -27,7 +23,7 @@ interface RouteBuilderOptions {
  */
 export function buildChildRoutes({
   routes,
-  apiKeys = [],
+  APIKeyAccess,
   loadingMessage = 'loadingModule',
   config
 }: RouteBuilderOptions): RouteObject[] {
@@ -39,7 +35,7 @@ export function buildChildRoutes({
     return {
       path,
       element: (
-        <APIKeyStatusProvider apiKeys={apiKeys}>
+        <APIKeyStatusProvider APIKeyAccess={APIKeyAccess}>
           <Suspense
             key={`route-${path}`}
             fallback={<LoadingScreen message={loadingMessage} />}
@@ -64,7 +60,7 @@ export function createModuleRoute(
 ): RouteObject | RouteObject[] {
   const routeConfig = {
     routes: item.routes,
-    apiKeys: item.apiAccess,
+    APIKeyAccess: item.APIKeyAccess,
     config: {
       title: item.name,
       icon: item.icon,

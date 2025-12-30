@@ -50,8 +50,8 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
       })
   )
 
-  const modulesRequiredCount = ROUTES.flatMap(cat => cat.items).filter(item =>
-    item.apiAccess?.some(access => access.key === entry.keyId)
+  const modulesRequiredCount = ROUTES.flatMap(cat => cat.items).filter(
+    item => item.APIKeyAccess?.[entry.keyId]
   ).length
 
   async function copyKey() {
