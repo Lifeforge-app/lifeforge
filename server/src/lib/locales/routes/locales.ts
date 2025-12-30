@@ -3,16 +3,13 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
+import {
+  ALLOWED_NAMESPACE,
+  LocaleService
+} from '@functions/initialization/localeService'
 import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-
-import {
-  ALLOWED_LANG,
-  ALLOWED_NAMESPACE,
-  LANG_MANIFESTS,
-  SYSTEM_LOCALES
-} from '../constants/locales'
 
 export const allApps = fs
   .globSync([
@@ -36,7 +33,7 @@ const listLanguages = forgeController
   })
   .input({})
   .callback(async () => {
-    return LANG_MANIFESTS as unknown as {
+    return LocaleService.getLangManifests() as unknown as {
       name: string
       alternative?: string[]
       icon: string
@@ -55,13 +52,15 @@ const getLocale = forgeController
   })
   .input({
     query: z.object({
-      lang: z.enum(ALLOWED_LANG.flat()),
+      lang: z.string(),
       namespace: z.enum(ALLOWED_NAMESPACE),
       subnamespace: z.string()
     })
   })
   .callback(async ({ query: { lang, namespace, subnamespace } }) => {
-    const finalLang = ALLOWED_LANG.find(e => e.includes(lang))?.[0]
+    const finalLang = LocaleService.getAllowedLang().find(e =>
+      e.includes(lang)
+    )?.[0]
 
     if (!finalLang) {
       throw new ClientError(`Language ${lang} does not exist`, 404)
@@ -87,11 +86,11 @@ const getLocale = forgeController
         fs.readFileSync(`${target}/locales/${finalLang}.json`, 'utf-8')
       )
     } else {
-      if (!SYSTEM_LOCALES[finalLang][subnamespace]) {
+      if (!LocaleService.getSystemLocales()[finalLang][subnamespace]) {
         return {}
       }
 
-      data = SYSTEM_LOCALES[finalLang][subnamespace]
+      data = LocaleService.getSystemLocales()[finalLang][subnamespace]
     }
 
     if (namespace === 'common' && subnamespace === 'sidebar') {
@@ -118,7 +117,7 @@ const getLocale = forgeController
             .filter(e => e.length > 0)
         ),
         ...Object.fromEntries(
-          Object.entries(SYSTEM_LOCALES[finalLang])
+          Object.entries(LocaleService.getSystemLocales()[finalLang])
             .filter(e => 'title' in e[1])
             .map(e => [
               e[0],
