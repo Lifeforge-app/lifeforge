@@ -11,17 +11,19 @@ function Version({
   year = dayjs().year(),
   week,
   liCount,
+  isLatest,
   children
 }: {
   prefix?: string
   year?: number
   week: number
   liCount?: number
+  isLatest: boolean
   children: React.ReactNode
 }) {
-  const [collapsed, setCollapsed] = useState(true)
+  const [collapsed, setCollapsed] = useState(!isLatest)
 
-  const [debouncedCollapsed, setDebouncedCollapsed] = useState(true)
+  const [debouncedCollapsed, setDebouncedCollapsed] = useState(!isLatest)
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
 
@@ -64,9 +66,14 @@ function Version({
           className="hover:bg-bg-100 dark:hover:bg-bg-800/50 flex cursor-pointer items-center justify-between gap-4 p-4 transition-colors select-none"
           onClick={toggleCollapsed}
         >
-          <div>
-            <h2 className="text-xl font-medium sm:text-2xl">{version}</h2>
-            <span className="text-bg-500 text-sm">{liCount} entries</span>
+          <div className="flex items-center gap-4">
+            <div className="bg-bg-500/10 text-bg-500 flex-center size-13 rounded-lg">
+              <Icon className="size-8 shrink-0" icon="tabler:history" />
+            </div>
+            <div>
+              <h2 className="text-xl font-medium sm:text-2xl">{version}</h2>
+              <span className="text-bg-500 text-sm">{liCount} entries</span>
+            </div>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-bg-500 hidden text-sm sm:block">

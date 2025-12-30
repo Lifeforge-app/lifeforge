@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import mdxListCounts from 'virtual:mdx-list-counts'
 
 import { components } from '@/components/MdxComponents'
@@ -30,19 +31,28 @@ const entries = Object.entries(
   }))
 
 function ChangelogEntries() {
+  let isFirst = true
+
   return (
     <div className="divide-bg-500/20 divide-y-[1.5px]">
       {entries.map(({ year, versions }) =>
-        versions.map(({ week, Component, liCount }) => (
-          <Version
-            key={`${year}-week-${week}`}
-            liCount={liCount}
-            week={week}
-            year={year}
-          >
-            <Component components={components} />
-          </Version>
-        ))
+        versions.map(({ week, Component, liCount }) => {
+          const first = isFirst
+
+          isFirst = false
+
+          return (
+            <Version
+              key={`${year}-week-${week}`}
+              isLatest={first}
+              liCount={liCount}
+              week={week}
+              year={year}
+            >
+              <Component components={components} />
+            </Version>
+          )
+        })
       )}
     </div>
   )
