@@ -2,9 +2,10 @@ import mdx, { Options } from '@mdx-js/rollup'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
-import rehypeHighlight from 'rehype-highlight'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
+
+import mdxListCountsPlugin from './plugins/mdxListCountsPlugin'
 
 const options: Options = {
   remarkPlugins: [remarkGfm]
@@ -12,7 +13,7 @@ const options: Options = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), mdx(options), tailwindcss()],
+  plugins: [react(), mdx(options), tailwindcss(), mdxListCountsPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

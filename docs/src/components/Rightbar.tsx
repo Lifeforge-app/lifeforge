@@ -3,6 +3,8 @@ import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'shared'
 
+export const BLACKLISTED_PAGES = ['/progress/changelog']
+
 function Rightbar() {
   const [allSections, setAllSections] = useState<string[]>([])
 
@@ -133,6 +135,10 @@ function Rightbar() {
     userClickTimeoutRef.current = window.setTimeout(() => {
       userClickedRef.current = false
     }, 1000) // 1 second delay to allow scroll to finish
+  }
+
+  if (BLACKLISTED_PAGES.some(page => location.pathname.startsWith(page))) {
+    return null
   }
 
   return (

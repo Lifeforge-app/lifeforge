@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
 import { useLocation } from 'shared'
 
+import { BLACKLISTED_PAGES } from '../Rightbar'
 import NavigationBar from './components/NavigationBar'
 
 function Boilerplate({ children }: { children: React.ReactNode }) {
@@ -40,7 +41,9 @@ function Boilerplate({ children }: { children: React.ReactNode }) {
           />
         )}
       >
-        <div className="flex h-full w-full min-w-0 flex-col sm:pl-8 lg:w-[calc(100%-20rem)]">
+        <div
+          className={`flex h-full w-full min-w-0 flex-col sm:pl-8 ${BLACKLISTED_PAGES.some(page => location.pathname.startsWith(page)) ? '' : 'lg:w-[calc(100%-20rem)]'}`}
+        >
           {children}
           <NavigationBar />
           <hr className="border-bg-200 dark:border-bg-800 my-12 border-t-[1.5px]" />
