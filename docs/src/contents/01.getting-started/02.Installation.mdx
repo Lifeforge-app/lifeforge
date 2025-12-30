@@ -171,7 +171,8 @@ Before you start, make sure you have the following items on hand:
     <span>
       This is the database that will be used to store all your data. You can
       download the latest version of PocketBase from
-      [here](https://pocketbase.io/).
+      [here](https://pocketbase.io/), or use `bun forge db init` command to
+      automatically download and set it up for you.
     </span>
   </div>
 
@@ -239,9 +240,12 @@ That's pretty much it for the installation of the system itself. Now, let's move
 
 ### Database Installation
 
-You'll need to set up a PocketBase database. For your information, PocketBase is a free, open-source, and self-hosted lightweight database. Head over to the [PocketBase website](https://pocketbase.io) and download the latest version of the database. Make sure to select the correct version for your server's operating system. Once downloaded, extract the files and inside the extracted folder, you'll find an executable file named **"pocketbase"**. Move this file to the **"database"** directory in the root of the LifeForge project.
+You'll need to set up a PocketBase database. For your information, PocketBase is a free, open-source, and self-hosted lightweight database. 
+If you are using the Forge CLI, it will help you to download and set up the database automatically during database initialization.
 
-![PocketBase Setup](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/installation/db.webp)
+Optionally, if you somehow prefer to manually download it, head over to the [PocketBase website](https://pocketbase.io) and download the latest version of the database. 
+
+Make sure to select the correct version for your server's operating system. Once downloaded, extract the files and inside the extracted folder, you'll find an executable file named **"pocketbase"**. Move this file to the **"database"** directory in the root of the LifeForge project.
 
 <Alert className="mt-6" type="note">
 If you want to host the database in a different location, feel free to do so, but make sure to update the database path accordingly in the configuration file later.
