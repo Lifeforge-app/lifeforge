@@ -1,6 +1,3 @@
-import TwoFAModal from '@/auth/modals/TwoFAModal'
-import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
-import forgeAPI from '@/utils/forgeAPI'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { BackendFactory } from 'dnd-core'
 import { useModalStore } from 'lifeforge-ui'
@@ -21,6 +18,10 @@ import {
   ToastProvider
 } from 'shared'
 
+import TwoFAModal from '@/auth/modals/TwoFAModal'
+import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
+import forgeAPI from '@/utils/forgeAPI'
+
 import EncryptionProvider from './features/EncryptionProvider'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
@@ -29,7 +30,7 @@ const queryClient = new QueryClient()
 
 // Auto-detect global providers from modules
 const moduleGlobalProviders = import.meta.glob(
-  ['../../../apps/**/client/src/providers/global.tsx'],
+  ['../../../apps/**/client/providers/global.tsx'],
   { eager: true, import: 'default' }
 )
 
