@@ -141,10 +141,7 @@ const verifySessionToken = forgeController
       throw new ClientError('Invalid session', 401)
     }
 
-    return {
-      valid: true as const,
-      session: pb.authStore.token
-    }
+    return true
   })
 
 const getUserData = forgeController
