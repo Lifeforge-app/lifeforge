@@ -1,9 +1,6 @@
 import CLILoggingService from '@/utils/logging'
 
-import {
-  regenerateSchemas,
-  removeModuleMigrations
-} from '../functions/migrations'
+import { removeModuleMigrations } from '../functions/migrations'
 import {
   removeModuleDirectory,
   removeServerReferences
@@ -34,8 +31,6 @@ export async function removeModuleHandler(moduleName?: string): Promise<void> {
     await removeModuleMigrations(moduleName)
 
     removeModuleDirectory(moduleName)
-
-    await regenerateSchemas()
 
     CLILoggingService.success(`Module "${moduleName}" removed successfully`)
     CLILoggingService.info(

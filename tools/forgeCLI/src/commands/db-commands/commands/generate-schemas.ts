@@ -1,7 +1,7 @@
 import chalk from 'chalk'
-import path from 'path'
 
 import { isDockerMode } from '@/utils/helpers'
+import initRouteAndSchemaFiles from '@/utils/initRouteAndSchemaFiles'
 import CLILoggingService from '@/utils/logging'
 import getPBInstance from '@/utils/pocketbase'
 
@@ -53,14 +53,11 @@ export async function generateSchemaHandler(
     if (!targetModule) {
       const mainSchemaContent = generateMainSchemaContent(moduleDirs)
 
-      const coreSchemaPath = path.resolve(
-        __dirname,
-        '../../../../../../server/src/core/schema.ts'
-      )
+      const { schemaPath } = initRouteAndSchemaFiles()
 
-      await writeFormattedFile(coreSchemaPath, mainSchemaContent)
+      await writeFormattedFile(schemaPath, mainSchemaContent)
       CLILoggingService.debug(
-        `Updated main schema file at ${chalk.bold('core/schema.ts')}`
+        `Updated main schema file at ${chalk.bold(schemaPath)}`
       )
     }
 
