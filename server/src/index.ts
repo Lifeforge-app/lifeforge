@@ -2,9 +2,7 @@ import fs from 'fs'
 import { createServer } from 'node:http'
 
 import checkDB from '@functions/database/dbUtils'
-import { ensureKeysExist } from '@functions/encryption'
 import ensureCredentials from '@functions/initialization/ensureCredentials'
-import initRouteAndSchemaFiles from '@functions/initialization/initRouteAndSchemaFiles'
 import { LocaleService } from '@functions/initialization/localeService'
 import traceRouteStack from '@functions/initialization/traceRouteStack'
 import updateLocaleSubmodules from '@functions/initialization/updateLocaleSubmodules'
@@ -35,7 +33,6 @@ async function main(): Promise<void> {
   updateLocaleSubmodules()
   LocaleService.validateAndLoad()
   ensureRootName()
-  initRouteAndSchemaFiles()
   ensureDirectories()
   ensureCredentials()
   await checkDB()

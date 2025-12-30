@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import CLILoggingService from './logging'
+import { generateDatabaseSchemas } from '@/commands/modules/functions'
 
 const ROOT_DIR = path.resolve(
   import.meta.dirname.split('tools')[0],
@@ -26,6 +27,8 @@ export default function initRouteAndSchemaFiles(): {
   if (!fs.existsSync(schemaPath)) {
     CLILoggingService.info('schema.ts not found, creating from template...')
     fs.copyFileSync(path.join(templatesDir, 'example.schema.ts'), schemaPath)
+
+    generateDatabaseSchemas()
   }
 
   return {

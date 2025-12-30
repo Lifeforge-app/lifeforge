@@ -7,6 +7,7 @@ import {
   executeCommand,
   killExistingProcess
 } from '@/utils/helpers'
+import initRouteAndSchemaFiles from '@/utils/initRouteAndSchemaFiles'
 import CLILoggingService from '@/utils/logging'
 
 /**
@@ -67,7 +68,9 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
         process.exit(1)
       }
 
-      return 'bun run dev'
+      initRouteAndSchemaFiles()
+
+      return 'bun tsx watch --env-file=../env/.env.local ./src/index.ts'
     },
     cwd: 'server'
   },
