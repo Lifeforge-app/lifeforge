@@ -18,6 +18,8 @@ pocketbase
 pb_*/
 medium
 .temp
+server/src/core/routes/app.routes.ts
+server/src/core/schema.ts
 
 # system files
 Thumbs.db
