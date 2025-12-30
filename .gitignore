@@ -46,7 +46,7 @@ logs
 
 # environment variables & credentials
 *.local
-env
+env/*
 .env
 .env.*
 !env/.env.example
