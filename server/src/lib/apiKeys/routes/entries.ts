@@ -116,30 +116,24 @@ const create = forgeController
     })
   })
   .statusCode(201)
-  .callback(
-    async ({
-      pb,
-      body: { keyId, name, description, icon, key, exposable }
-    }) => {
-      const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
+  .callback(async ({ pb, body: { keyId, name, icon, key, exposable } }) => {
+    const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
 
-      const entry = await pb.create
-        .collection('api_keys__entries')
-        .data({
-          keyId,
-          name,
-          description,
-          icon,
-          exposable,
-          key: encryptedKey
-        })
-        .execute()
+    const entry = await pb.create
+      .collection('api_keys__entries')
+      .data({
+        keyId,
+        name,
+        icon,
+        exposable,
+        key: encryptedKey
+      })
+      .execute()
 
-      entry.key = key.slice(-4)
+    entry.key = key.slice(-4)
 
-      return entry
-    }
-  )
+    return entry
+  })
 
 const update = forgeController
   .mutation()
@@ -170,7 +164,7 @@ const update = forgeController
     async ({
       pb,
       query: { id },
-      body: { keyId, name, description, icon, key, exposable, overrideKey }
+      body: { keyId, name, icon, key, exposable, overrideKey }
     }) => {
       const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
 
@@ -180,7 +174,6 @@ const update = forgeController
         .data({
           keyId,
           name,
-          description,
           icon,
           exposable,
           key: overrideKey ? encryptedKey : undefined
