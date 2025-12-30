@@ -87,5 +87,20 @@
     </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <!-- Google tag for analytics -->
+    <!-- Don't worry, I'm just curious how much traffic the docs get :) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-40WQCL0RYK"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || []
+      function gtag() {
+        dataLayer.push(arguments)
+      }
+      gtag('js', new Date())
+
+      gtag('config', 'G-40WQCL0RYK')
+    </script>
   </body>
 </html>
