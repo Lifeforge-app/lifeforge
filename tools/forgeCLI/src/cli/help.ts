@@ -22,7 +22,7 @@ const SECTION_ICONS: Record<string, string> = {
 function formatSectionTitle(title: string): string {
   const icon = SECTION_ICONS[title] || '•'
 
-  return `\n${icon}  ${chalk.bold.underline.yellow(title)}\n`
+  return `\n${icon} ${chalk.bold.underline.yellow(title)}\n`
 }
 
 function formatCommand(name: string, description: string): string {
