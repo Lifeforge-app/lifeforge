@@ -1,4 +1,5 @@
 import { getEnvVars } from '@/utils/helpers'
+import initRouteAndSchemaFiles from '@/utils/initRouteAndSchemaFiles'
 import CLILoggingService from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
@@ -22,6 +23,7 @@ export async function initializeDatabaseHandler() {
   validatePocketBaseNotInitialized()
   createPocketBaseSuperuser(PB_EMAIL, PB_PASSWORD)
   runDatabaseMigrations()
+  initRouteAndSchemaFiles()
 
   CLILoggingService.success(
     'PocketBase server stopped, setup process complete.'
