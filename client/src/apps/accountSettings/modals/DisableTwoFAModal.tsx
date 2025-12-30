@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
-import { Button, ModalHeader, WithOTP } from 'lifeforge-ui'
+import { Button, ModalHeader } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 import { useAuth } from 'shared'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.accountSettings')
@@ -34,30 +35,23 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
         title="disable2FA"
         onClose={onClose}
       />
-      <WithOTP
-        controllers={{
-          getChallenge: forgeAPI.user['2fa'].getChallenge,
-          verifyOTP: forgeAPI.user['2fa'].validateOTP,
-          generateOTP: forgeAPI.user.auth.generateOTP
-        }}
-      >
-        <p className="text-bg-500">{t('modals.disable2FA.description')}</p>
-        <div className="mt-6 flex w-full flex-col-reverse gap-2 sm:flex-row">
-          <Button className="sm:w-1/2" icon="" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            dangerous
-            className="sm:w-1/2"
-            icon="tabler:check"
-            loading={loading}
-            variant="secondary"
-            onClick={onConfirm}
-          >
-            Confirm
-          </Button>
-        </div>
-      </WithOTP>
+
+      <p className="text-bg-500">{t('modals.disable2FA.description')}</p>
+      <div className="mt-6 flex w-full flex-col-reverse gap-2 sm:flex-row">
+        <Button className="sm:w-1/2" icon="" onClick={onClose}>
+          Cancel
+        </Button>
+        <Button
+          dangerous
+          className="sm:w-1/2"
+          icon="tabler:check"
+          loading={loading}
+          variant="secondary"
+          onClick={onConfirm}
+        >
+          Confirm
+        </Button>
+      </div>
     </div>
   )
 }
