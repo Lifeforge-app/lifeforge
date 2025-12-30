@@ -1,0 +1,143 @@
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+import PR from "../../components/PR";
+import GithubUser from "@/components/GithubUser";
+import {Alert} from "lifeforge-ui";
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="89c5be88e3891dfbde12ac50aa7b17e032d8b245" />: Added feature that allow users to login by scanning QR code displayed on the login page using another logged-in device. Access the scanner by navigating to Account Settings page.
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w51-1.webp)
+
+- <Commit hash="56ff136bd1b8fb37742e18796e0399940b83f02c" />: Change the icon display for border radius selector in system personalization.
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w51-2.webp)
+
+- <Commit hash="bb4854aac82101c23deaa5af78ec01e3dca3a6a2" />: Updated `dev` script for `client` codebase to build `shared` and `lifeforge-ui` packages before starting the development server to avoid potential issues caused by stale or non-existent builds.
+
+- <PR number={51} />, <Commit hash="ada44b82069bc16531c1f70db03b5105d70adb67" />, <Commit hash="994372fe503a6368a3a1626014485e0f7ef6a3f7" />, <Commit hash="f88502018e38884c07c7542407ea24c435d81f42" />: Implemented dynamic language pack loading engine, separating localization files from the main application codebase. User can now add new language support by simply installing the corresponding language pack through
+
+    ```bash
+    bun forge locales add <locale-code>
+    ```
+
+    For more information, refer to the <a href="/user-guide/localization">localization guide</a>.
+
+- <PR number={52} />, <Commit hash="5c7924d39d3c03ce3622d191e1c59d20fb24ea36" />: Finally, after two years of waiting, Docker support is here! You can now run LifeForge server using Docker for easier deployment and management. Check out the <a href="/getting-started/installation">installation guide</a> for more information.
+
+    ![](https://www.mizouzie.dev/images/Moby-Group-Docker.jpeg)
+
+- <Commit hash="80c8d308c40eb91884f0abc9850173ede0645cfa" />, <Commit hash="3d8cec06fa72a6355cf2053645d55d29afcdda5f" />: `id` and `collectionId` fields are now removed from the schema when syncing database schema to avoid potential conflicts. Collections and fields are now matched solely based on their names. Completely reworked migration generation logic into a three-stage process to properly handle cross-reference fields.
+    - Stage 1: Generate collection skeletons without any fields if the collection does not exist.
+    - Stage 2: Add fields and configs for normal collections.
+    - Stage 3: Add view-type collections that depend on the existence of specific fields in other collections.
+
+- <PR number={56} />: Renamed database syncing commands:
+
+    ```bash
+    # Old commands
+    bun forge db generate-schemas
+    bun forge db generate-migrations
+
+    # New commands
+    bun forge db pull
+    bun forge db push
+    ```
+
+- <PR number={57} />: Huge rework on the API key management. Master password is now removed from the API key management page since LifeForge API now supports end-to-end asymmetric encryption for every API call, so there is no need to encrypt the API key a second time using the master password.
+
+    <Alert type="important" className="mt-6">
+        As long as you keep your `MASTER_KEY` environment variable safe, your API keys are safe even if your database is compromised. So please, <strong>KEEP YOUR MASTER KEY SAFE!</strong>
+    </Alert>
+
+
+- <PR number={57} />, <Commit hash="f1f1cfaa68f960147672600c693fad967c40e756" />, <Commit hash="7d348050bf48de6d54e2a2e5c243467715257fae" />: Moved the `manifest.ts` file from `client` folder of each module to the root folder of each module to facilitate better module management in the future. Improved API keys usage declaration in the manifest file.
+
+    ```ts
+    // Old way
+    export const manifest: ModuleManifest = {
+      ...
+      requiredAPIKeys: ['openai', 'tmdb'],
+      ...
+    };
+
+    // New way
+    export const manifest: ModuleManifest = {
+      ...
+      apiKeyAccess: {
+        openai: {
+            usage: "Generate text and image content using OpenAI's API",
+            required: false,
+        },
+        tmdb: {
+            usage: "Fetch movie and TV show data from The Movie Database",
+            required: false,
+        },
+      },
+    };
+    ```
+
+- <PR number={57} />: Flattened the `client` folder in each module, moving all client-side code from `client/src` to `client` directly for better structural consistency with the server-side code.
+
+- <PR number={57} />, <Commit hash="3ae47f3a53ca487f66bed94401c4d8b157365a42" />, <Commit hash="2334bca3cab9f84239273883b545c3e4eeda2987" />, <Commit hash="e7700f905a5e807a95f689b8ec6598fd90b8c44e" />, <Commit hash="80c128fbe2ee5dd42a1c020325e09b81f11fa4be" />: Removed description field from API keys record, and the API Key management page now displays how much module is using a particular API key to give users better insights on their API key usage.
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w52-3.webp)
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w52-4.webp)
+
+- <Commit hash="cb1d6e95d8aea202d14fddca9cc9baf58f4fe21e" />, <Commit hash="d7707033d090774fcce8d76e714f3eea008d3253" />, <Commit hash="288759f3345db53ae2f70255fbb0daf354e542fd" />, <Commit hash="4e0fb0ed5f10b9b14aab29b515e31b62f22cd751" />: Enhanced server initialization process, user defined route and schema files are now stored as templates and copied to the appropriate directories during server setup to prevent pushing user files to the repository. Added root name check during server initialization to make sure the project folder name is 'lifeforge'.
+
+- <PR hash="49" />: Added language support for Turkish (`tr`). Thanks <GithubUser username="tahabugracck" /> for the contribution!
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="bd8299e3675bd16d0166f15304364ccc5deb290e" />: Added `WithCustomConfirmationButtons` story to demonstrate custom confirmation buttons in `ConfirmationModal`.
+- <Commit hash="6da76cfc963c482d1b959da68f7410277414b227" />: Add optional `text` prop to `ViewModeSelector` component.
+- <Commit hash="6da76cfc963c482d1b959da68f7410277414b227" />: Button with icon only will not show the original icon instead of the ban icon when disabled.
+- <Commit hash="6da76cfc963c482d1b959da68f7410277414b227" />, <Commit hash="1c2ec98fe3f820a1f338a16c6e7306e70e75c418" />: Adjusted title and icon size for the `ModalHeader` component.
+- <Commit hash="542803afab10b29d5daa41cf8da97e83398949ca" />: Added support for custom React nodes as titles in `FormModal` component.
+
+    ```tsx
+    const { formProps } = defineForm<MyFormValues>({
+      title: (
+        <div>
+          <MyCustomTitle />
+        </div>
+      ),
+      ...
+    });
+    ```
+- <Commit hash="07531205e2076fd9ba67da81e2e736e38832edea" />: Added `actionButtonProps` prop to `NumberInput` component.
+- <Commit hash="2334f412bc495a5982e5aafef414e38a267c1dcd" />: Updated `Checkbox` and `Switch` component for better light and dark theme compatibility.
+- <Commit hash="059283fa8bb6169c14cb9e6585c730742b5361d1" />: `description` prop in the `OptionsColumn` component now supports React nodes for more customization.
+- <Commit hash="0e69df694332d3d5181774c3cd31511c2ac0f67f" />: Added `className` prop to the `Loader` component and subsequently `loaderClassName` prop to the `WithQuery` and `WithQueryData` components for better styling control.
+- <Commit hash="66e6edd5fea9f597ac45d3574a103a90db09c641" />: Added ability to show suggestions / search results in the `SearchInput` component. You can now provide the `children` prop to render custom suggestion items below the input field. See [the storybook](https://ui.lifeforge.dev/?path=/story/components-inputs-searchinput--with-search-suggestions) for more details. Credit to <GithubUser username="jiahuiiiii" /> for the suggestion!
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w52-6.webp)
+    
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="ad1c1ddad6679953a0c85cd2846af1e03c6b4833" />: Change the import path for `Button` component in `ModalHeader` component to absolute path to fix prop type issues.
+- <Commit hash="6da76cfc963c482d1b959da68f7410277414b227" />: Fixed the `SearchInput` component to completely disable annoying browser autocomplete.
+- <Commit hash="b11310f76f14c8bc58f4c4e5787db555122d6d91" />: Fixed light theme text color issue in the right bar of the documentation.
+- <Commit hash="dbbbfb84ca492e81a65140734f6dc9c0a74bcf2a" />: Removed useless README files across the monorepo.
+- <Commit hash="a0138156c97f00d3d0b8a716d0668ca2089c9451" />, <Commit hash="280ae2e06497191a68acaf757545f04a627571e8" />: Removed stale submodule reference in `apps` and `locales` directory that are accidentally left during previous commits.
+- <Commit hash="b30e0becae4cddb1211d2f1e46a3c6303326e869" />: Removed deprecated `.eslintignore` file from the monorepo.
+- <Commit hash="c7bb6cce48e7e88b587c135a302353035faa8283" />: Fixed spacing issue in the preloader component in `client/index.html`.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="b11310f76f14c8bc58f4c4e5787db555122d6d91" />, <Commit hash="334350dcdfc2d0a5811c1bf1f2a8ae264d952a7b" />: Added GitHub repo star count badge to documentation header for flexing due to the sudden surge of stars recently. Huge thanks to everyone who has supported LifeForge! 🎉
+- <Commit hash="cec4a4a3fbfed348b482057236f442752186aedb" />: Added issue template in GitHub repository for better issue tracking and management.
+- <PR number={48} />: Added contribution guidelines to the documentation. Thanks <GithubUser username="lukashow" /> for the initial draft!
+- <Commit hash="9029d9a87ec4ad2ad81f65878f2ad838d002391b" />: Added some agent workflows for guidance on ~~vibe coding~~ agentic assistance.
+- <PR number={53} />: Clarified module naming conventions for installation/uninstallation, updated example command, and named future module registry. Thanks <GithubUser username="jiahuiiiii" />~
+- <PR number={56} />, <Commit hash="3daa4a81add7008df6390d3ac9db81826e4a8b2c" />: Huge overhaul and refactoring on `forgeCLI` codebase.
+- <Commit hash="c3ff86695b9926a5e643f489933d023ec7cdf0f7" />: Make git submodule updating target more specific modules to avoid unnecessary updates that cause longer setup time.
+- <Commit hash="b2f0884ef53c866a8ff1d26a97ee34bae85b600b" />: Extra CLI arguments are now piped to the dev script when running `bun forge dev` for better flexibility.
+- <Commit hash="a1de57f78b637b33c363f39b06aec8bfbf703d77" />, <Commit hash="b50cbe8a4c7a0969fd94d997430a593b736f35d9" />, <Commit hash="929e85e8c1550b9894404f59bd076df39c9c3200" />: Another huge overhaul and refactor on the ForgeCLI codebase, added mechanism to load commands dynamically during runtime, and ~~vibed~~ created a much more nice looking help screen.
+
+    ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w52-5.webp)
+
+- <Commit hash="a9f55872bb2b3d41a4d2dfaf7da3d642cd38507f" />: Huge improvement to the README file for the project. Thanks <GithubUser username="lukashow" />~
+- <Commit hash="3d73e29b1d183382b9bc3231ae671137bed41a11" />: Added PR component for displaying pull request links.
