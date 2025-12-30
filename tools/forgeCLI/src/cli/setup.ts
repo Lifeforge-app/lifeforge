@@ -35,6 +35,7 @@ export function setupCLI(): void {
     .name('bun forge')
     .description('Build and manage the LifeForge ecosystem')
     .version(getVersion())
+    .enablePositionalOptions()
     .option(
       '-l, --log-level <level>',
       `Set log level (${LOG_LEVELS.join(', ')})`,
@@ -83,6 +84,8 @@ function setupDevCommand(): void {
       '[service]',
       `Service to start. Leave blank for starting db, server, and client. Available: ${VALID_SERVICES.join(', ')}`
     )
+    .argument('[extraArgs...]', 'Extra arguments to pass to the service')
+    .allowUnknownOption()
     .action(devHandler)
 }
 
