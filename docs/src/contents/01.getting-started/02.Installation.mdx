@@ -84,12 +84,12 @@ The client uses the server's database schemas for API type inference. Before bui
 
 ```bash
 bun install --linker isolated
-bun forge db generate-schemas
+bun forge db pull
 docker compose build
 docker compose up
 ```
 
-Usually, installing and removing modules through ForgeCLI will automatically sync the schemas. If you have modified the schemas manually, you will need to run `bun forge db generate-schemas` to update the schemas.
+Usually, installing and removing modules through ForgeCLI will automatically sync the schemas. If you have modified the schemas manually, you will need to run `bun forge db pull` to update the schemas.
 </Alert>
 
 ### Accessing LifeForge
