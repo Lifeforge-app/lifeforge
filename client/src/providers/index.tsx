@@ -11,6 +11,7 @@ import {
   APIOnlineStatusProvider,
   AuthProvider,
   BackgroundProvider,
+  EncryptionProvider,
   MainSidebarStateProvider,
   NuqsProvider,
   PersonalizationProvider,
@@ -22,7 +23,6 @@ import TwoFAModal from '@/auth/modals/TwoFAModal'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 import forgeAPI from '@/utils/forgeAPI'
 
-import EncryptionProvider from './features/EncryptionProvider'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
 

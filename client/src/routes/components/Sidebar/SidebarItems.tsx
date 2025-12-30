@@ -6,7 +6,7 @@ import {
   SidebarTitle
 } from 'lifeforge-ui'
 import _ from 'lodash'
-import { Fragment, useMemo } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useMainSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
@@ -17,9 +17,11 @@ function SidebarItems({ query }: { query: string }) {
 
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
+  const [resolvedRoutes, setResolvedRoutes] = useState(ROUTES)
+
   const filteredRoutes = useMemo(
     () =>
-      ROUTES.filter(
+      resolvedRoutes.filter(
         e =>
           e.title.toLowerCase().includes(query.toLowerCase()) ||
           e.items.some(
@@ -29,8 +31,34 @@ function SidebarItems({ query }: { query: string }) {
               !subItem.hidden
           )
       ),
-    [query, userData]
+    [query, userData, resolvedRoutes]
   )
+
+  async function resolveRoutes() {
+    const updatedRoutes = await Promise.all(
+      ROUTES.map(async category => {
+        const updatedItems = await Promise.all(
+          category.items.map(async mod => {
+            if (typeof mod.disabled === 'function') {
+              const isDisabled = await mod.disabled()
+
+              return { ...mod, disabled: isDisabled }
+            }
+
+            return mod
+          })
+        )
+
+        return { ...category, items: updatedItems }
+      })
+    )
+
+    setResolvedRoutes(updatedRoutes)
+  }
+
+  useEffect(() => {
+    resolveRoutes()
+  }, [ROUTES])
 
   return (
     <ul className="flex flex-1 flex-col gap-1 overscroll-none pb-6">

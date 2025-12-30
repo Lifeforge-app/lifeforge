@@ -40,13 +40,24 @@ export function AuthRedirectHandler() {
 /**
  * Creates the main router configuration based on authentication state
  */
-export function createRouterConfig({
+export async function createRouterConfig({
   routes,
   loadingMessage
-}: CreateRouterConfigOptions): RouteObject[] {
-  const enabledItems = routes
-    .flatMap(category => category.items)
-    .filter(item => !item.disabled)
+}: CreateRouterConfigOptions): Promise<RouteObject[]> {
+  const allItems = routes.flatMap(category => category.items)
+
+  const resolvedItems = await Promise.all(
+    allItems.map(async item => {
+      const disabled =
+        typeof item.disabled === 'function'
+          ? await item.disabled()
+          : item.disabled
+
+      return { ...item, disabled }
+    })
+  )
+
+  const enabledItems = resolvedItems.filter(item => !item.disabled)
 
   const moduleRoutes = enabledItems.flatMap(item =>
     createModuleRoute(item, loadingMessage)
