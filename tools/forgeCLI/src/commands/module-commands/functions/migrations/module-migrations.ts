@@ -1,7 +1,4 @@
-import {
-  generateMigrationsHandler,
-  generateSchemaHandler
-} from '@/commands/db-commands'
+import { generateMigrationsHandler } from '@/commands/db-commands'
 import { cleanupOldMigrations } from '@/commands/db-commands/utils/pocketbase-utils'
 import { executeCommand } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
@@ -31,17 +28,6 @@ export async function removeModuleMigrations(
     CLILoggingService.warn(
       `Failed to remove migrations for ${moduleName}: ${error}`
     )
-  }
-}
-
-export async function regenerateSchemas(): Promise<void> {
-  CLILoggingService.progress('Regenerating database schemas')
-
-  try {
-    await generateSchemaHandler()
-    CLILoggingService.success('Database schemas regenerated')
-  } catch (error) {
-    CLILoggingService.warn(`Failed to regenerate schemas: ${error}`)
   }
 }
 
