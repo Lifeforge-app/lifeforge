@@ -1,6 +1,6 @@
-<center>
+<div align="center">
 <img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/lifeforge-logo.svg" alt="LifeForge Logo" width="240" height="80"/></img>
-</center>
+</div>
 
 <p align="center">
 A self-hosted solution to streamline and organize all aspects of your life.</p>
