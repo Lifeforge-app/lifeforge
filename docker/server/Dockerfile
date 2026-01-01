@@ -1,8 +1,10 @@
 # syntax=docker/dockerfile:1
 FROM oven/bun:alpine AS builder
 
+RUN apk update && apk add git
+
 # Set working directory
-WORKDIR /app
+WORKDIR /lifeforge
 
 # Copy all files
 COPY bun.lock bun.lock
@@ -24,18 +26,18 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
 # Production stage
 FROM oven/bun:alpine
 
-WORKDIR /app
+WORKDIR /lifeforge
 
 # Copy only what's needed for runtime
-COPY --from=builder /app/node_modules node_modules
-COPY --from=builder /app/server server
-COPY --from=builder /app/shared shared
-COPY --from=builder /app/packages packages
-COPY --from=builder /app/apps apps
-COPY --from=builder /app/locales locales
-COPY --from=builder /app/tools/forgeCLI tools/forgeCLI
-COPY --from=builder /app/tsconfig.json tsconfig.json
-COPY --from=builder /app/package.json package.json
+COPY --from=builder /lifeforge/node_modules node_modules
+COPY --from=builder /lifeforge/server server
+COPY --from=builder /lifeforge/shared shared
+COPY --from=builder /lifeforge/packages packages
+COPY --from=builder /lifeforge/apps apps
+COPY --from=builder /lifeforge/locales locales
+COPY --from=builder /lifeforge/tools/forgeCLI tools/forgeCLI
+COPY --from=builder /lifeforge/tsconfig.json tsconfig.json
+COPY --from=builder /lifeforge/package.json package.json
 
 # Copy entrypoint script
 COPY docker/server/entrypoint.sh /entrypoint.sh
