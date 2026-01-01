@@ -1,9 +1,3 @@
 [submodule "locales/en"]
 	path = locales/en
 	url = https://github.com/lifeforge-app/lang-en.git
-[submodule "apps/calendar"]
-	path = apps/calendar
-	url = https://github.com/lifeforge-app/lifeforge-module-calendar.git
-[submodule "apps/ideaBox"]
-	path = apps/ideaBox
-	url = https://github.com/lifeforge-app/lifeforge-module-ideaBox.git
