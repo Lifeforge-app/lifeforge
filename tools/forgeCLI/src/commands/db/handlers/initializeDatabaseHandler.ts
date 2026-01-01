@@ -26,9 +26,6 @@ export async function initializeDatabaseHandler() {
   initRouteAndSchemaFiles()
 
   CLILoggingService.success(
-    'PocketBase server stopped, setup process complete.'
-  )
-  CLILoggingService.info(
-    'You can now start the PocketBase server with `bun forge dev db`'
+    'Setup process complete. You can now start the PocketBase server with `bun forge dev db`'
   )
 }
