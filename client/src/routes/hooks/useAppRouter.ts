@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Router, createBrowserRouter } from 'shared'
-import { useAuth } from 'shared'
+import type { DataRouter } from 'shared'
+import { createBrowserRouter, useAuth } from 'shared'
 
 import ROUTES from '..'
 import {
@@ -19,7 +19,7 @@ export function useAppRouter() {
 
   const { auth, authLoading } = useAuth()
 
-  const [appRouter, setAppRouter] = useState<typeof Router | null>(null)
+  const [appRouter, setAppRouter] = useState<DataRouter | null>(null)
 
   const loadingRouter = useMemo(
     () => createBrowserRouter(createAuthLoadingConfig()),
