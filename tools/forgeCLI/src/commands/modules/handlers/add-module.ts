@@ -53,7 +53,7 @@ export async function addModuleHandler(repoPath: string): Promise<void> {
     }
 
     CLILoggingService.success(
-      `Module ${repoPath} setup completed successfully! Start the system with "bun forge dev all"`
+      `Module ${repoPath} setup completed successfully! Start the system with "bun forge dev"`
     )
     cleanup(config.tempDir)
   } catch (error) {
