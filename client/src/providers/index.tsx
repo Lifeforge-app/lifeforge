@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import type { BackendFactory } from 'dnd-core'
-import { useModalStore } from 'lifeforge-ui'
+import { EncryptionWrapper, useModalStore } from 'lifeforge-ui'
 import { APIOnlineStatusWrapper } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import React from 'react'
@@ -60,6 +60,7 @@ function Providers() {
 
         // Provider that initializes end-to-end encryption (fetches server public key)
         [EncryptionProvider, { apiHost: import.meta.env.VITE_API_HOST }],
+        [EncryptionWrapper],
 
         // Provider that stores all the theming information
         [PersonalizationProvider, { forgeAPI }],
