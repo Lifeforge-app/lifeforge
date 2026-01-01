@@ -8,14 +8,20 @@ import CLILoggingService from '@/utils/logging'
 /**
  * Validates that PocketBase data directory doesn't already exist
  */
-export function validatePocketBaseNotInitialized(): void {
-  if (fs.existsSync(PB_DATA_DIR)) {
+export function validatePocketBaseNotInitialized(
+  exitOnFailure: boolean = true
+): boolean {
+  const pbInitialized = fs.existsSync(PB_DATA_DIR)
+
+  if (pbInitialized && exitOnFailure) {
     CLILoggingService.actionableError(
       `PocketBase is already initialized in ${PB_DATA_DIR}, aborting.`,
       'If you want to re-initialize, please remove the existing pb_data folder in the database directory.'
     )
     process.exit(1)
   }
+
+  return pbInitialized
 }
 
 /**
