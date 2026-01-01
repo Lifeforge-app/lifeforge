@@ -34,7 +34,7 @@ export async function removeModuleHandler(moduleName?: string): Promise<void> {
 
     CLILoggingService.success(`Module "${moduleName}" removed successfully`)
     CLILoggingService.info(
-      'Restart the system with "bun forge dev all" to see the changes'
+      'Restart the system with "bun forge dev" to see the changes'
     )
   } catch (error) {
     CLILoggingService.actionableError(
