@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useMutation } from '@tanstack/react-query'
 import {
   Button,
@@ -11,6 +10,8 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import AdjustBgImageModal from './modals/AdjustBgImageModal'
 
@@ -74,7 +75,7 @@ function BgImageSelector() {
       enableUrl: true,
       enablePixabay: true,
       acceptedMimeTypes: {
-        'image/*': ['png', 'jpg', 'jpeg', 'gif', 'webp']
+        image: ['png', 'jpg', 'jpeg', 'gif', 'webp']
       },
       enableAI: true,
       onSelect: onSubmit
