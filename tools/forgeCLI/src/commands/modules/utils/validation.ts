@@ -1,3 +1,5 @@
+import CLILoggingService from '@/utils/logging'
+
 import type { ModuleInstallConfig } from './constants'
 
 /**
@@ -18,9 +20,11 @@ export function createModuleConfig(repoPath: string): ModuleInstallConfig {
   const [author, moduleName] = repoPath.split('/')
 
   if (!moduleName.startsWith('lifeforge-module-')) {
-    throw new Error(
+    CLILoggingService.error(
       `Module name must start with 'lifeforge-module-'. Received: ${moduleName}`
     )
+
+    process.exit(1)
   }
 
   const finalModuleName = moduleName.replace(/^lifeforge-module-/, '')
