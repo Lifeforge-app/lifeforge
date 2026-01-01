@@ -52,8 +52,3 @@ env/*
 !env/.env.example
 !env/.env.docker.example
 keys
-
-# apps folder - ignore subfolders but keep config
-apps/*
-!apps/.gitkeep
-!apps/cat.config.json
