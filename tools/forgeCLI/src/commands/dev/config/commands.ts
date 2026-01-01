@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import fs from 'fs'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
@@ -37,8 +38,9 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       }
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
-        CLILoggingService.error(
-          `PocketBase binary does not exist: ${PB_BINARY_PATH}`
+        CLILoggingService.actionableError(
+          `PocketBase binary does not exist: ${PB_BINARY_PATH}`,
+          `Please run "${chalk.bold.blue('bun forge db init')}" to initialize the database`
         )
         process.exit(1)
       }
