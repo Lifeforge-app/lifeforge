@@ -3,31 +3,61 @@ import { spawn, spawnSync } from 'child_process'
 import PocketBase from 'pocketbase'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
+import { executeCommand } from '@/utils/helpers'
 import { getEnvVars } from '@/utils/helpers'
 import CLILoggingService from '@/utils/logging'
 
 import { killExistingProcess } from './helpers'
 
 /**
+ * Verifies if a PID is actually running and is a PocketBase process
+ */
+function isValidPocketbaseProcess(pid: number): boolean {
+  try {
+    // First check if process exists using kill -0 (doesn't actually kill)
+    process.kill(pid, 0)
+
+    // Verify it's actually a pocketbase process by checking the command
+    const psResult = executeCommand(`ps -p ${pid} -o comm=`, {
+      exitOnError: false,
+      stdio: 'pipe'
+    })
+
+    return psResult?.toLowerCase().includes('pocketbase') ?? false
+  } catch {
+    // Process doesn't exist or we don't have permission
+    return false
+  }
+}
+
+/**
  * Checks for running PocketBase instances
  */
 export function checkRunningPBInstances(exitOnError = true): boolean {
   try {
-    const result = spawnSync(
-      'sh',
-      ['-c', "pgrep -f 'pocketbase serve'", ...PB_KWARGS],
-      {
-        stdio: 'pipe',
-        encoding: 'utf8'
-      }
-    )
+    const result = executeCommand(`pgrep -f "pocketbase serve"`, {
+      exitOnError: false,
+      stdio: 'pipe'
+    })
 
-    const pbInstanceNumber = result.stdout?.toString().trim()
+    if (!result?.trim()) {
+      return false
+    }
 
-    if (pbInstanceNumber) {
+    // pgrep can return multiple PIDs (one per line)
+    const pids = result
+      .trim()
+      .split('\n')
+      .map(pid => parseInt(pid.trim(), 10))
+      .filter(pid => !isNaN(pid))
+
+    // Verify each PID is actually a running pocketbase process
+    const validPids = pids.filter(isValidPocketbaseProcess)
+
+    if (validPids.length > 0) {
       if (exitOnError) {
         CLILoggingService.actionableError(
-          `PocketBase is already running (PID: ${pbInstanceNumber})`,
+          `PocketBase is already running (PID: ${validPids.join(', ')})`,
           'Stop the existing instance with "pkill -f pocketbase" before proceeding'
         )
         process.exit(1)
