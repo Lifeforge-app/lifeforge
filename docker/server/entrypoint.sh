@@ -10,5 +10,5 @@ echo "PocketBase is ready!"
 
 # Start the server
 echo "Starting server..."
-cd /app/server
+cd /lifeforge/server
 exec bun run start
