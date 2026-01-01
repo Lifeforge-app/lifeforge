@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: bun upgrade && bun install --linker isolated
 
+      - name: Initialize server with routes and schema
+        run: bun run forge chores setup-server-schema-and-routes
+
       - name: Type check server
         run: bun run forge types server
 
@@ -46,6 +49,9 @@ jobs:
 
       - name: Install dependencies
         run: bun upgrade && bun install --linker isolated
+
+      - name: Initialize client with routes and schema
+        run: bun run forge chores setup-client-schema-and-routes
 
       - name: Build client
         run: bun run forge build client
