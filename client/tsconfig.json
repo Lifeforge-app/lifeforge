@@ -41,7 +41,6 @@
   },
   "include": [
     "./src/**/*",
-    "../shared/src/providers/EncryptionProvider.tsx"
   ],
   "references": [
     {
