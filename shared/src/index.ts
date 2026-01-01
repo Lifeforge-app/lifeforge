@@ -12,6 +12,7 @@ export {
 } from 'nuqs'
 
 // Context providers
+export { useEncryption } from './providers/EncryptionProvider'
 export { useAPIEndpoint } from './providers/APIEndpointProvider'
 export { useAPIOnlineStatus } from './providers/APIOnlineStatusProvider'
 export { usePersonalization } from './providers/PersonalizationProvider'
