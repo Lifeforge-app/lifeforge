@@ -1,6 +1,9 @@
 import flattenSchemas from '@functions/utils/flattenSchema'
 
-export const SCHEMAS = {}
+export const SCHEMAS = {
+  user: (await import('@lib/user/schema')).default,
+  api_keys: (await import('@lib/apiKeys/schema')).default
+}
 
 const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS)
 

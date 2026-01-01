@@ -1,8 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 
-import CLILoggingService from './logging'
+import { validatePocketBaseNotInitialized } from '@/commands/db/functions/database-initialization/superuser'
 import { generateDatabaseSchemas } from '@/commands/modules/functions'
+
+import CLILoggingService from './logging'
 
 const ROOT_DIR = path.resolve(
   import.meta.dirname.split('tools')[0],
@@ -28,7 +30,11 @@ export default function initRouteAndSchemaFiles(): {
     CLILoggingService.info('schema.ts not found, creating from template...')
     fs.copyFileSync(path.join(templatesDir, 'example.schema.ts'), schemaPath)
 
-    generateDatabaseSchemas()
+    const pbInitialized = validatePocketBaseNotInitialized(false)
+
+    if (pbInitialized) {
+      generateDatabaseSchemas()
+    }
   }
 
   return {
