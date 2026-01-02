@@ -206,20 +206,24 @@ function SearchInput({
           )}
         </div>
       </search>
-      <Card
-        className={clsx(
-          'absolute top-2 w-full overflow-hidden p-0! transition-all',
-          shouldShowChildren
-            ? 'visible opacity-100'
-            : 'pointer-events-none invisible opacity-0'
-        )}
-        style={{ height: children && shouldShowChildren ? childrenHeight : 0 }}
-        onMouseDown={e => e.preventDefault()}
-      >
-        <div ref={childrenRef} className="p-4">
-          {children}
-        </div>
-      </Card>
+      {children && (
+        <Card
+          className={clsx(
+            'absolute top-2 w-full overflow-hidden p-0! transition-all',
+            shouldShowChildren
+              ? 'visible opacity-100'
+              : 'pointer-events-none invisible opacity-0'
+          )}
+          style={{
+            height: children && shouldShowChildren ? childrenHeight : 0
+          }}
+          onMouseDown={e => e.preventDefault()}
+        >
+          <div ref={childrenRef} className="p-4">
+            {children}
+          </div>
+        </Card>
+      )}
     </div>
   )
 }
