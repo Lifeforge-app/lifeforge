@@ -1,8 +1,9 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput, getFormFileFieldInitialData } from 'shared'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import { detectFontMetadata } from '../utils/detectFontMetadata'
 import type { CustomFont } from './FontFamilySelectorModal/tabs/CustomFontSelector'
@@ -42,7 +43,7 @@ function CustomFontUploadModal({
     title: `fontFamily.modals.customFonts.${openType === 'create' ? 'upload' : 'edit'}`,
     namespace: 'common.personalization',
     onClose,
-    submitButton: 'create'
+    submitButton: openType === 'create' ? 'create' : 'update'
   })
     .typesMap({
       file: 'file',
@@ -134,7 +135,7 @@ function CustomFontUploadModal({
       weight: initialData?.weight ?? 400
     })
     .onSubmit(async formData => {
-      if (!formData.file || !(formData.file instanceof File)) {
+      if (!formData.file) {
         throw new Error('Please select a font file')
       }
 
