@@ -7,3 +7,6 @@
 [submodule "apps/ideaBox"]
 	path = apps/ideaBox
 	url = https://github.com/lifeforge-app/lifeforge-module-ideaBox.git
+[submodule "apps/wallet"]
+	path = apps/wallet
+	url = https://github.com/lifeforge-app/lifeforge-module-wallet.git

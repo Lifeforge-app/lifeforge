@@ -7,7 +7,6 @@
 **/build
 
 # Development files
-**/.git
 **/.gitignore
 **/.env*
 !**/env/.env.docker.example
