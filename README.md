@@ -20,6 +20,13 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
 
 </div>
 
+<div align="center">
+<a href="README.md">🇬🇧 English</a>
+<a href="readme/README.zh-CN.md">🇨🇳 简体中文</a>
+<a href="readme/README.zh-TW.md">🇹🇼 繁體中文</a>
+<a href="readme/README.ms.md">🇲🇾 Bahasa Malaysia</a>
+</div>
+
 <h3 align="center">
   THIS PROJECT IS STILL IN EARLY DEVELOPMENT. FEATURES AND MODULES ARE SUBJECT TO CHANGE. PLEASE CHECK THE <a href="https://docs.lifeforge.dev/progress/changelog">DOCUMENTATION</a> FOR THE LATEST UPDATES.
 </h3>
@@ -40,6 +47,10 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
   - [Translation](#translation)
 - [💡 Credits](#-credits)
 - [📄 License](#-license)
+
+## 📚 Translations
+
+
 
 ## 🔥 Support the Author
 
