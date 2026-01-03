@@ -6,8 +6,6 @@ import path from 'path'
 import { PB_BINARY_PATH, PB_KWARGS, PB_MIGRATIONS_DIR } from '@/constants/db'
 import CLILoggingService from '@/utils/logging'
 
-
-
 /**
  * Cleans up old migrations
  */
@@ -15,7 +13,7 @@ export async function cleanupOldMigrations(
   targetModule?: string
 ): Promise<void> {
   try {
-    CLILoggingService.warn('Cleaning up old migrations directory...')
+    CLILoggingService.debug('Cleaning up old migrations directory...')
 
     if (!targetModule) {
       fs.rmSync(PB_MIGRATIONS_DIR, { recursive: true, force: true })
@@ -41,7 +39,7 @@ export async function cleanupOldMigrations(
         }
       )
 
-      CLILoggingService.info(
+      CLILoggingService.debug(
         `Removed ${chalk.bold.blue(
           migrationFiles.filter(file => file.endsWith(`_${targetModule}.js`))
             .length

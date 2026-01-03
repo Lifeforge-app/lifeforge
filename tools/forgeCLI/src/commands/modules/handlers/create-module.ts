@@ -5,8 +5,8 @@ import { runDatabaseMigrations } from '@/commands/db/functions/database-initiali
 import CLILoggingService from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
-import { generateDatabaseSchemas } from '../functions/migrations'
-import { installDependencies } from '../functions/module-lifecycle'
+import { installDependencies } from '../functions/install-dependencies'
+import { generateDatabaseSchemas } from '../functions/module-migrations'
 import {
   checkModuleTypeAvailability,
   promptForModuleName,
@@ -15,14 +15,13 @@ import {
   promptModuleType,
   selectIcon
 } from '../functions/prompts'
+import { generateModuleRegistries } from '../functions/registry/generator'
 import {
   type ModuleMetadata,
   copyTemplateFiles,
   initializeGitRepository,
   registerHandlebarsHelpers
 } from '../functions/templates'
-import { injectModuleRoute } from '../utils/route-injection'
-import { injectModuleSchema } from '../utils/schema-injection'
 
 registerHandlebarsHelpers()
 
@@ -57,8 +56,8 @@ export async function createModuleHandler(moduleName?: string): Promise<void> {
 
   installDependencies(`${process.cwd()}/apps`)
 
-  injectModuleRoute(camelizedModuleName)
-  injectModuleSchema(camelizedModuleName)
+  // Regenerate registries to include the new module
+  generateModuleRegistries()
 
   if (
     fs.existsSync(
