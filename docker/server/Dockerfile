@@ -16,6 +16,11 @@ COPY apps apps
 COPY locales locales
 COPY tsconfig.json tsconfig.json
 
+# We must COPY the .git directory to run git commands
+# Not a best practice, but necessary for lifeforge modules
+COPY .git .git
+COPY .gitmodules .gitmodules
+
 # Create a Docker-specific package.json with only needed workspaces
 RUN echo '{"workspaces": ["./shared", "./packages/*", "./apps/*", "./server", "./tools/forgeCLI"]}' > package.json
 
@@ -25,6 +30,9 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
 
 # Production stage
 FROM oven/bun:alpine
+
+# Install git here so it's available at runtime
+RUN apk add --no-cache git
 
 WORKDIR /lifeforge
 
@@ -38,6 +46,10 @@ COPY --from=builder /lifeforge/locales locales
 COPY --from=builder /lifeforge/tools/forgeCLI tools/forgeCLI
 COPY --from=builder /lifeforge/tsconfig.json tsconfig.json
 COPY --from=builder /lifeforge/package.json package.json
+
+# We must COPY the .git directory to run git commands
+COPY --from=builder /lifeforge/.git /lifeforge/.git
+COPY --from=builder /lifeforge/.gitmodules /lifeforge/.gitmodules
 
 # Copy entrypoint script
 COPY docker/server/entrypoint.sh /entrypoint.sh

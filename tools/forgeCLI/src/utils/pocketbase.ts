@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import { spawn, spawnSync } from 'child_process'
 import PocketBase from 'pocketbase'
 
+import { downloadPocketBaseBinary } from '@/commands/db/functions/database-initialization/download-pocketbase'
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import { executeCommand } from '@/utils/helpers'
 import { getEnvVars } from '@/utils/helpers'
@@ -129,6 +130,14 @@ export async function startPocketbase(): Promise<(() => void) | null> {
     }
 
     CLILoggingService.step('Starting PocketBase server...')
+
+	// Check if PocketBase binary exists, if not download it
+	if (!spawnSync('which', [PB_BINARY_PATH]).stdout.toString().trim()) {
+	  CLILoggingService.step(
+		'PocketBase binary not found, downloading the binary...'
+	  )
+	  await downloadPocketBaseBinary()
+	}
 
     const pbPid = await startPBServer()
 
