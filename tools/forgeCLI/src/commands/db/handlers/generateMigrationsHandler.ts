@@ -60,7 +60,7 @@ export async function generateMigrationsHandler(
 
     const schemaFiles = getSchemaFiles(targetModule)
 
-    CLILoggingService.info(
+    CLILoggingService.debug(
       targetModule
         ? `Processing module: ${chalk.bold.blue(targetModule)}`
         : `Found ${chalk.bold.blue(schemaFiles.length)} schema files.`
@@ -76,7 +76,7 @@ export async function generateMigrationsHandler(
     )
 
     // Phase 1: Generate all skeleton migrations
-    CLILoggingService.step('Phase 1: Creating skeleton migrations...')
+    CLILoggingService.debug('Phase 1: Creating skeleton migrations...')
 
     for (const { moduleName, schema } of importedSchemas) {
       const result = await createSkeletonMigration(moduleName, schema)
@@ -90,16 +90,16 @@ export async function generateMigrationsHandler(
       }
     }
 
-    CLILoggingService.success(
+    CLILoggingService.debug(
       `Created ${importedSchemas.length} skeleton migrations`
     )
 
     // Phase 2: Run migrate up to apply skeleton migrations
-    CLILoggingService.step('Phase 2: Applying skeleton migrations...')
+    CLILoggingService.debug('Phase 2: Applying skeleton migrations...')
     runMigrateUp()
 
     // Phase 3: Generate all structure migrations
-    CLILoggingService.step('Phase 3: Creating structure migrations...')
+    CLILoggingService.debug('Phase 3: Creating structure migrations...')
 
     for (const { moduleName, schema } of importedSchemas) {
       const result = await createStructureMigration(
@@ -117,16 +117,16 @@ export async function generateMigrationsHandler(
       }
     }
 
-    CLILoggingService.success(
+    CLILoggingService.debug(
       `Created ${importedSchemas.length} structure migrations`
     )
 
     // Phase 4: Run migrate up to apply structure migrations
-    CLILoggingService.step('Phase 4: Applying structure migrations...')
+    CLILoggingService.debug('Phase 4: Applying structure migrations...')
     runMigrateUp()
 
     // Phase 5: Generate view query migrations (for modules with view collections)
-    CLILoggingService.step('Phase 5: Creating view query migrations...')
+    CLILoggingService.debug('Phase 5: Creating view query migrations...')
 
     let viewMigrationCount = 0
 
@@ -147,23 +147,23 @@ export async function generateMigrationsHandler(
     }
 
     if (viewMigrationCount > 0) {
-      CLILoggingService.success(
+      CLILoggingService.debug(
         `Created ${viewMigrationCount} view query migrations`
       )
 
       // Phase 6: Apply view query migrations
-      CLILoggingService.step('Phase 6: Applying view query migrations...')
+      CLILoggingService.debug('Phase 6: Applying view query migrations...')
       runMigrateUp()
     } else {
-      CLILoggingService.info(
+      CLILoggingService.debug(
         'No view collections found, skipping view migrations'
       )
     }
 
     // Summary
     const message = targetModule
-      ? `Migration script completed for module ${chalk.bold.blue(targetModule)}`
-      : 'Migration script completed for all modules'
+      ? `Database migrations applied for ${chalk.bold.blue(targetModule)}`
+      : 'Database migrations applied for all modules'
 
     CLILoggingService.success(message)
   } catch (error) {
