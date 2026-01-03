@@ -141,13 +141,13 @@ export async function createStructureMigration(
  * Runs migrate up to apply pending migrations
  */
 export function runMigrateUp(): void {
-  CLILoggingService.info('Applying pending migrations...')
+  CLILoggingService.debug('Applying pending migrations...')
 
   execSync(`${PB_BINARY_PATH} migrate up ${PB_KWARGS.join(' ')}`, {
     stdio: ['pipe', 'pipe', 'pipe']
   })
 
-  CLILoggingService.success('Migrations applied successfully')
+  CLILoggingService.debug('Migrations applied successfully')
 }
 
 /**
