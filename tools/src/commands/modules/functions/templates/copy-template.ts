@@ -2,7 +2,7 @@ import fs from 'fs'
 import Handlebars from 'handlebars'
 import _ from 'lodash'
 
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../../../constants/constants'
 
@@ -74,7 +74,7 @@ export function renameTsConfigFile(moduleDir: string): void {
 }
 
 export function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
-  CLILoggingService.step(`Creating module "${moduleMetadata.moduleName.en}"...`)
+  Logging.step(`Creating module "${moduleMetadata.moduleName.en}"...`)
 
   const templateDir = `${process.cwd()}/tools/src/templates/${moduleMetadata.moduleType}`
 
@@ -90,7 +90,7 @@ export function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
 
   renameTsConfigFile(destinationDir)
 
-  CLILoggingService.success(
+  Logging.success(
     `Module "${moduleMetadata.moduleName.en}" created successfully at ${destinationDir}`
   )
 }

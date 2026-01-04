@@ -4,7 +4,7 @@ import path from 'path'
 
 import { LOG_LEVELS } from '@/constants/constants'
 
-import CLILoggingService from '../utils/logging'
+import Logging from '../utils/logging'
 import { configureHelp } from './help'
 
 function getVersion(): string {
@@ -52,7 +52,7 @@ export async function setupCLI(): Promise<void> {
       const level = thisCommand.opts().logLevel as (typeof LOG_LEVELS)[number]
 
       if (LOG_LEVELS.includes(level)) {
-        CLILoggingService.setLevel(level)
+        Logging.setLevel(level)
       }
     })
 

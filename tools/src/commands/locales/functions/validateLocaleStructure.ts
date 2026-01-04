@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 interface LocalePackageJson {
   name?: string
@@ -55,11 +55,11 @@ export function validateLocaleStructure(localePath: string) {
   }
 
   if (errors.length > 0) {
-    CLILoggingService.error('Locale validation failed:')
-    errors.forEach(err => CLILoggingService.error(`  - ${err}`))
+    Logging.error('Locale validation failed:')
+    errors.forEach(err => Logging.error(`  - ${err}`))
 
     process.exit(1)
   }
 
-  warnings.forEach(warn => CLILoggingService.warn(`  - ${warn}`))
+  warnings.forEach(warn => Logging.warn(`  - ${warn}`))
 }

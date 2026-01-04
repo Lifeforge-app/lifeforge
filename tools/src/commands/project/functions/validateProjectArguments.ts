@@ -1,4 +1,4 @@
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { PROJECTS } from '../constants/projects'
 
@@ -26,7 +26,7 @@ export function validateProjectArguments(projects: string[] | undefined): void {
   const validation = validateProjects(projects, validProjects)
 
   if (!validation.isValid) {
-    CLILoggingService.options(
+    Logging.options(
       `Invalid project(s): ${validation.invalidProjects.join(', ')}`,
       validProjects
     )

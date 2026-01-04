@@ -1,4 +1,4 @@
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 import { getRegistryUrl } from '@/utils/registry'
 
 interface LocaleUpgrade {
@@ -47,15 +47,13 @@ async function getUpgrades(
   }
 
   if (!upgrades.length) {
-    CLILoggingService.success('All locales are up to date!')
+    Logging.success('All locales are up to date!')
 
     process.exit(0)
   }
 
-  CLILoggingService.info('Available upgrades:')
-  upgrades.forEach(u =>
-    CLILoggingService.info(`  ${u.name}: ${u.current} → ${u.latest}`)
-  )
+  Logging.info('Available upgrades:')
+  upgrades.forEach(u => Logging.info(`  ${u.name}: ${u.current} → ${u.latest}`))
 
   return upgrades
 }

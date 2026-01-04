@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 import { executeCommand } from '@/utils/helpers'
-import { addWorkspaceDependency } from '@/utils/package'
+import { addDependency } from '@/utils/packageJson'
 
 function installAndMoveLocales(fullPackageName: string, targetDir: string) {
   if (fs.existsSync(targetDir)) {
@@ -21,7 +21,7 @@ function installAndMoveLocales(fullPackageName: string, targetDir: string) {
 
   fs.cpSync(installedPath, targetDir, { recursive: true })
 
-  addWorkspaceDependency(fullPackageName)
+  addDependency(fullPackageName)
 
   fs.rmSync(installedPath, { recursive: true, force: true })
   executeCommand('bun install', { cwd: process.cwd(), stdio: 'inherit' })

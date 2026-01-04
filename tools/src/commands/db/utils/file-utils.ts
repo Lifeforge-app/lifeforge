@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import prettier from 'prettier'
 
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { PRETTIER_OPTIONS } from './constants'
 
@@ -18,7 +18,7 @@ export async function writeFormattedFile(
 
     fs.writeFileSync(filePath, formattedContent)
   } catch (error) {
-    CLILoggingService.error(`Failed to write file ${filePath}: ${error}`)
+    Logging.error(`Failed to write file ${filePath}: ${error}`)
     throw error
   }
 }
@@ -55,7 +55,7 @@ export function getSchemaFiles(targetModule?: string): string[] {
       .map((schemaPath: string) => getModuleName(schemaPath))
       .join(', ')
 
-    CLILoggingService.error(
+    Logging.error(
       `Module "${targetModule}" not found. Available modules: ${availableModules}`
     )
     process.exit(1)

@@ -2,8 +2,8 @@ import chalk from 'chalk'
 import _ from 'lodash'
 import path from 'path'
 
-import { parseCollectionName } from '@/commands/modules/functions/registry/namespace-utils'
-import CLILoggingService from '@/utils/logging'
+import { parseCollectionName } from '@/commands/modules/functions/registry/namespaceUtils'
+import Logging from '@/utils/logging'
 
 import { generateCollectionSchema, stripCollectionIds } from './field-converter'
 
@@ -25,7 +25,7 @@ export function generateModuleSchemaContent(
 
     const fields = collection.fields as Array<Record<string, unknown>>
 
-    CLILoggingService.debug(
+    Logging.debug(
       `Processing collection ${chalk.bold(collectionName)} with ${fields.length} fields`
     )
 
@@ -48,7 +48,7 @@ export function generateModuleSchemaContent(
         raw: ${JSON.stringify(cleanedCollection, null, 2)}
       },`)
 
-    CLILoggingService.info(
+    Logging.info(
       `Generated schema for collection ${chalk.bold(collectionName)}`
     )
   }

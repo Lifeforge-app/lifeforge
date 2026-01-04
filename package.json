@@ -18,7 +18,7 @@
     "./packages/*",
     "./apps/*",
     "./locales/*",
-    "./tools/*"
+    "./tools"
   ],
   "scripts": {
     "forge": "bun run tools/src/index.ts"
@@ -64,6 +64,7 @@
     "@lifeforge/lifeforge--achievements": "workspace:*",
     "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*",
     "@lifeforge/lifeforge--calendar": "workspace:*",
+    "@lifeforge/lifeforge--movies": "workspace:*",
     "@lifeforge/melvinchia3636--invoice-maker": "workspace:*"
   }
 }

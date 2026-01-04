@@ -5,9 +5,7 @@ import path from 'path'
 import prompts from 'prompts'
 
 import type { CommandExecutionOptions } from '../types'
-import CLILoggingService from './logging'
-
-
+import Logging from './logging'
 
 /**
  * Executes a shell command with proper error handling
@@ -22,7 +20,7 @@ export function executeCommand(
   try {
     cmd = typeof command === 'function' ? command() : command
   } catch (error) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Failed to generate command: ${error}`,
       'Check the command generation logic for errors'
     )
@@ -30,7 +28,7 @@ export function executeCommand(
   }
 
   try {
-    CLILoggingService.debug(`Executing: ${cmd}`)
+    Logging.debug(`Executing: ${cmd}`)
 
     const [toBeExecuted, ...args] = cmd.split(' ')
 
@@ -50,7 +48,7 @@ export function executeCommand(
     }
 
     if (!options.stdio || options.stdio === 'inherit') {
-      CLILoggingService.debug(`Completed: ${cmd}`)
+      Logging.debug(`Completed: ${cmd}`)
     }
 
     return result.stdout?.toString().trim() || ''
@@ -59,11 +57,11 @@ export function executeCommand(
       throw error
     }
 
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Command execution failed: ${cmd}`,
       'Check if the command exists and you have the necessary permissions'
     )
-    CLILoggingService.debug(`Error details: ${error}`)
+    Logging.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }
@@ -89,7 +87,7 @@ export function getEnvVars<const T extends readonly string[]>(
   }
 
   if (missing.length > 0) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Missing required environment variables: ${missing.join(', ')}`,
       'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
     )
@@ -110,7 +108,7 @@ export function getEnvVar(varName: string, fallback?: string): string {
     return fallback
   }
 
-  CLILoggingService.actionableError(
+  Logging.actionableError(
     `Missing required environment variable: ${varName}`,
     'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
   )
@@ -128,7 +126,7 @@ export function formatProjectList(projects: string[]): string {
  * Logs a process start message
  */
 export function logProcessStart(processType: string, projects: string[]): void {
-  CLILoggingService.step(
+  Logging.step(
     `Running ${processType} for ${projects.length} project(s): ${formatProjectList(projects)}`
   )
 }
@@ -137,9 +135,7 @@ export function logProcessStart(processType: string, projects: string[]): void {
  * Logs a process completion message
  */
 export function logProcessComplete(processType: string): void {
-  CLILoggingService.success(
-    `All projects ${processType} completed successfully`
-  )
+  Logging.success(`All projects ${processType} completed successfully`)
 }
 
 /**
@@ -152,7 +148,7 @@ export function killExistingProcess(
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
 
-      CLILoggingService.debug(
+      Logging.debug(
         `Killed process with PID: ${chalk.bold.blue(processKeywordOrPID)}`
       )
 
@@ -167,7 +163,7 @@ export function killExistingProcess(
     if (serverInstance) {
       executeCommand(`pkill -f "${processKeywordOrPID}"`)
 
-      CLILoggingService.debug(
+      Logging.debug(
         `Killed process matching keyword: ${chalk.bold.blue(
           processKeywordOrPID
         )} (PID: ${chalk.bold.blue(serverInstance)})`
@@ -196,23 +192,19 @@ export function validateFilePaths(
     const fullPath = path.resolve(basedir, pth)
 
     if (!fs.existsSync(fullPath)) {
-      CLILoggingService.error(
-        `Invalid module structure detected: ${pth} does not exist`
-      )
+      Logging.error(`Invalid module structure detected: ${pth} does not exist`)
       process.exit(1)
     }
 
     const stats = fs.lstatSync(fullPath)
 
     if (type === 'file' && !stats.isFile()) {
-      CLILoggingService.error(
-        `Invalid module structure detected: ${pth} is not a file`
-      )
+      Logging.error(`Invalid module structure detected: ${pth} is not a file`)
       process.exit(1)
     }
 
     if (type === 'directory' && !stats.isDirectory()) {
-      CLILoggingService.error(
+      Logging.error(
         `Invalid module structure detected: ${pth} is not a directory`
       )
       process.exit(1)

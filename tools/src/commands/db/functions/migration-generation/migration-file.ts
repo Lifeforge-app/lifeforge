@@ -4,7 +4,7 @@ import fs from 'fs'
 import prettier from 'prettier'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { PRETTIER_OPTIONS } from '../../utils'
 import {
@@ -84,7 +84,7 @@ export async function createSkeletonMigration(
       throw new Error(`Skeleton migration failed: ${result.error}`)
     }
 
-    CLILoggingService.debug(
+    Logging.debug(
       `Created skeleton migration for ${chalk.bold.blue(moduleName)}`
     )
 
@@ -92,7 +92,7 @@ export async function createSkeletonMigration(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
 
-    CLILoggingService.error(
+    Logging.error(
       `Failed to create skeleton migration for ${chalk.bold.blue(moduleName)}: ${errorMessage}`
     )
 
@@ -121,7 +121,7 @@ export async function createStructureMigration(
       throw new Error(`Structure migration failed: ${result.error}`)
     }
 
-    CLILoggingService.debug(
+    Logging.debug(
       `Created structure migration for ${chalk.bold.blue(moduleName)}`
     )
 
@@ -129,7 +129,7 @@ export async function createStructureMigration(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
 
-    CLILoggingService.error(
+    Logging.error(
       `Failed to create structure migration for ${chalk.bold.blue(moduleName)}: ${errorMessage}`
     )
 
@@ -141,13 +141,13 @@ export async function createStructureMigration(
  * Runs migrate up to apply pending migrations
  */
 export function runMigrateUp(): void {
-  CLILoggingService.debug('Applying pending migrations...')
+  Logging.debug('Applying pending migrations...')
 
   execSync(`${PB_BINARY_PATH} migrate up ${PB_KWARGS.join(' ')}`, {
     stdio: ['pipe', 'pipe', 'pipe']
   })
 
-  CLILoggingService.debug('Migrations applied successfully')
+  Logging.debug('Migrations applied successfully')
 }
 
 /**
@@ -174,7 +174,7 @@ export async function createViewQueryMigration(
       throw new Error(`View query migration failed: ${result.error}`)
     }
 
-    CLILoggingService.debug(
+    Logging.debug(
       `Created view query migration for ${chalk.bold.blue(moduleName)}`
     )
 
@@ -182,7 +182,7 @@ export async function createViewQueryMigration(
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error)
 
-    CLILoggingService.error(
+    Logging.error(
       `Failed to create view query migration for ${chalk.bold.blue(moduleName)}: ${errorMessage}`
     )
 
