@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
 import { isDockerMode } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 import getPBInstance from '@/utils/pocketbase'
 
 import { buildModuleCollectionsMap } from '../functions/schema-generation/module-mapper'
@@ -14,11 +14,11 @@ export async function generateSchemaHandler(
   targetModule?: string
 ): Promise<void> {
   try {
-    CLILoggingService.info('Starting schema generation process...')
+    Logging.info('Starting schema generation process...')
 
     const { pb, killPB } = await getPBInstance(!isDockerMode())
 
-    CLILoggingService.debug('Fetching collections from PocketBase...')
+    Logging.debug('Fetching collections from PocketBase...')
 
     const allCollections = await pb.collections.getFullList()
 
@@ -26,9 +26,7 @@ export async function generateSchemaHandler(
       collection => !collection.system
     )
 
-    CLILoggingService.info(
-      `Found ${userCollections.length} user-defined collections`
-    )
+    Logging.info(`Found ${userCollections.length} user-defined collections`)
 
     // Build ID-to-name map for all collections (including system)
     // This allows relation fields to reference collections by name instead of ID
@@ -52,7 +50,7 @@ export async function generateSchemaHandler(
 
     const moduleCount = Object.keys(moduleSchemas).length
 
-    CLILoggingService.info(
+    Logging.info(
       targetModule
         ? `Schema generation completed for module ${chalk.bold.blue(targetModule)}!`
         : `Schema generation completed! Created ${moduleCount} module schema files.`
@@ -60,7 +58,7 @@ export async function generateSchemaHandler(
 
     killPB?.()
   } catch (error) {
-    CLILoggingService.error(`Schema generation failed: ${error}`)
+    Logging.error(`Schema generation failed: ${error}`)
     process.exit(1)
   }
 }

@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { executeCommand } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 export function getRegistryUrl(): string {
   const bunfigPath = path.join(process.cwd(), 'bunfig.toml')
@@ -55,25 +55,41 @@ export async function checkAuth(): Promise<{
     const username = result?.toString().trim()
 
     if (username) {
+      Logging.success(`Authenticated as ${username}`)
+
       return { authenticated: true, username }
     }
 
     throw new Error('Not authenticated')
   } catch {
-    CLILoggingService.warn('Not authenticated. Please login first.')
-    openRegistryLogin()
+    Logging.warn('Not authenticated. Please login first.')
 
     process.exit(1)
   }
 }
 
-export function openRegistryLogin(): void {
+export async function getPackageLatestVersion(
+  packageName: string
+): Promise<string | null> {
   const registry = getRegistryUrl()
 
-  const loginUrl = registry.replace(/\/$/, '')
+  try {
+    const targetURL = new URL(registry)
 
-  executeCommand(`open "${loginUrl}"`, {
-    cwd: process.cwd(),
-    stdio: 'ignore'
-  })
+    targetURL.pathname = packageName
+
+    const response = await fetch(targetURL.toString())
+
+    if (!response.ok) {
+      return null
+    }
+
+    const data = (await response.json()) as {
+      'dist-tags'?: { latest?: string }
+    }
+
+    return data['dist-tags']?.latest || null
+  } catch {
+    return null
+  }
 }

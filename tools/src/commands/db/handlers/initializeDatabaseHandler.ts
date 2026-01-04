@@ -1,5 +1,5 @@
 import { getEnvVars } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
 import { downloadPocketBaseBinary } from '../functions/database-initialization/download-pocketbase'
@@ -23,7 +23,7 @@ export async function initializeDatabaseHandler() {
   createPocketBaseSuperuser(PB_EMAIL, PB_PASSWORD)
   runDatabaseMigrations()
 
-  CLILoggingService.success(
+  Logging.success(
     'Setup process complete. You can now start the PocketBase server with `bun forge dev db`'
   )
 }

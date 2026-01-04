@@ -2,9 +2,9 @@ import prompts from 'prompts'
 import z from 'zod'
 
 import { fetchAI } from '@/utils/ai'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
-import { getInstalledModules } from '../../utils/file-system'
+import listModules from '../listModules'
 
 export async function promptForModuleName(moduleName?: string): Promise<{
   en: string
@@ -13,7 +13,7 @@ export async function promptForModuleName(moduleName?: string): Promise<{
   zhTW: string
 }> {
   if (!moduleName) {
-    const availableModules = getInstalledModules()
+    const availableModules = Object.keys(listModules())
 
     const response = await prompts(
       {
@@ -34,7 +34,7 @@ export async function promptForModuleName(moduleName?: string): Promise<{
       },
       {
         onCancel: () => {
-          CLILoggingService.error('Module creation cancelled by user.')
+          Logging.error('Module creation cancelled by user.')
           process.exit(0)
         }
       }
@@ -64,7 +64,7 @@ export async function promptForModuleName(moduleName?: string): Promise<{
   })
 
   if (!translationResponse) {
-    CLILoggingService.warn(
+    Logging.warn(
       "Failed to translate module name. Please edit it manually in the module's localization files."
     )
 
@@ -77,7 +77,7 @@ export async function promptForModuleName(moduleName?: string): Promise<{
   }
 
   for (const [key, value] of Object.entries(translationResponse)) {
-    CLILoggingService.debug(`Translated module name [${key}]: ${value}`)
+    Logging.debug(`Translated module name [${key}]: ${value}`)
   }
 
   return {

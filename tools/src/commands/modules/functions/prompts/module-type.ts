@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import prompts from 'prompts'
 
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../../../constants/constants'
 
@@ -23,7 +23,7 @@ export async function promptModuleType(): Promise<
     },
     {
       onCancel: () => {
-        CLILoggingService.error('Module creation cancelled by user.')
+        Logging.error('Module creation cancelled by user.')
         process.exit(0)
       }
     }
@@ -38,26 +38,26 @@ export function checkModuleTypeAvailability(
   const templateDir = `${process.cwd()}/tools/src/templates/${moduleType}`
 
   if (!fs.existsSync(templateDir)) {
-    CLILoggingService.error(
+    Logging.error(
       `Template for module type "${moduleType}" does not exist at path: ${templateDir}`
     )
     process.exit(1)
   }
 
-  CLILoggingService.debug(
+  Logging.debug(
     `Template for module type "${moduleType}" found at path: ${templateDir}`
   )
 
   const files = fs.readdirSync(templateDir)
 
   if (files.length === 0) {
-    CLILoggingService.error(
+    Logging.error(
       `Template directory for module type "${moduleType}" is empty at path: ${templateDir}`
     )
     process.exit(1)
   }
 
-  CLILoggingService.debug(
+  Logging.debug(
     `Template for module type "${moduleType}" is available and ready to use.`
   )
 }

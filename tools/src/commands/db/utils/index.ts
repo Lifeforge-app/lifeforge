@@ -5,8 +5,6 @@ export {
   importSchemaModules
 } from './file-utils'
 
-export { cleanupOldMigrations } from './pocketbase-utils'
-
 export {
   FIELD_TYPE_MAPPING,
   PRETTIER_OPTIONS,
