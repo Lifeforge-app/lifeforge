@@ -53,8 +53,5 @@ env/*
 keys
 
 # # module and locale packages (installed from registry)
-# # Note: Tailwind still scans these via @source directives in index.css
 apps/*
-!apps/.gitkeep
 locales/*
-!locales/.gitkeep
