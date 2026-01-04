@@ -77,7 +77,7 @@ function InvoiceMaker() {
             className="hidden md:flex"
             icon="tabler:plus"
             namespace="apps.melvinchia3636__invoiceMaker"
-            onClick={() => navigate('/invoice-maker/modify')}
+            onClick={() => navigate('/melvinchia3636--invoice-maker/modify')}
           >
             New Invoice
           </Button>
@@ -169,7 +169,7 @@ function InvoiceMaker() {
       <FAB
         className="fixed right-6 bottom-6 md:hidden"
         icon="tabler:plus"
-        onClick={() => navigate('/invoice-maker/modify')}
+        onClick={() => navigate('/melvinchia3636--invoice-maker/modify')}
       />
     </>
   )

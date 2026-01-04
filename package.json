@@ -21,7 +21,7 @@
     "./tools/*"
   ],
   "scripts": {
-    "forge": "bun run tools/forgeCLI/src/index.ts"
+    "forge": "bun run tools/src/index.ts"
   },
   "keywords": [
     "bun",

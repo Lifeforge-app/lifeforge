@@ -120,7 +120,7 @@ function InvoiceEditorProvider({ children }: { children: React.ReactNode }) {
       onSuccess: () => {
         qc.invalidateQueries({ queryKey: ['invoiceMaker', 'invoices'] })
         toast.success(t('toast.invoiceCreated'))
-        navigate('/invoice-maker')
+        navigate('/melvinchia3636--invoice-maker')
       }
     })
   )
@@ -134,7 +134,7 @@ function InvoiceEditorProvider({ children }: { children: React.ReactNode }) {
         onSuccess: () => {
           qc.invalidateQueries({ queryKey: ['invoiceMaker', 'invoices'] })
           toast.success(t('toast.invoiceUpdated'))
-          navigate('/invoice-maker')
+          navigate('/melvinchia3636--invoice-maker')
         }
       })
   )

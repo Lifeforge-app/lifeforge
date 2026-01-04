@@ -17,7 +17,9 @@ function ModifyInvoiceContent() {
 
   return (
     <>
-      <GoBackButton onClick={() => navigate('/invoice-maker')} />
+      <GoBackButton
+        onClick={() => navigate('/melvinchia3636--invoice-maker')}
+      />
       <Header />
       <div className="w-full space-y-6 pb-8">
         <TopInfoSection />
