@@ -18,10 +18,7 @@ pocketbase
 pb_*/
 medium
 .temp
-server/src/core/routes/app.routes.ts
-server/src/core/routes/generated-routes.ts
-server/src/core/schema.ts
-client/src/module-registry.ts
+server/src/generated
 
 # system files
 Thumbs.db
@@ -57,7 +54,7 @@ keys
 
 # # module and locale packages (installed from registry)
 # # Note: Tailwind still scans these via @source directives in index.css
-# apps/*
-# !apps/.gitkeep
-# locales/*
-# !locales/.gitkeep
+apps/*
+!apps/.gitkeep
+locales/*
+!locales/.gitkeep
