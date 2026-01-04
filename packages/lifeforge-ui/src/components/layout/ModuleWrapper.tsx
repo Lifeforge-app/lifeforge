@@ -9,11 +9,12 @@ import ModuleSidebarStateProvider from './ModuleSidebarStateProvider'
 
 function ModuleWrapper({
   children,
-  config: { title, icon, clearQueryOnUnmount = true }
+  config: { title, displayName, icon, clearQueryOnUnmount = true }
 }: {
   children: React.ReactNode
   config: {
     title: string
+    displayName?: string
     icon: string
     clearQueryOnUnmount: boolean
   }
@@ -31,7 +32,7 @@ function ModuleWrapper({
   }, [queryClient, clearQueryOnUnmount, title])
 
   return (
-    <ModuleHeaderStateContext value={{ title, icon }}>
+    <ModuleHeaderStateContext value={{ title: displayName ?? title, icon }}>
       <ModuleSidebarStateProvider>
         <Scrollbar
           className="no-overflow-x flex min-h-0 flex-col transition-all"

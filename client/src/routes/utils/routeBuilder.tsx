@@ -1,7 +1,6 @@
 import { LoadingScreen, ModalManager, ModuleWrapper } from 'lifeforge-ui'
-import _ from 'lodash'
 import { Suspense } from 'react'
-import type { RouteObject } from 'shared'
+import type { ModuleCategory, RouteObject } from 'shared'
 import type { ModuleConfig } from 'shared'
 
 import APIKeyStatusProvider from '@/providers/features/APIKeyStatusProvider'
@@ -10,9 +9,10 @@ interface RouteBuilderOptions {
   routes: ModuleConfig['routes']
   loadingMessage: string
   isNested?: boolean
-  APIKeyAccess?: ModuleConfig['APIKeyAccess']
+  APIKeyAccess?: Record<string, { usage: string; required: boolean }>
   config: {
     title: string
+    displayName: string
     icon: string
     clearQueryOnUnmount: boolean
   }
@@ -55,7 +55,7 @@ export function buildChildRoutes({
  * Creates route configuration for a module with optional provider wrapper
  */
 export function createModuleRoute(
-  item: ModuleConfig,
+  item: ModuleCategory['items'][number],
   loadingMessage: string
 ): RouteObject | RouteObject[] {
   const routeConfig = {
@@ -63,6 +63,7 @@ export function createModuleRoute(
     APIKeyAccess: item.APIKeyAccess,
     config: {
       title: item.name,
+      displayName: item.displayName,
       icon: item.icon,
       clearQueryOnUnmount: item.clearQueryOnUnmount ?? true
     },
@@ -73,14 +74,14 @@ export function createModuleRoute(
     const Provider = item.provider
 
     return {
-      path: `/${_.kebabCase(item.name)}`,
+      path: `/${item.name.startsWith('lifeforge--') ? item.name.split('--')[1] : item.name}`,
       element: <Provider />,
       children: buildChildRoutes(routeConfig)
     }
   }
 
   return {
-    path: `/${_.kebabCase(item.name)}`,
+    path: `/${item.name.startsWith('lifeforge--') ? item.name.split('--')[1] : item.name}`,
     children: buildChildRoutes(routeConfig)
   }
 }

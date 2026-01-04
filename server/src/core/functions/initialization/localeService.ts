@@ -58,7 +58,9 @@ export class LocaleService {
       process.exit(1)
     }
 
-    this.languagePacks = fs.readdirSync(LANGUAGE_PACK_PATH)
+    this.languagePacks = fs
+      .readdirSync(LANGUAGE_PACK_PATH)
+      .filter(e => e !== '.gitkeep')
 
     if (!this.languagePacks.length) {
       LoggingService.error(
@@ -83,29 +85,41 @@ export class LocaleService {
     }
 
     this.langManifests = this.languagePacks.map(e => {
-      const manifestPath = path.join(LANGUAGE_PACK_PATH, e, 'manifest.json')
+      const packagePath = path.join(LANGUAGE_PACK_PATH, e, 'package.json')
 
-      if (!fs.existsSync(manifestPath)) {
+      if (!fs.existsSync(packagePath)) {
         LoggingService.error(
-          `Language pack ${e} does not have a manifest file. Please check the language pack path.`,
+          `Language pack ${e} does not have a package.json file. Please check the language pack path.`,
           'LOCALES'
         )
 
         process.exit(1)
       }
 
-      const content = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'))
+      const content = JSON.parse(fs.readFileSync(packagePath, 'utf-8'))
 
-      if (['name', 'icon', 'displayName'].some(e => !content[e])) {
+      if (
+        !content.name ||
+        !content.lifeforge?.displayName ||
+        !content.lifeforge?.icon
+      ) {
         LoggingService.error(
-          `Language pack ${e} does not have a name, icon, or displayName. Please check the language pack path.`,
+          `Language pack ${e} does not have a valid package.json. Required fields: name, lifeforge.displayName, lifeforge.icon`,
           'LOCALES'
         )
 
         process.exit(1)
       }
 
-      return content
+      // Extract language code from package name (e.g., "@lifeforge/lang-en" -> "en")
+      const langCode = content.name.replace('@lifeforge/lang-', '')
+
+      return {
+        name: langCode,
+        icon: content.lifeforge.icon,
+        displayName: content.lifeforge.displayName,
+        alternative: content.lifeforge.alternative
+      }
     })
 
     this.systemLocales = Object.fromEntries(
@@ -113,7 +127,7 @@ export class LocaleService {
         try {
           const languagePackContent = fs
             .readdirSync(path.join(LANGUAGE_PACK_PATH, lang))
-            .filter(e => e !== '.git')
+            .filter(e => e !== '.git' && e !== 'package.json')
 
           for (const item of languagePackContent) {
             const itemPath = path.join(LANGUAGE_PACK_PATH, lang, item)
@@ -131,17 +145,15 @@ export class LocaleService {
           return [
             lang,
             Object.fromEntries(
-              languagePackContent
-                .filter(file => file !== 'manifest.json')
-                .map(file => [
-                  file.replace('.json', ''),
-                  JSON.parse(
-                    fs.readFileSync(
-                      path.join(LANGUAGE_PACK_PATH, lang, file),
-                      'utf-8'
-                    )
+              languagePackContent.map(file => [
+                file.replace('.json', ''),
+                JSON.parse(
+                  fs.readFileSync(
+                    path.join(LANGUAGE_PACK_PATH, lang, file),
+                    'utf-8'
                   )
-                ])
+                )
+              ])
             )
           ]
         } catch (e) {

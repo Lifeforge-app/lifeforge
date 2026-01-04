@@ -1,0 +1,103 @@
+{
+  "title": "发票生成器",
+  "description": "帮助生成整洁专业的发票的实用工具",
+  "sidebar": {
+    "allInvoices": "所有发票",
+    "filteredInvoices": "已过滤的发票",
+    "status": "状态",
+    "clients": "客户",
+    "allClients": "所有客户"
+  },
+  "buttons": {
+    "newInvoice": "新建发票",
+    "createInvoice": "创建发票",
+    "saveInvoice": "保存发票",
+    "downloadPdf": "下载 PDF",
+    "duplicate": "克隆发票",
+    "manageClients": "管理客户",
+    "settings": "设置"
+  },
+  "pages": {
+    "newInvoice": "新建发票",
+    "editInvoice": "编辑发票"
+  },
+  "inputs": {
+    "billTo": "开票给",
+    "date": "日期",
+    "dueDate": "到期日",
+    "paymentTerms": "付款条款",
+    "poNumber": "采购单号",
+    "item": "项目",
+    "quantity": "数量",
+    "rate": "单价",
+    "amount": "金额",
+    "addLineItem": "添加项目",
+    "paymentInfo": "付款信息",
+    "notes": "备注",
+    "subtotal": "小计",
+    "tax": "税",
+    "discount": "折扣",
+    "shipping": "运费",
+    "total": "总计",
+    "amountPaid": "已付金额",
+    "balanceDue": "应付余额",
+    "name": "客户名称",
+    "address": "地址",
+    "email": "电子邮件",
+    "phone": "电话",
+    "companyName": "公司名称",
+    "companyAdditionalInfo": "公司额外信息",
+    "defaultLogo": "默认标志",
+    "defaultPaymentTerms": "默认付款条款",
+    "defaultNotes": "默认备注",
+    "defaultTaxRate": "默认税率 (%)",
+    "bankName": "银行名称",
+    "bankAccount": "银行账号",
+    "currency": "货币代码",
+    "currencySymbol": "货币符号",
+    "invoicePrefix": "发票号码前缀",
+    "nextInvoiceNumber": "下一发票号码"
+  },
+  "modals": {
+    "clients": {
+      "manage": "管理客户",
+      "create": "新建客户",
+      "update": "编辑客户"
+    },
+    "deleteInvoice": {
+      "title": "删除发票",
+      "message": "确定要删除此发票吗？此操作无法撤销。",
+      "confirm": "删除"
+    },
+    "settings": "设置"
+  },
+  "toast": {
+    "invoiceCreated": "发票创建成功",
+    "invoiceUpdated": "发票更新成功"
+  },
+  "empty": {
+    "invoice": {
+      "title": "没有发票",
+      "description": "创建您的第一张发票开始使用。"
+    },
+    "search": {
+      "title": "没有找到结果",
+      "description": "尝试不同的关键字或条件。"
+    },
+    "clients": {
+      "title": "没有客户",
+      "description": "创建您的第一个客户开始使用。"
+    }
+  },
+  "items": {
+    "invoice": "发票",
+    "client": "客戶"
+  },
+  "statuses": {
+    "draft": "草稿",
+    "sent": "已发送",
+    "paid": "已支付",
+    "overdue": "过期",
+    "cancelled": "已取消"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "title": "Invoice Maker",
+  "description": "A handy utility tool that helps generate clean and professional looking invoices",
+  "sidebar": {
+    "allInvoices": "All Invoices",
+    "filteredInvoices": "Filtered Invoices",
+    "status": "Status",
+    "clients": "Clients",
+    "allClients": "All Clients"
+  },
+  "buttons": {
+    "newInvoice": "New Invoice",
+    "createInvoice": "Create Invoice",
+    "saveInvoice": "Save Invoice",
+    "downloadPdf": "Download PDF",
+    "duplicate": "Duplicate",
+    "manageClients": "Manage Clients",
+    "settings": "Settings"
+  },
+  "pages": {
+    "newInvoice": "New Invoice",
+    "editInvoice": "Edit Invoice"
+  },
+  "inputs": {
+    "billTo": "Bill To",
+    "date": "Date",
+    "dueDate": "Due Date",
+    "paymentTerms": "Payment Terms",
+    "poNumber": "PO Number",
+    "item": "Item",
+    "quantity": "Quantity",
+    "rate": "Rate",
+    "amount": "Amount",
+    "addLineItem": "Add Line Item",
+    "paymentInfo": "Payment Information",
+    "notes": "Notes",
+    "subtotal": "Subtotal",
+    "tax": "Tax",
+    "discount": "Discount",
+    "shipping": "Shipping",
+    "total": "Total",
+    "amountPaid": "Amount Paid",
+    "balanceDue": "Balance Due",
+    "name": "Client Name",
+    "address": "Address",
+    "email": "Email",
+    "phone": "Phone",
+    "companyName": "Company Name",
+    "companyAdditionalInfo": "Company Additional Info",
+    "defaultLogo": "Default Logo",
+    "defaultPaymentTerms": "Default Payment Terms",
+    "defaultNotes": "Default Notes",
+    "defaultTaxRate": "Default Tax Rate (%)",
+    "bankName": "Bank Name",
+    "bankAccount": "Bank Account Number",
+    "currency": "Currency Code",
+    "currencySymbol": "Currency Symbol",
+    "invoicePrefix": "Invoice Number Prefix",
+    "nextInvoiceNumber": "Next Invoice Number"
+  },
+  "modals": {
+    "clients": {
+      "manage": "Manage Clients",
+      "create": "New Client",
+      "update": "Edit Client"
+    },
+    "deleteInvoice": {
+      "title": "Delete Invoice",
+      "message": "Are you sure you want to delete this invoice? This action cannot be undone.",
+      "confirm": "Delete"
+    },
+    "settings": "Settings"
+  },
+  "toast": {
+    "invoiceCreated": "Invoice created successfully",
+    "invoiceUpdated": "Invoice updated successfully",
+    "clientDeleted": "Client deleted successfully"
+  },
+  "empty": {
+    "invoice": {
+      "title": "No Invoices",
+      "description": "Create your first invoice to get started."
+    },
+    "search": {
+      "title": "No Results",
+      "description": "Try different keywords or conditions."
+    },
+    "clients": {
+      "title": "No Clients",
+      "description": "Create your first client to get started."
+    }
+  },
+  "items": {
+    "invoice": "invoice",
+    "client": "client"
+  },
+  "statuses": {
+    "draft": "Draft",
+    "sent": "Sent",
+    "paid": "Paid",
+    "overdue": "Overdue",
+    "cancelled": "Cancelled"
+  }
+}

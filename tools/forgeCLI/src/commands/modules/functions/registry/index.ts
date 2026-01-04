@@ -1,9 +1,8 @@
-export { generateClientRegistry } from './client-registry'
-
 export {
   getLifeforgeModules,
   getModulePath,
-  moduleHasSchema
+  moduleHasSchema,
+  moduleHasServer
 } from './module-utils'
 
 export { generateSchemaRegistry } from './schema-registry'
