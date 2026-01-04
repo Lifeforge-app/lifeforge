@@ -3,7 +3,10 @@ import prompts from 'prompts'
 
 import Logging from '@/utils/logging'
 
-import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../../../constants/constants'
+import {
+  AVAILABLE_TEMPLATE_MODULE_TYPES,
+  ROOT_DIR
+} from '../../../../constants/constants'
 
 export async function promptModuleType(): Promise<
   keyof typeof AVAILABLE_TEMPLATE_MODULE_TYPES
@@ -34,7 +37,7 @@ export async function promptModuleType(): Promise<
 export function checkModuleTypeAvailability(
   moduleType: keyof typeof AVAILABLE_TEMPLATE_MODULE_TYPES
 ): void {
-  const templateDir = `${process.cwd()}/tools/src/templates/${moduleType}`
+  const templateDir = `${ROOT_DIR}/tools/src/templates/${moduleType}`
 
   if (!fs.existsSync(templateDir)) {
     Logging.error(

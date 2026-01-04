@@ -8,7 +8,6 @@ import Logging from '@/utils/logging'
 import { getPackageLatestVersion } from '@/utils/registry'
 
 import normalizePackage from '../../../utils/normalizePackage'
-import linkModuleToWorkspace from '../functions/linkModuleToWorkspace'
 import listModules from '../functions/listModules'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import generateServerRegistry from '../functions/registry/generateServerRegistry'
@@ -51,8 +50,6 @@ async function upgradeModule(
     fs.rmSync(targetDir, { recursive: true, force: true })
 
     installPackage(fullName, targetDir)
-
-    linkModuleToWorkspace(fullName)
 
     fs.rmSync(backupPath, { recursive: true, force: true })
 

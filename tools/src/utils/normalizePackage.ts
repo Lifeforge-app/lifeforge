@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { PROJECT_ROOT } from '@/constants/constants'
+import { ROOT_DIR } from '@/constants/constants'
 
 type PackageType = 'module' | 'locale'
 
@@ -51,7 +51,7 @@ export default function normalizePackage(
 
   const shortName = fullName.replace(prefix, '')
 
-  const targetDir = path.join(PROJECT_ROOT, dir, shortName)
+  const targetDir = path.join(ROOT_DIR, dir, shortName)
 
   if (!fs.existsSync(path.dirname(targetDir))) {
     fs.mkdirSync(path.dirname(targetDir), { recursive: true })
