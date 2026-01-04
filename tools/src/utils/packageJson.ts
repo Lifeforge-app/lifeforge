@@ -1,6 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
+import { ROOT_DIR } from '@/constants/constants'
+
 import Logging from './logging'
 
 interface PackageJson {
@@ -10,15 +12,15 @@ interface PackageJson {
   [key: string]: unknown
 }
 
+const ROOT_PACKAGE_JSON_DIR = path.join(ROOT_DIR, 'package.json')
+
 /**
  * Reads the root package.json file and returns it as a JSON object.
  *
  * @returns The root package.json file as a JSON object.
  */
 export function readRootPackageJson(): PackageJson {
-  const rootPackageJsonPath = path.join(process.cwd(), 'package.json')
-
-  return JSON.parse(fs.readFileSync(rootPackageJsonPath, 'utf-8'))
+  return JSON.parse(fs.readFileSync(ROOT_PACKAGE_JSON_DIR, 'utf-8'))
 }
 
 /**
@@ -29,10 +31,8 @@ export function readRootPackageJson(): PackageJson {
 export function writeRootPackageJson(packageJson: PackageJson): void {
   Logging.debug(`Writing root package.json`)
 
-  const rootPackageJsonPath = path.join(process.cwd(), 'package.json')
-
   fs.writeFileSync(
-    rootPackageJsonPath,
+    ROOT_PACKAGE_JSON_DIR,
     JSON.stringify(packageJson, null, 2) + '\n'
   )
 

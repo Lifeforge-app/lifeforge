@@ -1,12 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
+import { ROOT_DIR } from '@/constants/constants'
 import Logging from '@/utils/logging'
 
 import executeCommand from './commands'
 
 export function getRegistryUrl(): string {
-  const bunfigPath = path.join(process.cwd(), 'bunfig.toml')
+  const bunfigPath = path.join(ROOT_DIR, 'bunfig.toml')
 
   if (fs.existsSync(bunfigPath)) {
     const content = fs.readFileSync(bunfigPath, 'utf-8')
@@ -28,7 +29,7 @@ export async function checkPackageExists(
 
   try {
     executeCommand(`npm view ${packageName} --registry ${registry}`, {
-      cwd: process.cwd(),
+      cwd: ROOT_DIR,
       stdio: 'pipe'
     })
 
@@ -48,7 +49,7 @@ export async function checkAuth(): Promise<{
     const result = executeCommand(
       `npm whoami --registry ${registry} 2>/dev/null`,
       {
-        cwd: process.cwd(),
+        cwd: ROOT_DIR,
         stdio: 'pipe'
       }
     )

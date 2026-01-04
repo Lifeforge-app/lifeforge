@@ -2,7 +2,10 @@ import fs from 'fs'
 import Handlebars from 'handlebars'
 import _ from 'lodash'
 
-import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../../../constants/constants'
+import {
+  AVAILABLE_TEMPLATE_MODULE_TYPES,
+  ROOT_DIR
+} from '../../../../constants/constants'
 
 export type ModuleMetadata = {
   moduleName: {
@@ -72,9 +75,9 @@ export function renameTsConfigFile(moduleDir: string): void {
 }
 
 export function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
-  const templateDir = `${process.cwd()}/tools/src/templates/${moduleMetadata.moduleType}`
+  const templateDir = `${ROOT_DIR}/tools/src/templates/${moduleMetadata.moduleType}`
 
-  const destinationDir = `${process.cwd()}/apps/${_.camelCase(moduleMetadata.moduleName.en)}`
+  const destinationDir = `${ROOT_DIR}/apps/${_.camelCase(moduleMetadata.moduleName.en)}`
 
   fs.mkdirSync(destinationDir)
 
