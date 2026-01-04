@@ -51,5 +51,5 @@ export default function createChangelogHandler(year?: string, week?: string) {
 
   fs.writeFileSync(filePath, boilerPlate)
 
-  Logging.success(`Changelog file created at path: ${filePath}`)
+  Logging.success(`Created changelog file at path: ${filePath}`)
 }

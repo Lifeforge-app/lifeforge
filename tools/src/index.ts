@@ -31,5 +31,5 @@ try {
   await setupCLI()
   runCLI()
 } catch (error) {
-  Logging.fatal(`Unexpected error occurred: ${error}`)
+  Logging.error(`Unexpected error occurred: ${error}`)
 }

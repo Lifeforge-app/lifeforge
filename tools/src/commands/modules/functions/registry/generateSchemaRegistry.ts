@@ -1,15 +1,19 @@
 import fs from 'fs'
 import path from 'path'
 
-import getFsMetadata from '../getFsMetadata'
+import { SERVER_SCHEMA_PATH } from '@/constants/constants'
+
+import normalizePackage from '../../../../utils/normalizePackage'
 import listModules from '../listModules'
-import { parsePackageName } from './namespaceUtils'
+import { parsePackageName } from '../parsePackageName'
 
 export default function generateSchemaRegistry(): string {
   const modules = Object.keys(listModules())
 
   const modulesWithSchema = modules.filter(mod =>
-    fs.existsSync(path.join(getFsMetadata(mod).targetDir, 'server/schema.ts'))
+    fs.existsSync(
+      path.join(normalizePackage(mod).targetDir, 'server/schema.ts')
+    )
   )
 
   const moduleSchemas = modulesWithSchema
@@ -22,17 +26,15 @@ export default function generateSchemaRegistry(): string {
     })
     .join('\n')
 
-  return `// AUTO-GENERATED - DO NOT EDIT
+  const registry = `// AUTO-GENERATED - DO NOT EDIT
 import flattenSchemas from '@functions/utils/flattenSchema'
 
-export const SCHEMAS = {
-  user: (await import('@lib/user/schema')).default,
-  api_keys: (await import('@lib/apiKeys/schema')).default,
+const SCHEMAS = {
 ${moduleSchemas}
 }
 
-const COLLECTION_SCHEMAS = flattenSchemas(SCHEMAS)
-
-export default COLLECTION_SCHEMAS
+export default SCHEMAS
 `
+
+  fs.writeFileSync(SERVER_SCHEMA_PATH, registry)
 }

@@ -2,7 +2,8 @@ import concurrently from 'concurrently'
 
 import { PROJECTS } from '@/commands/project/constants/projects'
 import { TOOLS_ALLOWED } from '@/constants/constants'
-import { executeCommand, getEnvVars } from '@/utils/helpers'
+import executeCommand from '@/utils/commands'
+import { getEnvVars } from '@/utils/helpers'
 import Logging from '@/utils/logging'
 
 import { SERVICE_COMMANDS } from '../config/commands'
@@ -51,8 +52,6 @@ export async function startSingleService(
  * Starts all development services concurrently
  */
 export async function startAllServices(): Promise<void> {
-  Logging.progress('Starting all services: database, server, and client')
-
   try {
     const concurrentServices = await getConcurrentServices()
 

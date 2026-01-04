@@ -4,7 +4,7 @@ import path from 'path'
 import Logging from '@/utils/logging'
 import { readRootPackageJson } from '@/utils/packageJson'
 
-import getFsMetadata from './getFsMetadata'
+import normalizePackage from '../../../utils/normalizePackage'
 
 interface ModuleBasicInfo {
   name: string
@@ -33,7 +33,7 @@ export default function listModules(
   const modules: Record<string, ModuleBasicInfo> = {}
 
   for (const module of allModules) {
-    const { targetDir } = getFsMetadata(module)
+    const { targetDir } = normalizePackage(module)
 
     const packageJson = JSON.parse(
       fs.readFileSync(path.join(targetDir, 'package.json'), 'utf-8')

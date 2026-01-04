@@ -7,15 +7,27 @@ import Logging from '@/utils/logging'
  * - "melvinchia3636--invoice-maker" → { username: "melvinchia3636", moduleName: "invoice_maker" }
  * - "lifeforge--achievements" → { moduleName: "achievements" } (official, no username)
  */
-export function parsePackageName(packageName: string): {
+export function parsePackageName(
+  packageName: string,
+  isLibModule?: boolean
+): {
   username?: string
   moduleName: string
 } {
   const withoutScope = packageName.replace(/^@lifeforge\//, '')
 
   if (!withoutScope.includes('--')) {
-    Logging.error(`Invalid package name: ${packageName}`)
-    process.exit(1)
+    if (!isLibModule) {
+      Logging.actionableError(
+        `Invalid package name: ${Logging.highlight(packageName)}`,
+        'Package name must include "--" separator (e.g., username--module-name)'
+      )
+      process.exit(1)
+    }
+
+    return {
+      moduleName: withoutScope.replace(/-/g, '_')
+    }
   }
 
   const [username, moduleName] = withoutScope.split('--', 2)

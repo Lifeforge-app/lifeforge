@@ -6,21 +6,17 @@ async function ensureLocaleNotInUse(shortName: string) {
 
   const { pb, killPB } = await getPBInstance()
 
-  try {
-    const user = await pb.collection('users').getFirstListItem("id != ''")
+  const user = await pb.collection('users').getFirstListItem("id != ''")
 
-    if (user.language === shortName) {
-      Logging.actionableError(
-        `Cannot uninstall locale "${shortName}"`,
-        'This language is currently selected. Change your language first.'
-      )
+  killPB?.()
 
-      killPB?.()
+  if (user.language === shortName) {
+    Logging.actionableError(
+      `Cannot uninstall locale "${shortName}"`,
+      'This language is currently selected. Change your language first.'
+    )
 
-      process.exit(1)
-    }
-  } finally {
-    killPB?.()
+    process.exit(1)
   }
 }
 

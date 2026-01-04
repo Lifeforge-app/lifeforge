@@ -1,5 +1,3 @@
-import chalk from 'chalk'
-
 import Logging from '@/utils/logging'
 
 import listModules from '../functions/listModules'
@@ -17,8 +15,8 @@ export async function listModulesHandler(): Promise<void> {
   )
 
   Object.entries(modules).forEach(([name, info]) => {
-    console.log(
-      `  ${chalk.green(name)} - ${info.displayName} (${info.version})`
+    Logging.print(
+      `  ${Logging.highlight(name)} - ${info.displayName} (${info.version})`
     )
   })
 }

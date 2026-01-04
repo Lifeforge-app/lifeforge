@@ -1,8 +1,7 @@
-import chalk from 'chalk'
 import fs from 'fs'
 
 import { PB_BINARY_PATH, PB_DATA_DIR, PB_KWARGS } from '@/constants/db'
-import { executeCommand } from '@/utils/helpers'
+import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
 
 /**
@@ -15,7 +14,7 @@ export function validatePocketBaseNotInitialized(
 
   if (pbInitialized && exitOnFailure) {
     Logging.actionableError(
-      `PocketBase is already initialized in ${PB_DATA_DIR}, aborting.`,
+      `PocketBase is already initialized in ${Logging.highlight(PB_DATA_DIR)}, aborting.`,
       'If you want to re-initialize, please remove the existing pb_data folder in the database directory.'
     )
     process.exit(1)
@@ -31,11 +30,9 @@ export function createPocketBaseSuperuser(
   email: string,
   password: string
 ): void {
-  try {
-    Logging.step(
-      `Initializing PocketBase database for ${chalk.bold.blue(email)}`
-    )
+  Logging.debug(`Creating superuser with email ${Logging.highlight(email)}...`)
 
+  try {
     const result = executeCommand(
       `${PB_BINARY_PATH} superuser create ${PB_KWARGS.join(' ')}`,
       {
@@ -48,14 +45,11 @@ export function createPocketBaseSuperuser(
       throw new Error(result.replace(/^Error:\s*/, ''))
     }
 
-    Logging.success(
-      'PocketBase initialized and superuser created successfully.'
-    )
+    Logging.success('Created superuser')
   } catch (error) {
-    Logging.error(
-      `Failed to create superuser: ${
-        error instanceof Error ? error.message : 'Unknown error'
-      }`
+    Logging.actionableError(
+      `Failed to create superuser: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      'Check your PocketBase configuration and try again'
     )
     process.exit(1)
   }

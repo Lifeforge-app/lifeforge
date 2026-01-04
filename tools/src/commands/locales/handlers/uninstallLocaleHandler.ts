@@ -1,16 +1,19 @@
 import fs from 'fs'
 
-import { executeCommand } from '@/utils/helpers'
+import { installDependencies } from '@/utils/commands'
 import Logging from '@/utils/logging'
+import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
 import ensureLocaleNotInUse from '../functions/ensureLocaleNotInUse'
-import getLocalesMeta from '../functions/getLocalesMeta'
 
 export async function uninstallLocaleHandler(langCode: string): Promise<void> {
-  const { fullPackageName, shortName, targetDir } = getLocalesMeta(langCode)
+  const { fullName, shortName, targetDir } = normalizePackage(
+    langCode,
+    'locale'
+  )
 
-  const found = findPackageName(fullPackageName)
+  const found = findPackageName(fullName)
 
   if (!found) {
     Logging.actionableError(
@@ -23,13 +26,13 @@ export async function uninstallLocaleHandler(langCode: string): Promise<void> {
 
   await ensureLocaleNotInUse(shortName)
 
-  Logging.info(`Uninstalling locale ${fullPackageName}...`)
+  Logging.info(`Uninstalling ${Logging.highlight(fullName)}...`)
 
   fs.rmSync(targetDir, { recursive: true, force: true })
 
-  removeDependency(fullPackageName)
+  removeDependency(fullName)
 
-  executeCommand('bun install', { cwd: process.cwd(), stdio: 'inherit' })
+  installDependencies()
 
-  Logging.info(`Uninstalled locale ${fullPackageName}`)
+  Logging.success(`Uninstalled ${Logging.highlight(fullName)}`)
 }

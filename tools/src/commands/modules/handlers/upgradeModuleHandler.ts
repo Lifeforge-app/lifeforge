@@ -6,7 +6,7 @@ import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrat
 import Logging from '@/utils/logging'
 import { getPackageLatestVersion } from '@/utils/registry'
 
-import getFsMetadata from '../functions/getFsMetadata'
+import normalizePackage from '../../../utils/normalizePackage'
 import installModulePackage from '../functions/installModulePackage'
 import linkModuleToWorkspace from '../functions/linkModuleToWorkspace'
 import listModules from '../functions/listModules'
@@ -17,21 +17,27 @@ async function upgradeModule(
   packageName: string,
   currentVersion: string
 ): Promise<boolean> {
-  const { fullName, targetDir } = getFsMetadata(packageName)
+  const { fullName, targetDir } = normalizePackage(packageName)
 
   const latestVersion = await getPackageLatestVersion(fullName)
 
   if (!latestVersion) {
-    Logging.warn(`Could not check registry for ${fullName}`)
+    Logging.warn(`Could not check registry for ${Logging.highlight(fullName)}`)
 
     return false
   }
 
   if (semver.eq(currentVersion, latestVersion)) {
-    Logging.info(`${packageName}@${currentVersion} is up to date`)
+    Logging.info(
+      `${Logging.highlight(packageName)}@${currentVersion} is up to date`
+    )
 
     return false
   }
+
+  Logging.info(
+    `Upgrading ${Logging.highlight(packageName)} from ${currentVersion} to ${latestVersion}...`
+  )
 
   const backupPath = path.join(path.dirname(targetDir), `${packageName}.backup`)
 
@@ -50,9 +56,13 @@ async function upgradeModule(
 
     fs.rmSync(backupPath, { recursive: true, force: true })
 
+    Logging.success(
+      `Upgraded ${Logging.highlight(packageName)} to ${latestVersion}`
+    )
+
     return true
   } catch (error) {
-    Logging.error(`Failed to upgrade ${fullName}: ${error}`)
+    Logging.error(`Failed to upgrade ${Logging.highlight(fullName)}: ${error}`)
 
     if (fs.existsSync(backupPath)) {
       fs.renameSync(backupPath, targetDir)
@@ -68,7 +78,7 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   let upgradedCount = 0
 
   if (moduleName) {
-    const { fullName } = getFsMetadata(moduleName)
+    const { fullName } = normalizePackage(moduleName)
 
     const mod = modules[fullName]
 
@@ -97,10 +107,16 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   }
 
   if (upgradedCount > 0) {
+    Logging.info('Regenerating registries...')
+
     generateServerRegistry()
 
     generateSchemaRegistry()
 
     generateMigrationsHandler()
+
+    Logging.success(
+      `Upgraded ${upgradedCount} module${upgradedCount > 1 ? 's' : ''}`
+    )
   }
 }

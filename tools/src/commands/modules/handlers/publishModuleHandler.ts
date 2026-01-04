@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { executeCommand } from '@/utils/helpers'
+import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
 
 import { getRegistryUrl } from '../../../utils/registry'
@@ -19,16 +19,27 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
     process.exit(1)
   }
 
+  Logging.info(`Validating module structure...`)
   await validateModuleStructure(modulePath)
+
+  Logging.info(`Validating module author...`)
   await validateModuleAuthor(modulePath)
+
+  Logging.info(`Publishing ${Logging.highlight(moduleName)}...`)
 
   try {
     executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
       cwd: modulePath,
       stdio: 'inherit'
     })
+
+    Logging.success(`Published ${Logging.highlight(moduleName)}`)
   } catch (error) {
-    Logging.error(`Publish failed: ${error}`)
+    Logging.actionableError(
+      `Publish failed for ${Logging.highlight(moduleName)}`,
+      'Check npm authentication and try again'
+    )
+    Logging.debug(`Error: ${error}`)
     process.exit(1)
   }
 }
