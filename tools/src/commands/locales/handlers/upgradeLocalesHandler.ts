@@ -1,4 +1,4 @@
-import { installDependencies } from '@/utils/commands'
+import { bunInstall, installPackage } from '@/utils/commands'
 import { confirmAction } from '@/utils/helpers'
 import Logging from '@/utils/logging'
 import normalizePackage from '@/utils/normalizePackage'
@@ -6,7 +6,6 @@ import normalizePackage from '@/utils/normalizePackage'
 import { checkAuth } from '../../../utils/registry'
 import getPackagesToCheck from '../functions/getPackagesToCheck'
 import getUpgrades from '../functions/getUpgrades'
-import installAndMoveLocales from '../functions/installAndMoveLocales'
 
 export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
   const packagesToCheck = getPackagesToCheck(langCode)
@@ -23,7 +22,7 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
     Logging.info(`Upgrading ${Logging.highlight(upgrade.name)}...`)
 
     try {
-      installAndMoveLocales(
+      installPackage(
         upgrade.name,
         normalizePackage(upgrade.name, 'locale').targetDir
       )
@@ -38,7 +37,7 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
   }
 
   if (upgradedCount > 0) {
-    installDependencies()
+    bunInstall()
     Logging.success(
       `Upgraded ${upgradedCount} locale${upgradedCount > 1 ? 's' : ''}`
     )

@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-import { SERVER_ROUTES_PATH } from '@/constants/constants'
+import { SERVER_ROUTES_DIR } from '@/constants/constants'
 
 import normalizePackage from '../../../../utils/normalizePackage'
 import listModules from '../listModules'
 import { parsePackageName } from '../parsePackageName'
 
-export default function generateServerRegistry(): string {
+export default function generateServerRegistry() {
   const modules = Object.keys(listModules(true))
 
   const modulesWithServer = modules.filter(mod =>
@@ -44,5 +44,5 @@ ${imports}
 export default appRoutes
 `
 
-  fs.writeFileSync(SERVER_ROUTES_PATH, registry)
+  fs.writeFileSync(SERVER_ROUTES_DIR, registry)
 }

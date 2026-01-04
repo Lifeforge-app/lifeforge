@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { installDependencies } from '@/utils/commands'
+import { bunInstall } from '@/utils/commands'
 import Logging from '@/utils/logging'
 import { addDependency } from '@/utils/packageJson'
 
@@ -23,7 +23,7 @@ export default function linkModuleToWorkspace(fullName: string) {
     fs.rmSync(nodeModulesPath, { recursive: true, force: true })
   }
 
-  installDependencies()
+  bunInstall()
 
   Logging.debug(`Linked ${Logging.highlight(fullName)} to workspace`)
 }

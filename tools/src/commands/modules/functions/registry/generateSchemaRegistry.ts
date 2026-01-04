@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
-import { SERVER_SCHEMA_PATH } from '@/constants/constants'
+import { SERVER_SCHEMA_DIR } from '@/constants/constants'
 
 import normalizePackage from '../../../../utils/normalizePackage'
 import listModules from '../listModules'
 import { parsePackageName } from '../parsePackageName'
 
-export default function generateSchemaRegistry(): string {
+export default function generateSchemaRegistry() {
   const modules = Object.keys(listModules())
 
   const modulesWithSchema = modules.filter(mod =>
@@ -36,5 +36,5 @@ ${moduleSchemas}
 export default SCHEMAS
 `
 
-  fs.writeFileSync(SERVER_SCHEMA_PATH, registry)
+  fs.writeFileSync(SERVER_SCHEMA_DIR, registry)
 }

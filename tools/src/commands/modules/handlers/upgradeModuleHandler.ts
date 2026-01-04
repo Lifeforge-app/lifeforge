@@ -3,11 +3,11 @@ import path from 'path'
 import semver from 'semver'
 
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
+import { installPackage } from '@/utils/commands'
 import Logging from '@/utils/logging'
 import { getPackageLatestVersion } from '@/utils/registry'
 
 import normalizePackage from '../../../utils/normalizePackage'
-import installModulePackage from '../functions/installModulePackage'
 import linkModuleToWorkspace from '../functions/linkModuleToWorkspace'
 import listModules from '../functions/listModules'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
@@ -50,7 +50,7 @@ async function upgradeModule(
 
     fs.rmSync(targetDir, { recursive: true, force: true })
 
-    installModulePackage(fullName, targetDir)
+    installPackage(fullName, targetDir)
 
     linkModuleToWorkspace(fullName)
 

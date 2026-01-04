@@ -1,9 +1,9 @@
 import fs from 'fs'
 
+import { installPackage } from '@/utils/commands'
 import Logging from '@/utils/logging'
 import normalizePackage from '@/utils/normalizePackage'
 
-import installAndMoveLocales from '../functions/installAndMoveLocales'
 import setFirstLangInDB from '../functions/setFirstLangInDB'
 
 export async function installLocaleHandler(langCode: string): Promise<void> {
@@ -24,7 +24,7 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
   Logging.info(`Installing ${Logging.highlight(fullName)}...`)
 
   try {
-    installAndMoveLocales(fullName, targetDir)
+    installPackage(fullName, targetDir)
 
     await setFirstLangInDB(shortName)
 
