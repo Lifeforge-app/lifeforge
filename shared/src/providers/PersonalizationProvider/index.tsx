@@ -20,7 +20,7 @@ import type {
 import { getColorPalette } from './utils/themeColors'
 
 const DEFAULT_VALUE: IPersonalizationData = {
-  rootElement: document.body,
+  rootElement: typeof document !== 'undefined' ? document.body : null,
   fontFamily: 'Onest',
   fontScale: 1,
   borderRadiusMultiplier: 1,

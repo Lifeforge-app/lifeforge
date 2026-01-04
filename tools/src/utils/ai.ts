@@ -5,7 +5,7 @@ import ora from 'ora'
 import z from 'zod'
 
 import { getEnvVars } from './helpers'
-import CLILoggingService from './logging'
+import Logging from './logging'
 import getPBInstance from './pocketbase'
 import { zodTextFormat } from './zodResponseFormat'
 
@@ -34,7 +34,7 @@ export async function getAPIKey(): Promise<string | null> {
       CryptoJS.enc.Utf8
     )
   } catch {
-    CLILoggingService.error('Failed to decrypt OpenAI API key.')
+    Logging.error('Failed to decrypt OpenAI API key.')
 
     return null
   } finally {
@@ -50,7 +50,7 @@ export async function fetchAI<T extends z.ZodTypeAny>({
   const apiKey = await getAPIKey()
 
   if (!apiKey) {
-    CLILoggingService.error('OpenAI API key not found.')
+    Logging.error('OpenAI API key not found.')
 
     return null
   }

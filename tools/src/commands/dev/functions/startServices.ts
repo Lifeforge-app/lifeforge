@@ -3,7 +3,7 @@ import concurrently from 'concurrently'
 import { PROJECTS } from '@/commands/project/constants/projects'
 import { TOOLS_ALLOWED } from '@/constants/constants'
 import { executeCommand, getEnvVars } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { SERVICE_COMMANDS } from '../config/commands'
 import getConcurrentServices from './getConcurrentServices'
@@ -51,9 +51,7 @@ export async function startSingleService(
  * Starts all development services concurrently
  */
 export async function startAllServices(): Promise<void> {
-  CLILoggingService.progress(
-    'Starting all services: database, server, and client'
-  )
+  Logging.progress('Starting all services: database, server, and client')
 
   try {
     const concurrentServices = await getConcurrentServices()
@@ -65,11 +63,11 @@ export async function startAllServices(): Promise<void> {
       prefixColors: ['cyan', 'green', 'magenta']
     })
   } catch (error) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       'Failed to start all services',
       'Ensure PocketBase is properly configured and all dependencies are installed'
     )
-    CLILoggingService.debug(`Error details: ${error}`)
+    Logging.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }

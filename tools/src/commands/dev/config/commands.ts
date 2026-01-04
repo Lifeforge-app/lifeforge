@@ -8,7 +8,7 @@ import {
   executeCommand,
   killExistingProcess
 } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 /**
  * Service command configurations
@@ -29,7 +29,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       }
 
       if (checkPortInUse(8090)) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           'No Pocketbase instance found running, but port 8090 is already in use.',
           'Please free up the port. Are you using the port for another application? (e.g., port forwarding, etc.)'
         )
@@ -37,7 +37,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       }
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           `PocketBase binary does not exist: ${PB_BINARY_PATH}`,
           `Please run "${chalk.bold.blue('bun forge db init')}" to initialize the database`
         )
@@ -62,7 +62,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       const PORT = process.env.PORT || '3636'
 
       if (checkPortInUse(Number(PORT))) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           `Port ${PORT} is already in use.`,
           'Please free up the port or set a different PORT environment variable.'
         )

@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { runCLI, setupCLI } from './cli/setup'
-import CLILoggingService from './utils/logging'
+import Logging from './utils/logging'
 
 /**
  * LifeForge Forge - Build and development tool for LifeForge projects
@@ -21,7 +21,7 @@ const envPath = path.resolve(process.cwd(), 'env/.env.local')
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath, quiet: true })
 } else {
-  CLILoggingService.warn(
+  Logging.warn(
     `Environment file not found at ${envPath}. Continuing without loading environment variables from file.`
   )
 }
@@ -31,5 +31,5 @@ try {
   await setupCLI()
   runCLI()
 } catch (error) {
-  CLILoggingService.fatal(`Unexpected error occurred: ${error}`)
+  Logging.fatal(`Unexpected error occurred: ${error}`)
 }

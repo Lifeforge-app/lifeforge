@@ -1,4 +1,4 @@
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { FIELD_TYPE_MAPPING } from '../../utils'
 import type { PocketBaseField } from '../../utils/constants'
@@ -14,7 +14,7 @@ export function convertFieldToZodSchema(field: PocketBaseField): string | null {
   const converter = FIELD_TYPE_MAPPING[field.type]
 
   if (!converter) {
-    CLILoggingService.warn(
+    Logging.warn(
       `Unknown field type '${field.type}' for field '${field.name}'. Skipping.`
     )
 

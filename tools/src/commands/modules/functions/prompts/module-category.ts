@@ -1,6 +1,6 @@
 import prompts from 'prompts'
 
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 export async function promptModuleCategory(): Promise<string> {
   const response = await prompts(
@@ -19,7 +19,7 @@ export async function promptModuleCategory(): Promise<string> {
     },
     {
       onCancel: () => {
-        CLILoggingService.error('Module creation cancelled by user.')
+        Logging.error('Module creation cancelled by user.')
         process.exit(0)
       }
     }

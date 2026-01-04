@@ -1,8 +1,8 @@
 import chalk from 'chalk'
 import path from 'path'
 
-import { parseCollectionName } from '@/commands/modules/functions/registry/namespace-utils'
-import CLILoggingService from '@/utils/logging'
+import { parseCollectionName } from '@/commands/modules/functions/registry/namespaceUtils'
+import Logging from '@/utils/logging'
 
 import { writeFormattedFile } from '../../utils'
 import { generateModuleSchemaContent } from './content-generator'
@@ -27,9 +27,7 @@ export async function processSchemaGeneration(
     : moduleCollectionsMap
 
   if (targetModule && Object.keys(filteredModuleCollectionsMap).length === 0) {
-    CLILoggingService.error(
-      `Module "${targetModule}" not found or has no collections`
-    )
+    Logging.error(`Module "${targetModule}" not found or has no collections`)
     process.exit(1)
   }
 
@@ -43,7 +41,7 @@ export async function processSchemaGeneration(
     const [moduleDirPath, moduleDirName] = moduleDir.split('|')
 
     if (!collections.length) {
-      CLILoggingService.warn(
+      Logging.warn(
         `No collections found for module ${chalk.bold(moduleDirName)}`
       )
       continue
@@ -73,7 +71,7 @@ export async function processSchemaGeneration(
 
     await writeFormattedFile(moduleSchemaPath, moduleSchemaContent)
 
-    CLILoggingService.debug(
+    Logging.debug(
       `Created schema file for module ${chalk.bold(moduleDirName)} at ${chalk.bold(`lib/${moduleDirName}/schema.ts`)}`
     )
   }

@@ -1,4 +1,4 @@
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { getInstalledLocalesWithMeta } from './getInstalledLocales'
 import { normalizeLocalePackageName } from './getLocalesMeta'
@@ -7,7 +7,7 @@ function getPackagesToCheck(langCode?: string) {
   const localePackages = getInstalledLocalesWithMeta()
 
   if (!localePackages.length) {
-    CLILoggingService.info('No locales installed')
+    Logging.info('No locales installed')
 
     process.exit(0)
   }
@@ -19,7 +19,7 @@ function getPackagesToCheck(langCode?: string) {
     : localePackages
 
   if (!packagesToCheck?.length) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Locale "${langCode}" is not installed`,
       'Run "bun forge locales list" to see installed locales'
     )

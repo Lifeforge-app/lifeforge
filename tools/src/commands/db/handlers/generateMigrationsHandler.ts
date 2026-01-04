@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
 import { isDockerMode } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
 import {
@@ -51,7 +51,7 @@ export async function generateMigrationsHandler(
   targetModule?: string
 ): Promise<void> {
   try {
-    CLILoggingService.step('Starting database migration generation')
+    Logging.step('Starting database migration generation')
 
     // Skip running instances check in Docker mode (we control the container)
     if (!isDockerMode()) {
@@ -62,7 +62,7 @@ export async function generateMigrationsHandler(
 
     const schemaFiles = getSchemaFiles(targetModule)
 
-    CLILoggingService.debug(
+    Logging.debug(
       targetModule
         ? `Processing module: ${chalk.bold.blue(targetModule)}`
         : `Found ${chalk.bold.blue(schemaFiles.length)} schema files.`
@@ -73,18 +73,16 @@ export async function generateMigrationsHandler(
     // Build ID-to-name map from all schemas for relation resolution
     const idToNameMap = buildIdToNameMap(importedSchemas)
 
-    CLILoggingService.debug(
-      `Built ID-to-name map with ${idToNameMap.size} collections`
-    )
+    Logging.debug(`Built ID-to-name map with ${idToNameMap.size} collections`)
 
     // Phase 1: Generate all skeleton migrations
-    CLILoggingService.debug('Phase 1: Creating skeleton migrations...')
+    Logging.debug('Phase 1: Creating skeleton migrations...')
 
     for (const { moduleName, schema } of importedSchemas) {
       const result = await createSkeletonMigration(moduleName, schema)
 
       if (!result.success) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           `Skeleton migration failed for module ${moduleName}`,
           'Check the module schema definition for syntax errors'
         )
@@ -92,16 +90,14 @@ export async function generateMigrationsHandler(
       }
     }
 
-    CLILoggingService.debug(
-      `Created ${importedSchemas.length} skeleton migrations`
-    )
+    Logging.debug(`Created ${importedSchemas.length} skeleton migrations`)
 
     // Phase 2: Run migrate up to apply skeleton migrations
-    CLILoggingService.debug('Phase 2: Applying skeleton migrations...')
+    Logging.debug('Phase 2: Applying skeleton migrations...')
     runMigrateUp()
 
     // Phase 3: Generate all structure migrations
-    CLILoggingService.debug('Phase 3: Creating structure migrations...')
+    Logging.debug('Phase 3: Creating structure migrations...')
 
     for (const { moduleName, schema } of importedSchemas) {
       const result = await createStructureMigration(
@@ -111,7 +107,7 @@ export async function generateMigrationsHandler(
       )
 
       if (!result.success) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           `Structure migration failed for module ${moduleName}`,
           'Check the module schema definition for syntax errors'
         )
@@ -119,16 +115,14 @@ export async function generateMigrationsHandler(
       }
     }
 
-    CLILoggingService.debug(
-      `Created ${importedSchemas.length} structure migrations`
-    )
+    Logging.debug(`Created ${importedSchemas.length} structure migrations`)
 
     // Phase 4: Run migrate up to apply structure migrations
-    CLILoggingService.debug('Phase 4: Applying structure migrations...')
+    Logging.debug('Phase 4: Applying structure migrations...')
     runMigrateUp()
 
     // Phase 5: Generate view query migrations (for modules with view collections)
-    CLILoggingService.debug('Phase 5: Creating view query migrations...')
+    Logging.debug('Phase 5: Creating view query migrations...')
 
     let viewMigrationCount = 0
 
@@ -136,7 +130,7 @@ export async function generateMigrationsHandler(
       const result = await createViewQueryMigration(moduleName, schema)
 
       if (!result.success) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           `View query migration failed for module ${moduleName}`,
           'Check the view query definition for syntax errors'
         )
@@ -149,17 +143,13 @@ export async function generateMigrationsHandler(
     }
 
     if (viewMigrationCount > 0) {
-      CLILoggingService.debug(
-        `Created ${viewMigrationCount} view query migrations`
-      )
+      Logging.debug(`Created ${viewMigrationCount} view query migrations`)
 
       // Phase 6: Apply view query migrations
-      CLILoggingService.debug('Phase 6: Applying view query migrations...')
+      Logging.debug('Phase 6: Applying view query migrations...')
       runMigrateUp()
     } else {
-      CLILoggingService.debug(
-        'No view collections found, skipping view migrations'
-      )
+      Logging.debug('No view collections found, skipping view migrations')
     }
 
     // Summary
@@ -167,13 +157,13 @@ export async function generateMigrationsHandler(
       ? `Database migrations applied for ${chalk.bold.blue(targetModule)}`
       : 'Database migrations applied for all modules'
 
-    CLILoggingService.success(message)
+    Logging.success(message)
   } catch (error) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       'Migration script failed',
       'Check the schema definitions and PocketBase configuration'
     )
-    CLILoggingService.debug(
+    Logging.debug(
       `Error details: ${error instanceof Error ? error.message : String(error)}`
     )
     process.exit(1)

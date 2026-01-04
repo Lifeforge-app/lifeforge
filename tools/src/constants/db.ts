@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { getEnvVar, isDockerMode } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 dotenv.config({
   path: path.resolve(process.cwd(), 'env/.env.local'),
@@ -31,6 +31,6 @@ export const PB_KWARGS = [
 try {
   fs.accessSync(PB_DIR)
 } catch (error) {
-  CLILoggingService.error(`PB_DIR is not accessible: ${error}`)
+  Logging.error(`PB_DIR is not accessible: ${error}`)
   process.exit(1)
 }

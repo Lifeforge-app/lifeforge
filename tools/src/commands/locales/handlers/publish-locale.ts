@@ -1,7 +1,7 @@
 import fs from 'fs'
 
 import { executeCommand } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { validateMaintainerAccess } from '../../../utils/github-cli'
 import { checkAuth, getRegistryUrl } from '../../../utils/registry'
@@ -15,7 +15,7 @@ export async function publishLocaleHandler(
   const { targetDir, shortName } = getLocalesMeta(langCode)
 
   if (!fs.existsSync(targetDir)) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Locale "${langCode}" not found in locales/`,
       'Run "bun forge locales list" to see available locales'
     )
@@ -37,9 +37,9 @@ export async function publishLocaleHandler(
       stdio: 'inherit'
     })
 
-    CLILoggingService.success(`Locale "${shortName}" published successfully!`)
+    Logging.success(`Locale "${shortName}" published successfully!`)
   } catch (error) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       'Failed to publish locale',
       'Check if you are properly authenticated with the registry'
     )

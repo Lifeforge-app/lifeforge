@@ -1,0 +1,106 @@
+import fs from 'fs'
+import path from 'path'
+import semver from 'semver'
+
+import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
+import Logging from '@/utils/logging'
+import { getPackageLatestVersion } from '@/utils/registry'
+
+import getFsMetadata from '../functions/getFsMetadata'
+import installModulePackage from '../functions/installModulePackage'
+import linkModuleToWorkspace from '../functions/linkModuleToWorkspace'
+import listModules from '../functions/listModules'
+import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
+import generateServerRegistry from '../functions/registry/generateServerRegistry'
+
+async function upgradeModule(
+  packageName: string,
+  currentVersion: string
+): Promise<boolean> {
+  const { fullName, targetDir } = getFsMetadata(packageName)
+
+  const latestVersion = await getPackageLatestVersion(fullName)
+
+  if (!latestVersion) {
+    Logging.warn(`Could not check registry for ${fullName}`)
+
+    return false
+  }
+
+  if (semver.eq(currentVersion, latestVersion)) {
+    Logging.info(`${packageName}@${currentVersion} is up to date`)
+
+    return false
+  }
+
+  const backupPath = path.join(path.dirname(targetDir), `${packageName}.backup`)
+
+  try {
+    if (fs.existsSync(backupPath)) {
+      fs.rmSync(backupPath, { recursive: true, force: true })
+    }
+
+    fs.cpSync(targetDir, backupPath, { recursive: true })
+
+    fs.rmSync(targetDir, { recursive: true, force: true })
+
+    installModulePackage(fullName, targetDir)
+
+    linkModuleToWorkspace(fullName)
+
+    fs.rmSync(backupPath, { recursive: true, force: true })
+
+    return true
+  } catch (error) {
+    Logging.error(`Failed to upgrade ${fullName}: ${error}`)
+
+    if (fs.existsSync(backupPath)) {
+      fs.renameSync(backupPath, targetDir)
+    }
+
+    return false
+  }
+}
+
+export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
+  const modules = listModules()
+
+  let upgradedCount = 0
+
+  if (moduleName) {
+    const { fullName } = getFsMetadata(moduleName)
+
+    const mod = modules[fullName]
+
+    if (!mod) {
+      Logging.actionableError(
+        `Module "${moduleName}" not found`,
+        'Run "bun forge modules list" to see installed modules'
+      )
+
+      process.exit(1)
+    }
+
+    const upgraded = await upgradeModule(fullName, mod.version)
+
+    if (upgraded) {
+      upgradedCount++
+    }
+  } else {
+    for (const [name, { version }] of Object.entries(modules)) {
+      const upgraded = await upgradeModule(name, version)
+
+      if (upgraded) {
+        upgradedCount++
+      }
+    }
+  }
+
+  if (upgradedCount > 0) {
+    generateServerRegistry()
+
+    generateSchemaRegistry()
+
+    generateMigrationsHandler()
+  }
+}

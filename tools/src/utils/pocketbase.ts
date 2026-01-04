@@ -1,13 +1,74 @@
 import chalk from 'chalk'
-import { spawn, spawnSync } from 'child_process'
+import { spawn } from 'child_process'
 import PocketBase from 'pocketbase'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import { executeCommand } from '@/utils/helpers'
 import { getEnvVars } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { killExistingProcess } from './helpers'
+
+// Triple underscore separates username from module name
+const USERNAME_SEPARATOR = {
+  code: '$',
+  pb: '___'
+}
+
+// Double underscore separates module name from collection name
+const COLLECTION_SEPARATOR = {
+  code: '__',
+  pb: '__'
+}
+
+/**
+ * Parse a PocketBase collection name into components
+ *
+ * Examples:
+ * - "melvinchia3636___melvinchia3636$melvinchia3636$invoice_maker__clients" → { username: "melvinchia3636", moduleName: "invoice_maker", collectionName: "clients" }
+ * - "achievements__badges" → { moduleName: "achievements", collectionName: "badges" }
+ */
+export function parseCollectionName(
+  str: string,
+  type: 'code' | 'pb'
+): {
+  username?: string
+  moduleName: string
+  collectionName: string
+} {
+  const userNameSeparator = USERNAME_SEPARATOR[type]
+
+  const collectionSeparator = COLLECTION_SEPARATOR[type]
+
+  if (str.includes(userNameSeparator)) {
+    const [username, remainder] = str.split(userNameSeparator, 2)
+
+    if (!remainder.includes(collectionSeparator)) {
+      Logging.error(`Invalid collection name: ${str}`)
+      process.exit(1)
+    }
+
+    const [moduleName, collectionName] = remainder.split(collectionSeparator, 2)
+
+    return {
+      username,
+      moduleName,
+      collectionName
+    }
+  }
+
+  if (!str.includes(collectionSeparator)) {
+    Logging.error(`Invalid collection name: ${str}`)
+    process.exit(1)
+  }
+
+  const [moduleName, collectionName] = str.split(collectionSeparator, 2)
+
+  return {
+    moduleName,
+    collectionName
+  }
+}
 
 /**
  * Verifies if a PID is actually running and is a PocketBase process
@@ -56,7 +117,7 @@ export function checkRunningPBInstances(exitOnError = true): boolean {
 
     if (validPids.length > 0) {
       if (exitOnError) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           `PocketBase is already running (PID: ${validPids.join(', ')})`,
           'Stop the existing instance with "pkill -f pocketbase" before proceeding'
         )
@@ -89,7 +150,7 @@ export async function startPBServer(): Promise<number> {
       }
 
       if (output.includes('bind: address already in use')) {
-        CLILoggingService.actionableError(
+        Logging.actionableError(
           'Port 8090 is already in use by another application.',
           'Please free up the port. Are you using the port for non-pocketbase applications? (e.g., port forwarding, etc.)'
         )
@@ -121,18 +182,16 @@ export async function startPocketbase(): Promise<(() => void) | null> {
     const pbRunning = checkRunningPBInstances(false)
 
     if (pbRunning) {
-      CLILoggingService.step(
-        'PocketBase server is already running, skipping...'
-      )
+      Logging.step('PocketBase server is already running, skipping...')
 
       return null
     }
 
-    CLILoggingService.step('Starting PocketBase server...')
+    Logging.step('Starting PocketBase server...')
 
     const pbPid = await startPBServer()
 
-    CLILoggingService.success(
+    Logging.success(
       `PocketBase server started successfully with PID ${chalk.bold.blue(
         pbPid.toString()
       )}`
@@ -142,7 +201,7 @@ export async function startPocketbase(): Promise<(() => void) | null> {
       killExistingProcess(pbPid)
     }
   } catch (error) {
-    CLILoggingService.error(
+    Logging.error(
       `Failed to start PocketBase server: ${
         error instanceof Error ? error.message : 'Unknown error'
       }`
@@ -177,7 +236,7 @@ export default async function getPBInstance(createNewInstance = true): Promise<{
       killPB
     }
   } catch (error) {
-    CLILoggingService.error(
+    Logging.error(
       `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
     )
     process.exit(1)

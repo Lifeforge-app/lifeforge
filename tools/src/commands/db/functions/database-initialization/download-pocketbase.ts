@@ -5,7 +5,7 @@ import path from 'path'
 
 import { PB_BINARY_PATH, PB_DIR } from '@/constants/db'
 import { executeCommand, isDockerMode } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 const PB_VERSION = '0.35.0'
 
@@ -16,20 +16,18 @@ const PB_VERSION = '0.35.0'
 export async function downloadPocketBaseBinary(): Promise<void> {
   // Skip in Docker mode - binary is provided by the container
   if (isDockerMode()) {
-    CLILoggingService.debug('Docker mode detected, skipping binary download')
+    Logging.debug('Docker mode detected, skipping binary download')
 
     return
   }
 
   if (fs.existsSync(PB_BINARY_PATH)) {
-    CLILoggingService.debug(
-      'PocketBase binary already exists, skipping download'
-    )
+    Logging.debug('PocketBase binary already exists, skipping download')
 
     return
   }
 
-  CLILoggingService.step('PocketBase binary not found, downloading...')
+  Logging.step('PocketBase binary not found, downloading...')
 
   // Detect OS
   const platform = os.platform()
@@ -47,7 +45,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       osName = 'windows'
       break
     default:
-      CLILoggingService.error(`Unsupported platform: ${platform}`)
+      Logging.error(`Unsupported platform: ${platform}`)
       process.exit(1)
   }
 
@@ -64,13 +62,13 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       archName = 'amd64'
       break
     default:
-      CLILoggingService.error(`Unsupported architecture: ${arch}`)
+      Logging.error(`Unsupported architecture: ${arch}`)
       process.exit(1)
   }
 
   const downloadUrl = `https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_${osName}_${archName}.zip`
 
-  CLILoggingService.info(
+  Logging.info(
     `Downloading PocketBase v${PB_VERSION} for ${osName}/${archName}...`
   )
 
@@ -90,7 +88,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
 
     fs.writeFileSync(zipPath, Buffer.from(arrayBuffer))
 
-    CLILoggingService.debug('Download complete, extracting...')
+    Logging.debug('Download complete, extracting...')
 
     // Extract using unzip command
     executeCommand(`unzip -o "${zipPath}" -d "${PB_DIR}"`, {
@@ -112,11 +110,11 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       fs.chmodSync(PB_BINARY_PATH, 0o755)
     }
 
-    CLILoggingService.success(
+    Logging.success(
       `PocketBase v${PB_VERSION} downloaded to ${chalk.bold.blue(PB_BINARY_PATH)}`
     )
   } catch (error) {
-    CLILoggingService.error(
+    Logging.error(
       `Failed to download PocketBase: ${error instanceof Error ? error.message : 'Unknown error'}`
     )
     process.exit(1)

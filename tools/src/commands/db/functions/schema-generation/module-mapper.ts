@@ -4,8 +4,8 @@ import _ from 'lodash'
 import {
   parseCollectionName,
   parsePackageName
-} from '@/commands/modules/functions/registry/namespace-utils'
-import CLILoggingService from '@/utils/logging'
+} from '@/commands/modules/functions/registry/namespaceUtils'
+import Logging from '@/utils/logging'
 
 /**
  * Builds mapping of modules to their collections
@@ -28,7 +28,7 @@ export async function buildModuleCollectionsMap(
       .flat()
       .map(entry => entry.split('/').slice(0, -1).join('/'))
   } catch (error) {
-    CLILoggingService.error(`Failed to read modules directory: ${error}`)
+    Logging.error(`Failed to read modules directory: ${error}`)
     process.exit(1)
   }
 
@@ -73,7 +73,7 @@ export async function buildModuleCollectionsMap(
       )
 
       if (foundModulePath.length > 0) {
-        CLILoggingService.debug(
+        Logging.debug(
           `Inferred module path for collection '${collectionName}': ${foundModulePath[0]}`
         )
 
@@ -87,9 +87,7 @@ export async function buildModuleCollectionsMap(
         continue
       }
 
-      CLILoggingService.warn(
-        `Collection '${collectionName}' has no corresponding module`
-      )
+      Logging.warn(`Collection '${collectionName}' has no corresponding module`)
       continue
     }
 
@@ -111,7 +109,7 @@ export async function buildModuleCollectionsMap(
 
   const moduleCount = Object.keys(moduleCollectionsMap).length
 
-  CLILoggingService.info(
+  Logging.info(
     `Found ${totalCollections} collections across ${moduleCount} modules`
   )
 

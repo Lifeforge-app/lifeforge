@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import getLocalesMeta from '../functions/getLocalesMeta'
 import installAndMoveLocales from '../functions/installAndMoveLocales'
@@ -10,7 +10,7 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
   const { fullPackageName, shortName, targetDir } = getLocalesMeta(langCode)
 
   if (fs.existsSync(targetDir)) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Locale already exists at locales/${shortName}`,
       `Remove it first with: bun forge locales uninstall ${shortName}`
     )
@@ -18,18 +18,16 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
     process.exit(1)
   }
 
-  CLILoggingService.progress('Fetching locale from registry...')
+  Logging.progress('Fetching locale from registry...')
 
   try {
     installAndMoveLocales(fullPackageName, targetDir)
 
     await setFirstLangInDB(shortName)
 
-    CLILoggingService.success(
-      `Locale ${fullPackageName} installed successfully!`
-    )
+    Logging.success(`Locale ${fullPackageName} installed successfully!`)
   } catch (error) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Failed to install ${fullPackageName}`,
       'Make sure the locale exists in the registry'
     )

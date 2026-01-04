@@ -15,19 +15,19 @@ const LEVEL_ORDER = {
  * CLI Logging service that wraps the server's LoggingService
  * Provides consistent logging across the entire CLI with file persistence
  */
-export default class CLILoggingService {
+export default class Logging {
   private static readonly SERVICE_NAME = 'CLI'
   private static level: number = LEVEL_ORDER['info']
 
   static setLevel(level: keyof typeof LEVEL_ORDER): void {
-    CLILoggingService.level = LEVEL_ORDER[level]
+    Logging.level = LEVEL_ORDER[level]
   }
 
   /**
    * Log an informational message
    */
   static info(message: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['info']) {
+    if (Logging.level > LEVEL_ORDER['info']) {
       return
     }
 
@@ -38,7 +38,7 @@ export default class CLILoggingService {
    * Log an error message with consistent formatting
    */
   static error(message: string, details?: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['error']) {
+    if (Logging.level > LEVEL_ORDER['error']) {
       return
     }
 
@@ -51,7 +51,7 @@ export default class CLILoggingService {
    * Log a warning message
    */
   static warn(message: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['warn']) {
+    if (Logging.level > LEVEL_ORDER['warn']) {
       return
     }
 
@@ -62,7 +62,7 @@ export default class CLILoggingService {
    * Log a debug message
    */
   static debug(message: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['debug']) {
+    if (Logging.level > LEVEL_ORDER['debug']) {
       return
     }
 
@@ -73,7 +73,7 @@ export default class CLILoggingService {
    * Log a success message with green checkmark
    */
   static success(message: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['info']) {
+    if (Logging.level > LEVEL_ORDER['info']) {
       return
     }
 
@@ -84,7 +84,7 @@ export default class CLILoggingService {
    * Log a step in a process with consistent formatting
    */
   static step(message: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['info']) {
+    if (Logging.level > LEVEL_ORDER['info']) {
       return
     }
 
@@ -95,7 +95,7 @@ export default class CLILoggingService {
    * Log a process start with spinner-like indicator
    */
   static progress(message: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['info']) {
+    if (Logging.level > LEVEL_ORDER['info']) {
       return
     }
 
@@ -106,7 +106,7 @@ export default class CLILoggingService {
    * Display a formatted list of items
    */
   static list(title: string, items: string[]): void {
-    if (CLILoggingService.level > LEVEL_ORDER['info']) {
+    if (Logging.level > LEVEL_ORDER['info']) {
       return
     }
 
@@ -124,7 +124,7 @@ export default class CLILoggingService {
    * Display available options in a formatted way
    */
   static options(title: string, options: string[]): void {
-    if (CLILoggingService.level > LEVEL_ORDER['error']) {
+    if (Logging.level > LEVEL_ORDER['error']) {
       return
     }
 
@@ -136,7 +136,7 @@ export default class CLILoggingService {
    * Add a visual separator/newline for better readability
    */
   static newline(): void {
-    if (CLILoggingService.level > LEVEL_ORDER['info']) {
+    if (Logging.level > LEVEL_ORDER['info']) {
       return
     }
 
@@ -147,7 +147,7 @@ export default class CLILoggingService {
    * Log a fatal error and exit the process
    */
   static fatal(message: string, exitCode = 1): never {
-    if (CLILoggingService.level > LEVEL_ORDER['fatal']) {
+    if (Logging.level > LEVEL_ORDER['fatal']) {
       process.exit(exitCode)
     }
 
@@ -159,7 +159,7 @@ export default class CLILoggingService {
    * Log an actionable error with next steps
    */
   static actionableError(message: string, suggestion: string): void {
-    if (CLILoggingService.level > LEVEL_ORDER['error']) {
+    if (Logging.level > LEVEL_ORDER['error']) {
       return
     }
 

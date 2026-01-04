@@ -1,0 +1,47 @@
+{
+  "name": "@lifeforge/lifeforge--movies",
+  "displayName": "Movies Library",
+  "version": "0.1.0",
+  "description": "Your personal log for every movie you’ve watched.",
+  "scripts": {
+    "types": "cd client && bun tsc"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.2",
+    "@tanstack/react-query": "^5.90.11",
+    "@uidotdev/usehooks": "^2.4.1",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.18",
+    "lifeforge-ui": "workspace:*",
+    "moment": "^2.30.1",
+    "qrcode.react": "^4.2.0",
+    "react-i18next": "^15.1.1",
+    "react-toastify": "^11.0.5",
+    "shared": "workspace:*",
+    "vite": "^7.1.9",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.1"
+  },
+  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "exports": {
+    "./server": "./server/index.ts",
+    "./manifest": {
+      "types": "./manifest.d.ts",
+      "default": "./manifest.ts"
+    },
+    "./server/schema": "./server/schema.ts"
+  },
+  "lifeforge": {
+    "icon": "tabler:movie",
+    "APIKeyAccess": {
+      "tmdb": {
+        "required": true,
+        "usage": "Fetch movie data from TMDB"
+      }
+    },
+    "category": "Lifestyle"
+  }
+}

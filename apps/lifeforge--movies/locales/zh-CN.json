@@ -1,0 +1,59 @@
+{
+  "title": "電影",
+  "description": "每一部电影，是一个值得铭记的故事。",
+  "items": {
+    "movie": "电影"
+  },
+  "modals": {
+    "searchTmdb": {
+      "title": "搜索电影"
+    },
+    "ticket": {
+      "create": "新增票券",
+      "update": "更新票券",
+      "view": "查看票券"
+    }
+  },
+  "empty": {
+    "tmdb": {
+      "title": "由 The Movie DB 提供支援",
+      "description": "数百万部电影等待您发现。"
+    },
+    "search": {
+      "title": "找不到电影",
+      "description": "请尝试输入不同的搜索关键字。"
+    },
+    "library": {
+      "title": "没有电影在库",
+      "description": "点击下面的按钮将电影添加到您的库中。"
+    }
+  },
+  "buttons": {
+    "addToLibrary": "加入影片库",
+    "alreadyInLibrary": "已在影片库",
+    "addTicket": "新增票券",
+    "updateTicket": "更新票券",
+    "markAsWatched": "标记为已观看",
+    "markAsUnwatched": "标记为未观看",
+    "watched": "已观看",
+    "showTicket": "显示票据",
+    "addToCalendar": "添加到日历",
+    "addedToCalendar": "已添加到日历",
+    "updateMovieData": "更新电影数据"
+  },
+  "inputs": {
+    "ticketNumber": "票券号码",
+    "theatreSeat": "影院座位",
+    "theatreLocation": "影院地点",
+    "theatreShowtime": "影院放映时间",
+    "theatreNumber": "影院号码",
+    "category": "类别"
+  },
+  "tabs": {
+    "watched": "已观看",
+    "unwatched": "未观看"
+  },
+  "misc": {
+    "watched": "观看于{{date}}"
+  }
+}

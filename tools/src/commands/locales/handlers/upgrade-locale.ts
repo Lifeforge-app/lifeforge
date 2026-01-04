@@ -1,5 +1,5 @@
 import { confirmAction, executeCommand } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 import { checkAuth } from '../../../utils/registry'
 import getLocalesMeta from '../functions/getLocalesMeta'
@@ -25,15 +25,15 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
         getLocalesMeta(upgrade.name).targetDir
       )
 
-      CLILoggingService.success(`Upgraded ${upgrade.name} to ${upgrade.latest}`)
+      Logging.success(`Upgraded ${upgrade.name} to ${upgrade.latest}`)
       upgradedCount++
     } catch (error) {
-      CLILoggingService.error(`Failed to upgrade ${upgrade.name}: ${error}`)
+      Logging.error(`Failed to upgrade ${upgrade.name}: ${error}`)
     }
   }
 
   if (upgradedCount > 0) {
     executeCommand('bun install', { cwd: process.cwd(), stdio: 'inherit' })
-    CLILoggingService.success(`Upgraded ${upgradedCount} locale(s)`)
+    Logging.success(`Upgraded ${upgradedCount} locale(s)`)
   }
 }

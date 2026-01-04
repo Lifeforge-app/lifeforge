@@ -4,7 +4,7 @@ import path from 'path'
 /**
  * Directory containing all tools
  */
-export const TOOLS_DIR = path.join(__dirname, '../../../../tools')
+export const TOOLS_DIR = path.join(__dirname, '../../../tools')
 
 /**
  * Dynamically discovered tools from the tools directory
@@ -25,3 +25,16 @@ export const AVAILABLE_TEMPLATE_MODULE_TYPES = {
   'client-only': 'Client-side only functionality',
   widget: 'Standalone widget component'
 } as const
+
+const GENERATED_DIR = path.join(
+  import.meta.dirname.split('/tools')[0],
+  'server/src/generated'
+)
+
+if (!fs.existsSync(GENERATED_DIR)) {
+  fs.mkdirSync(GENERATED_DIR, { recursive: true })
+}
+
+export const SERVER_ROUTES_PATH = path.join(GENERATED_DIR, 'routes.ts')
+
+export const SERVER_SCHEMA_PATH = path.join(GENERATED_DIR, 'schemas.ts')

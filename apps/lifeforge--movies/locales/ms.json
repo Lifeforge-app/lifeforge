@@ -1,0 +1,59 @@
+{
+  "title": "Filem",
+  "description": "Setiap filem, sebuah cerita untuk diingati.",
+  "items": {
+    "movie": "Filem"
+  },
+  "modals": {
+    "searchTmdb": {
+      "title": "Cari Filem"
+    },
+    "ticket": {
+      "create": "Tambah Tiket",
+      "update": "Kemaskini Tiket",
+      "view": "Lihat Tiket"
+    }
+  },
+  "empty": {
+    "tmdb": {
+      "title": "Dikuasakan oleh Pangkalan Data Filem",
+      "description": "Berjuta-juta filem untuk ditemui."
+    },
+    "search": {
+      "title": "Filem Tidak Ditemui",
+      "description": "Sila cuba masukkan kata kunci carian yang berbeza."
+    },
+    "library": {
+      "title": "Tiada Filem dalam Pustaka",
+      "description": "Tambah filem ke dalam pustaka anda dengan menekan butang di bawah."
+    }
+  },
+  "buttons": {
+    "addToLibrary": "Tambah ke Pustaka",
+    "alreadyInLibrary": "Sudah di dalam Pustaka",
+    "addTicket": "Tambah Tiket",
+    "updateTicket": "Kemaskini Tiket",
+    "markAsWatched": "Tandakan sebagai Ditonton",
+    "markAsUnwatched": "Tandakan sebagai Tidak Ditonton",
+    "watched": "Telah Ditonton",
+    "showTicket": "Tunjukkan Tiket",
+    "addToCalendar": "Tambah ke Kalendar",
+    "addedToCalendar": "Ditambahkan ke Kalendar",
+    "updateMovieData": "Kemas Kini Data Filem"
+  },
+  "inputs": {
+    "ticketNumber": "Nombor Tiket",
+    "theatreSeat": "Tempat Duduk Pawagam",
+    "theatreLocation": "Lokasi Pawagam",
+    "theatreShowtime": "Masa Tayangan Pawagam",
+    "theatreNumber": "Nombor Pawagam",
+    "category": "Kategori"
+  },
+  "tabs": {
+    "watched": "Ditonton",
+    "unwatched": "Belum ditonton"
+  },
+  "misc": {
+    "watched": "Ditonton pada {{date}}"
+  }
+}

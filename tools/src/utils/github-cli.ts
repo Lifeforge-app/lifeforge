@@ -1,11 +1,9 @@
 import { executeCommand } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
-export function validateMaintainerAccess(username: string) {
+export function validateMaintainerAccess(username: string): void {
   try {
-    CLILoggingService.progress(
-      `Checking maintainer privileges for ${username}...`
-    )
+    Logging.progress(`Checking maintainer privileges for ${username}...`)
 
     // Check permission level on the official repo
     const result = executeCommand(
@@ -22,16 +20,18 @@ export function validateMaintainerAccess(username: string) {
     const allowedPermissions = ['admin', 'maintain', 'write']
 
     if (allowedPermissions.includes(response.permission)) {
-      CLILoggingService.success(`Verified maintainer access for ${username}`)
+      Logging.success(`Verified maintainer access for ${username}`)
+
+      return
     }
 
-    CLILoggingService.warn(
+    Logging.warn(
       'Failed to verify maintainer access. Ensure you are authenticated with "gh auth login".'
     )
 
     process.exit(1)
   } catch (error) {
-    CLILoggingService.actionableError(
+    Logging.actionableError(
       `Failed to check maintainer access for ${username}.`,
       `Error: ${error instanceof Error ? error.message : String(error)}`
     )
@@ -77,7 +77,7 @@ export function getGithubUser(): { name: string; email: string } | null {
 
     return null
   } catch (error) {
-    CLILoggingService.debug(`Failed to fetch GitHub user info: ${error}`)
+    Logging.debug(`Failed to fetch GitHub user info: ${error}`)
 
     return null
   }

@@ -2,7 +2,7 @@ import axios from 'axios'
 import ora from 'ora'
 import prompts from 'prompts'
 
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 export default async function selectIcon(): Promise<string> {
   const iconCollections = (
@@ -20,7 +20,7 @@ export default async function selectIcon(): Promise<string> {
   ).data
 
   if (!iconCollections) {
-    CLILoggingService.error('Failed to fetch icon collections from Iconify.')
+    Logging.error('Failed to fetch icon collections from Iconify.')
     process.exit(1)
   }
 
@@ -55,12 +55,12 @@ export default async function selectIcon(): Promise<string> {
     )
 
     if (!moduleIconCollection.iconCollection) {
-      CLILoggingService.error('Please select a valid icon set.')
+      Logging.error('Please select a valid icon set.')
       continue
     }
 
     if (cancelled) {
-      CLILoggingService.error('Icon selection cancelled by user.')
+      Logging.error('Icon selection cancelled by user.')
       process.exit(1)
     }
 
@@ -78,7 +78,7 @@ export default async function selectIcon(): Promise<string> {
       ).data
     } catch (error) {
       spinner2.fail('Failed to fetch icons from Iconify.')
-      CLILoggingService.error(
+      Logging.error(
         `Error fetching icons for collection ${moduleIconCollection.iconCollection}: ${error}`
       )
       continue
@@ -87,7 +87,7 @@ export default async function selectIcon(): Promise<string> {
     spinner2.stop()
 
     if (!icons) {
-      CLILoggingService.error('Failed to fetch icons from Iconify.')
+      Logging.error('Failed to fetch icons from Iconify.')
       process.exit(1)
     }
 
@@ -167,7 +167,7 @@ export default async function selectIcon(): Promise<string> {
     )
 
     if (cancelled2) {
-      CLILoggingService.error('Icon selection cancelled by user.')
+      Logging.error('Icon selection cancelled by user.')
       process.exit(1)
     }
 

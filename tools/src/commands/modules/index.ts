@@ -1,23 +1,16 @@
 import type { Command } from 'commander'
 
-import { createModuleHandler } from './handlers/create-module'
-import { installModuleHandler } from './handlers/install-module'
-import { listModulesHandler } from './handlers/list-modules'
-import { loginModuleHandler } from './handlers/login-module'
-import { migrateModuleHandler } from './handlers/migrate-module'
-import { publishModuleHandler } from './handlers/publish-module'
-import { uninstallModuleHandler } from './handlers/uninstall-module'
-import { upgradeModuleHandler } from './handlers/upgrade-module'
+import { createModuleHandler } from './handlers/createModuleHandler'
+import { installModuleHandler } from './handlers/installModuleHandler'
+import { listModulesHandler } from './handlers/listModuleHandler'
+import { publishModuleHandler } from './handlers/publishModuleHandler'
+import { uninstallModuleHandler } from './handlers/uninstallModuleHandler'
+import { upgradeModuleHandler } from './handlers/upgradeModuleHandler'
 
 export default function setup(program: Command): void {
   const command = program
     .command('modules')
     .description('Manage LifeForge modules')
-
-  command
-    .command('login')
-    .description('Login to the module registry')
-    .action(loginModuleHandler)
 
   command
     .command('list')
@@ -66,17 +59,4 @@ export default function setup(program: Command): void {
       'Publish as official module (requires maintainer access)'
     )
     .action(publishModuleHandler)
-
-  command
-    .command('migrate')
-    .description('Migrate legacy modules to the new package architecture')
-    .argument(
-      '[folder]',
-      'Module folder name (optional, migrates all if omitted)'
-    )
-    .option(
-      '--official',
-      'Migrate as official module (requires maintainer access)'
-    )
-    .action(migrateModuleHandler)
 }

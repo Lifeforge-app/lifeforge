@@ -1,6 +1,5 @@
 import type { Command } from 'commander'
 
-import { loginModuleHandler } from '../modules/handlers/login-module'
 import { installLocaleHandler } from './handlers/install-locale'
 import { listLocalesHandler } from './handlers/list-locales'
 import { publishLocaleHandler } from './handlers/publish-locale'
@@ -11,11 +10,6 @@ export default function setup(program: Command): void {
   const command = program
     .command('locales')
     .description('Manage LifeForge language packs')
-
-  command
-    .command('login')
-    .description('Login to the locale registry')
-    .action(loginModuleHandler)
 
   command
     .command('list')

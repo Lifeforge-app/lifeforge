@@ -1,8 +1,8 @@
 import { executeCommand } from '@/utils/helpers'
-import CLILoggingService from '@/utils/logging'
+import Logging from '@/utils/logging'
 
 export function initializeGitRepository(modulePath: string): void {
-  CLILoggingService.step('Initializing git repository for the new module...')
+  Logging.step('Initializing git repository for the new module...')
 
   executeCommand('git init', { cwd: modulePath, stdio: 'ignore' })
   executeCommand('git add .', { cwd: modulePath, stdio: 'ignore' })
