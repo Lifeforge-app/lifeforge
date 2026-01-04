@@ -11,13 +11,13 @@ COPY bun.lock bun.lock
 COPY server server
 COPY shared shared
 COPY packages packages
-COPY tools/forgeCLI tools/forgeCLI
+COPY tools tools
 COPY apps apps
 COPY locales locales
 COPY tsconfig.json tsconfig.json
 
 # Create a Docker-specific package.json with only needed workspaces
-RUN echo '{"workspaces": ["./shared", "./packages/*", "./apps/*", "./server", "./tools/forgeCLI"]}' > package.json
+RUN echo '{"workspaces": ["./shared", "./packages/*", "./apps/*", "./server", "./tools"]}' > package.json
 
 # Install all dependencies for build
 RUN --mount=type=cache,target=/root/.bun/install/cache \
@@ -35,7 +35,7 @@ COPY --from=builder /lifeforge/shared shared
 COPY --from=builder /lifeforge/packages packages
 COPY --from=builder /lifeforge/apps apps
 COPY --from=builder /lifeforge/locales locales
-COPY --from=builder /lifeforge/tools/forgeCLI tools/forgeCLI
+COPY --from=builder /lifeforge/tools tools
 COPY --from=builder /lifeforge/tsconfig.json tsconfig.json
 COPY --from=builder /lifeforge/package.json package.json
 
