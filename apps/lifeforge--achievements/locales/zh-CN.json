@@ -1,0 +1,54 @@
+{
+  "title": "成就",
+  "description": "庆祝你的大小胜利。",
+  "difficulties": {
+    "easy": "简单",
+    "medium": "中等",
+    "hard": "困难",
+    "impossible": "不可能"
+  },
+  "headers": {
+    "easy": "简单成就",
+    "medium": "中等成就",
+    "hard": "困难成就",
+    "impossible": "不可能成就",
+    "filtered": "已筛选",
+    "all": "所有成就"
+  },
+  "sidebar": {
+    "categories": "类别",
+    "difficulties": "难度",
+    "starredAchievements": "已加星成就",
+    "allCategories": "所有类别",
+    "allDifficulties": "所有难度"
+  },
+  "empty": {
+    "achievements": {
+      "title": "没有成就",
+      "description": "你还没有添加任何成就。点击上面的按钮添加一个。"
+    },
+    "categories": {
+      "title": "没有类别",
+      "description": "你还没有添加任何类别。点击上面的按钮添加一个。"
+    }
+  },
+  "modals": {
+    "achievement": {
+      "create": "创建成就",
+      "update": "更新成就"
+    }
+  },
+  "inputs": {
+    "achievementTitle": "成就标题",
+    "achievementDifficulty": "成就难度",
+    "achievementThoughts": "成就想法",
+    "achievementCategory": "成就类别",
+    "categoryName": "类别名称",
+    "categoryColor": "类别颜色",
+    "categoryIcon": "类别图标"
+  },
+  "items": {
+    "achievement": "成就"
+  },
+  "accomplishedOn": "{{date}}达成"
+}

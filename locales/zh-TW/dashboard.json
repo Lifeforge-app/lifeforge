@@ -1,0 +1,39 @@
+{
+  "title": "儀表板",
+  "description": "您的任務控制中心，讓一切更精彩。",
+  "widgets": {
+    "date": {
+      "title": "日期",
+      "description": "一個簡單的裝飾性小工具，顯示今天的日期。"
+    },
+    "clock": {
+      "title": "時鐘",
+      "description": "一個小時鐘，幫助您不忘時間流逝。"
+    },
+    "quotes": {
+      "description": "一則隨機語錄，希望能激勵您度過一天。",
+      "title": "語錄"
+    }
+  },
+  "modals": {
+    "manageWidgets": "管理小部件"
+  },
+  "buttons": {
+    "manageCategories": "管理分類",
+    "unlockLayout": "解鎖佈局",
+    "manageWidgets": "管理小工具",
+    "lockLayout": "鎖定佈局"
+  },
+  "empty": {
+    "welcome": {
+      "title": "歡迎來到 LifeForge！",
+      "description": "在 ForgeStore 安裝一些模組並開始使用吧。"
+    },
+    "notFound": {
+      "title": "未找到小工具",
+      "description": "您正在尋找的小工具不存在。請檢查您已安裝的模組。"
+    }
+  },
+  "loading": "正在加載儀表板...",
+  "test": ""
+}

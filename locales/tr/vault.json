@@ -1,0 +1,46 @@
+{
+    "vault": {
+        "lockedMessage": "Kasanız kilitli",
+        "passwordRequired": "Kasanızın şifresini çözmek için ana şifre gereklidir.",
+        "unlocked": "Kasa kilidi açıldı",
+        "failedToUnlock": "Kasa kilidi açılamadı",
+        "buttons": {
+            "unlock": "Kilidi Aç"
+        },
+        "createPassword": {
+            "title": "Ana Şifre Belirle",
+            "desc": "Lütfen kasanızı korumak için bir ana şifre belirleyin."
+        },
+        "inputs": {
+            "newPassword": "Yeni Şifre",
+            "confirmPassword": "Şifreyi Onayla",
+            "masterPassword": "Ana Şifre"
+        },
+        "confirmSetNewPassword": {
+            "title": "Ana şifrenizi hatırladığınızdan emin olun!",
+            "desc": "Bu ana şifre değiştirilemez (şimdilik)! Şifreyi yanlışlıkla unutursanız, her şeyi kaybedersiniz. Bu şifre hash'lenir ve kullanıcı profilinizde saklanır ve şifresi çözülemez. Kasanızda sakladığınız verileri şifrelemek ve şifresini çözmek için kullanılacaktır."
+        }
+    },
+    "otp": {
+        "buttons": {
+            "request": "OTP İste",
+            "resend": "OTP'yi Yeniden Gönder",
+            "verify": "OTP'yi Doğrula",
+            "authByQR": "QR Kod ile Kimlik Doğrula"
+        },
+        "messages": {
+            "success": "OTP gönderildi! Lütfen e-postanızı kontrol edin.",
+            "failed": "OTP isteği başarısız oldu",
+            "invalid": "OTP 6 haneli bir sayı olmalıdır",
+            "cooldown": "İstek çok sık, lütfen daha sonra tekrar deneyin",
+            "required": {
+                "title": "Kilidi Açmak İçin OTP Gerekli",
+                "desc": "Ek güvenlik için, bu modülün kilidini açmak için bir OTP gereklidir. Lütfen OTP istemek için aşağıdaki düğmeye tıklayın."
+            },
+            "verify": {
+                "success": "OTP doğrulama başarılı",
+                "failed": "OTP doğrulama başarısız"
+            }
+        }
+    }
+}

@@ -127,7 +127,6 @@ function SidebarItem({
           actionButtonProps={actionButtonProps}
           active={active}
           contextMenuItems={contextMenuItems}
-          hasAI={false}
           hasSubsection={subsection !== undefined}
           isMainSidebarItem={false}
           label={label}

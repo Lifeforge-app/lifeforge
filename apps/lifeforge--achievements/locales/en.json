@@ -1,0 +1,54 @@
+{
+  "title": "Achievements",
+  "description": "Celebrate your victories big and small.",
+  "difficulties": {
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "impossible": "Impossible"
+  },
+  "headers": {
+    "easy": "Easy Achievements",
+    "medium": "Medium Achievements",
+    "hard": "Hard Achievements",
+    "impossible": "Impossible Achievements",
+    "filtered": "Filtered",
+    "all": "All Achievements"
+  },
+  "sidebar": {
+    "categories": "Categories",
+    "difficulties": "Difficulties",
+    "starredAchievements": "Starred Achievements",
+    "allCategories": "All Categories",
+    "allDifficulties": "All Difficulties"
+  },
+  "empty": {
+    "achievements": {
+      "title": "No Achievements",
+      "description": "You haven't added any achievements yet. Click the button above to add one."
+    },
+    "categories": {
+      "title": "No Categories",
+      "description": "You haven't added any categories yet. Click the button above to add one."
+    }
+  },
+  "modals": {
+    "achievement": {
+      "create": "Create Achievement",
+      "update": "Update Achievement"
+    }
+  },
+  "inputs": {
+    "achievementTitle": "Achievement Title",
+    "achievementDifficulty": "Achievement Difficulty",
+    "achievementThoughts": "Achievement Thoughts",
+    "achievementCategory": "Achievement Category",
+    "categoryName": "Category Name",
+    "categoryColor": "Category Color",
+    "categoryIcon": "Category Icon"
+  },
+  "items": {
+    "achievement": "Achievement"
+  },
+  "accomplishedOn": "Accomplished {{date}}"
+}

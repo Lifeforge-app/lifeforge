@@ -1,6 +1,7 @@
 import chalk from 'chalk'
 import path from 'path'
 
+import { parseCollectionName } from '@/commands/modules/functions/registry/namespace-utils'
 import CLILoggingService from '@/utils/logging'
 
 import { writeFormattedFile } from '../../utils'
@@ -50,7 +51,12 @@ export async function processSchemaGeneration(
 
     const firstCollection = collections[0] as Record<string, unknown>
 
-    const moduleName = (firstCollection.name as string).split('__')[0]
+    // Use parseCollectionName to extract module name with username support for third-party modules
+    const parsed = parseCollectionName(firstCollection.name as string)
+
+    const moduleName = parsed.username
+      ? `${parsed.username}___${parsed.moduleName}`
+      : parsed.moduleName
 
     moduleDirs.push(moduleDir)
 

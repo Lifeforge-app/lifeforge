@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import _ from 'lodash'
 import path from 'path'
 
+import { parseCollectionName } from '@/commands/modules/functions/registry/namespace-utils'
 import CLILoggingService from '@/utils/logging'
 
 import { generateCollectionSchema, stripCollectionIds } from './field-converter'
@@ -34,7 +35,8 @@ export function generateModuleSchemaContent(
       .map(([key, value]) => `  ${key}: ${value},`)
       .join('\n')
 
-    const shortName = collectionName.split('__').pop()
+    // Use parseCollectionName to properly extract short name for both official and third-party modules
+    const shortName = parseCollectionName(collectionName).collectionName
 
     const zodSchemaString = `z.object({\n${schemaObjectString}\n})`
 

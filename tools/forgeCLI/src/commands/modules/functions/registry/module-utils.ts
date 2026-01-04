@@ -20,7 +20,9 @@ export function getLifeforgeModules(): string[] {
     ...packageJson.devDependencies
   }
 
-  return Object.keys(allDeps).filter(dep => dep.startsWith(LIFEFORGE_SCOPE))
+  return Object.keys(allDeps)
+    .filter(dep => dep.startsWith(LIFEFORGE_SCOPE))
+    .filter(dep => !dep.replace(LIFEFORGE_SCOPE, '').startsWith('lang-'))
 }
 
 export function extractModuleName(packageName: string): string {
@@ -59,4 +61,16 @@ export function moduleHasSchema(packageName: string): boolean {
   const schemaPath = path.join(modulePath, 'server', 'schema.ts')
 
   return fs.existsSync(schemaPath)
+}
+
+export function moduleHasServer(packageName: string): boolean {
+  const modulePath = getModulePath(packageName)
+
+  if (!modulePath) {
+    return false
+  }
+
+  const serverPath = path.join(modulePath, 'server', 'index.ts')
+
+  return fs.existsSync(serverPath)
 }

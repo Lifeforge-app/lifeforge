@@ -1,0 +1,54 @@
+{
+  "title": "Pencapaian",
+  "description": "Raikan kemenangan anda besar dan kecil.",
+  "difficulties": {
+    "easy": "Mudah",
+    "medium": "Sederhana",
+    "hard": "Sukar",
+    "impossible": "Mustahil"
+  },
+  "headers": {
+    "easy": "Pencapaian Mudah",
+    "medium": "Pencapaian Sederhana",
+    "hard": "Pencapaian Sukar",
+    "impossible": "Pencapaian Mustahil",
+    "filtered": "Ditapis",
+    "all": "Semua Pencapaian"
+  },
+  "sidebar": {
+    "categories": "Kategori",
+    "difficulties": "Kesukaran",
+    "starredAchievements": "Pencapaian Berbintang",
+    "allCategories": "Semua Kategori",
+    "allDifficulties": "Semua Kesukaran"
+  },
+  "empty": {
+    "achievements": {
+      "title": "Tiada Pencapaian",
+      "description": "Anda belum menambah sebarang pencapaian lagi. Klik butang di atas untuk menambah satu."
+    },
+    "categories": {
+      "title": "Tiada Kategori",
+      "description": "Anda belum menambah sebarang kategori lagi. Klik butang di atas untuk menambah satu."
+    }
+  },
+  "modals": {
+    "achievement": {
+      "create": "Cipta Pencapaian",
+      "update": "Kemaskini Pencapaian"
+    }
+  },
+  "inputs": {
+    "achievementTitle": "Tajuk Pencapaian",
+    "achievementDifficulty": "Kesukaran Pencapaian",
+    "achievementThoughts": "Pemikiran Pencapaian",
+    "achievementCategory": "Kategori Pencapaian",
+    "categoryName": "Nama Kategori",
+    "categoryColor": "Warna Kategori",
+    "categoryIcon": "Ikon Kategori"
+  },
+  "items": {
+    "achievement": "Pencapaian"
+  },
+  "accomplishedOn": "Dicapai {{date}}"
+}

@@ -54,7 +54,6 @@
     "react-router": "^7.9.4",
     "react-toastify": "^11.0.5",
     "react-virtualized": "^9.22.6",
-    "shared": "workspace:*",
     "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.14",
     "tailwindcss-animate": "^1.0.7",

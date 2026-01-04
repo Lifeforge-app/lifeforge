@@ -28,7 +28,7 @@ interface MainSidebarItemBaseProps {
    * - Prefix "url:" can be used to render image icons from a URL.
    */
   icon?: string | React.ReactElement
-  showAIIcon: boolean
+  link: string
   subsection?: {
     label: string
     icon: string | React.ReactElement
@@ -45,7 +45,7 @@ type MainSidebarItemProps = MainSidebarItemAutoActiveProps &
 function MainSidebarItem({
   label,
   icon,
-  showAIIcon = false,
+  link,
   subsection,
   sidebarExpanded,
   toggleSidebar,
@@ -74,14 +74,12 @@ function MainSidebarItem({
       return
     }
 
-    navigate(
-      `/${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label.toString())}`
-    )
+    navigate(link)
 
     if (window.innerWidth < 1024) {
       toggleSidebar?.()
     }
-  }, [subsectionExpanded, subsection, prefix, label, navigate, toggleSidebar])
+  }, [subsectionExpanded, subsection, link, navigate, toggleSidebar])
 
   const handleToggleSubsection = useCallback(() => {
     if (subsection !== undefined) {
@@ -101,7 +99,6 @@ function MainSidebarItem({
         />
         <SidebarItemContent
           active={autoActive ? isLocationMatched : active}
-          hasAI={showAIIcon}
           hasSubsection={subsection !== undefined}
           isMainSidebarItem={true}
           label={label}

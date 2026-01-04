@@ -3,7 +3,6 @@ import path from 'path'
 
 import CLILoggingService from '@/utils/logging'
 
-import { generateClientRegistry } from './client-registry'
 import {
   getLifeforgeModules,
   getModulePath,
@@ -94,11 +93,6 @@ export function generateModuleRegistries(): void {
     'server/src/core/routes/generated-routes.ts'
   )
 
-  const clientOutputPath = path.join(
-    process.cwd(),
-    'client/src/module-registry.ts'
-  )
-
   const schemaOutputPath = path.join(process.cwd(), 'server/src/core/schema.ts')
 
   // Generate server registry
@@ -107,13 +101,6 @@ export function generateModuleRegistries(): void {
   fs.mkdirSync(path.dirname(serverOutputPath), { recursive: true })
   fs.writeFileSync(serverOutputPath, serverContent)
   CLILoggingService.debug(`Generated: ${serverOutputPath}`)
-
-  // Generate client registry
-  const clientContent = generateClientRegistry(modules)
-
-  fs.mkdirSync(path.dirname(clientOutputPath), { recursive: true })
-  fs.writeFileSync(clientOutputPath, clientContent)
-  CLILoggingService.debug(`Generated: ${clientOutputPath}`)
 
   // Generate schema registry (only for modules with schema.ts)
   const modulesWithSchema = modules.filter(mod => moduleHasSchema(mod))

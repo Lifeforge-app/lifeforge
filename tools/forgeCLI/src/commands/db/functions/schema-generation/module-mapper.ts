@@ -1,6 +1,10 @@
 import fs from 'fs'
 import _ from 'lodash'
 
+import {
+  parseCollectionName,
+  parsePackageName
+} from '@/commands/modules/functions/registry/namespace-utils'
 import CLILoggingService from '@/utils/logging'
 
 /**
@@ -31,19 +35,33 @@ export async function buildModuleCollectionsMap(
   for (const collection of collections) {
     const collectionName = collection.name as string
 
-    const matchingModule = allModules.find(module =>
-      collectionName.startsWith(
-        _.snakeCase(
-          module
-            .replace(/\/server$/, '')
-            .split('/')
-            .pop() || ''
-        )
-      )
-    )
+    // Parse the collection name to get the module identifier
+    const parsed = parseCollectionName(collectionName)
+
+    // Build the module prefix (including username for third-party)
+    const modulePrefix = parsed.username
+      ? `${parsed.username}___${parsed.moduleName}`
+      : parsed.moduleName
+
+    const matchingModule = allModules.find(module => {
+      const moduleDirName =
+        module
+          .replace(/\/server$/, '')
+          .split('/')
+          .pop() || ''
+
+      const { username, moduleName } = parsePackageName(moduleDirName)
+
+      const expectedPrefix = username
+        ? `${username}___${moduleName}`
+        : moduleName
+
+      return modulePrefix === expectedPrefix
+    })
 
     if (!matchingModule) {
-      const moduleName = _.camelCase(collectionName.split('__')[0])
+      // Fallback: use camelCase for path lookup
+      const moduleName = _.camelCase(parsed.moduleName)
 
       const possibleModulePath = [
         `./server/src/lib/${moduleName}/server`,

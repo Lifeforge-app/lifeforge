@@ -9,11 +9,12 @@ import {
   FilterType,
   MultiItemsReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
-import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
+import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 
 /**
  * Class for retrieving all records from PocketBase collections with filtering, sorting, and expansion capabilities
@@ -190,7 +191,12 @@ const getFullList = (pb: PocketBase) => ({
   collection: <TCollectionKey extends CollectionKey>(
     collection: TCollectionKey
   ): GetFullList<TCollectionKey> => {
-    return new GetFullList<TCollectionKey>(pb, collection)
+    const finalCollectionName = toPocketBaseCollectionName(collection)
+
+    return new GetFullList<TCollectionKey>(
+      pb,
+      finalCollectionName as TCollectionKey
+    )
   }
 })
 

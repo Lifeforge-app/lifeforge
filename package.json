@@ -61,6 +61,9 @@
     "@lifeforge/lang-tr": "workspace:*",
     "@lifeforge/lang-zh-CN": "workspace:*",
     "@lifeforge/lang-zh-TW": "workspace:*",
-    "@lifeforge/lifeforge--achievements": "workspace:*"
+    "@lifeforge/lifeforge--achievements": "workspace:*",
+    "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*",
+    "@lifeforge/lifeforge--calendar": "workspace:*",
+    "@lifeforge/melvinchia3636--invoice-maker": "workspace:*"
   }
 }

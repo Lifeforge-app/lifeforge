@@ -1,0 +1,31 @@
+{
+  "categories": {
+    "productivity": "生產力",
+    "storage": "儲存",
+    "study": "學習",
+    "finance": "財務",
+    "confidential": "機密",
+    "settings": "設置",
+    "technologies": "技術",
+    "utilities": "實用工具",
+    "information": "信息",
+    "sso": "單一登入",
+    "references": "參考資料",
+    "lifestyle": "生活方式",
+    "externalManagement": "外部管理",
+    "healthFitness": "健康與健身"
+  },
+  "buttons": {
+    "signOut": "登出",
+    "accountSettings": "帳戶設置"
+  },
+  "items": {
+    "module": "模組"
+  },
+  "empty": {
+    "modules": {
+      "title": "未找到模組",
+      "description": "請調整模組搜索。"
+    }
+  }
+}

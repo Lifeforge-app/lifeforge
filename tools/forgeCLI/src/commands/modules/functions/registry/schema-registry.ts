@@ -5,7 +5,21 @@ export function generateSchemaRegistry(modulesWithSchema: string[]): string {
     .map(mod => {
       const name = extractModuleName(mod)
 
-      return `  ${name}: (await import('${mod}/server/schema')).default,`
+      let key: string
+
+      if (name.includes('--')) {
+        // Third-party module: username--module-name → username$module_name
+        const [username, ...rest] = name.split('--')
+
+        const moduleName = rest.join('--').replace(/-/g, '_')
+
+        key = `${username}$${moduleName}`
+      } else {
+        // Official module: just convert dashes to underscores
+        key = name.replace(/-/g, '_')
+      }
+
+      return `  ${key}: (await import('${mod}/server/schema')).default,`
     })
     .join('\n')
 

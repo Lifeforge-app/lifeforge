@@ -1,0 +1,119 @@
+{
+  "search": "搜索{{item}}...",
+  "notFound": {
+    "title": "糟糕！这里什么都没有",
+    "description": "找不到您正在寻找的页面。请检查网址并重试。"
+  },
+  "tipsAndTricks": "提示与技巧",
+  "loadingModule": "加载模块中...",
+  "deprecated": "不再支持",
+  "imageUpload": {
+    "local": "上传本地图片",
+    "url": "图片网址",
+    "pixabay": "从Pixabay下载",
+    "orPasteLink": "或粘贴图片链接",
+    "inputs": {
+      "imageLink": "图片链接",
+      "imageType": "图片类型",
+      "imageCategory": "图片类别",
+      "imageColor": "图片颜色",
+      "editorsChoice": "编辑推荐"
+    },
+    "imageType": {
+      "all": "所有",
+      "photo": "照片",
+      "vector": "矢量",
+      "illustration": "插图"
+    },
+    "items": {
+      "pixabay": "Pixabay"
+    },
+    "empty": {
+      "result": {
+        "title": "没有结果",
+        "description": "找不到图片, 请尝试其他关键字。"
+      },
+      "pixabay": {
+        "title": "由 Pixabay 提供",
+        "description": "搜索超过1300万张免费高质量图片。"
+      }
+    }
+  },
+  "dnd": {
+    "dropHere": "将项目拖放到这里",
+    "dragAndDropToUpload": "拖放或点击上传",
+    "or": "或",
+    "buttons": {
+      "pasteFromClipboard": "从剪贴板粘贴"
+    }
+  },
+  "buttons": {
+    "goBack": "返回",
+    "reportBug": "报告错误"
+  },
+  "colorPicker": {
+    "title": "选择颜色",
+    "modals": {
+      "morandiColorPalette": "莫兰迪色调",
+      "tailwindCssColorPalette": "Tailwind CSS色调"
+    },
+    "buttons": {
+      "morandiColorPalette": "莫兰迪色调",
+      "tailwindCssColorPalette": "Tailwind CSS色调"
+    }
+  },
+  "empty": {
+    "apiStatus": {
+      "title": "无法连接到API",
+      "description": "请检查您的网络连接并重试。如果您是开发人员，请检查服务器是否正常运行。"
+    }
+  },
+  "iconPicker": {
+    "items": {
+      "icon": "图标",
+      "iconSet": "图标集"
+    },
+    "empty": {
+      "icon": {
+        "title": "没有图标",
+        "description": "找不到图标, 请尝试其他关键字。"
+      }
+    }
+  },
+  "locationDisabled": {
+    "description": "位置输入当前不可用。请添加正确配置的Google Cloud API密钥以启用此功能。有关更多信息，请参阅",
+    "title": "不可用"
+  },
+  "dates": {
+    "months": {
+      "0": "一月",
+      "1": "二月",
+      "2": "三月",
+      "3": "四月",
+      "4": "五月",
+      "5": "六月",
+      "6": "七月",
+      "7": "八月",
+      "8": "九月",
+      "9": "十月",
+      "10": "十一月",
+      "11": "十二月"
+    },
+    "days": {
+      "0": "星期一",
+      "1": "星期二",
+      "2": "星期三",
+      "3": "星期四",
+      "4": "星期五",
+      "5": "星期六",
+      "6": "星期日"
+    }
+  },
+  "fieldRequired": "该字段是必填的。",
+  "invalidField": "无效字段。",
+  "invalidColor": "无效颜色。请输入有效的十六进制值，格式为#RRGGBB。",
+  "invalidIcon": "无效图标。必须是来自Iconify的有效图标标识符，格式为<icon-set>:<icon-name>。",
+  "loadingUserData": "正在加载用户数据...",
+  "invalidSelection": "无效选择。请从列表中选择一个有效的值。",
+  "fileInputSupportedFormat": "支持的格式：{{format}}"
+}
