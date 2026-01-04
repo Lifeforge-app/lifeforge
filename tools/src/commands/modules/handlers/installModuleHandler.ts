@@ -2,11 +2,11 @@ import fs from 'fs'
 import path from 'path'
 
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
+import { installPackage } from '@/utils/commands'
 import Logging from '@/utils/logging'
 import { checkPackageExists } from '@/utils/registry'
 
 import normalizePackage from '../../../utils/normalizePackage'
-import installModulePackage from '../functions/installModulePackage'
 import linkModuleToWorkspace from '../functions/linkModuleToWorkspace'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import generateServerRegistry from '../functions/registry/generateServerRegistry'
@@ -34,7 +34,7 @@ export async function installModuleHandler(moduleName: string): Promise<void> {
 
   Logging.info(`Installing ${Logging.highlight(fullName)}...`)
 
-  installModulePackage(fullName, targetDir)
+  installPackage(fullName, targetDir)
 
   linkModuleToWorkspace(fullName)
 

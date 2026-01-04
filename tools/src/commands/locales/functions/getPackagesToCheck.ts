@@ -1,10 +1,10 @@
 import Logging from '@/utils/logging'
 import normalizePackage from '@/utils/normalizePackage'
 
-import { getInstalledLocalesWithMeta } from './getInstalledLocales'
+import { listLocalesWithMeta } from './listLocales'
 
 function getPackagesToCheck(langCode?: string) {
-  const localePackages = getInstalledLocalesWithMeta()
+  const localePackages = listLocalesWithMeta()
 
   if (!localePackages.length) {
     Logging.info('No locales installed')

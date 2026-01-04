@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-import { installDependencies } from '@/utils/commands'
+import { bunInstall } from '@/utils/commands'
 import Logging from '@/utils/logging'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
@@ -28,7 +28,7 @@ export async function uninstallModuleHandler(
 
   fs.rmSync(targetDir, { recursive: true, force: true })
 
-  installDependencies()
+  bunInstall()
 
   Logging.info('Regenerating registries...')
 

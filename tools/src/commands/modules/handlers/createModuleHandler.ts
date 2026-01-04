@@ -1,8 +1,10 @@
+import Logging from '@/utils/logging'
 import { registerHandlebarsHelpers } from '../functions/templates'
 
 registerHandlebarsHelpers()
 
 export async function createModuleHandler(moduleName?: string): Promise<void> {
+  Logging.info('Work in progress...')
   // checkRunningPBInstances()
   // const moduleNameWithTranslation = await promptForModuleName(moduleName)
   // const moduleType = await promptModuleType()

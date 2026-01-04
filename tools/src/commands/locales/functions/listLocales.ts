@@ -1,9 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 
-import { LOCALES_DIR } from '../constants'
+import { LOCALES_DIR } from '@/constants/constants'
 
-export function getInstalledLocales(): string[] {
+export function listLocales(): string[] {
   return fs.readdirSync(LOCALES_DIR).filter(dir => {
     if (dir.startsWith('.')) return false
 
@@ -15,12 +15,12 @@ export function getInstalledLocales(): string[] {
   })
 }
 
-export function getInstalledLocalesWithMeta(): {
+export function listLocalesWithMeta(): {
   name: string
   displayName: string
   version: string
 }[] {
-  const locales = getInstalledLocales()
+  const locales = listLocales()
 
   const installedLocales: {
     name: string
