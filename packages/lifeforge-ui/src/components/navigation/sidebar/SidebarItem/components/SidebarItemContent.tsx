@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useState } from 'react'
@@ -12,7 +11,6 @@ function SidebarItemContent({
   label,
   sidebarExpanded,
   isMainSidebarItem,
-  hasAI,
   number,
   contextMenuItems,
   active,
@@ -24,7 +22,6 @@ function SidebarItemContent({
   label: string | React.ReactElement
   sidebarExpanded: boolean
   isMainSidebarItem: boolean
-  hasAI: boolean
   number?: number
   contextMenuItems?: React.ReactElement
   active: boolean
@@ -66,15 +63,9 @@ function SidebarItemContent({
               <span className="flex-between flex w-full gap-3 truncate">
                 <span className="w-full min-w-0 truncate">
                   {typeof label === 'string'
-                    ? t(`common.sidebar:apps.${_.camelCase(label)}.title`)
+                    ? t(`common.sidebar:apps.${label}.title`)
                     : label}
                 </span>
-                {hasAI && (
-                  <Icon
-                    className="text-custom-500 size-4"
-                    icon="mage:stars-c"
-                  />
-                )}
               </span>
             )
           )

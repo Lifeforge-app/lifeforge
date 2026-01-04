@@ -112,10 +112,11 @@ export default async function fetchAPI<T>(
     )
 
   // Normalize endpoint path - ensure it starts with / for relative paths
-  const normalizedEndpoint =
+  const normalizedEndpoint = (
     endpoint.startsWith('/') || endpoint.startsWith('http')
       ? endpoint
       : `/${endpoint}`
+  ).replace(/\$/g, '__')
 
   const config: AxiosRequestConfig = {
     method: method.toUpperCase() as

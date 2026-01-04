@@ -25,8 +25,10 @@ function buildIdToNameMap(
   const idToNameMap = new Map<string, string>()
 
   for (const { schema } of importedSchemas) {
-    for (const { raw } of Object.values(schema)) {
-      if (raw.id && raw.name) {
+    for (const entry of Object.values(schema)) {
+      const raw = entry?.raw
+
+      if (raw?.id && raw?.name) {
         idToNameMap.set(raw.id as string, raw.name as string)
       }
     }

@@ -1,0 +1,46 @@
+{
+  "vault": {
+    "lockedMessage": "您的保险库已锁定",
+    "passwordRequired": "需要主密码来解密您的保险库。",
+    "unlocked": "保险库已解锁",
+    "failedToUnlock": "解锁保险库失败",
+    "buttons": {
+      "unlock": "解锁"
+    },
+    "createPassword": {
+      "title": "设置主密码",
+      "desc": "请设置一个主密码来保护您的保险库。"
+    },
+    "inputs": {
+      "newPassword": "新密码",
+      "confirmPassword": "确认密码",
+      "masterPassword": "主密码"
+    },
+    "confirmSetNewPassword": {
+      "title": "确保您记住您的主密码！",
+      "desc": "此主密码是不可更改的（目前）！如果您不小心忘记了密码，您将失去一切。此密码会被哈希并存储在您的用户资料中，且无法解密。它将用于加密和解密您存储在保险库中的数据。"
+    }
+  },
+  "otp": {
+    "buttons": {
+      "request": "请求一次性密码",
+      "resend": "重新发送一次性密码",
+      "verify": "验证一次性密码",
+      "authByQR": "通过二维码验证"
+    },
+    "messages": {
+      "success": "一次性密码已发送！请检查您的电子邮件。",
+      "failed": "请求一次性密码失败",
+      "invalid": "一次性密码必须是6位数字",
+      "cooldown": "请求过于频繁，请稍后再试",
+      "required": {
+        "title": "需要一次性密码来解锁",
+        "desc": "为了增加安全性，需要一次性密码来解锁此模块。请点击下面的按钮来请求一次性密码。"
+      },
+      "verify": {
+        "success": "一次性密码验证成功",
+        "failed": "一次性密码验证失败"
+      }
+    }
+  }
+}

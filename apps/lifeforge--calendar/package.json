@@ -1,0 +1,53 @@
+{
+  "name": "@lifeforge/lifeforge--calendar",
+  "displayName": "Calendar",
+  "version": "0.1.0",
+  "description": "Don't miss appointments with destiny (or the dentist).",
+  "scripts": {
+    "types": "cd client && bun tsc"
+  },
+  "dependencies": {
+    "@iconify/react": "^6.0.2",
+    "@tanstack/react-query": "^5.90.11",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.18",
+    "lifeforge-ui": "workspace:*",
+    "lodash": "^4.17.21",
+    "moment": "^2.30.1",
+    "node-ical": "^0.21.0",
+    "react": "^19.2.0",
+    "react-big-calendar": "^1.19.4",
+    "react-dom": "^19.2.0",
+    "react-i18next": "^15.1.1",
+    "react-markdown": "^10.1.0",
+    "react-toastify": "^11.0.5",
+    "react-tooltip": "^5.30.0",
+    "rrule": "^2.8.1",
+    "shared": "workspace:*",
+    "tailwindcss": "^4.1.14",
+    "tinycolor2": "^1.6.0",
+    "vite": "^7.1.9",
+    "zod": "^4.1.12",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.21",
+    "@types/react": "^19.2.0",
+    "@types/react-big-calendar": "^1.16.3",
+    "@types/react-dom": "^19.2.0",
+    "@types/tinycolor2": "^1.4.6"
+  },
+  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "exports": {
+    "./server": "./server/index.ts",
+    "./manifest": {
+      "types": "./manifest.d.ts",
+      "default": "./manifest.ts"
+    },
+    "./server/schema": "./server/schema.ts"
+  },
+  "lifeforge": {
+    "icon": "tabler:calendar",
+    "category": "Productivity"
+  }
+}

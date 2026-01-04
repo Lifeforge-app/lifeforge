@@ -1,0 +1,31 @@
+{
+    "categories": {
+        "productivity": "Verimlilik",
+        "storage": "Depolama",
+        "study": "Çalışma",
+        "finance": "Finans",
+        "confidential": "Gizli",
+        "settings": "Ayarlar",
+        "technologies": "Teknolojiler",
+        "utilities": "Araçlar",
+        "information": "Bilgi",
+        "sso": "Tek Oturum Açma",
+        "references": "Referanslar",
+        "lifestyle": "Yaşam Tarzı",
+        "externalManagement": "Harici Yönetim",
+        "healthFitness": "Sağlık ve Fitness"
+    },
+    "buttons": {
+        "signOut": "Çıkış Yap",
+        "accountSettings": "Hesap Ayarları"
+    },
+    "items": {
+        "module": "Modül"
+    },
+    "empty": {
+        "modules": {
+            "title": "Modül bulunamadı",
+            "description": "Modül aramanızı ayarlamayı deneyin."
+        }
+    }
+}

@@ -1,0 +1,54 @@
+{
+  "title": "成就",
+  "description": "慶祝你的大小勝利。",
+  "difficulties": {
+    "easy": "簡單",
+    "medium": "中等",
+    "hard": "困難",
+    "impossible": "不可能"
+  },
+  "headers": {
+    "easy": "簡單成就",
+    "medium": "中等成就",
+    "hard": "困難成就",
+    "impossible": "不可能成就",
+    "filtered": "已篩選",
+    "all": "所有成就"
+  },
+  "sidebar": {
+    "categories": "類別",
+    "difficulties": "難度",
+    "starredAchievements": "已加星成就",
+    "allCategories": "所有類別",
+    "allDifficulties": "所有難度"
+  },
+  "empty": {
+    "achievements": {
+      "title": "沒有成就",
+      "description": "你還沒有添加任何成就。點擊上面的按鈕添加一個。"
+    },
+    "categories": {
+      "title": "沒有類別",
+      "description": "你還沒有添加任何類別。點擊上面的按鈕添加一個。"
+    }
+  },
+  "modals": {
+    "achievement": {
+      "create": "創建成就",
+      "update": "更新成就"
+    }
+  },
+  "inputs": {
+    "achievementTitle": "成就標題",
+    "achievementDifficulty": "成就難度",
+    "achievementThoughts": "成就想法",
+    "achievementCategory": "成就類別",
+    "categoryName": "類別名稱",
+    "categoryColor": "類別顏色",
+    "categoryIcon": "類別圖標"
+  },
+  "items": {
+    "achievement": "成就"
+  },
+  "accomplishedOn": "{{date}}達成"
+}

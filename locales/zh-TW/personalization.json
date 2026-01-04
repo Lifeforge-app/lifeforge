@@ -1,0 +1,158 @@
+{
+  "title": "個性化",
+  "description": "讓它成為你的！誰想要一個無聊的系統？",
+  "themeSelector": {
+    "title": "主題",
+    "desc": "選擇一個適合你風格的主題。",
+    "theme": {
+      "system": "系統",
+      "light": "淺色",
+      "dark": "深色"
+    },
+    "customBgColor": "自定義背景顏色"
+  },
+  "themeColorSelector": {
+    "title": "主題顏色",
+    "desc": "選擇最適合你界面的顏色。",
+    "colors": {
+      "red": "紅色",
+      "pink": "粉紅色",
+      "purple": "紫色",
+      "deepPurple": "深紫色",
+      "indigo": "靛藍色",
+      "blue": "藍色",
+      "lightBlue": "淺藍色",
+      "cyan": "青色",
+      "teal": "藍綠色",
+      "green": "綠色",
+      "lightGreen": "淺綠色",
+      "lime": "萊姆色",
+      "yellow": "黃色",
+      "amber": "琥珀色",
+      "orange": "橙色",
+      "deepOrange": "深橙色",
+      "brown": "棕色",
+      "grey": "灰色",
+      "custom": "自定義顏色"
+    }
+  },
+  "languageSelector": {
+    "title": "語言",
+    "desc": "選擇你喜歡的語言。"
+  },
+  "bgTempSelector": {
+    "title": "背景溫度",
+    "desc": "選擇一個適合你心情的背景溫度。",
+    "cool": "冷色",
+    "warm": "暖色",
+    "customBgTemp": "自定義背景溫度"
+  },
+  "fontFamily": {
+    "title": "字體樣式",
+    "desc": "選擇一個符合你偏好的字體",
+    "tooltip": "有關所有字體的詳細信息，請訪問Google字體網站。",
+    "tooltipTitle": "由Google字體提供支持",
+    "tabs": {
+      "googleFonts": "Google 字體",
+      "customFonts": "自訂字體"
+    },
+    "empty": {
+      "apiKey": {
+        "title": "未找到 Google Cloud API 密鑰",
+        "description": "要啟用此功能，請將 Google Cloud API 密鑰添加到您的 API 保險庫中。"
+      },
+      "search": {
+        "title": "未找到字型系列",
+        "description": "未找到符合查詢的字體家族。請再試一次。"
+      },
+      "customFont": {
+        "title": "未找到自訂字體",
+        "description": "您尚未上傳任何自訂字體。點擊上方按鈕以上傳一個。"
+      }
+    },
+    "inputs": {
+      "displayName": "顯示名稱",
+      "fontFamily": "字體家族",
+      "fontWeight": "字體粗細",
+      "selectFile": "字體文件"
+    },
+    "modals": {
+      "fontFamilySelector": "字體家族選擇器",
+      "customFonts": {
+        "upload": "上傳自訂字體",
+        "edit": "編輯自訂字體",
+        "delete": {
+          "title": "刪除自訂字體",
+          "description": "您確定要刪除這個自訂字體嗎？此操作無法撤銷。"
+        }
+      }
+    },
+    "buttons": {
+      "uploadButton": "上傳自訂字體"
+    },
+    "items": {
+      "fontFamily": "字體家族"
+    }
+  },
+  "fontScaleSelector": {
+    "title": "字體大小",
+    "desc": "選擇一個適合你所選字體家族的字體大小。"
+  },
+  "borderRadiusSelector": {
+    "title": "邊框圓角",
+    "desc": "調整介面中各元素的圓角程度。",
+    "options": {
+      "none": "無",
+      "small": "小",
+      "default": "預設",
+      "medium": "中",
+      "large": "大",
+      "full": "最大"
+    }
+  },
+  "borderedSelector": {
+    "title": "邊框組件",
+    "desc": "為UI組件啟用可見邊框。"
+  },
+  "bgImageSelector": {
+    "title": "背景圖片",
+    "desc": "上傳或搜索背景圖片",
+    "pixabayDisabled": {
+      "tooltip": "要從Pixabay搜索圖片，請將您的Pixabay API密鑰添加到API保險庫。欲了解更多信息，請參閱"
+    },
+    "modals": {
+      "adjustBackground": {
+        "title": "調整背景圖片",
+        "modals": {
+          "adjustBackgroundImage": "調整背景圖片"
+        },
+        "columns": {
+          "blur": {
+            "title": "模糊效果",
+            "desc": "調整背景圖片的模糊程度。"
+          },
+          "brightness": {
+            "title": "亮度",
+            "desc": "調整背景圖片的亮度。"
+          },
+          "contrast": {
+            "title": "對比度",
+            "desc": "調整背景圖片的對比度。"
+          },
+          "saturation": {
+            "title": "飽和度",
+            "desc": "調整背景圖片中色彩的強度。"
+          },
+          "overlayOpacity": {
+            "title": "覆蓋層不透明度",
+            "desc": "調整背景覆蓋的透明度。"
+          }
+        }
+      }
+    }
+  },
+  "inputs": {
+    "colorHex": "顏色十六進制"
+  },
+  "notApplicable": "不適用"
+}

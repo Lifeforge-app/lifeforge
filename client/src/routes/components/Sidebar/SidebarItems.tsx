@@ -7,7 +7,7 @@ import {
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import { useMainSidebarState } from 'shared'
+import { transformModuleNameForLocales, useMainSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
 import ROUTES from '../..'
@@ -80,8 +80,8 @@ function SidebarItems({ query }: { query: string }) {
                       key={_.kebabCase(subItem.name)}
                       autoActive
                       icon={subItem.icon ?? ''}
-                      label={subItem.name.replace('-', ' ')}
-                      showAIIcon={subItem.hasAI === true}
+                      label={transformModuleNameForLocales(subItem.name)}
+                      link={`/${subItem.name.startsWith('lifeforge--') ? subItem.name.split('--')[1] : subItem.name}`}
                       sidebarExpanded={sidebarExpanded}
                       subsection={subItem.subsection}
                       toggleSidebar={toggleSidebar}

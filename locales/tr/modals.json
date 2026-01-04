@@ -1,0 +1,86 @@
+{
+    "deleteConfirmation": {
+        "title": "{{itemName}} öğesini silmek istediğinizden emin misiniz?",
+        "desc": "Bu, {{itemName}} öğesini ve ilgili tüm içeriği silecektir. Bu işlem geri alınamaz!",
+        "inputs": {
+            "confirmation": {
+                "placeholder": "Silmeyi onaylamak için lütfen \"{{text}}\" yazın",
+                "label": "Silmeyi Onayla"
+            }
+        },
+        "error": "Öğe silinirken hata oluştu. Lütfen tekrar deneyin."
+    },
+    "searchFilters": "Arama Filtreleri",
+    "iconPicker": {
+        "title": "İkon Seç",
+        "items": {
+            "icon": "İkon",
+            "iconSet": "İkon seti"
+        },
+        "empty": {
+            "icon": {
+                "title": "İkon yok",
+                "description": "İkon bulunamadı, lütfen başka anahtar kelimeler deneyin."
+            }
+        }
+    },
+    "imagePicker": {
+        "title": "Dosya Seç",
+        "local": "Yerel resim yükle",
+        "url": "Resim URL'si",
+        "pixabay": "Pixabay'den indir",
+        "orPasteLink": "Veya resim bağlantısını yapıştır",
+        "inputs": {
+            "imageLink": "Resim bağlantısı",
+            "imageType": "Resim türü",
+            "imageCategory": "Resim kategorisi",
+            "imageColor": "Resim rengi",
+            "editorsChoice": "Editörün seçimi",
+            "prompt": "AI İstem Metni"
+        },
+        "imageType": {
+            "all": "Tümü",
+            "photo": "Fotoğraf",
+            "vector": "Vektör",
+            "illustration": "İllüstrasyon"
+        },
+        "items": {
+            "pixabay": "Pixabay"
+        },
+        "empty": {
+            "result": {
+                "title": "Sonuç yok",
+                "description": "Resim bulunamadı, lütfen başka anahtar kelimeler deneyin."
+            },
+            "pixabay": {
+                "title": "Pixabay Tarafından Sağlanmıştır",
+                "description": "13 milyondan fazla yüksek kaliteli ücretsiz resim arayın."
+            },
+            "noAPIKey": {
+                "title": "Pixabay API Anahtarı yapılandırılmamış",
+                "description": "Bu özelliği kullanmak için lütfen API Anahtar kasasında Pixabay API anahtarınızı ayarlayın."
+            },
+            "noOpenAIKey": {
+                "title": "OpenAI API Anahtarı yapılandırılmamış",
+                "description": "Bu özelliği kullanmak için lütfen API Anahtar kasasında OpenAI API anahtarınızı ayarlayın."
+            }
+        },
+        "ai": "AI Görsel Üretimi"
+    },
+    "colorPicker": {
+        "title": "Renk Seç",
+        "modals": {
+            "morandiColorPalette": "Morandi Renk Paleti",
+            "tailwindCssColorPalette": "Tailwind CSS Renk Paleti",
+            "flatUiColors": "Flat UI Renkleri"
+        },
+        "buttons": {
+            "morandiColorPalette": "Morandi Renk Paleti",
+            "tailwindCssColorPalette": "Tailwind CSS Renk Paleti",
+            "flatUiColors": "Flat UI Renkleri"
+        }
+    },
+    "imagePreview": "Resim Önizleme",
+    "qrCodeScanner": "QR Kod Tarayıcı",
+    "viewImage": "Resmi Görüntüle"
+}
