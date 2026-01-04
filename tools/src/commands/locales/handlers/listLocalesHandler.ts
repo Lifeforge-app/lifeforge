@@ -1,9 +1,9 @@
 import Logging from '@/utils/logging'
 
-import { getInstalledLocalesWithMeta } from '../functions/getInstalledLocales'
+import { listLocalesWithMeta } from '../functions/listLocales'
 
 export function listLocalesHandler(): void {
-  const locales = getInstalledLocalesWithMeta()
+  const locales = listLocalesWithMeta()
 
   if (locales.length === 0) {
     Logging.info('No language packs installed')

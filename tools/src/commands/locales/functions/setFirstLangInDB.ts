@@ -1,10 +1,10 @@
 import Logging from '@/utils/logging'
 import getPBInstance from '@/utils/pocketbase'
 
-import { getInstalledLocales } from './getInstalledLocales'
+import { listLocales } from './listLocales'
 
 async function setFirstLangInDB(shortName: string) {
-  const installedLocales = getInstalledLocales()
+  const installedLocales = listLocales()
 
   if (installedLocales.length === 1) {
     Logging.debug('This is the first locale, setting as default...')

@@ -34,6 +34,12 @@ if (!fs.existsSync(GENERATED_DIR)) {
   fs.mkdirSync(GENERATED_DIR, { recursive: true })
 }
 
-export const SERVER_ROUTES_PATH = path.join(GENERATED_DIR, 'routes.ts')
+export const SERVER_ROUTES_DIR = path.join(GENERATED_DIR, 'routes.ts')
 
-export const SERVER_SCHEMA_PATH = path.join(GENERATED_DIR, 'schemas.ts')
+export const SERVER_SCHEMA_DIR = path.join(GENERATED_DIR, 'schemas.ts')
+
+export const LOCALES_DIR = path.join(PROJECT_ROOT, 'locales')
+
+if (!fs.existsSync(LOCALES_DIR)) {
+  fs.mkdirSync(LOCALES_DIR)
+}
