@@ -96,7 +96,9 @@ export default function InvoiceCard({
     <Card
       isInteractive
       className="flex-between gap-4"
-      onClick={() => navigate(`/invoice-maker/view/${invoice.id}`)}
+      onClick={() =>
+        navigate(`/melvinchia3636--invoice-maker/view/${invoice.id}`)
+      }
     >
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2">
@@ -128,7 +130,9 @@ export default function InvoiceCard({
         <ContextMenuItem
           icon="tabler:pencil"
           label="edit"
-          onClick={() => navigate(`/invoice-maker/modify/${invoice.id}`)}
+          onClick={() =>
+            navigate(`/melvinchia3636--invoice-maker/modify/${invoice.id}`)
+          }
         />
         <ContextMenuItem
           icon="tabler:files"
