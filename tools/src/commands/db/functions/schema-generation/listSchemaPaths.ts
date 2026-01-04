@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { PROJECT_ROOT } from '@/constants/constants'
+import { ROOT_DIR } from '@/constants/constants'
 import Logging from '@/utils/logging'
 
 /**
@@ -34,7 +34,7 @@ export function listSchemaPaths(): string[] {
 
   try {
     allModules = modulesDirs
-      .map(dir => fs.globSync(path.resolve(PROJECT_ROOT, dir)))
+      .map(dir => fs.globSync(path.resolve(ROOT_DIR, dir)))
       .flat()
       .map(entry => path.dirname(entry).replace(/\/server$/, ''))
   } catch (error) {

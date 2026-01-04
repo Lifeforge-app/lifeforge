@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
+import { ROOT_DIR } from '@/constants/constants'
 import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
 
@@ -9,7 +10,7 @@ import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
 export async function publishModuleHandler(moduleName: string): Promise<void> {
-  const modulePath = path.join(process.cwd(), 'apps', moduleName)
+  const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
 
   if (!fs.existsSync(modulePath)) {
     Logging.actionableError(

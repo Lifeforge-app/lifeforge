@@ -2,6 +2,8 @@ import { type IOType, spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
+import { ROOT_DIR } from '@/constants/constants'
+
 import Logging, { LEVEL_ORDER } from './logging'
 import { addDependency } from './packageJson'
 
@@ -73,7 +75,7 @@ export default function executeCommand(
 
 export function bunInstall() {
   executeCommand('bun install', {
-    cwd: process.cwd(),
+    cwd: ROOT_DIR,
     stdio: Logging.level > LEVEL_ORDER['debug'] ? 'pipe' : 'inherit'
   })
 }
@@ -92,11 +94,11 @@ export function installPackage(fullName: string, targetDir: string) {
   Logging.debug(`Installing ${Logging.highlight(fullName)} from registry...`)
 
   executeCommand(`bun add ${fullName}@latest`, {
-    cwd: process.cwd(),
+    cwd: ROOT_DIR,
     stdio: Logging.level > LEVEL_ORDER['info'] ? 'pipe' : 'inherit'
   })
 
-  const installedPath = path.join(process.cwd(), 'node_modules', fullName)
+  const installedPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
   if (!fs.existsSync(installedPath)) {
     Logging.actionableError(
@@ -113,7 +115,9 @@ export function installPackage(fullName: string, targetDir: string) {
 
   addDependency(fullName)
 
-  fs.rmSync(installedPath, { recursive: true, force: true })
+  if (fs.existsSync(installedPath)) {
+    fs.rmSync(installedPath, { recursive: true, force: true })
+  }
 
   bunInstall()
 }

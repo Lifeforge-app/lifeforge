@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { runCLI, setupCLI } from './cli/setup'
+import { ROOT_DIR } from './constants/constants'
 import Logging from './utils/logging'
 
 /**
@@ -16,7 +17,7 @@ import Logging from './utils/logging'
  */
 
 // Load environment variables
-const envPath = path.resolve(process.cwd(), 'env/.env.local')
+const envPath = path.resolve(ROOT_DIR, 'env/.env.local')
 
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath, quiet: true })

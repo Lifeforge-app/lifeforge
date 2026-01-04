@@ -7,7 +7,6 @@ import Logging from '@/utils/logging'
 import { checkPackageExists } from '@/utils/registry'
 
 import normalizePackage from '../../../utils/normalizePackage'
-import linkModuleToWorkspace from '../functions/linkModuleToWorkspace'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import generateServerRegistry from '../functions/registry/generateServerRegistry'
 
@@ -35,8 +34,6 @@ export async function installModuleHandler(moduleName: string): Promise<void> {
   Logging.info(`Installing ${Logging.highlight(fullName)}...`)
 
   installPackage(fullName, targetDir)
-
-  linkModuleToWorkspace(fullName)
 
   Logging.info('Regenerating registries...')
 

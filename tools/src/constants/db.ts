@@ -5,8 +5,10 @@ import path from 'path'
 import { getEnvVar, isDockerMode } from '@/utils/helpers'
 import Logging from '@/utils/logging'
 
+import { ROOT_DIR } from './constants'
+
 dotenv.config({
-  path: path.resolve(process.cwd(), 'env/.env.local'),
+  path: path.resolve(ROOT_DIR, 'env/.env.local'),
   quiet: true
 })
 
