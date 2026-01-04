@@ -58,7 +58,6 @@
   "dependencies": {
     "@lifeforge/lang-en": "workspace:*",
     "@lifeforge/lang-ms": "workspace:*",
-    "@lifeforge/lang-tr": "workspace:*",
     "@lifeforge/lang-zh-CN": "workspace:*",
     "@lifeforge/lang-zh-TW": "workspace:*",
     "@lifeforge/lifeforge--achievements": "workspace:*",
