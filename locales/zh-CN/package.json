@@ -1,9 +1,0 @@
-{
-  "name": "@lifeforge/lang-zh-CN",
-  "version": "0.1.3",
-  "description": "简体中文 language support for LifeForge.",
-  "lifeforge": {
-    "displayName": "简体中文",
-    "icon": "circle-flags:cn"
-  }
-}
