@@ -3,11 +3,11 @@ import Logging from '@/utils/logging'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
 import { downloadPocketBaseBinary } from '../functions/database-initialization/download-pocketbase'
-import { runDatabaseMigrations } from '../functions/database-initialization/migrations'
 import {
   createPocketBaseSuperuser,
   validatePocketBaseNotInitialized
 } from '../functions/database-initialization/superuser'
+import { generateMigrationsHandler } from './generateMigrationsHandler'
 
 export async function initializeDatabaseHandler() {
   const { PB_EMAIL, PB_PASSWORD } = getEnvVars([
@@ -20,10 +20,10 @@ export async function initializeDatabaseHandler() {
 
   checkRunningPBInstances()
   validatePocketBaseNotInitialized()
-  createPocketBaseSuperuser(PB_EMAIL, PB_PASSWORD)
-  runDatabaseMigrations()
 
-  Logging.success(
-    'Setup process complete. You can now start the PocketBase server with `bun forge dev db`'
-  )
+  createPocketBaseSuperuser(PB_EMAIL, PB_PASSWORD)
+
+  generateMigrationsHandler()
+
+  Logging.success('Database initialized successfully')
 }

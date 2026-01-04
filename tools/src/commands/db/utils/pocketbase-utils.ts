@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
@@ -39,11 +38,12 @@ export async function cleanupOldMigrations(
         }
       )
 
+      const removedCount = migrationFiles.filter(file =>
+        file.endsWith(`_${targetModule}.js`)
+      ).length
+
       Logging.debug(
-        `Removed ${chalk.bold.blue(
-          migrationFiles.filter(file => file.endsWith(`_${targetModule}.js`))
-            .length
-        )} old migrations for module ${chalk.bold.blue(targetModule)}.`
+        `Removed ${Logging.highlight(String(removedCount))} old migrations for module ${Logging.highlight(targetModule)}.`
       )
     }
   } catch {

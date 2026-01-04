@@ -67,12 +67,14 @@ export function getSchemaFiles(targetModule?: string): string[] {
 /**
  * Imports schema modules from file paths
  */
-export async function importSchemaModules(schemaFiles: string[]): Promise<
+export async function importSchemaModules(targetModule?: string): Promise<
   Array<{
     moduleName: string
     schema: Record<string, { raw: Record<string, unknown> }>
   }>
 > {
+  const schemaFiles = getSchemaFiles(targetModule)
+
   return Promise.all(
     schemaFiles.map(async schemaPath => {
       const module = await import(path.resolve(schemaPath))

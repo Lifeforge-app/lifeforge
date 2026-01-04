@@ -1,8 +1,9 @@
-import { confirmAction, executeCommand } from '@/utils/helpers'
+import { installDependencies } from '@/utils/commands'
+import { confirmAction } from '@/utils/helpers'
 import Logging from '@/utils/logging'
+import normalizePackage from '@/utils/normalizePackage'
 
 import { checkAuth } from '../../../utils/registry'
-import getLocalesMeta from '../functions/getLocalesMeta'
 import getPackagesToCheck from '../functions/getPackagesToCheck'
 import getUpgrades from '../functions/getUpgrades'
 import installAndMoveLocales from '../functions/installAndMoveLocales'
@@ -19,21 +20,27 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
   let upgradedCount = 0
 
   for (const upgrade of upgrades) {
+    Logging.info(`Upgrading ${Logging.highlight(upgrade.name)}...`)
+
     try {
       installAndMoveLocales(
         upgrade.name,
-        getLocalesMeta(upgrade.name).targetDir
+        normalizePackage(upgrade.name, 'locale').targetDir
       )
 
-      Logging.success(`Upgraded ${upgrade.name} to ${upgrade.latest}`)
+      Logging.success(`Upgraded ${Logging.highlight(upgrade.name)}`)
       upgradedCount++
     } catch (error) {
-      Logging.error(`Failed to upgrade ${upgrade.name}: ${error}`)
+      Logging.error(
+        `Failed to upgrade ${Logging.highlight(upgrade.name)}: ${error}`
+      )
     }
   }
 
   if (upgradedCount > 0) {
-    executeCommand('bun install', { cwd: process.cwd(), stdio: 'inherit' })
-    Logging.success(`Upgraded ${upgradedCount} locale(s)`)
+    installDependencies()
+    Logging.success(
+      `Upgraded ${upgradedCount} locale${upgradedCount > 1 ? 's' : ''}`
+    )
   }
 }

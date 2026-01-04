@@ -7,7 +7,7 @@ async function setFirstLangInDB(shortName: string) {
   const installedLocales = getInstalledLocales()
 
   if (installedLocales.length === 1) {
-    Logging.step('First language pack - setting as default for user')
+    Logging.debug('This is the first locale, setting as default...')
 
     const { pb, killPB } = await getPBInstance()
 
@@ -15,7 +15,7 @@ async function setFirstLangInDB(shortName: string) {
 
     await pb.collection('users').update(user.id, { language: shortName })
 
-    Logging.info(`Set ${shortName} as default language`)
+    Logging.info(`Set ${Logging.highlight(shortName)} as default language`)
     killPB?.()
   }
 }

@@ -1,12 +1,11 @@
-import chalk from 'chalk'
 import { spawn } from 'child_process'
 import PocketBase from 'pocketbase'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
-import { executeCommand } from '@/utils/helpers'
 import { getEnvVars } from '@/utils/helpers'
 import Logging from '@/utils/logging'
 
+import executeCommand from './commands'
 import { killExistingProcess } from './helpers'
 
 // Triple underscore separates username from module name
@@ -30,7 +29,8 @@ const COLLECTION_SEPARATOR = {
  */
 export function parseCollectionName(
   str: string,
-  type: 'code' | 'pb'
+  type: 'code' | 'pb',
+  fallbackModuleName?: string
 ): {
   username?: string
   moduleName: string
@@ -44,8 +44,18 @@ export function parseCollectionName(
     const [username, remainder] = str.split(userNameSeparator, 2)
 
     if (!remainder.includes(collectionSeparator)) {
-      Logging.error(`Invalid collection name: ${str}`)
-      process.exit(1)
+      if (!fallbackModuleName) {
+        Logging.actionableError(
+          `Invalid collection name: ${Logging.highlight(str)}`,
+          'Collection names must follow the format: module__collection or username___module__collection'
+        )
+        process.exit(1)
+      }
+
+      return {
+        moduleName: fallbackModuleName,
+        collectionName: str
+      }
     }
 
     const [moduleName, collectionName] = remainder.split(collectionSeparator, 2)
@@ -58,8 +68,18 @@ export function parseCollectionName(
   }
 
   if (!str.includes(collectionSeparator)) {
-    Logging.error(`Invalid collection name: ${str}`)
-    process.exit(1)
+    if (!fallbackModuleName) {
+      Logging.actionableError(
+        `Invalid collection name: ${Logging.highlight(str)}`,
+        'Collection names must follow the format: module__collection or username___module__collection'
+      )
+      process.exit(1)
+    }
+
+    return {
+      moduleName: fallbackModuleName,
+      collectionName: str
+    }
   }
 
   const [moduleName, collectionName] = str.split(collectionSeparator, 2)
@@ -137,6 +157,8 @@ export function checkRunningPBInstances(exitOnError = true): boolean {
  * Starts a PocketBase server instance
  */
 export async function startPBServer(): Promise<number> {
+  Logging.debug('Starting PocketBase server...')
+
   return new Promise((resolve, reject) => {
     const pbProcess = spawn(PB_BINARY_PATH, ['serve', ...PB_KWARGS], {
       stdio: ['ignore', 'pipe', 'pipe']
@@ -146,28 +168,34 @@ export async function startPBServer(): Promise<number> {
       const output = data.toString()
 
       if (output.includes('Server started')) {
+        Logging.debug(`PocketBase server started (PID: ${pbProcess.pid})`)
         resolve(pbProcess.pid!)
       }
 
       if (output.includes('bind: address already in use')) {
         Logging.actionableError(
-          'Port 8090 is already in use by another application.',
-          'Please free up the port. Are you using the port for non-pocketbase applications? (e.g., port forwarding, etc.)'
+          'Port 8090 is already in use',
+          'Run "pkill -f pocketbase" to stop existing instances, or check for other apps using port 8090'
         )
         process.exit(1)
       }
     })
 
     pbProcess.stderr?.on('data', data => {
-      reject(new Error(data.toString()))
+      const error = data.toString().trim()
+
+      Logging.debug(`PocketBase stderr: ${error}`)
+      reject(new Error(error))
     })
 
     pbProcess.on('error', error => {
+      Logging.debug(`PocketBase spawn error: ${error.message}`)
       reject(error)
     })
 
     pbProcess.on('exit', code => {
       if (code !== 0) {
+        Logging.debug(`PocketBase exited with code ${code}`)
         reject(new Error(`PocketBase process exited with code ${code}`))
       }
     })
@@ -182,34 +210,31 @@ export async function startPocketbase(): Promise<(() => void) | null> {
     const pbRunning = checkRunningPBInstances(false)
 
     if (pbRunning) {
-      Logging.step('PocketBase server is already running, skipping...')
+      Logging.debug('PocketBase is already running')
 
       return null
     }
 
-    Logging.step('Starting PocketBase server...')
-
     const pbPid = await startPBServer()
-
-    Logging.success(
-      `PocketBase server started successfully with PID ${chalk.bold.blue(
-        pbPid.toString()
-      )}`
-    )
 
     return () => {
       killExistingProcess(pbPid)
     }
   } catch (error) {
-    Logging.error(
-      `Failed to start PocketBase server: ${
-        error instanceof Error ? error.message : 'Unknown error'
-      }`
+    Logging.actionableError(
+      `Failed to start PocketBase server: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      'Run "bun forge db init" to initialize the database or check if the PocketBase binary exists'
     )
     process.exit(1)
   }
 }
 
+/**
+ * Gets a PocketBase instance.
+ *
+ * If `createNewInstance` is true, and there is no existing instance,
+ * it will start a new PocketBase instance.
+ */
 export default async function getPBInstance(createNewInstance = true): Promise<{
   pb: PocketBase
   killPB: (() => void) | null
@@ -236,8 +261,9 @@ export default async function getPBInstance(createNewInstance = true): Promise<{
       killPB
     }
   } catch (error) {
-    Logging.error(
-      `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+    Logging.actionableError(
+      `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      'Check PB_EMAIL and PB_PASSWORD in env/.env.local are correct'
     )
     process.exit(1)
   }

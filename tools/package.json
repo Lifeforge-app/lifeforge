@@ -23,7 +23,7 @@
     "prompts": "^2.4.2",
     "semver": "^7.7.3",
     "shared": "workspace:*",
-    "zod": "^4.3.4"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",

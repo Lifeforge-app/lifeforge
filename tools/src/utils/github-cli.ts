@@ -1,10 +1,9 @@
-import { executeCommand } from '@/utils/helpers'
 import Logging from '@/utils/logging'
+
+import executeCommand from './commands'
 
 export function validateMaintainerAccess(username: string): void {
   try {
-    Logging.progress(`Checking maintainer privileges for ${username}...`)
-
     // Check permission level on the official repo
     const result = executeCommand(
       `gh api repos/lifeforge-app/lifeforge/collaborators/${username}/permission`,
@@ -20,8 +19,6 @@ export function validateMaintainerAccess(username: string): void {
     const allowedPermissions = ['admin', 'maintain', 'write']
 
     if (allowedPermissions.includes(response.permission)) {
-      Logging.success(`Verified maintainer access for ${username}`)
-
       return
     }
 

@@ -5,8 +5,4 @@ export {
   importSchemaModules
 } from './file-utils'
 
-export {
-  FIELD_TYPE_MAPPING,
-  PRETTIER_OPTIONS,
-  SCHEMA_PATTERNS
-} from './constants'
+export { PRETTIER_OPTIONS, SCHEMA_PATTERNS } from './constants'

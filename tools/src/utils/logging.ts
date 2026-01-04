@@ -3,7 +3,7 @@
 import { LoggingService } from '@server/core/functions/logging/loggingService'
 import chalk from 'chalk'
 
-const LEVEL_ORDER = {
+export const LEVEL_ORDER = {
   debug: 1,
   info: 2,
   warn: 3,
@@ -11,17 +11,62 @@ const LEVEL_ORDER = {
   fatal: 5
 }
 
+type LogLevel = keyof typeof LEVEL_ORDER
+
 /**
  * CLI Logging service that wraps the server's LoggingService
  * Provides consistent logging across the entire CLI with file persistence
  */
 export default class Logging {
   private static readonly SERVICE_NAME = 'CLI'
-  private static level: number = LEVEL_ORDER['info']
+  public static level: number = LEVEL_ORDER['info']
 
-  static setLevel(level: keyof typeof LEVEL_ORDER): void {
+  static setLevel(level: LogLevel): void {
     Logging.level = LEVEL_ORDER[level]
   }
+
+  // ─────────────────────────────────────────────────────────────
+  // Formatting Utilities
+  // ─────────────────────────────────────────────────────────────
+
+  /** Format text as bold */
+  static bold(text: string): string {
+    return chalk.bold(text)
+  }
+
+  /** Format text as dim/muted */
+  static dim(text: string): string {
+    return chalk.dim(text)
+  }
+
+  /** Format text as highlighted (bold blue) - for important values */
+  static highlight(text: string): string {
+    return chalk.bold.blue(text)
+  }
+
+  /** Format text as green - for success/positive items */
+  static green(text: string): string {
+    return chalk.green(text)
+  }
+
+  /** Format text as yellow - for warnings */
+  static yellow(text: string): string {
+    return chalk.yellow(text)
+  }
+
+  /** Format text as red - for errors */
+  static red(text: string): string {
+    return chalk.red(text)
+  }
+
+  /** Format text as cyan - for info/neutral items */
+  static cyan(text: string): string {
+    return chalk.cyan(text)
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // Core Logging Methods
+  // ─────────────────────────────────────────────────────────────
 
   /**
    * Log an informational message
@@ -77,82 +122,19 @@ export default class Logging {
       return
     }
 
-    LoggingService.info(chalk.green(`${message}`), this.SERVICE_NAME)
+    LoggingService.info(`${chalk.green('✔')} ${message}`, this.SERVICE_NAME)
   }
 
   /**
-   * Log a step in a process with consistent formatting
+   * Print raw output without log prefix (for lists, tables, etc.)
+   * Respects log level - only prints if info level is enabled
    */
-  static step(message: string): void {
+  static print(message: string): void {
     if (Logging.level > LEVEL_ORDER['info']) {
       return
     }
 
-    LoggingService.info(chalk.blue(`${message}`), this.SERVICE_NAME)
-  }
-
-  /**
-   * Log a process start with spinner-like indicator
-   */
-  static progress(message: string): void {
-    if (Logging.level > LEVEL_ORDER['info']) {
-      return
-    }
-
-    LoggingService.info(chalk.magenta(`${message}...`), this.SERVICE_NAME)
-  }
-
-  /**
-   * Display a formatted list of items
-   */
-  static list(title: string, items: string[]): void {
-    if (Logging.level > LEVEL_ORDER['info']) {
-      return
-    }
-
-    this.info(title)
-    this.newline()
-    items.forEach((item, index) => {
-      console.log(
-        `  ${chalk.cyan((index + 1).toString().padStart(2))}. ${chalk.white(item)}`
-      )
-    })
-    this.newline()
-  }
-
-  /**
-   * Display available options in a formatted way
-   */
-  static options(title: string, options: string[]): void {
-    if (Logging.level > LEVEL_ORDER['error']) {
-      return
-    }
-
-    this.error(title)
-    this.error(`Available options: ${options.join(', ')}`)
-  }
-
-  /**
-   * Add a visual separator/newline for better readability
-   */
-  static newline(): void {
-    if (Logging.level > LEVEL_ORDER['info']) {
-      return
-    }
-
-    console.log()
-  }
-
-  /**
-   * Log a fatal error and exit the process
-   */
-  static fatal(message: string, exitCode = 1): never {
-    if (Logging.level > LEVEL_ORDER['fatal']) {
-      process.exit(exitCode)
-    }
-
-    this.error(chalk.red(`Fatal: ${message}`))
-    process.exit(exitCode)
+    console.log(message)
   }
 
   /**
