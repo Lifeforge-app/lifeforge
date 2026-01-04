@@ -1,13 +1,16 @@
 import fs from 'fs'
 
 import Logging from '@/utils/logging'
+import normalizePackage from '@/utils/normalizePackage'
 
-import getLocalesMeta from '../functions/getLocalesMeta'
 import installAndMoveLocales from '../functions/installAndMoveLocales'
 import setFirstLangInDB from '../functions/setFirstLangInDB'
 
 export async function installLocaleHandler(langCode: string): Promise<void> {
-  const { fullPackageName, shortName, targetDir } = getLocalesMeta(langCode)
+  const { fullName, shortName, targetDir } = normalizePackage(
+    langCode,
+    'locale'
+  )
 
   if (fs.existsSync(targetDir)) {
     Logging.actionableError(
@@ -18,17 +21,17 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
     process.exit(1)
   }
 
-  Logging.progress('Fetching locale from registry...')
+  Logging.info(`Installing ${Logging.highlight(fullName)}...`)
 
   try {
-    installAndMoveLocales(fullPackageName, targetDir)
+    installAndMoveLocales(fullName, targetDir)
 
     await setFirstLangInDB(shortName)
 
-    Logging.success(`Locale ${fullPackageName} installed successfully!`)
+    Logging.success(`Installed ${Logging.highlight(fullName)}`)
   } catch (error) {
     Logging.actionableError(
-      `Failed to install ${fullPackageName}`,
+      `Failed to install ${Logging.highlight(fullName)}`,
       'Make sure the locale exists in the registry'
     )
     throw error

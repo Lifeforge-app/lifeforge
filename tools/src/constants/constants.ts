@@ -1,10 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 
-/**
- * Directory containing all tools
- */
-export const TOOLS_DIR = path.join(__dirname, '../../../tools')
+export const PROJECT_ROOT = import.meta.dirname.split('/tools')[0]
+
+const TOOLS_DIR = path.join(PROJECT_ROOT, 'tools')
 
 /**
  * Dynamically discovered tools from the tools directory

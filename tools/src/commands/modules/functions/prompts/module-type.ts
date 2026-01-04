@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import fs from 'fs'
 import prompts from 'prompts'
 
@@ -16,7 +15,7 @@ export async function promptModuleType(): Promise<
       message: 'Select the type of module to create:',
       choices: Object.entries(AVAILABLE_TEMPLATE_MODULE_TYPES).map(
         ([value, title]) => ({
-          title: `${title} ${chalk.dim(`(${value})`)}`,
+          title: `${title} ${Logging.dim(`(${value})`)}`,
           value
         })
       )

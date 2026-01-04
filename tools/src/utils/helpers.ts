@@ -1,70 +1,8 @@
-import chalk from 'chalk'
 import { spawnSync } from 'child_process'
-import fs from 'fs'
-import path from 'path'
 import prompts from 'prompts'
 
-import type { CommandExecutionOptions } from '../types'
+import executeCommand from './commands'
 import Logging from './logging'
-
-/**
- * Executes a shell command with proper error handling
- */
-export function executeCommand(
-  command: string | (() => string),
-  options: CommandExecutionOptions = {},
-  _arguments: string[] = []
-): string {
-  let cmd: string
-
-  try {
-    cmd = typeof command === 'function' ? command() : command
-  } catch (error) {
-    Logging.actionableError(
-      `Failed to generate command: ${error}`,
-      'Check the command generation logic for errors'
-    )
-    process.exit(1)
-  }
-
-  try {
-    Logging.debug(`Executing: ${cmd}`)
-
-    const [toBeExecuted, ...args] = cmd.split(' ')
-
-    const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
-      stdio: 'inherit',
-      encoding: 'utf8',
-      shell: true,
-      ...options
-    })
-
-    if (result.error) {
-      throw result.error
-    }
-
-    if (result.status !== 0) {
-      throw result.status
-    }
-
-    if (!options.stdio || options.stdio === 'inherit') {
-      Logging.debug(`Completed: ${cmd}`)
-    }
-
-    return result.stdout?.toString().trim() || ''
-  } catch (error) {
-    if (!options.exitOnError) {
-      throw error
-    }
-
-    Logging.actionableError(
-      `Command execution failed: ${cmd}`,
-      'Check if the command exists and you have the necessary permissions'
-    )
-    Logging.debug(`Error details: ${error}`)
-    process.exit(1)
-  }
-}
 
 /**
  * Validates environment variables
@@ -116,29 +54,6 @@ export function getEnvVar(varName: string, fallback?: string): string {
 }
 
 /**
- * Formats project list for display
- */
-export function formatProjectList(projects: string[]): string {
-  return projects.join(', ')
-}
-
-/**
- * Logs a process start message
- */
-export function logProcessStart(processType: string, projects: string[]): void {
-  Logging.step(
-    `Running ${processType} for ${projects.length} project(s): ${formatProjectList(projects)}`
-  )
-}
-
-/**
- * Logs a process completion message
- */
-export function logProcessComplete(processType: string): void {
-  Logging.success(`All projects ${processType} completed successfully`)
-}
-
-/**
  * Kills existing processes matching the given keyword
  */
 export function killExistingProcess(
@@ -149,7 +64,7 @@ export function killExistingProcess(
       process.kill(processKeywordOrPID)
 
       Logging.debug(
-        `Killed process with PID: ${chalk.bold.blue(processKeywordOrPID)}`
+        `Killed process with PID: ${Logging.highlight(String(processKeywordOrPID))}`
       )
 
       return
@@ -164,9 +79,7 @@ export function killExistingProcess(
       executeCommand(`pkill -f "${processKeywordOrPID}"`)
 
       Logging.debug(
-        `Killed process matching keyword: ${chalk.bold.blue(
-          processKeywordOrPID
-        )} (PID: ${chalk.bold.blue(serverInstance)})`
+        `Killed process matching keyword: ${Logging.highlight(processKeywordOrPID)} (PID: ${Logging.highlight(serverInstance)})`
       )
 
       return parseInt(serverInstance, 10)
@@ -174,48 +87,6 @@ export function killExistingProcess(
   } catch {
     // No existing server instance found
   }
-}
-
-export type PathConfig = {
-  path: string
-  type: 'file' | 'directory'
-  children?: PathConfig[]
-}
-
-export function validateFilePaths(
-  paths: PathConfig[],
-  basedir: string
-): boolean {
-  for (const p of paths) {
-    const { path: pth, type, children } = p
-
-    const fullPath = path.resolve(basedir, pth)
-
-    if (!fs.existsSync(fullPath)) {
-      Logging.error(`Invalid module structure detected: ${pth} does not exist`)
-      process.exit(1)
-    }
-
-    const stats = fs.lstatSync(fullPath)
-
-    if (type === 'file' && !stats.isFile()) {
-      Logging.error(`Invalid module structure detected: ${pth} is not a file`)
-      process.exit(1)
-    }
-
-    if (type === 'directory' && !stats.isDirectory()) {
-      Logging.error(
-        `Invalid module structure detected: ${pth} is not a directory`
-      )
-      process.exit(1)
-    }
-
-    if (children) {
-      validateFilePaths(children, fullPath)
-    }
-  }
-
-  return true
 }
 
 export function checkPortInUse(port: number): boolean {
@@ -240,35 +111,6 @@ export async function delay(ms: number): Promise<void> {
  */
 export function isDockerMode(): boolean {
   return process.env.DOCKER_MODE === 'true'
-}
-
-/**
- * Executes a command and returns the output as a string
- */
-export function executeCommandWithOutput(
-  command: string,
-  options: CommandExecutionOptions = {}
-): string {
-  const [toBeExecuted, ...args] = command.split(' ')
-
-  const result = spawnSync(toBeExecuted, args, {
-    stdio: 'pipe',
-    encoding: 'utf8',
-    shell: true,
-    ...options
-  })
-
-  if (result.error) {
-    throw result.error
-  }
-
-  if (result.status !== 0) {
-    throw new Error(
-      `Command failed with exit code ${result.status}: ${result.stderr}`
-    )
-  }
-
-  return result.stdout?.toString().trim() || ''
 }
 
 /**

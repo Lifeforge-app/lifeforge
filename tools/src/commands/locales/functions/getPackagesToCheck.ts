@@ -1,7 +1,7 @@
 import Logging from '@/utils/logging'
+import normalizePackage from '@/utils/normalizePackage'
 
 import { getInstalledLocalesWithMeta } from './getInstalledLocales'
-import { normalizeLocalePackageName } from './getLocalesMeta'
 
 function getPackagesToCheck(langCode?: string) {
   const localePackages = getInstalledLocalesWithMeta()
@@ -14,7 +14,7 @@ function getPackagesToCheck(langCode?: string) {
 
   const packagesToCheck = langCode
     ? localePackages.filter(
-        p => p.name === normalizeLocalePackageName(langCode)
+        p => p.name === normalizePackage(langCode, 'locale').fullName
       )
     : localePackages
 

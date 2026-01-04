@@ -1,7 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
-import { executeCommand } from '@/utils/helpers'
+import { installDependencies } from '@/utils/commands'
+import Logging from '@/utils/logging'
 import { addDependency } from '@/utils/packageJson'
 
 /**
@@ -12,6 +13,8 @@ import { addDependency } from '@/utils/packageJson'
  * @param fullName The full name of the module
  */
 export default function linkModuleToWorkspace(fullName: string) {
+  Logging.debug(`Linking ${Logging.highlight(fullName)} to workspace...`)
+
   addDependency(fullName)
 
   const nodeModulesPath = path.join(process.cwd(), 'node_modules', fullName)
@@ -20,8 +23,7 @@ export default function linkModuleToWorkspace(fullName: string) {
     fs.rmSync(nodeModulesPath, { recursive: true, force: true })
   }
 
-  executeCommand('bun install', {
-    cwd: process.cwd(),
-    stdio: 'inherit'
-  })
+  installDependencies()
+
+  Logging.debug(`Linked ${Logging.highlight(fullName)} to workspace`)
 }

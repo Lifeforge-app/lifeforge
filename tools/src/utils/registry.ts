@@ -1,8 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 
-import { executeCommand } from '@/utils/helpers'
 import Logging from '@/utils/logging'
+
+import executeCommand from './commands'
 
 export function getRegistryUrl(): string {
   const bunfigPath = path.join(process.cwd(), 'bunfig.toml')
@@ -55,8 +56,6 @@ export async function checkAuth(): Promise<{
     const username = result?.toString().trim()
 
     if (username) {
-      Logging.success(`Authenticated as ${username}`)
-
       return { authenticated: true, username }
     }
 

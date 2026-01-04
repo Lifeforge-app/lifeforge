@@ -1,10 +1,10 @@
-import chalk from 'chalk'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
 import { PB_BINARY_PATH, PB_DIR } from '@/constants/db'
-import { executeCommand, isDockerMode } from '@/utils/helpers'
+import executeCommand from '@/utils/commands'
+import { isDockerMode } from '@/utils/helpers'
 import Logging from '@/utils/logging'
 
 const PB_VERSION = '0.35.0'
@@ -27,9 +27,6 @@ export async function downloadPocketBaseBinary(): Promise<void> {
     return
   }
 
-  Logging.step('PocketBase binary not found, downloading...')
-
-  // Detect OS
   const platform = os.platform()
 
   let osName: string
@@ -45,7 +42,10 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       osName = 'windows'
       break
     default:
-      Logging.error(`Unsupported platform: ${platform}`)
+      Logging.actionableError(
+        `Unsupported platform: ${platform}`,
+        'PocketBase supports darwin, linux, and windows'
+      )
       process.exit(1)
   }
 
@@ -62,14 +62,17 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       archName = 'amd64'
       break
     default:
-      Logging.error(`Unsupported architecture: ${arch}`)
+      Logging.actionableError(
+        `Unsupported architecture: ${arch}`,
+        'PocketBase supports arm64 and amd64'
+      )
       process.exit(1)
   }
 
   const downloadUrl = `https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_${osName}_${archName}.zip`
 
   Logging.info(
-    `Downloading PocketBase v${PB_VERSION} for ${osName}/${archName}...`
+    `Downloading PocketBase ${Logging.highlight(`v${PB_VERSION}`)} for ${osName}/${archName}...`
   )
 
   try {
@@ -98,7 +101,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
     // Clean up zip file and unnecessary files
     fs.unlinkSync(zipPath)
 
-    const changelogPath = path.join(PB_DIR, 'CHANGELOG.md')
+    const changelogPath = path.join(PB_DIR, 'CHANGELogging.md')
 
     const licensePath = path.join(PB_DIR, 'LICENSE.md')
 
@@ -111,11 +114,12 @@ export async function downloadPocketBaseBinary(): Promise<void> {
     }
 
     Logging.success(
-      `PocketBase v${PB_VERSION} downloaded to ${chalk.bold.blue(PB_BINARY_PATH)}`
+      `Downloaded PocketBase ${Logging.highlight(`v${PB_VERSION}`)}`
     )
   } catch (error) {
-    Logging.error(
-      `Failed to download PocketBase: ${error instanceof Error ? error.message : 'Unknown error'}`
+    Logging.actionableError(
+      `Failed to download PocketBase: ${error instanceof Error ? error.message : 'Unknown error'}`,
+      'Check your internet connection and try again'
     )
     process.exit(1)
   }

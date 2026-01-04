@@ -1,8 +1,4 @@
-import {
-  executeCommand,
-  logProcessComplete,
-  logProcessStart
-} from '@/utils/helpers'
+import executeCommand from '@/utils/commands'
 
 import type { CommandType } from '../constants/commands'
 import { PROJECTS, type ProjectType } from '../constants/projects'
@@ -18,15 +14,12 @@ export function executeProjectCommand(
 
   const finalProjects = projects?.length ? projects : allProjectKeys
 
-  logProcessStart(commandType, finalProjects)
-
   for (const projectType of finalProjects) {
     const projectPath = PROJECTS[projectType as ProjectType]
 
-    const command = `cd ${projectPath} && bun run ${commandType}`
-
-    executeCommand(command)
+    executeCommand(`bun run ${commandType}`, {
+      cwd: projectPath,
+      stdio: 'pipe'
+    })
   }
-
-  logProcessComplete(commandType)
 }

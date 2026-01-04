@@ -26,9 +26,9 @@ export function validateProjectArguments(projects: string[] | undefined): void {
   const validation = validateProjects(projects, validProjects)
 
   if (!validation.isValid) {
-    Logging.options(
+    Logging.actionableError(
       `Invalid project(s): ${validation.invalidProjects.join(', ')}`,
-      validProjects
+      'Available projects: ' + validProjects.join(', ')
     )
     process.exit(1)
   }

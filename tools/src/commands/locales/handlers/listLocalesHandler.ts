@@ -1,5 +1,3 @@
-import chalk from 'chalk'
-
 import Logging from '@/utils/logging'
 
 import { getInstalledLocalesWithMeta } from '../functions/getInstalledLocales'
@@ -19,8 +17,8 @@ export function listLocalesHandler(): void {
   Logging.info(`Installed language packs (${locales.length}):`)
 
   for (const locale of locales.sort((a, b) => a.name.localeCompare(b.name))) {
-    console.log(
-      `  ${chalk.bold.blue(locale.name)} - ${locale.displayName} (v.${locale.version})`
+    Logging.print(
+      `  ${Logging.highlight(locale.name)} - ${locale.displayName} (v.${locale.version})`
     )
   }
 }

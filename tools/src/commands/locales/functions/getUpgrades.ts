@@ -47,13 +47,16 @@ async function getUpgrades(
   }
 
   if (!upgrades.length) {
-    Logging.success('All locales are up to date!')
-
+    Logging.info('All locales are up to date')
     process.exit(0)
   }
 
   Logging.info('Available upgrades:')
-  upgrades.forEach(u => Logging.info(`  ${u.name}: ${u.current} → ${u.latest}`))
+  upgrades.forEach(u =>
+    Logging.print(
+      `  ${Logging.highlight(u.name)}: ${u.current} → ${Logging.green(u.latest)}`
+    )
+  )
 
   return upgrades
 }

@@ -1,15 +1,17 @@
 import fs from 'fs'
 import path from 'path'
 
-import getFsMetadata from '../getFsMetadata'
+import { SERVER_ROUTES_PATH } from '@/constants/constants'
+
+import normalizePackage from '../../../../utils/normalizePackage'
 import listModules from '../listModules'
-import { parsePackageName } from './namespaceUtils'
+import { parsePackageName } from '../parsePackageName'
 
 export default function generateServerRegistry(): string {
   const modules = Object.keys(listModules(true))
 
   const modulesWithServer = modules.filter(mod =>
-    fs.existsSync(path.join(getFsMetadata(mod).targetDir, 'server/index.ts'))
+    fs.existsSync(path.join(normalizePackage(mod).targetDir, 'server/index.ts'))
   )
 
   if (modulesWithServer.length === 0) {
@@ -32,7 +34,7 @@ export default appRoutes
     })
     .join('\n')
 
-  return `// AUTO-GENERATED - DO NOT EDIT
+  const registry = `// AUTO-GENERATED - DO NOT EDIT
 import { forgeRouter } from '@functions/routes'
 
 const appRoutes = forgeRouter({
@@ -41,4 +43,6 @@ ${imports}
 
 export default appRoutes
 `
+
+  fs.writeFileSync(SERVER_ROUTES_PATH, registry)
 }

@@ -1,10 +1,10 @@
 import type { Command } from 'commander'
 
-import { installLocaleHandler } from './handlers/install-locale'
-import { listLocalesHandler } from './handlers/list-locales'
-import { publishLocaleHandler } from './handlers/publish-locale'
-import { uninstallLocaleHandler } from './handlers/uninstall-locale'
-import { upgradeLocaleHandler } from './handlers/upgrade-locale'
+import { installLocaleHandler } from './handlers/installLocaleHandler'
+import { listLocalesHandler } from './handlers/listLocalesHandler'
+import { publishLocaleHandler } from './handlers/publishLocaleHandler'
+import { uninstallLocaleHandler } from './handlers/uninstallLocaleHandler'
+import { upgradeLocaleHandler } from './handlers/upgradeLocalesHandler'
 
 export default function setup(program: Command): void {
   const command = program

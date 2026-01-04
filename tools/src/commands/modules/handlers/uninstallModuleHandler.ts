@@ -1,34 +1,40 @@
 import fs from 'fs'
 
-import { executeCommand } from '@/utils/helpers'
+import { installDependencies } from '@/utils/commands'
 import Logging from '@/utils/logging'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
-import getFsMetadata from '../functions/getFsMetadata'
+import normalizePackage from '../../../utils/normalizePackage'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import generateServerRegistry from '../functions/registry/generateServerRegistry'
 
 export async function uninstallModuleHandler(
   moduleName: string
 ): Promise<void> {
-  const { targetDir, fullName } = getFsMetadata(moduleName)
+  const { targetDir, fullName } = normalizePackage(moduleName)
 
   if (!findPackageName(fullName)) {
-    Logging.error(`Module ${fullName} not found`)
+    Logging.actionableError(
+      `Module ${Logging.highlight(fullName)} not found`,
+      'Run "bun forge modules list" to see installed modules'
+    )
 
     return
   }
+
+  Logging.info(`Uninstalling ${Logging.highlight(fullName)}...`)
 
   removeDependency(fullName)
 
   fs.rmSync(targetDir, { recursive: true, force: true })
 
-  executeCommand('bun install', {
-    cwd: process.cwd(),
-    stdio: 'inherit'
-  })
+  installDependencies()
+
+  Logging.info('Regenerating registries...')
 
   generateServerRegistry()
 
   generateSchemaRegistry()
+
+  Logging.success(`Uninstalled ${Logging.highlight(fullName)}`)
 }

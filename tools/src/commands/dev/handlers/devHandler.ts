@@ -10,12 +10,13 @@ export function devHandler(service: string, extraArgs: string[] = []): void {
   validateService(service)
 
   if (!service) {
+    Logging.info('Starting all services...')
     startAllServices()
 
     return
   }
 
-  Logging.progress(`Starting ${service} service`)
+  Logging.info(`Starting ${Logging.highlight(service)} service...`)
 
   if (extraArgs.length > 0) {
     Logging.debug(`Extra arguments: ${extraArgs.join(' ')}`)
@@ -25,7 +26,7 @@ export function devHandler(service: string, extraArgs: string[] = []): void {
     startSingleService(service, extraArgs)
   } catch (error) {
     Logging.actionableError(
-      `Failed to start ${service} service`,
+      `Failed to start ${Logging.highlight(service)} service`,
       'Check if all required dependencies are installed and environment variables are set'
     )
     Logging.debug(`Error details: ${error}`)

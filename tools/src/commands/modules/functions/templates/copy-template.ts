@@ -2,8 +2,6 @@ import fs from 'fs'
 import Handlebars from 'handlebars'
 import _ from 'lodash'
 
-import Logging from '@/utils/logging'
-
 import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../../../constants/constants'
 
 export type ModuleMetadata = {
@@ -74,8 +72,6 @@ export function renameTsConfigFile(moduleDir: string): void {
 }
 
 export function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
-  Logging.step(`Creating module "${moduleMetadata.moduleName.en}"...`)
-
   const templateDir = `${process.cwd()}/tools/src/templates/${moduleMetadata.moduleType}`
 
   const destinationDir = `${process.cwd()}/apps/${_.camelCase(moduleMetadata.moduleName.en)}`
@@ -89,8 +85,4 @@ export function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
   )
 
   renameTsConfigFile(destinationDir)
-
-  Logging.success(
-    `Module "${moduleMetadata.moduleName.en}" created successfully at ${destinationDir}`
-  )
 }

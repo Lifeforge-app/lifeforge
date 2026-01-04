@@ -5,14 +5,14 @@ import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrat
 import Logging from '@/utils/logging'
 import { checkPackageExists } from '@/utils/registry'
 
-import getFsMetadata from '../functions/getFsMetadata'
+import normalizePackage from '../../../utils/normalizePackage'
 import installModulePackage from '../functions/installModulePackage'
 import linkModuleToWorkspace from '../functions/linkModuleToWorkspace'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import generateServerRegistry from '../functions/registry/generateServerRegistry'
 
 export async function installModuleHandler(moduleName: string): Promise<void> {
-  const { fullName, shortName, targetDir } = getFsMetadata(moduleName)
+  const { fullName, shortName, targetDir } = normalizePackage(moduleName)
 
   if (fs.existsSync(targetDir)) {
     Logging.actionableError(
@@ -25,22 +25,29 @@ export async function installModuleHandler(moduleName: string): Promise<void> {
 
   if (!(await checkPackageExists(fullName))) {
     Logging.actionableError(
-      `Module ${fullName} does not exist`,
+      `Module ${Logging.highlight(fullName)} does not exist`,
       `Check the module name and try again`
     )
 
     return
   }
 
+  Logging.info(`Installing ${Logging.highlight(fullName)}...`)
+
   installModulePackage(fullName, targetDir)
 
   linkModuleToWorkspace(fullName)
+
+  Logging.info('Regenerating registries...')
 
   generateServerRegistry()
 
   generateSchemaRegistry()
 
   if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
+    Logging.info('Generating database migrations...')
     generateMigrationsHandler(moduleName)
   }
+
+  Logging.success(`Installed ${Logging.highlight(fullName)}`)
 }

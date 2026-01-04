@@ -1,18 +1,18 @@
 import fs from 'fs'
 
-import { executeCommand } from '@/utils/helpers'
+import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
+import normalizePackage from '@/utils/normalizePackage'
 
 import { validateMaintainerAccess } from '../../../utils/github-cli'
 import { checkAuth, getRegistryUrl } from '../../../utils/registry'
-import getLocalesMeta from '../functions/getLocalesMeta'
 import { validateLocaleStructure } from '../functions/validateLocaleStructure'
 
 export async function publishLocaleHandler(
   langCode: string,
   options?: { official?: boolean }
 ): Promise<void> {
-  const { targetDir, shortName } = getLocalesMeta(langCode)
+  const { fullName, targetDir } = normalizePackage(langCode, 'locale')
 
   if (!fs.existsSync(targetDir)) {
     Logging.actionableError(
@@ -23,13 +23,17 @@ export async function publishLocaleHandler(
     return
   }
 
+  Logging.info('Validating locale structure...')
   validateLocaleStructure(targetDir)
 
   const auth = await checkAuth()
 
   if (options?.official) {
+    Logging.info('Validating maintainer access...')
     validateMaintainerAccess(auth.username ?? '')
   }
+
+  Logging.info(`Publishing ${Logging.highlight(fullName)}...`)
 
   try {
     executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
@@ -37,10 +41,10 @@ export async function publishLocaleHandler(
       stdio: 'inherit'
     })
 
-    Logging.success(`Locale "${shortName}" published successfully!`)
+    Logging.success(`Published ${Logging.highlight(fullName)}`)
   } catch (error) {
     Logging.actionableError(
-      'Failed to publish locale',
+      `Failed to publish ${Logging.highlight(fullName)}`,
       'Check if you are properly authenticated with the registry'
     )
     throw error
