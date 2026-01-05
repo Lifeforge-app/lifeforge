@@ -85,6 +85,12 @@ export async function startPBServer(): Promise<number> {
     pbProcess.stdout?.on('data', data => {
       const output = data.toString()
 
+      if (output.startsWith('Error:')) {
+        reject(new Error(output.trim()))
+
+        return
+      }
+
       if (output.includes('Server started')) {
         Logging.debug(`PocketBase server started (PID: ${pbProcess.pid})`)
         resolve(pbProcess.pid!)
