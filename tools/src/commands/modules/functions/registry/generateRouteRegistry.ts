@@ -1,4 +1,5 @@
 import fs from 'fs'
+import _ from 'lodash'
 import path from 'path'
 
 import { SERVER_ROUTES_DIR } from '@/constants/constants'
@@ -7,7 +8,7 @@ import normalizePackage from '../../../../utils/normalizePackage'
 import listModules from '../listModules'
 import { parsePackageName } from '../parsePackageName'
 
-export default function generateServerRegistry() {
+export default function generateRouteRegistry() {
   const modules = Object.keys(listModules(true))
 
   const modulesWithServer = modules.filter(mod =>
@@ -28,7 +29,9 @@ export default appRoutes
     .map(mod => {
       const { username, moduleName } = parsePackageName(mod)
 
-      const key = username ? `${username}$${moduleName}` : moduleName
+      const key = username
+        ? `${username}$${_.camelCase(moduleName)}`
+        : _.camelCase(moduleName)
 
       return `  ${key}: (await import('${mod}/server')).default,`
     })
