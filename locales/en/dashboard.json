@@ -1,0 +1,39 @@
+{
+  "title": "Dashboard",
+  "description": "Your mission control center, making everything more exciting.",
+  "widgets": {
+    "date": {
+      "title": "Date",
+      "description": "A simple decorative widget showing today's date."
+    },
+    "clock": {
+      "title": "Clock",
+      "description": "A small clock to help you keep track of time."
+    },
+    "quotes": {
+      "description": "A random quote to inspire you through the day.",
+      "title": "Quotes"
+    }
+  },
+  "modals": {
+    "manageWidgets": "Manage Widgets"
+  },
+  "buttons": {
+    "manageCategories": "Manage Categories",
+    "unlockLayout": "Unlock Layout",
+    "manageWidgets": "Manage Widgets",
+    "lockLayout": "Lock Layout"
+  },
+  "empty": {
+    "welcome": {
+      "title": "Welcome to LifeForge!",
+      "description": "Get started by installing some modules from the ForgeStore."
+    },
+    "notFound": {
+      "title": "Widget Not Found",
+      "description": "The widget you are looking for does not exist. Please check your installed modules."
+    }
+  },
+  "loading": "Loading dashboard...",
+  "test": ""
+}
