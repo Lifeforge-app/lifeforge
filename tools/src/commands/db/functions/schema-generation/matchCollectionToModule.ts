@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import path from 'path'
 
 import { parsePackageName } from '@/commands/modules/functions/parsePackageName'
@@ -46,7 +47,9 @@ export async function matchCollectionToModule(
       path.dirname(module).endsWith('/server/src/lib')
     )
 
-    const expectedPrefix = username ? `${username}___${moduleName}` : moduleName
+    const expectedPrefix = username
+      ? `${username}___${_.snakeCase(moduleName)}`
+      : _.snakeCase(moduleName)
 
     return modulePrefix === expectedPrefix
   })
