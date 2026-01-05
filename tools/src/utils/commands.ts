@@ -111,7 +111,7 @@ export function installPackage(fullName: string, targetDir: string) {
 
   Logging.debug(`Copying ${Logging.highlight(fullName)} to ${targetDir}...`)
 
-  fs.cpSync(installedPath, targetDir, { recursive: true })
+  fs.cpSync(installedPath, targetDir, { recursive: true, dereference: true })
 
   addDependency(fullName)
 
