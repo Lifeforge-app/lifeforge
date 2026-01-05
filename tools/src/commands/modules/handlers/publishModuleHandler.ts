@@ -12,38 +12,50 @@ import { getRegistryUrl } from '../../../utils/registry'
 import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
+/**
+ * Publishes a module to the registry.
+ *
+ * Steps:
+ * 1. Validates module structure (required files, package.json format)
+ * 2. Validates author permissions
+ * 3. Bumps version in package.json
+ * 4. Publishes to npm registry
+ * 5. Reverts version on failure
+ */
 export async function publishModuleHandler(moduleName: string): Promise<void> {
   const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
 
   if (!fs.existsSync(modulePath)) {
     Logging.actionableError(
-      `Module "${moduleName}" not found in apps/`,
+      `Module ${Logging.highlight(moduleName)} not found in apps/`,
       'Make sure the module exists in the apps directory'
     )
     process.exit(1)
   }
 
-  Logging.info(`Validating module structure...`)
+  Logging.debug('Validating module structure...')
   await validateModuleStructure(modulePath)
 
-  Logging.info(`Validating module author...`)
+  Logging.debug('Validating module author...')
   await validateModuleAuthor(modulePath)
 
   const { oldVersion, newVersion } = bumpPackageVersion(modulePath)
 
-  Logging.info(
-    `Bumped version: ${Logging.highlight(oldVersion)} → ${Logging.highlight(newVersion)}`
+  Logging.print(
+    `  Version: ${Logging.dim(oldVersion)} ${Logging.dim('→')} ${Logging.green(newVersion)}`
   )
 
-  Logging.info(`Publishing ${Logging.highlight(moduleName)}...`)
+  Logging.debug(`Publishing ${Logging.highlight(moduleName)}...`)
 
   try {
     executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
       cwd: modulePath,
-      stdio: 'inherit'
+      stdio: 'pipe'
     })
 
-    Logging.success(`Published ${Logging.highlight(moduleName)} v${newVersion}`)
+    Logging.success(
+      `Published ${Logging.highlight(moduleName)} ${Logging.dim(`v${newVersion}`)}`
+    )
   } catch (error) {
     revertPackageVersion(modulePath, oldVersion)
 

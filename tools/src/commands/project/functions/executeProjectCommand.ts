@@ -19,7 +19,7 @@ export function executeProjectCommand(
 
     executeCommand(`bun run ${commandType}`, {
       cwd: projectPath,
-      stdio: 'pipe'
+      stdio: 'inherit'
     })
   }
 }

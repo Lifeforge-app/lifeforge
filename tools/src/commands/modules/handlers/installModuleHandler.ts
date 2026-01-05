@@ -3,14 +3,27 @@ import path from 'path'
 
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
 import { installPackage } from '@/utils/commands'
+import initGitRepository from '@/utils/initGitRepository'
 import Logging from '@/utils/logging'
+import normalizePackage from '@/utils/normalizePackage'
 import { checkPackageExists } from '@/utils/registry'
 
-import normalizePackage from '../../../utils/normalizePackage'
-import initGitRepository from '../../../utils/initGitRepository'
 import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 
+/**
+ * Installs one or more modules from the registry.
+ *
+ * For each module:
+ * 1. Validates it doesn't already exist locally
+ * 2. Checks it exists in the registry
+ * 3. Downloads and extracts to apps/
+ * 4. Initializes git repository
+ *
+ * After installation:
+ * - Regenerates route and schema registries
+ * - Generates database migrations if schema.ts exists
+ */
 export async function installModuleHandler(
   moduleNames: string[]
 ): Promise<void> {
@@ -22,23 +35,26 @@ export async function installModuleHandler(
     if (fs.existsSync(targetDir)) {
       Logging.actionableError(
         `Module already exists at apps/${shortName}`,
-        `Remove it first with: bun forge modules remove ${shortName}`
+        `Remove it first with: bun forge modules uninstall ${shortName}`
       )
       continue
     }
 
     if (!(await checkPackageExists(fullName))) {
       Logging.actionableError(
-        `Module ${Logging.highlight(fullName)} does not exist`,
-        `Check the module name and try again`
+        `Module ${Logging.highlight(fullName)} does not exist in registry`,
+        'Check the module name and try again'
       )
       continue
     }
 
-    Logging.info(`Installing ${Logging.highlight(fullName)}...`)
+    Logging.debug(`Installing ${Logging.highlight(fullName)}...`)
+
     installPackage(fullName, targetDir)
     initGitRepository(targetDir)
+
     installed.push(moduleName)
+
     Logging.success(`Installed ${Logging.highlight(fullName)}`)
   }
 
@@ -46,7 +62,7 @@ export async function installModuleHandler(
     return
   }
 
-  Logging.info('Regenerating registries...')
+  Logging.debug('Regenerating registries...')
   generateRouteRegistry()
   generateSchemaRegistry()
 
@@ -54,7 +70,7 @@ export async function installModuleHandler(
     const { targetDir } = normalizePackage(moduleName)
 
     if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
-      Logging.info(`Generating database migrations for ${moduleName}...`)
+      Logging.debug(`Generating database migrations for ${moduleName}...`)
       generateMigrationsHandler(moduleName)
     }
   }
