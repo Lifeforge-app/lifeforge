@@ -1,5 +1,8 @@
 import fs from 'fs'
 
+import bumpPackageVersion, {
+  revertPackageVersion
+} from '@/utils/bumpPackageVersion'
 import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
 import normalizePackage from '@/utils/normalizePackage'
@@ -33,6 +36,12 @@ export async function publishLocaleHandler(
     validateMaintainerAccess(auth.username ?? '')
   }
 
+  const { oldVersion, newVersion } = bumpPackageVersion(targetDir)
+
+  Logging.info(
+    `Bumped version: ${Logging.highlight(oldVersion)} → ${Logging.highlight(newVersion)}`
+  )
+
   Logging.info(`Publishing ${Logging.highlight(fullName)}...`)
 
   try {
@@ -43,10 +52,13 @@ export async function publishLocaleHandler(
 
     Logging.success(`Published ${Logging.highlight(fullName)}`)
   } catch (error) {
+    revertPackageVersion(targetDir, oldVersion)
+
     Logging.actionableError(
       `Failed to publish ${Logging.highlight(fullName)}`,
       'Check if you are properly authenticated with the registry'
     )
+
     throw error
   }
 }
