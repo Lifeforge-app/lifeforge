@@ -1,6 +1,6 @@
 import z from 'zod'
 
-const apiKeysSchemas = {
+const schemas = {
   entries: {
     schema: z.object({
       keyId: z.string(),
@@ -120,4 +120,4 @@ const apiKeysSchemas = {
   }
 }
 
-export default apiKeysSchemas
+export default schemas
