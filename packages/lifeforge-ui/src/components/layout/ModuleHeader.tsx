@@ -1,6 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 import { useMainSidebarState } from 'shared'
 
@@ -43,8 +42,8 @@ function ModuleHeader({
   icon = icon ?? innerIcon
 
   const { t } = useTranslation([
-    `apps.${_.camelCase(title?.toString() ?? '')}`,
-    `common.${_.camelCase(title?.toString() ?? '')}`,
+    `apps.${title}`,
+    `common.${title}`,
     'common.misc',
     namespace ?? ''
   ])
@@ -71,10 +70,10 @@ function ModuleHeader({
           <h1 className="flex w-full min-w-0 items-end gap-3 text-2xl font-semibold whitespace-nowrap sm:text-3xl">
             <span className="block truncate">
               {t([
-                `${namespace}:${tKey}.${_.camelCase(title?.toString() ?? '')}.title`,
-                `${namespace}:${_.camelCase(title?.toString() ?? '')}.title`,
-                `apps.${_.camelCase(title?.toString() ?? '')}:title`,
-                `common.${_.camelCase(title?.toString() ?? '')}:title`,
+                `${namespace}:${tKey}.${title}.title`,
+                `${namespace}:${title}.title`,
+                `apps.${title}:title`,
+                `common.${title}:title`,
                 'common.misc:title',
                 'title',
                 title?.toString() ?? ''
@@ -88,10 +87,10 @@ function ModuleHeader({
           </h1>
           <div className="text-bg-500 w-full min-w-0 truncate text-sm whitespace-nowrap sm:text-base">
             {t([
-              `${namespace}:${tKey}.${_.camelCase(title?.toString() ?? '')}.description`,
-              `${namespace}:${_.camelCase(title?.toString() ?? '')}.description`,
-              `apps.${_.camelCase(title?.toString() ?? '')}:description`,
-              `common.${_.camelCase(title?.toString() ?? '')}:description`,
+              `${namespace}:${tKey}.${title}.description`,
+              `${namespace}:${title}.description`,
+              `apps.${title}:description`,
+              `common.${title}:description`,
               'common.misc:description',
               'description',
               `Description for ${title?.toString() ?? ''}`
