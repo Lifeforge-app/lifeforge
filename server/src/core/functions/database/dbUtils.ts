@@ -1,15 +1,25 @@
 import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
 import chalk from 'chalk'
 import Pocketbase from 'pocketbase'
+import { parseCollectionName } from 'shared'
 
 import { LoggingService } from '@functions/logging/loggingService'
 
 /**
  * Converts a code-format collection name to PocketBase format
- * e.g., "melvinchia3636$invoice_maker__clients" -> "melvinchia3636___invoice_maker__clients"
+ * e.g., "melvinchia3636$invoiceMaker__clients" -> "melvinchia3636___melvinchia3636$invoiceMaker__clients"
  */
 export function toPocketBaseCollectionName(codeCollectionName: string): string {
-  return codeCollectionName.replace('$', '___')
+  const { username, moduleName, collectionName } = parseCollectionName(
+    codeCollectionName,
+    'code'
+  )
+
+  if (username === 'lifeforge' || !username) {
+    return `${moduleName}__${collectionName}`
+  }
+
+  return `${username}___${moduleName}__${collectionName}`
 }
 
 /**
@@ -20,7 +30,7 @@ function parseCodeCollectionName(codeCollectionName: string): {
   moduleKey: string
   collectionKey: string
 } {
-  // Handle third-party modules: "melvinchia3636$invoice_maker__clients"
+  // Handle third-party modules: "melvinchia3636$invoiceMaker__clients"
   if (codeCollectionName.includes('$')) {
     const [moduleKey, collectionKey] = codeCollectionName.split('__')
 
@@ -141,7 +151,7 @@ async function validateCollections(
 
   for (const collection of requiredCollections) {
     // Convert code format to PocketBase format
-    // e.g., "melvinchia3636$invoice_maker__clients" -> "melvinchia3636___invoice_maker__clients"
+    // e.g., "melvinchia3636$invoiceMaker__clients" -> "melvinchia3636___melvinchia3636$invoiceMaker__clients"
     let targetCollection = toPocketBaseCollectionName(collection)
 
     // Special case for users collection
@@ -150,7 +160,7 @@ async function validateCollections(
     }
 
     if (!existingCollectionNames.has(targetCollection)) {
-      missingCollections.push(collection)
+      missingCollections.push(targetCollection)
     }
 
     const existingCollection = allCollections.find(

@@ -3,6 +3,8 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
+import normalizeSubnamespace from 'shared/src/utils/normalizeSubnamespace'
+
 import {
   ALLOWED_NAMESPACE,
   LocaleService
@@ -10,8 +12,6 @@ import {
 import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
-
-import transformModuleNameForLocales from './utils/transformModuleNameForLocales'
 
 // Get the project root directory
 const projectRoot = import.meta.dirname.split('/server')[0]
@@ -73,6 +73,8 @@ const getLocale = forgeController
     })
   })
   .callback(async ({ query: { lang, namespace, subnamespace } }) => {
+    subnamespace = normalizeSubnamespace(subnamespace)
+
     const finalLang = LocaleService.getAllowedLang().find(e =>
       e.includes(lang)
     )?.[0]
@@ -87,8 +89,7 @@ const getLocale = forgeController
       // Find module by extracting name from path (e.g., lifeforge--calendar -> calendar)
       const target = moduleApps.find(
         modulePath =>
-          transformModuleNameForLocales(path.basename(modulePath)) ===
-          subnamespace
+          normalizeSubnamespace(path.basename(modulePath)) === subnamespace
       )
 
       if (!target) {
@@ -129,7 +130,7 @@ const getLocale = forgeController
                 fs.readFileSync(localePath, 'utf-8')
               )
 
-              const moduleName = transformModuleNameForLocales(
+              const moduleName = normalizeSubnamespace(
                 path.basename(modulePath)
               )
 
