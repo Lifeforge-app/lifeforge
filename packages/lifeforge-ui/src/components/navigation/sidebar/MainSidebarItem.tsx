@@ -96,7 +96,7 @@ function MainSidebarItem({
           label={label}
           subsection={subsection.map(e => ({
             ...e,
-            callback: e.path
+            callback: `${link}/${e.path}`
           }))}
           subsectionExpanded={subsectionExpanded}
         />
