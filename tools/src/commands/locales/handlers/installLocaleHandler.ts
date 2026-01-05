@@ -13,6 +13,14 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
     'locale'
   )
 
+  if (!/^@lifeforge\/lang-[a-z]{2}(-[A-Z]{2})?$/i.test(fullName)) {
+    Logging.actionableError(
+      `Invalid locale name: ${Logging.highlight(langCode)}`,
+      'Locale names should follow the format "xx" or "xx-XX", where "xx" is a two-letter language code and "XX" is a two-letter country code.'
+    )
+    process.exit(1)
+  }
+
   if (fs.existsSync(targetDir)) {
     Logging.actionableError(
       `Locale already exists at locales/${shortName}`,

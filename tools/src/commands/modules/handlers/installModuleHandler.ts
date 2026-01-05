@@ -32,6 +32,14 @@ export async function installModuleHandler(
   for (const moduleName of moduleNames) {
     const { fullName, shortName, targetDir } = normalizePackage(moduleName)
 
+    if (!/^@lifeforge\/[a-z0-9-_]+--[a-z0-9-_]+$/i.test(fullName)) {
+      Logging.actionableError(
+        `Invalid module name: ${Logging.highlight(moduleName)}`,
+        'Module names can only contain letters, numbers, hyphens, and underscores.'
+      )
+      continue
+    }
+
     if (fs.existsSync(targetDir)) {
       Logging.actionableError(
         `Module already exists at apps/${shortName}`,
