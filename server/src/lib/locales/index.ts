@@ -3,6 +3,8 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
+import normalizeSubnamespace from 'shared/src/utils/normalizeSubnamespace'
+
 import {
   ALLOWED_NAMESPACE,
   LocaleService
@@ -11,15 +13,28 @@ import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
-export const allApps = fs
-  .globSync([
-    '../tools/*/locales',
-    path.resolve(import.meta.dirname.split('/server')[0], 'apps/*/locales')
-  ])
-  .filter(dir => {
-    return fs.existsSync(path.join(dir, 'en.json'))
-  })
-  .map(dir => path.dirname(dir))
+// Get the project root directory
+const projectRoot = import.meta.dirname.split('/server')[0]
+
+// Scan apps directory for modules with locales
+const appsDir = path.join(projectRoot, 'apps')
+
+function getModulesWithLocales(): string[] {
+  if (!fs.existsSync(appsDir)) return []
+
+  return fs
+    .readdirSync(appsDir)
+    .filter(dir => {
+      if (dir.startsWith('.')) return false
+
+      const localesPath = path.join(appsDir, dir, 'locales')
+
+      return fs.existsSync(localesPath)
+    })
+    .map(dir => path.join(appsDir, dir))
+}
+
+const moduleApps = getModulesWithLocales()
 
 const listLanguages = forgeController
   .query()
@@ -58,6 +73,8 @@ const getLocale = forgeController
     })
   })
   .callback(async ({ query: { lang, namespace, subnamespace } }) => {
+    subnamespace = normalizeSubnamespace(subnamespace)
+
     const finalLang = LocaleService.getAllowedLang().find(e =>
       e.includes(lang)
     )?.[0]
@@ -69,22 +86,23 @@ const getLocale = forgeController
     let data
 
     if (namespace === 'apps') {
-      const target = allApps.find(e => e.split('/').pop() === subnamespace)
+      // Find module by extracting name from path (e.g., lifeforge--calendar -> calendar)
+      const target = moduleApps.find(
+        modulePath =>
+          normalizeSubnamespace(path.basename(modulePath)) === subnamespace
+      )
 
       if (!target) {
         return {}
       }
 
-      if (!fs.existsSync(`${target}/locales/${finalLang}.json`)) {
-        throw new ClientError(
-          `Locale ${finalLang} is not supported for app ${subnamespace}`,
-          404
-        )
+      const localePath = path.join(target, 'locales', `${finalLang}.json`)
+
+      if (!fs.existsSync(localePath)) {
+        return {}
       }
 
-      data = JSON.parse(
-        fs.readFileSync(`${target}/locales/${finalLang}.json`, 'utf-8')
-      )
+      data = JSON.parse(fs.readFileSync(localePath, 'utf-8'))
     } else {
       if (!LocaleService.getSystemLocales()[finalLang][subnamespace]) {
         return {}
@@ -96,21 +114,31 @@ const getLocale = forgeController
     if (namespace === 'common' && subnamespace === 'sidebar') {
       data.apps = {
         ...Object.fromEntries(
-          allApps
-            .map(module => {
-              if (!fs.existsSync(`${module}/locales/${finalLang}.json`)) {
+          moduleApps
+            .map(modulePath => {
+              const localePath = path.join(
+                modulePath,
+                'locales',
+                `${finalLang}.json`
+              )
+
+              if (!fs.existsSync(localePath)) {
                 return []
               }
 
-              const data = JSON.parse(
-                fs.readFileSync(`${module}/locales/${finalLang}.json`, 'utf-8')
+              const localeData = JSON.parse(
+                fs.readFileSync(localePath, 'utf-8')
+              )
+
+              const moduleName = normalizeSubnamespace(
+                path.basename(modulePath)
               )
 
               return [
-                module.split('/').pop() || '',
+                moduleName,
                 {
-                  title: data.title ?? '',
-                  subsections: data.subsections ?? {}
+                  title: localeData.title ?? '',
+                  subsections: localeData.subsections ?? {}
                 }
               ]
             })

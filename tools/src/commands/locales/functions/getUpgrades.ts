@@ -1,0 +1,64 @@
+import Logging from '@/utils/logging'
+import { getRegistryUrl } from '@/utils/registry'
+
+interface LocaleUpgrade {
+  name: string
+  current: string
+  latest: string
+}
+
+async function getLatestLocaleVersion(
+  packageName: string
+): Promise<string | null> {
+  try {
+    const registryUrl = getRegistryUrl()
+
+    const response = await fetch(`${registryUrl}/${packageName}`)
+
+    if (!response.ok) {
+      return null
+    }
+
+    const data = (await response.json()) as {
+      'dist-tags'?: { latest?: string }
+    }
+
+    return data['dist-tags']?.latest || null
+  } catch {
+    return null
+  }
+}
+
+async function getUpgrades(
+  packagesToCheck: { name: string; version: string }[]
+) {
+  const upgrades: LocaleUpgrade[] = []
+
+  for (const pkg of packagesToCheck) {
+    const latestVersion = await getLatestLocaleVersion(pkg.name)
+
+    if (latestVersion && latestVersion !== pkg.version) {
+      upgrades.push({
+        name: pkg.name,
+        current: pkg.version,
+        latest: latestVersion
+      })
+    }
+  }
+
+  if (!upgrades.length) {
+    Logging.info('All locales are up to date')
+    process.exit(0)
+  }
+
+  Logging.info('Available upgrades:')
+  upgrades.forEach(u =>
+    Logging.print(
+      `  ${Logging.highlight(u.name)}: ${u.current} → ${Logging.green(u.latest)}`
+    )
+  )
+
+  return upgrades
+}
+
+export default getUpgrades

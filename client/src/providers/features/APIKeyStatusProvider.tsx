@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { Button, Card, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { Link, type ModuleConfig } from 'shared'
+import { Link, type ModuleCategory } from 'shared'
 
 import forgeAPI from '@/utils/forgeAPI'
 
@@ -9,7 +9,7 @@ function APIKeyStatusProvider({
   APIKeyAccess,
   children
 }: {
-  APIKeyAccess: ModuleConfig['APIKeyAccess']
+  APIKeyAccess: ModuleCategory['items'][number]['APIKeyAccess']
   children: React.ReactNode
 }) {
   const { t } = useTranslation('common.apiKeys')

@@ -8,6 +8,7 @@ import {
   FieldSelection,
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -195,7 +196,9 @@ const update = (pb: PocketBase) => ({
   collection: <TCollectionKey extends CollectionKey>(
     collection: TCollectionKey
   ): Update<TCollectionKey> => {
-    return new Update<TCollectionKey>(pb, collection)
+    const finalCollectionName = toPocketBaseCollectionName(collection)
+
+    return new Update<TCollectionKey>(pb, finalCollectionName as TCollectionKey)
   }
 })
 

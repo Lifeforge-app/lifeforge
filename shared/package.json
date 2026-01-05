@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "tsc --watch",
     "types": "tsc -b --noEmit",
-    "build": "rm -rf dist && tsc"
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",

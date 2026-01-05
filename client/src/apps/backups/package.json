@@ -1,0 +1,11 @@
+{
+    "name": "@internal/backups",
+    "displayName": "Backups",
+    "version": "0.1.0",
+    "description": "Manage your backups",
+    "author": "melvinchia3636 <melvinchia623600@gmail.com>",
+    "lifeforge": {
+        "icon": "tabler:history",
+        "category": "Settings"
+    }
+}

@@ -9,6 +9,7 @@ import {
   FilterType,
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 import { LoggingService } from '@functions/logging/loggingService'
 
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
@@ -132,7 +133,12 @@ const getFirstListItem = (pb: PocketBase) => ({
   collection: <TCollectionKey extends CollectionKey>(
     collection: TCollectionKey
   ): GetFirstListItem<TCollectionKey> => {
-    return new GetFirstListItem<TCollectionKey>(pb, collection)
+    const finalCollectionName = toPocketBaseCollectionName(collection)
+
+    return new GetFirstListItem<TCollectionKey>(
+      pb,
+      finalCollectionName as TCollectionKey
+    )
   }
 })
 

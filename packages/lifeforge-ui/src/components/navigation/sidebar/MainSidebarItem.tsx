@@ -1,5 +1,4 @@
-import _ from 'lodash'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate } from 'shared'
 
 import SidebarItemContent from './SidebarItem/components/SidebarItemContent'
@@ -28,13 +27,12 @@ interface MainSidebarItemBaseProps {
    * - Prefix "url:" can be used to render image icons from a URL.
    */
   icon?: string | React.ReactElement
-  showAIIcon: boolean
+  link: string
   subsection?: {
     label: string
     icon: string | React.ReactElement
     path: string
   }[]
-  prefix?: string
   sidebarExpanded: boolean
   toggleSidebar: () => void
 }
@@ -45,27 +43,15 @@ type MainSidebarItemProps = MainSidebarItemAutoActiveProps &
 function MainSidebarItem({
   label,
   icon,
-  showAIIcon = false,
+  link,
   subsection,
   sidebarExpanded,
   toggleSidebar,
-  autoActive = false,
-  active = false,
-  prefix = ''
+  active = false
 }: MainSidebarItemProps) {
   const navigate = useNavigate()
 
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
-
-  const isLocationMatched = useMemo(
-    () =>
-      location.pathname
-        .slice(1)
-        .startsWith(
-          (prefix !== '' ? `${prefix}/` : '') + _.kebabCase(label.toString())
-        ),
-    [location.pathname, prefix, label]
-  )
 
   const handleNavigation = useCallback(() => {
     setSubsectionExpanded(!subsectionExpanded)
@@ -74,14 +60,12 @@ function MainSidebarItem({
       return
     }
 
-    navigate(
-      `/${prefix !== '' ? prefix + '/' : ''}${_.kebabCase(label.toString())}`
-    )
+    navigate(link)
 
     if (window.innerWidth < 1024) {
       toggleSidebar?.()
     }
-  }, [subsectionExpanded, subsection, prefix, label, navigate, toggleSidebar])
+  }, [subsectionExpanded, subsection, link, navigate, toggleSidebar])
 
   const handleToggleSubsection = useCallback(() => {
     if (subsection !== undefined) {
@@ -91,17 +75,10 @@ function MainSidebarItem({
 
   return (
     <>
-      <SidebarItemWrapper
-        active={autoActive ? isLocationMatched : active}
-        onClick={handleNavigation}
-      >
-        <SidebarItemIcon
-          active={autoActive ? isLocationMatched : active}
-          icon={icon}
-        />
+      <SidebarItemWrapper active={active} onClick={handleNavigation}>
+        <SidebarItemIcon active={active} icon={icon} />
         <SidebarItemContent
-          active={autoActive ? isLocationMatched : active}
-          hasAI={showAIIcon}
+          active={active}
           hasSubsection={subsection !== undefined}
           isMainSidebarItem={true}
           label={label}

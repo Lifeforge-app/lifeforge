@@ -1,0 +1,11 @@
+{
+    "name": "documentation",
+    "displayName": "Documentation",
+    "version": "0.1.0",
+    "description": "Documentation",
+    "author": "melvinchia3636 <melvinchia623600@gmail.com>",
+    "lifeforge": {
+        "icon": "tabler:info-circle",
+        "category": "<END>"
+    }
+}

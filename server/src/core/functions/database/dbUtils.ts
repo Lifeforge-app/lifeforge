@@ -1,8 +1,47 @@
 import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
 import chalk from 'chalk'
 import Pocketbase from 'pocketbase'
+import { parseCollectionName } from 'shared'
 
 import { LoggingService } from '@functions/logging/loggingService'
+
+/**
+ * Converts a code-format collection name to PocketBase format
+ * e.g., "melvinchia3636$invoiceMaker__clients" -> "melvinchia3636___melvinchia3636$invoiceMaker__clients"
+ */
+export function toPocketBaseCollectionName(codeCollectionName: string): string {
+  const { username, moduleName, collectionName } = parseCollectionName(
+    codeCollectionName,
+    'code'
+  )
+
+  if (username === 'lifeforge' || !username) {
+    return `${moduleName}__${collectionName}`
+  }
+
+  return `${username}___${moduleName}__${collectionName}`
+}
+
+/**
+ * Parses a code-format collection name into module key and collection key
+ * for looking up in SCHEMAS
+ */
+function parseCodeCollectionName(codeCollectionName: string): {
+  moduleKey: string
+  collectionKey: string
+} {
+  // Handle third-party modules: "melvinchia3636$invoiceMaker__clients"
+  if (codeCollectionName.includes('$')) {
+    const [moduleKey, collectionKey] = codeCollectionName.split('__')
+
+    return { moduleKey, collectionKey }
+  }
+
+  // Handle official modules: "achievements__entries"
+  const [moduleKey, collectionKey] = codeCollectionName.split('__')
+
+  return { moduleKey, collectionKey }
+}
 
 interface DBConnectionConfig {
   host: string
@@ -111,19 +150,29 @@ async function validateCollections(
   const collectionsWithDiscrepancies: string[] = []
 
   for (const collection of requiredCollections) {
-    const targetCollection = collection === 'user__users' ? 'users' : collection
+    // Convert code format to PocketBase format
+    // e.g., "melvinchia3636$invoiceMaker__clients" -> "melvinchia3636___melvinchia3636$invoiceMaker__clients"
+    let targetCollection = toPocketBaseCollectionName(collection)
+
+    // Special case for users collection
+    if (targetCollection === 'user__users') {
+      targetCollection = 'users'
+    }
 
     if (!existingCollectionNames.has(targetCollection)) {
-      missingCollections.push(collection)
+      missingCollections.push(targetCollection)
     }
 
     const existingCollection = allCollections.find(
       c => c.name === targetCollection
     )
 
+    // Parse the collection name to get module and collection keys for SCHEMAS lookup
+    const { moduleKey, collectionKey } = parseCodeCollectionName(collection)
+
     const requiredSchema =
-      // @ts-expect-error: Lazy to fix :)
-      SCHEMAS[collection.split('__')[0]][collection.split('__')[1]].raw
+      // @ts-expect-error: Dynamic schema lookup
+      SCHEMAS[moduleKey]?.[collectionKey]?.raw
 
     delete (existingCollection as any)?.id
     delete existingCollection?.updated
