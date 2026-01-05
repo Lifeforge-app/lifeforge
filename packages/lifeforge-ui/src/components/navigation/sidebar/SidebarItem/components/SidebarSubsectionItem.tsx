@@ -52,7 +52,7 @@ function SidebarSubsectionItem({
         sidebarExpanded ? 'pl-[3rem]' : 'px-2',
         locationDependentStyles
       )}
-      to={`./${_.kebabCase(label.toString())}/${path}`}
+      to={`./${path.replace(/^\//, '')}`}
       onClick={handleClick}
     >
       <div className="flex size-7 items-center justify-center">
