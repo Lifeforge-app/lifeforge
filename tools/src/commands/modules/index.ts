@@ -20,18 +20,18 @@ export default function setup(program: Command): void {
   command
     .command('install')
     .alias('i')
-    .description('Install a module from the LifeForge registry')
+    .description('Install modules from the LifeForge registry')
     .argument(
-      '<module>',
-      'Module to install, e.g., @lifeforge/lifeforge--calendar'
+      '<modules...>',
+      'Modules to install, e.g., @lifeforge/lifeforge--calendar'
     )
     .action(installModuleHandler)
 
   command
     .command('uninstall')
     .alias('un')
-    .description('Uninstall a module')
-    .argument('<module>', 'Module to uninstall, e.g., achievements')
+    .description('Uninstall modules')
+    .argument('<modules...>', 'Modules to uninstall, e.g., achievements')
     .action(uninstallModuleHandler)
 
   command
