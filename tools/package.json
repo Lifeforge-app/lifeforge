@@ -7,6 +7,7 @@
     "types": "tsc --noEmit"
   },
   "dependencies": {
+    "tar": "^7.5.2",
     "axios": "^1.12.2",
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
@@ -29,6 +30,7 @@
     "@types/crypto-js": "^4.2.2",
     "@types/lodash": "^4.17.21",
     "@types/prompts": "^2.4.9",
-    "@types/semver": "^7.7.1"
+    "@types/semver": "^7.7.1",
+    "@types/tar": "^6.1.13"
   }
 }
