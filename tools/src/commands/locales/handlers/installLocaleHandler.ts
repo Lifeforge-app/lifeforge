@@ -1,6 +1,7 @@
 import fs from 'fs'
 
 import { installPackage } from '@/utils/commands'
+import initGitRepository from '@/utils/initGitRepository'
 import Logging from '@/utils/logging'
 import normalizePackage from '@/utils/normalizePackage'
 
@@ -25,6 +26,7 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
 
   try {
     installPackage(fullName, targetDir)
+    initGitRepository(targetDir)
 
     await setFirstLangInDB(shortName)
 
