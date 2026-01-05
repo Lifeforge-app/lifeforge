@@ -7,13 +7,15 @@ import {
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import { transformModuleNameForLocales, useMainSidebarState } from 'shared'
+import { normalizeSubnamespace, useLocation, useMainSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
 import ROUTES from '../..'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
+
+  const location = useLocation()
 
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
@@ -75,18 +77,24 @@ function SidebarItems({ query }: { query: string }) {
                   {item.title !== '' &&
                     filteredModules.length > 0 &&
                     sidebarExpanded && <SidebarTitle label={item.title} />}
-                  {filteredModules.map(subItem => (
-                    <MainSidebarItem
-                      key={_.kebabCase(subItem.name)}
-                      autoActive
-                      icon={subItem.icon ?? ''}
-                      label={transformModuleNameForLocales(subItem.name)}
-                      link={`/${subItem.name.startsWith('lifeforge--') ? subItem.name.split('--')[1] : subItem.name}`}
-                      sidebarExpanded={sidebarExpanded}
-                      subsection={subItem.subsection}
-                      toggleSidebar={toggleSidebar}
-                    />
-                  ))}
+                  {filteredModules.map(subItem => {
+                    const link = subItem.name.startsWith('lifeforge--')
+                      ? subItem.name.split('--')[1]
+                      : subItem.name
+
+                    return (
+                      <MainSidebarItem
+                        key={_.kebabCase(subItem.name)}
+                        active={location.pathname.startsWith(`/${link}`)}
+                        icon={subItem.icon ?? ''}
+                        label={normalizeSubnamespace(subItem.name)}
+                        link={`/${link}`}
+                        sidebarExpanded={sidebarExpanded}
+                        subsection={subItem.subsection}
+                        toggleSidebar={toggleSidebar}
+                      />
+                    )
+                  })}
                   {index !== ROUTES.length - 1 &&
                     filteredModules.length > 0 && <SidebarDivider />}
                 </Fragment>
