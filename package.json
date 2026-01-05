@@ -56,14 +56,6 @@
     "typescript-eslint": "^8.31.1"
   },
   "dependencies": {
-    "@lifeforge/lang-en": "workspace:*",
-    "@lifeforge/lang-ms": "workspace:*",
-    "@lifeforge/lang-zh-CN": "workspace:*",
-    "@lifeforge/lang-zh-TW": "workspace:*",
-    "@lifeforge/lifeforge--achievements": "workspace:*",
-    "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*",
-    "@lifeforge/lifeforge--calendar": "workspace:*",
-    "@lifeforge/lifeforge--movies": "workspace:*",
-    "@lifeforge/melvinchia3636--invoice-maker": "workspace:*"
+    "@lifeforge/lang-en": "workspace:*"
   }
 }
