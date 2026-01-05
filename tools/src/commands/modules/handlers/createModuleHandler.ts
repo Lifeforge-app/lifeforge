@@ -1,7 +1,15 @@
 import Logging from '@/utils/logging'
+
 import { registerHandlebarsHelpers } from '../functions/templates'
 
 registerHandlebarsHelpers()
+
+export const AVAILABLE_TEMPLATE_MODULE_TYPES = {
+  'bare-bones': 'Minimal setup with basic structure',
+  'with-crud': 'Full CRUD operations ready',
+  'with-routes': 'Multiple routes and navigation',
+  'client-only': 'Client-side only functionality'
+} as const
 
 export async function createModuleHandler(moduleName?: string): Promise<void> {
   Logging.info('Work in progress...')
