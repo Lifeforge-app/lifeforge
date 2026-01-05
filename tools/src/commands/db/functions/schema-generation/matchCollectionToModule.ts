@@ -1,14 +1,13 @@
 import path from 'path'
 
 import { parsePackageName } from '@/commands/modules/functions/parsePackageName'
-import { parseCollectionName } from '@/utils/pocketbase'
 
 /**
  * Finds the module that owns a given PocketBase collection.
  *
  * PocketBase collection names follow a naming convention:
  * - First-party: `moduleName__collectionName` (e.g., `calendar__events`)
- * - Third-party: `username___moduleName__collectionName` (e.g., `melvinchia3636___invoice_maker__clients`)
+ * - Third-party: `username___moduleName__collectionName` (e.g., `melvinchia3636___melvinchia3636$invoiceMaker__clients`)
  *
  * This function parses the collection name and matches it against registered modules
  * by comparing the username and module name prefixes.
@@ -21,12 +20,14 @@ import { parseCollectionName } from '@/utils/pocketbase'
  *
  * @example
  * // Collection 'calendar__events' matches module at '/apps/lifeforge--calendar'
- * // Collection 'melvinchia3636___invoice_maker__clients' matches '/apps/melvinchia3636--invoice-maker'
+ * // Collection 'melvinchia3636___melvinchia3636$invoiceMaker__clients' matches '/apps/melvinchia3636--invoice-maker'
  */
-export function matchCollectionToModule(
+export async function matchCollectionToModule(
   allModules: string[],
   collection: Record<string, unknown>
 ) {
+  const { parseCollectionName } = await import('shared')
+
   const collectionName = collection.name as string
 
   const parsed = parseCollectionName(

@@ -1,5 +1,3 @@
-import path from 'path'
-
 import Logging from '@/utils/logging'
 
 import buildModuleCollectionsMap from '../functions/schema-generation/buildModuleCollectionsMap'
@@ -36,17 +34,15 @@ export async function generateSchemaHandler(
 
   await Promise.all(
     entries.map(async ([modulePath, moduleCollections]) => {
-      const schemaPath = path.join(modulePath, 'schema.ts')
-
       const collectionCount = moduleCollections.length
 
       Logging.debug(
-        `Writing ${Logging.highlight(String(collectionCount))} collections to ${Logging.dim(schemaPath)}`
+        `Writing ${Logging.highlight(String(collectionCount))} collections for module ${Logging.dim(modulePath)}`
       )
 
       await writeFormattedFile(
-        schemaPath,
-        generateSchemaContent(
+        modulePath,
+        await generateSchemaContent(
           moduleCollections as Array<Record<string, unknown>>,
           new Map<string, string>(
             moduleCollections.map(
