@@ -59,24 +59,24 @@ export async function validateCallerAccess(
     return
   }
 
-  const manifestPath = path.resolve(
+  const packageJSONPath = path.resolve(
     import.meta.dirname.split('/server')[0],
     'apps',
     callerModule.id,
-    'manifest.ts'
+    'package.json'
   )
 
-  if (!fs.existsSync(manifestPath)) {
+  if (!fs.existsSync(packageJSONPath)) {
     throw new Error(`Manifest for ${callerModule.id} not found`)
   }
 
-  const module = await import(manifestPath)
+  const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, 'utf-8'))
 
-  if (!module.default.APIKeyAccess) {
+  if (!packageJSON.lifeforge?.APIKeyAccess) {
     throw new Error(`API access for ${callerModule.id} not found`)
   }
 
-  const access = module.default.APIKeyAccess[id]
+  const access = packageJSON.lifeforge.APIKeyAccess[id]
 
   if (!access) {
     throw new Error(`API access for ${id} not found`)
