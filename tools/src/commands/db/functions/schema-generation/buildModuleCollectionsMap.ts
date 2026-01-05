@@ -33,7 +33,7 @@ export default async function buildModuleCollectionsMap(
   let unmatchedCount = 0
 
   for (const collection of collections) {
-    const matchingModuleDir = matchCollectionToModule(allModules, collection)
+    const matchingModuleDir = await matchCollectionToModule(allModules, collection)
 
     if (!matchingModuleDir) {
       unmatchedCount++
