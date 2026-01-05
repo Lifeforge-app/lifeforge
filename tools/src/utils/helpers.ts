@@ -5,7 +5,11 @@ import executeCommand from './commands'
 import Logging from './logging'
 
 /**
- * Validates environment variables
+ * Validates and retrieves multiple required environment variables.
+ *
+ * @param requiredVars - Array of environment variable names to retrieve
+ * @returns A record of variable names to their values
+ * @throws Exits the process if any required variables are missing
  */
 export function getEnvVars<const T extends readonly string[]>(
   requiredVars: T
@@ -35,6 +39,14 @@ export function getEnvVars<const T extends readonly string[]>(
   return vars as Record<T[number], string>
 }
 
+/**
+ * Retrieves a single environment variable.
+ *
+ * @param varName - The name of the environment variable
+ * @param fallback - Optional fallback value if the variable is not set
+ * @returns The environment variable value, or the fallback if provided
+ * @throws Exits the process if the variable is not set and no fallback is provided
+ */
 export function getEnvVar(varName: string, fallback?: string): string {
   const value = process.env[varName]
 
@@ -54,7 +66,10 @@ export function getEnvVar(varName: string, fallback?: string): string {
 }
 
 /**
- * Kills existing processes matching the given keyword
+ * Kills existing processes matching the given keyword or PID.
+ *
+ * @param processKeywordOrPID - Either a PID number or a keyword to match against running processes
+ * @returns The PID of the killed process if found by keyword, undefined otherwise
  */
 export function killExistingProcess(
   processKeywordOrPID: string | number
@@ -89,6 +104,12 @@ export function killExistingProcess(
   }
 }
 
+/**
+ * Checks if a specific port is currently in use.
+ *
+ * @param port - The port number to check
+ * @returns True if the port is in use, false otherwise
+ */
 export function checkPortInUse(port: number): boolean {
   try {
     const result = spawnSync('nc', ['-zv', 'localhost', port.toString()], {
@@ -102,19 +123,29 @@ export function checkPortInUse(port: number): boolean {
   }
 }
 
+/**
+ * Creates a promise that resolves after the specified delay.
+ *
+ * @param ms - The delay duration in milliseconds
+ */
 export async function delay(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 /**
- * Checks if running in Docker mode
+ * Checks if the CLI is running inside a Docker container.
+ *
+ * @returns True if `DOCKER_MODE` environment variable is set to 'true'
  */
 export function isDockerMode(): boolean {
   return process.env.DOCKER_MODE === 'true'
 }
 
 /**
- * Prompts the user for confirmation
+ * Prompts the user for confirmation with a yes/no question.
+ *
+ * @param message - The confirmation message to display
+ * @returns True if the user confirms, false otherwise
  */
 export async function confirmAction(message: string): Promise<boolean> {
   const response = await prompts({

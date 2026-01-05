@@ -3,8 +3,12 @@ import semver from 'semver'
 
 /**
  * Bumps the patch version in a module's package.json file.
- * @param packagePath - The path to the module directory
- * @returns An object containing the old and new versions
+ *
+ * Reads the current version, increments the patch number using semver,
+ * and writes the updated version back to package.json.
+ *
+ * @param packagePath - The absolute path to the module directory
+ * @returns An object containing the old and new version strings
  */
 export default function bumpPackageVersion(packagePath: string): {
   oldVersion: string
@@ -25,9 +29,12 @@ export default function bumpPackageVersion(packagePath: string): {
 }
 
 /**
- * Reverts the version in a module's package.json file.
- * @param packagePath - The path to the module directory
- * @param version - The version to revert to
+ * Reverts the version in a module's package.json file to a previous value.
+ *
+ * Used for rollback when a publish operation fails after version bump.
+ *
+ * @param packagePath - The absolute path to the module directory
+ * @param version - The version string to revert to
  */
 export function revertPackageVersion(
   packagePath: string,

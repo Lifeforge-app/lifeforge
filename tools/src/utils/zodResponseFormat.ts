@@ -14,6 +14,14 @@ import type { ResponseFormatJSONSchema } from 'openai/resources'
 import type { ResponseFormatTextJSONSchemaConfig } from 'openai/resources/responses/responses'
 import z from 'zod'
 
+/**
+ * Creates an auto-parseable response format for OpenAI using a Zod schema.
+ *
+ * @param zodObject - The Zod schema defining the expected response structure
+ * @param name - The name of the response format schema
+ * @param props - Additional JSON schema properties
+ * @returns An auto-parseable response format for use with OpenAI's API
+ */
 export function zodResponseFormat<ZodInput extends z.ZodType>(
   zodObject: ZodInput,
   name: string,
@@ -36,6 +44,14 @@ export function zodResponseFormat<ZodInput extends z.ZodType>(
   )
 }
 
+/**
+ * Creates an auto-parseable text format for OpenAI using a Zod schema.
+ *
+ * @param zodObject - The Zod schema defining the expected response structure
+ * @param name - The name of the text format schema
+ * @param props - Additional JSON schema properties
+ * @returns An auto-parseable text format for use with OpenAI's API
+ */
 export function zodTextFormat<ZodInput extends z.ZodType>(
   zodObject: ZodInput,
   name: string,

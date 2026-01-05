@@ -9,7 +9,10 @@ import executeCommand from './commands'
 import { killExistingProcess } from './helpers'
 
 /**
- * Verifies if a PID is actually running and is a PocketBase process
+ * Verifies if a PID is actually running and is a PocketBase process.
+ *
+ * @param pid - The process ID to verify
+ * @returns True if the PID is a valid running PocketBase process, false otherwise
  */
 function isValidPocketbaseProcess(pid: number): boolean {
   try {
@@ -30,7 +33,10 @@ function isValidPocketbaseProcess(pid: number): boolean {
 }
 
 /**
- * Checks for running PocketBase instances
+ * Checks for running PocketBase instances.
+ *
+ * @param exitOnError - If true, exits the process when PocketBase is already running
+ * @returns True if PocketBase instances are running, false otherwise
  */
 export function checkRunningPBInstances(exitOnError = true): boolean {
   try {
@@ -72,7 +78,10 @@ export function checkRunningPBInstances(exitOnError = true): boolean {
 }
 
 /**
- * Starts a PocketBase server instance
+ * Starts a PocketBase server instance in a child process.
+ *
+ * @returns A promise that resolves with the process ID when the server starts
+ * @throws Rejects if the server fails to start or encounters an error
  */
 export async function startPBServer(): Promise<number> {
   Logging.debug('Starting PocketBase server...')
@@ -127,7 +136,9 @@ export async function startPBServer(): Promise<number> {
 }
 
 /**
- * Starts PocketBase server and returns the process ID
+ * Starts PocketBase server if not already running.
+ *
+ * @returns A cleanup function to kill the PocketBase process, or null if already running
  */
 export async function startPocketbase(): Promise<(() => void) | null> {
   try {
@@ -154,10 +165,13 @@ export async function startPocketbase(): Promise<(() => void) | null> {
 }
 
 /**
- * Gets a PocketBase instance.
+ * Gets an authenticated PocketBase instance.
  *
- * If `createNewInstance` is true, and there is no existing instance,
- * it will start a new PocketBase instance.
+ * Optionally starts a new PocketBase server if none is running, then authenticates
+ * using credentials from environment variables.
+ *
+ * @param createNewInstance - If true, starts a new PocketBase server if none is running
+ * @returns The authenticated PocketBase client and an optional cleanup function
  */
 export default async function getPBInstance(createNewInstance = true): Promise<{
   pb: PocketBase
