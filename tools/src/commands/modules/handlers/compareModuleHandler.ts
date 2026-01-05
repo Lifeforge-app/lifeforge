@@ -18,6 +18,10 @@ interface FileDiff {
   deleted: string[]
 }
 
+/**
+ * Recursively gets all file paths in a directory.
+ * Excludes node_modules and .git directories.
+ */
 function getAllFiles(dir: string, baseDir: string = dir): string[] {
   const files: string[] = []
 
@@ -46,6 +50,9 @@ function getAllFiles(dir: string, baseDir: string = dir): string[] {
   return files
 }
 
+/**
+ * Compares two files by content using Buffer.equals.
+ */
 function compareFileContent(file1: string, file2: string): boolean {
   if (!fs.existsSync(file1) || !fs.existsSync(file2)) {
     return false
@@ -58,6 +65,9 @@ function compareFileContent(file1: string, file2: string): boolean {
   return content1.equals(content2)
 }
 
+/**
+ * Compares local and registry directories to find differences.
+ */
 function compareDirectories(localDir: string, registryDir: string): FileDiff {
   const localFiles = new Set(getAllFiles(localDir))
 
@@ -92,6 +102,9 @@ function compareDirectories(localDir: string, registryDir: string): FileDiff {
   return { added, modified, deleted }
 }
 
+/**
+ * Downloads and extracts an npm package tarball.
+ */
 async function downloadAndExtractTarball(
   tarballUrl: string,
   extractDir: string
@@ -111,60 +124,63 @@ async function downloadAndExtractTarball(
   await pipeline(nodeStream, createGunzip(), extract({ cwd: extractDir }))
 }
 
+/**
+ * Prints file differences in a formatted way.
+ *
+ * @returns true if there were differences, false if in sync
+ */
 function printDiff(moduleName: string, diff: FileDiff): boolean {
   const hasChanges =
     diff.added.length > 0 || diff.modified.length > 0 || diff.deleted.length > 0
 
   if (!hasChanges) {
-    Logging.success(`${Logging.highlight(moduleName)} is in sync with registry`)
+    Logging.print(
+      `  ${Logging.green('✓')} ${Logging.highlight(moduleName)} ${Logging.dim('is in sync')}`
+    )
 
     return false
   }
 
-  Logging.warn(`${Logging.highlight(moduleName)} has differences:`)
+  Logging.print(`  ${Logging.yellow('!')} ${Logging.highlight(moduleName)}`)
 
   if (diff.added.length > 0) {
-    Logging.print(
-      Logging.green(`  + ${diff.added.length} file(s) added locally:`)
-    )
+    Logging.print(Logging.green(`      + ${diff.added.length} added locally`))
 
-    for (const file of diff.added.slice(0, 10)) {
-      Logging.print(Logging.dim(`      ${file}`))
+    for (const file of diff.added.slice(0, 5)) {
+      Logging.print(Logging.dim(`        ${file}`))
     }
 
-    if (diff.added.length > 10) {
-      Logging.print(Logging.dim(`      ... and ${diff.added.length - 10} more`))
+    if (diff.added.length > 5) {
+      Logging.print(
+        Logging.dim(`        ... and ${diff.added.length - 5} more`)
+      )
     }
   }
 
   if (diff.modified.length > 0) {
-    Logging.print(
-      Logging.yellow(`  ~ ${diff.modified.length} file(s) modified:`)
-    )
+    Logging.print(Logging.yellow(`      ~ ${diff.modified.length} modified`))
 
-    for (const file of diff.modified.slice(0, 10)) {
-      Logging.print(Logging.dim(`      ${file}`))
+    for (const file of diff.modified.slice(0, 5)) {
+      Logging.print(Logging.dim(`        ${file}`))
     }
 
-    if (diff.modified.length > 10) {
+    if (diff.modified.length > 5) {
       Logging.print(
-        Logging.dim(`      ... and ${diff.modified.length - 10} more`)
+        Logging.dim(`        ... and ${diff.modified.length - 5} more`)
       )
     }
   }
 
   if (diff.deleted.length > 0) {
-    Logging.print(
-      Logging.red(`  - ${diff.deleted.length} file(s) deleted locally:`)
-    )
+    Logging.print(Logging.red(`      - ${diff.deleted.length} deleted locally`))
 
-    for (const file of diff.deleted.slice(0, 10)) {
-      Logging.print(Logging.dim(`      ${file}`))
+    for (const file of diff.deleted.slice(0, 5)) {
+      Logging.print(Logging.dim(`        ${file}`))
     }
 
-    if (diff.deleted.length > 10) {
+    if (diff.deleted.length > 5) {
       Logging.print(
-        Logging.dim(`      ... and ${diff.deleted.length - 10} more`)
+        Logging.dim(`        ... and ${diff.deleted.length - 5} more`)
       )
     }
   }
@@ -172,12 +188,17 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
   return true
 }
 
+/**
+ * Compares a single module against its registry version.
+ *
+ * @returns true if has changes, false if in sync, null if comparison failed
+ */
 async function compareModule(packageName: string): Promise<boolean | null> {
   const { fullName, shortName, targetDir } = normalizePackage(packageName)
 
   if (!fs.existsSync(targetDir)) {
     Logging.actionableError(
-      `Module "${shortName}" not found locally`,
+      `Module ${Logging.highlight(shortName)} is not installed`,
       'Run "bun forge modules list" to see installed modules'
     )
 
@@ -185,8 +206,8 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   }
 
   if (!(await checkPackageExists(fullName))) {
-    Logging.warn(
-      `${Logging.highlight(fullName)} is not published to the registry`
+    Logging.print(
+      `  ${Logging.dim('○')} ${Logging.highlight(shortName)} ${Logging.dim('(not published)')}`
     )
 
     return null
@@ -221,9 +242,17 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   }
 }
 
+/**
+ * Compares one or all modules against their registry versions.
+ *
+ * Shows which files have been added, modified, or deleted locally
+ * compared to the published version in the registry.
+ */
 export async function compareModuleHandler(moduleName?: string): Promise<void> {
   if (moduleName) {
+    Logging.print('')
     await compareModule(moduleName)
+    Logging.print('')
 
     return
   }
@@ -231,13 +260,13 @@ export async function compareModuleHandler(moduleName?: string): Promise<void> {
   const modules = listModules()
 
   if (Object.keys(modules).length === 0) {
-    Logging.info('No modules found to compare')
+    Logging.print('No modules installed')
 
     return
   }
 
-  Logging.info(
-    `Comparing ${Object.keys(modules).length} module(s) with registry...`
+  Logging.print(
+    `\nComparing ${Logging.highlight(String(Object.keys(modules).length))} modules with registry...\n`
   )
 
   let changedCount = 0
@@ -255,6 +284,8 @@ export async function compareModuleHandler(moduleName?: string): Promise<void> {
   if (changedCount === 0) {
     Logging.success('All modules are in sync with the registry')
   } else {
-    Logging.warn(`${changedCount} module(s) have local changes`)
+    Logging.warn(
+      `${Logging.highlight(String(changedCount))} module${changedCount > 1 ? 's' : ''} have local changes`
+    )
   }
 }
