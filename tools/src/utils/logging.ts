@@ -3,6 +3,8 @@
 import { LoggingService } from '@server/core/functions/logging/loggingService'
 import chalk from 'chalk'
 
+export const LOG_LEVELS = ['debug', 'info', 'warn', 'error', 'fatal'] as const
+
 export const LEVEL_ORDER = {
   debug: 1,
   info: 2,

@@ -1,4 +1,4 @@
-import { TOOLS_ALLOWED } from '@/constants/constants'
+import { TOOLS_ALLOWED } from '@/commands/project/constants/projects'
 
 const SERVICES = [
   'db',
