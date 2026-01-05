@@ -2,9 +2,7 @@ import { Command, program } from 'commander'
 import fs from 'fs'
 import path from 'path'
 
-import { LOG_LEVELS } from '@/constants/constants'
-
-import Logging from '../utils/logging'
+import Logging, { LOG_LEVELS } from '../utils/logging'
 import { configureHelp } from './help'
 
 function getVersion(): string {

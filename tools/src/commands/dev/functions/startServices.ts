@@ -1,7 +1,6 @@
 import concurrently from 'concurrently'
 
-import { PROJECTS } from '@/commands/project/constants/projects'
-import { TOOLS_ALLOWED } from '@/constants/constants'
+import { PROJECTS, TOOLS_ALLOWED } from '@/commands/project/constants/projects'
 import executeCommand from '@/utils/commands'
 import { getEnvVars } from '@/utils/helpers'
 import Logging from '@/utils/logging'
