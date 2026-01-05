@@ -13,12 +13,14 @@ export default function setup(program: Command): void {
 
   command
     .command('list')
+    .alias('ls')
     .description('List all installed language packs')
     .action(listLocalesHandler)
 
   command
     .command('install')
     .alias('i')
+    .alias('add')
     .description('Install a language pack from the registry')
     .argument('<lang>', 'Language code, e.g., en, ms, zh-CN, zh-TW')
     .action(installLocaleHandler)
@@ -26,6 +28,8 @@ export default function setup(program: Command): void {
   command
     .command('uninstall')
     .alias('un')
+    .alias('rm')
+    .alias('remove')
     .description('Uninstall a language pack')
     .argument('<lang>', 'Language code to remove')
     .action(uninstallLocaleHandler)
@@ -33,6 +37,7 @@ export default function setup(program: Command): void {
   command
     .command('upgrade')
     .alias('up')
+    .alias('u')
     .description('Upgrade language packs to latest version')
     .argument(
       '[lang]',

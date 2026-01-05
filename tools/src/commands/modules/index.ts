@@ -17,12 +17,14 @@ export default function setup(program: Command): void {
 
   command
     .command('list')
+    .alias('ls')
     .description('List all installed modules')
     .action(listModulesHandler)
 
   command
     .command('install')
     .alias('i')
+    .alias('add')
     .description('Install modules from the LifeForge registry')
     .argument(
       '<modules...>',
@@ -33,6 +35,8 @@ export default function setup(program: Command): void {
   command
     .command('uninstall')
     .alias('un')
+    .alias('rm')
+    .alias('remove')
     .description('Uninstall modules')
     .argument('<modules...>', 'Modules to uninstall, e.g., achievements')
     .action(uninstallModuleHandler)
@@ -40,12 +44,14 @@ export default function setup(program: Command): void {
   command
     .command('upgrade')
     .alias('up')
+    .alias('u')
     .description('Upgrade modules to latest version from registry')
     .argument('[module]', 'Module to upgrade (optional, checks all if omitted)')
     .action(upgradeModuleHandler)
 
   command
     .command('create')
+    .alias('new')
     .description('Create a new LifeForge module scaffold')
     .argument(
       '[moduleName]',
@@ -55,7 +61,7 @@ export default function setup(program: Command): void {
 
   command
     .command('publish')
-    .description('Publish a LifeForge module to the registry')
+    .description('Publish a LifeFordge module to the registry')
     .argument('<module>', 'Module to publish from apps/')
     .option(
       '--official',
