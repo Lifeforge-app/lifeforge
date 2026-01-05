@@ -10,9 +10,17 @@ import { PRETTIER_OPTIONS } from './constants'
  * Writes a formatted file with prettier
  */
 export async function writeFormattedFile(
-  filePath: string,
+  modulePath: string,
   content: string
 ): Promise<void> {
+  let filePath
+
+  if (fs.existsSync(path.join(modulePath, 'server/schema.ts'))) {
+    filePath = path.join(modulePath, 'server/schema.ts')
+  } else {
+    filePath = path.join(modulePath, 'schema.ts')
+  }
+
   try {
     const formattedContent = await prettier.format(content, PRETTIER_OPTIONS)
 
