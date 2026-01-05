@@ -4,6 +4,17 @@ import path from 'path'
 import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
 
+/**
+ * Initializes a git repository in the target directory and sets up the remote.
+ *
+ * Reads the repository URL from package.json and initializes git with:
+ * - Creates a new git repository
+ * - Adds the remote origin
+ * - Fetches from origin and checks out main branch
+ * - Creates an initial commit
+ *
+ * @param targetDir - The directory to initialize the git repository in
+ */
 export default function initGitRepository(targetDir: string): void {
   const pkgPath = path.join(targetDir, 'package.json')
 

@@ -82,6 +82,12 @@ export function removeDependency(packageName: string): void {
   Logging.debug(`Removed workspace dependency: ${packageName}`)
 }
 
+/**
+ * Finds a package by name in the root package.json dependencies.
+ *
+ * @param name - The package name to search for
+ * @returns The package name if found, or null if not found
+ */
 export function findPackageName(name: string): string | null {
   Logging.debug(`Finding package name: ${name}`)
 

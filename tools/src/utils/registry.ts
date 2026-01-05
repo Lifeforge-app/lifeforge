@@ -6,6 +6,11 @@ import Logging from '@/utils/logging'
 
 import executeCommand from './commands'
 
+/**
+ * Gets the registry URL for the @lifeforge scope from bunfig.toml.
+ *
+ * @returns The registry URL, or the default registry if not configured
+ */
 export function getRegistryUrl(): string {
   const bunfigPath = path.join(ROOT_DIR, 'bunfig.toml')
 
@@ -22,6 +27,12 @@ export function getRegistryUrl(): string {
   return 'https://registry.lifeforge.dev/'
 }
 
+/**
+ * Checks if a package exists in the registry.
+ *
+ * @param packageName - The full package name to check
+ * @returns True if the package exists, false otherwise
+ */
 export async function checkPackageExists(
   packageName: string
 ): Promise<boolean> {
@@ -39,6 +50,12 @@ export async function checkPackageExists(
   }
 }
 
+/**
+ * Checks if the user is authenticated with the registry.
+ *
+ * @returns An object with authentication status and username if authenticated
+ * @throws Exits the process if not authenticated
+ */
 export async function checkAuth(): Promise<{
   authenticated: boolean
   username?: string
@@ -68,9 +85,20 @@ export async function checkAuth(): Promise<{
   }
 }
 
-export async function getPackageLatestVersion(
+interface PackageMetadata {
+  'dist-tags'?: { latest?: string }
+  versions?: Record<string, { dist?: { tarball?: string } }>
+}
+
+/**
+ * Fetches package metadata from the registry.
+ *
+ * @param packageName - The full package name to fetch metadata for
+ * @returns The package metadata, or null if not found
+ */
+async function getPackageMetadata(
   packageName: string
-): Promise<string | null> {
+): Promise<PackageMetadata | null> {
   const registry = getRegistryUrl()
 
   try {
@@ -84,12 +112,42 @@ export async function getPackageLatestVersion(
       return null
     }
 
-    const data = (await response.json()) as {
-      'dist-tags'?: { latest?: string }
-    }
-
-    return data['dist-tags']?.latest || null
+    return (await response.json()) as PackageMetadata
   } catch {
     return null
   }
+}
+
+/**
+ * Gets the latest version of a package from the registry.
+ *
+ * @param packageName - The full package name to check
+ * @returns The latest version string, or null if not found
+ */
+export async function getPackageLatestVersion(
+  packageName: string
+): Promise<string | null> {
+  const metadata = await getPackageMetadata(packageName)
+
+  return metadata?.['dist-tags']?.latest || null
+}
+
+/**
+ * Gets the tarball URL for the latest version of a package.
+ *
+ * @param packageName - The full package name
+ * @returns The tarball URL, or null if not found
+ */
+export async function getPackageTarballUrl(
+  packageName: string
+): Promise<string | null> {
+  const metadata = await getPackageMetadata(packageName)
+
+  const latestVersion = metadata?.['dist-tags']?.latest
+
+  if (!latestVersion) {
+    return null
+  }
+
+  return metadata?.versions?.[latestVersion]?.dist?.tarball || null
 }
