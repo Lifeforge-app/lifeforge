@@ -6,6 +6,9 @@ import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
 
 import { getRegistryUrl } from '../../../utils/registry'
+import bumpPackageVersion, {
+  revertPackageVersion
+} from '../functions/bumpPackageVersion'
 import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
@@ -26,6 +29,12 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
   Logging.info(`Validating module author...`)
   await validateModuleAuthor(modulePath)
 
+  const { oldVersion, newVersion } = bumpPackageVersion(modulePath)
+
+  Logging.info(
+    `Bumped version: ${Logging.highlight(oldVersion)} → ${Logging.highlight(newVersion)}`
+  )
+
   Logging.info(`Publishing ${Logging.highlight(moduleName)}...`)
 
   try {
@@ -34,8 +43,10 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
       stdio: 'inherit'
     })
 
-    Logging.success(`Published ${Logging.highlight(moduleName)}`)
+    Logging.success(`Published ${Logging.highlight(moduleName)} v${newVersion}`)
   } catch (error) {
+    revertPackageVersion(modulePath, oldVersion)
+
     Logging.actionableError(
       `Publish failed for ${Logging.highlight(moduleName)}`,
       'Check npm authentication and try again'
