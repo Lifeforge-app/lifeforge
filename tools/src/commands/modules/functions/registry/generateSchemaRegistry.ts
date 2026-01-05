@@ -1,4 +1,5 @@
 import fs from 'fs'
+import _ from 'lodash'
 import path from 'path'
 
 import { SERVER_SCHEMA_DIR } from '@/constants/constants'
@@ -20,14 +21,15 @@ export default function generateSchemaRegistry() {
     .map(mod => {
       const { username, moduleName } = parsePackageName(mod)
 
-      const key = username ? `${username}$${moduleName}` : moduleName
+      const key = username
+        ? `${username}$${_.camelCase(moduleName)}`
+        : _.camelCase(moduleName)
 
       return `  ${key}: (await import('${mod}/server/schema')).default,`
     })
     .join('\n')
 
   const registry = `// AUTO-GENERATED - DO NOT EDIT
-import flattenSchemas from '@functions/utils/flattenSchema'
 
 const SCHEMAS = {
 ${moduleSchemas}
