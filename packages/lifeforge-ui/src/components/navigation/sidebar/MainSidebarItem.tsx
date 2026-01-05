@@ -1,5 +1,4 @@
-import _ from 'lodash'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useNavigate } from 'shared'
 
 import SidebarItemContent from './SidebarItem/components/SidebarItemContent'
@@ -34,7 +33,6 @@ interface MainSidebarItemBaseProps {
     icon: string | React.ReactElement
     path: string
   }[]
-  prefix?: string
   sidebarExpanded: boolean
   toggleSidebar: () => void
 }
@@ -49,23 +47,11 @@ function MainSidebarItem({
   subsection,
   sidebarExpanded,
   toggleSidebar,
-  autoActive = false,
-  active = false,
-  prefix = ''
+  active = false
 }: MainSidebarItemProps) {
   const navigate = useNavigate()
 
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
-
-  const isLocationMatched = useMemo(
-    () =>
-      location.pathname
-        .slice(1)
-        .startsWith(
-          (prefix !== '' ? `${prefix}/` : '') + _.kebabCase(label.toString())
-        ),
-    [location.pathname, prefix, label]
-  )
 
   const handleNavigation = useCallback(() => {
     setSubsectionExpanded(!subsectionExpanded)
@@ -89,16 +75,10 @@ function MainSidebarItem({
 
   return (
     <>
-      <SidebarItemWrapper
-        active={autoActive ? isLocationMatched : active}
-        onClick={handleNavigation}
-      >
-        <SidebarItemIcon
-          active={autoActive ? isLocationMatched : active}
-          icon={icon}
-        />
+      <SidebarItemWrapper active={active} onClick={handleNavigation}>
+        <SidebarItemIcon active={active} icon={icon} />
         <SidebarItemContent
-          active={autoActive ? isLocationMatched : active}
+          active={active}
           hasSubsection={subsection !== undefined}
           isMainSidebarItem={true}
           label={label}
