@@ -9,7 +9,7 @@
     "docs/src",
     "shared/src",
     "scripts/*",
-    "tools/*/src",
-    "tools/*/scripts"
+    "tools/src",
+    "tools/scripts"
   ]
 }

@@ -1,6 +1,6 @@
 import z from 'zod'
 
-const usersSchemas = {
+const schemas = {
   users: {
     schema: z.object({
       email: z.email(),
@@ -514,4 +514,4 @@ const usersSchemas = {
   }
 }
 
-export default usersSchemas
+export default schemas

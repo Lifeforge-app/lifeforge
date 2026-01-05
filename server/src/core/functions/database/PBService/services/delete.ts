@@ -2,6 +2,7 @@ import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { CollectionKey } from '@functions/database/PBService/typescript/pb_service'
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 import { LoggingService } from '@functions/logging/loggingService'
 import { ClientError } from '@functions/routes/utils/response'
 
@@ -112,7 +113,9 @@ const deleteRecord = (pb: PocketBase) => ({
   collection: <TCollectionKey extends CollectionKey>(
     collection: TCollectionKey
   ): Delete<TCollectionKey> => {
-    return new Delete<TCollectionKey>(pb, collection)
+    const finalCollectionName = toPocketBaseCollectionName(collection)
+
+    return new Delete<TCollectionKey>(pb, finalCollectionName as TCollectionKey)
   }
 })
 

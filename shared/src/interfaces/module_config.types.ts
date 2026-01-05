@@ -1,6 +1,6 @@
+import z from 'zod'
+
 export interface ModuleConfig {
-  name: string
-  icon: string
   provider?:
     | React.LazyExoticComponent<React.ComponentType<any>>
     | (() => React.ReactElement)
@@ -9,8 +9,6 @@ export interface ModuleConfig {
     | React.LazyExoticComponent<React.ComponentType<any>>
     | (() => React.ReactElement)
   >
-  hasAI?: boolean
-  APIKeyAccess?: Record<string, { usage: string; required: boolean }>
   subsection?: {
     label: string
     icon: string
@@ -18,11 +16,47 @@ export interface ModuleConfig {
   }[]
   hidden?: boolean
   disabled?: boolean | (() => Promise<boolean>)
-  category?: string
   clearQueryOnUnmount?: boolean
 }
 
+export const packageJSONSchema = z.object({
+  name: z.string(),
+  displayName: z.string(),
+  version: z.string(),
+  description: z.string(),
+  author: z.string(),
+  scripts: z
+    .object({
+      types: z.string()
+    })
+    .optional(),
+  dependencies: z.record(z.string(), z.string()).optional(),
+  devDependencies: z.record(z.string(), z.string()).optional(),
+  lifeforge: z.object({
+    icon: z.string(),
+    category: z.string(),
+    APIKeyAccess: z
+      .record(
+        z.string(),
+        z.object({
+          usage: z.string(),
+          required: z.boolean()
+        })
+      )
+      .optional()
+  })
+})
+
 export interface ModuleCategory {
   title: string
-  items: ModuleConfig[]
+  items: (ModuleConfig & {
+    name: string
+    displayName: string
+    version: string
+    author: string
+    description: string
+    icon: string
+    category: string
+    APIKeyAccess?: Record<string, { usage: string; required: boolean }>
+  })[]
 }
