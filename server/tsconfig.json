@@ -37,7 +37,6 @@
   },
   "include": [
     "./src/**/*",
-    "../apps/**/server/**/*",
-    "../shared/src/utils/transformModuleNameForLocales.tsx"
+    "../apps/**/server/**/*"
   ]
 }
