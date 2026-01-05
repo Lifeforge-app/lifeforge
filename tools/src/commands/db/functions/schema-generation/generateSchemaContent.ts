@@ -1,5 +1,3 @@
-import { parseCollectionName } from '@/utils/pocketbase'
-
 import generateZodSchemaString from './generateZodSchema'
 import stripCollectionIds from './stripCollectionIds'
 
@@ -10,10 +8,12 @@ import stripCollectionIds from './stripCollectionIds'
  * @param idToNameMap - Map for converting relation IDs to collection names
  * @returns Formatted schema entry string for the collection
  */
-function processCollectionSchema(
+async function processCollectionSchema(
   collection: Record<string, unknown>,
   idToNameMap: Map<string, string>
-): string {
+): Promise<string> {
+  const { parseCollectionName } = await import('shared')
+
   const collectionName = collection.name as string
 
   const shortName = parseCollectionName(
@@ -59,14 +59,14 @@ function processCollectionSchema(
  * //
  * // export default schemas
  */
-export default function generateSchemaContent(
+export default async function generateSchemaContent(
   collections: Array<Record<string, unknown>>,
   idToNameMap: Map<string, string>
-): string {
+): Promise<string> {
   const schemaEntries: string[] = []
 
   for (const collection of collections) {
-    schemaEntries.push(processCollectionSchema(collection, idToNameMap))
+    schemaEntries.push(await processCollectionSchema(collection, idToNameMap))
   }
 
   return `import z from 'zod'
