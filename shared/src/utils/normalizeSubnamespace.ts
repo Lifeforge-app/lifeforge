@@ -17,16 +17,16 @@ import _ from 'lodash'
  *
  * @param moduleName
  */
-export default function transformModuleNameForLocales(moduleName: string) {
-  if (moduleName.includes('--')) {
-    const [username, name] = moduleName.split('--')
-
-    if (username === 'lifeforge') {
-      moduleName = _.camelCase(name)
-    } else {
-      moduleName = `${username}__${_.camelCase(name)}`
-    }
+export default function normalizeSubnamespace(moduleName: string) {
+  if (!moduleName.includes('$') && !moduleName.includes('--')) {
+    return _.camelCase(moduleName)
   }
 
-  return moduleName
+  const [username, name] = moduleName.split(/\$|--/)
+
+  if (username === 'lifeforge') {
+    return _.camelCase(name)
+  }
+
+  return `${username}__${_.camelCase(name)}`
 }

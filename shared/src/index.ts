@@ -42,7 +42,8 @@ export { encrypt, decrypt } from './utils/encryption'
 
 export { default as getFormFileFieldInitialData } from './utils/getFormFileFieldInitialData'
 export { default as getBrowserInfo } from './utils/getBrowserInfo'
-export { default as transformModuleNameForLocales } from './utils/transformModuleNameForLocales'
+export { default as normalizeSubnamespace } from './utils/normalizeSubnamespace'
+export { default as parseCollectionName } from './utils/parseCollectionName'
 
 export { packageJSONSchema } from './interfaces/module_config.types'
 
