@@ -44,7 +44,37 @@ For detailed guide on how to manage widgets, refer to [The Dashboard Guide](/use
 <section id="modules">
 ## Modules
 
-LifeForge is designed to be modular, meaning you can install different modules to add functionalities to the system. Modules can be anything from a simple utility tool to a complex application. You can install module using a single command in the terminal thanks to the built-in `forgeCLI` tool.
+LifeForge is designed to be **modular** – the core system provides essential features, while additional functionality comes from installable modules. This architecture keeps the system lightweight and lets you customize it to your exact needs.
+
+### What Are Modules?
+
+Modules are self-contained packages that add features to LifeForge. They can range from simple utilities to full-fledged applications:
+
+- **Productivity** – Calendar, Notes, Projects, Todo
+- **Finance** – Wallet, Budget Tracker, Invoice Maker
+- **Media** – Music, Photos, Books Library
+- **Lifestyle** – Achievements, Journal, Guitar Tabs
+- **Utilities** – DNS Records, Repositories, Changelogs
+
+### Installing Modules
+
+Modules are installed using the `forge` CLI tool. Simply run:
+
+```bash
+bun forge modules install <module-name>
+```
+
+For example, to install the Wallet module:
+
+```bash
+bun forge modules install lifeforge--wallet
+```
+
+Once installed, the module appears in your sidebar and is ready to use.
+
+<Alert className="mt-6" type="tip">
+  You can browse all available modules at the [Forgistry](https://registry.lifeforge.dev) – the official LifeForge module registry.
+</Alert>
 
 For more information on how to install and manage modules, refer to [The Modules Guide](/user-guide/modules).
 
