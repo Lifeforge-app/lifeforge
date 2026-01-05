@@ -25,7 +25,7 @@ function Version({
 
   const [debouncedCollapsed, setDebouncedCollapsed] = useState(!isLatest)
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const timeoutRef = useRef<number | null>(null)
 
   const version = `${prefix} ${dayjs().year(year).format('YY')}w${week.toString().padStart(2, '0')}`
 
