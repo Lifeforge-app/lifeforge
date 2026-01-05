@@ -1,12 +1,10 @@
 import fs from 'fs'
 import prompts from 'prompts'
 
+import { ROOT_DIR } from '@/constants/constants'
 import Logging from '@/utils/logging'
 
-import {
-  AVAILABLE_TEMPLATE_MODULE_TYPES,
-  ROOT_DIR
-} from '../../../../constants/constants'
+import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../handlers/createModuleHandler'
 
 export async function promptModuleType(): Promise<
   keyof typeof AVAILABLE_TEMPLATE_MODULE_TYPES
