@@ -52,6 +52,3 @@ env/*
 !env/.env.docker.example
 keys
 
-# # module and locale packages (installed from registry)
-apps/*
-locales/*
