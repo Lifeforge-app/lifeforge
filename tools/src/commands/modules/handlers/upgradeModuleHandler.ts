@@ -9,8 +9,8 @@ import { getPackageLatestVersion } from '@/utils/registry'
 
 import normalizePackage from '../../../utils/normalizePackage'
 import listModules from '../functions/listModules'
+import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
-import generateServerRegistry from '../functions/registry/generateServerRegistry'
 
 async function upgradeModule(
   packageName: string,
@@ -106,7 +106,7 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   if (upgradedCount > 0) {
     Logging.info('Regenerating registries...')
 
-    generateServerRegistry()
+    generateRouteRegistry()
 
     generateSchemaRegistry()
 

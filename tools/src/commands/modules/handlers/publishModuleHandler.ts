@@ -5,10 +5,10 @@ import { ROOT_DIR } from '@/constants/constants'
 import executeCommand from '@/utils/commands'
 import Logging from '@/utils/logging'
 
-import { getRegistryUrl } from '../../../utils/registry'
 import bumpPackageVersion, {
   revertPackageVersion
-} from '../functions/bumpPackageVersion'
+} from '../../../utils/bumpPackageVersion'
+import { getRegistryUrl } from '../../../utils/registry'
 import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
