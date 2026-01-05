@@ -15,7 +15,13 @@ interface CommandExecutionOptions {
 }
 
 /**
- * Executes a shell command with proper error handling
+ * Executes a shell command synchronously with proper error handling.
+ *
+ * @param command - The command to execute, either as a string or a function that returns a string
+ * @param options - Execution options including stdio, cwd, env, and exitOnError
+ * @param _arguments - Additional arguments to append to the command
+ * @returns The trimmed stdout output from the command
+ * @throws Re-throws errors if `exitOnError` is false, otherwise exits the process
  */
 export default function executeCommand(
   command: string | (() => string),
@@ -73,6 +79,9 @@ export default function executeCommand(
   }
 }
 
+/**
+ * Runs `bun install` in the root directory to install dependencies.
+ */
 export function bunInstall() {
   executeCommand('bun install', {
     cwd: ROOT_DIR,
@@ -83,8 +92,11 @@ export function bunInstall() {
 /**
  * Installs a package from the registry and copies it to the target directory.
  *
- * @param fullName The full name of the package
- * @param targetDir The target directory to copy the package to
+ * Downloads the package using `bun add`, copies it from node_modules to the target
+ * directory, adds it as a workspace dependency, and runs `bun install`.
+ *
+ * @param fullName - The full package name (e.g., `@lifeforge/lifeforge--calendar`)
+ * @param targetDir - The absolute path to copy the package to
  */
 export function installPackage(fullName: string, targetDir: string) {
   if (fs.existsSync(targetDir)) {
