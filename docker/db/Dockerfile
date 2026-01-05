@@ -22,11 +22,11 @@ COPY server server
 COPY shared shared
 COPY packages packages
 COPY apps apps
-COPY tools/forgeCLI tools/forgeCLI
+COPY tools tools
 COPY tsconfig.json /app/tsconfig.json
 
 # Create a Docker-specific package.json with only needed workspaces
-RUN echo '{"workspaces": ["./shared", "./packages/*", "./apps/*", "./server", "./tools/forgeCLI"], "scripts": {"forge": "bun run tools/forgeCLI/src/index.ts"}}' > package.json
+RUN echo '{"workspaces": ["./shared", "./packages/*", "./apps/*", "./server", "./tools"], "scripts": {"forge": "bun run tools/src/index.ts"}}' > package.json
 
 # Install all dependencies with cache mount for faster rebuilds
 RUN --mount=type=cache,target=/root/.bun/install/cache \

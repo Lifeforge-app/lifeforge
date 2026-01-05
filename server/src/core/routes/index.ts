@@ -5,7 +5,7 @@ import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 
-import appRoutes from './app.routes'
+import appRoutes from '../../generated/routes'
 import coreRoutes from './core.routes'
 
 const router = express.Router()

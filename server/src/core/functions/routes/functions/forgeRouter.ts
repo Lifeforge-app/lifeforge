@@ -71,15 +71,18 @@ function registerRoutes<T extends RouterInput>(
 
   function registerRoutesRecursive(routes: RouterInput, router: Router): void {
     for (const [route, controller] of Object.entries(routes)) {
+      const finalRoute = route.replace(/\$/g, '__')
+
       if (controller instanceof ForgeControllerBuilder) {
-        controller.register(router, route)
+        controller.register(router, finalRoute)
       } else if (isRouter(controller)) {
-        router.use(`/${route}`, controller)
+        router.use(`/${finalRoute}`, controller)
       } else if (typeof controller === 'object' && controller !== null) {
         const nestedRouter = Router()
 
         registerRoutesRecursive(controller as RouterInput, nestedRouter)
-        router.use(`/${route}`, nestedRouter)
+
+        router.use(`/${finalRoute}`, nestedRouter)
       } else {
         console.warn(
           `Skipping route ${route}: not a valid controller, router, or nested object`

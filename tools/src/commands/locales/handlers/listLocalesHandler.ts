@@ -1,0 +1,24 @@
+import Logging from '@/utils/logging'
+
+import { listLocalesWithMeta } from '../functions/listLocales'
+
+export function listLocalesHandler(): void {
+  const locales = listLocalesWithMeta()
+
+  if (locales.length === 0) {
+    Logging.info('No language packs installed')
+    Logging.info(
+      'Use "bun forge locales install <lang>" to install a language pack'
+    )
+
+    return
+  }
+
+  Logging.info(`Installed language packs (${locales.length}):`)
+
+  for (const locale of locales.sort((a, b) => a.name.localeCompare(b.name))) {
+    Logging.print(
+      `  ${Logging.highlight(locale.name)} - ${locale.displayName} (v.${locale.version})`
+    )
+  }
+}

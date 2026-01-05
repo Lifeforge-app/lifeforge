@@ -18,8 +18,7 @@ pocketbase
 pb_*/
 medium
 .temp
-server/src/core/routes/app.routes.ts
-server/src/core/schema.ts
+server/src/generated
 
 # system files
 Thumbs.db
@@ -52,3 +51,4 @@ env/*
 !env/.env.example
 !env/.env.docker.example
 keys
+
