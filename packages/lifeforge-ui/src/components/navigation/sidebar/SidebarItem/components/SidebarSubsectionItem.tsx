@@ -65,11 +65,7 @@ function SidebarSubsectionItem({
 
       {sidebarExpanded && (
         <span className="w-full truncate pr-4">
-          {t(
-            `apps.${_.camelCase(label.toString())}.subsections.${_.camelCase(
-              subsectionLabel
-            )}`
-          )}
+          {t(`apps.${label}.subsections.${_.camelCase(subsectionLabel)}`)}
         </span>
       )}
     </Link>
