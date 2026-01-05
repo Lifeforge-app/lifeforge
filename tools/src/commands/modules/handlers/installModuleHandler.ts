@@ -7,44 +7,55 @@ import Logging from '@/utils/logging'
 import { checkPackageExists } from '@/utils/registry'
 
 import normalizePackage from '../../../utils/normalizePackage'
+import initGitRepository from '../../../utils/initGitRepository'
+import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
-import generateServerRegistry from '../functions/registry/generateServerRegistry'
 
-export async function installModuleHandler(moduleName: string): Promise<void> {
-  const { fullName, shortName, targetDir } = normalizePackage(moduleName)
+export async function installModuleHandler(
+  moduleNames: string[]
+): Promise<void> {
+  const installed: string[] = []
 
-  if (fs.existsSync(targetDir)) {
-    Logging.actionableError(
-      `Module already exists at apps/${shortName}`,
-      `Remove it first with: bun forge modules remove ${shortName}`
-    )
+  for (const moduleName of moduleNames) {
+    const { fullName, shortName, targetDir } = normalizePackage(moduleName)
 
-    return
+    if (fs.existsSync(targetDir)) {
+      Logging.actionableError(
+        `Module already exists at apps/${shortName}`,
+        `Remove it first with: bun forge modules remove ${shortName}`
+      )
+      continue
+    }
+
+    if (!(await checkPackageExists(fullName))) {
+      Logging.actionableError(
+        `Module ${Logging.highlight(fullName)} does not exist`,
+        `Check the module name and try again`
+      )
+      continue
+    }
+
+    Logging.info(`Installing ${Logging.highlight(fullName)}...`)
+    installPackage(fullName, targetDir)
+    initGitRepository(targetDir)
+    installed.push(moduleName)
+    Logging.success(`Installed ${Logging.highlight(fullName)}`)
   }
 
-  if (!(await checkPackageExists(fullName))) {
-    Logging.actionableError(
-      `Module ${Logging.highlight(fullName)} does not exist`,
-      `Check the module name and try again`
-    )
-
+  if (installed.length === 0) {
     return
   }
-
-  Logging.info(`Installing ${Logging.highlight(fullName)}...`)
-
-  installPackage(fullName, targetDir)
 
   Logging.info('Regenerating registries...')
-
-  generateServerRegistry()
-
+  generateRouteRegistry()
   generateSchemaRegistry()
 
-  if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
-    Logging.info('Generating database migrations...')
-    generateMigrationsHandler(moduleName)
-  }
+  for (const moduleName of installed) {
+    const { targetDir } = normalizePackage(moduleName)
 
-  Logging.success(`Installed ${Logging.highlight(fullName)}`)
+    if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
+      Logging.info(`Generating database migrations for ${moduleName}...`)
+      generateMigrationsHandler(moduleName)
+    }
+  }
 }
