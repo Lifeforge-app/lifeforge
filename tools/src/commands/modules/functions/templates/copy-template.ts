@@ -2,10 +2,9 @@ import fs from 'fs'
 import Handlebars from 'handlebars'
 import _ from 'lodash'
 
-import {
-  AVAILABLE_TEMPLATE_MODULE_TYPES,
-  ROOT_DIR
-} from '../../../../constants/constants'
+import { ROOT_DIR } from '@/constants/constants'
+
+import type { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../handlers/createModuleHandler'
 
 export type ModuleMetadata = {
   moduleName: {
