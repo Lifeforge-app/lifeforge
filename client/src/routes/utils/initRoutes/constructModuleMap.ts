@@ -58,8 +58,6 @@ function resolveFiles(
 export default function constructModuleMap() {
   const { packageJsonFiles, manifestFiles } = scanModuleFiles()
 
-  console.log(packageJsonFiles)
-
   const moduleMap = new Map<string, Partial<ModuleFiles>>()
 
   resolveFiles(moduleMap, 'packageJson', packageJsonFiles)
