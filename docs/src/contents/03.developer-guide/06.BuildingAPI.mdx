@@ -42,7 +42,12 @@ import z from 'zod'
 
 const myHandler = forgeController
   .query()
-  .description("This is a sample query handler")
+  .description({
+    en: "This is a sample query handler",
+    ms: "Ini adalah pengendali pertanyaan sampel",
+    'zh-CN': '这是一个示例查询处理程序',
+    'zh-TW': '這是一個範例查詢處理程式'
+  })
   .input({
     query: z.object({
       name: z.string()
@@ -304,10 +309,15 @@ The core logic of the API handler is defined in the `.callback()` method. This m
 - `io`: The Socket.IO server instance, which can be used to emit
   events to connected clients. See [Real-time
   Features](/developer-guide/real-time-features) for more information.
+- `userData`: The authenticated user's data from PocketBase (available for authenticated endpoints).
 - `req, res`: The original Express.js request and response objects,
   which can be used for advanced use cases.
 
 If you have defined the input schema using the `.input()` method, the `query` and `body` properties will be automatically typed based on the schema. This ensures that you have type safety throughout the entire request handling process. Same can be said for the `media` property if you have defined the media fields using the `.media()` method.
+
+<Alert className="mt-6" type="note">
+  The `userData` property contains the authenticated user's information, including their `id`, `username`, `email`, and other PocketBase user fields. This is available for all authenticated endpoints (i.e., those that don't use `.noAuth()`).
+</Alert>
 
 Here is an example of a complete API handler that demonstrates the usage of the `.callback()` method:
 
@@ -338,6 +348,110 @@ const createUser = forgeController
   });
 ```
 
+### Multiple File Uploads
+
+To accept multiple files for a single field, set `multiple: true` in the media configuration:
+
+```typescript
+const createWithAttachments = forgeController
+  .mutation()
+  .description("Create item with multiple attachments")
+  .input({
+    body: z.object({
+      name: z.string()
+    })
+  })
+  .media({
+    cover: { optional: true },
+    attachments: { optional: true, multiple: true }
+  })
+  .callback(async ({ body, media, pb }) => {
+    return pb.create
+      .collection('items')
+      .data({
+        ...body,
+        ...(await getMedia('cover', media.cover)),
+        ...(await getMedia('attachments', media.attachments))
+      })
+      .execute();
+  });
+```
+</section>
+
+<section id="error-handling">
+## Error Handling
+
+Errors thrown inside the `.callback()` function are automatically caught and handled by the `forgeController`. You don't need to wrap your code in try-catch blocks for most cases.
+
+### Default Behavior
+
+If you throw a standard JavaScript `Error`, the API will return a `500 Internal Server Error`:
+
+```typescript
+const myHandler = forgeController
+  .query()
+  .callback(async () => {
+    throw new Error("Something went wrong")
+    // Returns: 500 Internal Server Error
+    // Response: { state: "error", message: "Internal server error" }
+  })
+```
+
+### ClientError for Controlled Errors
+
+For client-side errors (bad requests, not found, unauthorized, etc.), use the `ClientError` class:
+
+```typescript
+import { ClientError } from '@functions/routes/utils/response'
+
+const getItem = forgeController
+  .query()
+  .input({
+    query: z.object({ id: z.string() })
+  })
+  .callback(async ({ pb, query }) => {
+    const item = await pb.getOne.collection('items').id(query.id).execute()
+    
+    if (!item) {
+      throw new ClientError("Item not found", 404)
+    }
+    
+    if (item.isPrivate) {
+      throw new ClientError("You don't have permission to view this item", 403)
+    }
+    
+    return item
+  })
+```
+
+### ClientError Signature
+
+```typescript
+class ClientError extends Error {
+  constructor(message: string, code: number = 400)
+}
+```
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `message` | `string` | (required) | Error message returned to the client |
+| `code` | `number` | `400` | HTTP status code |
+
+### Common Status Codes
+
+| Code | Name | Use Case |
+|------|------|----------|
+| `400` | Bad Request | Invalid input that passed Zod validation |
+| `401` | Unauthorized | Authentication required |
+| `403` | Forbidden | Insufficient permissions |
+| `404` | Not Found | Resource doesn't exist |
+| `409` | Conflict | Duplicate resource or state conflict |
+| `422` | Unprocessable Entity | Business logic validation failure |
+
+<Alert className="mt-6" type="tip">
+  Use `ClientError` for all expected error conditions that the client should handle. Reserve standard `Error` throws for truly unexpected situations (bugs, external service failures, etc.).
+</Alert>
+
 </section>
 
 <section id="miscellaneous-methods">
@@ -348,7 +462,19 @@ In addition to the core methods mentioned above, there are some other useful met
 - `.description()`: This method is used to provide a brief
   description of the API handler. This description is used in the auto-generated
   API documentation and can be helpful for understanding the purpose of the
-  handler.
+  handler. It can accept either a plain string or an object with localized descriptions:
+  ```typescript
+  // Simple string
+  .description("Get all items")
+  
+  // Localized object
+  .description({
+    en: "Get all items",
+    ms: "Dapatkan semua item",
+    'zh-CN': '获取所有项目',
+    'zh-TW': '獲取所有項目'
+  })
+  ```
 
 - `.noAuth()`: By default, all API handlers require authentication.
   This method can be used to disable authentication for public endpoints, such

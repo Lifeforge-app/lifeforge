@@ -1,0 +1,877 @@
+import { Alert } from "lifeforge-ui"
+
+###### Using API
+
+# Consuming APIs in Your Frontend
+
+This guide covers how to use `forgeAPI` to make type-safe API calls from your module's frontend. Inspired by [tRPC](https://trpc.io), the `forgeAPI` system is designed to work seamlessly with [React Query](https://tanstack.com/query), providing a chainable, ergonomic interface for all your data fetching needs.
+
+---
+
+<section id="how-it-works">
+## How It Works
+
+### Type Inference from Server
+
+The `forgeAPI` system provides **end-to-end type safety** by inferring types directly from your server's route definitions. When you build an API endpoint using `forgeController` on the server, the input/output types are automatically available on the client – no manual type definitions required.
+
+**On the server**, you define endpoints with Zod schemas:
+
+```typescript
+// server/routes/items.ts
+const create = forgeController
+  .mutation()
+  .input({
+    body: z.object({
+      name: z.string(),
+      amount: z.number(),
+      description: z.string().optional()
+    })
+  })
+  .callback(async ({ body }) => {
+    return createItem(body)  // Returns Item
+  })
+```
+
+**On the client**, the types are automatically available:
+
+```typescript
+// client/components/CreateItem.tsx
+forgeAPI.myModule.items.create
+  .mutate({
+    name: 'New Item',           // ✅ TypeScript knows this is required
+    amount: 100,                // ✅ TypeScript knows this is a number
+    description: 'Optional'     // ✅ TypeScript knows this is optional
+  })
+
+// Extract types for reuse
+type CreateItemInput = InferInput<typeof forgeAPI.myModule.items.create>['body']
+type Item = InferOutput<typeof forgeAPI.myModule.items.create>
+```
+
+### Route Proxy System
+
+The `forgeAPI` client uses a **JavaScript Proxy** that mirrors your server's route structure exactly. Each property you chain corresponds to a segment in the API path:
+
+```plaintext
+forgeAPI.wallet.assets.list.query()
+         │      │      │     └── Method: GET request
+         │      │      └──────── Endpoint: list
+         │      └─────────────── Resource: assets
+         └────────────────────── Module: wallet
+
+→ GET /wallet/assets/list
+```
+
+| What You Write | What It Calls |
+|----------------|---------------|
+| `forgeAPI.wallet.assets.list.query()` | `GET /wallet/assets/list` |
+| `forgeAPI.calendar.events.create.mutate(data)` | `POST /calendar/events/create` |
+| `forgeAPI.myModule.items.get.input({ id: '123' }).query()` | `GET /myModule/items/get?id=123` |
+
+This provides **full autocomplete** as you type – TypeScript knows exactly which routes exist and what methods are available at each level.
+
+</section>
+
+<section id="setting-up-forge-api">
+## Setting Up forgeAPI
+
+Every module needs its own `forgeAPI.ts` file to enable type-safe API calls. Create this file in your module's `client/utils/` directory:
+
+```typescript
+// apps/<your-module>/client/utils/forgeAPI.ts
+import { type AppRoutes } from '@server/core/routes/routes.type'
+import { createForgeAPIClient } from 'shared'
+
+if (!import.meta.env.VITE_API_HOST) {
+  throw new Error('VITE_API_HOST is not defined')
+}
+
+const forgeAPI = createForgeAPIClient<AppRoutes>(import.meta.env.VITE_API_HOST)
+
+export default forgeAPI
+```
+
+This creates a fully-typed API client that mirrors your server's route structure. You can now import and use it anywhere in your module:
+
+```typescript
+import forgeAPI from '@/utils/forgeAPI'
+```
+
+</section>
+
+<section id="fetching-data-with-queries">
+## Fetching Data with Queries
+
+LifeForge provides two wrapper components from `lifeforge-ui` that handle loading and error states automatically. **Always prefer these over manual `useQuery` calls.**
+
+### Using WithQueryData (Recommended)
+
+`WithQueryData` is the simplest way to fetch and display data. It handles loading spinners, error screens, and type inference automatically:
+
+```tsx
+import forgeAPI from '@/utils/forgeAPI'
+import { WithQueryData } from 'lifeforge-ui'
+
+function ItemList() {
+  return (
+    <WithQueryData controller={forgeAPI.myModule.items.list}>
+      {items => (
+        <ul>
+          {items.map(item => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      )}
+    </WithQueryData>
+  )
+}
+```
+
+### WithQueryData with Parameters
+
+Pass query parameters using `.input()`:
+
+```tsx
+function EventList({ startDate, endDate }: { startDate: string; endDate: string }) {
+  return (
+    <WithQueryData
+      controller={forgeAPI.calendar.events.getByDateRange.input({
+        start: startDate,
+        end: endDate
+      })}
+    >
+      {events => (
+        <div>
+          {events.map(event => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </div>
+      )}
+    </WithQueryData>
+  )
+}
+```
+
+### WithQueryData Options
+
+Customize behaviour with additional props:
+
+```tsx
+<WithQueryData
+  controller={forgeAPI.myModule.items.list}
+  queryOptions={{ enabled: isReady }}  // React Query options
+  showLoading={true}           // Show loading spinner (default: true)
+  showRetryButton={true}       // Show retry button on error (default: true)
+  loaderSize="lg"              // Loader size
+  loaderClassName="min-h-64"   // Custom loader container class
+>
+  {items => /* render items */}
+</WithQueryData>
+```
+
+### Using WithQuery
+
+Use `WithQuery` when you need to:
+- Access query state (e.g., `isRefetching`, `refetch`)
+- Transform or filter data before rendering
+- Access data outside the render function
+
+```tsx
+import forgeAPI from '@/utils/forgeAPI'
+import { useQuery } from '@tanstack/react-query'
+import { WithQuery } from 'lifeforge-ui'
+
+function ItemListWithRefresh() {
+  const query = useQuery(forgeAPI.myModule.items.list.queryOptions())
+
+  return (
+    <div>
+      <button onClick={() => query.refetch()}>
+        {query.isRefetching ? 'Refreshing...' : 'Refresh'}
+      </button>
+      <WithQuery query={query}>
+        {items => (
+          <ul>
+            {items.map(item => (
+              <li key={item.id}>{item.name}</li>
+            ))}
+          </ul>
+        )}
+      </WithQuery>
+    </div>
+  )
+}
+```
+
+### Raw useQuery (When Necessary)
+
+For cases where you need full control without wrapper components:
+
+```tsx
+import forgeAPI from '@/utils/forgeAPI'
+import { useQuery } from '@tanstack/react-query'
+
+function MyComponent() {
+  const { data, isLoading, error } = useQuery(
+    forgeAPI.myModule.items.list.queryOptions()
+  )
+
+  if (isLoading) return <LoadingScreen />
+  if (error) return <ErrorScreen message={error.message} />
+
+  return (
+    <ul>
+      {data?.map(item => (
+        <li key={item.id}>{item.name}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+<Alert className="mt-6" type="tip">
+  Use `WithQueryData` for simple data fetching. Use `WithQuery` when you need access to the query object. Use raw `useQuery` only when you need complete control over rendering.
+</Alert>
+
+</section>
+
+<section id="modifying-data-with-mutations">
+## Modifying Data with Mutations
+
+To create, update, or delete data, use `useMutation` with `.mutationOptions()`:
+
+### Basic Mutation
+
+```typescript
+import forgeAPI from '@/utils/forgeAPI'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-toastify'
+
+function CreateItemButton() {
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(
+    forgeAPI.myModule.items.create.mutationOptions({
+      onSuccess: () => {
+        // Invalidate and refetch the list
+        queryClient.invalidateQueries({ queryKey: ['myModule', 'items'] })
+        toast.success('Item created!')
+      },
+      onError: (error) => {
+        toast.error(`Failed to create: ${error.message}`)
+      }
+    })
+  )
+
+  const handleCreate = () => {
+    mutation.mutate({
+      name: 'New Item',
+      description: 'A new item'
+    })
+  }
+
+  return (
+    <button onClick={handleCreate} disabled={mutation.isPending}>
+      {mutation.isPending ? 'Creating...' : 'Create Item'}
+    </button>
+  )
+}
+```
+
+### Mutation with Query Parameters
+
+For endpoints that require both query parameters and a body (like update endpoints), chain `.input()` before `.mutationOptions()`:
+
+```typescript
+function UpdateItem({ itemId }: { itemId: string }) {
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(
+    forgeAPI.myModule.items.update
+      .input({ id: itemId })  // Query parameter
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['myModule', 'items'] })
+        }
+      })
+  )
+
+  const handleUpdate = (newData: { name: string }) => {
+    mutation.mutate(newData)  // Body parameter
+  }
+
+  // ...
+}
+```
+
+### Delete Mutation
+
+```typescript
+const deleteMutation = useMutation(
+  forgeAPI.myModule.items.remove
+    .input({ id: itemId })
+    .mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['myModule', 'items'] })
+        toast.success('Item deleted')
+      }
+    })
+)
+
+// Usage
+deleteMutation.mutate({})  // Empty body for delete
+```
+
+</section>
+
+<section id="the-create-update-pattern">
+## The Create/Update Pattern
+
+A common pattern is having a single modal component that handles both creating and updating. Here's how to implement it:
+
+```typescript
+import forgeAPI from '@/utils/forgeAPI'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import type { InferInput } from 'shared'
+
+function ModifyItemModal({
+  type,  // 'create' | 'update'
+  initialData,  // Existing item data for updates
+  onClose
+}: {
+  type: 'create' | 'update'
+  initialData?: Item
+  onClose: () => void
+}) {
+  const queryClient = useQueryClient()
+
+  // Dynamically select the controller based on type
+  const mutation = useMutation(
+    (type === 'create'
+      ? forgeAPI.myModule.items.create
+      : forgeAPI.myModule.items.update.input({ id: initialData?.id || '' })
+    ).mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['myModule', 'items'] })
+        onClose()
+      }
+    })
+  )
+
+  const handleSubmit = (data: FormData) => {
+    mutation.mutate(data)
+  }
+
+  // ... form UI
+}
+```
+
+</section>
+
+<section id="type-inference">
+## Type Inference
+
+The `forgeAPI` system provides powerful type inference. Use `InferInput` and `InferOutput` to extract types from your endpoints:
+
+### Inferring Response Types
+
+```typescript
+import forgeAPI from '@/utils/forgeAPI'
+import type { InferOutput } from 'shared'
+
+// Infer the type of a single item from a list endpoint
+type Item = InferOutput<typeof forgeAPI.myModule.items.list>[number]
+
+// Use in your component
+function ItemCard({ item }: { item: Item }) {
+  return <div>{item.name}</div>
+}
+```
+
+### Inferring Request Body Types
+
+```typescript
+import type { InferInput } from 'shared'
+
+// Infer the body type for create/update endpoints
+type CreateItemBody = InferInput<typeof forgeAPI.myModule.items.create>['body']
+type UpdateItemBody = InferInput<typeof forgeAPI.myModule.items.update>['body']
+
+// Dynamic type based on operation
+type ItemFormData = InferInput<
+  (typeof forgeAPI.myModule.items)[typeof type]
+>['body']
+```
+
+### Inferring Query Parameter Types
+
+```typescript
+type QueryParams = InferInput<typeof forgeAPI.myModule.items.list>['query']
+```
+
+</section>
+
+<section id="cache-management">
+## Cache Management
+
+### Using the Cache Key
+
+Every endpoint has a `.key` property that returns the React Query cache key:
+
+```typescript
+// Get the cache key for invalidation
+const cacheKey = forgeAPI.myModule.items.list.key
+// Returns: ['myModule', 'items', 'list']
+
+// Invalidate all queries for this endpoint
+queryClient.invalidateQueries({ queryKey: cacheKey })
+```
+
+### Manual Cache Key in Options
+
+You can also specify a custom query key:
+
+```typescript
+const { data } = useQuery(
+  forgeAPI.myModule.items.list.queryOptions({
+    queryKey: forgeAPI.myModule.items.list.key  // Explicit key
+  })
+)
+```
+
+### Invalidating After Mutations
+
+Always invalidate related queries after mutations:
+
+```typescript
+const mutation = useMutation(
+  forgeAPI.myModule.items.create.mutationOptions({
+    onSuccess: () => {
+      // Invalidate the list query
+      queryClient.invalidateQueries({
+        queryKey: forgeAPI.myModule.items.list.key
+      })
+      
+      // Or invalidate all queries in the module
+      queryClient.invalidateQueries({
+        queryKey: ['myModule']
+      })
+    }
+  })
+)
+```
+
+</section>
+
+<section id="direct-api-calls">
+## Direct API Calls
+
+Sometimes you need to make API calls outside of React Query (e.g., in event handlers, form submissions, or utilities). Use `.query()` and `.mutate()` directly:
+
+### Direct Query Call
+
+```typescript
+async function fetchItemDetails(id: string) {
+  const item = await forgeAPI.myModule.items.get
+    .input({ id })
+    .query()
+  
+  return item
+}
+```
+
+### Direct Mutation Call
+
+```typescript
+async function updateItem(id: string, data: UpdateData) {
+  const result = await forgeAPI.myModule.items.update
+    .input({ id })
+    .mutate(data)
+  
+  return result
+}
+```
+
+### In Event Handlers
+
+```typescript
+const handleDragEnd = async (event: DragEvent) => {
+  const { id, newPosition } = extractFromEvent(event)
+  
+  await forgeAPI.calendar.events.update
+    .input({ id })
+    .mutate({ position: newPosition })
+  
+  // Manually refetch after direct call
+  queryClient.invalidateQueries({ queryKey: ['calendar', 'events'] })
+}
+```
+
+</section>
+
+<section id="file-uploads">
+## File Uploads
+
+The `forgeAPI` system automatically handles file uploads. Just pass `File` objects in your mutation data:
+
+### Single File Upload
+
+```typescript
+function UploadForm() {
+  const mutation = useMutation(
+    forgeAPI.myModule.items.create.mutationOptions()
+  )
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    const formData = new FormData(e.target as HTMLFormElement)
+    const file = formData.get('cover') as File
+
+    mutation.mutate({
+      name: 'My Item',
+      cover: file  // File object passed directly
+    })
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="file" name="cover" />
+      <button type="submit">Upload</button>
+    </form>
+  )
+}
+```
+
+### Multiple File Uploads
+
+```typescript
+mutation.mutate({
+  name: 'My Gallery',
+  attachments: fileList  // Array of File objects
+})
+```
+
+### Keep, Remove, or Replace Files
+
+When updating records with existing files:
+
+```typescript
+mutation.mutate({
+  name: 'Updated Item',
+  cover: 'keep',        // Keep the existing file
+  // OR
+  cover: 'remove',      // Remove the existing file
+  // OR
+  cover: newFile        // Replace with a new file
+})
+```
+
+<Alert className="mt-6" type="note">
+  File uploads automatically use unencrypted mode since FormData cannot be encrypted. This is handled transparently by the API client.
+</Alert>
+
+</section>
+
+<section id="serving-media-files">
+## Serving Media Files
+
+To display images or other media stored in PocketBase, use the `.endpoint` property to get the URL:
+
+```typescript
+import forgeAPI from '@/utils/forgeAPI'
+
+function ItemImage({ item }: { item: Item }) {
+  const imageUrl = forgeAPI.media
+    .input({
+      collection: 'myModule__items',
+      field: 'cover',
+      entry: item.id
+    })
+    .endpoint
+
+  return <img src={imageUrl} alt={item.name} />
+}
+```
+
+### With Thumbnails
+
+```typescript
+const thumbnailUrl = forgeAPI.media
+  .input({
+    collection: 'myModule__items',
+    field: 'cover',
+    entry: item.id,
+    thumb: '200x200'  // Thumbnail size
+  })
+  .endpoint
+```
+
+<Alert className="mt-6" type="important">
+  Thumbnail sizes must be configured in the PocketBase file field settings. Go to your collection in the PocketBase admin dashboard, edit the file field, and add your desired thumbnail sizes (e.g., `200x200`, `100x100`) in the "Thumb sizes" option. Only configured sizes will work.
+</Alert>
+
+</section>
+
+<section id="context-provider-pattern">
+## Context Provider Pattern
+
+For modules with shared data, create a provider that fetches data once and shares it:
+
+```typescript
+// providers/MyModuleProvider.tsx
+import forgeAPI from '@/utils/forgeAPI'
+import { useQuery } from '@tanstack/react-query'
+import { createContext, useContext } from 'react'
+import type { InferOutput } from 'shared'
+
+type Item = InferOutput<typeof forgeAPI.myModule.items.list>[number]
+
+interface MyModuleContextType {
+  items: Item[]
+  isLoading: boolean
+}
+
+const MyModuleContext = createContext<MyModuleContextType | null>(null)
+
+export function MyModuleProvider({ children }: { children: React.ReactNode }) {
+  const { data: items = [], isLoading } = useQuery(
+    forgeAPI.myModule.items.list.queryOptions()
+  )
+
+  return (
+    <MyModuleContext.Provider value={{ items, isLoading }}>
+      {children}
+    </MyModuleContext.Provider>
+  )
+}
+
+export function useMyModule() {
+  const context = useContext(MyModuleContext)
+  if (!context) {
+    throw new Error('useMyModule must be used within MyModuleProvider')
+  }
+  return context
+}
+```
+
+Then use it in your module's manifest:
+
+```typescript
+// manifest.ts
+export default {
+  routes: { /* ... */ },
+  provider: lazy(() => import('./client/providers/MyModuleProvider'))
+} satisfies ModuleConfig
+```
+
+</section>
+
+<section id="creating-custom-data-hooks">
+## Creating Custom Data Hooks
+
+Encapsulate your data fetching logic in custom hooks:
+
+```typescript
+// hooks/useItems.ts
+import forgeAPI from '@/utils/forgeAPI'
+import { useQuery } from '@tanstack/react-query'
+import type { InferOutput } from 'shared'
+
+export type Item = InferOutput<typeof forgeAPI.myModule.items.list>[number]
+
+export function useItems(options?: { enabled?: boolean }) {
+  return useQuery(
+    forgeAPI.myModule.items.list.queryOptions({
+      enabled: options?.enabled
+    })
+  )
+}
+
+export function useItem(id: string) {
+  return useQuery(
+    forgeAPI.myModule.items.get
+      .input({ id })
+      .queryOptions({
+        enabled: !!id
+      })
+  )
+}
+```
+
+Usage:
+
+```typescript
+function MyComponent() {
+  const { data: items, isLoading } = useItems()
+  // ...
+}
+```
+
+</section>
+
+<section id="error-handling">
+## Error Handling
+
+### Automatic Handling with WithQueryData/WithQuery
+
+The `WithQueryData` and `WithQuery` components handle errors automatically by displaying an `ErrorScreen` with a retry button:
+
+```tsx
+<WithQueryData controller={forgeAPI.myModule.items.list}>
+  {items => /* This only renders when data is available */}
+</WithQueryData>
+// Error screen is shown automatically if the query fails
+```
+
+### Manual Error Handling with useQuery
+
+If you need custom error handling, use raw `useQuery`:
+
+### In Mutation Callbacks
+
+```typescript
+const mutation = useMutation(
+  forgeAPI.myModule.items.create.mutationOptions({
+    onError: (error) => {
+      // error.message contains the server's error message
+      toast.error(error.message)
+    }
+  })
+)
+```
+
+### In Direct Calls
+
+```typescript
+try {
+  const result = await forgeAPI.myModule.items.create.mutate(data)
+} catch (error) {
+  if (error instanceof Error) {
+    console.error('API Error:', error.message)
+  }
+}
+```
+
+</section>
+
+<section id="accessing-untyped-endpoints">
+## Accessing Untyped Endpoints
+
+For endpoints not defined in your API schema (e.g., external APIs or dynamic routes), use `.untyped()`:
+
+```typescript
+const result = await forgeAPI
+  .untyped<ResponseType, BodyType, QueryType>('/custom/endpoint')
+  .input({ param: 'value' })
+  .query()
+```
+
+<Alert className="mt-6" type="caution">
+  Using `.untyped()` bypasses type checking. Prefer defining proper types on the server whenever possible.
+</Alert>
+
+</section>
+
+<section id="quick-reference">
+## Quick Reference
+
+### Query Methods
+
+| Method | Description |
+|--------|-------------|
+| `.input(params)` | Set query parameters |
+| `.queryOptions(opts?)` | Get React Query options for `useQuery` |
+| `.query()` | Execute GET request directly |
+| `.key` | Get the cache key array |
+| `.endpoint` | Get the full URL |
+
+### Mutation Methods
+
+| Method | Description |
+|--------|-------------|
+| `.input(params)` | Set query parameters |
+| `.mutationOptions(opts?)` | Get React Query options for `useMutation` |
+| `.mutate(body)` | Execute POST request directly |
+
+### Type Utilities
+
+| Type | Description |
+|------|-------------|
+| `InferInput<T>` | Extract `{ body, query }` types from endpoint |
+| `InferOutput<T>` | Extract response type from endpoint |
+
+</section>
+
+<section id="best-practices">
+## Best Practices
+
+### 1. Always Use Type Inference
+
+Don't manually type your data. Let TypeScript infer types from the API:
+
+```typescript
+// ✅ Good
+type Item = InferOutput<typeof forgeAPI.myModule.items.list>[number]
+
+// ❌ Bad - manually duplicating types
+interface Item {
+  id: string
+  name: string
+  // ...
+}
+```
+
+### 2. Invalidate Related Queries
+
+After mutations, always invalidate queries that might be affected:
+
+```typescript
+// ✅ Good - invalidate related data
+onSuccess: () => {
+  queryClient.invalidateQueries({ queryKey: ['myModule', 'items'] })
+  queryClient.invalidateQueries({ queryKey: ['myModule', 'stats'] })
+}
+```
+
+### 3. Use Custom Hooks
+
+Encapsulate data fetching logic in reusable hooks:
+
+```typescript
+// ✅ Good
+const { data } = useItems()
+
+// ❌ Bad - repeating query logic everywhere
+const { data } = useQuery(forgeAPI.myModule.items.list.queryOptions())
+```
+
+### 4. Use WithQueryData for Simple Queries
+
+Always prefer the wrapper components over manual loading/error handling:
+
+```tsx
+// ✅ Good - automatic loading and error states
+<WithQueryData controller={forgeAPI.myModule.items.list}>
+  {items => <ItemList items={items} />}
+</WithQueryData>
+
+// ❌ Bad - manual boilerplate
+const { data, isLoading, error } = useQuery(...)
+if (isLoading) return <LoadingSkeleton />
+if (error) return <ErrorMessage error={error} />
+```
+
+### 5. Use the Cache Key Property
+
+Use `.key` for consistent cache management:
+
+```typescript
+// ✅ Good - uses the same key as the query
+queryClient.invalidateQueries({ queryKey: forgeAPI.myModule.items.list.key })
+
+// ❌ Bad - manually constructed, might not match
+queryClient.invalidateQueries({ queryKey: ['myModule', 'items', 'list'] })
+```
+
+</section>
