@@ -14,9 +14,10 @@
   "type": "module",
   "main": "./dist/server.js",
   "scripts": {
+    "build:shared": "cd ../shared && bun run build",
     "dev": "echo \"PLEASE USE \"bun forge dev\" INSTEAD\"",
-    "types": "bun run tsc -b",
-    "build": "bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
+    "types": "bun build:shared && bun run tsc -b",
+    "build": "bun build:shared && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "start": "NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "vitest",
