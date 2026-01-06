@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+@import "tailwindcss";
+@import 'lifeforge-ui/dist/index.css';
+@source '../../packages/lifeforge-ui/dist';
+
+@plugin "daisyui";
+
+@theme {
+  --font-sans: "Onest", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  color-scheme: dark;
+  --custom-font-scale: 1 !important;
+}
+
+body {
+    @apply bg-base-100 text-base-content min-h-screen font-sans antialiased;
+}
