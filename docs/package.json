@@ -13,9 +13,12 @@
   },
   "type": "module",
   "scripts": {
+    "build:shared": "cd ../shared && bun run build",
+    "build:ui": "cd ../packages/lifeforge-ui && bun run build",
+    "prebuild": "bun run build:shared && bun run build:ui",
     "dev": "vite",
     "types": "tsc -b",
-    "build": "cd ../shared && bun run build && cd ../packages/lifeforge-ui && bun run build && cd ../../docs && tsc && vite build",
+    "build": "bun run prebuild && tsc && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
