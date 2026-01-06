@@ -29,8 +29,7 @@ interface TagChipProps {
 const CLASSNAMES_WITHOUT_COLOR = {
   outlined:
     'text-bg-500 dark:text-bg-400 border-bg-200 dark:border-bg-700/50 component-bg-lighter bg-bg-50',
-  filled:
-    'bg-bg-600 dark:bg-bg-400 dark:text-bg-900 text-bg-100 border-transparent'
+  filled: 'bg-bg-200 dark:bg-bg-800 dark:text-bg-500 border-transparent'
 }
 
 /**
@@ -55,7 +54,7 @@ function TagChip({
   return (
     <span
       className={clsx(
-        'flex-center shadow-custom shrink-0 gap-1 rounded-full border px-3 py-1 text-sm whitespace-nowrap!',
+        'flex-center shrink-0 gap-1 rounded-full border px-3 py-1 text-sm whitespace-nowrap!',
         color === undefined && CLASSNAMES_WITHOUT_COLOR[variant],
         onClick !== undefined &&
           'cursor-pointer transition-all hover:brightness-120',
