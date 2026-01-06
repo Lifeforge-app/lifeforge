@@ -8,22 +8,14 @@ ARG VITE_API_HOST
 WORKDIR /app
 
 # Copy all source code
-COPY bun.lock bun.lock
-COPY client client
-COPY server server
-COPY shared shared
-COPY packages packages
-COPY apps apps
-COPY tsconfig.json tsconfig.json
-
-# Create a Docker-specific package.json with only needed workspaces
-RUN echo '{"workspaces": ["./shared", "./packages/*", "./apps/*", "./server", "./client"]}' > package.json
+COPY . .
 
 # Install all dependencies with cache mount for faster rebuilds
 RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install --ignore-scripts --linker isolated
 
-# Build packages in order
+# Generate module registry
+RUN bun forge modules gen-registry
 RUN cd client && bun run build
 
 # Production stage - serve static files
