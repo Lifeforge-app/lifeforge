@@ -23,6 +23,7 @@ COPY shared shared
 COPY packages packages
 COPY apps apps
 COPY tools tools
+COPY locales locales
 COPY tsconfig.json /app/tsconfig.json
 
 # Create a Docker-specific package.json with only needed workspaces

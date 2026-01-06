@@ -27,7 +27,6 @@
 # Documentation
 **/README.md
 **/CHANGELOG.md
-**/docs
 
 # Docker files (not needed inside containers)
 **/Dockerfile
