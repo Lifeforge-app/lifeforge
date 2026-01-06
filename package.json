@@ -18,7 +18,8 @@
     "./packages/*",
     "./apps/*",
     "./locales/*",
-    "./tools"
+    "./tools",
+    "./stores"
   ],
   "scripts": {
     "forge": "bun run tools/src/index.ts",
