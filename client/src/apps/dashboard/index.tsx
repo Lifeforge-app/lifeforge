@@ -3,6 +3,7 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
 import DashboardGrid from './components/DashboardGrid'
+import './index.css'
 import ManageWidgetsModal from './modals/ManageWidgetsModal'
 
 function Dashboard() {

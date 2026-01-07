@@ -1,3 +1,7 @@
+@import 'tailwindcss' source ('.');
+
+@reference '../../../../packages/lifeforge-ui/dist';
+
 .react-grid-layout {
   @apply isolate;
 }
