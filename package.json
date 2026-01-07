@@ -21,7 +21,8 @@
     "./tools"
   ],
   "scripts": {
-    "forge": "bun run tools/src/index.ts"
+    "forge": "bun run tools/src/index.ts",
+    "prebuild": "bun forge modules gen-registry && bun --cwd=shared run build && bun --cwd=packages/lifeforge-ui run build"
   },
   "keywords": [
     "bun",
@@ -53,7 +54,7 @@
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.31.1"
+    "typescript-eslint": "^8.31.1",
   },
   "dependencies": {}
 }

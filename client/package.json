@@ -12,10 +12,7 @@
   },
   "type": "module",
   "scripts": {
-    "types:server": "cd ../server && bun types",
-    "build:shared": "cd ../shared && bun run build",
-    "build:ui": "cd ../packages/lifeforge-ui && bun run build",
-    "prebuild": "bun types:server && bun build:shared && bun build:ui",
+    "prebuild": "cd ../server && bun run types",
     "dev": "bun run prebuild && vite",
     "types": "tsc -b && for dir in ../apps/*/; do echo \"Running types in $dir\" && (cd \"$dir\" && bun types); done",
     "build": "bun run prebuild && tsc -b && vite build",
