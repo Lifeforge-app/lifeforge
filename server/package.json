@@ -14,16 +14,14 @@
   "type": "module",
   "main": "./dist/server.js",
   "scripts": {
-    "build:shared": "cd ../shared && bun run build",
-    "dev": "echo \"PLEASE USE \"bun forge dev\" INSTEAD\"",
-    "types": "bun build:shared && bun run tsc -b",
-    "build": "bun build:shared && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
-    "start": "NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
+    "types": "cd .. && bun run prebuild && cd server && tsc -b",
+    "build": "bun run types && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
+    "start": "cd .. && bun run prebuild && cd server && NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
+    "dev": "echo \"PLEASE USE \\\"bun forge dev\\\" INSTEAD\"",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run",
-    "schema:generate": "bun ./scripts/generateSchema.ts"
+    "test:run": "vitest run"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

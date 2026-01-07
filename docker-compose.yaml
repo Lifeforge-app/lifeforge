@@ -22,6 +22,25 @@ services:
       retries: 5
       start_period: 10s
 
+  db-init:
+    build:
+      context: .
+      dockerfile: docker/db-init/Dockerfile
+    container_name: lifeforge-db-init
+    env_file:
+      - ./env/.env.docker
+    environment:
+      - DOCKER_MODE=true
+      - PB_DIR=/pb_data
+      - PB_HOST=http://db:8090
+    volumes:
+      - ./database/pb_data:/pb_data
+      - ./apps:/app/apps
+      - ./locales:/app/locales
+    depends_on:
+      db:
+        condition: service_healthy
+
   server:
     build:
       context: .
@@ -36,20 +55,46 @@ services:
       - PB_HOST=http://db:8090
     expose:
       - "3636"
+    volumes:
+      - ./apps:/lifeforge/apps
+      - ./locales:/lifeforge/locales
     depends_on:
-      db:
-        condition: service_healthy
+      db-init:
+        condition: service_completed_successfully
+
+  client-builder:
+    build:
+      context: .
+      dockerfile: docker/client-builder/Dockerfile
+      args:
+        - VITE_API_HOST=/api
+    container_name: lifeforge-client-builder
+    environment:
+      - DOCKER_MODE=true
+      - VITE_API_HOST=/api
+    volumes:
+      - ./apps:/app/apps
+      - ./locales:/app/locales
+      - client-dist:/output
+    depends_on:
+      db-init:
+        condition: service_completed_successfully
 
   client:
     build:
       context: .
       dockerfile: docker/client/Dockerfile
-      args:
-        - VITE_API_HOST=/api
     container_name: lifeforge-client
     restart: unless-stopped
     ports:
       - "80:80"
+    volumes:
+      - client-dist:/usr/share/nginx/html
     depends_on:
-      - server
+      client-builder:
+        condition: service_completed_successfully
+      server:
+        condition: service_started
 
+volumes:
+  client-dist:
