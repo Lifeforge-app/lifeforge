@@ -30,6 +30,10 @@ export default function setup(program: Command): void {
       '<modules...>',
       'Modules to install, e.g., @lifeforge/lifeforge--calendar'
     )
+    .option(
+      '--reload',
+      'Trigger Docker container reload after installation (for Docker deployments)'
+    )
     .action(installModuleHandler)
 
   command
@@ -39,6 +43,10 @@ export default function setup(program: Command): void {
     .alias('remove')
     .description('Uninstall modules')
     .argument('<modules...>', 'Modules to uninstall, e.g., achievements')
+    .option(
+      '--reload',
+      'Trigger Docker container reload after uninstallation (for Docker deployments)'
+    )
     .action(uninstallModuleHandler)
 
   command

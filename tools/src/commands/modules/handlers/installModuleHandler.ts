@@ -2,7 +2,9 @@ import fs from 'fs'
 import path from 'path'
 
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
+import { reloadHandler } from '@/commands/docker/handlers/reloadHandler'
 import { installPackage } from '@/utils/commands'
+import { isDockerMode } from '@/utils/helpers'
 import initGitRepository from '@/utils/initGitRepository'
 import Logging from '@/utils/logging'
 import normalizePackage from '@/utils/normalizePackage'
@@ -10,6 +12,10 @@ import { checkPackageExists } from '@/utils/registry'
 
 import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
+
+interface InstallOptions {
+  reload?: boolean
+}
 
 /**
  * Installs one or more modules from the registry.
@@ -23,9 +29,11 @@ import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry
  * After installation:
  * - Regenerates route and schema registries
  * - Generates database migrations if schema.ts exists
+ * - Optionally triggers Docker reload (--reload flag)
  */
 export async function installModuleHandler(
-  moduleNames: string[]
+  moduleNames: string[],
+  options: InstallOptions
 ): Promise<void> {
   const installed: string[] = []
 
@@ -74,12 +82,21 @@ export async function installModuleHandler(
   generateRouteRegistry()
   generateSchemaRegistry()
 
-  for (const moduleName of installed) {
-    const { targetDir } = normalizePackage(moduleName)
+  // Generate migrations for new modules (only in non-Docker mode)
+  if (!isDockerMode()) {
+    for (const moduleName of installed) {
+      const { targetDir } = normalizePackage(moduleName)
 
-    if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
-      Logging.debug(`Generating database migrations for ${moduleName}...`)
-      generateMigrationsHandler(moduleName)
+      if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
+        Logging.debug(`Generating database migrations for ${moduleName}...`)
+        generateMigrationsHandler(moduleName)
+      }
     }
+  }
+
+  // Trigger Docker reload if requested
+  if (options.reload) {
+    Logging.info('Triggering Docker reload...')
+    await reloadHandler({})
   }
 }

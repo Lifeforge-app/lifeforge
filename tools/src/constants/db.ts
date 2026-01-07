@@ -29,10 +29,12 @@ export const PB_KWARGS = [
   `--migrationsDir=${PB_MIGRATIONS_DIR}`
 ]
 
-// Straightaway exit if PB_DIR is not accessible
-try {
-  fs.accessSync(PB_DIR)
-} catch (error) {
-  Logging.error(`PB_DIR is not accessible: ${error}`)
-  process.exit(1)
+// Straightaway exit if PB_DIR is not accessible (skip in Docker mode)
+if (!isDockerMode()) {
+  try {
+    fs.accessSync(PB_DIR)
+  } catch (error) {
+    Logging.error(`PB_DIR is not accessible: ${error}`)
+    process.exit(1)
+  }
 }
