@@ -42,7 +42,7 @@ const MODULE_STRUCTURE: Array<{
     validate: async (content: string) => {
       const json = JSON.parse(content)
 
-      const { packageJSONSchema } = await import('shared')
+      const { packageJSONSchema } = await import('../../../../../shared/src/index')
 
       const result = z.safeParse(packageJSONSchema, json)
 

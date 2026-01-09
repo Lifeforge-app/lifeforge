@@ -76,11 +76,29 @@ export function killExistingProcess(
 ): number | undefined {
   try {
     if (typeof processKeywordOrPID === 'number') {
-      process.kill(processKeywordOrPID)
+      if (process.platform === 'win32') {
+        executeCommand(`taskkill /F /PID ${processKeywordOrPID}`, { exitOnError: false })
+      } else {
+        process.kill(processKeywordOrPID)
+      }
 
       Logging.debug(
         `Killed process with PID: ${Logging.highlight(String(processKeywordOrPID))}`
       )
+
+      return
+    }
+
+    if (process.platform === 'win32') {
+      const taskResult = executeCommand(`tasklist /fi "imagename eq ${processKeywordOrPID}.exe" /fo csv /nh`, {
+        exitOnError: false,
+        stdio: 'pipe'
+      })
+
+      if (taskResult?.trim() && !taskResult.includes('No tasks are running')) {
+        executeCommand(`taskkill /F /IM ${processKeywordOrPID}.exe`, { exitOnError: false })
+        Logging.debug(`Killed processes matching: ${processKeywordOrPID}`)
+      }
 
       return
     }

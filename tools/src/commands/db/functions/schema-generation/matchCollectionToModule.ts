@@ -27,7 +27,7 @@ export async function matchCollectionToModule(
   allModules: string[],
   collection: Record<string, unknown>
 ) {
-  const { parseCollectionName } = await import('shared')
+  const { parseCollectionName } = await import('../../../../../../shared/src/index')
 
   const collectionName = collection.name as string
 
@@ -42,9 +42,10 @@ export async function matchCollectionToModule(
     : parsed.moduleName
 
   const matchingModule = allModules.find(module => {
+    const normalizedModule = module.replace(/\\/g, '/')
     const { username, moduleName } = parsePackageName(
       path.basename(module),
-      path.dirname(module).endsWith('/server/src/lib')
+      normalizedModule.includes('/server/src/lib/')
     )
 
     const expectedPrefix = username

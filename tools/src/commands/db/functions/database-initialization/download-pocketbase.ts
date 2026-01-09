@@ -93,16 +93,20 @@ export async function downloadPocketBaseBinary(): Promise<void> {
 
     Logging.debug('Download complete, extracting...')
 
-    // Extract using unzip command
-    executeCommand(`unzip -o "${zipPath}" -d "${PB_DIR}"`, {
+    // Extracting
+    const extractCommand = 
+      platform === 'win32'
+        ? `powershell -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${PB_DIR}' -Force"`
+        : `unzip -o "${zipPath}" -d "${PB_DIR}"`
+
+    executeCommand(extractCommand, {
       stdio: ['pipe', 'pipe', 'pipe']
     })
 
     // Clean up zip file and unnecessary files
     fs.unlinkSync(zipPath)
 
-    const changelogPath = path.join(PB_DIR, 'CHANGELogging.md')
-
+    const changelogPath = path.join(PB_DIR, 'CHANGELOG.md')
     const licensePath = path.join(PB_DIR, 'LICENSE.md')
 
     if (fs.existsSync(changelogPath)) fs.unlinkSync(changelogPath)

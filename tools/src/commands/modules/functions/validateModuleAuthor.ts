@@ -9,7 +9,7 @@ import { checkAuth } from '@/utils/registry'
 export default async function validateModuleAuthor(modulePath: string) {
   const auth = await checkAuth()
 
-  const { packageJSONSchema } = await import('shared')
+  const { packageJSONSchema } = await import('../../../../../shared/src/index')
 
   const packageJson = z.safeParse(
     packageJSONSchema,

@@ -12,7 +12,7 @@ async function processCollectionSchema(
   collection: Record<string, unknown>,
   idToNameMap: Map<string, string>
 ): Promise<string> {
-  const { parseCollectionName } = await import('shared')
+  const { parseCollectionName } = await import('../../../../../../shared/src/index')
 
   const collectionName = collection.name as string
 

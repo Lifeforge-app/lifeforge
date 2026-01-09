@@ -21,7 +21,8 @@ export const PB_DATA_DIR = isDockerMode()
 export const PB_MIGRATIONS_DIR = path.resolve(`${PB_DATA_DIR}/pb_migrations`)
 
 export const PB_BINARY_PATH = path.resolve(
-  process.env.PB_BINARY_PATH || `${PB_DIR}/pocketbase`
+  process.env.PB_BINARY_PATH || 
+  `${PB_DIR}/pocketbase${process.platform === 'win32' ? '.exe' : ''}`
 )
 
 export const PB_KWARGS = [

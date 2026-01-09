@@ -1,0 +1,86 @@
+{
+    "deleteConfirmation": {
+        "title": "您確定要刪除 {{itemName}} 嗎？",
+        "desc": "這將刪除 {{itemName}} 及其所有相關內容。此操作無法復原！",
+        "inputs": {
+            "confirmation": {
+                "placeholder": "請輸入 \"{{text}}\" 以確認刪除",
+                "label": "確認刪除"
+            }
+        },
+        "error": "刪除項目時發生錯誤。請再試一次。"
+    },
+    "searchFilters": "搜尋篩選",
+    "iconPicker": {
+        "title": "選擇圖示",
+        "items": {
+            "icon": "圖示",
+            "iconSet": "圖示集"
+        },
+        "empty": {
+            "icon": {
+                "title": "無圖示",
+                "description": "找不到圖示，請嘗試其他關鍵字。"
+            }
+        }
+    },
+    "imagePicker": {
+        "title": "選擇檔案",
+        "local": "上傳本地圖片",
+        "url": "圖片網址",
+        "pixabay": "從 Pixabay 下載",
+        "orPasteLink": "或貼上圖片連結",
+        "inputs": {
+            "imageLink": "圖片連結",
+            "imageType": "圖片類型",
+            "imageCategory": "圖片分類",
+            "imageColor": "圖片顏色",
+            "editorsChoice": "編輯精選",
+            "prompt": "AI 提示詞文字"
+        },
+        "imageType": {
+            "all": "全部",
+            "photo": "照片",
+            "vector": "向量圖",
+            "illustration": "插畫"
+        },
+        "items": {
+            "pixabay": "Pixabay"
+        },
+        "empty": {
+            "result": {
+                "title": "無結果",
+                "description": "找不到圖片，請嘗試其他關鍵字。"
+            },
+            "pixabay": {
+                "title": "由 Pixabay 提供",
+                "description": "搜尋超過 1300 萬張高品質免費圖片。"
+            },
+            "noAPIKey": {
+                "title": "未配置 Pixabay API 金鑰",
+                "description": "請在 API 保險箱中設定您的 Pixabay API 金鑰以使用此功能。"
+            },
+            "noOpenAIKey": {
+                "title": "未配置 OpenAI API 金鑰",
+                "description": "請在 API 保險箱中設定您的 OpenAI API 金鑰以使用此功能。"
+            }
+        },
+        "ai": "AI 圖片生成"
+    },
+    "colorPicker": {
+        "title": "選擇顏色",
+        "modals": {
+            "morandiColorPalette": "莫蘭迪色盤",
+            "tailwindCssColorPalette": "Tailwind CSS 色盤",
+            "flatUiColors": "Flat UI 顏色"
+        },
+        "buttons": {
+            "morandiColorPalette": "莫蘭迪色盤",
+            "tailwindCssColorPalette": "Tailwind CSS 色盤",
+            "flatUiColors": "Flat UI 顏色"
+        }
+    },
+    "imagePreview": "圖片預覽",
+    "qrCodeScanner": "QR Code 掃描器",
+    "viewImage": "查看圖片"
+}

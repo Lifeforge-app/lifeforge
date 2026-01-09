@@ -19,6 +19,15 @@ function isValidPocketbaseProcess(pid: number): boolean {
     // First check if process exists using kill -0 (doesn't actually kill)
     process.kill(pid, 0)
 
+    if (process.platform === 'win32') {
+      const taskResult = executeCommand(`tasklist /fi "pid eq ${pid}" /fo csv /nh`, {
+        exitOnError: false,
+        stdio: 'pipe'
+      })
+
+      return taskResult?.toLowerCase().includes('pocketbase.exe') ?? false
+    }
+
     // Verify it's actually a pocketbase process by checking the command
     const psResult = executeCommand(`ps -p ${pid} -o comm=`, {
       exitOnError: false,
@@ -40,6 +49,41 @@ function isValidPocketbaseProcess(pid: number): boolean {
  */
 export function checkRunningPBInstances(exitOnError = true): boolean {
   try {
+    if (process.platform === 'win32') {
+      const taskResult = executeCommand(`tasklist /fi "imagename eq pocketbase.exe" /fo csv /nh`, {
+        exitOnError: false,
+        stdio: 'pipe'
+      })
+
+      if (!taskResult?.trim() || taskResult.includes('No tasks are running')) {
+        return false
+      }
+
+      // tasklist /fo csv returns: "pocketbase.exe","PID","Session Name","Session#","Mem Usage"
+      const pids = taskResult
+        .split('\n')
+        .map(line => {
+          const match = line.match(/"\d+"/)
+
+          return match ? parseInt(match[0].replace(/"/g, ''), 10) : NaN
+        })
+        .filter(pid => !isNaN(pid))
+
+      if (pids.length > 0) {
+        if (exitOnError) {
+          Logging.actionableError(
+            `PocketBase is already running (PID: ${pids.join(', ')})`,
+            'Stop the existing instance before proceeding'
+          )
+          process.exit(1)
+        }
+
+        return true
+      }
+
+      return false
+    }
+
     const result = executeCommand(`pgrep -f "pocketbase serve"`, {
       exitOnError: false,
       stdio: 'pipe'

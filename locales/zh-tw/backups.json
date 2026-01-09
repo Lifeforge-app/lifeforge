@@ -1,0 +1,29 @@
+{
+  "title": "備份管理",
+  "description": "管理您的資料庫備份。",
+  "items": {
+    "backup": "備份"
+  },
+  "empty": {
+    "noBackups": {
+      "title": "找不到備份",
+      "description": "目前沒有可用的備份。使用上方按鈕建立新備份。"
+    },
+    "toBeImplemented": {
+      "title": "待修復",
+      "description": "備份還原功能即將重新加入。"
+    }
+  },
+  "modals": {
+    "createBackup": "初始化新備份"
+  },
+  "inputs": {
+    "backupName": {
+      "label": "備份名稱 (必須以 .zip 結尾)",
+      "placeholder": "輸入備份名稱 (留空將自動生成)"
+    }
+  },
+  "buttons": {
+    "startBackup": "開始備份"
+  }
+}

@@ -39,6 +39,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./locales:/lifeforge/locales
 
   client:
     build:

@@ -1,0 +1,48 @@
+{
+  "title": "API 金鑰管理",
+  "description": "管理所有模組所需的 API 金鑰",
+  "lockedMessage": "API 金鑰配置模組已鎖定",
+  "passwordRequired": "需要密碼才能解密 API 金鑰",
+  "missing": {
+    "title": "缺少 API 金鑰",
+    "description": "缺少一個或多個 API 金鑰。請前往 API 金鑰配置模組進行設定",
+    "requiredKeysAre": "缺少必要的 API 金鑰："
+  },
+  "modals": {
+    "apiKey": {
+      "create": "建立 API 金鑰",
+      "update": "更新 API 金鑰"
+    },
+    "modulesRequired": {
+      "title": "模組需求",
+      "totalModulesRequire": "共有 {{count}} 個模組需要此 API 金鑰。"
+    }
+  },
+  "buttons": {
+    "configApiKeys": "配置 API 金鑰"
+  },
+  "inputs": {
+    "keyName": "金鑰名稱",
+    "keyDescription": "金鑰描述",
+    "keyIcon": "金鑰圖示",
+    "apiKey": "API 金鑰",
+    "keyId": "金鑰 ID",
+    "isExposable": "可對外暴露",
+    "overrideKey": "覆蓋金鑰"
+  },
+  "items": {
+    "apiKey": "API 金鑰"
+  },
+  "empty": {
+    "apiKeys": {
+      "title": "無 API 金鑰",
+      "description": "找不到 API 金鑰。點擊下方按鈕建立新的 API 金鑰"
+    }
+  },
+  "misc": {
+    "requiredBy": "被 {{count}} 個模組使用",
+    "lastUpdated": "最後更新：{{time}}",
+    "exposable": "可對外暴露",
+    "internalOnly": "僅限內部"
+  }
+}

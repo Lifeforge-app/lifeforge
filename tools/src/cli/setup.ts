@@ -17,11 +17,11 @@ function getVersion(): string {
 
 async function setupCommands(program: Command): Promise<void> {
   const commandsPath = path.resolve(
-    import.meta.dirname.split('src')[0],
-    'src/commands'
+    import.meta.dirname,
+    '../commands'
   )
 
-  const commandIndexes = fs.globSync(`${commandsPath}/*/index.ts`)
+  const commandIndexes = fs.globSync(path.join(commandsPath, '*/index.ts').replace(/\\/g, '/'))
 
   for (const index of commandIndexes) {
     const command = await import(index)

@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 
-export const ROOT_DIR = import.meta.dirname.split('/tools')[0]
+export const ROOT_DIR = path.resolve(import.meta.dirname, '../../..')
 
 const GENERATED_DIR = path.join(
-  import.meta.dirname.split('/tools')[0],
+  ROOT_DIR,
   'server/src/generated'
 )
 

@@ -1,0 +1,119 @@
+{
+  "search": "搜尋 {{item}}...",
+  "notFound": {
+    "title": "喔不！這裡什麼都沒有",
+    "description": "找不到您要查看的頁面。請檢查網址並再試一次。"
+  },
+  "tipsAndTricks": "秘訣與技巧",
+  "loadingModule": "正在載入模組...",
+  "deprecated": "不再支援",
+  "imageUpload": {
+    "local": "上傳本地圖片",
+    "url": "圖片網址",
+    "pixabay": "從 Pixabay 下載",
+    "orPasteLink": "或貼上圖片連結",
+    "inputs": {
+      "imageLink": "圖片連結",
+      "imageType": "圖片類型",
+      "imageCategory": "圖片分類",
+      "imageColor": "圖片顏色",
+      "editorsChoice": "編輯精選"
+    },
+    "imageType": {
+      "all": "全部",
+      "photo": "照片",
+      "vector": "向量圖",
+      "illustration": "插畫"
+    },
+    "items": {
+      "pixabay": "Pixabay"
+    },
+    "empty": {
+      "result": {
+        "title": "無結果",
+        "description": "找不到圖片。請嘗試不同的搜尋詞。"
+      },
+      "pixabay": {
+        "title": "由 Pixabay 提供",
+        "description": "搜尋超過 1300 萬張高品質免費圖片。"
+      }
+    }
+  },
+  "dnd": {
+    "dropHere": "將項目拖放到此處",
+    "dragAndDropToUpload": "拖放或點擊上傳",
+    "or": "或",
+    "buttons": {
+      "pasteFromClipboard": "從剪貼簿貼上"
+    }
+  },
+  "buttons": {
+    "goBack": "返回",
+    "reportBug": "回報錯誤"
+  },
+  "colorPicker": {
+    "title": "選擇顏色",
+    "modals": {
+      "morandiColorPalette": "莫蘭迪色盤",
+      "tailwindCssColorPalette": "Tailwind CSS 色盤"
+    },
+    "buttons": {
+      "morandiColorPalette": "莫蘭迪色盤",
+      "tailwindCssColorPalette": "Tailwind CSS 色盤"
+    }
+  },
+  "empty": {
+    "apiStatus": {
+      "title": "無法連接到 API",
+      "description": "請檢查您的網路連線並再試一次。如果您是開發者，請檢查伺服器是否正常運行。"
+    }
+  },
+  "iconPicker": {
+    "items": {
+      "icon": "圖示",
+      "iconSet": "圖示集"
+    },
+    "empty": {
+      "icon": {
+        "title": "無圖示",
+        "description": "找不到圖示。請嘗試不同的搜尋詞。"
+      }
+    }
+  },
+  "locationDisabled": {
+    "description": "位置輸入目前已被停用。請在 API 保險箱中加入正確配置的 Google Cloud API 金鑰以啟用此功能。更多資訊請參閱",
+    "title": "不適用"
+  },
+  "dates": {
+    "months": {
+      "0": "一月",
+      "1": "二月",
+      "2": "三月",
+      "3": "四月",
+      "4": "五月",
+      "5": "六月",
+      "6": "七月",
+      "7": "八月",
+      "8": "九月",
+      "9": "十月",
+      "10": "十一月",
+      "11": "十二月"
+    },
+    "days": {
+      "0": "星期一",
+      "1": "星期二",
+      "2": "星期三",
+      "3": "星期四",
+      "4": "星期五",
+      "5": "星期六",
+      "6": "星期日"
+    }
+  },
+  "fieldRequired": "此欄位為必填。",
+  "invalidField": "欄位無效。",
+  "invalidColor": "顏色無效。請輸入格式為 #RRGGBB 的有效十六進位值。",
+  "invalidIcon": "圖示無效。必須是來自 Iconify 的有效圖示識別碼，格式為 <圖示集>:<圖示名稱>。",
+  "loadingUserData": "正在載入使用者資料...",
+  "invalidSelection": "選擇無效。請從清單中選擇一個有效的選項。",
+  "fileInputSupportedFormat": "支援格式：{{format}}"
+}

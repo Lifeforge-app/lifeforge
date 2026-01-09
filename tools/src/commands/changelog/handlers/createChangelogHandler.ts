@@ -3,6 +3,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import fs from 'fs'
 import path from 'path'
 
+import { ROOT_DIR } from '@/constants/constants'
 import Logging from '@/utils/logging'
 
 dayjs.extend(weekOfYear)
@@ -20,7 +21,7 @@ import Code from "@/components/Code";
 `
 
 const CHANGELOG_PATH = path.resolve(
-  import.meta.dirname.split('tools')[0],
+  ROOT_DIR,
   'docs/src/contents/04.progress/versions'
 )
 

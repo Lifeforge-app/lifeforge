@@ -32,15 +32,15 @@ export async function writeFormattedFile(
 }
 
 function getModuleName(schemaPath: string): string | null {
-  return (
-    schemaPath
-      .split('/')
-      .slice(0, -1)
-      .join('/')
-      .replace(/\/server$/, '')
-      .split('/')
-      .pop() || null
-  )
+  const normalized = schemaPath.replace(/\\/g, '/')
+  const segments = normalized.split('/')
+  segments.pop() // Remove schema.ts
+  
+  if (segments[segments.length - 1] === 'server') {
+    segments.pop() // Remove server folder
+  }
+  
+  return segments.pop() || null
 }
 
 /**

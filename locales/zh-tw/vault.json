@@ -1,0 +1,46 @@
+{
+  "vault": {
+    "lockedMessage": "您的保險箱已鎖定",
+    "passwordRequired": "需要主密碼才能解密您的保險箱。",
+    "unlocked": "保險箱已解鎖",
+    "failedToUnlock": "無法解鎖保險箱",
+    "buttons": {
+      "unlock": "解鎖"
+    },
+    "createPassword": {
+      "title": "設定主密碼",
+      "desc": "請設定主密碼以保護您的保險箱。"
+    },
+    "inputs": {
+      "newPassword": "新密碼",
+      "confirmPassword": "確認密碼",
+      "masterPassword": "主密碼"
+    },
+    "confirmSetNewPassword": {
+      "title": "請務必記住您的主密碼！",
+      "desc": "此主密碼（目前）無法修改！如果您不小心忘記密碼，將會失去所有資料。此密碼經過雜湊處理並儲存在您的使用者設定檔中，無法被解密。它將用於加密和解密您儲存在保險箱中的資料。"
+    }
+  },
+  "otp": {
+    "buttons": {
+      "request": "獲取驗證碼 (OTP)",
+      "resend": "重新發送驗證碼",
+      "verify": "驗證代碼",
+      "authByQR": "使用 QR Code 驗證"
+    },
+    "messages": {
+      "success": "驗證碼已發送！請檢查您的郵箱。",
+      "failed": "獲取驗證碼失敗",
+      "invalid": "驗證碼必須是 6 位數字",
+      "cooldown": "請求頻繁，請稍後再試",
+      "required": {
+        "title": "解鎖需要驗證碼",
+        "desc": "為了增加安全性，解鎖此模組需要驗證碼。請點擊下方按鈕獲取驗證碼。"
+      },
+      "verify": {
+        "success": "驗證碼驗證成功",
+        "failed": "驗證碼驗證失敗"
+      }
+    }
+  }
+}
