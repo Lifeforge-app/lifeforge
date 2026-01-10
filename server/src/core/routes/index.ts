@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 
 import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { forgeController, forgeRouter } from '@functions/routes'
@@ -25,6 +26,53 @@ const mainRoutes = forgeRouter({
   ...appRoutes,
   ...coreRoutes,
   listRoutes
+})
+
+// Serve module bundles from apps/*/client/dist
+const rootDir = import.meta.dirname.split('/server')[0]
+
+router.get('/hello', (_, res) => {
+  res.send('Hello from the API server!')
+})
+
+router.use('/modules/:moduleName/*', (req, res, next) => {
+  const moduleName = req.params.moduleName
+
+  const filePath =
+    (req.params[0 as any as keyof typeof req.params] as string) || ''
+
+  const moduleDistPath = path.join(
+    rootDir,
+    'apps',
+    moduleName,
+    'client',
+    'dist'
+  )
+
+  console.log(moduleDistPath)
+
+  const resolvedPath = path.join(moduleDistPath, filePath)
+
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
+
+  res.sendFile(resolvedPath, err => {
+    if (!err) return
+
+    const fallbackPath = path.join(moduleDistPath, 'index.html')
+
+    if (fallbackPath === resolvedPath) {
+      next()
+
+      return
+    }
+
+    res.sendFile(fallbackPath, fallbackErr => {
+      if (fallbackErr) {
+        next()
+      }
+    })
+  })
 })
 
 router.use('/', registerRoutes(mainRoutes))
