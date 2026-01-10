@@ -25,7 +25,6 @@ export const checkModuleAvailability = forgeController
 
 export const manifest = forgeController
   .query()
-  .noEncryption()
   .description({
     en: 'Get installed modules manifest for runtime loading',
     ms: 'Dapatkan manifes modul yang dipasang',
