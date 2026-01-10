@@ -58,7 +58,7 @@
     },
     "apps/lifeforge--achievements": {
       "name": "@lifeforge/lifeforge--achievements",
-      "version": "0.0.2",
+      "version": "0.0.4",
       "dependencies": {
         "@iconify/react": "^6.0.2",
         "@uidotdev/usehooks": "^2.4.1",
