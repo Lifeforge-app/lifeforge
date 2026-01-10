@@ -72,7 +72,8 @@ export async function loadModuleConfig(
     hidden: unwrapped.hidden,
     disabled: unwrapped.disabled,
     clearQueryOnUnmount: unwrapped.clearQueryOnUnmount,
-    APIKeyAccess: mod.APIKeyAccess
+    APIKeyAccess: mod.APIKeyAccess,
+    widgets: unwrapped.widgets
   }
 
   return moduleConfig

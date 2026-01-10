@@ -11,16 +11,17 @@ interface FederationContextValue {
   refetch: () => Promise<void>
 }
 
-const FederationContext = createContext<FederationContextValue | null>(null)
+// Default value for HMR safety - prevents crashes when context is unavailable during hot reload
+const defaultValue: FederationContextValue = {
+  modules: [],
+  globalProviders: [],
+  refetch: async () => {}
+}
+
+const FederationContext = createContext<FederationContextValue>(defaultValue)
 
 export function useFederation(): FederationContextValue {
-  const context = useContext(FederationContext)
-
-  if (!context) {
-    throw new Error('useFederation must be used within a FederationProvider')
-  }
-
-  return context
+  return useContext(FederationContext)
 }
 
 function FederationProvider({ children }: { children: React.ReactNode }) {
@@ -63,15 +64,18 @@ function FederationProvider({ children }: { children: React.ReactNode }) {
     [modules, globalProviders]
   )
 
-  if (loading) {
-    return <LoadingScreen message="Loading modules..." />
-  }
-
-  if (error) {
-    return <ErrorScreen message={error.message} showRetryButton={true} />
-  }
-
-  return <FederationContext value={value}>{children}</FederationContext>
+  // Always wrap in Provider to prevent HMR issues where context disappears
+  return (
+    <FederationContext value={value}>
+      {loading ? (
+        <LoadingScreen message="Loading modules..." />
+      ) : error ? (
+        <ErrorScreen showRetryButton message={error.message} />
+      ) : (
+        children
+      )}
+    </FederationContext>
+  )
 }
 
 export default FederationProvider
