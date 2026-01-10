@@ -24,7 +24,7 @@ function FormTextInput({
   namespace,
   handleChange
 }: FormInputProps<TextFieldProps>) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const openQRScanner = () => {
     open(QRCodeScanner, {

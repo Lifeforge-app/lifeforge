@@ -1,16 +1,17 @@
 import { useQueryClient } from '@tanstack/react-query'
 import _ from 'lodash'
 import { useEffect } from 'react'
-import { normalizeSubnamespace } from 'shared'
+import {
+  ModuleHeaderStateProvider,
+  ModuleSidebarStateProvider,
+  normalizeSubnamespace
+} from 'shared'
 
 import { Scrollbar } from '@components/utilities'
 
-import { ModuleHeaderStateContext } from './ModuleHeaderStateProvider'
-import ModuleSidebarStateProvider from './ModuleSidebarStateProvider'
-
 function ModuleWrapper({
   children,
-  config: { title, displayName, icon, clearQueryOnUnmount = true }
+  config: { title, icon, clearQueryOnUnmount = true }
 }: {
   children: React.ReactNode
   config: {
@@ -33,7 +34,7 @@ function ModuleWrapper({
   }, [queryClient, clearQueryOnUnmount, title])
 
   return (
-    <ModuleHeaderStateContext
+    <ModuleHeaderStateProvider
       value={{ title: normalizeSubnamespace(title).replace('__', '$'), icon }}
     >
       <ModuleSidebarStateProvider>
@@ -46,7 +47,7 @@ function ModuleWrapper({
           </div>
         </Scrollbar>
       </ModuleSidebarStateProvider>
-    </ModuleHeaderStateContext>
+    </ModuleHeaderStateProvider>
   )
 }
 

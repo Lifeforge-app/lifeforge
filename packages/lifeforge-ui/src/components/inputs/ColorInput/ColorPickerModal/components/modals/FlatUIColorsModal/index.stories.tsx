@@ -24,7 +24,7 @@ export const Default: Story = {
     }
   },
   render: args => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     return (
       <Button icon="tabler:palette" onClick={() => open(Index, args.data)}>

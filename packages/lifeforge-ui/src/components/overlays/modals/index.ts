@@ -10,8 +10,8 @@ export { default as ModalWrapper } from './core/components/ModalWrapper'
 
 export { default as ModalManager } from './core/ModalManager'
 
-export { useModalStore } from './core/useModalStore'
+export { useModalStore } from 'shared'
 
-export type { ModalComponent } from './core/useModalStore'
+export type { ModalComponent } from 'shared'
 
 export { default as defineForm } from './features/FormModal/formBuilder'

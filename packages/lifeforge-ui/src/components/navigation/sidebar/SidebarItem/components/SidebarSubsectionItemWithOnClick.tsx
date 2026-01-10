@@ -3,8 +3,7 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-
-import { useModuleSidebarState } from '@components/layout'
+import { useModuleSidebarState } from 'shared'
 
 function SidebarSubsectionItemWithOnClick({
   subsectionLabel,
