@@ -12,6 +12,7 @@ import { checkPackageExists } from '@/utils/registry'
 
 import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
+import { buildModuleHandler } from './buildModuleHandler'
 
 interface InstallOptions {
   reload?: boolean
@@ -28,6 +29,7 @@ interface InstallOptions {
  *
  * After installation:
  * - Regenerates route and schema registries
+ * - Builds module client bundles for federation
  * - Generates database migrations if schema.ts exists
  * - Optionally triggers Docker reload (--reload flag)
  */
@@ -81,6 +83,11 @@ export async function installModuleHandler(
   Logging.debug('Regenerating registries...')
   generateRouteRegistry()
   generateSchemaRegistry()
+
+  // Build module client bundles for federation
+  for (const moduleName of installed) {
+    await buildModuleHandler(moduleName)
+  }
 
   // Generate migrations for new modules (only in non-Docker mode)
   if (!isDockerMode()) {

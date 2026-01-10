@@ -11,6 +11,7 @@ import { getPackageLatestVersion } from '@/utils/registry'
 import listModules from '../functions/listModules'
 import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
+import { buildModuleHandler } from './buildModuleHandler'
 
 /**
  * Upgrades a single module to its latest registry version.
@@ -81,12 +82,13 @@ async function upgradeModule(
  *
  * After successful upgrades:
  * - Regenerates route and schema registries
+ * - Rebuilds module client bundles for federation
  * - Regenerates database migrations
  */
 export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   const modules = listModules()
 
-  let upgradedCount = 0
+  const upgraded: string[] = []
 
   if (moduleName) {
     const { fullName } = normalizePackage(moduleName)
@@ -101,10 +103,10 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
       process.exit(1)
     }
 
-    const upgraded = await upgradeModule(fullName, mod.version)
+    const wasUpgraded = await upgradeModule(fullName, mod.version)
 
-    if (upgraded) {
-      upgradedCount++
+    if (wasUpgraded) {
+      upgraded.push(fullName)
     }
   } else {
     Logging.print(
@@ -112,24 +114,30 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     )
 
     for (const [name, { version }] of Object.entries(modules)) {
-      const upgraded = await upgradeModule(name, version)
+      const wasUpgraded = await upgradeModule(name, version)
 
-      if (upgraded) {
-        upgradedCount++
+      if (wasUpgraded) {
+        upgraded.push(name)
       }
     }
   }
 
-  if (upgradedCount > 0) {
+  if (upgraded.length > 0) {
     Logging.print('')
     Logging.debug('Regenerating registries...')
 
     generateRouteRegistry()
     generateSchemaRegistry()
+
+    // Rebuild module client bundles for federation
+    for (const mod of upgraded) {
+      await buildModuleHandler(mod)
+    }
+
     generateMigrationsHandler()
 
     Logging.success(
-      `Upgraded ${Logging.highlight(String(upgradedCount))} module${upgradedCount > 1 ? 's' : ''}`
+      `Upgraded ${Logging.highlight(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
     )
   } else if (!moduleName) {
     Logging.print('')
