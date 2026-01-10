@@ -3,7 +3,9 @@ layer(base);
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap')
 layer(base);
 
-@import 'tailwindcss';
+@layer modules, host, dependencies, custom;
+
+@import 'tailwindcss' layer(host);
 
 @plugin 'tailwindcss-animate';
 @plugin 'daisyui';
