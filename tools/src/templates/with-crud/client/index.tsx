@@ -18,7 +18,7 @@ export type Entry = InferOutput<typeof forgeAPI.{{camel moduleName.en}}.entries.
 function {{pascal moduleName.en}}() {
   const { t } = useTranslation('apps.{{camel moduleName.en}}')
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const entriesQuery = useQuery(forgeAPI.{{camel moduleName.en}}.entries.list.queryOptions())
 
