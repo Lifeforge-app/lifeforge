@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { type IBackdropFilters, type IDashboardLayout } from 'shared'
 import { usePersonalization } from 'shared'
 import { useAuth } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 const UserPersonalizationContext = createContext<{
   changeFontFamily: (font: string) => Promise<void>
