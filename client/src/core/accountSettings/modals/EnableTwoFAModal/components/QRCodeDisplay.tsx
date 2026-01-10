@@ -1,10 +1,11 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
 import { decrypt } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 function QRCodeDisplay() {
   const { bgTempPalette, derivedTheme } = usePersonalization()

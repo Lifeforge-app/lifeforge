@@ -3,7 +3,7 @@ import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 import { type InferInput, getFormFileFieldInitialData } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 import { detectFontMetadata } from '../utils/detectFontMetadata'
 import type { CustomFont } from './FontFamilySelectorModal/tabs/CustomFontSelector'

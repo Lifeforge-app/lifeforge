@@ -1,10 +1,11 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useMutation } from '@tanstack/react-query'
 import { Button, TextInput } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+
+import forgeAPI from '@/forgeAPI'
 
 function UserCreationPage() {
   const { t } = useTranslation('common.auth')

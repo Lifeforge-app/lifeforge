@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePersonalization } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 import AdjustBgImageModal from './modals/AdjustBgImageModal'
 

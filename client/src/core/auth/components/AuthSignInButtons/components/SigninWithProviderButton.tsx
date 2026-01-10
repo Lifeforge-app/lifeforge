@@ -1,10 +1,11 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Button } from 'lifeforge-ui'
 import _ from 'lodash'
 import { memo, useCallback } from 'react'
 import { toast } from 'react-toastify'
 import { useSearchParams } from 'shared'
 import { useAuth } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 function SigninWithProviderButton({
   provider,

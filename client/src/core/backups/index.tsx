@@ -9,7 +9,7 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 import BackupItem from './components/BackupItem'
 import CreateBackupModal from './components/CreateBackupModal'

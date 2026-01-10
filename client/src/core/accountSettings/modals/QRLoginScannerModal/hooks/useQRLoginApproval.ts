@@ -1,8 +1,9 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 interface QRSessionData {
   type: 'lifeforge-qr-login'

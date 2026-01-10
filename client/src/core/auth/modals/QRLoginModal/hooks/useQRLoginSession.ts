@@ -1,10 +1,11 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { getBrowserInfo, useAPIEndpoint, useAuth } from 'shared'
 import { Socket, io } from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
+
+import forgeAPI from '@/forgeAPI'
 
 import {
   clearStoredSession,
