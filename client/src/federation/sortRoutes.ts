@@ -1,6 +1,6 @@
 import type { ModuleCategory } from 'shared'
 
-import loadCategoriesSeq from './loadCategoriesSeq'
+import loadCategoryOrder from './loadCategoryOrder'
 
 const ORDER = ['<START>', 'Miscellaneous', 'Settings', 'SSO', '<END>']
 
@@ -60,7 +60,7 @@ function routeSorter(categoriesSeq: string[]) {
 }
 
 export default function sortRoutes(routes: ModuleCategory[]) {
-  const categoriesSeq = loadCategoriesSeq()
+  const categoriesSeq = loadCategoryOrder()
 
   return routes.sort(routeSorter(categoriesSeq)).map(cat => ({
     title: ['<START>', '<END>'].includes(cat.title) ? '' : cat.title,

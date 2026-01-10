@@ -1,7 +1,7 @@
-import constructRoutes from './utils/initRoutes/constructRoutes'
+import loadModules from '../federation/loadModules'
 
 const { routes: ROUTES, globalProviders: GLOBAL_PROVIDERS } =
-  await constructRoutes()
+  await loadModules()
 
 export { GLOBAL_PROVIDERS }
 
