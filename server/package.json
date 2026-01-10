@@ -17,7 +17,7 @@
     "types": "bun --cwd .. prebuild && tsc -b",
     "build": "bun types && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "start": "bun types && NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
-    "dev": "bun --cwd .. prebuild && bun tsx watch --env-file=../env/.env.local ./src/index.ts",
+    "dev": "bun tsx watch --env-file=../env/.env.local ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "vitest",
     "test:ui": "vitest --ui",
