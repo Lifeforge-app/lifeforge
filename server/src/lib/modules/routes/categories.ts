@@ -14,11 +14,7 @@ export const list = forgeController
     'zh-TW': '獲取類別顯示順序'
   })
   .input({})
-  .callback(async () => {
-    const order = categoryOrderFile.read<string[]>()
-
-    return { categoryOrder: order }
-  })
+  .callback(async () => categoryOrderFile.read<string[]>())
 
 export const update = forgeController
   .mutation()
