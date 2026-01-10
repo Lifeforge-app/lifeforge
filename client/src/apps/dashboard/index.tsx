@@ -7,7 +7,7 @@ import './index.css'
 import ManageWidgetsModal from './modals/ManageWidgetsModal'
 
 function Dashboard() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const wrapperRef = useRef<HTMLDivElement>(null)
 

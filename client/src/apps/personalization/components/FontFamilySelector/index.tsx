@@ -1,16 +1,17 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { Button, OptionsColumn, WithQuery, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
+import forgeAPI from '@/utils/forgeAPI'
+
 import FontFamilySelectorModal from './components/FontFamilySelectorModal'
 
 function FontFamilySelector() {
   const { t } = useTranslation('common.personalization')
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { fontFamily } = usePersonalization()
 

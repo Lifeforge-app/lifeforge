@@ -8,7 +8,7 @@ import DisableTwoFAModal from '../modals/DisableTwoFAModal'
 import EnableTwoFAModal from '../modals/EnableTwoFAModal'
 
 function TwoFAColumn() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { t } = useTranslation('common.accountSettings')
 

@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
   Button,
@@ -10,13 +9,15 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 
+import forgeAPI from '@/utils/forgeAPI'
+
 import BackupItem from './components/BackupItem'
 import CreateBackupModal from './components/CreateBackupModal'
 
 function Backups() {
   const { t } = useTranslation('common.backups')
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const backupsQuery = useQuery(forgeAPI.backups.list.queryOptions())
 
