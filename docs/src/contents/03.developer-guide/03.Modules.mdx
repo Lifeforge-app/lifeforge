@@ -162,7 +162,7 @@ cd apps/myusername--my-module
     "react": "^19.2.0",
     "react-i18next": "^15.1.1",
     "shared": "workspace:*",
-    "zod": "^4.1.12"
+    "zod": "^4.3.5"
   },
   "exports": {
     "./manifest": {
@@ -236,7 +236,7 @@ The `package.json` file is crucial for your module's configuration. Here's a com
     "react-i18next": "^15.1.1",
     "react-toastify": "^11.0.5",
     "shared": "workspace:*",
-    "zod": "^4.1.12"
+    "zod": "^4.3.5"
   },
   "exports": {
     "./server": "./server/index.ts",
@@ -681,6 +681,142 @@ If you run `bun add` from the root directory, dependencies may be installed at t
   - Cryptic runtime errors
   
   Always check the versions used in the main client before adding such dependencies to your module.
+</Alert>
+</section>
+
+<section id="module-federation">
+## Module Federation
+
+LifeForge uses **Vite Module Federation** to enable dynamic loading of modules at runtime. Each module is built as a federated remote that exposes its manifest and components to the host application.
+
+### How It Works
+
+1. **Host Application** – The main LifeForge client acts as the federation host
+2. **Remote Modules** – Each module in `apps/` is built as a federated remote
+3. **Shared Dependencies** – Core libraries (React, React-DOM, etc.) are shared to avoid duplication
+
+### Shared Dependencies
+
+The following dependencies are shared between the host and all modules:
+
+| Package | Purpose |
+|---------|---------|
+| `react` | Core React library (must be singleton) |
+| `react-dom` | React DOM bindings (must be singleton) |
+| `shared` | LifeForge shared utilities |
+| `lifeforge-ui` | UI component library |
+| `@tanstack/react-query` | Data fetching |
+| `i18next` | Internationalization core |
+| `react-i18next` | React bindings for i18n |
+
+<Alert className="mt-6" type="important">
+  **React must be a singleton!** Any library that uses React hooks internally must use the same React instance as the host. If different React instances exist, you'll see errors like:
+  
+  ```plaintext
+  TypeError: can't access property "useRef", ReactSharedInternals.H is null
+  ```
+</Alert>
+
+### Module Vite Configuration
+
+Each module has a `client/vite.config.ts` that configures federation:
+
+```typescript
+import federation from '@originjs/vite-plugin-federation'
+import tailwindcss from '@tailwindcss/vite'
+import react from '@vitejs/plugin-react'
+import dotenv from 'dotenv'
+import path from 'node:path'
+import { defineConfig } from 'vite'
+
+import pkg from '../package.json'
+
+dotenv.config({ path: '../../../env/.env.local' })
+
+const apiHost = process.env.VITE_API_HOST
+
+if (!apiHost) {
+  throw new Error('VITE_API_HOST is not defined')
+}
+
+const moduleName = pkg.name.replace('@lifeforge/', '')
+
+export default defineConfig({
+  base: `${apiHost}/modules/${moduleName}/`,
+  plugins: [
+    react(),
+    tailwindcss(),
+    federation({
+      name: moduleName,
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Manifest': './manifest.ts'
+      },
+      shared: {
+        react: { generate: false },
+        'react-dom': { generate: false },
+        shared: { generate: false },
+        'lifeforge-ui': { generate: false },
+        'react-i18next': { generate: false },
+        i18next: { generate: false },
+        '@tanstack/react-query': { generate: false }
+      }
+    })
+  ],
+  resolve: {
+    alias: [
+      { find: '@server', replacement: path.resolve(__dirname, '../../../server/src') },
+      { find: /^@\/(.*)$/, replacement: path.resolve(__dirname, './src/$1') },
+      { find: /^@$/, replacement: path.resolve(__dirname, './src/index') }
+    ]
+  },
+  build: {
+    target: 'esnext',
+    minify: true,
+    modulePreload: false
+  }
+})
+```
+
+
+### Libraries That Use React Hooks
+
+Libraries like `recharts`, `react-beautiful-dnd`, or any library that uses React hooks internally need special handling.
+
+<Alert className="mt-6" type="caution">
+  **Do NOT add these libraries to the federation `shared` config!** This causes ESM compatibility issues in Vite dev mode because federation loads shared modules directly from `node_modules`, bypassing Vite's module transformation.
+</Alert>
+
+**The correct approach:**
+
+1. **Keep React/React-DOM in shared** – These must be shared with `generate: false`
+2. **Let the library bundle normally** – Don't add it to shared config
+3. **Install the library in your module** – Add it to your module's dependencies
+
+```bash
+cd apps/myusername--my-module
+bun add recharts@^2.15.0
+```
+
+The federation plugin automatically rewrites React imports inside bundled libraries to use the shared React instance, so hooks will work correctly.
+
+<Alert className="mt-6" type="warning">
+#### Known Issues
+
+- `recharts@3.x` introduced breaking changes with ESM module loading. Stick to `recharts@^2.15.0` for best compatibility.
+</Alert>
+
+### Building Modules
+
+Build your module before testing:
+
+```bash
+cd apps/myusername--my-module
+bun run build:client
+```
+
+<Alert className="mt-6" type="tip">
+  Built modules work correctly in both dev and production. If you encounter runtime issues during development, always try rebuilding the module first.
 </Alert>
 
 </section>
