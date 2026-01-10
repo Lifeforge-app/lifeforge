@@ -64,7 +64,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
         process.exit(1)
       }
 
-      return 'bun tsx watch --env-file=../env/.env.local ./src/index.ts'
+      return 'bun run dev'
     },
     cwd: 'server'
   },
