@@ -1,9 +1,15 @@
 import { ModalHeader } from 'lifeforge-ui'
 
-import DASHBOARD_WIDGETS from '../../widgets'
+import type { WidgetEntry } from '../../providers/WidgetProvider'
 import ComponentListItem from './components/ComponentItem'
 
-function ManageWidgetsModal({ onClose }: { onClose: () => void }) {
+function ManageWidgetsModal({
+  onClose,
+  data: { widgets }
+}: {
+  onClose: () => void
+  data: { widgets: Record<string, WidgetEntry> }
+}) {
   return (
     <div className="min-w-[40vw]">
       <ModalHeader
@@ -13,7 +19,7 @@ function ManageWidgetsModal({ onClose }: { onClose: () => void }) {
         onClose={onClose}
       />
       <ul className="space-y-2 overflow-y-auto">
-        {Object.entries(DASHBOARD_WIDGETS).map(
+        {Object.entries(widgets).map(
           ([key, { icon, minW, minH, maxW, maxH, namespace }]) => (
             <ComponentListItem
               key={key}
