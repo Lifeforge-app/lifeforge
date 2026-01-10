@@ -1,5 +1,8 @@
 import constructRoutes from './utils/initRoutes/constructRoutes'
 
-const ROUTES = await constructRoutes()
+const { routes: ROUTES, globalProviders: GLOBAL_PROVIDERS } =
+  await constructRoutes()
+
+export { GLOBAL_PROVIDERS }
 
 export default ROUTES

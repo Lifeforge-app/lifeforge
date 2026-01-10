@@ -1,92 +1,99 @@
+import type { ModuleCategory, ModuleConfig } from 'shared'
 import {
-  type ModuleCategory,
-  type ModuleConfig,
-  packageJSONSchema
-} from 'shared'
-import z from 'zod'
+  __federation_method_getRemote as getRemote,
+  __federation_method_setRemote as setRemote,
+  __federation_method_unwrapDefault as unwrapModule
+  // @ts-expect-error - Virtual federation methods
+} from 'virtual:__federation__'
 
-import constructModuleMap, { type ModuleFiles } from './constructModuleMap'
+import forgeAPI from '@/utils/forgeAPI'
+
 import sortRoutes from './routeSorter'
 
+interface FederatedModule {
+  name: string
+  displayName: string
+  version: string
+  description: string
+  author: string
+  icon: string
+  category: string
+  remoteEntryUrl: string
+  isInternal: boolean
+  APIKeyAccess?: Record<string, { usage: string; required: boolean }>
+}
+
+export type GlobalProviderComponent = React.FC<{ children: React.ReactNode }>
+
+export interface ConstructRoutesResult {
+  routes: ModuleCategory[]
+  globalProviders: GlobalProviderComponent[]
+}
+
 /**
- * Parses the content of a module's package.json and manifest.ts files
- * Uses zod to validate the package.json file
- *
- * @param entry The module's package.json and manifest.ts files
- * @returns The parsed package.json and manifest.ts files
- * @throws Error if the package.json or manifest.ts files are invalid
+ * Fetches module manifest from the server
  */
-async function parseContent(entry: [string, Partial<ModuleFiles>]) {
-  const [packagePath, files] = entry
+async function fetchModuleManifest(): Promise<FederatedModule[]> {
+  try {
+    const response = await forgeAPI.modules.manifest.queryRaw()
 
-  if (!files.packageJsonResolver || !files.manifestResolver) {
-    throw new Error(`Missing package.json or manifest.ts for ${packagePath}`)
-  }
+    return response.modules ?? []
+  } catch (e) {
+    console.warn('Failed to fetch module manifest:', e)
 
-  const mod = await files.packageJsonResolver()
-
-  const packageJSONContent = z.safeParse(packageJSONSchema, mod)
-
-  if (!packageJSONContent.success) {
-    throw new Error(
-      `Error parsing package.json for ${packagePath}:\n${z.treeifyError(packageJSONContent.error)}`
-    )
-  }
-
-  const manifestContent = (await files.manifestResolver()) as {
-    default: ModuleConfig
-  }
-
-  if (!manifestContent.default) {
-    throw new Error(`Invalid manifest for ${packagePath}`)
-  }
-
-  return {
-    packageJSON: packageJSONContent,
-    manifest: manifestContent
+    return []
   }
 }
 
 /**
- * Constructs the final module configuration
- * It is a consolidation of the package.json and manifest.ts files
- *
- * @param packageJSON The parsed package.json file
- * @param manifest The parsed manifest.ts file
- * @returns The module configuration
+ * Dynamically imports a federated module's manifest via runtime remote registration
  */
-const constructModuleConfig = (
-  packageJSON: z.infer<typeof packageJSONSchema>,
-  manifest: ModuleConfig
-) => {
-  const category = packageJSON.lifeforge.category || 'Miscellaneous'
+async function loadFederatedManifest(
+  remoteEntryUrl: string,
+  moduleName: string
+): Promise<ModuleConfig> {
+  const remoteName = moduleName.replace(/-+/g, '_')
 
-  const moduleConfig: ModuleCategory['items'][number] = {
-    ...manifest,
-    name: packageJSON.name.split('/').pop()!,
-    displayName: packageJSON.displayName,
-    version: packageJSON.version,
-    description: packageJSON.description,
-    author: packageJSON.author,
-    icon: packageJSON.lifeforge.icon,
-    category,
-    APIKeyAccess: packageJSON.lifeforge.APIKeyAccess
+  setRemote(remoteName, {
+    url: `${import.meta.env.VITE_API_HOST}${remoteEntryUrl}`,
+    format: 'esm',
+    from: 'vite'
+  })
+
+  const remoteModule = await getRemote(remoteName, './Manifest')
+
+  const unwrapped = (await unwrapModule(remoteModule)) as ModuleConfig
+
+  if (!unwrapped) {
+    throw new Error(`Failed to load federated manifest: ${moduleName}`)
   }
 
-  return {
-    category,
-    moduleConfig
+  return unwrapped
+}
+
+/**
+ * Attempts to load a GlobalProvider from a federated module
+ * Returns null if the module doesn't expose a GlobalProvider
+ */
+async function loadFederatedGlobalProvider(
+  moduleName: string
+): Promise<GlobalProviderComponent | null> {
+  const remoteName = moduleName.replace(/-+/g, '_')
+
+  try {
+    const remoteModule = await getRemote(remoteName, './GlobalProvider')
+
+    const unwrapped = await unwrapModule(remoteModule)
+
+    return (unwrapped as GlobalProviderComponent) ?? null
+  } catch {
+    // Module doesn't expose GlobalProvider - this is expected for most modules
+    return null
   }
 }
 
 /**
  * Adds the module configuration to the routes
- * If the category already exists, it will add the module configuration to the existing category
- * Otherwise, it will create a new category
- *
- * @param routes The routes to add the module configuration to
- * @param category The category of the module
- * @param moduleConfig The module configuration
  */
 const addToRoute = (
   routes: ModuleCategory[],
@@ -107,24 +114,55 @@ const addToRoute = (
 
 /**
  * Entry point for constructing the routes
- *
- * @returns The final routes
+ * Fetches federated modules from the server and dynamically imports their manifests
+ * Also loads GlobalProviders from modules that expose them
  */
-export default async function constructRoutes() {
-  const moduleMap = constructModuleMap()
+export default async function constructRoutes(): Promise<ConstructRoutesResult> {
+  const serverManifest = await fetchModuleManifest()
 
   const ROUTES: ModuleCategory[] = []
 
-  for (const entry of moduleMap.entries()) {
-    const { packageJSON, manifest } = await parseContent(entry)
+  const globalProviders: GlobalProviderComponent[] = []
 
-    const { category, moduleConfig } = constructModuleConfig(
-      packageJSON.data,
-      manifest.default
-    )
+  for (const mod of serverManifest) {
+    try {
+      const moduleManifest = await loadFederatedManifest(
+        mod.remoteEntryUrl,
+        mod.name
+      )
 
-    addToRoute(ROUTES, category, moduleConfig)
+      const moduleConfig: ModuleCategory['items'][number] = {
+        name: mod.name,
+        displayName: mod.displayName,
+        version: mod.version,
+        description: mod.description,
+        author: mod.author,
+        icon: mod.icon,
+        category: mod.category,
+        routes: moduleManifest.routes,
+        provider: moduleManifest.provider,
+        subsection: moduleManifest.subsection,
+        hidden: moduleManifest.hidden,
+        disabled: moduleManifest.disabled,
+        clearQueryOnUnmount: moduleManifest.clearQueryOnUnmount,
+        APIKeyAccess: mod.APIKeyAccess
+      }
+
+      addToRoute(ROUTES, mod.category, moduleConfig)
+
+      // Try to load GlobalProvider for this module
+      const globalProvider = await loadFederatedGlobalProvider(mod.name)
+
+      if (globalProvider) {
+        globalProviders.push(globalProvider)
+      }
+    } catch (e) {
+      console.error(`Failed to load module ${mod.name}:`, e)
+    }
   }
 
-  return sortRoutes(ROUTES)
+  return {
+    routes: sortRoutes(ROUTES),
+    globalProviders
+  }
 }
