@@ -1,5 +1,7 @@
 import type { ModuleCategory } from 'shared'
 
+import forgeAPI from '@/utils/forgeAPI'
+
 import loadCoreModules from './loadCoreModules'
 import {
   type GlobalProviderComponent,
@@ -7,6 +9,21 @@ import {
 } from './loadGlobalProvider'
 import { fetchModuleManifest, loadModuleConfig } from './loadModuleConfig'
 import sortRoutes from './sortRoutes'
+
+/**
+ * Fetches category order from the server
+ */
+async function fetchCategoryOrder(): Promise<string[]> {
+  try {
+    const response = await forgeAPI.modules.categories.list.queryRaw({})
+
+    return response.categoryOrder ?? []
+  } catch (e) {
+    console.warn('Failed to fetch category order:', e)
+
+    return []
+  }
+}
 
 /**
  * Adds the module configuration to the routes
@@ -38,16 +55,20 @@ export default async function loadModules(): Promise<{
   globalProviders: GlobalProviderComponent[]
 }> {
   const ROUTES: ModuleCategory[] = []
-
   const globalProviders: GlobalProviderComponent[] = []
 
+  // Load core modules (static, always available)
   const coreModules = loadCoreModules()
 
   for (const mod of coreModules) {
     addToRoute(ROUTES, mod.category, mod)
   }
 
-  const serverManifest = await fetchModuleManifest()
+  // Fetch federated modules and category order in parallel
+  const [serverManifest, categoryOrder] = await Promise.all([
+    fetchModuleManifest(),
+    fetchCategoryOrder()
+  ])
 
   for (const mod of serverManifest) {
     try {
@@ -66,7 +87,7 @@ export default async function loadModules(): Promise<{
   }
 
   return {
-    routes: sortRoutes(ROUTES),
+    routes: sortRoutes(ROUTES, categoryOrder),
     globalProviders
   }
 }
