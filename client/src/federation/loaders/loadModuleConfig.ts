@@ -26,9 +26,9 @@ interface FederatedModule {
  */
 export async function fetchModuleManifest(): Promise<FederatedModule[]> {
   try {
-    const response = await forgeAPI.modules.manifest.queryRaw()
+    const { modules } = await forgeAPI.modules.manifest.query()
 
-    return response.modules ?? []
+    return modules ?? []
   } catch (e) {
     console.warn('Failed to fetch module manifest:', e)
 

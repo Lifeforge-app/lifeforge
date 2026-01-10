@@ -1,6 +1,21 @@
 import type { ModuleCategory } from 'shared'
 
+import forgeAPI from '@/forgeAPI'
+
 const ORDER = ['<START>', 'Miscellaneous', 'Settings', 'SSO', '<END>']
+
+/**
+ * Fetches category order from the server
+ */
+export async function fetchCategoryOrder(): Promise<string[]> {
+  try {
+    return await forgeAPI.modules.categories.list.query()
+  } catch (e) {
+    console.warn('Failed to fetch category order:', e)
+
+    return []
+  }
+}
 
 /**
  * Sorts the routes based on the order of the categories
@@ -57,7 +72,7 @@ function routeSorter(categoriesSeq: string[]) {
   }
 }
 
-export default function sortRoutes(
+export function sortRoutes(
   routes: ModuleCategory[],
   categoryOrder: string[] = []
 ) {

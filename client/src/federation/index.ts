@@ -1,7 +1,10 @@
-import loadModules from './loadModules'
+import loadModules from './loaders/loadModules'
+import FederationProvider, {
+  useFederation
+} from './providers/FederationProvider'
 
-export { loadModules }
+export { FederationProvider, useFederation, loadModules }
 
-export type { GlobalProviderComponent } from './loadGlobalProvider'
+export type { GlobalProviderComponent } from './loaders/loadGlobalProvider'
 
-export default loadModules
+export default FederationProvider
