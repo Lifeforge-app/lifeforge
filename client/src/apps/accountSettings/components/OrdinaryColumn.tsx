@@ -19,7 +19,7 @@ function OrdinaryColumn({
   icon: string
   type: 'text' | 'datetime'
 }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { userData } = useAuth()
 

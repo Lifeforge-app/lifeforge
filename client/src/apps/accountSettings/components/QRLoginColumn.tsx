@@ -11,7 +11,7 @@ import { toast } from 'react-toastify'
 import QRLoginApprovalModal from '../modals/QRLoginScannerModal'
 
 function QRLoginColumn() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { t } = useTranslation('common.auth')
 
