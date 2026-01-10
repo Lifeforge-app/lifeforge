@@ -1,15 +1,11 @@
 import { ErrorScreen } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { type InferOutput, ModalStoreProvider } from 'shared'
+import { ModalStoreProvider } from 'shared'
 
 import './i18n'
 import './index.css'
 import Providers from './providers'
-import './utils/extendDayJs'
-import forgeAPI from './utils/forgeAPI'
-
-export type UserData = InferOutput<typeof forgeAPI.user.auth.getUserData>
 
 // @ts-expect-error - VITE_API_HOST is injected at build time
 window.VITE_API_HOST = import.meta.env.VITE_API_HOST

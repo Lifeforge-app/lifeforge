@@ -19,9 +19,9 @@ import {
   ToastProvider
 } from 'shared'
 
-import TwoFAModal from '@/auth/modals/TwoFAModal'
+import TwoFAModal from '@/core/auth/modals/TwoFAModal'
+import forgeAPI from '@/forgeAPI'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
-import forgeAPI from '@/utils/forgeAPI'
 
 import ExternalModuleProviders from './features/ExternalModuleProviders'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'

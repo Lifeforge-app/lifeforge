@@ -1,6 +1,6 @@
 import type { ModuleCategory } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 import loadCoreModules from './loadCoreModules'
 import {

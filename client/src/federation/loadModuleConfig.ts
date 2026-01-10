@@ -6,7 +6,7 @@ import {
   // @ts-expect-error - Virtual federation methods
 } from 'virtual:__federation__'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 interface FederatedModule {
   name: string
