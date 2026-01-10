@@ -20,6 +20,7 @@ import {
 } from 'shared'
 
 import TwoFAModal from '@/core/auth/modals/TwoFAModal'
+import { FederationProvider } from '@/federation'
 import forgeAPI from '@/forgeAPI'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 
@@ -79,6 +80,8 @@ function Providers() {
         [BackgroundProvider],
         // Provider that exposes a socket.io client instance to the app
         [SocketProvider],
+        // Provider that loads federated modules (routes and global providers)
+        [FederationProvider],
         // GlobalProviders from federated modules
         // (loaded dynamically via ./GlobalProvider export in each module)
         [ExternalModuleProviders],

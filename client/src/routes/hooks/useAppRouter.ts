@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next'
 import type { DataRouter } from 'shared'
 import { createBrowserRouter, useAuth } from 'shared'
 
-import ROUTES from '..'
+import { useFederation } from '@/federation'
+
 import {
   createAuthLoadingConfig,
   createAuthRouterConfig,
@@ -19,6 +20,8 @@ export function useAppRouter() {
 
   const { auth, authLoading } = useAuth()
 
+  const { modules } = useFederation()
+
   const [appRouter, setAppRouter] = useState<DataRouter | null>(null)
 
   const loadingRouter = useMemo(
@@ -32,7 +35,7 @@ export function useAppRouter() {
   )
 
   useEffect(() => {
-    if (authLoading || !auth) {
+    if (authLoading || !auth || modules.length === 0) {
       setAppRouter(null)
 
       return
@@ -41,7 +44,7 @@ export function useAppRouter() {
     let cancelled = false
 
     createRouterConfig({
-      routes: ROUTES,
+      routes: modules,
       loadingMessage: t('loadingModule')
     }).then(routerConfig => {
       if (!cancelled) {
@@ -52,7 +55,7 @@ export function useAppRouter() {
     return () => {
       cancelled = true
     }
-  }, [auth, t, authLoading])
+  }, [auth, t, authLoading, modules])
 
   const router = useMemo(() => {
     if (authLoading) {

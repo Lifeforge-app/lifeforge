@@ -3,7 +3,7 @@ import { Card, ModalHeader, TagChip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import COLORS from 'tailwindcss/colors'
 
-import ROUTES from '@/routes'
+import { useFederation } from '@/federation'
 
 function ModulesRequiredListModal({
   onClose,
@@ -16,9 +16,11 @@ function ModulesRequiredListModal({
 }) {
   const { t } = useTranslation('common.apiKeys')
 
-  const modulesRequired = ROUTES.flatMap(cat => cat.items).filter(
-    item => item.APIKeyAccess?.[keyId]
-  )
+  const { modules } = useFederation()
+
+  const modulesRequired = modules
+    .flatMap(cat => cat.items)
+    .filter(item => item.APIKeyAccess?.[keyId])
 
   return (
     <div className="min-w-[40vw] space-y-6">
