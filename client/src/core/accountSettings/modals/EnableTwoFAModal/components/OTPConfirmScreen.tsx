@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { OTPInputBox } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { encrypt } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('common.accountSettings')

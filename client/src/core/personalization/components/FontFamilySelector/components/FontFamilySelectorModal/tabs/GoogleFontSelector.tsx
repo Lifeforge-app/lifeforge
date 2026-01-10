@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import {
   EmptyStateScreen,
@@ -13,6 +12,8 @@ import _ from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AutoSizer } from 'react-virtualized'
 import { type InferOutput, usePersonalization } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 import FontListItem from '../components/FontListItem'
 

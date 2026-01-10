@@ -1,10 +1,11 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { Listbox, ListboxOption, OptionsColumn, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 function LanguageSelector() {
   const { language } = usePersonalization()

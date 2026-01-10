@@ -3,7 +3,8 @@ import type { RouteObject } from 'shared'
 import { Navigate } from 'shared'
 import type { ModuleCategory } from 'shared'
 
-import Auth from '../../auth'
+import Auth from '@/core/auth'
+
 import RootLayout from '../components/RootLayout'
 import { createModuleRoute } from './routeBuilder'
 

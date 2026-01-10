@@ -13,7 +13,7 @@ import prettyBytes from 'pretty-bytes'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 function BackupItem({
   backup

@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useMutation } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import _ from 'lodash'
 import { toast } from 'react-toastify'
 import { useAuth } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 function ModifyModal<TType extends 'datetime' | 'text'>({
   data: { type, title, id, icon },

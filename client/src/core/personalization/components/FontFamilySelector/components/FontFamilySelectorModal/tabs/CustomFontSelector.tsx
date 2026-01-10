@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type InferOutput, usePersonalization } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 import CustomFontUploadModal from '../../CustomFontUploadModal'
 

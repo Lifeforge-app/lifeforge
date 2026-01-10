@@ -4,7 +4,7 @@ import { Button, OptionsColumn, WithQuery, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 import FontFamilySelectorModal from './components/FontFamilySelectorModal'
 
