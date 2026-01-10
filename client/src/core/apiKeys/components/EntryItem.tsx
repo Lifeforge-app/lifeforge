@@ -15,16 +15,21 @@ import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import COLORS from 'tailwindcss/colors'
+import relativeTime from "dayjs/plugin/relativeTime.js"
 
+import { useFederation } from '@/federation'
 import forgeAPI from '@/forgeAPI'
-import ROUTES from '@/routes'
 
 import type { APIKeysEntry } from '..'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
 
+dayjs.extend(relativeTime)
+
 function EntryItem({ entry }: { entry: APIKeysEntry }) {
   const { t } = useTranslation('common.apiKeys')
+
+  const { modules } = useFederation()
 
   const queryClient = useQueryClient()
 
@@ -50,9 +55,9 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
       })
   )
 
-  const modulesRequiredCount = ROUTES.flatMap(cat => cat.items).filter(
-    item => item.APIKeyAccess?.[entry.keyId]
-  ).length
+  const modulesRequiredCount = modules
+    .flatMap(cat => cat.items)
+    .filter(item => item.APIKeyAccess?.[entry.keyId]).length
 
   async function copyKey() {
     setIsCopying(true)
