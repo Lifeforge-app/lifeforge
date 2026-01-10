@@ -10,16 +10,18 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import { normalizeSubnamespace, useLocation, useMainSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
-import ROUTES from '../..'
+import { useFederation } from '@/federation'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
+
+  const { modules } = useFederation()
 
   const location = useLocation()
 
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
 
-  const [resolvedRoutes, setResolvedRoutes] = useState(ROUTES)
+  const [resolvedRoutes, setResolvedRoutes] = useState(modules)
 
   const filteredRoutes = useMemo(
     () =>
@@ -38,7 +40,7 @@ function SidebarItems({ query }: { query: string }) {
 
   async function resolveRoutes() {
     const updatedRoutes = await Promise.all(
-      ROUTES.map(async category => {
+      modules.map(async category => {
         const updatedItems = await Promise.all(
           category.items.map(async mod => {
             if (typeof mod.disabled === 'function') {
@@ -60,7 +62,7 @@ function SidebarItems({ query }: { query: string }) {
 
   useEffect(() => {
     resolveRoutes()
-  }, [ROUTES])
+  }, [modules])
 
   return (
     <ul className="flex flex-1 flex-col gap-1 overscroll-none pb-6">
@@ -95,7 +97,7 @@ function SidebarItems({ query }: { query: string }) {
                       />
                     )
                   })}
-                  {index !== ROUTES.length - 1 &&
+                  {index !== modules.length - 1 &&
                     filteredModules.length > 0 && <SidebarDivider />}
                 </Fragment>
               )

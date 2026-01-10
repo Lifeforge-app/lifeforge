@@ -1,7 +1,9 @@
-import { GLOBAL_PROVIDERS } from '@/routes'
+import { useFederation } from '@/federation'
 
 function ExternalModuleProviders({ children }: { children: React.ReactNode }) {
-  return GLOBAL_PROVIDERS.reduce<React.ReactNode>(
+  const { globalProviders } = useFederation()
+
+  return globalProviders.reduce<React.ReactNode>(
     (acc, Provider) => <Provider>{acc}</Provider>,
     children
   )
