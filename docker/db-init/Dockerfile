@@ -7,12 +7,20 @@ FROM ghcr.io/muchobien/pocketbase:latest AS pocketbase
 
 # ============================================
 # DB Init Container - Generates and applies migrations
-# Uses pre-built deps from lifeforge-deps image
 # ============================================
-FROM lifeforge-deps:latest
+FROM oven/bun:alpine
 
 # Copy PocketBase binary from official image
 COPY --from=pocketbase /usr/local/bin/pocketbase /usr/local/bin/pocketbase
+
+WORKDIR /app
+
+# Copy source
+COPY . .
+
+# Install all dependencies
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+    bun install --frozen-lockfile --linker isolated
 
 # Set environment for Docker mode
 ENV DOCKER_MODE=true

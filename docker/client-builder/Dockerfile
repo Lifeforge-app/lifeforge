@@ -2,9 +2,17 @@
 
 # ============================================
 # Client Builder - On-demand client rebuilds
-# Uses pre-built deps from lifeforge-deps image
 # ============================================
-FROM lifeforge-deps:latest
+FROM oven/bun:alpine
+
+WORKDIR /app
+
+# Copy source
+COPY . .
+
+# Install all dependencies
+RUN --mount=type=cache,target=/root/.bun/install/cache \
+    bun install --frozen-lockfile --ignore-scripts --linker isolated
 
 # Set environment
 ENV DOCKER_MODE=true
