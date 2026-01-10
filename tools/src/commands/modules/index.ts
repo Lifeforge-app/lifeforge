@@ -2,6 +2,7 @@ import type { Command } from 'commander'
 
 import generateRouteRegistry from './functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from './functions/registry/generateSchemaRegistry'
+import { buildModuleHandler } from './handlers/buildModuleHandler'
 import { compareModuleHandler } from './handlers/compareModuleHandler'
 import { createModuleHandler } from './handlers/createModuleHandler'
 import { installModuleHandler } from './handlers/installModuleHandler'
@@ -56,6 +57,13 @@ export default function setup(program: Command): void {
     .description('Upgrade modules to latest version from registry')
     .argument('[module]', 'Module to upgrade (optional, checks all if omitted)')
     .action(upgradeModuleHandler)
+
+  command
+    .command('build')
+    .alias('b')
+    .description('Build module client bundles for federation')
+    .argument('[module]', 'Module to build (optional, builds all if omitted)')
+    .action(buildModuleHandler)
 
   command
     .command('create')
