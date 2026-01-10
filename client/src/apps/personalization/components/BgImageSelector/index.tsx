@@ -16,7 +16,7 @@ import forgeAPI from '@/utils/forgeAPI'
 import AdjustBgImageModal from './modals/AdjustBgImageModal'
 
 function BgImageSelector() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { t } = useTranslation('common.personalization')
 

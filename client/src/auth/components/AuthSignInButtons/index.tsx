@@ -1,7 +1,8 @@
-import QRLoginModal from '@/auth/modals/QRLoginModal'
 import { Button, useModalStore } from 'lifeforge-ui'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import QRLoginModal from '@/auth/modals/QRLoginModal'
 
 import SignInButton from './components/SignInButton'
 import SigninWithProviderButton from './components/SigninWithProviderButton'
@@ -17,7 +18,7 @@ function AuthSignInButton({
 }) {
   const { t } = useTranslation('common.auth')
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   return (
     <div className="mt-6 space-y-3">

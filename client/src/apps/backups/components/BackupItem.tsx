@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
@@ -14,6 +13,8 @@ import prettyBytes from 'pretty-bytes'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
+import forgeAPI from '@/utils/forgeAPI'
+
 function BackupItem({
   backup
 }: {
@@ -25,7 +26,7 @@ function BackupItem({
 }) {
   const queryClient = useQueryClient()
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const [downloadLoading, setDownloadLoading] = useState(false)
 

@@ -1,4 +1,3 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import {
   Button,
   ConfirmationModal,
@@ -8,6 +7,8 @@ import {
 } from 'lifeforge-ui'
 import { type IDashboardLayout, usePersonalization } from 'shared'
 
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
+
 function NotFoundWidget({
   widgetId,
   dimension: { h, w }
@@ -15,7 +16,7 @@ function NotFoundWidget({
   widgetId: string
   dimension: { w: number; h: number }
 }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { dashboardLayout: enabledWidgets } = usePersonalization()
 

@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
@@ -15,6 +14,8 @@ import {
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { type InferOutput, usePersonalization } from 'shared'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import CustomFontUploadModal from '../../CustomFontUploadModal'
 
@@ -33,7 +34,7 @@ function CustomFontSelector({
 
   const { fontFamily } = usePersonalization()
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const queryClient = useQueryClient()
 

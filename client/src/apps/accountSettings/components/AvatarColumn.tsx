@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { useMutation } from '@tanstack/react-query'
 import {
@@ -13,8 +12,10 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { useAuth } from 'shared'
 
+import forgeAPI from '@/utils/forgeAPI'
+
 function AvatarColumn() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { t } = useTranslation('common.accountSettings')
 

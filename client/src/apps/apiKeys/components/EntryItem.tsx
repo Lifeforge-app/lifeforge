@@ -28,7 +28,7 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
 
   const queryClient = useQueryClient()
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const [isCopying, setIsCopying] = useState(false)
 

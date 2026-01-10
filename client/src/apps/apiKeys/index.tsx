@@ -20,7 +20,7 @@ export type APIKeysEntry = InferOutput<
 >[number]
 
 function APIKeys() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { t } = useTranslation('common.apiKeys')
 
