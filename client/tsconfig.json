@@ -35,9 +35,9 @@
       "@server/*": [
         "../server/src/*"
       ],
-      "@modules/*": [
-        "../apps/*"
-      ]
+      "@core/*": [
+        "../core/*"
+      ],
     }
   },
   "include": [

@@ -18,7 +18,7 @@ export const alias: Alias[] = [
     replacement: path.resolve(__dirname, './src/providers')
   },
   { find: '@utils', replacement: path.resolve(__dirname, './src/utils') },
-  { find: '@apps', replacement: path.resolve(__dirname, './src/apps') },
+  { find: '@core', replacement: path.resolve(__dirname, './src/core') },
   { find: '@server', replacement: path.resolve(__dirname, '../server/src') },
   { find: '@modules', replacement: path.resolve(__dirname, '../apps') },
   {
