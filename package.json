@@ -56,31 +56,5 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.31.1"
   },
-  "dependencies": {
-    "@lifeforge/lifeforge--achievements": "workspace:*",
-    "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*",
-    "@lifeforge/lifeforge--books-library": "workspace:*",
-    "@lifeforge/lifeforge--calendar": "workspace:*",
-    "@lifeforge/lifeforge--cfop-algorithms": "workspace:*",
-    "@lifeforge/lifeforge--changi-airport-flight-status": "workspace:*",
-    "@lifeforge/lifeforge--code-time": "workspace:*",
-    "@lifeforge/lifeforge--currency-converter": "workspace:*",
-    "@lifeforge/lifeforge--guitar-tuner": "workspace:*",
-    "@lifeforge/lifeforge--idea-box": "workspace:*",
-    "@lifeforge/lifeforge--moment-vault": "workspace:*",
-    "@lifeforge/lifeforge--movies": "workspace:*",
-    "@lifeforge/lifeforge--music": "workspace:*",
-    "@lifeforge/lifeforge--passwords": "workspace:*",
-    "@lifeforge/lifeforge--pomodoro-timer": "workspace:*",
-    "@lifeforge/lifeforge--railway-map": "workspace:*",
-    "@lifeforge/lifeforge--scores-library": "workspace:*",
-    "@lifeforge/lifeforge--sin-chew-daily": "workspace:*",
-    "@lifeforge/lifeforge--sudoku": "workspace:*",
-    "@lifeforge/lifeforge--todo-list": "workspace:*",
-    "@lifeforge/lifeforge--wallet": "workspace:*",
-    "@lifeforge/melvinchia3636--invoice-maker": "workspace:*",
-    "@lifeforge/melvinchia3636--modrinth": "workspace:*",
-    "@lifeforge/melvinchia3636--rental-payment-tracker": "workspace:*",
-    "@lifeforge/melvinchia3636--vanilla-tweaks": "workspace:*"
-  }
+  "dependencies": {}
 }
