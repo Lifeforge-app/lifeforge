@@ -1,20 +1,15 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
+import { useMemo } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
 import { useDivSize, usePersonalization } from 'shared'
 
-import DASHBOARD_WIDGETS from '../widgets'
-import NotFoundWidget from './NotFoundWidget'
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
-const COMPONENTS = Object.fromEntries(
-  Object.entries(DASHBOARD_WIDGETS).map(([key, value]) => [
-    key,
-    value.component
-  ])
-)
+import { useWidgets } from '../providers/WidgetProvider'
+import NotFoundWidget from './NotFoundWidget'
 
 function getBreakpointFromWidth(width: number) {
   if (width >= 1200) {
@@ -38,6 +33,16 @@ function DashboardGrid({
   canLayoutChange: boolean
 }) {
   const { t } = useTranslation('common.dashboard')
+
+  const { widgets } = useWidgets()
+
+  const COMPONENTS = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(widgets).map(([key, value]) => [key, value.component])
+      ),
+    [widgets]
+  )
 
   const { width, height } = useDivSize(wrapperRef)
 
