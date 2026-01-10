@@ -7,7 +7,7 @@ import MorandiColorPaletteModal from './modals/ModandiColorPaletteModal'
 import TailwindCSSColorsModal from './modals/TailwindCSSColorsModal'
 
 function PaletteButtons() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { innerColor, setInnerColor } = useColorPickerModalStore()
 

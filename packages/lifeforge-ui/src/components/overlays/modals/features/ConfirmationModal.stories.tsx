@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useModalStore } from 'shared'
 
 import { Button } from '@components/inputs'
 
-import { useModalStore } from '../core/useModalStore'
 import ConfirmationModal from './ConfirmationModal'
 
 const meta = {
@@ -34,7 +34,7 @@ export const Default: Story = {
     }
   },
   render: args => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     return (
       <Button
@@ -70,7 +70,7 @@ export const WithConfirmationPrompt: Story = {
     }
   },
   render: args => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     return (
       <Button
@@ -134,7 +134,7 @@ export const WithCustomConfirmationButtons: Story = {
     }
   },
   render: args => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     return (
       <Button

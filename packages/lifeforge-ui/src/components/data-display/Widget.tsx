@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
-import { forwardRef } from 'react'
 import { useTranslation } from 'react-i18next'
 
 export interface WidgetProps {
@@ -24,23 +23,23 @@ export interface WidgetProps {
   actionComponent?: React.ReactNode
   /** The namespace for translation keys. Set to `false` to disable translations. */
   namespace?: string | false
+  /** Ref to the outer div element. */
+  ref?: React.Ref<HTMLDivElement>
 }
 
 /**
  * A reusable Widget component for displaying content in a card-like layout with a title and icon.
  * Especially useful for dashboard or panel interfaces.
  */
-function _Widget(
-  {
-    className = '',
-    icon,
-    title,
-    children,
-    actionComponent: componentBesideTitle,
-    namespace = 'common.dashboard'
-  }: WidgetProps,
-  ref: React.Ref<HTMLDivElement>
-) {
+export default function Widget({
+  className = '',
+  icon,
+  title,
+  children,
+  actionComponent: componentBesideTitle,
+  namespace = 'common.dashboard',
+  ref
+}: WidgetProps) {
   const { t } = useTranslation(namespace === false ? [] : [namespace])
 
   return (
@@ -72,9 +71,3 @@ function _Widget(
     </div>
   )
 }
-
-const Widget = forwardRef<HTMLDivElement, WidgetProps>(_Widget)
-
-Widget.displayName = 'Widget'
-
-export default Widget

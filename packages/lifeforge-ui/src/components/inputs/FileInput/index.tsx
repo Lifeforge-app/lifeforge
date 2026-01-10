@@ -52,7 +52,7 @@ function FileInput({
   defaultAIPrompt?: string
   acceptedMimeTypes?: Record<string, string[]>
 }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { t } = useTranslation('common.misc')
 
