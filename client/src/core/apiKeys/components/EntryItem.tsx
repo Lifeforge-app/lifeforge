@@ -16,8 +16,8 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import COLORS from 'tailwindcss/colors'
 
+import forgeAPI from '@/forgeAPI'
 import ROUTES from '@/routes'
-import forgeAPI from '@/utils/forgeAPI'
 
 import type { APIKeysEntry } from '..'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'

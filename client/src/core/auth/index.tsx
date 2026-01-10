@@ -1,5 +1,6 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { WithQueryData } from 'lifeforge-ui'
+
+import forgeAPI from '@/forgeAPI'
 
 import LoginPage from './pages/LoginPage'
 import UserCreationPage from './pages/UserCreationPage'

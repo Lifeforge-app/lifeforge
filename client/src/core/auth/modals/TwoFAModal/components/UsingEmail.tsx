@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Button, OTPInputBox, ResendOTPButton, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { useAuth } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 function UsingEmail({
   callback

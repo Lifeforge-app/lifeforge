@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { Icon } from '@iconify/react'
 import { ModalManager, WithQueryData } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 import { useAuth } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 import AuthForm from '../components/AuthForm'
 import AuthHeader from '../components/AuthHeader'

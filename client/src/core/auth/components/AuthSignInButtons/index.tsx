@@ -2,7 +2,7 @@ import { Button, useModalStore } from 'lifeforge-ui'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import QRLoginModal from '@/auth/modals/QRLoginModal'
+import QRLoginModal from '@/core/auth/modals/QRLoginModal'
 
 import SignInButton from './components/SignInButton'
 import SigninWithProviderButton from './components/SigninWithProviderButton'

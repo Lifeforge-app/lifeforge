@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { usePromiseLoading } from 'shared'
 import { useAuth } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.accountSettings')

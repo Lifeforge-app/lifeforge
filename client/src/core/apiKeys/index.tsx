@@ -10,7 +10,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { type InferOutput } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './modals/ModifyAPIKeyModal'
