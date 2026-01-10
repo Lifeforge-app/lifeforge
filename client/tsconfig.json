@@ -27,6 +27,7 @@
     "verbatimModuleSyntax": true,
     "composite": true,
     "rootDir": "../",
+    "baseUrl": "./",
     "paths": {
       "@/*": [
         "./src/*"

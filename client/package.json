@@ -12,10 +12,10 @@
   },
   "type": "module",
   "scripts": {
-    "prebuild": "cd ../server && bun run types",
-    "dev": "bun run prebuild && vite",
-    "types": "tsc -b && for dir in ../apps/*/; do echo \"Running types in $dir\" && (cd \"$dir\" && bun types); done",
-    "build": "bun run prebuild && tsc -b && vite build",
+    "prebundle": "bun run --cwd ../server types",
+    "dev": "bun run --cwd . prebundle && vite",
+    "types": "tsc -b",
+    "build": "bun run --cwd . prebundle && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -39,6 +39,7 @@
     "i18next-http-backend": "^2.7.3",
     "lifeforge-ui": "workspace:*",
     "lodash": "^4.17.21",
+    "lodash-es": "^4.17.22",
     "opentype.js": "^1.3.4",
     "postcss": "^8.5.3",
     "pretty-bytes": "^7.1.0",
@@ -55,6 +56,7 @@
     "react-router": "^7.9.4",
     "react-toastify": "^11.0.5",
     "react-virtualized": "^9.22.6",
+    "recharts": "^2.15.0",
     "shared": "workspace:*",
     "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.14",
@@ -65,6 +67,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@originjs/vite-plugin-federation": "^1.4.1",
     "@types/lodash": "^4.17.20",
     "@types/opentype.js": "^1.3.8",
     "@types/react": "^19.2.0",

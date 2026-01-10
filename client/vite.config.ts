@@ -1,4 +1,5 @@
 // import MillionLint from '@million/lint'
+import federation from '@originjs/vite-plugin-federation'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { globSync } from 'glob'
@@ -69,7 +70,28 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
       }
     }),
-    tailwindcss()
+    tailwindcss(),
+    federation({
+      name: 'host',
+      remotes: {
+        None: ''
+      },
+      shared: [
+        'react',
+        'react-dom',
+        {
+          shared: {
+            packagePath: './node_modules/shared'
+          },
+          'lifeforge-ui': {
+            packagePath: './node_modules/lifeforge-ui'
+          }
+        },
+        '@tanstack/react-query',
+        'i18next',
+        'react-i18next'
+      ]
+    })
   ],
   server: {
     fs: {

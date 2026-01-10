@@ -23,23 +23,14 @@ import TwoFAModal from '@/auth/modals/TwoFAModal'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 import forgeAPI from '@/utils/forgeAPI'
 
+import ExternalModuleProviders from './features/ExternalModuleProviders'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
 
 const queryClient = new QueryClient()
 
-// Auto-detect global providers from modules
-const moduleGlobalProviders = import.meta.glob(
-  ['../../../apps/**/client/providers/global.tsx'],
-  { eager: true, import: 'default' }
-)
-
-const GLOBAL_PROVIDERS = Object.values(moduleGlobalProviders) as React.FC<{
-  children: React.ReactNode
-}>[]
-
 function Providers() {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const providers = useMemo(
     () =>
@@ -88,10 +79,9 @@ function Providers() {
         [BackgroundProvider],
         // Provider that exposes a socket.io client instance to the app
         [SocketProvider],
-        // Module-specific global providers (auto-detected from apps/**/providers/global.tsx)
-        ...GLOBAL_PROVIDERS.map(
-          Provider => [Provider] as readonly [typeof Provider]
-        ),
+        // GlobalProviders from federated modules
+        // (loaded dynamically via ./GlobalProvider export in each module)
+        [ExternalModuleProviders],
         // This is where all the routes are defined
         [AppRoutesProvider]
       ] as const),
