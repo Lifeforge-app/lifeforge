@@ -16,7 +16,7 @@ function CreatePasswordScreen({
   controller: ForgeAPIClientController
   challengeController: ForgeAPIClientController
 }) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const { t } = useTranslation('common.vault')
 
