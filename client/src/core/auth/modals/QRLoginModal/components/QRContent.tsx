@@ -1,10 +1,13 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 import { Button, LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 import { useTranslation } from 'react-i18next'
 
 import useQRLoginSession from '../hooks/useQRLoginSession'
+
+dayjs.extend(duration)
 
 function QRByStatus({
   status,
