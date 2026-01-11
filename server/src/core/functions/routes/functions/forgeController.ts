@@ -41,6 +41,7 @@ import {
   encryptResponse,
   isEncryptedPayload
 } from '@functions/encryption'
+import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
 import {
   BaseResponse,
@@ -449,6 +450,8 @@ export class ForgeControllerBuilder<
   ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>, TMedia> {
     const schema = this._schema
 
+    const callerModule = getCallerModuleId()
+
     const isEncrypted = this._encrypted
 
     const options = {
@@ -663,7 +666,11 @@ export class ForgeControllerBuilder<
           return clientError(res, err.message, err.code)
         }
 
-        serverError(res, err instanceof Error ? err.message : String(err))
+        serverError(
+          res,
+          err instanceof Error ? err.message : String(err),
+          callerModule ? `${callerModule.source}:${callerModule.id}` : undefined
+        )
       }
     }
 
