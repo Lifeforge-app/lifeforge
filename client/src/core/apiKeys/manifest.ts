@@ -5,7 +5,7 @@ export default {
   routes: {
     '/': lazy(() => import('.'))
   },
-  name: 'apiKeys',
+  name: 'api-keys',
   displayName: 'API Keys',
   version: '1.0.0',
   author: 'LifeForge <https://lifeforge.dev>',
