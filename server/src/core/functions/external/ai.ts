@@ -6,12 +6,10 @@ import { ResponseInputItem } from 'openai/resources/responses/responses.mjs'
 import z from 'zod'
 
 import { PBService, getAPIKey } from '@functions/database'
-import {
-  getCallerModuleId,
-  validateCallerAccess
-} from '@functions/database/getAPIKey'
+import { validateCallerAccess } from '@functions/database/getAPIKey'
 import { LoggingService } from '@functions/logging/loggingService'
 import { ClientError } from '@functions/routes/utils/response'
+import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 
 export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
