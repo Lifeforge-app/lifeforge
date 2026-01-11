@@ -49,8 +49,6 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
     'dist'
   )
 
-  console.log(moduleDistPath)
-
   const resolvedPath = path.join(moduleDistPath, filePath)
 
   res.setHeader('Access-Control-Allow-Origin', '*')
