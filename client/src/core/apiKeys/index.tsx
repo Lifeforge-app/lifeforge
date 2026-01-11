@@ -50,7 +50,7 @@ function APIKeys() {
       />
       <WithQuery query={entriesQuery}>
         {entries => (
-          <div className="mt-6 mb-24 h-full flex-1 space-y-3 lg:mb-12">
+          <div className="mb-24 h-full flex-1 space-y-3 lg:mb-12">
             {entries.length > 0 ? (
               entries.map(entry => <EntryItem key={entry.id} entry={entry} />)
             ) : (
