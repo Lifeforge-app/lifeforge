@@ -76,7 +76,9 @@ function ModuleItem({
 
   function handleUninstall() {
     open(ConfirmationModal, {
-      title: t('common.moduleManager:modals.uninstall.title'),
+      title: t('common.moduleManager:modals.uninstall.title', {
+        module: translatedTitle
+      }),
       description: t('common.moduleManager:modals.uninstall.description', {
         module: translatedTitle
       }),
