@@ -1,11 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import type { BackendFactory } from 'dnd-core'
 import { EncryptionWrapper, useModalStore } from 'lifeforge-ui'
 import { APIOnlineStatusWrapper } from 'lifeforge-ui'
 import { useMemo } from 'react'
-import React from 'react'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
@@ -42,10 +38,6 @@ function Providers() {
         [NuqsProvider],
         [QueryClientProvider, { client: queryClient }],
         [ToastProvider],
-        [
-          DndProvider as React.FC<{ backend: BackendFactory }>,
-          { backend: HTML5Backend }
-        ],
 
         // Provider that tells components the API endpoint to use
         [APIEndpointProvider, { endpoint: import.meta.env.VITE_API_HOST }],
