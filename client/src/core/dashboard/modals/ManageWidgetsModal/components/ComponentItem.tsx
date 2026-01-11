@@ -1,10 +1,11 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { Switch } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { type IDashboardLayout, usePersonalization } from 'shared'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 function ComponentListItem({
   id,
