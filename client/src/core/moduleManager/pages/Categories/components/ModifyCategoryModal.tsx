@@ -9,6 +9,7 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import forgeAPI from '@/forgeAPI'
@@ -29,6 +30,8 @@ function ModifyCategoryModal({
     onSubmit: (category: { key: string; value: Record<string, string> }) => void
   }
 }) {
+  const { t } = useTranslation('common.moduleManager')
+
   const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
 
   const { open } = useModalStore()
@@ -133,13 +136,14 @@ function ModifyCategoryModal({
                   }
                   icon="tabler:category"
                   label="Category Key"
+                  namespace="common.moduleManager"
                   placeholder="e.g. productivity, finance, information, etc."
                   value={data.key}
                   onChange={value => setData({ ...data, key: value })}
                 />
                 <div className="text-bg-500 mt-6 flex items-center gap-2">
                   <Icon className="size-5" icon="mingcute:translate-line" />
-                  <span className="font-medium">Translations</span>
+                  <span className="font-medium">{t('misc.translations')}</span>
                 </div>
                 <div className="mt-3 space-y-3">
                   {data.value.map(([key, value], index) => (
@@ -194,6 +198,7 @@ function ModifyCategoryModal({
                   <Button
                     className="w-full"
                     icon="tabler:plus"
+                    namespace="common.moduleManager"
                     variant="plain"
                     onClick={() => {
                       open(ModifyTranslationKeyModal, {
