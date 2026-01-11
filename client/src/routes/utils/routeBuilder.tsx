@@ -70,16 +70,6 @@ export function createModuleRoute(
     loadingMessage
   }
 
-  if (item.provider) {
-    const Provider = item.provider
-
-    return {
-      path: `/${item.name.startsWith('lifeforge--') ? item.name.split('--')[1] : item.name}`,
-      element: <Provider />,
-      children: buildChildRoutes(routeConfig)
-    }
-  }
-
   return {
     path: `/${item.name.startsWith('lifeforge--') ? item.name.split('--')[1] : item.name}`,
     children: buildChildRoutes(routeConfig)
