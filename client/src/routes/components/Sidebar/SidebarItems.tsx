@@ -2,8 +2,7 @@ import {
   EmptyStateScreen,
   MainSidebarItem,
   Scrollbar,
-  SidebarDivider,
-  SidebarTitle
+  SidebarDivider
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
@@ -11,6 +10,8 @@ import { normalizeSubnamespace, useLocation, useMainSidebarState } from 'shared'
 import { useAuth } from 'shared'
 
 import { useFederation } from '@/federation'
+
+import MainSidebarTitle from './MainSidebarTitle'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
@@ -78,7 +79,7 @@ function SidebarItems({ query }: { query: string }) {
                 <Fragment key={`section-${item.title || item.items[0].name}`}>
                   {item.title !== '' &&
                     filteredModules.length > 0 &&
-                    sidebarExpanded && <SidebarTitle label={item.title} />}
+                    sidebarExpanded && <MainSidebarTitle title={item.title} />}
                   {filteredModules.map(subItem => {
                     const link = subItem.name.startsWith('lifeforge--')
                       ? subItem.name.split('--')[1]
