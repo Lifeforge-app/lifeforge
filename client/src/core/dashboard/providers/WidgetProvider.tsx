@@ -141,8 +141,6 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
     return <LoadingScreen message="Loading widgets" />
   }
 
-  console.log(federatedWidgets)
-
   return <WidgetContext value={value}>{children}</WidgetContext>
 }
 
