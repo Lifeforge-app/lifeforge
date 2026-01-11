@@ -2,18 +2,26 @@ import type { ModuleCategory } from 'shared'
 
 import forgeAPI from '@/forgeAPI'
 
-const ORDER = ['<START>', 'Miscellaneous', 'Settings', 'SSO', '<END>']
+export const SYSTEM_CATEGORIES = [
+  '<START>',
+  'Miscellaneous',
+  'Settings',
+  'SSO',
+  '<END>'
+]
+
+export type CategoryOrder = Record<string, Record<string, string>>
 
 /**
- * Fetches category order from the server
+ * Fetches category order (with translations) from the server
  */
-export async function fetchCategoryOrder(): Promise<string[]> {
+export async function fetchCategoryOrder(): Promise<CategoryOrder> {
   try {
-    return await forgeAPI.modules.categories.list.query()
+    return (await forgeAPI.modules.categories.list.query()) ?? {}
   } catch (e) {
     console.warn('Failed to fetch category order:', e)
 
-    return []
+    return {}
   }
 }
 
@@ -23,11 +31,11 @@ export async function fetchCategoryOrder(): Promise<string[]> {
  * @param categoriesSeq The sequence of categories
  * @returns The sorted routes
  */
-function routeSorter(categoriesSeq: string[]) {
+function routeSorter(categoriesSeq: Record<string, Record<string, string>>) {
   return (a: ModuleCategory, b: ModuleCategory) => {
-    const aIndex = ORDER.indexOf(a.title)
+    const aIndex = SYSTEM_CATEGORIES.indexOf(a.title)
 
-    const bIndex = ORDER.indexOf(b.title)
+    const bIndex = SYSTEM_CATEGORIES.indexOf(b.title)
 
     // Both are special categories
     if (aIndex !== -1 && bIndex !== -1) {
@@ -46,10 +54,14 @@ function routeSorter(categoriesSeq: string[]) {
       if (bIndex >= 1) return -1 // Settings, SSO, <END> go last
     }
 
-    if (categoriesSeq.length > 0) {
-      const aCatIndex = categoriesSeq.indexOf(a.title)
+    if (Object.keys(categoriesSeq).length > 0) {
+      const aCatIndex = Object.keys(categoriesSeq).indexOf(
+        a.title.toLowerCase()
+      )
 
-      const bCatIndex = categoriesSeq.indexOf(b.title)
+      const bCatIndex = Object.keys(categoriesSeq).indexOf(
+        b.title.toLowerCase()
+      )
 
       // Both found in sequence
       if (aCatIndex !== -1 && bCatIndex !== -1) {
@@ -74,7 +86,7 @@ function routeSorter(categoriesSeq: string[]) {
 
 export function sortRoutes(
   routes: ModuleCategory[],
-  categoryOrder: string[] = []
+  categoryOrder: Record<string, Record<string, string>>
 ) {
   return routes.sort(routeSorter(categoryOrder)).map(cat => ({
     title: ['<START>', '<END>'].includes(cat.title) ? '' : cat.title,

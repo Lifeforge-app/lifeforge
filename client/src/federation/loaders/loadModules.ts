@@ -1,12 +1,14 @@
 import type { ModuleCategory } from 'shared'
 
-import { fetchCategoryOrder, sortRoutes } from '../utils/sortRoutes'
-import loadCoreModules from './loadCoreModules'
 import {
-  type GlobalProviderComponent,
-  loadGlobalProvider
-} from './loadGlobalProvider'
+  type CategoryOrder,
+  fetchCategoryOrder,
+  sortRoutes
+} from '../utils/sortRoutes'
+import loadCoreModules from './loadCoreModules'
 import { fetchModuleManifest, loadModuleConfig } from './loadModuleConfig'
+
+export type GlobalProviderComponent = React.FC<{ children: React.ReactNode }>
 
 /**
  * Adds the module configuration to the routes
@@ -31,24 +33,30 @@ function addToRoute(
 /**
  * Entry point for constructing the routes
  * Loads core modules (static) and federated modules (dynamic) from the server
- * Also loads GlobalProviders from modules that expose them
+ * Collects providers from module manifests
  */
 export default async function loadModules(): Promise<{
   routes: ModuleCategory[]
   globalProviders: GlobalProviderComponent[]
+  categoryTranslations: CategoryOrder
 }> {
   const ROUTES: ModuleCategory[] = []
 
   const globalProviders: GlobalProviderComponent[] = []
 
-  // Load core modules (static, always available)
+  // Load core modules (static imports)
   const coreModules = loadCoreModules()
 
   for (const mod of coreModules) {
     addToRoute(ROUTES, mod.category, mod)
+
+    // Collect provider from core module if exists
+    if (mod.provider) {
+      globalProviders.push(mod.provider as unknown as GlobalProviderComponent)
+    }
   }
 
-  // Fetch federated modules and category order in parallel
+  // Fetch federated modules and category order (which includes translations)
   const [serverManifest, categoryOrder] = await Promise.all([
     fetchModuleManifest(),
     fetchCategoryOrder()
@@ -60,10 +68,11 @@ export default async function loadModules(): Promise<{
 
       addToRoute(ROUTES, mod.category, moduleConfig)
 
-      const globalProvider = await loadGlobalProvider(mod.name)
-
-      if (globalProvider) {
-        globalProviders.push(globalProvider)
+      // Collect provider from manifest if exists
+      if (moduleConfig.provider) {
+        globalProviders.push(
+          moduleConfig.provider as unknown as GlobalProviderComponent
+        )
       }
     } catch (e) {
       console.error(`Failed to load module ${mod.name}:`, e)
@@ -72,6 +81,7 @@ export default async function loadModules(): Promise<{
 
   return {
     routes: sortRoutes(ROUTES, categoryOrder),
-    globalProviders
+    globalProviders,
+    categoryTranslations: categoryOrder
   }
 }
