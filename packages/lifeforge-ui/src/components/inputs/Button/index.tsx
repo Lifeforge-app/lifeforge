@@ -34,6 +34,7 @@ export interface ButtonProps {
 }
 
 type ButtonComponentProps<C extends React.ElementType = 'button'> = {
+  ref?: React.RefObject<HTMLButtonElement | null>
   /** The HTML element or React component to render as the button. */
   as?: C
 } & ButtonProps &
@@ -43,6 +44,7 @@ type ButtonComponentProps<C extends React.ElementType = 'button'> = {
  * A button component for user interactions. Should be used consistently throughout the application. When designing pages, custom defined button should be avoided as much as possible.
  */
 function Button<C extends React.ElementType = 'button'>({
+  ref,
   as = 'button' as C,
   children,
   icon,
@@ -77,6 +79,7 @@ function Button<C extends React.ElementType = 'button'>({
   return (
     <Component
       {...(props as any)}
+      ref={ref}
       className={finalClassName}
       disabled={loading || disabled}
       type="button"
