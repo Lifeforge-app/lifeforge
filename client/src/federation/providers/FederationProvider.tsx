@@ -1,20 +1,30 @@
-import { ErrorScreen, LoadingScreen } from 'lifeforge-ui'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { ModuleCategory } from 'shared'
 
 import type { GlobalProviderComponent } from '../loaders/loadGlobalProvider'
 import loadModules from '../loaders/loadModules'
+import type { CategoryOrder } from '../utils/sortRoutes'
+
+// Force full reload instead of HMR to ensure clean state
+if (import.meta.hot) {
+  import.meta.hot.invalidate()
+}
 
 interface FederationContextValue {
   modules: ModuleCategory[]
   globalProviders: GlobalProviderComponent[]
+  categoryTranslations: CategoryOrder
+  loading: boolean
+  error: Error | null
   refetch: () => Promise<void>
 }
 
-// Default value for HMR safety - prevents crashes when context is unavailable during hot reload
 const defaultValue: FederationContextValue = {
   modules: [],
   globalProviders: [],
+  categoryTranslations: {},
+  loading: true,
+  error: null,
   refetch: async () => {}
 }
 
@@ -31,11 +41,14 @@ function FederationProvider({ children }: { children: React.ReactNode }) {
     GlobalProviderComponent[]
   >([])
 
+  const [categoryTranslations, setCategoryTranslations] =
+    useState<CategoryOrder>({})
+
   const [loading, setLoading] = useState(true)
 
   const [error, setError] = useState<Error | null>(null)
 
-  const fetchModules = async () => {
+  async function fetchModules() {
     setLoading(true)
     setError(null)
 
@@ -44,6 +57,7 @@ function FederationProvider({ children }: { children: React.ReactNode }) {
 
       setModules(result.routes)
       setGlobalProviders(result.globalProviders)
+      setCategoryTranslations(result.categoryTranslations)
     } catch (e) {
       setError(e instanceof Error ? e : new Error('Failed to load modules'))
     } finally {
@@ -59,23 +73,15 @@ function FederationProvider({ children }: { children: React.ReactNode }) {
     () => ({
       modules,
       globalProviders,
+      categoryTranslations,
+      loading,
+      error,
       refetch: fetchModules
     }),
-    [modules, globalProviders]
+    [modules, globalProviders, categoryTranslations, loading, error]
   )
 
-  // Always wrap in Provider to prevent HMR issues where context disappears
-  return (
-    <FederationContext value={value}>
-      {loading ? (
-        <LoadingScreen message="Loading modules..." />
-      ) : error ? (
-        <ErrorScreen showRetryButton message={error.message} />
-      ) : (
-        children
-      )}
-    </FederationContext>
-  )
+  return <FederationContext value={value}>{children}</FederationContext>
 }
 
 export default FederationProvider
