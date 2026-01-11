@@ -1,0 +1,74 @@
+{
+    "title": "Module Manager",
+    "description": "UI-based module manager for your LifeForge instance",
+    "category": "Category",
+    "subsections": {
+        "modules": "Modules",
+        "categories": "Categories"
+    },
+    "buttons": {
+        "uninstall": "Uninstall",
+        "addTranslation": "Add Translation"
+    },
+    "subsectionTitleAndDesc": {
+        "modules": {
+            "title": "Modules",
+            "description": "Install, update, and remove modules from your LifeForge instance"
+        },
+        "categories": {
+            "title": "Categories",
+            "description": "Organize and reorder sidebar categories to customize your navigation"
+        }
+    },
+    "items": {
+        "category": "Category"
+    },
+    "inputs": {
+        "categoryKey": "Category Key",
+        "translationKey": "Translation Key"
+    },
+    "empty": {
+        "category": {
+            "title": "No categories found",
+            "description": "Create a category to get started"
+        },
+        "modules": {
+            "title": "No modules installed",
+            "description": "Install modules from the registry to extend your LifeForge"
+        }
+    },
+    "modals": {
+        "category": {
+            "create": "Create Category",
+            "update": "Update Category"
+        },
+        "uninstall": {
+            "title": "Uninstall {{module}}?",
+            "description": "This module will be removed from your system but your data will be preserved. You can reinstall it anytime from the registry."
+        },
+        "devMode": {
+            "enable": {
+                "title": "Enable Dev Mode",
+                "description": "Enabling dev mode will load this module directly from source instead of pre-built bundles. Changes to the module's codebase will hot-reload instantly without requiring a rebuild.\n\nUse this when actively developing or customizing this module."
+            },
+            "disable": {
+                "title": "Disable Dev Mode",
+                "description": "Disabling dev mode will switch back to loading from pre-built bundles. Make sure you have rebuilt the module to include your latest changes."
+            }
+        },
+        "translationKey": {
+            "create": "Create Translation Key",
+            "update": "Update Translation Key"
+        }
+    },
+    "devMode": {
+        "label": "Dev Mode",
+        "enable": "Enable Dev Mode",
+        "disable": "Disable Dev Mode",
+        "enabled": "{{module}} is now in dev mode",
+        "disabled": "{{module}} is no longer in dev mode"
+    },
+    "misc": {
+        "translations": "Translations"
+    }
+}
