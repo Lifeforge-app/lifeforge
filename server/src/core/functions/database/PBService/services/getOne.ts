@@ -8,8 +8,8 @@ import {
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
 
+import { PBLogger } from '..'
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
@@ -26,8 +26,7 @@ export class GetOne<
     never,
     never
   >
-> implements PBServiceBase<TCollectionKey, TExpandConfig>
-{
+> implements PBServiceBase<TCollectionKey, TExpandConfig> {
   private _itemId: string = ''
   private _expand: string = ''
   private _fields: string = ''
@@ -123,13 +122,12 @@ export class GetOne<
         fields: this._fields
       })
 
-    LoggingService.debug(
+    PBLogger.debug(
       `${chalk.hex('#82c8e5').bold('getOne')} Fetched record with ID ${chalk
         .hex('#34ace0')
         .bold(
           this._itemId
-        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-      'DB'
+        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
     return result as unknown as Promise<

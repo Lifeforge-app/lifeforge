@@ -9,8 +9,8 @@ import {
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
 
+import { PBLogger } from '..'
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
@@ -38,8 +38,7 @@ export class Update<
     never,
     never
   >
-> implements PBServiceBase<TCollectionKey, TExpandConfig>
-{
+> implements PBServiceBase<TCollectionKey, TExpandConfig> {
   private _recordId: string = ''
   private _data: UpdateData<TCollectionKey> = {}
   private _expand: string = ''
@@ -156,13 +155,12 @@ export class Update<
         fields: this._fields
       })
 
-    LoggingService.debug(
+    PBLogger.debug(
       `${chalk.hex('#2ed573').bold('update')} Updated record with ID ${chalk
         .hex('#34ace0')
         .bold(
           this._recordId
-        )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-      'DB'
+        )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
     return result as unknown as SingleItemReturnType<

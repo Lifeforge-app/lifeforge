@@ -21,7 +21,9 @@ import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 
-import { LoggingService } from '@functions/logging/loggingService'
+import { coreLogger } from '../../..'
+
+const logger = coreLogger.child({ service: 'Encryption' })
 
 // Key storage paths
 const KEYS_DIR = path.join(ROOT_DIR, 'keys')
@@ -71,7 +73,7 @@ export function ensureKeysExist(): void {
   }
 
   if (!fs.existsSync(PRIVATE_KEY_PATH) || !fs.existsSync(PUBLIC_KEY_PATH)) {
-    LoggingService.debug('Generating new RSA keypair...', 'ENCRYPTION')
+    logger.debug('Generating new RSA keypair...')
 
     const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
       modulusLength: RSA_KEY_SIZE,
@@ -87,7 +89,7 @@ export function ensureKeysExist(): void {
 
     fs.writeFileSync(PUBLIC_KEY_PATH, publicKey)
     fs.writeFileSync(PRIVATE_KEY_PATH, privateKey, { mode: 0o600 })
-    LoggingService.info('RSA keypair generated successfully', 'ENCRYPTION')
+    logger.info('RSA keypair generated successfully')
   }
 }
 

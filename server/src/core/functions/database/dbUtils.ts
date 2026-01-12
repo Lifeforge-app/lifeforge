@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import Pocketbase from 'pocketbase'
 import { parseCollectionName } from 'shared'
 
-import { LoggingService } from '@functions/logging/loggingService'
+import { PBLogger } from './PBService'
 
 /**
  * Converts a code-format collection name to PocketBase format
@@ -117,7 +117,7 @@ export async function connectToPocketBase(
       )
     }
 
-    LoggingService.info('Successfully connected to PocketBase', 'DB')
+    PBLogger.info('Successfully connected to PocketBase')
 
     return pb
   } catch (error) {
@@ -246,21 +246,17 @@ export default async function checkDB(): Promise<void> {
       )
     }
 
-    LoggingService.info(
-      `Database validation complete. All ${validationResult.totalCollections} collections are present`,
-      'DB'
+    PBLogger.info(
+      `Database validation complete. All ${validationResult.totalCollections} collections are present`
     )
   } catch (error) {
     if (
       error instanceof DatabaseConnectionError ||
       error instanceof DatabaseValidationError
     ) {
-      LoggingService.error(error.message, 'DB')
+      PBLogger.error(error.message)
     } else {
-      LoggingService.error(
-        `Unexpected error during database validation: ${error}`,
-        'DB'
-      )
+      PBLogger.error(`Unexpected error during database validation: ${error}`)
     }
     process.exit(1)
   }

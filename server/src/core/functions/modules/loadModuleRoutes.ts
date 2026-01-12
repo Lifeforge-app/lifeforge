@@ -3,7 +3,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 
-import { LoggingService } from '@functions/logging/loggingService'
+import { coreLogger } from '../../..'
 
 /**
  * Dynamically loads module routes from TypeScript source files.
@@ -14,7 +14,7 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
   const appsDir = path.join(ROOT_DIR, 'apps')
 
   if (!fs.existsSync(appsDir)) {
-    LoggingService.warn('Apps directory not found, no module routes loaded')
+    coreLogger.warn('Apps directory not found, no module routes loaded')
 
     return {}
   }
@@ -38,17 +38,17 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
         : _.camelCase(modDir)
 
       if (!mod.default) {
-        LoggingService.warn(`Module ${modDir} has no default export`)
+        coreLogger.warn(`Module ${modDir} has no default export`)
         continue
       }
 
       modules[key] = mod.default
     } catch (error) {
-      LoggingService.error(`Failed to load routes from ${modDir}: ${error}`)
+      coreLogger.error(`Failed to load routes from ${modDir}: ${error}`)
     }
   }
 
-  LoggingService.info(`Loaded ${Object.keys(modules).length} module route(s)`)
+  coreLogger.info(`Loaded ${Object.keys(modules).length} module route(s)`)
 
   return modules
 }

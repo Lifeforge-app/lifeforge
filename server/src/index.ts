@@ -1,3 +1,5 @@
+import { PORT } from '@constants'
+import { createLogger } from '@lifeforge/log'
 import fs from 'fs'
 import { createServer } from 'node:http'
 
@@ -5,12 +7,12 @@ import checkDB from '@functions/database/dbUtils'
 import ensureCredentials from '@functions/initialization/ensureCredentials'
 import { LocaleService } from '@functions/initialization/localeService'
 import traceRouteStack from '@functions/initialization/traceRouteStack'
-import { LoggingService } from '@functions/logging/loggingService'
 import createSocketServer from '@functions/socketio/createSocketServer'
 import ensureRootName from '@functions/utils/ensureRootName'
 
 import app from './core/app'
-import { PORT } from '@constants'
+
+export const coreLogger = createLogger({ name: 'Server Core' })
 
 function ensureDirectories(): void {
   if (!fs.existsSync('./medium')) {
@@ -22,8 +24,8 @@ function startServer(server: ReturnType<typeof createServer>): void {
   server.listen(PORT, () => {
     const routes = traceRouteStack(app._router.stack)
 
-    LoggingService.debug(`Registered routes: ${routes.length}`, 'API')
-    LoggingService.info(`REST API server running on port ${PORT}`, 'API')
+    coreLogger.debug(`Registered routes: ${routes.length}`)
+    coreLogger.info(`REST API server running on port ${PORT}`)
   })
 }
 

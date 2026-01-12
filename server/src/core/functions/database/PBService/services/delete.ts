@@ -3,9 +3,9 @@ import PocketBase from 'pocketbase'
 
 import { CollectionKey } from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
 import { ClientError } from '@functions/routes/utils/response'
 
+import { PBLogger } from '..'
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
@@ -13,9 +13,9 @@ import getFinalCollectionName from '../utils/getFinalCollectionName'
  * Class for deleting records from PocketBase collections with type safety
  * @template TCollectionKey - The collection key type
  */
-export class Delete<TCollectionKey extends CollectionKey>
-  implements PBServiceBase<TCollectionKey>
-{
+export class Delete<
+  TCollectionKey extends CollectionKey
+> implements PBServiceBase<TCollectionKey> {
   private _recordId: string = ''
 
   /**
@@ -63,13 +63,12 @@ export class Delete<TCollectionKey extends CollectionKey>
         .collection(getFinalCollectionName(this.collectionKey))
         .delete(this._recordId)
 
-      LoggingService.debug(
+      PBLogger.debug(
         `${chalk.hex('#ff5252').bold('delete')} Deleted record with ID ${chalk
           .hex('#34ace0')
           .bold(
             this._recordId
-          )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-        'DB'
+          )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`
       )
 
       return result
