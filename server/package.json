@@ -1,5 +1,5 @@
 {
-  "name": "lifeforge-server",
+  "name": "@lifeforge/server",
   "private": true,
   "description": "The backend server for the LifeForge system",
   "version": "0.0.0",
@@ -14,9 +14,11 @@
   "type": "module",
   "main": "./dist/server.js",
   "scripts": {
-    "types": "bun --cwd .. prebuild && tsc -b",
-    "build": "bun types && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
+    "types": "tsc -b",
+    "build": "bun --cwd ../shared build && bun types && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "start": "bun types && NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
+    "start:prod": "NODE_ENV=production bun ./dist/server.js",
+    "start:watch": "NODE_ENV=production bun --watch ./dist/server.js",
     "dev": "bun tsx watch --env-file=../env/.env.local ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "vitest",
@@ -24,6 +26,7 @@
     "test:run": "vitest run"
   },
   "dependencies": {
+    "@lifeforge/log": "workspace:*",
     "bcryptjs": "^3.0.2",
     "chalk": "^5.4.1",
     "cors": "^2.8.5",
