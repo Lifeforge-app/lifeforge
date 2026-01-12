@@ -29,7 +29,7 @@ if (fs.existsSync(envPath)) {
 
 // Setup and run CLI
 try {
-  await setupCLI()
+  setupCLI()
   runCLI()
 } catch (error) {
   Logging.error(`Unexpected error occurred: ${error}`)

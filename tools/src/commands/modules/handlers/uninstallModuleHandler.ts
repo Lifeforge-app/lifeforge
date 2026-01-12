@@ -1,19 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 
-import { reloadHandler } from '@/commands/docker/handlers/reloadHandler'
 import { ROOT_DIR } from '@/constants/constants'
 import { bunInstall } from '@/utils/commands'
+import { smartReloadServer } from '@/utils/docker'
 import Logging from '@/utils/logging'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
 import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
-
-interface UninstallOptions {
-  reload?: boolean
-}
 
 /**
  * Uninstalls one or more modules.
@@ -27,11 +23,9 @@ interface UninstallOptions {
  * After uninstallation:
  * - Runs bun install to clean up
  * - Regenerates route and schema registries
- * - Optionally triggers Docker reload (--reload flag)
  */
 export async function uninstallModuleHandler(
-  moduleNames: string[],
-  options: UninstallOptions
+  moduleNames: string[]
 ): Promise<void> {
   const uninstalled: string[] = []
 
@@ -70,9 +64,5 @@ export async function uninstallModuleHandler(
   generateRouteRegistry()
   generateSchemaRegistry()
 
-  // Trigger Docker reload if requested
-  if (options.reload) {
-    Logging.info('Triggering Docker reload...')
-    await reloadHandler({})
-  }
+  smartReloadServer()
 }

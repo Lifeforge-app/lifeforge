@@ -1,9 +1,16 @@
-import path from 'path'
-
 import Logging from '@/utils/logging'
 
 import applyMigrations from './applyMigrations'
 import createSingleMigration from './createSingleMigration'
+import generateSkeletonContent from './generateContent/skeleton'
+import generateStructureContent from './generateContent/structure'
+import generateViewsContent from './generateContent/views'
+
+const generateContentMap = {
+  skeleton: generateSkeletonContent,
+  structure: generateStructureContent,
+  views: generateViewsContent
+}
 
 /**
  * Generates and applies migrations for a specific phase across all modules.
@@ -36,9 +43,7 @@ export default async function stageMigration(
 ) {
   Logging.debug(`Phase ${index + 1}: Creating ${phase} migrations...`)
 
-  const { default: phaseFn } = await import(
-    path.resolve(import.meta.dirname, 'generateContent', `${phase}.ts`)
-  )
+  const phaseFn = generateContentMap[phase]
 
   for (const { moduleName, schema } of importedSchemas) {
     try {

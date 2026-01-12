@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import prettier from 'prettier'
 
+import { ROOT_DIR } from '@/constants/constants'
 import Logging from '@/utils/logging'
 
 import { PRETTIER_OPTIONS } from './constants'
@@ -48,8 +49,8 @@ function getModuleName(schemaPath: string): string | null {
  */
 export function getSchemaFiles(targetModule?: string): string[] {
   const allSchemas = [
-    ...fs.globSync('./server/src/lib/**/schema.ts'),
-    ...fs.globSync('./apps/**/server/schema.ts')
+    ...fs.globSync(path.resolve(ROOT_DIR, './server/src/lib/**/schema.ts')),
+    ...fs.globSync(path.resolve(ROOT_DIR, './apps/**/server/schema.ts'))
   ]
 
   const filteredSchemas = targetModule
