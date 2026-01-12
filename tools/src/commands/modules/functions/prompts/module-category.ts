@@ -1,6 +1,6 @@
 import prompts from 'prompts'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 export async function promptModuleCategory(): Promise<string> {
   const response = await prompts(
@@ -19,7 +19,7 @@ export async function promptModuleCategory(): Promise<string> {
     },
     {
       onCancel: () => {
-        Logging.error('Module creation cancelled by user.')
+        logger.error('Module creation cancelled by user.')
         process.exit(0)
       }
     }

@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { getEnvVar, isDockerMode } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import { ROOT_DIR } from './constants'
 
@@ -36,7 +36,7 @@ if (!isDockerMode()) {
   try {
     fs.accessSync(PB_DIR)
   } catch (error) {
-    Logging.error(`PB_DIR is not accessible: ${error}`)
+    logger.error(`PB_DIR is not accessible: ${error}`)
     process.exit(1)
   }
 }

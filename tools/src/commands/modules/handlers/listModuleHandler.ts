@@ -1,4 +1,6 @@
-import Logging from '@/utils/logging'
+import chalk from 'chalk'
+
+import logger from '@/utils/logger'
 
 import listModules from '../functions/listModules'
 
@@ -11,22 +13,20 @@ export async function listModulesHandler(): Promise<void> {
   const totalCount = Object.keys(modules).length
 
   if (totalCount === 0) {
-    Logging.print('No modules installed')
-    Logging.print(
-      Logging.dim('  Run "bun forge modules install <name>" to install one')
+    logger.print('No modules installed')
+    logger.print(
+      chalk.dim('  Run "bun forge modules install <name>" to install one')
     )
 
     return
   }
 
-  Logging.print(
-    `${Logging.highlight(String(totalCount))} installed module${totalCount > 1 ? 's' : ''}:\n`
+  logger.print(
+    `${chalk.blue(String(totalCount))} installed module${totalCount > 1 ? 's' : ''}:\n`
   )
 
   Object.entries(modules).forEach(([name, info]) => {
-    Logging.print(
-      `  ${Logging.highlight(name)} ${Logging.dim(`v${info.version}`)}`
-    )
-    Logging.print(`    ${Logging.dim(info.displayName)}`)
+    logger.print(`  ${chalk.blue(name)} ${chalk.dim(`v${info.version}`)}`)
+    logger.print(`    ${chalk.dim(info.displayName)}`)
   })
 }

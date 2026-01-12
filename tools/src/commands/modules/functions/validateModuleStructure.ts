@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 const MODULE_STRUCTURE: Array<{
   type: 'folder' | 'file'
@@ -102,9 +102,9 @@ export default async function validateModuleStructure(
   }
 
   if (errors.length > 0) {
-    Logging.error('Module validation failed:')
+    logger.error('Module validation failed:')
     errors.forEach(error => {
-      Logging.error(`  ✗ ${error}`)
+      logger.error(`  ✗ ${error}`)
     })
     process.exit(1)
   }

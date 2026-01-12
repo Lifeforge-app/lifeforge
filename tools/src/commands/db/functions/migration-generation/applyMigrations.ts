@@ -1,6 +1,8 @@
+import { LOG_LEVELS } from '@lifeforge/log'
+
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import executeCommand from '@/utils/commands'
-import Logging, { LEVEL_ORDER } from '@/utils/logging'
+import logger from '@/utils/logger'
 
 /**
  * Runs `pocketbase migrate up` to apply all pending migrations in the migrations directory.
@@ -11,11 +13,14 @@ import Logging, { LEVEL_ORDER } from '@/utils/logging'
  * @throws Error if the migration command fails
  */
 export default function applyStagedMigration(): void {
-  Logging.debug('Applying pending migrations...')
+  logger.debug('Applying pending migrations...')
 
   executeCommand(`${PB_BINARY_PATH} migrate up ${PB_KWARGS.join(' ')}`, {
-    stdio: Logging.level > LEVEL_ORDER.debug ? 'pipe' : 'inherit'
+    stdio:
+      LOG_LEVELS.indexOf(logger.level) > LOG_LEVELS.indexOf('debug')
+        ? 'pipe'
+        : 'inherit'
   })
 
-  Logging.debug('Migrations applied successfully')
+  logger.debug('Migrations applied successfully')
 }

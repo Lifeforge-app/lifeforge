@@ -1,8 +1,10 @@
+import { LOG_LEVELS } from '@lifeforge/log'
 import { Command, program } from 'commander'
 import fs from 'fs'
 import path from 'path'
 
-import Logging, { LOG_LEVELS } from '../utils/logging'
+import logger, { setLogLevel } from '@/utils/logger'
+
 import { commands } from './commands'
 import { configureHelp } from './help'
 
@@ -38,12 +40,24 @@ export function setupCLI(): void {
       `Set log level (${LOG_LEVELS.join(', ')})`,
       'info'
     )
-    .hook('preAction', thisCommand => {
+    .hook('preAction', (thisCommand, actionCommand) => {
       const level = thisCommand.opts().logLevel as (typeof LOG_LEVELS)[number]
 
       if (LOG_LEVELS.includes(level)) {
-        Logging.setLevel(level)
+        setLogLevel(level)
       }
+
+      // Build full command path (e.g., "modules list")
+      const commandPath: string[] = []
+
+      let cmd: Command | null = actionCommand
+
+      while (cmd && cmd !== program) {
+        commandPath.unshift(cmd.name())
+        cmd = cmd.parent
+      }
+
+      logger.debug(`Executing command "${commandPath.join(' ')}"`)
     })
 
   setupCommands(program)

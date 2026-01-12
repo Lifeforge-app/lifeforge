@@ -1,4 +1,6 @@
-import Logging from '@/utils/logging'
+import chalk from 'chalk'
+
+import logger from '@/utils/logger'
 
 import { listSchemaPaths } from './listSchemaPaths'
 import { matchCollectionToModule } from './matchCollectionToModule'
@@ -25,20 +27,23 @@ export default async function buildModuleCollectionsMap(
 
   const allModules = listSchemaPaths()
 
-  Logging.debug(
-    `Found ${Logging.highlight(String(allModules.length))} modules with schema files`
+  logger.debug(
+    `Found ${chalk.blue(String(allModules.length))} modules with schema files`
   )
 
   let matchedCount = 0
   let unmatchedCount = 0
 
   for (const collection of collections) {
-    const matchingModuleDir = await matchCollectionToModule(allModules, collection)
+    const matchingModuleDir = await matchCollectionToModule(
+      allModules,
+      collection
+    )
 
     if (!matchingModuleDir) {
       unmatchedCount++
-      Logging.debug(
-        `Collection ${Logging.highlight(collection.name as string)} has no matching module`
+      logger.debug(
+        `Collection ${chalk.blue(collection.name as string)} has no matching module`
       )
       continue
     }
@@ -52,8 +57,8 @@ export default async function buildModuleCollectionsMap(
     moduleCollectionsMap[matchingModuleDir].push(collection)
   }
 
-  Logging.debug(
-    `Matched ${Logging.highlight(String(matchedCount))} collections to modules, ${unmatchedCount} unmatched`
+  logger.debug(
+    `Matched ${chalk.blue(String(matchedCount))} collections to modules, ${unmatchedCount} unmatched`
   )
 
   return moduleCollectionsMap

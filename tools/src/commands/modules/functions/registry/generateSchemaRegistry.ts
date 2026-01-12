@@ -3,7 +3,7 @@ import _ from 'lodash'
 import path from 'path'
 
 import { SERVER_SCHEMA_DIR } from '@/constants/constants'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import normalizePackage from '../../../../utils/normalizePackage'
 import listModules from '../listModules'
@@ -41,5 +41,5 @@ export default SCHEMAS
 
   fs.writeFileSync(SERVER_SCHEMA_DIR, registry)
 
-  Logging.success('Generated schema registry')
+  logger.success('Generated schema registry')
 }

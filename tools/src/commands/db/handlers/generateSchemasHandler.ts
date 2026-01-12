@@ -1,4 +1,6 @@
-import Logging from '@/utils/logging'
+import chalk from 'chalk'
+
+import logger from '@/utils/logger'
 
 import buildModuleCollectionsMap from '../functions/schema-generation/buildModuleCollectionsMap'
 import filterCollectionsMap from '../functions/schema-generation/filterCollectionsMap'
@@ -13,9 +15,7 @@ export async function generateSchemaHandler(
   targetModule?: string
 ): Promise<void> {
   if (targetModule) {
-    Logging.debug(
-      `Generating schema for module: ${Logging.highlight(targetModule)}`
-    )
+    logger.debug(`Generating schema for module: ${chalk.blue(targetModule)}`)
   }
 
   const collections = await getCollectionsFromPB()
@@ -27,7 +27,7 @@ export async function generateSchemaHandler(
   const entries = Object.entries(filteredMap)
 
   if (entries.length === 0) {
-    Logging.warn('No modules found to generate schemas for')
+    logger.warn('No modules found to generate schemas for')
 
     return
   }
@@ -36,8 +36,8 @@ export async function generateSchemaHandler(
     entries.map(async ([modulePath, moduleCollections]) => {
       const collectionCount = moduleCollections.length
 
-      Logging.debug(
-        `Writing ${Logging.highlight(String(collectionCount))} collections for module ${Logging.dim(modulePath)}`
+      logger.debug(
+        `Writing ${chalk.blue(String(collectionCount))} collections for module ${chalk.dim(modulePath)}`
       )
 
       await writeFormattedFile(
@@ -54,7 +54,7 @@ export async function generateSchemaHandler(
     })
   )
 
-  Logging.success(
-    `Generated schemas for ${Logging.highlight(String(entries.length))} modules`
+  logger.success(
+    `Generated schemas for ${chalk.blue(String(entries.length))} modules`
   )
 }

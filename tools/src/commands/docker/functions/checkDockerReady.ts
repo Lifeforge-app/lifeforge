@@ -1,14 +1,12 @@
 import { ROOT_DIR } from '@/constants/constants'
 import executeCommand from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 const REQUIRED_CONTAINERS = [
   'lifeforge-db',
   'lifeforge-server',
   'lifeforge-client'
 ]
-
-
 
 /**
  * Checks if Docker is available and LifeForge containers are initialized.
@@ -19,7 +17,7 @@ export default function checkDockerReady(): boolean {
     // Check if Docker is running
     executeCommand('docker info', { stdio: 'pipe' })
   } catch {
-    Logging.actionableError(
+    logger.actionableError(
       'Docker is not running',
       'Start Docker Desktop or the Docker daemon first'
     )
@@ -36,13 +34,12 @@ export default function checkDockerReady(): boolean {
 
     const runningContainers = result.split('\n').map(name => name.trim())
 
-    const missingContainers = REQUIRED_CONTAINERS
-    .filter(
+    const missingContainers = REQUIRED_CONTAINERS.filter(
       container => !runningContainers.includes(container)
     )
 
     if (missingContainers.length > 0) {
-      Logging.actionableError(
+      logger.actionableError(
         `LifeForge containers not running: ${missingContainers.join(', ')}`,
         'Run "docker compose up -d" first to start the containers'
       )
@@ -50,7 +47,7 @@ export default function checkDockerReady(): boolean {
       return false
     }
   } catch {
-    Logging.actionableError(
+    logger.actionableError(
       'Failed to check Docker containers',
       'Ensure Docker is running and docker-compose.yaml exists'
     )

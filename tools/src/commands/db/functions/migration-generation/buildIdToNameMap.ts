@@ -1,6 +1,6 @@
 import path from 'path'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import { getSchemaFiles } from '../../utils'
 
@@ -45,7 +45,7 @@ export default async function buildIdToNameMap(
     }
   }
 
-  Logging.debug(`Built ID-to-name map with ${idToNameMap.size} collections`)
+  logger.debug(`Built ID-to-name map with ${idToNameMap.size} collections`)
 
   return idToNameMap
 }

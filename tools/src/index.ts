@@ -5,7 +5,7 @@ import path from 'path'
 
 import { runCLI, setupCLI } from './cli/setup'
 import { ROOT_DIR } from './constants/constants'
-import Logging from './utils/logging'
+import logger from './utils/logger'
 
 /**
  * LifeForge Forge - Build and development tool for LifeForge projects
@@ -22,7 +22,7 @@ const envPath = path.resolve(ROOT_DIR, 'env/.env.local')
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath, quiet: true })
 } else {
-  Logging.warn(
+  logger.warn(
     `Environment file not found at ${envPath}. Continuing without loading environment variables from file.`
   )
 }
@@ -32,5 +32,5 @@ try {
   setupCLI()
   runCLI()
 } catch (error) {
-  Logging.error(`Unexpected error occurred: ${error}`)
+  logger.error(`Unexpected error occurred: ${error}`)
 }

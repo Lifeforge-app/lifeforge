@@ -1,6 +1,6 @@
 import { ROOT_DIR } from '@/constants/constants'
 import executeCommand from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import checkDockerReady from '../functions/checkDockerReady'
 
@@ -28,29 +28,29 @@ export async function migrateHandler(options: MigrateOptions): Promise<void> {
   const execOptions = { cwd: ROOT_DIR, stdio: 'inherit' as const }
 
   try {
-    Logging.info('Starting Docker migration sequence...')
+    logger.info('Starting Docker migration sequence...')
 
     // Step 1: Stop server
-    Logging.info('Stopping server...')
+    logger.info('Stopping server...')
     executeCommand('docker compose stop server', execOptions)
 
     // Step 2: Run migrations (unless skipped)
     if (!options.skipMigrations) {
-      Logging.info('Regenerating and applying migrations...')
+      logger.info('Regenerating and applying migrations...')
       executeCommand('docker compose run --rm db-init', execOptions)
     } else {
-      Logging.info('Skipping migrations (--skip-migrations)')
+      logger.info('Skipping migrations (--skip-migrations)')
     }
 
     // Step 3: Restart server
-    Logging.info('Restarting server...')
+    logger.info('Restarting server...')
     executeCommand('docker compose up -d server', execOptions)
 
-    Logging.success('Docker migration complete!')
-    Logging.info('Refresh the browser to load updated modules')
+    logger.success('Docker migration complete!')
+    logger.info('Refresh the browser to load updated modules')
   } catch (error) {
-    Logging.error('Docker migration failed')
-    Logging.debug(
+    logger.error('Docker migration failed')
+    logger.debug(
       `Error details: ${error instanceof Error ? error.message : String(error)}`
     )
     process.exit(1)

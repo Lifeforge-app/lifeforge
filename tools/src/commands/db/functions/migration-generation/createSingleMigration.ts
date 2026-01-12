@@ -3,6 +3,7 @@ import fs from 'fs'
 import prettier from 'prettier'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
+import logger from '@/utils/logger'
 
 import { PRETTIER_OPTIONS } from '../../utils'
 

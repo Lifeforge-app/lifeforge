@@ -1,10 +1,11 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 import { bunInstall } from '@/utils/commands'
 import { smartReloadServer } from '@/utils/docker'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
@@ -33,14 +34,14 @@ export async function uninstallModuleHandler(
     const { targetDir, fullName } = normalizePackage(moduleName)
 
     if (!findPackageName(fullName)) {
-      Logging.actionableError(
-        `Module ${Logging.highlight(fullName)} is not installed`,
+      logger.actionableError(
+        `Module ${chalk.blue(fullName)} is not installed`,
         'Run "bun forge modules list" to see installed modules'
       )
       continue
     }
 
-    Logging.debug(`Uninstalling ${Logging.highlight(fullName)}...`)
+    logger.debug(`Uninstalling ${chalk.blue(fullName)}...`)
 
     removeDependency(fullName)
 
@@ -51,7 +52,7 @@ export async function uninstallModuleHandler(
 
     uninstalled.push(moduleName)
 
-    Logging.success(`Uninstalled ${Logging.highlight(fullName)}`)
+    logger.success(`Uninstalled ${chalk.blue(fullName)}`)
   }
 
   if (uninstalled.length === 0) {
@@ -60,7 +61,7 @@ export async function uninstallModuleHandler(
 
   bunInstall()
 
-  Logging.debug('Regenerating registries...')
+  logger.debug('Regenerating registries...')
   generateRouteRegistry()
   generateSchemaRegistry()
 

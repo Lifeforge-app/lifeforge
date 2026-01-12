@@ -1,4 +1,6 @@
-import Logging from '@/utils/logging'
+import chalk from 'chalk'
+
+import logger from '@/utils/logger'
 
 import applyMigrations from './applyMigrations'
 import createSingleMigration from './createSingleMigration'
@@ -41,7 +43,7 @@ export default async function stageMigration(
   }>,
   idToNameMap: Map<string, string>
 ) {
-  Logging.debug(`Phase ${index + 1}: Creating ${phase} migrations...`)
+  logger.debug(`Phase ${index + 1}: Creating ${phase} migrations...`)
 
   const phaseFn = generateContentMap[phase]
 
@@ -52,15 +54,13 @@ export default async function stageMigration(
         phaseFn(schema, idToNameMap)
       )
 
-      Logging.debug(
-        `Created ${phase} migration for ${Logging.highlight(moduleName)}`
-      )
+      logger.debug(`Created ${phase} migration for ${chalk.blue(moduleName)}`)
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : String(error)
 
       throw new Error(
-        `Failed to create ${phase} migration for ${Logging.highlight(moduleName)}: ${errorMessage}`
+        `Failed to create ${phase} migration for ${chalk.blue(moduleName)}: ${errorMessage}`
       )
     }
   }

@@ -1,11 +1,11 @@
+import chalk from 'chalk'
 import CryptoJS from 'crypto-js'
 import OpenAI from 'openai'
 import type { ResponseInput } from 'openai/resources/responses/responses.mjs'
-import ora from 'ora'
 import z from 'zod'
 
 import { getEnvVars } from './helpers'
-import Logging from './logging'
+import logger from './logger'
 import getPBInstance from './pocketbase'
 import { zodTextFormat } from './zodResponseFormat'
 
@@ -39,7 +39,7 @@ export async function getAPIKey(): Promise<string | null> {
       CryptoJS.enc.Utf8
     )
   } catch {
-    Logging.error('Failed to decrypt OpenAI API key.')
+    logger.error('Failed to decrypt OpenAI API key.')
 
     return null
   } finally {
@@ -64,7 +64,7 @@ export async function fetchAI<T extends z.ZodTypeAny>({
   const apiKey = await getAPIKey()
 
   if (!apiKey) {
-    Logging.error('OpenAI API key not found.')
+    logger.error('OpenAI API key not found.')
 
     return null
   }
@@ -73,7 +73,7 @@ export async function fetchAI<T extends z.ZodTypeAny>({
     apiKey
   })
 
-  const spinner = ora('Fetching AI response...').start()
+  logger.debug(`Using OpenAI model: ${model}`)
 
   const completion = await client.responses.parse({
     model,
@@ -85,9 +85,13 @@ export async function fetchAI<T extends z.ZodTypeAny>({
 
   const parsedResponse = completion.output_parsed
 
-  spinner.stop()
+  logger.debug(
+    `Received response with length ${chalk.green(completion.output.length)} from OpenAI API and parsed successfully.`
+  )
 
   if (!parsedResponse) {
+    logger.error('Failed to parse response from OpenAI API.')
+
     return null
   }
 

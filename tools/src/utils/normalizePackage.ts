@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
+import logger from '@/utils/logger'
 
 type PackageType = 'module' | 'locale'
 

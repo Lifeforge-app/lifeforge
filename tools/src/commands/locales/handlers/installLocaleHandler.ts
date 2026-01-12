@@ -1,8 +1,9 @@
+import chalk from 'chalk'
 import fs from 'fs'
 
 import { installPackage } from '@/utils/commands'
 import initGitRepository from '@/utils/initGitRepository'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
 import setFirstLangInDB from '../functions/setFirstLangInDB'
@@ -14,15 +15,15 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
   )
 
   if (!/^@lifeforge\/lang-[a-z]{2}(-[A-Z]{2})?$/i.test(fullName)) {
-    Logging.actionableError(
-      `Invalid locale name: ${Logging.highlight(langCode)}`,
+    logger.actionableError(
+      `Invalid locale name: ${chalk.blue(langCode)}`,
       'Locale names should follow the format "xx" or "xx-XX", where "xx" is a two-letter language code and "XX" is a two-letter country code.'
     )
     process.exit(1)
   }
 
   if (fs.existsSync(targetDir)) {
-    Logging.actionableError(
+    logger.actionableError(
       `Locale already exists at locales/${shortName}`,
       `Remove it first with: bun forge locales uninstall ${shortName}`
     )
@@ -30,7 +31,7 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
     process.exit(1)
   }
 
-  Logging.info(`Installing ${Logging.highlight(fullName)}...`)
+  logger.info(`Installing ${chalk.blue(fullName)}...`)
 
   try {
     installPackage(fullName, targetDir)
@@ -38,10 +39,10 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
 
     await setFirstLangInDB(shortName)
 
-    Logging.success(`Installed ${Logging.highlight(fullName)}`)
+    logger.success(`Installed ${chalk.blue(fullName)}`)
   } catch (error) {
-    Logging.actionableError(
-      `Failed to install ${Logging.highlight(fullName)}`,
+    logger.actionableError(
+      `Failed to install ${chalk.blue(fullName)}`,
       'Make sure the locale exists in the registry'
     )
     throw error

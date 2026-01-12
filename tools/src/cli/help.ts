@@ -1,6 +1,8 @@
 import chalk from 'chalk'
 import { Command } from 'commander'
 
+import logger from '@/utils/logger'
+
 const LOGO = `
    ╭─────────────────────────────────────╮
    │                                     │
@@ -131,8 +133,8 @@ export function configureHelp(program: Command): void {
 
   // Custom error formatting
   program.configureOutput({
-    outputError: (str, write) => {
-      write(chalk.red(`\n   ❌ ${str.trim()}\n`))
+    outputError: str => {
+      logger.error(str.trim())
     }
   })
 }

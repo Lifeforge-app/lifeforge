@@ -1,10 +1,11 @@
+import chalk from 'chalk'
 import fs from 'fs'
 
 import bumpPackageVersion, {
   revertPackageVersion
 } from '@/utils/bumpPackageVersion'
 import executeCommand from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
 import { validateMaintainerAccess } from '../../../utils/github-cli'
@@ -18,7 +19,7 @@ export async function publishLocaleHandler(
   const { fullName, targetDir } = normalizePackage(langCode, 'locale')
 
   if (!fs.existsSync(targetDir)) {
-    Logging.actionableError(
+    logger.actionableError(
       `Locale "${langCode}" not found in locales/`,
       'Run "bun forge locales list" to see available locales'
     )
@@ -26,23 +27,23 @@ export async function publishLocaleHandler(
     return
   }
 
-  Logging.info('Validating locale structure...')
+  logger.info('Validating locale structure...')
   validateLocaleStructure(targetDir)
 
   const auth = await checkAuth()
 
   if (options?.official) {
-    Logging.info('Validating maintainer access...')
+    logger.info('Validating maintainer access...')
     validateMaintainerAccess(auth.username ?? '')
   }
 
   const { oldVersion, newVersion } = bumpPackageVersion(targetDir)
 
-  Logging.info(
-    `Bumped version: ${Logging.highlight(oldVersion)} → ${Logging.highlight(newVersion)}`
+  logger.info(
+    `Bumped version: ${chalk.blue(oldVersion)} → ${chalk.blue(newVersion)}`
   )
 
-  Logging.info(`Publishing ${Logging.highlight(fullName)}...`)
+  logger.info(`Publishing ${chalk.blue(fullName)}...`)
 
   try {
     executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
@@ -50,12 +51,12 @@ export async function publishLocaleHandler(
       stdio: 'inherit'
     })
 
-    Logging.success(`Published ${Logging.highlight(fullName)}`)
+    logger.success(`Published ${chalk.blue(fullName)}`)
   } catch (error) {
     revertPackageVersion(targetDir, oldVersion)
 
-    Logging.actionableError(
-      `Failed to publish ${Logging.highlight(fullName)}`,
+    logger.actionableError(
+      `Failed to publish ${chalk.blue(fullName)}`,
       'Check if you are properly authenticated with the registry'
     )
 

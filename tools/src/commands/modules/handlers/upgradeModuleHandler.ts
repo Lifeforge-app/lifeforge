@@ -1,10 +1,11 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import semver from 'semver'
 
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
 import { installPackage } from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { getPackageLatestVersion } from '@/utils/registry'
 
@@ -29,21 +30,21 @@ async function upgradeModule(
   const latestVersion = await getPackageLatestVersion(fullName)
 
   if (!latestVersion) {
-    Logging.warn(`Could not check registry for ${Logging.highlight(fullName)}`)
+    logger.warn(`Could not check registry for ${chalk.blue(fullName)}`)
 
     return false
   }
 
   if (semver.eq(currentVersion, latestVersion)) {
-    Logging.print(
-      `  ${Logging.dim('•')} ${Logging.highlight(packageName)} ${Logging.dim(`v${currentVersion} is up to date`)}`
+    logger.print(
+      `  ${chalk.dim('•')} ${chalk.blue(packageName)} ${chalk.dim(`v${currentVersion} is up to date`)}`
     )
 
     return false
   }
 
-  Logging.debug(
-    `Upgrading ${Logging.highlight(packageName)} from ${currentVersion} to ${latestVersion}...`
+  logger.debug(
+    `Upgrading ${chalk.blue(packageName)} from ${currentVersion} to ${latestVersion}...`
   )
 
   const backupPath = path.join(path.dirname(targetDir), `${packageName}.backup`)
@@ -60,17 +61,17 @@ async function upgradeModule(
 
     fs.rmSync(backupPath, { recursive: true, force: true })
 
-    Logging.print(
-      `  ${Logging.green('↑')} ${Logging.highlight(packageName)} ${Logging.dim(`${currentVersion} →`)} ${Logging.green(latestVersion)}`
+    logger.print(
+      `  ${chalk.green('↑')} ${chalk.blue(packageName)} ${chalk.dim(`${currentVersion} →`)} ${chalk.green(latestVersion)}`
     )
 
     return true
   } catch (error) {
-    Logging.error(`Failed to upgrade ${Logging.highlight(fullName)}: ${error}`)
+    logger.error(`Failed to upgrade ${chalk.blue(fullName)}: ${error}`)
 
     if (fs.existsSync(backupPath)) {
       fs.renameSync(backupPath, targetDir)
-      Logging.debug('Restored backup after failed upgrade')
+      logger.debug('Restored backup after failed upgrade')
     }
 
     return false
@@ -96,8 +97,8 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     const mod = modules[fullName]
 
     if (!mod) {
-      Logging.actionableError(
-        `Module ${Logging.highlight(moduleName)} is not installed`,
+      logger.actionableError(
+        `Module ${chalk.blue(moduleName)} is not installed`,
         'Run "bun forge modules list" to see installed modules'
       )
       process.exit(1)
@@ -109,8 +110,8 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
       upgraded.push(fullName)
     }
   } else {
-    Logging.print(
-      `Checking ${Logging.highlight(String(Object.keys(modules).length))} modules for updates...\n`
+    logger.print(
+      `Checking ${chalk.blue(String(Object.keys(modules).length))} modules for updates...\n`
     )
 
     for (const [name, { version }] of Object.entries(modules)) {
@@ -123,8 +124,8 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   }
 
   if (upgraded.length > 0) {
-    Logging.print('')
-    Logging.debug('Regenerating registries...')
+    logger.print('')
+    logger.debug('Regenerating registries...')
 
     generateRouteRegistry()
     generateSchemaRegistry()
@@ -136,11 +137,11 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
 
     generateMigrationsHandler()
 
-    Logging.success(
-      `Upgraded ${Logging.highlight(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
+    logger.success(
+      `Upgraded ${chalk.blue(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
     )
   } else if (!moduleName) {
-    Logging.print('')
-    Logging.success('All modules are up to date')
+    logger.print('')
+    logger.success('All modules are up to date')
   }
 }

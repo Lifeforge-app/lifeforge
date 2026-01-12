@@ -1,10 +1,11 @@
+import chalk from 'chalk'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
 import { PB_BINARY_PATH, PB_KWARGS, PB_MIGRATIONS_DIR } from '@/constants/db'
 import { isDockerMode } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 /**
  * Cleans up old migrations.
@@ -14,7 +15,7 @@ export async function cleanupOldMigrations(
   targetModule?: string
 ): Promise<void> {
   try {
-    Logging.debug('Cleaning up old migrations directory...')
+    logger.debug('Cleaning up old migrations directory...')
 
     if (!targetModule) {
       fs.rmSync(PB_MIGRATIONS_DIR, { recursive: true, force: true })
@@ -49,8 +50,8 @@ export async function cleanupOldMigrations(
         file.endsWith(`_${targetModule}.js`)
       ).length
 
-      Logging.debug(
-        `Removed ${Logging.highlight(String(removedCount))} old migrations for module ${Logging.highlight(targetModule)}.`
+      logger.debug(
+        `Removed ${chalk.blue(String(removedCount))} old migrations for module ${chalk.blue(targetModule)}.`
       )
     }
   } catch {
