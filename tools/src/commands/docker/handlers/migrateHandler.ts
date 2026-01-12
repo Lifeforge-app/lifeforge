@@ -4,21 +4,22 @@ import Logging from '@/utils/logging'
 
 import checkDockerReady from '../functions/checkDockerReady'
 
-interface ReloadOptions {
-  skipClient?: boolean
+interface MigrateOptions {
   skipMigrations?: boolean
 }
 
 /**
- * Orchestrates a full reload of Docker containers after module install/uninstall.
+ * Runs database migrations after module install/uninstall in Docker deployments.
  *
  * Steps:
  * 1. Stop server container
  * 2. Run db-init to regenerate + apply migrations (unless skipped)
- * 3. Run client-builder to rebuild client (unless skipped)
- * 4. Restart server and client containers
+ * 3. Restart server container
+ *
+ * Note: Client rebuild is not needed because modules are loaded dynamically
+ * via Module Federation - just refresh the browser after install/uninstall.
  */
-export async function reloadHandler(options: ReloadOptions): Promise<void> {
+export async function migrateHandler(options: MigrateOptions): Promise<void> {
   // Pre-flight checks
   if (!checkDockerReady()) {
     process.exit(1)
@@ -27,7 +28,7 @@ export async function reloadHandler(options: ReloadOptions): Promise<void> {
   const execOptions = { cwd: ROOT_DIR, stdio: 'inherit' as const }
 
   try {
-    Logging.info('Starting Docker reload sequence...')
+    Logging.info('Starting Docker migration sequence...')
 
     // Step 1: Stop server
     Logging.info('Stopping server...')
@@ -41,21 +42,14 @@ export async function reloadHandler(options: ReloadOptions): Promise<void> {
       Logging.info('Skipping migrations (--skip-migrations)')
     }
 
-    // Step 3: Rebuild client (unless skipped)
-    if (!options.skipClient) {
-      Logging.info('Rebuilding client...')
-      executeCommand('docker compose run --rm client-builder', execOptions)
-    } else {
-      Logging.info('Skipping client rebuild (--skip-client)')
-    }
+    // Step 3: Restart server
+    Logging.info('Restarting server...')
+    executeCommand('docker compose up -d server', execOptions)
 
-    // Step 4: Restart containers
-    Logging.info('Restarting server and client...')
-    executeCommand('docker compose up -d server client', execOptions)
-
-    Logging.success('Docker reload complete!')
+    Logging.success('Docker migration complete!')
+    Logging.info('Refresh the browser to load updated modules')
   } catch (error) {
-    Logging.error('Docker reload failed')
+    Logging.error('Docker migration failed')
     Logging.debug(
       `Error details: ${error instanceof Error ? error.message : String(error)}`
     )

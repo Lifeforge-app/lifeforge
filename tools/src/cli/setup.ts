@@ -3,6 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 import Logging, { LOG_LEVELS } from '../utils/logging'
+import { commands } from './commands'
 import { configureHelp } from './help'
 
 function getVersion(): string {
@@ -15,25 +16,16 @@ function getVersion(): string {
   }
 }
 
-async function setupCommands(program: Command): Promise<void> {
-  const commandsPath = path.resolve(
-    import.meta.dirname.split('src')[0],
-    'src/commands'
-  )
-
-  const commandIndexes = fs.globSync(`${commandsPath}/*/index.ts`)
-
-  for (const index of commandIndexes) {
-    const command = await import(index)
-
-    command.default(program)
+function setupCommands(program: Command): void {
+  for (const registerCommand of commands) {
+    registerCommand(program)
   }
 }
 
 /**
  * Sets up the CLI program with all commands
  */
-export async function setupCLI(): Promise<void> {
+export function setupCLI(): void {
   configureHelp(program)
 
   program
@@ -54,7 +46,7 @@ export async function setupCLI(): Promise<void> {
       }
     })
 
-  await setupCommands(program)
+  setupCommands(program)
 }
 
 /**
