@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import z from 'zod'
 
@@ -23,10 +23,10 @@ const pendingQRSessions = new Map<string, PendingQRSession>()
 
 // Cleanup expired sessions every minute
 setInterval(() => {
-  const now = moment()
+  const now = dayjs()
 
   for (const [sessionId, session] of pendingQRSessions) {
-    if (moment(session.expiresAt).isBefore(now)) {
+    if (dayjs(session.expiresAt).isBefore(now)) {
       pendingQRSessions.delete(sessionId)
     }
   }
@@ -62,8 +62,8 @@ const registerQRSession = forgeController
     const session: PendingQRSession = {
       sessionId,
       browserInfo,
-      createdAt: moment().toISOString(),
-      expiresAt: moment().add(5, 'minutes').toISOString(),
+      createdAt: dayjs().toISOString(),
+      expiresAt: dayjs().add(5, 'minutes').toISOString(),
       status: 'pending'
     }
 
@@ -105,7 +105,7 @@ const approveQRLogin = forgeController
     }
 
     // Check if expired
-    if (moment(pendingSession.expiresAt).isBefore(moment())) {
+    if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
       pendingQRSessions.delete(sessionId)
       throw new ClientError('Session expired', 400)
     }
@@ -180,7 +180,7 @@ const checkQRSessionStatus = forgeController
     }
 
     // Check if expired
-    if (moment(pendingSession.expiresAt).isBefore(moment())) {
+    if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
       pendingQRSessions.delete(sessionId)
 
       return { status: 'expired' as const }

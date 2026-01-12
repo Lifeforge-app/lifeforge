@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { v4 } from 'uuid'
 import z from 'zod'
 
@@ -101,9 +101,7 @@ const verify = forgeController
       if (authData) {
         if (pb.instance.authStore.record?.twoFASecret) {
           currentSession.token = pb.instance.authStore.token
-          currentSession.tokenExpireAt = moment()
-            .add(5, 'minutes')
-            .toISOString()
+          currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
           currentSession.tokenId = v4()
 
           return {
