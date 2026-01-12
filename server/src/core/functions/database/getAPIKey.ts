@@ -1,12 +1,13 @@
+import { ROOT_DIR } from '@constants'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { decrypt2 } from '@functions/auth/encryption'
 import { LoggingService } from '@functions/logging/loggingService'
+import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
 import PBService from './PBService'
-import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
 export async function validateCallerAccess(
   callerModule: { source: 'app' | 'core'; id: string },
@@ -17,7 +18,7 @@ export async function validateCallerAccess(
   }
 
   const packageJSONPath = path.resolve(
-    import.meta.dirname.split('/server')[0],
+    ROOT_DIR,
     'apps',
     callerModule.id,
     'package.json'

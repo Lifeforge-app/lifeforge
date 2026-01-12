@@ -1,7 +1,14 @@
 // AUTO-GENERATED - DO NOT EDIT
+import { loadModuleSchemas } from '@functions/modules/loadModuleSchemas'
 import flattenSchemas from '@functions/utils/flattenSchema'
 
-import appSchemas from '../generated/schemas'
+import type generatedSchemas from '../generated/schemas'
+
+const appSchemas = (
+  process.env.NODE_ENV === 'production'
+    ? await loadModuleSchemas()
+    : (await import('../generated/schemas')).default
+) as typeof generatedSchemas
 
 export const SCHEMAS = {
   user: (await import('@lib/user/schema')).default,

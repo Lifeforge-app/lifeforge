@@ -19,10 +19,6 @@ export const currentSession = {
   otpId: ''
 }
 
-if (!process.env.MASTER_KEY) {
-  throw new Error('MASTER_KEY not found in environment variables')
-}
-
 export default forgeRouter({
   exists: forgeController
     .query()
