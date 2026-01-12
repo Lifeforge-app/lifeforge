@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import executeCommand from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 /**
  * Initializes a git repository in the target directory and sets up the remote.
@@ -30,7 +30,7 @@ export default function initGitRepository(targetDir: string): void {
     return
   }
 
-  Logging.info(`Initializing git repository...`)
+  logger.info(`Initializing git repository...`)
 
   try {
     executeCommand('git init', { cwd: targetDir, stdio: 'pipe' })
@@ -47,8 +47,8 @@ export default function initGitRepository(targetDir: string): void {
       { cwd: targetDir, stdio: 'pipe' }
     )
 
-    Logging.debug(`Git repository initialized with remote: ${repoUrl}`)
+    logger.debug(`Git repository initialized with remote: ${repoUrl}`)
   } catch (error) {
-    Logging.debug(`Failed to initialize git repository: ${error}`)
+    logger.debug(`Failed to initialize git repository: ${error}`)
   }
 }

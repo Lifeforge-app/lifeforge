@@ -1,9 +1,10 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 import { bunInstall } from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
@@ -18,7 +19,7 @@ export async function uninstallLocaleHandler(langCode: string): Promise<void> {
   const found = findPackageName(fullName)
 
   if (!found) {
-    Logging.actionableError(
+    logger.actionableError(
       `Locale "${shortName}" is not installed`,
       'Run "bun forge locales list" to see installed locales'
     )
@@ -28,7 +29,7 @@ export async function uninstallLocaleHandler(langCode: string): Promise<void> {
 
   await ensureLocaleNotInUse(shortName)
 
-  Logging.info(`Uninstalling ${Logging.highlight(fullName)}...`)
+  logger.info(`Uninstalling ${chalk.blue(fullName)}...`)
 
   const symlinkPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
@@ -39,5 +40,5 @@ export async function uninstallLocaleHandler(langCode: string): Promise<void> {
 
   bunInstall()
 
-  Logging.success(`Uninstalled ${Logging.highlight(fullName)}`)
+  logger.success(`Uninstalled ${chalk.blue(fullName)}`)
 }

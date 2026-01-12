@@ -3,7 +3,7 @@ import PocketBase from 'pocketbase'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import { getEnvVars } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import executeCommand from './commands'
 import { killExistingProcess } from './helpers'
@@ -61,7 +61,7 @@ export function checkRunningPBInstances(exitOnError = true): boolean {
 
     if (validPids.length > 0) {
       if (exitOnError) {
-        Logging.actionableError(
+        logger.actionableError(
           `PocketBase is already running (PID: ${validPids.join(', ')})`,
           'Stop the existing instance with "pkill -f pocketbase" before proceeding'
         )
@@ -84,7 +84,7 @@ export function checkRunningPBInstances(exitOnError = true): boolean {
  * @throws Rejects if the server fails to start or encounters an error
  */
 export async function startPBServer(): Promise<number> {
-  Logging.debug('Starting PocketBase server...')
+  logger.debug('Starting PocketBase server...')
 
   return new Promise((resolve, reject) => {
     const pbProcess = spawn(PB_BINARY_PATH, ['serve', ...PB_KWARGS], {
@@ -101,12 +101,12 @@ export async function startPBServer(): Promise<number> {
       }
 
       if (output.includes('Server started')) {
-        Logging.debug(`PocketBase server started (PID: ${pbProcess.pid})`)
+        logger.debug(`PocketBase server started (PID: ${pbProcess.pid})`)
         resolve(pbProcess.pid!)
       }
 
       if (output.includes('bind: address already in use')) {
-        Logging.actionableError(
+        logger.actionableError(
           'Port 8090 is already in use',
           'Run "pkill -f pocketbase" to stop existing instances, or check for other apps using port 8090'
         )
@@ -117,18 +117,18 @@ export async function startPBServer(): Promise<number> {
     pbProcess.stderr?.on('data', data => {
       const error = data.toString().trim()
 
-      Logging.debug(`PocketBase stderr: ${error}`)
+      logger.debug(`PocketBase stderr: ${error}`)
       reject(new Error(error))
     })
 
     pbProcess.on('error', error => {
-      Logging.debug(`PocketBase spawn error: ${error.message}`)
+      logger.debug(`PocketBase spawn error: ${error.message}`)
       reject(error)
     })
 
     pbProcess.on('exit', code => {
       if (code !== 0) {
-        Logging.debug(`PocketBase exited with code ${code}`)
+        logger.debug(`PocketBase exited with code ${code}`)
         reject(new Error(`PocketBase process exited with code ${code}`))
       }
     })
@@ -145,7 +145,7 @@ export async function startPocketbase(): Promise<(() => void) | null> {
     const pbRunning = checkRunningPBInstances(false)
 
     if (pbRunning) {
-      Logging.debug('PocketBase is already running')
+      logger.debug('PocketBase is already running')
 
       return null
     }
@@ -156,7 +156,7 @@ export async function startPocketbase(): Promise<(() => void) | null> {
       killExistingProcess(pbPid)
     }
   } catch (error) {
-    Logging.actionableError(
+    logger.actionableError(
       `Failed to start PocketBase server: ${error instanceof Error ? error.message : 'Unknown error'}`,
       'Run "bun forge db init" to initialize the database or check if the PocketBase binary exists'
     )
@@ -199,7 +199,7 @@ export default async function getPBInstance(createNewInstance = true): Promise<{
       killPB
     }
   } catch (error) {
-    Logging.actionableError(
+    logger.actionableError(
       `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
       'Check PB_EMAIL and PB_PASSWORD in env/.env.local are correct'
     )

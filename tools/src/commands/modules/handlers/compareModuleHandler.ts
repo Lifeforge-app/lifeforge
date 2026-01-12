@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
@@ -6,7 +7,7 @@ import { pipeline } from 'stream/promises'
 import { extract } from 'tar'
 import { createGunzip } from 'zlib'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { checkPackageExists, getPackageTarballUrl } from '@/utils/registry'
 
@@ -134,54 +135,50 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
     diff.added.length > 0 || diff.modified.length > 0 || diff.deleted.length > 0
 
   if (!hasChanges) {
-    Logging.print(
-      `  ${Logging.green('✓')} ${Logging.highlight(moduleName)} ${Logging.dim('is in sync')}`
+    logger.print(
+      `  ${chalk.green('✓')} ${chalk.blue(moduleName)} ${chalk.dim('is in sync')}`
     )
 
     return false
   }
 
-  Logging.print(`  ${Logging.yellow('!')} ${Logging.highlight(moduleName)}`)
+  logger.print(`  ${chalk.yellow('!')} ${chalk.blue(moduleName)}`)
 
   if (diff.added.length > 0) {
-    Logging.print(Logging.green(`      + ${diff.added.length} added locally`))
+    logger.print(chalk.green(`      + ${diff.added.length} added locally`))
 
     for (const file of diff.added.slice(0, 5)) {
-      Logging.print(Logging.dim(`        ${file}`))
+      logger.print(chalk.dim(`        ${file}`))
     }
 
     if (diff.added.length > 5) {
-      Logging.print(
-        Logging.dim(`        ... and ${diff.added.length - 5} more`)
-      )
+      logger.print(chalk.dim(`        ... and ${diff.added.length - 5} more`))
     }
   }
 
   if (diff.modified.length > 0) {
-    Logging.print(Logging.yellow(`      ~ ${diff.modified.length} modified`))
+    logger.print(chalk.yellow(`      ~ ${diff.modified.length} modified`))
 
     for (const file of diff.modified.slice(0, 5)) {
-      Logging.print(Logging.dim(`        ${file}`))
+      logger.print(chalk.dim(`        ${file}`))
     }
 
     if (diff.modified.length > 5) {
-      Logging.print(
-        Logging.dim(`        ... and ${diff.modified.length - 5} more`)
+      logger.print(
+        chalk.dim(`        ... and ${diff.modified.length - 5} more`)
       )
     }
   }
 
   if (diff.deleted.length > 0) {
-    Logging.print(Logging.red(`      - ${diff.deleted.length} deleted locally`))
+    logger.print(chalk.red(`      - ${diff.deleted.length} deleted locally`))
 
     for (const file of diff.deleted.slice(0, 5)) {
-      Logging.print(Logging.dim(`        ${file}`))
+      logger.print(chalk.dim(`        ${file}`))
     }
 
     if (diff.deleted.length > 5) {
-      Logging.print(
-        Logging.dim(`        ... and ${diff.deleted.length - 5} more`)
-      )
+      logger.print(chalk.dim(`        ... and ${diff.deleted.length - 5} more`))
     }
   }
 
@@ -197,8 +194,8 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const { fullName, shortName, targetDir } = normalizePackage(packageName)
 
   if (!fs.existsSync(targetDir)) {
-    Logging.actionableError(
-      `Module ${Logging.highlight(shortName)} is not installed`,
+    logger.actionableError(
+      `Module ${chalk.blue(shortName)} is not installed`,
       'Run "bun forge modules list" to see installed modules'
     )
 
@@ -206,8 +203,8 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   }
 
   if (!(await checkPackageExists(fullName))) {
-    Logging.print(
-      `  ${Logging.dim('○')} ${Logging.highlight(shortName)} ${Logging.dim('(not published)')}`
+    logger.print(
+      `  ${chalk.dim('○')} ${chalk.blue(shortName)} ${chalk.dim('(not published)')}`
     )
 
     return null
@@ -216,7 +213,7 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const tarballUrl = await getPackageTarballUrl(fullName)
 
   if (!tarballUrl) {
-    Logging.warn(`Could not get tarball URL for ${Logging.highlight(fullName)}`)
+    logger.warn(`Could not get tarball URL for ${chalk.blue(fullName)}`)
 
     return null
   }
@@ -224,7 +221,7 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'forge-compare-'))
 
   try {
-    Logging.debug(`Downloading ${Logging.highlight(fullName)} from registry...`)
+    logger.debug(`Downloading ${chalk.blue(fullName)} from registry...`)
 
     await downloadAndExtractTarball(tarballUrl, tempDir)
 
@@ -250,9 +247,9 @@ async function compareModule(packageName: string): Promise<boolean | null> {
  */
 export async function compareModuleHandler(moduleName?: string): Promise<void> {
   if (moduleName) {
-    Logging.print('')
+    logger.print('')
     await compareModule(moduleName)
-    Logging.print('')
+    logger.print('')
 
     return
   }
@@ -260,13 +257,13 @@ export async function compareModuleHandler(moduleName?: string): Promise<void> {
   const modules = listModules()
 
   if (Object.keys(modules).length === 0) {
-    Logging.print('No modules installed')
+    logger.print('No modules installed')
 
     return
   }
 
-  Logging.print(
-    `\nComparing ${Logging.highlight(String(Object.keys(modules).length))} modules with registry...\n`
+  logger.print(
+    `\nComparing ${chalk.blue(String(Object.keys(modules).length))} modules with registry...\n`
   )
 
   let changedCount = 0
@@ -279,13 +276,13 @@ export async function compareModuleHandler(moduleName?: string): Promise<void> {
     }
   }
 
-  Logging.print('')
+  logger.print('')
 
   if (changedCount === 0) {
-    Logging.success('All modules are in sync with the registry')
+    logger.success('All modules are in sync with the registry')
   } else {
-    Logging.warn(
-      `${Logging.highlight(String(changedCount))} module${changedCount > 1 ? 's' : ''} have local changes`
+    logger.warn(
+      `${chalk.blue(String(changedCount))} module${changedCount > 1 ? 's' : ''} have local changes`
     )
   }
 }

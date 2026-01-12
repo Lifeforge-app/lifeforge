@@ -1,7 +1,7 @@
 import { execSync } from 'child_process'
 
 import { isDockerMode } from './helpers'
-import Logging from './logging'
+import logger from './logger'
 
 const SERVER_CONTAINER = 'lifeforge-server'
 
@@ -40,7 +40,7 @@ export function isContainerRunning(containerName: string): boolean {
  */
 export function restartServerContainer(): void {
   if (isDockerMode()) {
-    Logging.warn('Cannot restart Docker from inside a container')
+    logger.warn('Cannot restart Docker from inside a container')
 
     return
   }
@@ -50,17 +50,17 @@ export function restartServerContainer(): void {
   }
 
   if (!isContainerRunning(SERVER_CONTAINER)) {
-    Logging.debug('Server container not running, skipping restart')
+    logger.debug('Server container not running, skipping restart')
 
     return
   }
 
   try {
-    Logging.info('Restarting Docker server container...')
+    logger.info('Restarting Docker server container...')
     execSync(`docker restart ${SERVER_CONTAINER}`, { stdio: 'inherit' })
-    Logging.success('Server container restarted')
+    logger.success('Server container restarted')
   } catch (error) {
-    Logging.error(`Failed to restart Docker server: ${error}`)
+    logger.error(`Failed to restart Docker server: ${error}`)
   }
 }
 
@@ -76,6 +76,6 @@ export function smartReloadServer(): void {
   if (isDockerRunning() && isContainerRunning(SERVER_CONTAINER)) {
     restartServerContainer()
   } else {
-    Logging.info('Refresh the browser to load module changes')
+    logger.info('Refresh the browser to load module changes')
   }
 }

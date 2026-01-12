@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 interface LocalePackageJson {
   name?: string
@@ -55,11 +55,11 @@ export function validateLocaleStructure(localePath: string) {
   }
 
   if (errors.length > 0) {
-    Logging.error('Locale validation failed:')
-    errors.forEach(err => Logging.error(`  - ${err}`))
+    logger.error('Locale validation failed:')
+    errors.forEach(err => logger.error(`  - ${err}`))
 
     process.exit(1)
   }
 
-  warnings.forEach(warn => Logging.warn(`  - ${warn}`))
+  warnings.forEach(warn => logger.warn(`  - ${warn}`))
 }

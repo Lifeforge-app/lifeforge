@@ -1,26 +1,22 @@
-import axios from 'axios'
-import ora from 'ora'
 import prompts from 'prompts'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 export default async function selectIcon(): Promise<string> {
-  const iconCollections = (
-    await axios.get<
-      Record<
-        string,
-        {
-          name: string
-          total: number
-          categories?: Record<string, string[]>
-          uncategorized?: string[]
-        }
-      >
-    >('https://api.iconify.design/collections')
-  ).data
+  const iconCollections = (await fetch(
+    'https://api.iconify.design/collections'
+  ).then(res => res.json())) as Record<
+    string,
+    {
+      name: string
+      total: number
+      categories?: Record<string, string[]>
+      uncategorized?: string[]
+    }
+  >
 
   if (!iconCollections) {
-    Logging.error('Failed to fetch icon collections from Iconify.')
+    logger.error('Failed to fetch icon collections from Iconify.')
     process.exit(1)
   }
 
@@ -55,39 +51,32 @@ export default async function selectIcon(): Promise<string> {
     )
 
     if (!moduleIconCollection.iconCollection) {
-      Logging.error('Please select a valid icon set.')
+      logger.error('Please select a valid icon set.')
       continue
     }
 
     if (cancelled) {
-      Logging.error('Icon selection cancelled by user.')
+      logger.error('Icon selection cancelled by user.')
       process.exit(1)
     }
-
-    const spinner2 = ora('Fetching icons from Iconify...').start()
 
     let icons: {
       [key: string]: string[]
     }[] = []
 
     try {
-      icons = (
-        await axios(
-          `https://api.iconify.design/collection?prefix=${moduleIconCollection.iconCollection}`
-        )
-      ).data
+      icons = await fetch(
+        `https://api.iconify.design/collection?prefix=${moduleIconCollection.iconCollection}`
+      ).then(res => res.json())
     } catch (error) {
-      spinner2.fail('Failed to fetch icons from Iconify.')
-      Logging.error(
+      logger.error(
         `Error fetching icons for collection ${moduleIconCollection.iconCollection}: ${error}`
       )
       continue
     }
 
-    spinner2.stop()
-
     if (!icons) {
-      Logging.error('Failed to fetch icons from Iconify.')
+      logger.error('Failed to fetch icons from Iconify.')
       process.exit(1)
     }
 
@@ -167,7 +156,7 @@ export default async function selectIcon(): Promise<string> {
     )
 
     if (cancelled2) {
-      Logging.error('Icon selection cancelled by user.')
+      logger.error('Icon selection cancelled by user.')
       process.exit(1)
     }
 

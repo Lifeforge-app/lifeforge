@@ -1,8 +1,9 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import executeCommand from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
 import listModules from '../functions/listModules'
@@ -30,9 +31,7 @@ export async function buildModuleHandler(moduleName?: string): Promise<void> {
 
     // Check if module folder exists
     if (!fs.existsSync(targetDir)) {
-      Logging.error(
-        `Module ${Logging.highlight(shortName)} not found at ${targetDir}`
-      )
+      logger.error(`Module ${chalk.blue(shortName)} not found at ${targetDir}`)
       continue
     }
 
@@ -45,14 +44,14 @@ export async function buildModuleHandler(moduleName?: string): Promise<void> {
     const hasServer = fs.existsSync(serverIndexPath)
 
     if (!hasClient && !hasServer) {
-      Logging.debug(`Skipping ${shortName} (no client or server)`)
+      logger.debug(`Skipping ${shortName} (no client or server)`)
       skippedCount++
       continue
     }
 
     // Build client
     if (hasClient) {
-      Logging.info(`Building ${Logging.highlight(shortName)} client...`)
+      logger.info(`Building ${chalk.blue(shortName)} client...`)
 
       try {
         executeCommand('bun run build:client', {
@@ -61,13 +60,13 @@ export async function buildModuleHandler(moduleName?: string): Promise<void> {
         })
         clientBuiltCount++
       } catch (error) {
-        Logging.error(`Failed to build ${shortName} client: ${error}`)
+        logger.error(`Failed to build ${shortName} client: ${error}`)
       }
     }
 
     // Build server
     if (hasServer) {
-      Logging.info(`Building ${Logging.highlight(shortName)} server...`)
+      logger.info(`Building ${chalk.blue(shortName)} server...`)
 
       try {
         executeCommand('bun run build:server', {
@@ -76,18 +75,18 @@ export async function buildModuleHandler(moduleName?: string): Promise<void> {
         })
         serverBuiltCount++
       } catch (error) {
-        Logging.error(`Failed to build ${shortName} server: ${error}`)
+        logger.error(`Failed to build ${shortName} server: ${error}`)
       }
     }
   }
 
   if (clientBuiltCount > 0 || serverBuiltCount > 0) {
-    Logging.success(
-      `Built ${Logging.highlight(String(clientBuiltCount))} client bundle${clientBuiltCount !== 1 ? 's' : ''}, ${Logging.highlight(String(serverBuiltCount))} server bundle${serverBuiltCount !== 1 ? 's' : ''}`
+    logger.success(
+      `Built ${chalk.blue(String(clientBuiltCount))} client bundle${clientBuiltCount !== 1 ? 's' : ''}, ${chalk.blue(String(serverBuiltCount))} server bundle${serverBuiltCount !== 1 ? 's' : ''}`
     )
   }
 
   if (skippedCount > 0 && !moduleName) {
-    Logging.info(`Skipped ${skippedCount} modules without builds`)
+    logger.info(`Skipped ${skippedCount} modules without builds`)
   }
 }
