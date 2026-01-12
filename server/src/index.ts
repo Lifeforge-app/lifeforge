@@ -10,8 +10,7 @@ import createSocketServer from '@functions/socketio/createSocketServer'
 import ensureRootName from '@functions/utils/ensureRootName'
 
 import app from './core/app'
-
-const PORT = process.env.PORT || 3636
+import { PORT } from '@constants'
 
 function ensureDirectories(): void {
   if (!fs.existsSync('./medium')) {

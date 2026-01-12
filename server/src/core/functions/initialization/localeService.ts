@@ -1,3 +1,4 @@
+import { ROOT_DIR } from '@constants'
 import fs from 'fs'
 import path from 'path'
 
@@ -5,10 +6,7 @@ import { LoggingService } from '@functions/logging/loggingService'
 
 export const ALLOWED_NAMESPACE = ['apps', 'common'] as const
 
-export const LANGUAGE_PACK_PATH = path.resolve(
-  import.meta.dirname.split('/server')[0],
-  'locales'
-)
+export const LANGUAGE_PACK_PATH = path.resolve(ROOT_DIR, 'locales')
 
 interface LangManifest {
   name: string

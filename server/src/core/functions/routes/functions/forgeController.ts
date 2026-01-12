@@ -29,11 +29,11 @@
  * controller.register(router)
  * ```
  */
-import { fieldsUploadMiddleware } from '@middlewares/uploadMiddleware'
 import COLLECTION_SCHEMAS from '@schema'
 import type { Request, Response, Router } from 'express'
 import z from 'zod'
 
+import { createCoreContext } from '@functions/coreContext'
 import { checkExistence } from '@functions/database'
 import {
   decryptAESData,
@@ -43,6 +43,7 @@ import {
 } from '@functions/encryption'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
+import { fieldsUploadMiddleware } from '../../../middlewares/uploadMiddleware'
 import {
   BaseResponse,
   Context,
@@ -90,7 +91,7 @@ export class ForgeControllerBuilder<
   TMedia extends MediaConfig | null = null
 > {
   /** Indicates that this class is a ForgeController */
-  public __isForgeController!: true
+  public __isForgeController = true as const
 
   /** The type of input and output, used for type inference */
   public __method!: TMethod
@@ -636,7 +637,8 @@ export class ForgeControllerBuilder<
           pb: req.pb,
           body: req.body,
           query: req.query,
-          media: finalMedia
+          media: finalMedia,
+          core: createCoreContext(req.io, req.pb, callerModule?.id || 'unknown')
         })
 
         if (!options.noDefaultResponse) {

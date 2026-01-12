@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import chalk from 'chalk'
 import fs from 'fs'
 import moment from 'moment'
 import path from 'path'
 import { stripVTControlCharacters } from 'util'
 
-const logPath = path.resolve(import.meta.dirname.split('/server')[0], 'logs')
+// @ts-ignore
+import { ROOT_DIR } from '../../constants'
+
+const logPath = path.resolve(ROOT_DIR, 'logs')
 
 if (!fs.existsSync(logPath)) {
   fs.mkdirSync(logPath)

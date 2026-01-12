@@ -1,15 +1,25 @@
+import { ROOT_DIR } from '@constants'
 import express from 'express'
 import path from 'path'
 
 import traceRouteStack from '@functions/initialization/traceRouteStack'
+import { loadModuleRoutes } from '@functions/modules/loadModuleRoutes'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 
-import appRoutes from '../../generated/routes'
+import type generatedRoutes from '../../generated/routes'
 import coreRoutes from './core.routes'
 
 const router = express.Router()
+
+// Load module routes: production uses FS scanning, dev uses generated registry
+// Type assertion ensures TypeScript uses generated types for inference
+const appRoutes = (
+  process.env.NODE_ENV === 'production'
+    ? await loadModuleRoutes()
+    : (await import('../../generated/routes')).default
+) as typeof generatedRoutes
 
 const listRoutes = forgeController
   .query()
@@ -28,9 +38,6 @@ const mainRoutes = forgeRouter({
   listRoutes
 })
 
-// Serve module bundles from apps/*/client/dist
-const rootDir = import.meta.dirname.split('/server')[0]
-
 router.get('/hello', (_, res) => {
   res.send('Hello from the API server!')
 })
@@ -42,7 +49,7 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
     (req.params[0 as any as keyof typeof req.params] as string) || ''
 
   const moduleDistPath = path.join(
-    rootDir,
+    ROOT_DIR,
     'apps',
     moduleName,
     'client',
