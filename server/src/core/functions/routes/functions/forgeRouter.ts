@@ -12,6 +12,15 @@ function isRouter(value: unknown): value is Router {
   )
 }
 
+function isForgeController(value: unknown): value is ForgeControllerBuilder {
+  return !!(
+    value &&
+    typeof value === 'object' &&
+    '__isForgeController' in value &&
+    (value as Record<string, unknown>).__isForgeController === true
+  )
+}
+
 /**
  * A utility function to define a router configuration object.
  *
@@ -73,7 +82,7 @@ function registerRoutes<T extends RouterInput>(
     for (const [route, controller] of Object.entries(routes)) {
       const finalRoute = route.replace(/\$/g, '__')
 
-      if (controller instanceof ForgeControllerBuilder) {
+      if (isForgeController(controller)) {
         controller.register(router, finalRoute)
       } else if (isRouter(controller)) {
         router.use(`/${finalRoute}`, controller)
