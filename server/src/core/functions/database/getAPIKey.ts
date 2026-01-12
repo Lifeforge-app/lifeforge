@@ -4,10 +4,12 @@ import fs from 'fs'
 import path from 'path'
 
 import { decrypt2 } from '@functions/auth/encryption'
-import { LoggingService } from '@functions/logging/loggingService'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
+import { coreLogger } from '../../..'
 import PBService from './PBService'
+
+const logger = coreLogger.child({ service: 'API Key Vault' })
 
 export async function validateCallerAccess(
   callerModule: { source: 'app' | 'core'; id: string },
@@ -68,9 +70,8 @@ export default async function getAPIKey(id: string, pb: PBService) {
       })
 
     try {
-      LoggingService.info(
-        `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`,
-        'KEY VAULT'
+      logger.info(
+        `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`
       )
 
       return decrypt2(key, process.env.MASTER_KEY!)

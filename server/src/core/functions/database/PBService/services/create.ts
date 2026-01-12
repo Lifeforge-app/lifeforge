@@ -9,8 +9,8 @@ import {
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
 
+import { PBLogger } from '..'
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
@@ -35,8 +35,7 @@ export class Create<
     never,
     never
   >
-> implements PBServiceBase<TCollectionKey, TExpandConfig>
-{
+> implements PBServiceBase<TCollectionKey, TExpandConfig> {
   private _data: CreateData<TCollectionKey> = {}
   private _expand: string = ''
   private _fields: string = ''
@@ -131,11 +130,10 @@ export class Create<
         requestKey: null
       })
 
-    LoggingService.debug(
+    PBLogger.debug(
       `${chalk.hex('#2ed573').bold('create')} Created record with ID ${chalk
         .hex('#34ace0')
-        .bold(result.id)} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-      'DB'
+        .bold(result.id)} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
     return result as unknown as SingleItemReturnType<

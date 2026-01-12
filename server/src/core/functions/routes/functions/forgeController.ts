@@ -33,7 +33,6 @@ import COLLECTION_SCHEMAS from '@schema'
 import type { Request, Response, Router } from 'express'
 import z from 'zod'
 
-import { createCoreContext } from '@functions/coreContext'
 import { checkExistence } from '@functions/database'
 import {
   decryptAESData,
@@ -41,6 +40,7 @@ import {
   encryptResponse,
   isEncryptedPayload
 } from '@functions/encryption'
+import { createCoreContext } from '@functions/routes/utils/coreContext'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
 import { fieldsUploadMiddleware } from '../../../middlewares/uploadMiddleware'
@@ -471,6 +471,10 @@ export class ForgeControllerBuilder<
       >,
       res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
     ) => {
+      const callerModuleId = callerModule
+        ? `${callerModule.source}:${callerModule.id}`
+        : undefined
+
       if (!(await isAuthTokenValid(req, res, this._noAuth))) return
 
       // Store the decrypted AES key for response encryption
@@ -486,7 +490,11 @@ export class ForgeControllerBuilder<
           try {
             aesKey = decryptAESKey(encryptedKeyHeader)
           } catch {
-            return clientError(res, 'Failed to decrypt encryption key', 400)
+            return clientError({
+              res,
+              message: 'Failed to decrypt encryption key',
+              moduleName: callerModuleId
+            })
           }
         }
       }
@@ -519,7 +527,11 @@ export class ForgeControllerBuilder<
                 bodyData = JSON.parse(decryptedJson)
                 req.body = bodyData
               } catch {
-                return clientError(res, 'Failed to decrypt request body', 400)
+                return clientError({
+                  res,
+                  message: 'Failed to decrypt request body',
+                  moduleName: callerModuleId
+                })
               }
             }
 
@@ -546,9 +558,10 @@ export class ForgeControllerBuilder<
           }
 
           if (!result.success) {
-            return clientError(res, {
-              location: type,
-              message: JSON.parse(result.error.message)
+            return clientError({
+              res,
+              message: JSON.parse(result.error.message),
+              moduleName: callerModuleId
             })
           }
 
@@ -583,10 +596,11 @@ export class ForgeControllerBuilder<
                       val
                     ))
                   ) {
-                    clientError(
+                    clientError({
                       res,
-                      `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`
-                    )
+                      message: `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`,
+                      moduleName: callerModuleId
+                    })
 
                     return
                   }
@@ -602,10 +616,11 @@ export class ForgeControllerBuilder<
                     value!
                   ))
                 ) {
-                  clientError(
+                  clientError({
                     res,
-                    `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`
-                  )
+                    message: `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`,
+                    moduleName: callerModuleId
+                  })
 
                   return
                 }
@@ -618,7 +633,11 @@ export class ForgeControllerBuilder<
           this.__media || ({} as MediaConfig)
         )) {
           if (!value.optional && !finalMedia[key]) {
-            return clientError(res, `Missing required media field "${key}"`)
+            return clientError({
+              res,
+              message: ` Missing required media field "${key}"`,
+              moduleName: callerModuleId
+            })
           }
         }
 
@@ -638,7 +657,11 @@ export class ForgeControllerBuilder<
           body: req.body,
           query: req.query,
           media: finalMedia,
-          core: createCoreContext(req.io, req.pb, callerModule?.id || 'unknown')
+          core: createCoreContext({
+            moduleId: callerModule
+              ? `${callerModule.source}:${callerModule.id}`
+              : undefined
+          })
         })
 
         if (!options.noDefaultResponse) {
@@ -665,7 +688,12 @@ export class ForgeControllerBuilder<
         }
       } catch (err) {
         if (ClientError.isClientError(err)) {
-          return clientError(res, err.message, err.code)
+          return clientError({
+            res,
+            message: err.message,
+            code: err.code,
+            moduleName: callerModuleId
+          })
         }
 
         serverError(

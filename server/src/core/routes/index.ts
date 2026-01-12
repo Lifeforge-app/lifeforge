@@ -83,7 +83,12 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
 router.use('/', registerRoutes(mainRoutes))
 
 router.get('*', (_, res) => {
-  return clientError(res, 'The requested endpoint does not exist', 404)
+  return clientError({
+    res,
+    message: 'The requested endpoint does not exist',
+    code: 404,
+    moduleName: 'core'
+  })
 })
 
 export { mainRoutes }

@@ -1,3 +1,4 @@
+import { Logger } from '@lifeforge/log'
 import type { Request, Response } from 'express'
 import type { Server } from 'socket.io'
 import z from 'zod'
@@ -65,6 +66,9 @@ export type Context<
   body: InferZodType<TInput['body']>
   query: InferZodType<TInput['query']>
   media: ConvertMedia<TMedia>
+  core: {
+    logging: Logger
+  }
 }
 
 export type MediaConfig = Record<

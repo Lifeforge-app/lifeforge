@@ -1,9 +1,9 @@
+import corsAnywhere from '@lib/corsAnywhere'
 import moment from 'moment'
 import request from 'request'
 import z from 'zod'
 
 import { getEncryptionConfig, getPublicKey } from '@functions/encryption'
-import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 
 const welcome = forgeController
@@ -94,46 +94,6 @@ const getMedia = forgeController
       ).pipe(res)
     }
   )
-
-const corsAnywhere = forgeController
-  .query()
-  .description({
-    en: 'CORS Anywhere - Fetch external URL content',
-    ms: 'CORS Anywhere - Dapatkan kandungan URL luaran',
-    'zh-CN': 'CORS Anywhere - 获取外部URL内容',
-    'zh-TW': 'CORS Anywhere - 獲取外部URL內容'
-  })
-  .input({
-    query: z.object({
-      url: z.url()
-    })
-  })
-  .callback(async ({ query: { url } }) => {
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-      }
-    }).catch(() => {
-      LoggingService.error(`Failed to fetch URL: ${url}`)
-    })
-
-    if (!response) {
-      return
-    }
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch URL: ${url}`)
-    }
-
-    if (response.headers.get('content-type')?.includes('application/json')) {
-      const json = await response.json()
-
-      return json
-    }
-
-    return response.text()
-  })
 
 const encryptionPublicKey = forgeController
   .query()
