@@ -1,882 +1,304 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/**
- * @fileoverview Forge Controller - Type-safe Express.js route controller builder
- *
- * This module provides a fluent API for creating Express.js route controllers with:
- * - Automatic request/response validation using Zod schemas
- * - Type-safe request handlers with full TypeScript inference
- * - Built-in error handling and standardized responses
- * - Middleware support and existence checking for referenced entities
- * - Support for downloadable content and custom response handling
- *
- * The main exports are:
- * - `forgeController`: Factory for creating new controller builders with `query` (GET) and `mutation` (POST) methods
- * - `bulkRegisterControllers`: Utility for registering multiple controllers
- *
- * @example
- * ```typescript
- * const controller = forgeController.mutation()
- *   .input({
- *     body: z.object({ name: z.string(), email: z.string().email() })
- *   })
- *   .callback(async ({ body, pb }) => {
- *     const user = await pb.collection('users').create(body)
- *     return { id: user.id, success: true }
- *   })
- * // controller now has OutputType = { id: string, success: boolean }
- * type ControllerOutput = InferControllerOutput<typeof controller>
- *
- * controller.register(router)
- * ```
- */
-import COLLECTION_SCHEMAS from '@schema'
-import type { Request, Response, Router } from 'express'
-import z from 'zod'
-
-import { checkExistence } from '@functions/database'
-import {
-  decryptAESData,
-  decryptAESKey,
-  encryptResponse,
-  isEncryptedPayload
-} from '@functions/encryption'
-import { createCoreContext } from '@functions/routes/utils/coreContext'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
-import { fieldsUploadMiddleware } from '../../../middlewares/uploadMiddleware'
 import {
-  BaseResponse,
   Context,
-  ConvertMedia,
   Description,
   InferZodType,
   InputSchema,
   MediaConfig
 } from '../typescript/forge_controller.types'
-import {
-  ClientError,
-  clientError,
-  serverError,
-  successWithBaseResponse
-} from '../utils/response'
-import restoreFormDataType from '../utils/restoreDataType'
-import { splitMediaAndData } from '../utils/splitMediaAndData'
-import { isAuthTokenValid } from '../utils/validateAuthToken'
 
-/**
- * A fluent builder class for creating type-safe Express.js route controllers with validation.
- * Provides comprehensive schema validation, middleware support, and automatic error handling.
- *
- * @template TMethod - HTTP method type ('get' | 'post')
- * @template TInput - InputSchema containing body and query validation schemas
- * @template TOutput - The inferred return type from the callback function
- *
- * @example
- * ```typescript
- * const controller = forgeController.mutation()
- *   .input({
- *     body: z.object({ name: z.string(), age: z.number() }),
- *     query: z.object({ page: z.string().optional() })
- *   })
- *   .callback(async ({ body, query }) => {
- *     // Handler logic here
- *     return { success: true }
- *   })
- * ```
- */
+// ============================================================================
+// Stripped Controller Builder
+// ============================================================================
+
 export class ForgeControllerBuilder<
   TMethod extends 'get' | 'post' = 'get',
   TInput extends InputSchema<TMethod> = InputSchema<TMethod>,
   TOutput = unknown,
   TMedia extends MediaConfig | null = null
 > {
-  /** Indicates that this class is a ForgeController */
-  public __isForgeController = true as const
+  /** Marker for type identification */
+  public readonly __isForgeController = true as const
 
-  /** The type of input and output, used for type inference */
+  /** Type inference markers (never assigned at runtime) */
   public __method!: TMethod
   public __input!: TInput
   public __output!: TOutput
   public __media!: TMedia
 
-  /** The HTTP method for this route (get, post) */
-  protected _method: TMethod = 'get' as TMethod
-
-  /** Array of Express middleware functions to apply to this route */
+  /** Stored configuration */
+  protected _method: TMethod
   protected _middlewares: any[] = []
+  protected _schema: TInput
+  protected _statusCode: number
+  protected _noDefaultResponse: boolean
+  protected _existenceCheck: {
+    body?: Record<keyof InferZodType<TInput['body']>, string>
+    query?: Record<keyof InferZodType<TInput['query']>, string>
+  }
+  protected _description: Description
+  protected _isDownloadable: boolean
+  protected _media: TMedia
+  protected _noAuth: boolean
+  protected _encrypted: boolean
+  protected _callback:
+    | ((context: Context<TMethod, TInput, TOutput, TMedia>) => Promise<TOutput>)
+    | null
+  protected _callerModule?: { source: string; id: string }
 
-  /** Zod validation schemas for request body and query */
-  protected _schema: TInput = {
-    body: undefined,
-    query: undefined
-  } as TInput
-
-  /** HTTP status code to return on successful response */
-  protected _statusCode = 200
-
-  /** Whether to skip sending the default success response */
-  protected _noDefaultResponse = false
-
-  /** Configuration for automatic existence checking of referenced entities */
-  protected _existenceCheck: any = {}
-
-  /** Human-readable description of what this endpoint does */
-  protected _description: Description = ''
-
-  /** Whether this endpoint returns downloadable content */
-  protected _isDownloadable = false
-
-  /** Media input configuration for the response */
-  protected _media: TMedia = {} as TMedia
-
-  protected _noAuth = false
-
-  /** Whether this endpoint uses end-to-end encryption (defaults to true) */
-  protected _encrypted = true
-
-  /** The main callback function to handle the request */
-  protected _callback: (
-    context: Context<TMethod, TInput, TOutput, TMedia>
-  ) => Promise<TOutput> = async () => {
-    // Default implementation
-    return {} as TOutput
+  constructor(config: {
+    method: TMethod
+    middlewares?: any[]
+    schema?: TInput
+    statusCode?: number
+    noDefaultResponse?: boolean
+    existenceCheck?: {
+      body?: Record<keyof InferZodType<TInput['body']>, string>
+      query?: Record<keyof InferZodType<TInput['query']>, string>
+    }
+    description?: Description
+    isDownloadable?: boolean
+    media?: TMedia
+    noAuth?: boolean
+    encrypted?: boolean
+    callback?: (
+      context: Context<TMethod, TInput, TOutput, TMedia>
+    ) => Promise<TOutput>
+    callerModule?: { source: string; id: string }
+  }) {
+    this._method = config.method
+    this._middlewares = config.middlewares ?? []
+    this._schema = (config.schema ?? {
+      body: undefined,
+      query: undefined
+    }) as TInput
+    this._statusCode = config.statusCode ?? 200
+    this._noDefaultResponse = config.noDefaultResponse ?? false
+    this._existenceCheck = config.existenceCheck ?? {}
+    this._description = config.description ?? ''
+    this._isDownloadable = config.isDownloadable ?? false
+    this._media = (config.media ?? null) as TMedia
+    this._noAuth = config.noAuth ?? false
+    this._encrypted = config.encrypted ?? true
+    this._callback = config.callback ?? null
+    this._callerModule = config.callerModule
   }
 
-  /** The main request handler function with proper typing for request/response objects */
-  protected _handler?: (
-    req: Request<
-      never,
-      any,
-      InferZodType<TInput['body']>,
-      InferZodType<TInput['query']>
-    >,
-    res: Response<BaseResponse<any>>
-  ) => Promise<void>
+  // ============================================================================
+  // Value Getter
+  // ============================================================================
 
-  /**
-   * Creates a new builder instance with updated schema types while preserving current configuration.
-   * Used internally to maintain immutability when chaining methods.
-   *
-   * @template NewMethod - New HTTP method type
-   * @template NewInput - New input schema type
-   * @template NewOutput - New output type
-   * @param overrides - Partial schema overrides to apply
-   * @returns New builder instance with updated types
-   */
+  getValue() {
+    return {
+      method: this._method,
+      middlewares: this._middlewares,
+      schema: this._schema,
+      statusCode: this._statusCode,
+      noDefaultResponse: this._noDefaultResponse,
+      existenceCheck: this._existenceCheck,
+      description: this._description,
+      isDownloadable: this._isDownloadable,
+      media: this._media,
+      noAuth: this._noAuth,
+      encrypted: this._encrypted,
+      callback: this._callback,
+      callerModule: this._callerModule
+    }
+  }
+
+  // ============================================================================
+  // Private clone helper
+  // ============================================================================
+
   private cloneWith<
     NewMethod extends TMethod = TMethod,
     NewInput extends InputSchema<NewMethod> = InputSchema<NewMethod>,
     NewOutput = TOutput,
     NewMedia extends MediaConfig | null = TMedia
-  >(overrides: Partial<InputSchema<NewMethod>>, media: NewMedia) {
-    const builder = new ForgeControllerBuilder<
-      NewMethod,
-      NewInput,
-      NewOutput,
-      NewMedia
-    >()
-
-    builder._method = this._method as NewMethod
-    builder._middlewares = [...this._middlewares]
-    builder._schema = {
-      ...this._schema,
-      ...overrides
-    } as unknown as NewInput
-    builder._media = media as NewMedia
-    builder._statusCode = this._statusCode
-    builder._existenceCheck = this._existenceCheck
-    builder._noDefaultResponse = this._noDefaultResponse
-    builder._description = this._description
-    builder._isDownloadable = this._isDownloadable
-    builder._noAuth = this._noAuth
-    builder._encrypted = this._encrypted
-    builder._callback = this._callback as any
-
-    return builder
-  }
-
-  constructor(method?: TMethod) {
-    if (method) {
-      this._method = method
-    }
-  }
-
-  /**
-   * Adds Express middleware functions to be executed before the main route handler.
-   * Middleware functions are executed in the order they are added.
-   *
-   * @param middlewares - One or more Express middleware functions
-   * @returns This builder instance for method chaining
-   *
-   * @example
-   * ```typescript
-   * controller.middlewares(authMiddleware, validationMiddleware)
-   * ```
-   */
-  middlewares(...middlewares: any[]) {
-    this._middlewares.push(...middlewares)
-
-    return this
-  }
-
-  /**
-   * Configures file upload fields for the endpoint.
-   * Automatically disables encryption since FormData cannot be encrypted.
-   *
-   * @param config - Object defining the media fields and their options
-   * @returns New builder instance with updated media configuration
-   */
-  media<NewMedia extends MediaConfig>(config: NewMedia) {
-    const builder = this.cloneWith<TMethod, TInput, TOutput, NewMedia>(
-      {},
-      config
-    )
-
-    return builder
-  }
-
-  /**
-   * Sets Zod validation schemas for request input (body and query parameters).
-   * Enables automatic validation and type inference for the route handler.
-   *
-   * @template T - Object containing optional input schema definitions
-   * @param input - Object with optional body and query Zod schemas
-   * @returns New builder instance with updated input schema types
-   *
-   * @example
-   * ```typescript
-   * controller.input({
-   *   body: z.object({ name: z.string(), age: z.number() }),
-   *   query: z.object({ page: z.string().optional() })
-   * })
-   * ```
-   */
-  input<T extends InputSchema<TMethod>>(input: T) {
-    return this.cloneWith<TMethod, T, TOutput>(
+  >(
+    overrides: Partial<{
+      method: NewMethod
+      middlewares: any[]
+      schema: NewInput
+      statusCode: number
+      noDefaultResponse: boolean
+      existenceCheck: {
+        body?: Record<keyof InferZodType<NewInput['body']>, string>
+        query?: Record<keyof InferZodType<NewInput['query']>, string>
+      }
+      description: Description
+      isDownloadable: boolean
+      media: NewMedia
+      noAuth: boolean
+      encrypted: boolean
+      callback: (
+        context: Context<NewMethod, NewInput, NewOutput, NewMedia>
+      ) => Promise<NewOutput>
+    }>
+  ): ForgeControllerBuilder<NewMethod, NewInput, NewOutput, NewMedia> {
+    return new ForgeControllerBuilder<NewMethod, NewInput, NewOutput, NewMedia>(
       {
-        ...input
-      },
-      this._media
+        method: (overrides.method ?? this._method) as NewMethod,
+        middlewares: overrides.middlewares ?? [...this._middlewares],
+        schema: (overrides.schema ?? this._schema) as unknown as NewInput,
+        statusCode: overrides.statusCode ?? this._statusCode,
+        noDefaultResponse:
+          overrides.noDefaultResponse ?? this._noDefaultResponse,
+        existenceCheck: overrides.existenceCheck ?? { ...this._existenceCheck },
+        description: overrides.description ?? this._description,
+        isDownloadable: overrides.isDownloadable ?? this._isDownloadable,
+        media: (overrides.media ?? this._media) as NewMedia,
+        noAuth: overrides.noAuth ?? this._noAuth,
+        encrypted: overrides.encrypted ?? this._encrypted,
+        callback: overrides.callback ?? (this._callback as any),
+        callerModule: this._callerModule
+      }
     )
   }
 
-  /**
-   * Sets the HTTP status code to return on successful response.
-   *
-   * @param code - HTTP status code (e.g., 200, 201, 204)
-   * @returns This builder instance for method chaining
-   *
-   * @example
-   * ```typescript
-   * controller.statusCode(201) // For created resources
-   * controller.statusCode(204) // For no content responses
-   * ```
-   */
-  statusCode(code: number) {
-    this._statusCode = code
+  // ============================================================================
+  // Fluent API methods (same names as original forgeController)
+  // ============================================================================
 
-    return this
+  middlewares(
+    ...middlewares: any[]
+  ): ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia> {
+    return this.cloneWith({
+      middlewares: [...this._middlewares, ...middlewares]
+    })
   }
 
-  /**
-   * Disables the automatic success response wrapper.
-   * Use this when you need full control over the response format or for streaming responses.
-   *
-   * @returns This builder instance for method chaining
-   *
-   * @example
-   * ```typescript
-   * controller
-   *   .noDefaultResponse()
-   *   .callback(({ res }) => {
-   *     res.json({ custom: 'response' }) // Manual response handling
-   *   })
-   * ```
-   */
-  noDefaultResponse() {
-    this._noDefaultResponse = true
-
-    return this
+  media<NewMedia extends MediaConfig>(
+    config: NewMedia
+  ): ForgeControllerBuilder<TMethod, TInput, TOutput, NewMedia> {
+    return this.cloneWith<TMethod, TInput, TOutput, NewMedia>({
+      media: config
+    })
   }
 
-  /**
-   * Configures automatic existence validation for referenced entities in request data.
-   * Before the main handler executes, specified fields will be checked against database collections.
-   *
-   * @template T - The request section to validate ('body' | 'query')
-   * @param type - Which part of the request to validate
-   * @param map - Mapping of field names to collection names for existence checking
-   * @returns This builder instance for method chaining
-   *
-   * @example
-   * ```typescript
-   * // Check if user exists when userId is provided in request body
-   * controller.existenceCheck('body', { userId: 'users' })
-   *
-   * // Check optional fields (wrapped in brackets)
-   * controller.existenceCheck('query', { categoryId: '[categories]' })
-   *
-   * // Check arrays of IDs
-   * controller.existenceCheck('body', { tagIds: 'tags' })
-   * ```
-   */
+  input<T extends InputSchema<TMethod>>(
+    schema: T
+  ): ForgeControllerBuilder<TMethod, T, TOutput, TMedia> {
+    return this.cloneWith<TMethod, T, TOutput, TMedia>({
+      schema: { ...this._schema, ...schema } as unknown as T
+    })
+  }
+
+  statusCode(
+    code: number
+  ): ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia> {
+    return this.cloneWith({ statusCode: code })
+  }
+
+  noDefaultResponse(): ForgeControllerBuilder<
+    TMethod,
+    TInput,
+    TOutput,
+    TMedia
+  > {
+    return this.cloneWith({ noDefaultResponse: true })
+  }
+
   existenceCheck<T extends 'body' | 'query'>(
     type: T,
-    map: T extends 'body'
-      ? Partial<
-          Record<
-            keyof InferZodType<TInput['body']>,
-            | keyof typeof COLLECTION_SCHEMAS
-            | `[${keyof typeof COLLECTION_SCHEMAS}]`
-          >
-        >
-      : T extends 'query'
-        ? Partial<
-            Record<
-              keyof InferZodType<TInput['query']>,
-              | keyof typeof COLLECTION_SCHEMAS
-              | `[${keyof typeof COLLECTION_SCHEMAS}]`
-            >
-          >
-        : never
-  ) {
-    this._existenceCheck[type] = map
-
-    return this
+    map: Partial<Record<keyof InferZodType<TInput[T]>, string>>
+  ): ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia> {
+    return this.cloneWith({
+      existenceCheck: {
+        ...this._existenceCheck,
+        [type]: map
+      }
+    })
   }
 
-  /**
-   * Sets a human-readable description for this endpoint.
-   * This description can be used for API documentation generation.
-   *
-   * @param desc - Descriptive text explaining what this endpoint does
-   * @returns This builder instance for method chaining
-   *
-   * @example
-   * ```typescript
-   * controller.description('Creates a new user account with email verification')
-   * ```
-   */
-  description(desc: Description) {
-    this._description = desc
-
-    return this
+  description(
+    desc: Description
+  ): ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia> {
+    return this.cloneWith({ description: desc })
   }
 
-  noAuth() {
-    this._noAuth = true
-
-    return this
+  noAuth(): ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia> {
+    return this.cloneWith({ noAuth: true })
   }
 
-  /**
-   * Disables end-to-end encryption for this endpoint.
-   *
-   * By default, all endpoints use RSA + AES hybrid encryption.
-   * Use this method to disable encryption for endpoints that:
-   * - Need to expose public information (like the encryption public key endpoint)
-   * - Require raw binary responses
-   * - Need maximum performance for non-sensitive data
-   *
-   * @returns This builder instance for method chaining
-   *
-   * @example
-   * ```typescript
-   * controller
-   *   .noEncryption()
-   *   .input({})
-   *   .callback(async () => {
-   *     return { publicInfo: 'not encrypted' }
-   *   })
-   * ```
-   */
-  noEncryption() {
-    this._encrypted = false
-
-    return this
+  noEncryption(): ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia> {
+    return this.cloneWith({ encrypted: false })
   }
 
-  /**
-   * Marks this endpoint as returning downloadable content.
-   * Sets appropriate headers and disables the default response wrapper.
-   * Automatically sets status code to 200 and enables noDefaultResponse.
-   *
-   * @returns This builder instance for method chaining
-   *
-   * @example
-   * ```typescript
-   * controller
-   *   .isDownloadable()
-   *   .callback(({ res }) => {
-   *     res.setHeader('Content-Disposition', 'attachment; filename="export.csv"')
-   *     res.send(csvData)
-   *   })
-   * ```
-   */
-  isDownloadable() {
-    this._isDownloadable = true
-    this._noDefaultResponse = true
-    this._statusCode = 200
-
-    return this
+  isDownloadable(): ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia> {
+    return this.cloneWith({
+      isDownloadable: true,
+      noDefaultResponse: true,
+      statusCode: 200
+    })
   }
 
-  /**
-   * Sets the main request handler function with comprehensive error handling and validation.
-   * The callback receives validated and typed request data along with response utilities.
-   * The return type is automatically inferred and made available as a generic parameter.
-   *
-   * @template CB - Callback function type
-   * @param cb - The route handler function that processes the request
-   * @returns New builder instance with inferred output type
-   *
-   * @example
-   * ```typescript
-   * const controller = forgeController.mutation()
-   *   .input({
-   *     body: z.object({ name: z.string() })
-   *   })
-   *   .callback(async ({ req, res, body, query, pb, io }) => {
-   *     // body, query are fully typed based on input schemas
-   *     const user = await pb.collection('users').create(body)
-   *     return { success: true, user } // Return type is automatically inferred
-   *   })
-   * // controller now has the return type { success: boolean, user: User } as OutputType
-   * ```
-   */
   callback<
     CB extends (context: Context<TMethod, TInput, any, TMedia>) => Promise<any>
   >(
     cb: CB
   ): ForgeControllerBuilder<TMethod, TInput, Awaited<ReturnType<CB>>, TMedia> {
-    const schema = this._schema
+    this._callerModule = getCallerModuleId()
 
-    const callerModule = getCallerModuleId()
-
-    const isEncrypted = this._encrypted
-
-    const options = {
-      statusCode: this._statusCode,
-      noDefaultResponse: this._noDefaultResponse,
-      existenceCheck: this._existenceCheck,
-      isDownloadable: this._isDownloadable
-    }
-
-    const _handler = async (
-      req: Request<
-        never,
-        any,
-        InferZodType<TInput['body']>,
-        InferZodType<TInput['query']>
-      >,
-      res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
-    ) => {
-      const callerModuleId = callerModule
-        ? `${callerModule.source}:${callerModule.id}`
-        : undefined
-
-      if (!(await isAuthTokenValid(req, res, this._noAuth))) return
-
-      // Store the decrypted AES key for response encryption
-      let aesKey: Buffer | null = null
-
-      // For GET requests with encryption, client sends AES key via header
-      if (isEncrypted && req.method === 'GET') {
-        const encryptedKeyHeader = req.headers['x-lifeforge-key'] as
-          | string
-          | undefined
-
-        if (encryptedKeyHeader) {
-          try {
-            aesKey = decryptAESKey(encryptedKeyHeader)
-          } catch {
-            return clientError({
-              res,
-              message: 'Failed to decrypt encryption key',
-              moduleName: callerModuleId
-            })
-          }
-        }
-      }
-
-      try {
-        let finalMedia: ConvertMedia<TMedia> = {} as ConvertMedia<TMedia>
-
-        for (const type of ['body', 'query'] as const) {
-          const validator = schema[type] || z.object({})
-
-          let result
-
-          if (type === 'body') {
-            let bodyData = req[type]
-
-            // Handle encrypted request body
-            if (isEncrypted && isEncryptedPayload(bodyData)) {
-              try {
-                // Decrypt the AES key
-                aesKey = decryptAESKey(bodyData.k)
-
-                // Decrypt the body data
-                const decryptedJson = decryptAESData(
-                  bodyData.data,
-                  aesKey,
-                  bodyData.iv,
-                  bodyData.tag
-                )
-
-                bodyData = JSON.parse(decryptedJson)
-                req.body = bodyData
-              } catch {
-                return clientError({
-                  res,
-                  message: 'Failed to decrypt request body',
-                  moduleName: callerModuleId
-                })
-              }
-            }
-
-            const { data, media } = splitMediaAndData(
-              this._media,
-              bodyData,
-              (req.files || {}) as Record<string, Express.Multer.File[]>
-            )
-
-            finalMedia = media as ConvertMedia<TMedia>
-
-            const finalData = req.is('multipart/form-data')
-              ? Object.fromEntries(
-                  Object.entries(data).map(([key, value]) => [
-                    key,
-                    restoreFormDataType(value)
-                  ])
-                )
-              : data
-
-            result = validator.safeParse(finalData)
-          } else {
-            result = validator.safeParse(req[type])
-          }
-
-          if (!result.success) {
-            return clientError({
-              res,
-              message: JSON.parse(result.error.message),
-              moduleName: callerModuleId
-            })
-          }
-
-          if (type === 'body') {
-            req.body = result.data as InferZodType<TInput['body']>
-          } else if (type === 'query') {
-            req.query = result.data as InferZodType<TInput['query']>
-          }
-
-          if (options.existenceCheck?.[type]) {
-            for (const [key, collection] of Object.entries(
-              options.existenceCheck[type]
-            ) as Array<[string, string]>) {
-              const optional = collection.match(/\^?\[(.*)\]$/)
-
-              const value = (req[type] as any)[key] as
-                | string
-                | string[]
-                | undefined
-
-              if (optional && !value) continue
-
-              if (Array.isArray(value)) {
-                for (const val of value) {
-                  if (
-                    !(await checkExistence(
-                      req.pb,
-                      collection.replace(
-                        /\^?\[(.*)\]$/,
-                        '$1'
-                      ) as unknown as keyof typeof COLLECTION_SCHEMAS,
-                      val
-                    ))
-                  ) {
-                    clientError({
-                      res,
-                      message: `Invalid ${type} field "${key}" with value "${val}" does not exist in collection "${collection}"`,
-                      moduleName: callerModuleId
-                    })
-
-                    return
-                  }
-                }
-              } else {
-                if (
-                  !(await checkExistence(
-                    req.pb,
-                    collection.replace(
-                      /\^?\[(.*)\]$/,
-                      '$1'
-                    ) as unknown as keyof typeof COLLECTION_SCHEMAS,
-                    value!
-                  ))
-                ) {
-                  clientError({
-                    res,
-                    message: `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`,
-                    moduleName: callerModuleId
-                  })
-
-                  return
-                }
-              }
-            }
-          }
-        }
-
-        for (const [key, value] of Object.entries(
-          this.__media || ({} as MediaConfig)
-        )) {
-          if (!value.optional && !finalMedia[key]) {
-            return clientError({
-              res,
-              message: ` Missing required media field "${key}"`,
-              moduleName: callerModuleId
-            })
-          }
-        }
-
-        if (options.isDownloadable) {
-          res.setHeader('X-LifeForge-Downloadable', 'true')
-          res.setHeader(
-            'Access-Control-Expose-Headers',
-            'X-LifeForge-Downloadable'
-          )
-        }
-
-        const result = await cb({
-          req,
-          res,
-          io: req.io,
-          pb: req.pb,
-          body: req.body,
-          query: req.query,
-          media: finalMedia,
-          core: createCoreContext({
-            moduleId: callerModule
-              ? `${callerModule.source}:${callerModule.id}`
-              : undefined
-          })
-        })
-
-        if (!options.noDefaultResponse) {
-          res.status(options.statusCode || 200)
-
-          // Handle encrypted response
-          if (isEncrypted && aesKey) {
-            const encryptedResult = encryptResponse(result, aesKey)
-
-            res.setHeader('X-LifeForge-Encrypted', 'true')
-            res.setHeader(
-              'Access-Control-Expose-Headers',
-              'X-LifeForge-Encrypted'
-            )
-            // The response structure is different for encrypted responses
-            // Client-side decryption handles converting back to original type
-            res.json({
-              state: 'success',
-              data: encryptedResult as any
-            })
-          } else {
-            successWithBaseResponse(res, result)
-          }
-        }
-      } catch (err) {
-        if (ClientError.isClientError(err)) {
-          return clientError({
-            res,
-            message: err.message,
-            code: err.code,
-            moduleName: callerModuleId
-          })
-        }
-
-        serverError(
-          res,
-          err instanceof Error ? err.message : String(err),
-          callerModule ? `${callerModule.source}:${callerModule.id}` : undefined
-        )
-      }
-    }
-
-    function handlerWithMeta(
-      req: Request<
-        never,
-        any,
-        InferZodType<TInput['body']>,
-        InferZodType<TInput['query']>
-      >,
-      res: Response<BaseResponse<Awaited<ReturnType<CB>>>>
-    ) {
-      return _handler(req, res)
-    }
-
-    handlerWithMeta.meta = {
-      schema: this._schema,
-      description: this._description,
-      options: {
-        statusCode: this._statusCode,
-        noDefaultResponse: this._noDefaultResponse,
-        existenceCheck: this._existenceCheck,
-        isDownloadable: this._isDownloadable,
-        encrypted: this._encrypted
-      }
-    }
-
-    const newBuilder = new ForgeControllerBuilder<
-      TMethod,
-      TInput,
-      Awaited<ReturnType<CB>>,
-      TMedia
-    >()
-
-    newBuilder._method = this._method
-    newBuilder._middlewares = [...this._middlewares]
-    newBuilder._schema = this._schema
-    newBuilder._media = this._media
-    newBuilder._statusCode = this._statusCode
-    newBuilder._existenceCheck = this._existenceCheck
-    newBuilder._noDefaultResponse = this._noDefaultResponse
-    newBuilder._description = this._description
-    newBuilder._isDownloadable = this._isDownloadable
-    newBuilder._noAuth = this._noAuth
-    newBuilder._encrypted = this._encrypted
-    newBuilder._handler = handlerWithMeta
-    newBuilder._callback = cb
-
-    return newBuilder
-  }
-
-  /**
-   * Registers this controller with an Express router.
-   * This must be called after setting up the schema and callback.
-   *
-   * @param router - Express router instance to register the route with
-   * @throws {Error} When handler is missing
-   *
-   * @example
-   * ```typescript
-   * import forgeRouter from '@functions/forgeRouter'
-   * controller.register(router)
-   * ```
-   */
-  register(router: Router, routeName: string = '') {
-    if (!this._handler) {
-      throw new Error('Missing handler. Use .callback() before .register()')
-    }
-
-    router[this._method](
-      `/${routeName}`,
-      [
-        ...(Object.keys(this._media ?? {}).length > 0
-          ? [
-              fieldsUploadMiddleware(
-                Object.fromEntries(
-                  Object.entries(this._media ?? ({} as MediaConfig)).map(
-                    ([key, value]) => [key, value.multiple ? 999 : 1]
-                  )
-                )
-              )
-            ]
-          : []),
-        ...this._middlewares
-      ],
-      this._handler
-    )
+    return this.cloneWith<TMethod, TInput, Awaited<ReturnType<CB>>, TMedia>({
+      callback: cb as any
+    })
   }
 }
 
-/**
- * Initial builder class that requires input schemas to be set before proceeding.
- * Enforces the pattern where routes must have input validation defined.
- *
- * @template TMethod - HTTP method type ('get' | 'post')
- */
+// ============================================================================
+// Initial Builder (without schema)
+// ============================================================================
+
 class ForgeControllerBuilderWithoutSchema<
   TMethod extends 'get' | 'post' = 'get'
 > {
-  /** Human-readable description of what this endpoint does */
+  protected _method: TMethod
   protected _description: Description = ''
-  protected _noAuth = false
-  protected _encrypted = true
+  protected _noAuth: boolean = false
+  protected _encrypted: boolean = true
 
-  constructor(public _method: TMethod) {}
+  constructor(method: TMethod) {
+    this._method = method
+  }
 
-  /**
-   * Sets a description for this endpoint before schema configuration.
-   *
-   * @param desc - Descriptive text explaining what this endpoint does
-   * @returns This builder instance for method chaining
-   */
-  description(desc: Description) {
+  description(desc: Description): this {
     this._description = desc
 
     return this
   }
 
-  noAuth() {
+  noAuth(): this {
     this._noAuth = true
 
     return this
   }
 
-  /**
-   * Disables end-to-end encryption for this endpoint.
-   * @see ForgeControllerBuilder.noEncryption for full documentation
-   */
-  noEncryption() {
+  noEncryption(): this {
     this._encrypted = false
 
     return this
   }
 
-  /**
-   * Sets the input validation schemas and transitions to the full builder.
-   * Transforms the initial builder into a fully-featured controller builder.
-   *
-   * @template T - Object containing optional input schema definitions
-   * @param input - Object with optional body and query Zod schemas
-   * @returns New fully-featured builder instance with input schema types applied
-   *
-   * @example
-   * ```typescript
-   * forgeController.mutation()
-   *   .input({
-   *     body: z.object({ name: z.string() }),
-   *     query: z.object({ id: z.string() })
-   *   })
-   *   .callback(async ({ body }) => {
-   *     // body is now typed
-   *     return { success: true }
-   *   })
-   * ```
-   */
-  input<T extends InputSchema<TMethod>>(input: T) {
-    let controller = new ForgeControllerBuilder<TMethod, T>(this._method)
-      .input(input)
-      .description(this._description)
-
-    if (this._noAuth) {
-      controller = controller.noAuth()
-    }
-
-    if (!this._encrypted) {
-      controller = controller.noEncryption()
-    }
-
-    return controller
+  input<T extends InputSchema<TMethod>>(
+    schema: T
+  ): ForgeControllerBuilder<TMethod, T, unknown, null> {
+    return new ForgeControllerBuilder<TMethod, T, unknown, null>({
+      method: this._method,
+      schema,
+      description: this._description,
+      noAuth: this._noAuth,
+      encrypted: this._encrypted
+    })
   }
 }
 
-/**
- * Factory object for creating controller builders for different HTTP methods.
- * Provides `query` for GET requests and `mutation` for POST requests.
- */
+// ============================================================================
+// Factory
+// ============================================================================
+
 const forgeController = {
   query: () => new ForgeControllerBuilderWithoutSchema('get'),
   mutation: () => new ForgeControllerBuilderWithoutSchema('post')
