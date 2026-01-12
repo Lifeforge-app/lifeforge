@@ -1,9 +1,9 @@
 import corsAnywhere from '@lib/corsAnywhere'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import request from 'request'
 import z from 'zod'
 
-import { getEncryptionConfig, getPublicKey } from '@functions/encryption'
+import { getPublicKey } from '@functions/encryption'
 import { forgeController, forgeRouter } from '@functions/routes'
 
 const welcome = forgeController
@@ -36,7 +36,7 @@ const ping = forgeController
   })
   .callback(
     async ({ body: { timestamp } }) =>
-      `Pong at ${moment(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
+      `Pong at ${dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
   )
 
 const status = forgeController
@@ -106,10 +106,7 @@ const encryptionPublicKey = forgeController
     'zh-TW': '獲取伺服器公鑰用於端到端加密'
   })
   .input({})
-  .callback(async () => ({
-    publicKey: getPublicKey(),
-    config: getEncryptionConfig()
-  }))
+  .callback(async () => getPublicKey())
 
 const coreRoutes = forgeRouter({
   '': welcome,
