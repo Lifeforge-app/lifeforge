@@ -2,9 +2,9 @@ import { ROOT_DIR } from '@constants'
 import fs from 'fs'
 import path from 'path'
 
-import { coreLogger } from '../../..'
+import { createServiceLogger } from '@functions/logging'
 
-const localeLogger = coreLogger.child({ service: 'Locale' })
+const localeLogger = createServiceLogger('Locale')
 
 export const ALLOWED_NAMESPACE = ['apps', 'common'] as const
 

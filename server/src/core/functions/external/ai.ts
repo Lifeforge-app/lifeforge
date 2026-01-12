@@ -7,13 +7,12 @@ import z from 'zod'
 
 import { PBService, getAPIKey } from '@functions/database'
 import { validateCallerAccess } from '@functions/database/getAPIKey'
+import { createServiceLogger } from '@functions/logging'
 import { ClientError } from '@functions/routes/utils/response'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 
-import { coreLogger } from '../../..'
-
-const logger = coreLogger.child({ service: 'AI' })
+const logger = createServiceLogger('AI')
 
 export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
   pb: PBService
