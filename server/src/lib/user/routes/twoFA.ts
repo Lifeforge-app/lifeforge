@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
@@ -63,7 +63,7 @@ const requestOTP = forgeController
 
     currentSession.tokenId = v4()
     currentSession.otpId = otp.otpId
-    currentSession.tokenExpireAt = moment().add(5, 'minutes').toISOString()
+    currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
 
     return currentSession.tokenId
   })
@@ -233,7 +233,7 @@ const verify = forgeController
       throw new ClientError('Invalid token ID', 401)
     }
 
-    if (moment().isAfter(moment(currentSession.tokenExpireAt))) {
+    if (dayjs().isAfter(dayjs(currentSession.tokenExpireAt))) {
       throw new ClientError('Token expired', 401)
     }
 
