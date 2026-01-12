@@ -1,5 +1,5 @@
 {
-  "name": "lifeforge-client",
+  "name": "@lifeforge/client",
   "version": "0.0.0",
   "private": true,
   "description": "The client-side user interface for LifeForge.",
