@@ -3,7 +3,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 
-import { coreLogger } from '../../..'
+import { coreLogger } from '@functions/logging'
 
 // Use globalThis to ensure cache works across bundler-duplicated modules
 const SCHEMA_CACHE_KEY = '__lifeforge_module_schemas__'

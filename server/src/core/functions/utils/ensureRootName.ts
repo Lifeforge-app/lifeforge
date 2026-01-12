@@ -1,6 +1,6 @@
+import { coreLogger } from '@functions/logging'
 import path from 'path'
 
-import { coreLogger } from '../../..'
 
 /**
  * Ensures the root directory name is 'lifeforge'.

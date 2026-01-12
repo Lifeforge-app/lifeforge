@@ -1,6 +1,7 @@
 import PocketBase from 'pocketbase'
 
-import { coreLogger } from '../../../..'
+import { createServiceLogger } from '@functions/logging'
+
 import create from './services/create'
 import deleteRecord from './services/delete'
 import getFirstListItem from './services/getFirstListItem'
@@ -9,7 +10,7 @@ import getList from './services/getList'
 import getOne from './services/getOne'
 import update from './services/update'
 
-export const PBLogger = coreLogger.child({ service: 'Pocketbase' })
+export const PBLogger = createServiceLogger('Pocketbase')
 
 /**
  * Main class that provides type-safe CRUD operations for PocketBase collections

@@ -3,8 +3,7 @@ import dotenv from 'dotenv'
 import path from 'path'
 
 import { ensureKeysExist } from '@functions/encryption'
-
-import { coreLogger } from '../../..'
+import { coreLogger } from '@functions/logging'
 
 export default function ensureCredentials(): void {
   dotenv.config({

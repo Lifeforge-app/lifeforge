@@ -3,7 +3,7 @@ import Pocketbase from 'pocketbase'
 
 import { PBService } from '@functions/database'
 
-export async function isAuthTokenValid(
+export default async function isAuthTokenValid(
   req: Request<unknown, unknown, unknown, unknown>,
   res: Response,
   noAuth: boolean

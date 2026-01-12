@@ -4,12 +4,12 @@ import fs from 'fs'
 import path from 'path'
 
 import { decrypt2 } from '@functions/auth/encryption'
+import { createServiceLogger } from '@functions/logging'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
-import { coreLogger } from '../../..'
 import PBService from './PBService'
 
-const logger = coreLogger.child({ service: 'API Key Vault' })
+const logger = createServiceLogger('API Key Vault')
 
 export async function validateCallerAccess(
   callerModule: { source: 'app' | 'core'; id: string },

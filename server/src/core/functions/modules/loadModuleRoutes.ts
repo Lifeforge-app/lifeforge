@@ -3,7 +3,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 
-import { coreLogger } from '../../..'
+import { coreLogger } from '@functions/logging'
 
 /**
  * Dynamically loads module routes from TypeScript source files.
