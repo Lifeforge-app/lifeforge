@@ -290,7 +290,7 @@ export class ForgeAPIClientController<
    * import { setServerPublicKey } from 'shared/utils/encryption'
    *
    * // Fetch and set the server's public key (once at app init)
-   * const { publicKey } = await forgeAPI.encryptionPublicKey.query()
+   * const publicKey = await forgeAPI.encryptionPublicKey.query()
    * await setServerPublicKey(publicKey)
    *
    * // Make encrypted requests (default behavior)
