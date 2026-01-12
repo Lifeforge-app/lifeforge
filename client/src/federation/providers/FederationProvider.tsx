@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import type { ModuleCategory } from 'shared'
 
-import type { GlobalProviderComponent } from '../loaders/loadGlobalProvider'
-import loadModules from '../loaders/loadModules'
+import loadModules, {
+  type GlobalProviderComponent
+} from '../loaders/loadModules'
 import type { CategoryOrder } from '../utils/sortRoutes'
 
 // Force full reload instead of HMR to ensure clean state
