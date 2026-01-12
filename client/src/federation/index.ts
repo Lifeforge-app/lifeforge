@@ -5,6 +5,4 @@ import FederationProvider, {
 
 export { FederationProvider, useFederation, loadModules }
 
-export type { GlobalProviderComponent } from './loaders/loadGlobalProvider'
-
 export default FederationProvider

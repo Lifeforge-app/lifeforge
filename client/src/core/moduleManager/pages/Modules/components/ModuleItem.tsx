@@ -116,7 +116,7 @@ function ModuleItem({
               <h3 className="w-full min-w-0 truncate text-lg font-semibold">
                 {translatedTitle}
               </h3>
-              {module.isDevMode && (
+              {module.isDevMode && import.meta.env.DEV && (
                 <TagChip
                   className="text-xs!"
                   color={COLORS.yellow[500]}

@@ -12,10 +12,9 @@
   },
   "type": "module",
   "scripts": {
-    "prebundle": "bun run --cwd ../server types",
     "dev": "vite",
     "types": "tsc -b",
-    "build": "bun run --cwd . prebundle && tsc -b && vite build",
+    "build": "bun run --cwd .. prebuild && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
