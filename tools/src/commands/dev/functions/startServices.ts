@@ -3,7 +3,7 @@ import concurrently from 'concurrently'
 import { PROJECTS } from '@/commands/project/constants/projects'
 import executeCommand from '@/utils/commands'
 import { getEnvVars } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import { SERVICE_COMMANDS } from '../config/commands'
 import getConcurrentServices from './getConcurrentServices'
@@ -61,11 +61,11 @@ export async function startAllServices(): Promise<void> {
       prefixColors: ['cyan', 'green', 'magenta']
     })
   } catch (error) {
-    Logging.actionableError(
+    logger.actionableError(
       'Failed to start all services',
       'Ensure PocketBase is properly configured and all dependencies are installed'
     )
-    Logging.debug(`Error details: ${error}`)
+    logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }

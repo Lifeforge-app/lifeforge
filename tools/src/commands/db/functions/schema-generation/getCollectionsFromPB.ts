@@ -1,5 +1,7 @@
+import chalk from 'chalk'
+
 import { isDockerMode } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import getPBInstance from '@/utils/pocketbase'
 
 /**
@@ -19,11 +21,11 @@ import getPBInstance from '@/utils/pocketbase'
  * // Returns: [{ name: 'calendar__events', type: 'base', ... }, ...]
  */
 export default async function getCollectionsFromPB() {
-  Logging.debug('Connecting to PocketBase...')
+  logger.debug('Connecting to PocketBase...')
 
   const { pb, killPB } = await getPBInstance(!isDockerMode())
 
-  Logging.debug('Fetching all collections...')
+  logger.debug('Fetching all collections...')
 
   const allCollections = await pb.collections.getFullList()
 
@@ -33,8 +35,8 @@ export default async function getCollectionsFromPB() {
     collection => !collection.system
   )
 
-  Logging.debug(
-    `Found ${Logging.highlight(String(allCollections.length))} collections, ${Logging.highlight(String(nonSystemCollections.length))} non-system`
+  logger.debug(
+    `Found ${chalk.blue(String(allCollections.length))} collections, ${chalk.blue(String(nonSystemCollections.length))} non-system`
   )
 
   return nonSystemCollections

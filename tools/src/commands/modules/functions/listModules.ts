@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import { readRootPackageJson } from '@/utils/packageJson'
 
 import normalizePackage from '../../../utils/normalizePackage'
@@ -47,7 +47,7 @@ export default function listModules(
   }
 
   if (exitIfNoModule && Object.keys(modules).length === 0) {
-    Logging.info('No @lifeforge/* modules found. Exiting...')
+    logger.info('No @lifeforge/* modules found. Exiting...')
     process.exit(0)
   }
 

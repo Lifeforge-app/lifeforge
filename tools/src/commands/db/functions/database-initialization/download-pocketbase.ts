@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
@@ -5,7 +6,7 @@ import path from 'path'
 import { PB_BINARY_PATH, PB_DIR } from '@/constants/db'
 import executeCommand from '@/utils/commands'
 import { isDockerMode } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 const PB_VERSION = '0.35.0'
 
@@ -16,13 +17,13 @@ const PB_VERSION = '0.35.0'
 export async function downloadPocketBaseBinary(): Promise<void> {
   // Skip in Docker mode - binary is provided by the container
   if (isDockerMode()) {
-    Logging.debug('Docker mode detected, skipping binary download')
+    logger.debug('Docker mode detected, skipping binary download')
 
     return
   }
 
   if (fs.existsSync(PB_BINARY_PATH)) {
-    Logging.debug('PocketBase binary already exists, skipping download')
+    logger.debug('PocketBase binary already exists, skipping download')
 
     return
   }
@@ -42,7 +43,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       osName = 'windows'
       break
     default:
-      Logging.actionableError(
+      logger.actionableError(
         `Unsupported platform: ${platform}`,
         'PocketBase supports darwin, linux, and windows'
       )
@@ -62,7 +63,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       archName = 'amd64'
       break
     default:
-      Logging.actionableError(
+      logger.actionableError(
         `Unsupported architecture: ${arch}`,
         'PocketBase supports arm64 and amd64'
       )
@@ -71,8 +72,8 @@ export async function downloadPocketBaseBinary(): Promise<void> {
 
   const downloadUrl = `https://github.com/pocketbase/pocketbase/releases/download/v${PB_VERSION}/pocketbase_${PB_VERSION}_${osName}_${archName}.zip`
 
-  Logging.info(
-    `Downloading PocketBase ${Logging.highlight(`v${PB_VERSION}`)} for ${osName}/${archName}...`
+  logger.info(
+    `Downloading PocketBase ${chalk.blue(`v${PB_VERSION}`)} for ${osName}/${archName}...`
   )
 
   try {
@@ -91,7 +92,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
 
     fs.writeFileSync(zipPath, Buffer.from(arrayBuffer))
 
-    Logging.debug('Download complete, extracting...')
+    logger.debug('Download complete, extracting...')
 
     // Extract using unzip command
     executeCommand(`unzip -o "${zipPath}" -d "${PB_DIR}"`, {
@@ -101,7 +102,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
     // Clean up zip file and unnecessary files
     fs.unlinkSync(zipPath)
 
-    const changelogPath = path.join(PB_DIR, 'CHANGELogging.md')
+    const changelogPath = path.join(PB_DIR, 'CHANGElogger.md')
 
     const licensePath = path.join(PB_DIR, 'LICENSE.md')
 
@@ -113,11 +114,9 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       fs.chmodSync(PB_BINARY_PATH, 0o755)
     }
 
-    Logging.success(
-      `Downloaded PocketBase ${Logging.highlight(`v${PB_VERSION}`)}`
-    )
+    logger.success(`Downloaded PocketBase ${chalk.blue(`v${PB_VERSION}`)}`)
   } catch (error) {
-    Logging.actionableError(
+    logger.actionableError(
       `Failed to download PocketBase: ${error instanceof Error ? error.message : 'Unknown error'}`,
       'Check your internet connection and try again'
     )

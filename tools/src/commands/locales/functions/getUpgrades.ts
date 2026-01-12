@@ -1,4 +1,6 @@
-import Logging from '@/utils/logging'
+import chalk from 'chalk'
+
+import logger from '@/utils/logger'
 import { getRegistryUrl } from '@/utils/registry'
 
 interface LocaleUpgrade {
@@ -47,14 +49,14 @@ async function getUpgrades(
   }
 
   if (!upgrades.length) {
-    Logging.info('All locales are up to date')
+    logger.info('All locales are up to date')
     process.exit(0)
   }
 
-  Logging.info('Available upgrades:')
+  logger.info('Available upgrades:')
   upgrades.forEach(u =>
-    Logging.print(
-      `  ${Logging.highlight(u.name)}: ${u.current} → ${Logging.green(u.latest)}`
+    logger.print(
+      `  ${chalk.blue(u.name)}: ${u.current} → ${chalk.green(u.latest)}`
     )
   )
 

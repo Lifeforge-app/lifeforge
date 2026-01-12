@@ -3,7 +3,7 @@ import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 
-import Logging from './logging'
+import logger from './logger'
 
 interface PackageJson {
   name?: string
@@ -29,14 +29,14 @@ export function readRootPackageJson(): PackageJson {
  * @param packageJson The JSON object to write to the root package.json file.
  */
 export function writeRootPackageJson(packageJson: PackageJson): void {
-  Logging.debug(`Writing root package.json`)
+  logger.debug(`Writing root package.json`)
 
   fs.writeFileSync(
     ROOT_PACKAGE_JSON_DIR,
     JSON.stringify(packageJson, null, 2) + '\n'
   )
 
-  Logging.debug(`Wrote root package.json`)
+  logger.debug(`Wrote root package.json`)
 }
 
 /**
@@ -49,7 +49,7 @@ export function addDependency(
   packageName: string,
   version = 'workspace:*'
 ): void {
-  Logging.debug(`Adding workspace dependency: ${packageName}`)
+  logger.debug(`Adding workspace dependency: ${packageName}`)
 
   const packageJson = readRootPackageJson()
 
@@ -61,7 +61,7 @@ export function addDependency(
 
   writeRootPackageJson(packageJson)
 
-  Logging.debug(`Added workspace dependency: ${packageName}`)
+  logger.debug(`Added workspace dependency: ${packageName}`)
 }
 
 /**
@@ -70,7 +70,7 @@ export function addDependency(
  * @param packageName The name of the package to remove as a dependency.
  */
 export function removeDependency(packageName: string): void {
-  Logging.debug(`Removing workspace dependency: ${packageName}`)
+  logger.debug(`Removing workspace dependency: ${packageName}`)
 
   const packageJson = readRootPackageJson()
 
@@ -79,7 +79,7 @@ export function removeDependency(packageName: string): void {
     writeRootPackageJson(packageJson)
   }
 
-  Logging.debug(`Removed workspace dependency: ${packageName}`)
+  logger.debug(`Removed workspace dependency: ${packageName}`)
 }
 
 /**
@@ -89,7 +89,7 @@ export function removeDependency(packageName: string): void {
  * @returns The package name if found, or null if not found
  */
 export function findPackageName(name: string): string | null {
-  Logging.debug(`Finding package name: ${name}`)
+  logger.debug(`Finding package name: ${name}`)
 
   const packageJson = readRootPackageJson()
 
@@ -97,13 +97,13 @@ export function findPackageName(name: string): string | null {
 
   for (const dep of Object.keys(dependencies)) {
     if (dep === name) {
-      Logging.debug(`Found package name: ${name}`)
+      logger.debug(`Found package name: ${name}`)
 
       return dep
     }
   }
 
-  Logging.debug(`Package name not found: ${name}`)
+  logger.debug(`Package name not found: ${name}`)
 
   return null
 }

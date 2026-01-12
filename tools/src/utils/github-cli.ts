@@ -1,4 +1,4 @@
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import executeCommand from './commands'
 
@@ -22,13 +22,13 @@ export function validateMaintainerAccess(username: string): void {
       return
     }
 
-    Logging.warn(
+    logger.warn(
       'Failed to verify maintainer access. Ensure you are authenticated with "gh auth login".'
     )
 
     process.exit(1)
   } catch (error) {
-    Logging.actionableError(
+    logger.actionableError(
       `Failed to check maintainer access for ${username}.`,
       `Error: ${error instanceof Error ? error.message : String(error)}`
     )
@@ -74,7 +74,7 @@ export function getGithubUser(): { name: string; email: string } | null {
 
     return null
   } catch (error) {
-    Logging.debug(`Failed to fetch GitHub user info: ${error}`)
+    logger.debug(`Failed to fetch GitHub user info: ${error}`)
 
     return null
   }

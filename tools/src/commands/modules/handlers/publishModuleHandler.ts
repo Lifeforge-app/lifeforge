@@ -1,9 +1,10 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 import executeCommand from '@/utils/commands'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import bumpPackageVersion, {
   revertPackageVersion
@@ -26,26 +27,26 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
   const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
 
   if (!fs.existsSync(modulePath)) {
-    Logging.actionableError(
-      `Module ${Logging.highlight(moduleName)} not found in apps/`,
+    logger.actionableError(
+      `Module ${chalk.blue(moduleName)} not found in apps/`,
       'Make sure the module exists in the apps directory'
     )
     process.exit(1)
   }
 
-  Logging.debug('Validating module structure...')
+  logger.debug('Validating module structure...')
   await validateModuleStructure(modulePath)
 
-  Logging.debug('Validating module author...')
+  logger.debug('Validating module author...')
   await validateModuleAuthor(modulePath)
 
   const { oldVersion, newVersion } = bumpPackageVersion(modulePath)
 
-  Logging.print(
-    `  Version: ${Logging.dim(oldVersion)} ${Logging.dim('→')} ${Logging.green(newVersion)}`
+  logger.print(
+    `  Version: ${chalk.dim(oldVersion)} ${chalk.dim('→')} ${chalk.green(newVersion)}`
   )
 
-  Logging.debug(`Publishing ${Logging.highlight(moduleName)}...`)
+  logger.debug(`Publishing ${chalk.blue(moduleName)}...`)
 
   try {
     executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
@@ -53,17 +54,17 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
       stdio: 'pipe'
     })
 
-    Logging.success(
-      `Published ${Logging.highlight(moduleName)} ${Logging.dim(`v${newVersion}`)}`
+    logger.success(
+      `Published ${chalk.blue(moduleName)} ${chalk.dim(`v${newVersion}`)}`
     )
   } catch (error) {
     revertPackageVersion(modulePath, oldVersion)
 
-    Logging.actionableError(
-      `Publish failed for ${Logging.highlight(moduleName)}`,
+    logger.actionableError(
+      `Publish failed for ${chalk.blue(moduleName)}`,
       'Check npm authentication and try again'
     )
-    Logging.debug(`Error: ${error}`)
+    logger.debug(`Error: ${error}`)
     process.exit(1)
   }
 }

@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
@@ -6,7 +7,7 @@ import { installPackage } from '@/utils/commands'
 import { smartReloadServer } from '@/utils/docker'
 import { isDockerMode } from '@/utils/helpers'
 import initGitRepository from '@/utils/initGitRepository'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { checkPackageExists } from '@/utils/registry'
 
@@ -37,15 +38,15 @@ export async function installModuleHandler(
     const { fullName, shortName, targetDir } = normalizePackage(moduleName)
 
     if (!/^@lifeforge\/[a-z0-9-_]+--[a-z0-9-_]+$/i.test(fullName)) {
-      Logging.actionableError(
-        `Invalid module name: ${Logging.highlight(moduleName)}`,
+      logger.actionableError(
+        `Invalid module name: ${chalk.blue(moduleName)}`,
         'Module names can only contain letters, numbers, hyphens, and underscores.'
       )
       continue
     }
 
     if (fs.existsSync(targetDir)) {
-      Logging.actionableError(
+      logger.actionableError(
         `Module already exists at apps/${shortName}`,
         `Remove it first with: bun forge modules uninstall ${shortName}`
       )
@@ -53,28 +54,28 @@ export async function installModuleHandler(
     }
 
     if (!(await checkPackageExists(fullName))) {
-      Logging.actionableError(
-        `Module ${Logging.highlight(fullName)} does not exist in registry`,
+      logger.actionableError(
+        `Module ${chalk.blue(fullName)} does not exist in registry`,
         'Check the module name and try again'
       )
       continue
     }
 
-    Logging.debug(`Installing ${Logging.highlight(fullName)}...`)
+    logger.debug(`Installing ${chalk.blue(fullName)}...`)
 
     installPackage(fullName, targetDir)
     initGitRepository(targetDir)
 
     installed.push(moduleName)
 
-    Logging.success(`Installed ${Logging.highlight(fullName)}`)
+    logger.success(`Installed ${chalk.blue(fullName)}`)
   }
 
   if (installed.length === 0) {
     return
   }
 
-  Logging.debug('Regenerating registries...')
+  logger.debug('Regenerating registries...')
   generateRouteRegistry()
   generateSchemaRegistry()
 
@@ -89,7 +90,7 @@ export async function installModuleHandler(
       const { targetDir } = normalizePackage(moduleName)
 
       if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
-        Logging.debug(`Generating database migrations for ${moduleName}...`)
+        logger.debug(`Generating database migrations for ${moduleName}...`)
         generateMigrationsHandler(moduleName)
       }
     }

@@ -1,4 +1,4 @@
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import buildIdToNameMap from '../functions/migration-generation/buildIdToNameMap'
 import stageMigration from '../functions/migration-generation/stageMigrations'
@@ -26,13 +26,13 @@ export async function generateMigrationsHandler(
       await stageMigration(phase, Number(index), importedSchemas, idToNameMap)
     }
 
-    Logging.success('Migrations generated successfully')
+    logger.success('Migrations generated successfully')
   } catch (error) {
-    Logging.actionableError(
+    logger.actionableError(
       'Migration script failed',
       'Check the schema definitions and PocketBase configuration'
     )
-    Logging.debug(
+    logger.debug(
       `Error details: ${error instanceof Error ? error.message : String(error)}`
     )
     process.exit(1)

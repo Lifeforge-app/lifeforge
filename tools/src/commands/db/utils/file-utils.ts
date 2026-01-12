@@ -3,7 +3,7 @@ import path from 'path'
 import prettier from 'prettier'
 
 import { ROOT_DIR } from '@/constants/constants'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import { PRETTIER_OPTIONS } from './constants'
 
@@ -27,7 +27,7 @@ export async function writeFormattedFile(
 
     fs.writeFileSync(filePath, formattedContent)
   } catch (error) {
-    Logging.error(`Failed to write file ${filePath}: ${error}`)
+    logger.error(`Failed to write file ${filePath}: ${error}`)
     throw error
   }
 }
@@ -64,7 +64,7 @@ export function getSchemaFiles(targetModule?: string): string[] {
       .map((schemaPath: string) => getModuleName(schemaPath))
       .join(', ')
 
-    Logging.error(
+    logger.error(
       `Module "${targetModule}" not found. Available modules: ${availableModules}`
     )
     process.exit(1)
