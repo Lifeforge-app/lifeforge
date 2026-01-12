@@ -7,10 +7,13 @@ import z from 'zod'
 
 import { PBService, getAPIKey } from '@functions/database'
 import { validateCallerAccess } from '@functions/database/getAPIKey'
-import { LoggingService } from '@functions/logging/loggingService'
 import { ClientError } from '@functions/routes/utils/response'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
+
+import { coreLogger } from '../../..'
+
+const logger = coreLogger.child({ service: 'AI' })
 
 export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
   pb: PBService
@@ -49,6 +52,12 @@ export async function fetchAI<
     throw new ClientError(`API key for ${provider} not found.`)
   }
 
+  logger.debug(
+    `${chalk.blue(callerModule)} is sending ${chalk.blue(messages.length)} message(s) to ${chalk.green(
+      model
+    )} on provider ${chalk.green(provider)} using model: ${chalk.green(model)}.`
+  )
+
   if (provider === 'groq') {
     const client = new Groq({
       apiKey
@@ -62,8 +71,14 @@ export async function fetchAI<
     const res = response.choices[0]?.message?.content
 
     if (!res) {
+      logger.error('No response received from Groq model.')
+
       return null
     }
+
+    logger.debug(
+      `Received response (${chalk.blue(res.length)} characters) from Groq model: ${chalk.green(model)}`
+    )
 
     return res as any
   }
@@ -84,12 +99,13 @@ export async function fetchAI<
     const parsedResponse = completion.output_parsed
 
     if (!parsedResponse) {
+      logger.error('No structured response received from OpenAI model.')
+
       return null
     }
 
-    LoggingService.debug(
-      `Received structured response (${chalk.blue(Object.keys(parsedResponse).length)} fields) from OpenAI model: ${chalk.green(model)}`,
-      'AI'
+    logger.debug(
+      `Received structured response (${chalk.blue(Object.keys(parsedResponse).length)} fields) from OpenAI model: ${chalk.green(model)}`
     )
 
     return parsedResponse
@@ -103,12 +119,13 @@ export async function fetchAI<
   const res = response.output_text
 
   if (!res) {
+    logger.error('No text response received from OpenAI model.')
+
     return null
   }
 
-  LoggingService.debug(
-    `Received text response (${chalk.blue(res.length)} characters) from OpenAI model: ${chalk.green(model)}`,
-    'AI'
+  logger.debug(
+    `Received text response (${chalk.blue(res.length)} characters) from OpenAI model: ${chalk.green(model)}`
   )
 
   return res as any

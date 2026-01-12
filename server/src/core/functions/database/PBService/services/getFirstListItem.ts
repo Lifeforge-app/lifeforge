@@ -10,8 +10,8 @@ import {
   SingleItemReturnType
 } from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
 
+import { PBLogger } from '..'
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
@@ -23,8 +23,7 @@ export class GetFirstListItem<
     never,
     never
   >
-> implements PBServiceBase<TCollectionKey, TExpandConfig>
-{
+> implements PBServiceBase<TCollectionKey, TExpandConfig> {
   private _filterExpression: string = ''
   private _filterParams: Record<string, unknown> = {}
   private _sort: string = ''
@@ -112,13 +111,12 @@ export class GetFirstListItem<
         fields: this._fields
       })
 
-    LoggingService.debug(
+    PBLogger.debug(
       `${chalk
         .hex('#82c8e5')
         .bold('getFirstListItem')} Fetched first item from ${chalk
         .hex('#34ace0')
-        .bold(this.collectionKey)}`,
-      'DB'
+        .bold(this.collectionKey)}`
     )
 
     return result as unknown as SingleItemReturnType<

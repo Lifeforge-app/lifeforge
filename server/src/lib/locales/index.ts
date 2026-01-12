@@ -10,7 +10,6 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
-import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
@@ -170,11 +169,8 @@ const notifyMissing = forgeController
       key: z.string()
     })
   })
-  .callback(async ({ body: { namespace, key } }) => {
-    LoggingService.warn(
-      `Missing locale ${chalk.red(`${namespace}:${key}`)}`,
-      'LOCALES'
-    )
+  .callback(async ({ body: { namespace, key }, core: { logging } }) => {
+    logging.warn(`Missing locale ${chalk.red(`${namespace}:${key}`)}`)
   })
 
 export default forgeRouter({

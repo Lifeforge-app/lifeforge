@@ -3,7 +3,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 
-import { LoggingService } from '@functions/logging/loggingService'
+import { coreLogger } from '../../..'
 
 // Use globalThis to ensure cache works across bundler-duplicated modules
 const SCHEMA_CACHE_KEY = '__lifeforge_module_schemas__'
@@ -21,7 +21,7 @@ export async function loadModuleSchemas(): Promise<Record<string, unknown>> {
   const appsDir = path.join(ROOT_DIR, 'apps')
 
   if (!fs.existsSync(appsDir)) {
-    LoggingService.warn('Apps directory not found, no module schemas loaded')
+    coreLogger.warn('Apps directory not found, no module schemas loaded')
 
     return {}
   }
@@ -51,14 +51,14 @@ export async function loadModuleSchemas(): Promise<Record<string, unknown>> {
 
       schemas[key] = mod.default
     } catch (error) {
-      LoggingService.error(`Failed to load schemas from ${modDir}: ${error}`)
+      coreLogger.error(`Failed to load schemas from ${modDir}: ${error}`)
     }
   }
 
   const count = Object.keys(schemas).length
 
   if (count > 0) {
-    LoggingService.info(`Loaded ${count} module schema(s)`)
+    coreLogger.info(`Loaded ${count} module schema(s)`)
   }
 
   ;(globalThis as any)[SCHEMA_CACHE_KEY] = schemas
