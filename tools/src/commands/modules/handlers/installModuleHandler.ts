@@ -2,8 +2,8 @@ import fs from 'fs'
 import path from 'path'
 
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
-import { reloadHandler } from '@/commands/docker/handlers/reloadHandler'
 import { installPackage } from '@/utils/commands'
+import { smartReloadServer } from '@/utils/docker'
 import { isDockerMode } from '@/utils/helpers'
 import initGitRepository from '@/utils/initGitRepository'
 import Logging from '@/utils/logging'
@@ -13,10 +13,6 @@ import { checkPackageExists } from '@/utils/registry'
 import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
 import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import { buildModuleHandler } from './buildModuleHandler'
-
-interface InstallOptions {
-  reload?: boolean
-}
 
 /**
  * Installs one or more modules from the registry.
@@ -31,11 +27,9 @@ interface InstallOptions {
  * - Regenerates route and schema registries
  * - Builds module client bundles for federation
  * - Generates database migrations if schema.ts exists
- * - Optionally triggers Docker reload (--reload flag)
  */
 export async function installModuleHandler(
-  moduleNames: string[],
-  options: InstallOptions
+  moduleNames: string[]
 ): Promise<void> {
   const installed: string[] = []
 
@@ -101,9 +95,5 @@ export async function installModuleHandler(
     }
   }
 
-  // Trigger Docker reload if requested
-  if (options.reload) {
-    Logging.info('Triggering Docker reload...')
-    await reloadHandler({})
-  }
+  smartReloadServer()
 }

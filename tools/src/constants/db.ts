@@ -12,7 +12,9 @@ dotenv.config({
   quiet: true
 })
 
-export const PB_DIR = getEnvVar('PB_DIR', isDockerMode() ? '' : 'database')
+export const PB_DIR = path.resolve(
+  getEnvVar('PB_DIR', isDockerMode() ? '' : 'database')
+)
 
 export const PB_DATA_DIR = isDockerMode()
   ? path.resolve(PB_DIR)

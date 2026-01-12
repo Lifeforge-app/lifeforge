@@ -1,6 +1,6 @@
 import type { Command } from 'commander'
 
-import { reloadHandler } from './handlers/reloadHandler'
+import { migrateHandler } from './handlers/migrateHandler'
 
 export default function setup(program: Command): void {
   const command = program
@@ -8,11 +8,10 @@ export default function setup(program: Command): void {
     .description('Docker container management commands')
 
   command
-    .command('reload')
+    .command('migrate')
     .description(
-      'Reload all containers after module install/uninstall (regenerates migrations, rebuilds client)'
+      'Run database migrations after module install/uninstall (regenerates and applies migrations)'
     )
-    .option('--skip-client', 'Skip client rebuild')
     .option('--skip-migrations', 'Skip migration regeneration')
-    .action(reloadHandler)
+    .action(migrateHandler)
 }

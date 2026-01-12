@@ -1,19 +1,22 @@
 import Logging from '@/utils/logging'
 
+import SERVICES from '../constants/services'
 import {
   startAllServices,
   startSingleService
 } from '../functions/startServices'
-import validateService from '../functions/validateServices'
 
 export function devHandler(service: string, extraArgs: string[] = []): void {
-  validateService(service)
-
   if (!service) {
     Logging.info('Starting all services...')
     startAllServices()
 
     return
+  }
+
+  if (!SERVICES.includes(service as (typeof SERVICES)[number])) {
+    Logging.error(`Unknown service: ${service}`)
+    process.exit(1)
   }
 
   Logging.info(`Starting ${Logging.highlight(service)} service...`)

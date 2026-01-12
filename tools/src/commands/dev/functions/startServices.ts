@@ -1,6 +1,6 @@
 import concurrently from 'concurrently'
 
-import { PROJECTS, TOOLS_ALLOWED } from '@/commands/project/constants/projects'
+import { PROJECTS } from '@/commands/project/constants/projects'
 import executeCommand from '@/utils/commands'
 import { getEnvVars } from '@/utils/helpers'
 import Logging from '@/utils/logging'
@@ -36,7 +36,7 @@ export async function startSingleService(
   }
 
   // Handle tool services
-  if (service in TOOLS_ALLOWED) {
+  if (service in PROJECTS) {
     const projectPath = PROJECTS[service as keyof typeof PROJECTS]
 
     executeCommand(`cd ${projectPath} && bun run dev`, {}, extraArgs)
