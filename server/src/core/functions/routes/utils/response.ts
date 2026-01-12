@@ -20,12 +20,13 @@ export class ClientError extends Error {
   }
 }
 
-export function successWithBaseResponse<T>(
+export function success<T>(
   res: Response<BaseResponse<T>>,
-  data: T
+  data: T,
+  statusCode: number = 200
 ) {
   try {
-    res.json({
+    res.status(statusCode).json({
       state: 'success',
       data: data
     })

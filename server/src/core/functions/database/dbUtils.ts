@@ -117,7 +117,7 @@ export async function connectToPocketBase(
       )
     }
 
-    PBLogger.info('Successfully connected to PocketBase')
+    PBLogger.debug('Successfully connected to PocketBase')
 
     return pb
   } catch (error) {

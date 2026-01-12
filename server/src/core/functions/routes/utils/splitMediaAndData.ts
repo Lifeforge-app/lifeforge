@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 
-import { coreLogger } from '../../../..'
 import { MediaConfig } from '../typescript/forge_controller.types'
+import { coreLogger } from '@functions/logging'
 
 type MediaResponse = Record<
   string,
