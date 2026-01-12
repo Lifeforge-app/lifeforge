@@ -1,5 +1,5 @@
-import moment from 'moment'
 import z from 'zod'
+import dayjs from 'dayjs'
 
 import {
   connectToPocketBase,
@@ -83,7 +83,7 @@ const create = forgeController
     const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     if (!backupName) {
-      backupName = `pb_backup_lifeforge_${moment().format('YYYYMMDD_HHmmss')}.zip`
+      backupName = `pb_backup_lifeforge_${dayjs().format('YYYYMMDD_HHmmss')}.zip`
     }
 
     await pb.backups.create(backupName)

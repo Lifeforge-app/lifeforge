@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import z from 'zod'
 
 import getMedia from '@functions/external/media'
@@ -95,7 +95,7 @@ const updateProfile = forgeController
     if (data.name) updateData.name = data.name
 
     if (data.dateOfBirth) {
-      updateData.dateOfBirth = moment(data.dateOfBirth).format('YYYY-MM-DD')
+      updateData.dateOfBirth = dayjs(data.dateOfBirth).format('YYYY-MM-DD')
     }
 
     if (Object.keys(updateData).length > 0) {

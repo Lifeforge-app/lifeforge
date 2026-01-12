@@ -1,4 +1,3 @@
-import moment from 'moment'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
 import z from 'zod'
@@ -13,6 +12,7 @@ import { ClientError } from '@functions/routes/utils/response'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
+import dayjs from 'dayjs'
 
 const validateOTP = forgeController
   .mutation()
@@ -88,7 +88,7 @@ const login = forgeController
 
       if (sanitizedUserData.twoFAEnabled) {
         currentSession.token = pb.authStore.token
-        currentSession.tokenExpireAt = moment().add(5, 'minutes').toISOString()
+        currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
         currentSession.tokenId = v4()
 
         return {
