@@ -62,39 +62,16 @@ services:
       db-init:
         condition: service_completed_successfully
 
-  client-builder:
-    build:
-      context: .
-      dockerfile: docker/client-builder/Dockerfile
-      args:
-        - VITE_API_HOST=/api
-    container_name: lifeforge-client-builder
-    environment:
-      - DOCKER_MODE=true
-      - VITE_API_HOST=/api
-    volumes:
-      - ./apps:/app/apps
-      - ./locales:/app/locales
-      - client-dist:/output
-    depends_on:
-      db-init:
-        condition: service_completed_successfully
-
   client:
     build:
       context: .
       dockerfile: docker/client/Dockerfile
+      args:
+        - VITE_API_HOST=/api
     container_name: lifeforge-client
     restart: unless-stopped
     ports:
       - "80:80"
-    volumes:
-      - client-dist:/usr/share/nginx/html
     depends_on:
-      client-builder:
-        condition: service_completed_successfully
       server:
         condition: service_started
-
-volumes:
-  client-dist:

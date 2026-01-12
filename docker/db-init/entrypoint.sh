@@ -7,8 +7,8 @@ echo "Generating database migrations..."
 # Ensure the migrations directory exists
 mkdir -p /pb_data/pb_migrations
 
-# Generate migrations
-cd /app && bun run forge db push
+# Generate and apply migrations using bundled forge CLI
+cd /app && bun forge.js db push
 
-echo "Migrations generated successfully!"
+echo "Migrations applied successfully!"
 echo "=== DB Init Complete ==="
