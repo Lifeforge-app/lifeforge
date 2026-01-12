@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import pino from 'pino'
 import pretty from 'pino-pretty'
 import { Transform } from 'stream'
@@ -8,8 +9,28 @@ import { getFileStream } from '../utils/fileTransport'
 const PRETTY_OPTIONS = {
   colorize: true,
   translateTime: 'yyyy-mm-dd HH:MM:ss',
-  ignore: 'pid,hostname',
-  messageFormat: '{msg}',
+  ignore: 'pid,hostname,service,name',
+  messageFormat: (log: Record<string, unknown>, messageKey: string) => {
+    const msg = log[messageKey] as string
+
+    const name = log.name as string | undefined
+
+    const service = log.service as string | undefined
+
+    let output = ''
+
+    if (name) {
+      output += `${chalk.magenta(`(${name})`)}: `
+    }
+
+    if (service) {
+      output += `${chalk.cyan(`[${service}]`)} `
+    }
+
+    output += msg
+
+    return output
+  },
   levelFirst: true,
   customColors:
     'fatal:bgRed,error:red,warn:yellow,info:blue,debug:magenta,message:reset',
@@ -41,7 +62,7 @@ function createStripAnsiTransform(): Transform {
         }
 
         callback(null, JSON.stringify(log) + '\n')
-      } catch (error) {
+      } catch {
         // If not JSON, just strip ANSI codes from the entire chunk
         callback(null, stripAnsiCodes(chunk.toString()))
       }
