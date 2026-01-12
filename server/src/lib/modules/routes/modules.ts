@@ -1,3 +1,4 @@
+import { ROOT_DIR } from '@constants'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
@@ -10,6 +11,8 @@ import { devModeFile } from '..'
 import scanFederatedModules, {
   ModuleManifestEntry
 } from '../utils/scanFederatedModules'
+
+const APPS_DIR = path.join(ROOT_DIR, 'apps')
 
 export const checkModuleAvailability = forgeController
   .query()
@@ -36,17 +39,13 @@ export const manifest = forgeController
   })
   .input({})
   .callback(async () => {
-    const rootDir = import.meta.dirname.split('/server')[0]
-
     const modules: (ModuleManifestEntry & { isDevMode?: boolean })[] = []
 
     const devModeModules = (devModeFile.read() as string[]) || []
 
-    const appsDir = path.join(rootDir, 'apps')
+    scanFederatedModules(APPS_DIR, modules, false, '/modules')
 
-    scanFederatedModules(appsDir, modules, false, '/modules')
-
-    const internalAppsDir = path.join(rootDir, 'client', 'src', 'apps')
+    const internalAppsDir = path.join(ROOT_DIR, 'client', 'src', 'apps')
 
     scanFederatedModules(internalAppsDir, modules, true, '/internal-modules')
 
@@ -85,22 +84,18 @@ export const list = forgeController
   })
   .input({})
   .callback(async () => {
-    const rootDir = import.meta.dirname.split('/server')[0]
-
     const modules: InstalledModule[] = []
 
-    const appsDir = path.join(rootDir, 'apps')
-
-    if (!fs.existsSync(appsDir)) return { modules }
+    if (!fs.existsSync(APPS_DIR)) return { modules }
 
     const devModeModules = (devModeFile.read() as string[]) || []
 
     const dirs = fs
-      .readdirSync(appsDir, { withFileTypes: true })
+      .readdirSync(APPS_DIR, { withFileTypes: true })
       .filter(d => d.isDirectory() && !d.name.startsWith('.'))
 
     for (const dir of dirs) {
-      const pkgPath = path.join(appsDir, dir.name, 'package.json')
+      const pkgPath = path.join(APPS_DIR, dir.name, 'package.json')
 
       if (!fs.existsSync(pkgPath)) continue
 
@@ -140,11 +135,9 @@ export const uninstall = forgeController
     })
   })
   .callback(async ({ body: { moduleName } }) => {
-    const rootDir = import.meta.dirname.split('/server')[0]
-
     try {
       execSync(`bun forge modules uninstall ${moduleName}`, {
-        cwd: rootDir,
+        cwd: ROOT_DIR,
         stdio: 'pipe'
       })
 

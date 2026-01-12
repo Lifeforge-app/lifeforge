@@ -16,6 +16,7 @@
  * - No client-side private key storage needed
  * - Protection against proxy/log interception
  */
+import { ROOT_DIR } from '@constants'
 import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
@@ -23,7 +24,7 @@ import path from 'path'
 import { LoggingService } from '@functions/logging/loggingService'
 
 // Key storage paths
-const KEYS_DIR = path.join(import.meta.dirname, 'keys')
+const KEYS_DIR = path.join(ROOT_DIR, 'keys')
 
 const PRIVATE_KEY_PATH = path.join(KEYS_DIR, 'server_private.pem')
 

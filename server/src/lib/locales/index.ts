@@ -1,3 +1,4 @@
+import { ROOT_DIR } from '@constants'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -13,11 +14,8 @@ import { LoggingService } from '@functions/logging/loggingService'
 import { forgeController, forgeRouter } from '@functions/routes'
 import { ClientError } from '@functions/routes/utils/response'
 
-// Get the project root directory
-const projectRoot = import.meta.dirname.split('/server')[0]
-
 // Scan apps directory for modules with locales
-const appsDir = path.join(projectRoot, 'apps')
+const appsDir = path.join(ROOT_DIR, 'apps')
 
 function getModulesWithLocales(): string[] {
   if (!fs.existsSync(appsDir)) return []
