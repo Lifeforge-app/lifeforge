@@ -18,29 +18,6 @@ const upload = multer({
   }
 })
 
-const uploadMiddleware = (req: Request, res: Response, next: NextFunction) => {
-  upload.array('files', 100)(req, res, () => {
-    next()
-  })
-}
-
-const singleUploadMiddleware = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  upload.single('file')(req, res, () => {
-    next()
-  })
-}
-
-const singleUploadMiddlewareOfKey =
-  (key: string) => (req: Request, res: Response, next: NextFunction) => {
-    upload.single(key)(req, res, () => {
-      next()
-    })
-  }
-
 const fieldsUploadMiddleware =
   (fields: Record<string, number>) =>
   (req: Request, res: Response, next: NextFunction) => {
@@ -54,9 +31,4 @@ const fieldsUploadMiddleware =
     })
   }
 
-export {
-  fieldsUploadMiddleware,
-  singleUploadMiddleware,
-  singleUploadMiddlewareOfKey,
-  uploadMiddleware
-}
+export default fieldsUploadMiddleware

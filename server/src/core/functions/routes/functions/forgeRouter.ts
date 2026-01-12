@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import { ForgeRouter, RouterInput } from '../typescript/forge_router.types'
+import { registerController } from './controllerLogic'
 import { ForgeControllerBuilder } from './forgeController'
 
 function isRouter(value: unknown): value is Router {
@@ -83,7 +84,7 @@ function registerRoutes<T extends RouterInput>(
       const finalRoute = route.replace(/\$/g, '__')
 
       if (isForgeController(controller)) {
-        controller.register(router, finalRoute)
+        registerController(controller, router, finalRoute)
       } else if (isRouter(controller)) {
         router.use(`/${finalRoute}`, controller)
       } else if (typeof controller === 'object' && controller !== null) {
