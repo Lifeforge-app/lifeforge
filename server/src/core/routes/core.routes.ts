@@ -1,10 +1,11 @@
 import corsAnywhere from '@lib/corsAnywhere'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import dayjs from 'dayjs'
 import request from 'request'
 import z from 'zod'
 
 import { getPublicKey } from '@functions/encryption'
-import { forgeController, forgeRouter } from '@functions/routes'
+import { forgeController } from '@functions/routes'
 
 const welcome = forgeController
   .query()

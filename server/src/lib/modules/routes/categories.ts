@@ -1,13 +1,6 @@
 import z from 'zod'
 
-import { fetchAI } from '@functions/external/ai'
 import { forgeController } from '@functions/routes'
-import TempFileManager from '@functions/utils/tempFileManager'
-
-const moduleCategoriesFile = new TempFileManager(
-  'module_categories.json',
-  'object'
-)
 
 export const list = forgeController
   .query()
@@ -18,8 +11,10 @@ export const list = forgeController
     'zh-TW': '獲取類別顯示順序'
   })
   .input({})
-  .callback(async () =>
-    moduleCategoriesFile.read<Record<string, Record<string, string>>>()
+  .callback(async ({ core: { tempFile } }) =>
+    new tempFile('module_categories.json').read<
+      Record<string, Record<string, string>>
+    >()
   )
 
 export const update = forgeController
@@ -35,8 +30,8 @@ export const update = forgeController
       data: z.record(z.string(), z.record(z.string(), z.string()))
     })
   })
-  .callback(async ({ body: { data } }) => {
-    moduleCategoriesFile.write(JSON.stringify(data))
+  .callback(async ({ body: { data }, core: { tempFile } }) => {
+    new tempFile('module_categories.json').write(JSON.stringify(data))
 
     return { success: true }
   })
@@ -55,30 +50,37 @@ export const aiTranslate = forgeController
       languages: z.array(z.string())
     })
   })
-  .callback(async ({ body: { key, languages }, pb }) =>
-    fetchAI({
+  .callback(
+    async ({
+      body: { key, languages },
       pb,
-      provider: 'openai',
-      model: 'gpt-5-nano',
-      messages: [
-        {
-          role: 'system',
-          content: `You are a translation assistant for a software application's category names. Translate the given category key into natural, concise labels suitable for UI navigation. Keep translations short (1-3 words), capitalize appropriately for each language, and maintain consistent tone across all languages.`
-        },
-        {
-          role: 'user',
-          content: `Translate the category "${key}" into these languages: ${languages.join(', ')}. Return only the translations as requested.`
-        }
-      ],
-      structure: z.object(
-        languages.reduce(
-          (acc, lang) => {
-            acc[lang] = z.string()
-
-            return acc
+      core: {
+        api: { fetchAI }
+      }
+    }) =>
+      fetchAI({
+        pb,
+        provider: 'openai',
+        model: 'gpt-5-nano',
+        messages: [
+          {
+            role: 'system',
+            content: `You are a translation assistant for a software application's category names. Translate the given category key into natural, concise labels suitable for UI navigation. Keep translations short (1-3 words), capitalize appropriately for each language, and maintain consistent tone across all languages.`
           },
-          {} as Record<string, z.ZodString>
+          {
+            role: 'user',
+            content: `Translate the category "${key}" into these languages: ${languages.join(', ')}. Return only the translations as requested.`
+          }
+        ],
+        structure: z.object(
+          languages.reduce(
+            (acc, lang) => {
+              acc[lang] = z.string()
+
+              return acc
+            },
+            {} as Record<string, z.ZodString>
+          )
         )
-      )
-    })
+      })
   )

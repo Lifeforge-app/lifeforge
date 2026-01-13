@@ -4,7 +4,7 @@ type FileResult<TFieldName extends string> =
   | {}
   | { [K in TFieldName]: File | null | undefined }
 
-export default async function getMedia<TFieldName extends string = string>(
+export default async function retrieveMedia<TFieldName extends string = string>(
   fieldName: TFieldName,
   media: string | Express.Multer.File | undefined
 ): Promise<FileResult<TFieldName>> {

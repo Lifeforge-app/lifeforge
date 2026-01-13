@@ -1,8 +1,8 @@
+import { forgeRouter } from '@lifeforge/server-sdk'
 import dayjs from 'dayjs'
 import z from 'zod'
 
-import getMedia from '@functions/external/media'
-import { forgeController, forgeRouter } from '@functions/routes'
+import { forgeController } from '@functions/routes'
 
 const updateAvatar = forgeController
   .mutation()
@@ -18,19 +18,27 @@ const updateAvatar = forgeController
       optional: false
     }
   })
-  .callback(async ({ media: { file: rawFile }, pb }) => {
-    const fileResult = await getMedia('avatar', rawFile)
+  .callback(
+    async ({
+      media: { file: rawFile },
+      pb,
+      core: {
+        media: { retrieveMedia }
+      }
+    }) => {
+      const fileResult = await retrieveMedia('avatar', rawFile)
 
-    const { id } = pb.instance.authStore.record!
+      const { id } = pb.instance.authStore.record!
 
-    const newRecord = await pb.update
-      .collection('user__users')
-      .id(id)
-      .data(fileResult)
-      .execute()
+      const newRecord = await pb.update
+        .collection('user__users')
+        .id(id)
+        .data(fileResult)
+        .execute()
 
-    return newRecord.avatar
-  })
+      return newRecord.avatar
+    }
+  )
 
 const deleteAvatar = forgeController
   .mutation()

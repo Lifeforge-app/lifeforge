@@ -1,8 +1,8 @@
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import z from 'zod'
 
-import { getAPIKey } from '@functions/database'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 const searchImages = forgeController
   .query()
@@ -73,7 +73,10 @@ const searchImages = forgeController
   .callback(
     async ({
       query: { q, page, type, category, colors, editors_choice },
-      pb
+      pb,
+      core: {
+        api: { getAPIKey }
+      }
     }) => {
       const key = await getAPIKey('pixabay', pb)
 

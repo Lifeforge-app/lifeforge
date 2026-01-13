@@ -1,9 +1,9 @@
+import { ClientError } from '@lifeforge/server-sdk'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import { CollectionKey } from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { ClientError } from '@functions/routes/utils/response'
 
 import { PBLogger } from '..'
 import { PBServiceBase } from '../typescript/PBServiceBase.interface'

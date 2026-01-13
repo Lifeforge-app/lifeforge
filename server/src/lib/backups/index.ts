@@ -1,11 +1,12 @@
-import z from 'zod'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import dayjs from 'dayjs'
+import z from 'zod'
 
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
-import { forgeController, forgeRouter } from '@functions/routes'
+import { forgeController } from '@functions/routes'
 
 const list = forgeController
   .query()
@@ -61,7 +62,7 @@ const download = forgeController
     res.setHeader('Content-Disposition', `attachment; filename="${key}.zip"`)
     res.setHeader('Content-Length', buffer.length)
 
-    // @ts-expect-error - custom response type
+    // @ts-expect-error - res type
     res.send(buffer)
   })
 

@@ -1,4 +1,6 @@
 import { ROOT_DIR } from '@constants'
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -10,8 +12,7 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 // Scan apps directory for modules with locales
 const appsDir = path.join(ROOT_DIR, 'apps')

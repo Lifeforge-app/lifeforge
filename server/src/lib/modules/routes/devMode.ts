@@ -2,8 +2,6 @@ import z from 'zod'
 
 import { forgeController } from '@functions/routes'
 
-import { devModeFile } from '../'
-
 export const toggle = forgeController
   .mutation()
   .description({
@@ -17,7 +15,9 @@ export const toggle = forgeController
       moduleName: z.string().min(1)
     })
   })
-  .callback(async ({ body: { moduleName } }) => {
+  .callback(async ({ body: { moduleName }, core: { tempFile } }) => {
+    const devModeFile = new tempFile('module_dev_mode.json', 'array')
+
     const modules = (devModeFile.read() as string[]) || []
 
     const index = modules.indexOf(moduleName)

@@ -1,18 +1,5 @@
-import { Router } from 'express'
-
 // Define the controller type
-
-// Define the router input type to support nested structures like tRPC
-export interface RouterInput {
-  [key: string]:
-    | Router
-    | {
-        __isForgeController: true
-      }
-    | RouterInput
-}
-
-export type ForgeRouter<T extends RouterInput> = T
+import { ForgeRouter, RouterInput } from '@lifeforge/server-sdk'
 
 // Type utility to extract the structure from the router
 export type InferRouterStructure<T> = T extends ForgeRouter<infer U> ? U : never

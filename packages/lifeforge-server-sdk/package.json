@@ -1,0 +1,46 @@
+{
+  "name": "@lifeforge/server-sdk",
+  "version": "0.0.1",
+  "description": "Server SDK for LifeForge modules",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts --outdir=dist --target=node && bun tsc --emitDeclarationOnly",
+    "types": "bun tsc --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "chalk": "^5.6.2",
+    "crypto-js": "^4.2.0",
+    "express": "^4.21.2",
+    "form-data": "^4.0.0",
+    "groq-sdk": "^0.20.0",
+    "ical.js": "^2.1.0",
+    "lodash": "^4.17.21",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^4.81.0",
+    "pdf2pic": "^3.1.5",
+    "shared": "workspace:*",
+    "socket.io": "^4.8.3",
+    "tesseract.js": "^5.1.1",
+    "uuid": "^11.1.0",
+    "zod": "^4.3.5",
+    "@lifeforge/log": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/express": "^4.17.23",
+    "@types/lodash": "^4.17.21",
+    "@types/multer": "^1.4.13",
+    "typescript": "^5.8.3"
+  },
+  "peerDependencies": {
+    "pocketbase": "^0.26.2"
+  }
+}

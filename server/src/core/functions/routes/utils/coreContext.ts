@@ -3,55 +3,57 @@
  *
  * This module provides the implementation of core utilities that modules
  * access via the `core` parameter in their callbacks.
- *
- * NOTE: All utilities except `log` are temporarily commented out during
- * the logging overhaul. They will be restored in a future update.
  */
-// import type { Server } from 'socket.io'
-// import {
-//   decrypt,
-//   decrypt2,
-//   encrypt,
-//   encrypt2
-// } from '@functions/auth/encryption'
-// import { PBService } from '@functions/database'
-// import { getAPIKey } from '@functions/database'
-// import { fetchAI as _fetchAI } from '@functions/external/ai'
-// import searchLocations from '@functions/external/location'
-// import getMedia from '@functions/external/media'
-// import parseOCR from '@functions/external/ocr'
-// import { addToTaskPool, updateTaskInPool } from '@functions/socketio/taskPool'
-// import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
-// import convertPDFToImage from '@functions/utils/convertPDFToImage'
-// import TempFileManager from '@functions/utils/tempFileManager'
 import { type Logger, createLogger } from '@lifeforge/log'
+
+import {
+  decrypt,
+  decrypt2,
+  encrypt,
+  encrypt2
+} from '@functions/auth/encryption'
+import { checkExistence, getAPIKey } from '@functions/database'
+import { fetchAI } from '@functions/external/ai'
+import searchLocations from '@functions/external/location'
+import parseOCR from '@functions/external/ocr'
+import convertPDFToImage from '@functions/media/convertPDFToImage'
+import retrieveMedia from '@functions/media/retrieveMedia'
+import {
+  addToTaskPool,
+  globalTaskPool,
+  updateTaskInPool
+} from '@functions/socketio/taskPool'
+import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
+import TempFileManager from '@functions/utils/tempFileManager'
 
 export interface CoreContext {
   logging: Logger
-  // ai: {
-  //   fetch: typeof _fetchAI
-  // }
-  // tasks: {
-  //   add: (task: { description: string; data?: any; progress?: any }) => string
-  //   update: (taskId: string, updates: any) => void
-  // }
-  // media: {
-  //   get: typeof getMedia
-  //   convertPDFToImage: typeof convertPDFToImage
-  // }
-  // crypto: {
-  //   encrypt: typeof encrypt
-  //   decrypt: typeof decrypt
-  //   encryptString: typeof encrypt2
-  //   decryptString: typeof decrypt2
-  // }
-  // external: {
-  //   searchLocations: (query: string) => ReturnType<typeof searchLocations>
-  //   parseOCR: typeof parseOCR
-  // }
-  // getAPIKey: (provider: string) => Promise<string | null>
-  // checkModulesAvailability: typeof checkModulesAvailability
-  // tempFile: typeof TempFileManager
+  api: {
+    fetchAI: typeof fetchAI
+    searchLocations: typeof searchLocations
+    getAPIKey: typeof getAPIKey
+  }
+  tempFile: typeof TempFileManager
+  validation: {
+    checkRecordExistence: typeof checkExistence
+    checkModulesAvailability: typeof checkModulesAvailability
+  }
+  media: {
+    retrieveMedia: typeof retrieveMedia
+    convertPDFToImage: typeof convertPDFToImage
+    parseOCR: typeof parseOCR
+  }
+  tasks: {
+    global: typeof globalTaskPool
+    add: typeof addToTaskPool
+    update: typeof updateTaskInPool
+  }
+  crypto: {
+    decrypt: typeof decrypt
+    decrypt2: typeof decrypt2
+    encrypt: typeof encrypt
+    encrypt2: typeof encrypt2
+  }
 }
 
 /**
@@ -64,35 +66,32 @@ export function createCoreContext({
   moduleId?: string
 }): CoreContext {
   return {
-    logging: createLogger({ name: moduleId || 'unknown-module' })
-    // ai: {
-    //   fetch: params => _fetchAI({ ...params, pb })
-    // },
-    // tasks: {
-    //   add: task =>
-    //     addToTaskPool(io, { ...task, module: moduleId, status: 'pending' }),
-    //   update: (taskId, updates) => updateTaskInPool(io, taskId, updates)
-    // },
-    // media: {
-    //   get: getMedia,
-    //   convertPDFToImage
-    // },
-    // crypto: {
-    //   encrypt,
-    //   decrypt,
-    //   encryptString: encrypt2,
-    //   decryptString: decrypt2
-    // },
-    // external: {
-    //   searchLocations: async query => {
-    //     const key = await getAPIKey('google_places', pb)
-    //     if (!key) throw new Error('Google Places API key not found')
-    //     return searchLocations(key, query)
-    //   },
-    //   parseOCR
-    // },
-    // getAPIKey: provider => getAPIKey(provider, pb),
-    // checkModulesAvailability,
-    // tempFile: TempFileManager
+    logging: createLogger({ name: moduleId || 'unknown-module' }),
+    api: {
+      fetchAI,
+      searchLocations,
+      getAPIKey
+    },
+    tempFile: TempFileManager,
+    validation: {
+      checkRecordExistence: checkExistence,
+      checkModulesAvailability
+    },
+    media: {
+      retrieveMedia,
+      convertPDFToImage,
+      parseOCR
+    },
+    tasks: {
+      global: globalTaskPool,
+      add: addToTaskPool,
+      update: updateTaskInPool
+    },
+    crypto: {
+      decrypt,
+      decrypt2,
+      encrypt,
+      encrypt2
+    }
   }
 }

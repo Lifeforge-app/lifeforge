@@ -1,9 +1,9 @@
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import z from 'zod'
 
-import { getAPIKey } from '@functions/database'
 import searchLocations from '@functions/external/location'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 const search = forgeController
   .query()
@@ -18,14 +18,22 @@ const search = forgeController
       q: z.string()
     })
   })
-  .callback(async ({ query: { q }, pb }) => {
-    const key = await getAPIKey('gcloud', pb)
+  .callback(
+    async ({
+      query: { q },
+      pb,
+      core: {
+        api: { getAPIKey }
+      }
+    }) => {
+      const key = await getAPIKey('gcloud', pb)
 
-    if (!key) {
-      throw new ClientError('API key not found')
+      if (!key) {
+        throw new ClientError('API key not found')
+      }
+
+      return await searchLocations(key, q)
     }
-
-    return await searchLocations(key, q)
-  })
+  )
 
 export default forgeRouter({ search })

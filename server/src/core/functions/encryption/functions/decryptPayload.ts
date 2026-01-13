@@ -1,6 +1,5 @@
+import { ClientError } from '@lifeforge/server-sdk'
 import crypto from 'crypto'
-
-import { ClientError } from '@functions/routes/utils/response'
 
 import { AES_ALGORITHM } from '../constants'
 import { EncryptedPayload } from '../types'

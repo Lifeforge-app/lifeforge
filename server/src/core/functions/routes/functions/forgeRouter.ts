@@ -1,6 +1,6 @@
+import { ForgeRouter, RouterInput } from '@lifeforge/server-sdk'
 import { Router } from 'express'
 
-import { ForgeRouter, RouterInput } from '../typescript/forge_router.types'
 import { registerController } from './controllerLogic'
 import { ForgeControllerBuilder } from './forgeController'
 
@@ -20,33 +20,6 @@ function isForgeController(value: unknown): value is ForgeControllerBuilder {
     '__isForgeController' in value &&
     (value as Record<string, unknown>).__isForgeController === true
   )
-}
-
-/**
- * A utility function to define a router configuration object.
- *
- * This function serves as a type-safe way to create a router configuration
- * object that maps route names to either ForgeControllerBuilder instances,
- * Express Router instances, or nested router objects. It ensures that the
- * provided routes conform to the expected structure defined by the RouterInput type.
- *
- * @template T - The type of the router input configuration, extending RouterInput
- * @param routes - An object mapping route names to controllers, routers, or nested objects
- * @returns The same routes object, typed as T
- *
- * @example
- * ```typescript
- * const routes = forgeRouter({
- *   users: forgeController.query()...,
- *   posts: {
- *     list: forgeController.query()...,
- *     create: forgeController.mutation()...
- *   },
- * });
- * ```
- */
-function forgeRouter<T extends RouterInput>(routes: T): T {
-  return routes
 }
 
 /**
@@ -105,7 +78,5 @@ function registerRoutes<T extends RouterInput>(
 
   return expressRouter
 }
-
-export default forgeRouter
 
 export { registerRoutes }

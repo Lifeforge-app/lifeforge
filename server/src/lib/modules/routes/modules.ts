@@ -7,7 +7,6 @@ import z from 'zod'
 import { forgeController } from '@functions/routes'
 import { checkModulesAvailability as cma } from '@functions/utils/checkModulesAvailability'
 
-import { devModeFile } from '..'
 import scanFederatedModules, {
   ModuleManifestEntry
 } from '../utils/scanFederatedModules'
@@ -38,10 +37,11 @@ export const manifest = forgeController
     'zh-TW': '獲取已安裝模組的運行時加載清單'
   })
   .input({})
-  .callback(async () => {
+  .callback(async ({ core: { tempFile } }) => {
     const modules: (ModuleManifestEntry & { isDevMode?: boolean })[] = []
 
-    const devModeModules = (devModeFile.read() as string[]) || []
+    const devModeModules =
+      (new tempFile('module_dev_mode.json', 'array').read() as string[]) || []
 
     scanFederatedModules(APPS_DIR, modules, false, '/modules')
 
@@ -83,12 +83,13 @@ export const list = forgeController
     'zh-TW': '列出已安裝的模組及其元資料'
   })
   .input({})
-  .callback(async () => {
+  .callback(async ({ core: { tempFile } }) => {
     const modules: InstalledModule[] = []
 
     if (!fs.existsSync(APPS_DIR)) return { modules }
 
-    const devModeModules = (devModeFile.read() as string[]) || []
+    const devModeModules =
+      (new tempFile('module_dev_mode.json', 'array').read() as string[]) || []
 
     const dirs = fs
       .readdirSync(APPS_DIR, { withFileTypes: true })
