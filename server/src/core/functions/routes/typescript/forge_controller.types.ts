@@ -1,4 +1,3 @@
-import { Logger } from '@lifeforge/log'
 import type { Request, Response } from 'express'
 import type { Server } from 'socket.io'
 import z from 'zod'
@@ -6,11 +5,8 @@ import type { ZodIntersection, ZodObject, ZodTypeAny } from 'zod'
 
 import type { PBService } from '@functions/database'
 
-export interface BaseResponse<T = ''> {
-  data?: T
-  state: 'success' | 'error' | 'accepted'
-  message?: string
-}
+import { CoreContext } from '../utils/coreContext'
+import { BaseResponse } from '../utils/response'
 
 export type Description = string | Record<string, string>
 
@@ -66,9 +62,7 @@ export type Context<
   body: InferZodType<TInput['body']>
   query: InferZodType<TInput['query']>
   media: ConvertMedia<TMedia>
-  core: {
-    logging: Logger
-  }
+  core: CoreContext
 }
 
 export type MediaConfig = Record<

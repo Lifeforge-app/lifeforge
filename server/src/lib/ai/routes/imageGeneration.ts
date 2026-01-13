@@ -1,9 +1,9 @@
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import OpenAI from 'openai'
 import z from 'zod'
 
-import { getAPIKey } from '@functions/database'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 const generateImage = forgeController
   .mutation()
@@ -18,30 +18,38 @@ const generateImage = forgeController
       prompt: z.string().min(1, 'Prompt cannot be empty')
     })
   })
-  .callback(async ({ pb, body: { prompt } }) => {
-    const key = await getAPIKey('openai', pb)
+  .callback(
+    async ({
+      pb,
+      body: { prompt },
+      core: {
+        api: { getAPIKey }
+      }
+    }) => {
+      const key = await getAPIKey('openai', pb)
 
-    if (!key) {
-      throw new ClientError('OpenAI API key not found')
+      if (!key) {
+        throw new ClientError('OpenAI API key not found')
+      }
+
+      const openai = new OpenAI({
+        apiKey: key
+      })
+
+      const response = await openai.images.generate({
+        model: 'gpt-image-1',
+        prompt,
+        size: '1536x1024'
+      })
+
+      const image_base64 = response.data?.[0].b64_json
+
+      if (!image_base64) {
+        throw new Error('No image generated')
+      }
+
+      return `data:image/png;base64,${image_base64}`
     }
-
-    const openai = new OpenAI({
-      apiKey: key
-    })
-
-    const response = await openai.images.generate({
-      model: 'gpt-image-1',
-      prompt,
-      size: '1536x1024'
-    })
-
-    const image_base64 = response.data?.[0].b64_json
-
-    if (!image_base64) {
-      throw new Error('No image generated')
-    }
-
-    return `data:image/png;base64,${image_base64}`
-  })
+  )
 
 export default forgeRouter({ generateImage })

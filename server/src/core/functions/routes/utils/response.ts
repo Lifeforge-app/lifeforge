@@ -3,36 +3,10 @@ import chalk from 'chalk'
 import { Response } from 'express'
 import fs from 'fs'
 
-import { BaseResponse } from '../typescript/forge_controller.types'
-
-export class ClientError extends Error {
-  code: number
-
-  constructor(message: any, code: number = 400) {
-    super(message)
-    this.name = 'ClientError'
-    this.code = code
-    Object.setPrototypeOf(this, ClientError.prototype)
-  }
-
-  static isClientError(error: unknown): error is ClientError {
-    return error instanceof ClientError
-  }
-}
-
-export function success<T>(
-  res: Response<BaseResponse<T>>,
-  data: T,
-  statusCode: number = 200
-) {
-  try {
-    res.status(statusCode).json({
-      state: 'success',
-      data: data
-    })
-  } catch {
-    console.error('Failed to send response')
-  }
+export interface BaseResponse<T = ''> {
+  data?: T
+  state: 'success' | 'error' | 'accepted'
+  message?: string
 }
 
 export function clientError({
@@ -87,6 +61,21 @@ export function serverError(res: Response, err?: string, moduleName?: string) {
     res.status(500).json({
       state: 'error',
       message: err || 'Internal server error'
+    })
+  } catch {
+    console.error('Failed to send response')
+  }
+}
+
+export function success<T>(
+  res: Response<BaseResponse<T>>,
+  data: T,
+  statusCode: number = 200
+) {
+  try {
+    res.status(statusCode).json({
+      state: 'success',
+      data: data
     })
   } catch {
     console.error('Failed to send response')

@@ -1,8 +1,10 @@
+import { forgeRouter } from '@lifeforge/server-sdk'
+
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
-import { forgeController, forgeRouter } from '@functions/routes'
+import { forgeController } from '@functions/routes'
 
 const list = forgeController
   .query()
