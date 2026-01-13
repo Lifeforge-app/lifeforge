@@ -1,3 +1,4 @@
+import { ClientError } from '@lifeforge/server-sdk'
 import chalk from 'chalk'
 import Groq from 'groq-sdk'
 import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
@@ -8,7 +9,6 @@ import z from 'zod'
 import { PBService, getAPIKey } from '@functions/database'
 import { validateCallerAccess } from '@functions/database/getAPIKey'
 import { createServiceLogger } from '@functions/logging'
-import { ClientError } from '@functions/routes/utils/response'
 import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 

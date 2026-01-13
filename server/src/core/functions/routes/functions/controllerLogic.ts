@@ -13,23 +13,20 @@
  * The main export is:
  * - `registerController`: Function to register a ForgeControllerBuilder with an Express router
  */
+import { ClientError } from '@lifeforge/server-sdk'
 import type { Request, Response, Router } from 'express'
 
 import { encryptResponse } from '@functions/encryption'
 import { coreLogger } from '@functions/logging'
 
-import {
-  BaseResponse,
-  ConvertMedia,
-  MediaConfig
-} from '../typescript/forge_controller.types'
+import { ConvertMedia, MediaConfig } from '../typescript/forge_controller.types'
 import checkRecordExistence from '../utils/checkRecordExistence'
 import { createCoreContext } from '../utils/coreContext'
 import getAESKey from '../utils/getAESKey'
 import parseBodyPayload from '../utils/parsePayload'
 import parseQuery from '../utils/parseQuery'
 import {
-  ClientError,
+  BaseResponse,
   clientError,
   serverError,
   success
@@ -37,10 +34,6 @@ import {
 import fieldsUploadMiddleware from '../utils/uploadMiddleware'
 import isAuthTokenValid from '../utils/validateAuthToken'
 import { ForgeControllerBuilder } from './forgeController'
-
-// ============================================================================
-// Private Handler Creator
-// ============================================================================
 
 /**
  * Creates an Express request handler from a ForgeControllerBuilder's configuration.
@@ -195,10 +188,6 @@ function createHandler<
 
   return handlerWithMeta
 }
-
-// ============================================================================
-// Public Registration Function
-// ============================================================================
 
 /**
  * Registers a ForgeControllerBuilder with an Express router.

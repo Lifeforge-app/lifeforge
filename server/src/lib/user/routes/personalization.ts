@@ -1,9 +1,8 @@
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import z from 'zod'
 
-import { getAPIKey } from '@functions/database'
-import getMedia from '@functions/external/media'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 export interface FontFamily {
   family: string
@@ -66,27 +65,34 @@ const listGoogleFonts = forgeController
     'zh-TW': '獲取可用的Google字體'
   })
   .input({})
-  .callback(async ({ pb }) => {
-    const key = await getAPIKey('gcloud', pb)
+  .callback(
+    async ({
+      pb,
+      core: {
+        api: { getAPIKey }
+      }
+    }) => {
+      const key = await getAPIKey('gcloud', pb)
 
-    if (!key) {
+      if (!key) {
+        return {
+          enabled: false,
+          items: []
+        }
+      }
+
+      const target = `https://www.googleapis.com/webfonts/v1/webfonts?key=${key}`
+
+      const response = await fetch(target)
+
+      const data = await response.json()
+
       return {
-        enabled: false,
-        items: []
+        enabled: true,
+        items: data.items as FontFamily[]
       }
     }
-
-    const target = `https://www.googleapis.com/webfonts/v1/webfonts?key=${key}`
-
-    const response = await fetch(target)
-
-    const data = await response.json()
-
-    return {
-      enabled: true,
-      items: data.items as FontFamily[]
-    }
-  })
+  )
 
 const getGoogleFont = forgeController
   .query()
@@ -101,26 +107,34 @@ const getGoogleFont = forgeController
       family: z.string()
     })
   })
-  .callback(async ({ pb, query: { family } }) => {
-    const key = await getAPIKey('gcloud', pb).catch(() => null)
+  .callback(
+    async ({
+      pb,
+      query: { family },
+      core: {
+        api: { getAPIKey }
+      }
+    }) => {
+      const key = await getAPIKey('gcloud', pb).catch(() => null)
 
-    if (!key) {
+      if (!key) {
+        return {
+          enabled: false
+        }
+      }
+
+      const target = `https://www.googleapis.com/webfonts/v1/webfonts?family=${encodeURIComponent(family)}&key=${key}`
+
+      const response = await fetch(target)
+
+      const data = await response.json()
+
       return {
-        enabled: false
+        enabled: true,
+        items: data.items
       }
     }
-
-    const target = `https://www.googleapis.com/webfonts/v1/webfonts?family=${encodeURIComponent(family)}&key=${key}`
-
-    const response = await fetch(target)
-
-    const data = await response.json()
-
-    return {
-      enabled: true,
-      items: data.items
-    }
-  })
+  )
 
 const listGoogleFontsPin = forgeController
   .query()
@@ -197,28 +211,36 @@ const updateBgImage = forgeController
       optional: false
     }
   })
-  .callback(async ({ pb, media: { file } }) => {
-    const newRecord = await pb.update
-      .collection('user__users')
-      .id(pb.instance.authStore.record!.id)
-      .data({
-        ...(await getMedia('bgImage', file)),
-        backdropFilters: {
-          brightness: 100,
-          blur: 'none',
-          contrast: 100,
-          saturation: 100,
-          overlayOpacity: 50
-        }
-      })
-      .execute()
+  .callback(
+    async ({
+      pb,
+      media: { file },
+      core: {
+        media: { retrieveMedia }
+      }
+    }) => {
+      const newRecord = await pb.update
+        .collection('user__users')
+        .id(pb.instance.authStore.record!.id)
+        .data({
+          ...(await retrieveMedia('bgImage', file)),
+          backdropFilters: {
+            brightness: 100,
+            blur: 'none',
+            contrast: 100,
+            saturation: 100,
+            overlayOpacity: 50
+          }
+        })
+        .execute()
 
-    return {
-      collectionId: newRecord.collectionId,
-      recordId: newRecord.id,
-      fieldId: newRecord.bgImage
+      return {
+        collectionId: newRecord.collectionId,
+        recordId: newRecord.id,
+        fieldId: newRecord.bgImage
+      }
     }
-  })
+  )
 
 const deleteBgImage = forgeController
   .mutation()

@@ -1,8 +1,8 @@
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import z from 'zod'
 
-import getMedia from '@functions/external/media'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 const VALID_FONT_EXTENSIONS = ['.ttf', '.otf', '.woff', '.woff2']
 
@@ -99,7 +99,10 @@ const upload = forgeController
       pb,
       query: { id },
       body: { displayName, family, weight },
-      media: { file }
+      media: { file },
+      core: {
+        media: { retrieveMedia }
+      }
     }) => {
       // Validate file type on server side
       if (file instanceof File) {
@@ -119,7 +122,7 @@ const upload = forgeController
               displayName,
               family,
               weight,
-              ...(await getMedia('file', file))
+              ...(await retrieveMedia('file', file))
             })
             .execute()
         : await pb.create
@@ -128,7 +131,7 @@ const upload = forgeController
               displayName,
               family,
               weight,
-              ...(await getMedia('file', file))
+              ...(await retrieveMedia('file', file))
             })
             .execute()
 

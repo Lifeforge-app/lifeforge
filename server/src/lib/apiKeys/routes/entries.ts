@@ -1,8 +1,9 @@
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
 import z from 'zod'
 
 import { decrypt2, encrypt2 } from '@functions/auth/encryption'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 const get = forgeController
   .query()

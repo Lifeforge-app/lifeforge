@@ -1,3 +1,6 @@
+import { ClientError } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-sdk'
+import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
 import z from 'zod'
@@ -7,12 +10,10 @@ import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import { forgeController } from '@functions/routes'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
-import dayjs from 'dayjs'
 
 const validateOTP = forgeController
   .mutation()
