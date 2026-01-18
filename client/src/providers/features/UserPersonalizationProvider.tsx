@@ -128,11 +128,11 @@ function UserPersonalizationProvider({
 
     if (userData?.bgImage !== '') {
       setBgImage(
-        forgeAPI.media.input({
+        forgeAPI.getMedia({
           collectionId: userData.collectionId,
           recordId: userData.id,
           fieldId: userData.bgImage
-        }).endpoint
+        })
       )
     }
 
