@@ -8,50 +8,42 @@ import {
   isEncryptedResponse
 } from '../../utils/encryption'
 import fetchAPI from '../../utils/fetchAPI'
-import type {
-  ClientTree,
-  InferInput,
-  InferOutput
-} from '../typescript/forge_api_client.types'
+import type { InferInput, InferOutput } from '../typescript/forge_proxy.types'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
 /**
- * Helper type to wrap a simple output type into the Forge controller structure.
- * Used by `untyped()` to allow passing just the response type.
- */
-type UntypedControllerType<TOutput = any, TBody = any, TQuery = any> = {
-  __isForgeController: true
-  __input: { body: TBody; query: TQuery }
-  __output: TOutput
-  __media: null
-}
-
-/**
- * ForgeAPIClientController is a chainable API client controller for making type-safe
- * HTTP requests, designed to pair with LifeForge Server API schema and support React Query.
+ * ForgeEndpoint is a chainable API endpoint handler for making type-safe
+ * HTTP requests, designed to pair with LifeForge Server API schema and React Query.
  *
  * Usage is chainable and ergonomic:
- *   - Set query parameters using `.input()`
- *   - Get fetch options for React Query via `.queryOptions()` and `.mutationOptions()`
- *   - Trigger requests directly with `.query()` and `.mutate()`
+ * - Set query parameters using `.input()`
+ * - Get React Query options via `.queryOptions()` and `.mutationOptions()`
+ * - Execute requests directly with `.query()` and `.mutate()`
  *
- * Path is configured in the constructor, and query params are managed internally.
+ * @template T The endpoint type, inferred from API schema, must include `__isForgeController: true`.
  *
- * @template T The controller type, inferred from API schema, must include `__isForgeController: true`.
+ * @example
+ * ```typescript
+ * // Using with React Query
+ * const usersQuery = useQuery(forgeAPI.users.list.input({ page: 1 }).queryOptions())
+ *
+ * // Direct execution
+ * const users = await forgeAPI.users.list.input({ page: 1 }).query()
+ * ```
  */
-export class ForgeAPIClientController<
+export default class ForgeEndpoint<
   T extends { __isForgeController: true } = any
 > {
-  /** Internal type, for type inference only */
+  /** Internal type marker for type inference */
   public __type!: T
 
-  /** Internal storage for query parameters */
+  /** Query parameters storage */
   protected _input: Record<string, any> | undefined
 
   /**
-   * Creates a new API client controller for a specific route.
-   * @param _apiHost The base URL of the API server
-   * @param _route The endpoint path (without base URL)
+   * Creates a new ForgeEndpoint for a specific route.
+   * @param _apiHost - The base URL of the API server (e.g., 'https://api.example.com')
+   * @param _route - The endpoint path (e.g., 'users/list')
    */
   constructor(
     private _apiHost: string = '',
@@ -87,6 +79,11 @@ export class ForgeAPIClientController<
     return new URL(path, this._apiHost).toString()
   }
 
+  /**
+   * Updates the API host for this endpoint.
+   * @param apiHost - The new base URL
+   * @returns This endpoint instance for chaining
+   */
   setHost(apiHost: string) {
     this._apiHost = apiHost
 
@@ -94,9 +91,16 @@ export class ForgeAPIClientController<
   }
 
   /**
-   * Set query parameters for the endpoint.
-   * @param data Object of query parameters matching the input type
-   * @returns A new controller instance for chaining
+   * Sets query parameters for the endpoint.
+   * Parameters are merged with any existing parameters.
+   *
+   * @param data - Object of query parameters matching the input schema
+   * @returns This endpoint instance for chaining
+   *
+   * @example
+   * ```typescript
+   * forgeAPI.users.list.input({ page: 1, limit: 10 }).query()
+   * ```
    */
   input(data: InferInput<T>['query']) {
     this._input = joinObjectsRecursively(
@@ -356,62 +360,4 @@ export class ForgeAPIClientController<
 
     return endpoint
   }
-}
-
-/**
- * Recursively creates a chainable API client tree based on the provided type.
- * Allows ergonomic deep routing:
- *   `api.client.foo.bar.input(...).query()`
- *
- * Properties and methods from the controller are exposed at each leaf node.
- *
- * @template T API tree schema type (usually inferred from backend schema types)
- * @param apiHost The base URL of the API server
- * @param path The path segments accumulated so far (internal use)
- * @returns A proxied API client tree
- */
-export function createForgeAPIClient<T>(
-  apiHost?: string,
-  path: string[] = []
-): ClientTree<T> & {
-  untyped: <TOutput = any, TBody = any, TQuery = any>(
-    url: string
-  ) => ForgeAPIClientController<UntypedControllerType<TOutput, TBody, TQuery>>
-} {
-  const controller = new ForgeAPIClientController<
-    T extends { __isForgeController: true } ? T : never
-  >(apiHost, path.join('/'))
-
-  return new Proxy(() => {}, {
-    get: (_, prop: string) => {
-      if (typeof prop === 'symbol' || prop === 'then') return undefined
-
-      // Handle untyped() method at root level
-      if (prop === 'untyped' && path.length === 0) {
-        return <TOutput = any, TBody = any, TQuery = any>(url: string) =>
-          new ForgeAPIClientController<
-            UntypedControllerType<TOutput, TBody, TQuery>
-          >(apiHost, url)
-      }
-
-      if (
-        prop in controller &&
-        typeof (controller as any)[prop] !== 'undefined'
-      ) {
-        const value = (controller as any)[prop]
-
-        return typeof value === 'function' ? value.bind(controller) : value
-      }
-
-      return createForgeAPIClient(apiHost, [...path, prop])
-    },
-
-    apply: () => {
-      throw new Error(
-        `Invalid function call on path: ${path.join(
-          '.'
-        )} — maybe you meant to use .input(), .queryOptions(), or .getMutationOptions()?`
-      )
-    }
-  }) as any
 }

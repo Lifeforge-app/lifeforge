@@ -16,7 +16,7 @@ const COLLECTION_SEPARATOR = {
  * Parse a PocketBase collection name into components
  *
  * Examples:
- * - "melvinchia3636___melvinchia3636$melvinchia3636$invoiceMaker__clients" → { username: "melvinchia3636", moduleName: "invoice_maker", collectionName: "clients" }
+ * - "melvinchia3636___melvinchia3636$clients" → { username: "melvinchia3636", moduleName: "invoice_maker", collectionName: "clients" }
  * - "achievements__badges" → { moduleName: "achievements", collectionName: "badges" }
  */
 export default function parseCollectionName(
