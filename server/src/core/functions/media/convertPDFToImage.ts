@@ -1,8 +1,7 @@
+import { ConvertPDFToImageFunc } from '@lifeforge/server-utils'
 import { fromPath } from 'pdf2pic'
 
-export default function convertPDFToImage(
-  path: string
-): Promise<File | undefined> {
+const convertPDFToImage: ConvertPDFToImageFunc = path => {
   return new Promise((resolve, reject) => {
     try {
       const options = {
@@ -44,3 +43,5 @@ export default function convertPDFToImage(
     }
   })
 }
+
+export default convertPDFToImage

@@ -1,10 +1,11 @@
 /**
- * CoreContext - Runtime utilities injected into forgeController callbacks
+ * CoreContext - Runtime utilities injected into forge callbacks
  *
  * This module provides the implementation of core utilities that modules
  * access via the `core` parameter in their callbacks.
  */
 import { type Logger, createLogger } from '@lifeforge/log'
+import { CoreContext, IPBService } from '@lifeforge/server-utils'
 
 import {
   decrypt,
@@ -12,8 +13,9 @@ import {
   encrypt,
   encrypt2
 } from '@functions/auth/encryption'
+import validateOTP from '@functions/auth/validateOTP'
 import { checkExistence, getAPIKey } from '@functions/database'
-import { fetchAI } from '@functions/external/ai'
+import fetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'
 import convertPDFToImage from '@functions/media/convertPDFToImage'
@@ -26,34 +28,15 @@ import {
 import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
 import TempFileManager from '@functions/utils/tempFileManager'
 
-export interface CoreContext {
-  logging: Logger
-  api: {
-    fetchAI: typeof fetchAI
-    searchLocations: typeof searchLocations
-    getAPIKey: typeof getAPIKey
+// Cache loggers per module to avoid creating new file stream listeners per request
+const loggerCache = new Map<string, Logger>()
+
+function getOrCreateLogger(moduleId: string): Logger {
+  if (!loggerCache.has(moduleId)) {
+    loggerCache.set(moduleId, createLogger({ name: moduleId }))
   }
-  tempFile: typeof TempFileManager
-  validation: {
-    checkRecordExistence: typeof checkExistence
-    checkModulesAvailability: typeof checkModulesAvailability
-  }
-  media: {
-    retrieveMedia: typeof retrieveMedia
-    convertPDFToImage: typeof convertPDFToImage
-    parseOCR: typeof parseOCR
-  }
-  tasks: {
-    global: typeof globalTaskPool
-    add: typeof addToTaskPool
-    update: typeof updateTaskInPool
-  }
-  crypto: {
-    decrypt: typeof decrypt
-    decrypt2: typeof decrypt2
-    encrypt: typeof encrypt
-    encrypt2: typeof encrypt2
-  }
+
+  return loggerCache.get(moduleId)!
 }
 
 /**
@@ -61,21 +44,26 @@ export interface CoreContext {
  * Automatically detects the calling module using stack trace analysis.
  */
 export function createCoreContext({
-  moduleId
+  pb,
+  module
 }: {
-  moduleId?: string
+  pb: IPBService<any>
+  module?: { source: 'app' | 'core'; id: string }
 }): CoreContext {
   return {
-    logging: createLogger({ name: moduleId || 'unknown-module' }),
+    logging: getOrCreateLogger(
+      module ? `${module.source}:${module.id}` : 'unknown-module'
+    ),
     api: {
       fetchAI,
       searchLocations,
-      getAPIKey
+      getAPIKey: getAPIKey(pb, module)
     },
     tempFile: TempFileManager,
     validation: {
       checkRecordExistence: checkExistence,
-      checkModulesAvailability
+      checkModulesAvailability,
+      validateOTP
     },
     media: {
       retrieveMedia,

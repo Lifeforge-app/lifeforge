@@ -1,4 +1,5 @@
 import { ROOT_DIR } from '@constants'
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
@@ -178,7 +179,7 @@ export class LocaleService {
     }
 
     localeLogger.info(
-      `Loaded ${this.languagePacks.length} language pack(s): ${this.languagePacks.join(', ')}`
+      `Loaded ${chalk.green(this.languagePacks.length)} language pack(s): ${chalk.dim(this.languagePacks.join(', '))}`
     )
   }
 }

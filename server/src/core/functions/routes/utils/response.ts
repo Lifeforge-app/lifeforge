@@ -1,13 +1,8 @@
 import { createLogger } from '@lifeforge/log'
+import { BaseResponse } from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import { Response } from 'express'
 import fs from 'fs'
-
-export interface BaseResponse<T = ''> {
-  data?: T
-  state: 'success' | 'error' | 'accepted'
-  message?: string
-}
 
 export function clientError({
   res,
