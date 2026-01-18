@@ -1,6 +1,7 @@
+import { cleanSchemas } from '@lifeforge/server-utils'
 import z from 'zod'
 
-const schemas = {
+export const schemas = {
   users: {
     schema: z.object({
       email: z.email(),
@@ -514,4 +515,4 @@ const schemas = {
   }
 }
 
-export default schemas
+export default cleanSchemas(schemas)

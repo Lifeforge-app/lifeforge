@@ -1,4 +1,4 @@
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-utils'
 
 import entriesRouter from './routes/entries'
 

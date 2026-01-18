@@ -1,15 +1,10 @@
 import z from 'zod'
 
-import { forgeController } from '@functions/routes'
+import forge from '../forge'
 
-export const list = forgeController
+export const list = forge
   .query()
-  .description({
-    en: 'Get the category display order',
-    ms: 'Dapatkan urutan paparan kategori',
-    'zh-CN': '获取类别显示顺序',
-    'zh-TW': '獲取類別顯示順序'
-  })
+  .description('Get the category display order')
   .input({})
   .callback(async ({ core: { tempFile } }) =>
     new tempFile('module_categories.json').read<
@@ -17,14 +12,9 @@ export const list = forgeController
     >()
   )
 
-export const update = forgeController
+export const update = forge
   .mutation()
-  .description({
-    en: 'Update the category display order',
-    ms: 'Kemas kini urutan paparan kategori',
-    'zh-CN': '更新类别显示顺序',
-    'zh-TW': '更新類別顯示順序'
-  })
+  .description('Update the category display order')
   .input({
     body: z.object({
       data: z.record(z.string(), z.record(z.string(), z.string()))
@@ -36,14 +26,9 @@ export const update = forgeController
     return { success: true }
   })
 
-export const aiTranslate = forgeController
+export const aiTranslate = forge
   .mutation()
-  .description({
-    en: 'Translate a specific category into desired languages',
-    ms: 'Terjemahkan kategori tertentu ke bahasa yang diinginkan',
-    'zh-CN': '将特定类别翻译成所需语言',
-    'zh-TW': '將特定類別翻譯成所需語言'
-  })
+  .description('Translate a specific category into desired languages')
   .input({
     body: z.object({
       key: z.string(),

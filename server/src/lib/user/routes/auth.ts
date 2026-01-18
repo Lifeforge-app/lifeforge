@@ -1,5 +1,4 @@
-import { ClientError } from '@lifeforge/server-sdk'
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { ClientError } from '@lifeforge/server-utils'
 import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
@@ -10,20 +9,15 @@ import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
-import { forgeController } from '@functions/routes'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
+import forge from '../forge'
 
-const validateOTP = forgeController
+export const validateOTP = forge
   .mutation()
   .noEncryption()
-  .description({
-    en: 'Verify one-time password',
-    ms: 'Sahkan kata laluan sekali guna',
-    'zh-CN': '验证一次性密码',
-    'zh-TW': '驗證一次性密碼'
-  })
+  .description('Verify one-time password')
   .input({
     body: z.object({
       otp: z.string(),
@@ -32,15 +26,10 @@ const validateOTP = forgeController
   })
   .callback(({ pb, body }) => _validateOTP(pb, body))
 
-const generateOTP = forgeController
+export const generateOTP = forge
   .query()
   .noEncryption()
-  .description({
-    en: 'Generate one-time password',
-    ms: 'Jana kata laluan sekali guna',
-    'zh-CN': '生成一次性密码',
-    'zh-TW': '生成一次性密碼'
-  })
+  .description('Generate one-time password')
   .input({})
   .callback(
     async ({ pb }) =>
@@ -51,15 +40,10 @@ const generateOTP = forgeController
       ).otpId
   )
 
-const login = forgeController
+export const login = forge
   .mutation()
   .noAuth()
-  .description({
-    en: 'Authenticate user with credentials',
-    ms: 'Sahkan pengguna dengan kelayakan',
-    'zh-CN': '使用凭据认证用户',
-    'zh-TW': '使用憑證認證用戶'
-  })
+  .description('Authenticate user with credentials')
   .input({
     body: z.object({
       email: z.string(),
@@ -109,15 +93,10 @@ const login = forgeController
     }
   })
 
-const verifySessionToken = forgeController
+export const verifySessionToken = forge
   .mutation()
   .noEncryption()
-  .description({
-    en: 'Validate user session token',
-    ms: 'Sahkan token sesi pengguna',
-    'zh-CN': '验证用户会话令牌',
-    'zh-TW': '驗證用戶會話令牌'
-  })
+  .description('Validate user session token')
   .input({})
   .callback(async ({ req }) => {
     const bearerToken = req.headers.authorization?.split(' ')[1].trim()
@@ -145,14 +124,9 @@ const verifySessionToken = forgeController
     return true
   })
 
-const getUserData = forgeController
+export const getUserData = forge
   .query()
-  .description({
-    en: 'Get current user data',
-    ms: 'Dapatkan data pengguna semasa',
-    'zh-CN': '获取当前用户数据',
-    'zh-TW': '獲取當前用戶資料'
-  })
+  .description('Get current user data')
   .input({})
   .callback(async ({ pb }) => {
     const userData = pb.instance.authStore.record
@@ -168,15 +142,10 @@ const getUserData = forgeController
     return sanitizedUserData
   })
 
-const createFirstUser = forgeController
+export const createFirstUser = forge
   .mutation()
   .noAuth()
-  .description({
-    en: 'Create the first user (only works when no users exist)',
-    ms: 'Cipta pengguna pertama (hanya berfungsi jika tiada pengguna)',
-    'zh-CN': '创建第一个用户（仅在没有用户存在时有效）',
-    'zh-TW': '建立第一個用戶（僅在沒有用戶存在時有效）'
-  })
+  .description('Create the first user (only works when no users exist)')
   .input({
     body: z.object({
       email: z.email(),
@@ -213,12 +182,3 @@ const createFirstUser = forgeController
       state: 'success' as const
     }
   })
-
-export default forgeRouter({
-  validateOTP,
-  generateOTP,
-  login,
-  verifySessionToken,
-  getUserData,
-  createFirstUser
-})

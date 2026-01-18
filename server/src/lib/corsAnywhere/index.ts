@@ -1,15 +1,11 @@
+import { createForge } from '@lifeforge/server-utils'
 import z from 'zod'
 
-import { forgeController } from '@functions/routes'
+const forge = createForge({}, 'cors_anywhere')
 
-const corsAnywhere = forgeController
+const corsAnywhere = forge
   .query()
-  .description({
-    en: 'CORS Anywhere - Fetch external URL content',
-    ms: 'CORS Anywhere - Dapatkan kandungan URL luaran',
-    'zh-CN': 'CORS Anywhere - 获取外部URL内容',
-    'zh-TW': 'CORS Anywhere - 獲取外部URL內容'
-  })
+  .description('CORS Anywhere - Fetch external URL content')
   .input({
     query: z.object({
       url: z.url()

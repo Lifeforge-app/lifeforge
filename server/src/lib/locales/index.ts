@@ -1,6 +1,5 @@
 import { ROOT_DIR } from '@constants'
-import { ClientError } from '@lifeforge/server-sdk'
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -12,7 +11,8 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
-import { forgeController } from '@functions/routes'
+
+const forge = createForge({}, 'locales')
 
 // Scan apps directory for modules with locales
 const appsDir = path.join(ROOT_DIR, 'apps')
@@ -34,16 +34,11 @@ function getModulesWithLocales(): string[] {
 
 const moduleApps = getModulesWithLocales()
 
-const listLanguages = forgeController
+const listLanguages = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'List all languages',
-    ms: 'Senarai semua bahasa',
-    'zh-CN': '列出所有语言',
-    'zh-TW': '列出所有語言'
-  })
+  .description('List all languages')
   .input({})
   .callback(async () => {
     return LocaleService.getLangManifests() as unknown as {
@@ -54,15 +49,10 @@ const listLanguages = forgeController
     }[]
   })
 
-const getLocale = forgeController
+const getLocale = forge
   .query()
   .noAuth()
-  .description({
-    en: 'Retrieve localization strings for namespace',
-    ms: 'Dapatkan rentetan penyetempatan untuk ruang nama',
-    'zh-CN': '获取命名空间的本地化字符串',
-    'zh-TW': '獲取命名空間的本地化字串'
-  })
+  .description('Retrieve localization strings for namespace')
   .input({
     query: z.object({
       lang: z.string(),
@@ -156,14 +146,9 @@ const getLocale = forgeController
     return data
   })
 
-const notifyMissing = forgeController
+const notifyMissing = forge
   .mutation()
-  .description({
-    en: 'Report missing localization key',
-    ms: 'Laporkan kunci penyetempatan yang hilang',
-    'zh-CN': '报告缺失的本地化键',
-    'zh-TW': '報告缺失的本地化鍵'
-  })
+  .description('Report missing localization key')
   .input({
     body: z.object({
       namespace: z.string(),

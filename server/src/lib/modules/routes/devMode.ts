@@ -1,15 +1,10 @@
 import z from 'zod'
 
-import { forgeController } from '@functions/routes'
+import forge from '../forge'
 
-export const toggle = forgeController
+export const toggle = forge
   .mutation()
-  .description({
-    en: 'Toggle dev mode for a module',
-    ms: 'Tukar mod pembangunan untuk modul',
-    'zh-CN': '切换模块的开发模式',
-    'zh-TW': '切換模組的開發模式'
-  })
+  .description('Toggle dev mode for a module')
   .input({
     body: z.object({
       moduleName: z.string().min(1)

@@ -4,23 +4,18 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { forgeController } from '@functions/routes'
 import { checkModulesAvailability as cma } from '@functions/utils/checkModulesAvailability'
 
+import forge from '../forge'
 import scanFederatedModules, {
   ModuleManifestEntry
 } from '../utils/scanFederatedModules'
 
 const APPS_DIR = path.join(ROOT_DIR, 'apps')
 
-export const checkModuleAvailability = forgeController
+export const checkModuleAvailability = forge
   .query()
-  .description({
-    en: 'Check if a module is available',
-    ms: 'Periksa jika modul tersedia',
-    'zh-CN': '检查模块是否可用',
-    'zh-TW': '檢查模組是否可用'
-  })
+  .description('Check if a module is available')
   .input({
     query: z.object({
       moduleId: z.string().min(1)
@@ -28,14 +23,9 @@ export const checkModuleAvailability = forgeController
   })
   .callback(async ({ query: { moduleId } }) => cma(moduleId))
 
-export const manifest = forgeController
+export const manifest = forge
   .query()
-  .description({
-    en: 'Get installed modules manifest for runtime loading',
-    ms: 'Dapatkan manifes modul yang dipasang',
-    'zh-CN': '获取已安装模块的运行时加载清单',
-    'zh-TW': '獲取已安裝模組的運行時加載清單'
-  })
+  .description('Get installed modules manifest for runtime loading')
   .input({})
   .callback(async ({ core: { tempFile } }) => {
     const modules: (ModuleManifestEntry & { isDevMode?: boolean })[] = []
@@ -74,14 +64,9 @@ export interface InstalledModule {
   isDevMode?: boolean
 }
 
-export const list = forgeController
+export const list = forge
   .query()
-  .description({
-    en: 'List installed modules with metadata',
-    ms: 'Senaraikan modul yang dipasang dengan metadata',
-    'zh-CN': '列出已安装的模块及其元数据',
-    'zh-TW': '列出已安裝的模組及其元資料'
-  })
+  .description('List installed modules with metadata')
   .input({})
   .callback(async ({ core: { tempFile } }) => {
     const modules: InstalledModule[] = []
@@ -122,14 +107,9 @@ export const list = forgeController
     return { modules }
   })
 
-export const uninstall = forgeController
+export const uninstall = forge
   .mutation()
-  .description({
-    en: 'Uninstall a module',
-    ms: 'Nyahpasang modul',
-    'zh-CN': '卸载模块',
-    'zh-TW': '解除安裝模組'
-  })
+  .description('Uninstall a module')
   .input({
     body: z.object({
       moduleName: z.string().min(1)

@@ -1,4 +1,4 @@
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-utils'
 
 import * as categoriesRoutes from './routes/categories'
 import * as devModeRoutes from './routes/devMode'

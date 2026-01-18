@@ -1,8 +1,7 @@
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-utils'
 
-import imageGenerationRouter from './routes/imageGeneration'
+import * as imageGenerationRoutes from './routes/imageGeneration'
 
-// Factory function to create AI router with routes dependency injection
 export default forgeRouter({
-  imageGeneration: imageGenerationRouter
+  imageGeneration: imageGenerationRoutes
 })

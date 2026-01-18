@@ -1,19 +1,15 @@
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
-import { forgeController } from '@functions/routes'
 
-const list = forgeController
+const forge = createForge({}, 'database')
+
+const list = forge
   .query()
-  .description({
-    en: 'Retrieve all database collections',
-    ms: 'Dapatkan semua koleksi pangkalan data',
-    'zh-CN': '获取所有数据库集合',
-    'zh-TW': '獲取所有資料庫集合'
-  })
+  .description('Retrieve all database collections')
   .input({})
   .callback(async () => {
     const pb = await connectToPocketBase(validateEnvironmentVariables())

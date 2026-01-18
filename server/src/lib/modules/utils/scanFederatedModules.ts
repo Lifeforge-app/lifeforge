@@ -45,12 +45,16 @@ export default function scanFederatedModules(
 
       if (!parsed.success) continue
 
+      // Use dist-docker in Docker mode, dist otherwise
+      const distDir =
+        process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'
+
       // Check for remoteEntry.js (built federated module)
       const remoteEntryPath = path.join(
         baseDir,
         dir.name,
         'client',
-        'dist',
+        distDir,
         'assets',
         'remoteEntry.js'
       )
