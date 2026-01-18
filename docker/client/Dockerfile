@@ -18,6 +18,15 @@ COPY . .
 RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install --frozen-lockfile --linker isolated
 
+# Build @lifeforge/log (required by forge CLI used in prebuild)
+RUN cd /app/packages/lifeforge-log && bun run build
+
+# Build shared package (required by server types)
+RUN cd /app/shared && bun run build
+
+# Build @lifeforge/server-utils (required by server types)
+RUN cd /app/packages/lifeforge-server-utils && bun run build
+
 # Build client
 RUN cd /app/client && bun run build
 
