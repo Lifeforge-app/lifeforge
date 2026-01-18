@@ -2,13 +2,13 @@ import ReactDOM from 'react-dom/client'
 import {
   APIEndpointProvider,
   PersonalizationProvider,
-  createForgeAPIClient
+  createForgeProxy
 } from 'shared'
 
 import App from './App'
 import './index.css'
 
-const forgeAPI = createForgeAPIClient()
+const forgeAPI = createForgeProxy()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <APIEndpointProvider endpoint={import.meta.env.VITE_API_URL}>
