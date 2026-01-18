@@ -66,7 +66,7 @@ forgeAPI.wallet.assets.list.query()
 | What You Write | What It Calls |
 |----------------|---------------|
 | `forgeAPI.wallet.assets.list.query()` | `GET /wallet/assets/list` |
-| `forgeAPI.calendar.events.create.mutate(data)` | `POST /calendar/events/create` |
+| `forgeAPI.events.create.mutate(data)` | `POST /calendar/events/create` |
 | `forgeAPI.myModule.items.get.input({ id: '123' }).query()` | `GET /myModule/items/get?id=123` |
 
 This provides **full autocomplete** as you type – TypeScript knows exactly which routes exist and what methods are available at each level.
@@ -80,14 +80,15 @@ Every module needs its own `forgeAPI.ts` file to enable type-safe API calls. Cre
 
 ```typescript
 // apps/<your-module>/client/utils/forgeAPI.ts
-import { type AppRoutes } from '@server/core/routes/routes.type'
-import { createForgeAPIClient } from 'shared'
+import routes from '@server/index'
+import routes from '@server/index'
+import { createForgeProxy } from 'shared'
 
 if (!import.meta.env.VITE_API_HOST) {
   throw new Error('VITE_API_HOST is not defined')
 }
 
-const forgeAPI = createForgeAPIClient<AppRoutes>(import.meta.env.VITE_API_HOST)
+const forgeAPI = createForgeProxy<typeof routes>(import.meta.env.VITE_API_HOST)
 
 export default forgeAPI
 ```
@@ -136,7 +137,7 @@ Pass query parameters using `.input()`:
 function EventList({ startDate, endDate }: { startDate: string; endDate: string }) {
   return (
     <WithQueryData
-      controller={forgeAPI.calendar.events.getByDateRange.input({
+      controller={forgeAPI.events.getByDateRange.input({
         start: startDate,
         end: endDate
       })}
@@ -499,7 +500,7 @@ async function updateItem(id: string, data: UpdateData) {
 const handleDragEnd = async (event: DragEvent) => {
   const { id, newPosition } = extractFromEvent(event)
   
-  await forgeAPI.calendar.events.update
+  await forgeAPI.events.update
     .input({ id })
     .mutate({ position: newPosition })
   
