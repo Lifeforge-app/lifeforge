@@ -34,16 +34,11 @@
         "./*"
       ],
       "@server/*": [
-        "../../../server/src/*"
+        "../server/*"
       ]
     }
   },
   "include": [
     "./**/*"
-  ],
-  "references": [
-    {
-      "path": "../../../server/tsconfig.json"
-    }
   ]
 }

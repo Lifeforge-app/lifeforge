@@ -90,7 +90,7 @@ export async function importSchemaModules(targetModule?: string): Promise<
 
       return {
         moduleName: getModuleName(schemaPath) || 'unknown-module',
-        schema: module.default
+        schema: module.schemas
       }
     })
   )

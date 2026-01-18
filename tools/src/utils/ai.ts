@@ -26,7 +26,7 @@ export async function getAPIKey(): Promise<string | null> {
   const { pb, killPB } = await getPBInstance()
 
   const apiKey = await pb
-    .collection('api_keys__entries')
+    .collection('entries')
     .getFirstListItem('keyId="openai"')
     .catch(() => {})
 

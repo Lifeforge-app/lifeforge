@@ -55,6 +55,10 @@ export default function setup(program: Command): void {
     .alias('b')
     .description('Build module client bundles for federation')
     .argument('[module]', 'Module to build (optional, builds all if omitted)')
+    .option(
+      '--docker',
+      'Build for Docker (outputs to dist-docker with /api base)'
+    )
     .action(buildModuleHandler)
 
   command
