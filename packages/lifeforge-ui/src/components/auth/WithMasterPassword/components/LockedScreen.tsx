@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { ForgeAPIClientController, usePromiseLoading } from 'shared'
+import { ForgeEndpoint, usePromiseLoading } from 'shared'
 import { encrypt } from 'shared'
 
 import { Button, TextInput } from '@components/inputs'
@@ -12,8 +12,8 @@ function LockedScreen({
   verifyController,
   setMasterPassword
 }: {
-  challengeController: ForgeAPIClientController
-  verifyController: ForgeAPIClientController
+  challengeController: ForgeEndpoint
+  verifyController: ForgeEndpoint
   setMasterPassword: React.Dispatch<React.SetStateAction<string>>
 }) {
   const [masterPassWordInputContent, setMasterPassWordInputContent] =

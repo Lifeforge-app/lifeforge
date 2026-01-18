@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import type { ForgeAPIClientController } from 'shared'
+import type { ForgeEndpoint } from 'shared'
 
 import CreatePasswordScreen from './components/CreatePasswordScreen'
 import LockedScreen from './components/LockedScreen'
@@ -10,9 +10,9 @@ function WithMasterPassword({
   children
 }: {
   controllers: {
-    createPassword: ForgeAPIClientController
-    getChallenge: ForgeAPIClientController
-    verifyPassword: ForgeAPIClientController
+    createPassword: ForgeEndpoint
+    getChallenge: ForgeEndpoint
+    verifyPassword: ForgeEndpoint
   }
   hasMasterPassword: boolean
   children: (masterPassword: string) => React.ReactNode
