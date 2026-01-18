@@ -9,12 +9,12 @@ import tinycolor from 'tinycolor2'
 import forgeAPI from '@/forgeAPI'
 
 export default function Quotes() {
-  const quoteQuery = useQuery(
-    forgeAPI.corsAnywhere
-      .input({
+  const quoteQuery = useQuery<{ q: string; a: string }[]>(
+    forgeAPI
+      .corsAnywhere({
         url: 'https://zenquotes.io/api/random'
       })
-      .queryOptions()
+      .queryOptions() as never
   )
 
   const { derivedThemeColor: themeColor } = usePersonalization()
