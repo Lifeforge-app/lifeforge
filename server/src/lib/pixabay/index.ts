@@ -1,17 +1,11 @@
-import { ClientError } from '@lifeforge/server-sdk'
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 import z from 'zod'
 
-import { forgeController } from '@functions/routes'
+const forge = createForge({}, 'pixabay')
 
-const searchImages = forgeController
+const searchImages = forge
   .query()
-  .description({
-    en: 'Search for images on Pixabay',
-    ms: 'Cari imej di Pixabay',
-    'zh-CN': '在Pixabay上搜索图片',
-    'zh-TW': '在Pixabay上搜尋圖片'
-  })
+  .description('Search for images on Pixabay')
   .input({
     query: z.object({
       q: z.string().min(1),
