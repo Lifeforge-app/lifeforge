@@ -13,40 +13,41 @@
  * The main export is:
  * - `registerController`: Function to register a ForgeControllerBuilder with an Express router
  */
-import { ClientError } from '@lifeforge/server-sdk'
+import {
+  BaseResponse,
+  CleanedSchemas,
+  ClientError,
+  ConvertMedia,
+  Forge,
+  MediaConfig
+} from '@lifeforge/server-utils'
 import type { Request, Response, Router } from 'express'
 
 import { encryptResponse } from '@functions/encryption'
 import { coreLogger } from '@functions/logging'
 
-import { ConvertMedia, MediaConfig } from '../typescript/forge_controller.types'
 import checkRecordExistence from '../utils/checkRecordExistence'
 import { createCoreContext } from '../utils/coreContext'
 import getAESKey from '../utils/getAESKey'
 import parseBodyPayload from '../utils/parsePayload'
 import parseQuery from '../utils/parseQuery'
-import {
-  BaseResponse,
-  clientError,
-  serverError,
-  success
-} from '../utils/response'
+import { clientError, serverError, success } from '../utils/response'
 import fieldsUploadMiddleware from '../utils/uploadMiddleware'
 import isAuthTokenValid from '../utils/validateAuthToken'
-import { ForgeControllerBuilder } from './forgeController'
 
 /**
  * Creates an Express request handler from a ForgeControllerBuilder's configuration.
  * This is kept private and only used internally by registerController.
  */
 function createHandler<
+  TSchemas extends CleanedSchemas,
   TMethod extends 'get' | 'post',
   TInput extends { body?: any; query?: any },
   TOutput,
   TMedia extends MediaConfig | null
 >(
   config: ReturnType<
-    ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia>['getValue']
+    Forge<TSchemas, TMethod, TInput, TOutput, TMedia>['getValue']
   >
 ): ((req: Request, res: Response<BaseResponse<TOutput>>) => Promise<void>) & {
   meta: {
@@ -101,7 +102,8 @@ function createHandler<
         await checkRecordExistence({
           type,
           req,
-          existenceCheck
+          existenceCheck,
+          module: callerModule || { id: '' }
         })
       }
 
@@ -121,14 +123,13 @@ function createHandler<
         req: req as any,
         res: res as any,
         io: req.io,
-        pb: req.pb,
+        pb: req.pb(callerModule || { id: '' }),
         body: req.body as any,
         query: req.query as any,
         media: (req.media || {}) as ConvertMedia<NonNullable<TMedia>>,
         core: createCoreContext({
-          moduleId: callerModule
-            ? `${callerModule.source}:${callerModule.id}`
-            : undefined
+          pb: req.pb(callerModule || { id: '' }),
+          module: callerModule
         })
       })
 
@@ -209,12 +210,13 @@ function createHandler<
  * ```
  */
 export function registerController<
+  TSchemas extends CleanedSchemas,
   TMethod extends 'get' | 'post',
   TInput extends { body?: any; query?: any },
   TOutput,
   TMedia extends MediaConfig | null
 >(
-  controller: ForgeControllerBuilder<TMethod, TInput, TOutput, TMedia>,
+  controller: Forge<TSchemas, TMethod, TInput, TOutput, TMedia>,
   router: Router,
   routeName: string = ''
 ): void {
@@ -227,7 +229,9 @@ export function registerController<
     process.exit(1)
   }
 
-  const handler = createHandler<TMethod, TInput, TOutput, TMedia>(config)
+  const handler = createHandler<TSchemas, TMethod, TInput, TOutput, TMedia>(
+    config
+  )
 
   router[config.method](
     `/${routeName}`,

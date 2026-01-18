@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ClientError } from '@lifeforge/server-sdk'
+import { ClientError } from '@lifeforge/server-utils'
 import { Request } from 'express'
 
 import { PBService, checkExistence } from '@functions/database'
 
 async function check(
-  pb: PBService,
+  pb: PBService<any>,
   collection: string,
   val: any
 ): Promise<boolean> {
   return await checkExistence(
     pb,
-    collection.replace(/\^?\[(.*)\]$/, '$1') as any,
+    collection.replace(/\^?\[(.*)\]$/, '$1') as never,
     val
   )
 }
@@ -19,11 +19,13 @@ async function check(
 export default async function checkRecordExistence({
   type,
   req,
-  existenceCheck
+  existenceCheck,
+  module
 }: {
   type: 'body' | 'query'
   req: Request
   existenceCheck: any
+  module: { id: string }
 }): Promise<void> {
   if (!existenceCheck?.[type]) return
 
@@ -41,13 +43,13 @@ export default async function checkRecordExistence({
 
     if (Array.isArray(value)) {
       for (const val of value) {
-        if (!(await check(req.pb, collection, val))) {
+        if (!(await check(req.pb(module), collection, val))) {
           isValid = false
           break
         }
       }
     } else {
-      isValid = await check(req.pb, collection, value!)
+      isValid = await check(req.pb(module), collection, value!)
     }
 
     if (!isValid) {

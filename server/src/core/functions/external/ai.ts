@@ -1,38 +1,28 @@
-import { ClientError } from '@lifeforge/server-sdk'
+import {
+  ClientError,
+  FetchAIFunc,
+  getCallerModuleId
+} from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import Groq from 'groq-sdk'
 import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
 import OpenAI from 'openai'
 import { ResponseInputItem } from 'openai/resources/responses/responses.mjs'
-import z from 'zod'
 
-import { PBService, getAPIKey } from '@functions/database'
+import { getAPIKey } from '@functions/database'
 import { validateCallerAccess } from '@functions/database/getAPIKey'
 import { createServiceLogger } from '@functions/logging'
-import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 
 const logger = createServiceLogger('AI')
 
-export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
-  pb: PBService
-  provider: 'groq' | 'openai'
-  model: string
-  messages: ResponseInputItem[]
-  structure?: T
-}
-
-export async function fetchAI<
-  T extends z.ZodType<any> | undefined = undefined
->({
+const fetchAI: FetchAIFunc = async ({
   pb,
   provider,
   model,
   messages,
   structure
-}: FetchAIParams<T>): Promise<
-  (T extends z.ZodType<any> ? z.infer<T> : string) | null
-> {
+}) => {
   if (structure && provider !== 'openai') {
     throw new Error('Structure is only supported for OpenAI provider')
   }
@@ -45,7 +35,7 @@ export async function fetchAI<
 
   await validateCallerAccess(callerModule, provider)
 
-  const apiKey = await getAPIKey(provider, pb)
+  const apiKey = await getAPIKey(pb)(provider)
 
   if (!apiKey) {
     throw new ClientError(`API key for ${provider} not found.`)
@@ -129,3 +119,5 @@ export async function fetchAI<
 
   return res as any
 }
+
+export default fetchAI

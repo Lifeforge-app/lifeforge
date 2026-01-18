@@ -1,3 +1,4 @@
+import { ITempFileManager } from '@lifeforge/server-utils'
 import fs from 'fs'
 import path from 'path'
 
@@ -8,7 +9,7 @@ if (!fs.existsSync(TEMP_FILE_DIR)) {
   fs.mkdirSync(TEMP_FILE_DIR)
 }
 
-class TempFileManager {
+class TempFileManager implements ITempFileManager {
   private readonly filePath: string
 
   constructor(

@@ -1,13 +1,7 @@
+import { RetrieveMediaFunc } from '@lifeforge/server-utils'
 import fs from 'fs'
 
-type FileResult<TFieldName extends string> =
-  | {}
-  | { [K in TFieldName]: File | null | undefined }
-
-export default async function retrieveMedia<TFieldName extends string = string>(
-  fieldName: TFieldName,
-  media: string | Express.Multer.File | undefined
-): Promise<FileResult<TFieldName>> {
+const retrieveMedia: RetrieveMediaFunc = async (fieldName, media) => {
   if (media === 'keep') {
     return {}
   }
@@ -41,3 +35,5 @@ export default async function retrieveMedia<TFieldName extends string = string>(
   // If no media is provided, return null for the field
   return { [fieldName]: null }
 }
+
+export default retrieveMedia

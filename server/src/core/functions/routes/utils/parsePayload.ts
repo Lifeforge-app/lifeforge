@@ -1,10 +1,9 @@
-import { ClientError } from '@lifeforge/server-sdk'
+import { ClientError, ConvertMedia, MediaConfig } from '@lifeforge/server-utils'
 import { Request } from 'express'
 import z from 'zod'
 
 import { decryptPayload } from '@functions/encryption'
 
-import { ConvertMedia, MediaConfig } from '../typescript/forge_controller.types'
 import restoreFormDataType from './restoreDataType'
 import { splitMediaAndData } from './splitMediaAndData'
 

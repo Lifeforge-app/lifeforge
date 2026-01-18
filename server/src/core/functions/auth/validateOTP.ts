@@ -1,9 +1,9 @@
-import { PBService } from '@functions/database'
+import { IPBService } from '@lifeforge/server-utils'
 
 import { decrypt2 } from './encryption'
 
 async function validateOTP(
-  pb: PBService,
+  pb: IPBService<any>,
   {
     otp,
     otpId
