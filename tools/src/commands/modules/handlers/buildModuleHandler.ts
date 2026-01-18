@@ -8,15 +8,27 @@ import normalizePackage from '@/utils/normalizePackage'
 
 import listModules from '../functions/listModules'
 
+interface BuildOptions {
+  docker?: boolean
+}
+
 /**
  * Builds module client and server bundles.
  *
  * For each module:
  * - If client/vite.config.ts exists: Runs `bun run build:client`
  * - If server/index.ts exists: Runs `bun run build:server`
+ *
+ * @param moduleName - Optional module name to build (builds all if omitted)
+ * @param options.docker - If true, builds for Docker (outputs to dist-docker with /api base)
  */
-export async function buildModuleHandler(moduleName?: string): Promise<void> {
+export async function buildModuleHandler(
+  moduleName?: string,
+  options?: BuildOptions
+): Promise<void> {
   const modules = listModules()
+
+  const isDocker = options?.docker ?? false
 
   const moduleNames = moduleName
     ? [normalizePackage(moduleName).fullName]
@@ -25,6 +37,10 @@ export async function buildModuleHandler(moduleName?: string): Promise<void> {
   let clientBuiltCount = 0
   let serverBuiltCount = 0
   let skippedCount = 0
+
+  if (isDocker) {
+    logger.info('Building for Docker (output: dist-docker, base: /api)')
+  }
 
   for (const mod of moduleNames) {
     const { targetDir, shortName } = normalizePackage(mod)
@@ -56,7 +72,8 @@ export async function buildModuleHandler(moduleName?: string): Promise<void> {
       try {
         executeCommand('bun run build:client', {
           cwd: targetDir,
-          stdio: 'pipe'
+          stdio: 'pipe',
+          env: isDocker ? { ...process.env, DOCKER_BUILD: 'true' } : undefined
         })
         clientBuiltCount++
       } catch (error) {

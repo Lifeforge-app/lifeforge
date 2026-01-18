@@ -29,7 +29,7 @@ export default function generateRouteRegistry() {
     .join('\n')
 
   const registry = `// AUTO-GENERATED - DO NOT EDIT
-import { forgeRouter } from '@functions/routes'
+import { forgeRouter } from '@lifeforge/server-utils'
 
 const appRoutes = forgeRouter({
 ${imports}

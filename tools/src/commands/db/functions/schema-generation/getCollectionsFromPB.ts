@@ -18,7 +18,7 @@ import getPBInstance from '@/utils/pocketbase'
  *
  * @example
  * const collections = await getCollectionsFromPB()
- * // Returns: [{ name: 'calendar__events', type: 'base', ... }, ...]
+ * // Returns: [{ name: 'events', type: 'base', ... }, ...]
  */
 export default async function getCollectionsFromPB() {
   logger.debug('Connecting to PocketBase...')
