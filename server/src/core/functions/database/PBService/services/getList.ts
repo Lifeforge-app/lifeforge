@@ -1,45 +1,33 @@
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
-
 import {
   AllPossibleFieldsForFilter,
+  CleanedSchemas,
   CollectionKey,
   ExpandConfig,
   FieldSelection,
   FilterType,
-  MultiItemsReturnType
-} from '@functions/database/PBService/typescript/pb_service'
+  IGetList,
+  IGetListFactory,
+  IGetListReturnType
+} from '@lifeforge/server-utils'
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 
 import { PBLogger } from '..'
-import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 
-// Paginated return type for getList
-type GetListReturnType<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey>,
-  TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
-    never,
-    never
-  >
-> = {
-  page: number
-  perPage: number
-  totalItems: number
-  totalPages: number
-  items: MultiItemsReturnType<TCollectionKey, TExpandConfig, TFields>
-}
-
 export class GetList<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
-  TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
+  TSchemas extends CleanedSchemas,
+  TCollectionKey extends CollectionKey<TSchemas>,
+  TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
     never,
     never
-  >
-> implements PBServiceBase<TCollectionKey, TExpandConfig> {
+  >,
+  TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
+    Record<never, never>
+> implements IGetList<TSchemas, TCollectionKey, TExpandConfig, TFields> {
   private _filterExpression: string = ''
   private _filterParams: Record<string, unknown> = {}
   private _sort: string = ''
@@ -65,7 +53,7 @@ export class GetList<
     return this
   }
 
-  filter(filter: FilterType<TCollectionKey, TExpandConfig>) {
+  filter(filter: FilterType<TSchemas, TCollectionKey, TExpandConfig>) {
     const result = recursivelyBuildFilter(filter)
 
     this._filterExpression = result.expression
@@ -76,8 +64,8 @@ export class GetList<
 
   sort(
     sort: (
-      | AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig>
-      | `-${AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> : never}`
+      | AllPossibleFieldsForFilter<TSchemas, TCollectionKey, TExpandConfig>
+      | `-${AllPossibleFieldsForFilter<TSchemas, TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TSchemas, TCollectionKey, TExpandConfig> : never}`
     )[]
   ) {
     this._sort = sort.join(', ')
@@ -85,13 +73,15 @@ export class GetList<
     return this
   }
 
-  fields<NewFields extends FieldSelection<TCollectionKey, TExpandConfig>>(
-    fields: NewFields
-  ): GetList<TCollectionKey, TExpandConfig, NewFields> {
-    const newInstance = new GetList<TCollectionKey, TExpandConfig, NewFields>(
-      this._pb,
-      this.collectionKey
-    )
+  fields<
+    NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
+  >(fields: NewFields) {
+    const newInstance = new GetList<
+      TSchemas,
+      TCollectionKey,
+      TExpandConfig,
+      NewFields
+    >(this._pb, this.collectionKey)
 
     newInstance._filterExpression = this._filterExpression
     newInstance._filterParams = this._filterParams
@@ -104,10 +94,10 @@ export class GetList<
     return newInstance
   }
 
-  expand<NewExpandConfig extends ExpandConfig<TCollectionKey>>(
+  expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
-  ): GetList<TCollectionKey, NewExpandConfig> {
-    const newInstance = new GetList<TCollectionKey, NewExpandConfig>(
+  ) {
+    const newInstance = new GetList<TSchemas, TCollectionKey, NewExpandConfig>(
       this._pb,
       this.collectionKey
     )
@@ -123,9 +113,7 @@ export class GetList<
     return newInstance
   }
 
-  async execute(): Promise<
-    GetListReturnType<TCollectionKey, TExpandConfig, TFields>
-  > {
+  async execute() {
     if (!this.collectionKey) {
       throw new Error(
         'Collection key is required. Use .collection() method to set the collection key.'
@@ -143,7 +131,8 @@ export class GetList<
         sort: this._sort,
         expand: this._expand,
         fields: this._fields
-      })) as unknown as GetListReturnType<
+      })) as unknown as IGetListReturnType<
+      TSchemas,
       TCollectionKey,
       TExpandConfig,
       TFields
@@ -163,13 +152,19 @@ export class GetList<
   }
 }
 
-const getList = (pb: PocketBase) => ({
-  collection: <TCollectionKey extends CollectionKey>(
+const getList = <TSchemas extends CleanedSchemas>(
+  pb: PocketBase,
+  module: { id: string }
+): IGetListFactory<TSchemas> => ({
+  collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
-  ): GetList<TCollectionKey> => {
-    const finalCollectionName = toPocketBaseCollectionName(collection)
+  ) => {
+    const finalCollectionName = toPocketBaseCollectionName(
+      collection,
+      module.id
+    )
 
-    return new GetList<TCollectionKey>(
+    return new GetList<TSchemas, TCollectionKey>(
       pb,
       finalCollectionName as TCollectionKey
     )

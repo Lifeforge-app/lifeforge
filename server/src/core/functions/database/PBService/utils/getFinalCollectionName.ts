@@ -1,5 +1,5 @@
 export default function getFinalCollectionName(collectionKey: string) {
-  if (collectionKey === 'user__users') {
+  if (collectionKey === 'users') {
     return 'users'
   }
 
