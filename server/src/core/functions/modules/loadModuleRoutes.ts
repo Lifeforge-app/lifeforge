@@ -1,20 +1,29 @@
 import { ROOT_DIR } from '@constants'
+import chalk from 'chalk'
 import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 
-import { coreLogger } from '@functions/logging'
+import { createServiceLogger } from '@functions/logging'
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+
+const logger = createServiceLogger('Route Loader')
 
 /**
- * Dynamically loads module routes from TypeScript source files.
- * Bun runs TypeScript natively, so no bundling is needed.
- * Falls back to dist/index.js if source not found.
+ * Dynamically loads module routes.
+ * - In production: loads from pre-bundled dist/index.js
+ * - In development: loads from TypeScript source (Bun runs TS natively)
  */
 export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
+  logger.info(
+    `Detected ${chalk.blue(process.env.NODE_ENV)} environment, loading ${IS_PRODUCTION ? chalk.green('bundled') : chalk.yellow('source')} routes`
+  )
+
   const appsDir = path.join(ROOT_DIR, 'apps')
 
   if (!fs.existsSync(appsDir)) {
-    coreLogger.warn('Apps directory not found, no module routes loaded')
+    logger.warn('Apps directory not found, no module routes loaded')
 
     return {}
   }
@@ -22,7 +31,13 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
   const modules: Record<string, unknown> = {}
 
   for (const modDir of fs.readdirSync(appsDir)) {
-    const modulePath = path.join(appsDir, modDir, 'server', 'index.ts')
+    // In production, load from bundled dist; in dev, load from source
+    const distPath = path.join(appsDir, modDir, 'server', 'dist', 'index.js')
+
+    const sourcePath = path.join(appsDir, modDir, 'server', 'index.ts')
+
+    const modulePath =
+      IS_PRODUCTION && fs.existsSync(distPath) ? distPath : sourcePath
 
     if (!fs.existsSync(modulePath)) {
       continue
@@ -38,17 +53,19 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
         : _.camelCase(modDir)
 
       if (!mod.default) {
-        coreLogger.warn(`Module ${modDir} has no default export`)
+        logger.warn(`Module ${modDir} has no default export`)
         continue
       }
 
       modules[key] = mod.default
     } catch (error) {
-      coreLogger.error(`Failed to load routes from ${modDir}: ${error}`)
+      logger.error(`Failed to load routes from ${modDir}: ${error}`)
     }
   }
 
-  coreLogger.info(`Loaded ${Object.keys(modules).length} module route(s)`)
+  logger.info(
+    `Loaded routes from ${chalk.green(Object.keys(modules).length)} module(s)`
+  )
 
   return modules
 }

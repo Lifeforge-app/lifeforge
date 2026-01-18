@@ -1,4 +1,4 @@
-import { ClientError } from '@lifeforge/server-sdk'
+import { ClientError } from '@lifeforge/server-utils'
 import { Request } from 'express'
 import z from 'zod'
 

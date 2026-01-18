@@ -14,7 +14,7 @@ export default async function isAuthTokenValid(
 
   if (!bearerToken || req.url.startsWith('/user/auth')) {
     if (req.url === '/' || noAuth) {
-      req.pb = new PBService(pb)
+      req.pb = (module: { id: string }) => new PBService(pb, module)
 
       return true
     }
@@ -45,7 +45,7 @@ export default async function isAuthTokenValid(
       }
     }
 
-    req.pb = new PBService(pb)
+    req.pb = (module: { id: string }) => new PBService(pb, module)
 
     return true
   } catch {

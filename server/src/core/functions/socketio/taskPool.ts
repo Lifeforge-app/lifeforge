@@ -1,26 +1,13 @@
-import { Server } from 'socket.io'
+import {
+  AddToTaskPoolFunc,
+  GlobalTaskPool,
+  UpdateTaskInPoolFunc
+} from '@lifeforge/server-utils'
 import { v4 } from 'uuid'
 
-export interface ITaskPoolTask {
-  module: string
-  description: string
-  status: 'pending' | 'running' | 'completed' | 'failed'
-  data?: any
-  error?: string
-  createdAt: Date
-  updatedAt: Date
-  progress?: number | string | Record<string, number | string>
-}
+export const globalTaskPool: GlobalTaskPool = {}
 
-export const globalTaskPool: Record<string, ITaskPoolTask> = {}
-
-export const addToTaskPool = (
-  io: Server,
-  taskData: Pick<
-    ITaskPoolTask,
-    'module' | 'description' | 'status' | 'data' | 'progress'
-  >
-) => {
+export const addToTaskPool: AddToTaskPoolFunc = (io, taskData) => {
   const taskId = v4()
 
   globalTaskPool[taskId] = {
@@ -41,11 +28,7 @@ export const addToTaskPool = (
   return taskId
 }
 
-export const updateTaskInPool = (
-  io: Server,
-  taskId: string,
-  updates: Partial<ITaskPoolTask>
-) => {
+export const updateTaskInPool: UpdateTaskInPoolFunc = (io, taskId, updates) => {
   if (globalTaskPool[taskId]) {
     globalTaskPool[taskId] = {
       ...globalTaskPool[taskId],

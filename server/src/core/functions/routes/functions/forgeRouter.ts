@@ -1,8 +1,7 @@
-import { ForgeRouter, RouterInput } from '@lifeforge/server-sdk'
+import { Forge, ForgeRouter, RouterInput } from '@lifeforge/server-utils'
 import { Router } from 'express'
 
 import { registerController } from './controllerLogic'
-import { ForgeControllerBuilder } from './forgeController'
 
 function isRouter(value: unknown): value is Router {
   return !!(
@@ -13,7 +12,7 @@ function isRouter(value: unknown): value is Router {
   )
 }
 
-function isForgeController(value: unknown): value is ForgeControllerBuilder {
+function isForgeController(value: unknown): value is Forge<any> {
   return !!(
     value &&
     typeof value === 'object' &&
@@ -52,9 +51,15 @@ function registerRoutes<T extends RouterInput>(
 ): Router {
   const expressRouter = Router()
 
-  function registerRoutesRecursive(routes: RouterInput, router: Router): void {
+  function registerRoutesRecursive(
+    routes: RouterInput,
+    router: Router,
+    parentPath = ''
+  ): void {
     for (const [route, controller] of Object.entries(routes)) {
-      const finalRoute = route.replace(/\$/g, '__')
+      const finalRoute = route.replace(/\$/g, '--')
+
+      const currentPath = `${parentPath}/${finalRoute}`
 
       if (isForgeController(controller)) {
         registerController(controller, router, finalRoute)
@@ -63,12 +68,16 @@ function registerRoutes<T extends RouterInput>(
       } else if (typeof controller === 'object' && controller !== null) {
         const nestedRouter = Router()
 
-        registerRoutesRecursive(controller as RouterInput, nestedRouter)
+        registerRoutesRecursive(
+          controller as RouterInput,
+          nestedRouter,
+          currentPath
+        )
 
         router.use(`/${finalRoute}`, nestedRouter)
       } else {
         console.warn(
-          `Skipping route ${route}: not a valid controller, router, or nested object`
+          `Skipping route "${route}" at path "${currentPath}": not a valid controller, router, or nested object. Value type: ${typeof controller}, Value: ${JSON.stringify(controller)?.slice(0, 100)}`
         )
       }
     }

@@ -1,4 +1,4 @@
-import { ClientError } from '@lifeforge/server-sdk'
+import { ClientError } from '@lifeforge/server-utils'
 import crypto from 'crypto'
 
 import { AES_ALGORITHM } from '../constants'

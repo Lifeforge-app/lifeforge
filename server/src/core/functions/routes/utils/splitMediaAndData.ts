@@ -1,6 +1,6 @@
+import { MediaConfig } from '@lifeforge/server-utils'
 import chalk from 'chalk'
 
-import { MediaConfig } from '../typescript/forge_controller.types'
 import { coreLogger } from '@functions/logging'
 
 type MediaResponse = Record<
