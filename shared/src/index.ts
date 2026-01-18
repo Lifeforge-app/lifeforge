@@ -62,14 +62,12 @@ export { default as parseCollectionName } from './utils/parseCollectionName'
 export { packageJSONSchema } from './interfaces/module_config.types'
 
 // Forge API client and types
-export {
-  createForgeAPIClient,
-  ForgeAPIClientController
-} from './api/core/forgeAPIClient'
+export { default as createForgeProxy } from './api/core/createForgeProxy'
+export { default as ForgeEndpoint } from './api/core/forgeEndpoint'
 export type {
   InferClientControllerOutput as InferOutput,
   InferClientControllerInput as InferInput
-} from './api/typescript/forge_api_client.types'
+} from './api/typescript/forge_proxy.types'
 
 // Some shared types
 export type {

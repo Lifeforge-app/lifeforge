@@ -1,4 +1,4 @@
-import type { ClientTree } from '@shared/api/typescript/forge_api_client.types'
+import type { ProxyTree } from '@shared/api/typescript/forge_proxy.types'
 import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
 
@@ -63,7 +63,7 @@ export default function PersonalizationProvider({
   defaultValueOverride = {},
   children
 }: {
-  forgeAPI: ClientTree<any>
+  forgeAPI: ProxyTree<any>
   defaultValueOverride?: Partial<IPersonalizationData>
   children: React.ReactNode
 }) {
