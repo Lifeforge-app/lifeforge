@@ -1,26 +1,19 @@
+import {
+  CleanedSchemas,
+  CollectionKey,
+  ExpandConfig,
+  FieldSelection,
+  ICreate,
+  ICreateData,
+  ICreateFactory
+} from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
-import {
-  CollectionKey,
-  ExpandConfig,
-  FieldKey,
-  FieldSelection,
-  SingleItemReturnType
-} from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 
 import { PBLogger } from '..'
-import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
-
-/**
- * Type for create data - allows any field from the collection with any value
- * @template TCollectionKey - The collection key type
- */
-type CreateData<TCollectionKey extends CollectionKey> = Partial<
-  Record<FieldKey<TCollectionKey>, unknown>
->
 
 /**
  * Class for creating new records in PocketBase collections with type safety
@@ -29,14 +22,16 @@ type CreateData<TCollectionKey extends CollectionKey> = Partial<
  * @template TFields - The field selection type
  */
 export class Create<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
-  TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
+  TSchemas extends CleanedSchemas,
+  TCollectionKey extends CollectionKey<TSchemas>,
+  TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
     never,
     never
-  >
-> implements PBServiceBase<TCollectionKey, TExpandConfig> {
-  private _data: CreateData<TCollectionKey> = {}
+  >,
+  TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
+    Record<never, never>
+> implements ICreate<TSchemas, TCollectionKey, TExpandConfig, TFields> {
+  private _data: ICreateData<TSchemas, TCollectionKey> = {}
   private _expand: string = ''
   private _fields: string = ''
 
@@ -55,7 +50,7 @@ export class Create<
    * @param data - The data object containing the fields to create
    * @returns The current Create instance for method chaining
    */
-  data(data: CreateData<TCollectionKey>) {
+  data(data: ICreateData<TSchemas, TCollectionKey>) {
     this._data = data
 
     return this
@@ -67,13 +62,15 @@ export class Create<
    * @param fields - Object specifying which fields to include in the response
    * @returns A new Create instance with the specified field selection
    */
-  fields<NewFields extends FieldSelection<TCollectionKey, TExpandConfig>>(
-    fields: NewFields
-  ): Create<TCollectionKey, TExpandConfig, NewFields> {
-    const newInstance = new Create<TCollectionKey, TExpandConfig, NewFields>(
-      this._pb,
-      this.collectionKey
-    )
+  fields<
+    NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
+  >(fields: NewFields) {
+    const newInstance = new Create<
+      TSchemas,
+      TCollectionKey,
+      TExpandConfig,
+      NewFields
+    >(this._pb, this.collectionKey)
 
     newInstance._data = this._data
     newInstance._expand = this._expand
@@ -88,10 +85,10 @@ export class Create<
    * @param expandConfig - Object specifying which relations to expand
    * @returns A new Create instance with the specified expand configuration
    */
-  expand<NewExpandConfig extends ExpandConfig<TCollectionKey>>(
+  expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
-  ): Create<TCollectionKey, NewExpandConfig> {
-    const newInstance = new Create<TCollectionKey, NewExpandConfig>(
+  ) {
+    const newInstance = new Create<TSchemas, TCollectionKey, NewExpandConfig>(
       this._pb,
       this.collectionKey
     )
@@ -109,9 +106,7 @@ export class Create<
    * @throws Error if collection key is not set
    * @throws Error if data is not provided
    */
-  async execute(): Promise<
-    SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
-  > {
+  async execute() {
     if (!this.collectionKey) {
       throw new Error(
         'Collection key is required. Use .collection() method to set the collection key.'
@@ -136,10 +131,10 @@ export class Create<
         .bold(result.id)} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
-    return result as unknown as SingleItemReturnType<
-      TCollectionKey,
-      TExpandConfig,
-      TFields
+    return result as Awaited<
+      ReturnType<
+        ICreate<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
+      >
     >
   }
 }
@@ -156,19 +151,25 @@ export class Create<
  *   .execute()
  * ```
  */
-const create = (pb: PocketBase) => ({
+const create = <TSchemas extends CleanedSchemas>(
+  pb: PocketBase,
+  module: { id: string }
+): ICreateFactory<TSchemas> => ({
   /**
    * Specifies the collection to create records in
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
    * @returns A new Create instance for the specified collection
    */
-  collection: <TCollectionKey extends CollectionKey>(
+  collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
-  ): Create<TCollectionKey> => {
-    const finalCollectionName = toPocketBaseCollectionName(collection)
+  ) => {
+    const finalCollectionName = toPocketBaseCollectionName(collection as string, module.id)
 
-    return new Create<TCollectionKey>(pb, finalCollectionName as TCollectionKey)
+    return new Create<TSchemas, TCollectionKey>(
+      pb,
+      finalCollectionName as TCollectionKey
+    )
   }
 })
 

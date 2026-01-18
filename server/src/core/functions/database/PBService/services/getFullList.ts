@@ -1,35 +1,39 @@
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
-
 import {
   AllPossibleFieldsForFilter,
+  CleanedSchemas,
   CollectionKey,
   ExpandConfig,
   FieldSelection,
   FilterType,
-  MultiItemsReturnType
-} from '@functions/database/PBService/typescript/pb_service'
+  IGetFullList,
+  IGetFullListFactory
+} from '@lifeforge/server-utils'
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 
 import { PBLogger } from '..'
-import { PBServiceBase } from '../typescript/PBServiceBase.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 
 /**
  * Class for retrieving all records from PocketBase collections with filtering, sorting, and expansion capabilities
+ * @template TSchemas - The flattened schemas type
  * @template TCollectionKey - The collection key type
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
 export class GetFullList<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
-  TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
+  TSchemas extends CleanedSchemas,
+  TCollectionKey extends CollectionKey<TSchemas>,
+  TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
     never,
     never
-  >
-> implements PBServiceBase<TCollectionKey, TExpandConfig> {
+  >,
+  TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
+    Record<never, never>
+> implements IGetFullList<TSchemas, TCollectionKey, TExpandConfig, TFields> {
   private _filterExpression: string = ''
   private _filterParams: Record<string, unknown> = {}
   private _sort: string = ''
@@ -51,7 +55,7 @@ export class GetFullList<
    * @param filter - The filter configuration object specifying conditions
    * @returns The current GetFullList instance for method chaining
    */
-  filter(filter: FilterType<TCollectionKey, TExpandConfig>) {
+  filter(filter: FilterType<TSchemas, TCollectionKey, TExpandConfig>) {
     const result = recursivelyBuildFilter(filter)
 
     this._filterExpression = result.expression
@@ -67,8 +71,8 @@ export class GetFullList<
    */
   sort(
     sort: (
-      | AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig>
-      | `-${AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TCollectionKey, TExpandConfig> : never}`
+      | AllPossibleFieldsForFilter<TSchemas, TCollectionKey, TExpandConfig>
+      | `-${AllPossibleFieldsForFilter<TSchemas, TCollectionKey, TExpandConfig> extends string ? AllPossibleFieldsForFilter<TSchemas, TCollectionKey, TExpandConfig> : never}`
     )[]
   ) {
     this._sort = sort.join(', ')
@@ -82,10 +86,11 @@ export class GetFullList<
    * @param fields - Object specifying which fields to include in the response
    * @returns A new GetFullList instance with the specified field selection
    */
-  fields<NewFields extends FieldSelection<TCollectionKey, TExpandConfig>>(
-    fields: NewFields
-  ): GetFullList<TCollectionKey, TExpandConfig, NewFields> {
+  fields<
+    NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
+  >(fields: NewFields) {
     const newInstance = new GetFullList<
+      TSchemas,
       TCollectionKey,
       TExpandConfig,
       NewFields
@@ -106,13 +111,14 @@ export class GetFullList<
    * @param expandConfig - Object specifying which relations to expand
    * @returns A new GetFullList instance with the specified expand configuration
    */
-  expand<NewExpandConfig extends ExpandConfig<TCollectionKey>>(
+  expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
-  ): GetFullList<TCollectionKey, NewExpandConfig> {
-    const newInstance = new GetFullList<TCollectionKey, NewExpandConfig>(
-      this._pb,
-      this.collectionKey
-    )
+  ) {
+    const newInstance = new GetFullList<
+      TSchemas,
+      TCollectionKey,
+      NewExpandConfig
+    >(this._pb, this.collectionKey)
 
     newInstance._filterExpression = this._filterExpression
     newInstance._filterParams = this._filterParams
@@ -128,9 +134,7 @@ export class GetFullList<
    * @returns Promise that resolves to an array of records with applied filters, sorting, field selection, and expansions
    * @throws Error if collection key is not set
    */
-  async execute(): Promise<
-    MultiItemsReturnType<TCollectionKey, TExpandConfig, TFields>
-  > {
+  async execute() {
     if (!this.collectionKey) {
       throw new Error(
         'Collection key is required. Use .collection() method to set the collection key.'
@@ -148,10 +152,15 @@ export class GetFullList<
         sort: this._sort,
         expand: this._expand,
         fields: this._fields
-      })) as unknown as MultiItemsReturnType<
-      TCollectionKey,
-      TExpandConfig,
-      TFields
+      })) as Awaited<
+      ReturnType<
+        IGetFullList<
+          TSchemas,
+          TCollectionKey,
+          TExpandConfig,
+          TFields
+        >['execute']
+      >
     >
 
     PBLogger.debug(
@@ -179,19 +188,25 @@ export class GetFullList<
  *   .execute()
  * ```
  */
-const getFullList = (pb: PocketBase) => ({
+const getFullList = <TSchemas extends CleanedSchemas>(
+  pb: PocketBase,
+  module: { id: string }
+): IGetFullListFactory<TSchemas> => ({
   /**
    * Specifies the collection to retrieve records from
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
    * @returns A new GetFullList instance for the specified collection
    */
-  collection: <TCollectionKey extends CollectionKey>(
+  collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
-  ): GetFullList<TCollectionKey> => {
-    const finalCollectionName = toPocketBaseCollectionName(collection)
+  ) => {
+    const finalCollectionName = toPocketBaseCollectionName(
+      collection,
+      module.id
+    )
 
-    return new GetFullList<TCollectionKey>(
+    return new GetFullList<TSchemas, TCollectionKey>(
       pb,
       finalCollectionName as TCollectionKey
     )

@@ -1,8 +1,9 @@
 import {
+  CleanedSchemas,
   CollectionKey,
   ExpandConfig,
   FilterType
-} from '../typescript/pb_service'
+} from '@lifeforge/server-utils'
 
 /**
  * Recursively builds filter expressions and parameters for PocketBase queries
@@ -14,10 +15,11 @@ import {
  * @returns Object containing the filter expression string and parameters
  */
 export function recursivelyBuildFilter<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey>
+  TSchemas extends CleanedSchemas,
+  TCollectionKey extends CollectionKey<TSchemas>,
+  TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>
 >(
-  filter: FilterType<TCollectionKey, TExpandConfig>,
+  filter: FilterType<TSchemas, TCollectionKey, TExpandConfig>,
   paramCounter: { count: number } = { count: 0 },
   params: Record<string, unknown> = {}
 ): { expression: string; params: Record<string, unknown> } {
