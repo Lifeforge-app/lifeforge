@@ -9,7 +9,7 @@ declare global {
   namespace Express {
     interface Request {
       io: SocketIO.Server
-      pb: PBService
+      pb: (module: { id: string }) => PBService
       taskPool: Record<string, ITaskPoolTask>
       media?: ConvertMedia<MediaConfig>
     }
