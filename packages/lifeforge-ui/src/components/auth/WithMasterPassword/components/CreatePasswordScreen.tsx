@@ -3,8 +3,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { encrypt } from 'shared'
-import type { ForgeAPIClientController } from 'shared'
+import { ForgeEndpoint, encrypt } from 'shared'
 
 import { Button, TextInput } from '@components/inputs'
 import { ConfirmationModal, useModalStore } from '@components/overlays'
@@ -13,8 +12,8 @@ function CreatePasswordScreen({
   controller,
   challengeController
 }: {
-  controller: ForgeAPIClientController
-  challengeController: ForgeAPIClientController
+  controller: ForgeEndpoint
+  challengeController: ForgeEndpoint
 }) {
   const { open } = useModalStore()
 
