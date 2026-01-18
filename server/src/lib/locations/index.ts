@@ -1,18 +1,13 @@
-import { ClientError } from '@lifeforge/server-sdk'
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 import z from 'zod'
 
 import searchLocations from '@functions/external/location'
-import { forgeController } from '@functions/routes'
 
-const search = forgeController
+const forge = createForge({}, 'locations')
+
+const search = forge
   .query()
-  .description({
-    en: 'Search for locations using Google Places API',
-    ms: 'Cari lokasi menggunakan API Tempat Google',
-    'zh-CN': '使用Google Places API搜索位置',
-    'zh-TW': '使用Google Places API搜尋位置'
-  })
+  .description('Search for locations using Google Places API')
   .input({
     query: z.object({
       q: z.string()

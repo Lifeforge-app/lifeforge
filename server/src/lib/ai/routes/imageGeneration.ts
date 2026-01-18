@@ -1,18 +1,12 @@
-import { ClientError } from '@lifeforge/server-sdk'
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { ClientError, createForge } from '@lifeforge/server-utils'
 import OpenAI from 'openai'
 import z from 'zod'
 
-import { forgeController } from '@functions/routes'
+const forge = createForge({}, 'ai')
 
-const generateImage = forgeController
+export const generateImage = forge
   .mutation()
-  .description({
-    en: 'Generate image from text prompt using AI',
-    ms: 'Jana imej daripada gesaan teks menggunakan AI',
-    'zh-CN': '使用AI从文本提示生成图片',
-    'zh-TW': '使用AI從文本提示生成圖片'
-  })
+  .description('Generate image from text prompt using AI')
   .input({
     body: z.object({
       prompt: z.string().min(1, 'Prompt cannot be empty')
@@ -51,5 +45,3 @@ const generateImage = forgeController
       return `data:image/png;base64,${image_base64}`
     }
   )
-
-export default forgeRouter({ generateImage })
