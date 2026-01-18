@@ -19,7 +19,43 @@ export const alias: Alias[] = [
   },
   { find: '@utils', replacement: path.resolve(__dirname, './src/utils') },
   { find: '@core', replacement: path.resolve(__dirname, './src/core') },
-  { find: '@server', replacement: path.resolve(__dirname, '../server/src') },
+  {
+    find: '@server',
+    replacement: '@server',
+    customResolver: (id, importer) => {
+      // Check if importing from a module (apps/**/client/)
+      const moduleMatch = importer?.match(/\/apps\/([^/]+)\/client\//)
+      if (moduleMatch) {
+        // Resolve to the module's server directory
+        const moduleName = moduleMatch[1]
+        const serverPath = path.resolve(
+          __dirname,
+          '../apps',
+          moduleName,
+          'server',
+          id.replace('@server/', '').replace('@server', '')
+        )
+        const matched = globSync([
+          serverPath + '.ts',
+          serverPath + '/index.ts',
+          serverPath
+        ])
+        return matched[0] || serverPath
+      }
+      // Default: resolve to core server
+      const corePath = path.resolve(
+        __dirname,
+        '../server/src',
+        id.replace('@server/', '').replace('@server', '')
+      )
+      const matched = globSync([
+        corePath + '.ts',
+        corePath + '/index.ts',
+        corePath
+      ])
+      return matched[0] || corePath
+    }
+  },
   { find: '@modules', replacement: path.resolve(__dirname, '../apps') },
   {
     find: '@',
