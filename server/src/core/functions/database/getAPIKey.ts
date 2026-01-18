@@ -1,11 +1,11 @@
 import { ROOT_DIR } from '@constants'
+import { IPBService } from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { decrypt2 } from '@functions/auth/encryption'
 import { createServiceLogger } from '@functions/logging'
-import { getCallerModuleId } from '@functions/utils/getCallerModuleId'
 
 import PBService from './PBService'
 
@@ -43,10 +43,12 @@ export async function validateCallerAccess(
   }
 }
 
-export default async function getAPIKey(id: string, pb: PBService) {
+async function getAPIKey(
+  id: string,
+  pb: PBService<{ entries: any }>,
+  callerModule?: { source: 'app' | 'core'; id: string }
+): Promise<string> {
   try {
-    const callerModule = getCallerModuleId()
-
     if (!callerModule) {
       throw new Error(
         'Unable to determine caller module for API key validation.'
@@ -55,18 +57,11 @@ export default async function getAPIKey(id: string, pb: PBService) {
 
     await validateCallerAccess(callerModule, id)
 
-    const { key } = await pb.getFirstListItem
+    const { key } = await pb.instance
       .collection('api_keys__entries')
-      .filter([
-        {
-          field: 'keyId',
-          operator: '=',
-          value: id
-        }
-      ])
-      .execute()
+      .getFirstListItem(`keyId = "${id}"`)
       .catch(err => {
-        throw new Error(err.message)
+        throw new Error(`Failed to retrieve API key for ${id}: ${err.message}`)
       })
 
     try {
@@ -83,4 +78,12 @@ export default async function getAPIKey(id: string, pb: PBService) {
       `Failed to retrieve API key for ${id}: ${err instanceof Error ? err.message : String(err)}`
     )
   }
+}
+
+export default function getAPIKeyFactory(
+  pb: IPBService<any>,
+  callerModule?: { source: 'app' | 'core'; id: string }
+): (id: string) => Promise<string> {
+  return (id: string) =>
+    getAPIKey(id, pb as PBService<{ entries: any }>, callerModule)
 }

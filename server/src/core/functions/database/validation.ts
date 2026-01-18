@@ -1,10 +1,12 @@
-import COLLECTION_SCHEMAS from '@schema'
+import {
+  CleanedSchemas,
+  CollectionKey,
+  IPBService
+} from '@lifeforge/server-utils'
 
-import PBService from './PBService'
-
-const checkExistence = async (
-  pb: PBService,
-  collection: keyof typeof COLLECTION_SCHEMAS,
+const checkExistence = async <TSchemas extends CleanedSchemas>(
+  pb: IPBService<TSchemas>,
+  collection: CollectionKey<TSchemas>,
   id: string
 ): Promise<boolean> => {
   try {
