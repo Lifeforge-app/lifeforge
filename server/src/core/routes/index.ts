@@ -1,35 +1,25 @@
 import { ROOT_DIR } from '@constants'
-import { forgeRouter } from '@lifeforge/server-sdk'
+import { forgeRouter } from '@lifeforge/server-utils'
 import express from 'express'
 import path from 'path'
 
 import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { loadModuleRoutes } from '@functions/modules/loadModuleRoutes'
-import { forgeController } from '@functions/routes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 
-import type generatedRoutes from '../../generated/routes'
 import coreRoutes from './core.routes'
+import forge from './forge'
 
 const router = express.Router()
 
 // Load module routes: production uses FS scanning, dev uses generated registry
 // Type assertion ensures TypeScript uses generated types for inference
-const appRoutes = (
-  process.env.NODE_ENV === 'production'
-    ? await loadModuleRoutes()
-    : (await import('../../generated/routes')).default
-) as typeof generatedRoutes
+const appRoutes = await loadModuleRoutes()
 
-const listRoutes = forgeController
+const listRoutes = forge
   .query()
-  .description({
-    en: 'List all available API routes',
-    ms: 'Senaraikan semua laluan API yang tersedia',
-    'zh-CN': '列出所有可用的API路由',
-    'zh-TW': '列出所有可用的API路由'
-  })
+  .description('List all available API routes')
   .input({})
   .callback(async () => traceRouteStack(router.stack))
 
@@ -49,12 +39,15 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
   const filePath =
     (req.params[0 as any as keyof typeof req.params] as string) || ''
 
+  // Use dist-docker in Docker mode, dist otherwise
+  const distDir = process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'
+
   const moduleDistPath = path.join(
     ROOT_DIR,
     'apps',
     moduleName,
     'client',
-    'dist'
+    distDir
   )
 
   const resolvedPath = path.join(moduleDistPath, filePath)
