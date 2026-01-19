@@ -33,21 +33,11 @@ export const manifest = forge
     const devModeModules =
       (new tempFile('module_dev_mode.json', 'array').read() as string[]) || []
 
-    scanFederatedModules(APPS_DIR, modules, false, '/modules')
+    scanFederatedModules(APPS_DIR, modules, false, '/modules', devModeModules)
 
     const internalAppsDir = path.join(ROOT_DIR, 'client', 'src', 'apps')
 
     scanFederatedModules(internalAppsDir, modules, true, '/internal-modules')
-
-    const isDev = process.env.NODE_ENV !== 'production'
-
-    if (isDev) {
-      for (const mod of modules) {
-        if (devModeModules.includes(`@lifeforge/${mod.name}`)) {
-          mod.isDevMode = true
-        }
-      }
-    }
 
     return { modules }
   })
@@ -62,6 +52,7 @@ export interface InstalledModule {
   category: string
   isInternal: boolean
   isDevMode?: boolean
+  hasClientDist: boolean
 }
 
 export const list = forge
@@ -88,6 +79,21 @@ export const list = forge
       try {
         const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 
+        // Check if client dist exists (use dist-docker in Docker mode)
+        const distDir =
+          process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'
+
+        const clientDistPath = path.join(
+          APPS_DIR,
+          dir.name,
+          'client',
+          distDir,
+          'assets',
+          'remoteEntry.js'
+        )
+
+        const hasClientDist = fs.existsSync(clientDistPath)
+
         modules.push({
           name: pkg.name,
           displayName: pkg.displayName || pkg.name,
@@ -97,7 +103,8 @@ export const list = forge
           icon: pkg.lifeforge?.icon || 'tabler:package',
           category: pkg.lifeforge?.category || 'Miscellaneous',
           isInternal: false,
-          isDevMode: devModeModules.includes(pkg.name)
+          isDevMode: devModeModules.includes(pkg.name),
+          hasClientDist
         })
       } catch {
         // Skip invalid packages
