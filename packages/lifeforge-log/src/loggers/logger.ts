@@ -83,6 +83,18 @@ export interface Logger {
   child(bindings: object): Logger
 }
 
+// Shared file stream with ANSI stripping - singleton pattern
+let sharedFileStream: Transform | null = null
+
+function getSharedFileStream(): Transform {
+  if (sharedFileStream) return sharedFileStream
+
+  sharedFileStream = createStripAnsiTransform()
+  sharedFileStream.pipe(getFileStream())
+
+  return sharedFileStream
+}
+
 function createPinoLogger(options: LoggerOptions): pino.Logger {
   const config = getConfig()
 
@@ -107,13 +119,9 @@ function createPinoLogger(options: LoggerOptions): pino.Logger {
   }
 
   if (fileEnabled) {
-    const stripTransform = createStripAnsiTransform()
-
-    stripTransform.pipe(getFileStream())
-
     streams.push({
       level: 'trace',
-      stream: stripTransform
+      stream: getSharedFileStream()
     })
   }
 
