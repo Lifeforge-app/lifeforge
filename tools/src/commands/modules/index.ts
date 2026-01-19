@@ -1,7 +1,5 @@
 import type { Command } from 'commander'
 
-import generateRouteRegistry from './functions/registry/generateRouteRegistry'
-import generateSchemaRegistry from './functions/registry/generateSchemaRegistry'
 import { buildModuleHandler } from './handlers/buildModuleHandler'
 import { compareModuleHandler } from './handlers/compareModuleHandler'
 import { createModuleHandler } from './handlers/createModuleHandler'
@@ -80,14 +78,6 @@ export default function setup(program: Command): void {
       'Publish as official module (requires maintainer access)'
     )
     .action(publishModuleHandler)
-
-  command
-    .command('gen-registry')
-    .description('Generate routes and schema registry files for all modules')
-    .action(() => {
-      generateRouteRegistry()
-      generateSchemaRegistry()
-    })
 
   command
     .command('compare')

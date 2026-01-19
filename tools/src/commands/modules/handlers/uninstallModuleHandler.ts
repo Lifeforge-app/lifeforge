@@ -9,9 +9,6 @@ import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
-import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
-import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
-
 /**
  * Uninstalls one or more modules.
  *
@@ -60,10 +57,6 @@ export async function uninstallModuleHandler(
   }
 
   bunInstall()
-
-  logger.debug('Regenerating registries...')
-  generateRouteRegistry()
-  generateSchemaRegistry()
 
   smartReloadServer()
 }

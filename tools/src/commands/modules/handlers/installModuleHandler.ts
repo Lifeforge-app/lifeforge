@@ -11,8 +11,6 @@ import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { checkPackageExists } from '@/utils/registry'
 
-import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
-import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import { buildModuleHandler } from './buildModuleHandler'
 
 /**
@@ -74,10 +72,6 @@ export async function installModuleHandler(
   if (installed.length === 0) {
     return
   }
-
-  logger.debug('Regenerating registries...')
-  generateRouteRegistry()
-  generateSchemaRegistry()
 
   // Build module client bundles for federation
   for (const moduleName of installed) {
