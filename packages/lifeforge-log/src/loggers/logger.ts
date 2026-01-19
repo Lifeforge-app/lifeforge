@@ -10,6 +10,7 @@ const PRETTY_OPTIONS = {
   colorize: true,
   translateTime: 'yyyy-mm-dd HH:MM:ss',
   ignore: 'pid,hostname,service,name',
+  sync: true,
   messageFormat: (log: Record<string, unknown>, messageKey: string) => {
     const msg = log[messageKey] as string
 
