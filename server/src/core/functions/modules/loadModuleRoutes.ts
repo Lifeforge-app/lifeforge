@@ -17,7 +17,7 @@ const logger = createServiceLogger('Route Loader')
  */
 export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
   logger.info(
-    `Detected ${chalk.blue(process.env.NODE_ENV)} environment, loading ${IS_PRODUCTION ? chalk.green('bundled') : chalk.yellow('source')} routes`
+    `Detected ${chalk.blue(process.env.NODE_ENV === 'production' ? 'production' : 'development')} environment, loading ${IS_PRODUCTION ? chalk.green('bundled') : chalk.yellow('source')} routes`
   )
 
   const appsDir = path.join(ROOT_DIR, 'apps')
