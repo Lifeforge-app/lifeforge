@@ -25,11 +25,6 @@
     "prebuild": "bun forge modules gen-registry && bun --cwd=shared run build && bun --cwd=packages/lifeforge-ui run build"
   },
   "keywords": [
-    "bun",
-    "hono",
-    "react",
-    "vite",
-    "monorepo",
     "lifeforge"
   ],
   "devDependencies": {
@@ -65,19 +60,20 @@
     "vite": "^7.1.9"
   },
   "dependencies": {
-    "zod": "4.3.5",
-    "dotenv": "^17.2.3",
     "@iconify/react": "^6.0.2",
-    "clsx": "^2.1.1",
-    "react-toastify": "^11.0.5",
-    "dayjs": "^1.11.19",
-    "@uidotdev/usehooks": "^2.4.1",
-    "lodash": "^4.17.21",
-    "tinycolor2": "^1.6.0",
+    "@lifeforge/lifeforge--achievements": "^0.0.8",
     "@tanstack/react-query": "^5.90.2",
+    "@uidotdev/usehooks": "^2.4.1",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.19",
+    "dotenv": "^17.2.3",
     "i18next": "^25.7.4",
+    "lodash": "^4.17.21",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-i18next": "^16.5.1"
+    "react-i18next": "^16.5.1",
+    "react-toastify": "^11.0.5",
+    "tinycolor2": "^1.6.0",
+    "zod": "4.3.5"
   }
 }
