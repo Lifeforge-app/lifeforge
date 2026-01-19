@@ -36,8 +36,11 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
 
     const sourcePath = path.join(appsDir, modDir, 'server', 'index.ts')
 
+    // Load from dist if in production or if source code does not exist
     const modulePath =
-      IS_PRODUCTION && fs.existsSync(distPath) ? distPath : sourcePath
+      (IS_PRODUCTION || !fs.existsSync(sourcePath)) && fs.existsSync(distPath)
+        ? distPath
+        : sourcePath
 
     if (!fs.existsSync(modulePath)) {
       continue
