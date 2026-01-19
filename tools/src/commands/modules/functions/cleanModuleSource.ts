@@ -40,7 +40,7 @@ export default function cleanModuleSource(targetDir: string): void {
   }
 
   // Remove other development files
-  const devFiles = ['.gitignore', 'tsconfig.json', 'README.md', 'node_modules']
+  const devFiles = ['.gitignore', 'tsconfig.json', 'README.md']
 
   for (const file of devFiles) {
     const filePath = path.join(targetDir, file)
