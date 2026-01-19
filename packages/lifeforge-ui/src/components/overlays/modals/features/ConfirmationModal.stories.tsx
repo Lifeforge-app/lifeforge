@@ -110,7 +110,7 @@ export const WithCustomConfirmationButtons: Story = {
             className="w-full"
             icon="tabler:bubble"
             variant="secondary"
-            onClick={() => alert('Rocket launched!')}
+            onClick={() => alert('Hmmmmmmm.....')}
           >
             Let me think again
           </Button>
