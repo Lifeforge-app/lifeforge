@@ -11,7 +11,12 @@ import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { checkPackageExists } from '@/utils/registry'
 
+import cleanModuleSource from '../functions/cleanModuleSource'
 import { buildModuleHandler } from './buildModuleHandler'
+
+interface InstallOptions {
+  dev?: boolean
+}
 
 /**
  * Installs one or more modules from the registry.
@@ -20,16 +25,20 @@ import { buildModuleHandler } from './buildModuleHandler'
  * 1. Validates it doesn't already exist locally
  * 2. Checks it exists in the registry
  * 3. Downloads and extracts to apps/
- * 4. Initializes git repository
+ * 4. Initializes git repository (if --dev)
+ * 5. Builds both dist and dist-docker bundles
+ * 6. Removes source code (unless --dev is passed)
  *
  * After installation:
- * - Regenerates route and schema registries
- * - Builds module client bundles for federation
- * - Generates database migrations if schema.ts exists
+ * - Builds module client bundles for federation (both modes)
+ * - Generates database migrations if schema.ts exists (--dev only)
  */
 export async function installModuleHandler(
-  moduleNames: string[]
+  moduleNames: string[],
+  options?: InstallOptions
 ): Promise<void> {
+  const isDevMode = options?.dev ?? false
+
   const installed: string[] = []
 
   for (const moduleName of moduleNames) {
@@ -62,7 +71,10 @@ export async function installModuleHandler(
     logger.debug(`Installing ${chalk.blue(fullName)}...`)
 
     installPackage(fullName, targetDir)
-    initGitRepository(targetDir)
+
+    if (isDevMode) {
+      initGitRepository(targetDir)
+    }
 
     installed.push(moduleName)
 
@@ -73,13 +85,19 @@ export async function installModuleHandler(
     return
   }
 
-  // Build module client bundles for federation
+  // Build module client bundles for federation (both dist and dist-docker)
   for (const moduleName of installed) {
+    logger.debug(`Building ${chalk.blue(moduleName)} bundles...`)
+
+    // Build regular dist
     await buildModuleHandler(moduleName)
+
+    // Build dist-docker
+    await buildModuleHandler(moduleName, { docker: true })
   }
 
-  // Generate migrations for new modules (only in non-Docker mode)
-  if (!isDockerMode()) {
+  // Generate migrations for new modules (only in dev mode and non-Docker environment)
+  if (isDevMode && !isDockerMode()) {
     for (const moduleName of installed) {
       const { targetDir } = normalizePackage(moduleName)
 
@@ -88,6 +106,19 @@ export async function installModuleHandler(
         generateMigrationsHandler(moduleName)
       }
     }
+  }
+
+  // Clean source code if not in dev mode
+  if (!isDevMode) {
+    logger.debug('Cleaning source code (production mode)...')
+
+    for (const moduleName of installed) {
+      const { targetDir } = normalizePackage(moduleName)
+
+      cleanModuleSource(targetDir)
+    }
+
+    logger.info('Source code removed. Only built bundles retained.')
   }
 
   smartReloadServer()
