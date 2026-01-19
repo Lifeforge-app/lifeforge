@@ -10,8 +10,6 @@ import normalizePackage from '@/utils/normalizePackage'
 import { getPackageLatestVersion } from '@/utils/registry'
 
 import listModules from '../functions/listModules'
-import generateRouteRegistry from '../functions/registry/generateRouteRegistry'
-import generateSchemaRegistry from '../functions/registry/generateSchemaRegistry'
 import { buildModuleHandler } from './buildModuleHandler'
 
 /**
@@ -124,12 +122,6 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   }
 
   if (upgraded.length > 0) {
-    logger.print('')
-    logger.debug('Regenerating registries...')
-
-    generateRouteRegistry()
-    generateSchemaRegistry()
-
     // Rebuild module client bundles for federation
     for (const mod of upgraded) {
       await buildModuleHandler(mod)
