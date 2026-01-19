@@ -8,6 +8,9 @@ coverage
 
 # production
 dist
+dist-docker
+apps/*/locales
+apps/*/package.json
 build
 tsbuild
 *.js
@@ -51,3 +54,6 @@ env/*
 !env/.env.docker.example
 keys
 
+# user-generated files
+apps/package.json
+locales/package.json
