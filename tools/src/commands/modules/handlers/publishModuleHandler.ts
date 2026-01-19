@@ -14,14 +14,47 @@ import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
 /**
+ * Renames .gitignore to gitignore before publish (npm excludes .gitignore).
+ * Returns true if a rename was performed.
+ */
+function prepareGitignoreForPublish(modulePath: string): boolean {
+  const gitignorePath = path.join(modulePath, '.gitignore')
+
+  const renamedPath = path.join(modulePath, 'gitignore')
+
+  if (fs.existsSync(gitignorePath)) {
+    fs.renameSync(gitignorePath, renamedPath)
+
+    return true
+  }
+
+  return false
+}
+
+/**
+ * Restores gitignore back to .gitignore after publish.
+ */
+function restoreGitignoreAfterPublish(modulePath: string): void {
+  const gitignorePath = path.join(modulePath, '.gitignore')
+
+  const renamedPath = path.join(modulePath, 'gitignore')
+
+  if (fs.existsSync(renamedPath)) {
+    fs.renameSync(renamedPath, gitignorePath)
+  }
+}
+
+/**
  * Publishes a module to the registry.
  *
  * Steps:
  * 1. Validates module structure (required files, package.json format)
  * 2. Validates author permissions
  * 3. Bumps version in package.json
- * 4. Publishes to npm registry
- * 5. Reverts version on failure
+ * 4. Renames .gitignore to gitignore (npm excludes .gitignore)
+ * 5. Publishes to npm registry
+ * 6. Restores gitignore to .gitignore
+ * 7. Reverts version on failure
  */
 export async function publishModuleHandler(moduleName: string): Promise<void> {
   const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
@@ -46,6 +79,9 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
     `  Version: ${chalk.dim(oldVersion)} ${chalk.dim('→')} ${chalk.green(newVersion)}`
   )
 
+  // Rename .gitignore to gitignore (npm excludes .gitignore by default)
+  const gitignoreRenamed = prepareGitignoreForPublish(modulePath)
+
   logger.debug(`Publishing ${chalk.blue(moduleName)}...`)
 
   try {
@@ -66,5 +102,10 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
     )
     logger.debug(`Error: ${error}`)
     process.exit(1)
+  } finally {
+    // Always restore .gitignore after publish attempt
+    if (gitignoreRenamed) {
+      restoreGitignoreAfterPublish(modulePath)
+    }
   }
 }

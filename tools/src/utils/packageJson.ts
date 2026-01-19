@@ -191,12 +191,3 @@ export function getDependencies(
 
   return packageJson.dependencies || {}
 }
-
-// Legacy exports for backward compatibility with root package.json
-export function readRootPackageJson(): PackageJson {
-  return readPackageJson('root')
-}
-
-export function writeRootPackageJson(packageJson: PackageJson): void {
-  writePackageJson('root', packageJson)
-}

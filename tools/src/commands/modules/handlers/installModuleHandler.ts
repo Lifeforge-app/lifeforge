@@ -72,6 +72,13 @@ export async function installModuleHandler(
 
     installPackage(fullName, targetDir)
 
+    // Restore gitignore to .gitignore (npm excludes .gitignore during publish)
+    const gitignorePath = path.join(targetDir, 'gitignore')
+
+    if (fs.existsSync(gitignorePath)) {
+      fs.renameSync(gitignorePath, path.join(targetDir, '.gitignore'))
+    }
+
     if (isDevMode) {
       initGitRepository(targetDir)
     }
