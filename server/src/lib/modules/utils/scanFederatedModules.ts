@@ -16,6 +16,7 @@ export interface ModuleManifestEntry {
   remoteEntryUrl: string
   isInternal: boolean
   APIKeyAccess?: Record<string, { usage: string; required: boolean }>
+  isDevMode: boolean
 }
 
 /**
@@ -25,7 +26,8 @@ export default function scanFederatedModules(
   baseDir: string,
   modules: ModuleManifestEntry[],
   isInternal: boolean,
-  urlPrefix: string
+  urlPrefix: string,
+  devModeModules?: string[]
 ) {
   if (!fs.existsSync(baseDir)) return
 
@@ -34,6 +36,10 @@ export default function scanFederatedModules(
     .filter(d => d.isDirectory() && !d.name.startsWith('.'))
 
   for (const dir of dirs) {
+    const isDevMode =
+      process.env.NODE_ENV !== 'production' &&
+      devModeModules?.includes(`@lifeforge/${dir.name}`)
+
     const pkgPath = path.join(baseDir, dir.name, 'package.json')
 
     if (!fs.existsSync(pkgPath)) continue
@@ -45,11 +51,9 @@ export default function scanFederatedModules(
 
       if (!parsed.success) continue
 
-      // Use dist-docker in Docker mode, dist otherwise
       const distDir =
         process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'
 
-      // Check for remoteEntry.js (built federated module)
       const remoteEntryPath = path.join(
         baseDir,
         dir.name,
@@ -59,7 +63,7 @@ export default function scanFederatedModules(
         'remoteEntry.js'
       )
 
-      if (!fs.existsSync(remoteEntryPath)) continue
+      if (!fs.existsSync(remoteEntryPath) && !isDevMode) continue
 
       modules.push({
         name: dir.name,
@@ -71,7 +75,8 @@ export default function scanFederatedModules(
         category: parsed.data.lifeforge.category,
         remoteEntryUrl: `${urlPrefix}/${dir.name}/assets/remoteEntry.js`,
         isInternal,
-        APIKeyAccess: parsed.data.lifeforge.APIKeyAccess
+        APIKeyAccess: parsed.data.lifeforge.APIKeyAccess,
+        isDevMode: !!isDevMode
       })
     } catch {
       // Skip invalid modules
