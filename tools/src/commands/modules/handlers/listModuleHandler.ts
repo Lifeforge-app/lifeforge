@@ -25,8 +25,9 @@ export async function listModulesHandler(): Promise<void> {
     `${chalk.blue(String(totalCount))} installed module${totalCount > 1 ? 's' : ''}:\n`
   )
 
-  Object.entries(modules).forEach(([name, info]) => {
-    logger.print(`  ${chalk.blue(name)} ${chalk.dim(`v${info.version}`)}`)
-    logger.print(`    ${chalk.dim(info.displayName)}`)
-  })
+  for (const [name, info] of Object.entries(modules)) {
+    logger.print(
+      `  ${chalk.blue(name)} ${chalk.dim(`v${info.version}`)} - ${info.displayName}`
+    )
+  }
 }
