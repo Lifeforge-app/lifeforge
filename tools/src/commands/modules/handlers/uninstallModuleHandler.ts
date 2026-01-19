@@ -30,7 +30,7 @@ export async function uninstallModuleHandler(
   for (const moduleName of moduleNames) {
     const { targetDir, fullName } = normalizePackage(moduleName)
 
-    if (!findPackageName(fullName)) {
+    if (!findPackageName(fullName, 'apps')) {
       logger.actionableError(
         `Module ${chalk.blue(fullName)} is not installed`,
         'Run "bun forge modules list" to see installed modules'
@@ -40,7 +40,7 @@ export async function uninstallModuleHandler(
 
     logger.debug(`Uninstalling ${chalk.blue(fullName)}...`)
 
-    removeDependency(fullName)
+    removeDependency(fullName, 'apps')
 
     const symlinkPath = path.join(ROOT_DIR, 'node_modules', fullName)
 

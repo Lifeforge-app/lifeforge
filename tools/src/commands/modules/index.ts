@@ -29,6 +29,7 @@ export default function setup(program: Command): void {
       '<modules...>',
       'Modules to install, e.g., @lifeforge/lifeforge--calendar'
     )
+    .option('--dev', 'Keep source code and git repository for development')
     .action(installModuleHandler)
 
   command

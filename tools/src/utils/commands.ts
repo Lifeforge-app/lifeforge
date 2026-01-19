@@ -6,7 +6,7 @@ import path from 'path'
 import { ROOT_DIR } from '@/constants/constants'
 
 import logger from './logger'
-import { addDependency } from './packageJson'
+import { type PackageJsonTarget, addDependency } from './packageJson'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
@@ -102,8 +102,13 @@ export function bunInstall() {
  *
  * @param fullName - The full package name (e.g., `@lifeforge/lifeforge--calendar`)
  * @param targetDir - The absolute path to copy the package to
+ * @param target - The package.json target to update (defaults to 'apps')
  */
-export function installPackage(fullName: string, targetDir: string) {
+export function installPackage(
+  fullName: string,
+  targetDir: string,
+  target: PackageJsonTarget = 'apps'
+) {
   if (fs.existsSync(targetDir)) {
     fs.rmSync(targetDir, { recursive: true, force: true })
   }
@@ -134,7 +139,7 @@ export function installPackage(fullName: string, targetDir: string) {
 
   fs.cpSync(installedPath, targetDir, { recursive: true, dereference: true })
 
-  addDependency(fullName)
+  addDependency(fullName, target)
 
   if (fs.existsSync(installedPath)) {
     fs.rmSync(installedPath, { recursive: true, force: true })
