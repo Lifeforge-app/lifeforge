@@ -12,46 +12,106 @@ interface PackageJson {
   [key: string]: unknown
 }
 
-const ROOT_PACKAGE_JSON_DIR = path.join(ROOT_DIR, 'package.json')
+export type PackageJsonTarget = 'apps' | 'locales' | 'root'
 
-/**
- * Reads the root package.json file and returns it as a JSON object.
- *
- * @returns The root package.json file as a JSON object.
- */
-export function readRootPackageJson(): PackageJson {
-  return JSON.parse(fs.readFileSync(ROOT_PACKAGE_JSON_DIR, 'utf-8'))
+const PACKAGE_JSON_PATHS: Record<PackageJsonTarget, string> = {
+  apps: path.join(ROOT_DIR, 'apps', 'package.json'),
+  locales: path.join(ROOT_DIR, 'locales', 'package.json'),
+  root: path.join(ROOT_DIR, 'package.json')
+}
+
+const DEFAULT_PACKAGE_JSON: Record<
+  Exclude<PackageJsonTarget, 'root'>,
+  PackageJson
+> = {
+  apps: {
+    name: '@lifeforge/apps',
+    private: true,
+    description: 'LifeForge modules',
+    dependencies: {}
+  },
+  locales: {
+    name: '@lifeforge/locales',
+    private: true,
+    description: 'LifeForge locale packages',
+    dependencies: {}
+  }
 }
 
 /**
- * Writes the root package.json file with the given JSON object.
- *
- * @param packageJson The JSON object to write to the root package.json file.
+ * Gets the package.json path for the specified target.
  */
-export function writeRootPackageJson(packageJson: PackageJson): void {
-  logger.debug(`Writing root package.json`)
-
-  fs.writeFileSync(
-    ROOT_PACKAGE_JSON_DIR,
-    JSON.stringify(packageJson, null, 2) + '\n'
-  )
-
-  logger.debug(`Wrote root package.json`)
+export function getPackageJsonPath(target: PackageJsonTarget): string {
+  return PACKAGE_JSON_PATHS[target]
 }
 
 /**
- * Adds a dependency to the root package.json file.
- *
- * @param packageName The name of the package to add as a dependency.
- * @param version The version of the package to add as a dependency. Defaults to 'workspace:*'.
+ * Ensures the package.json exists for the specified target.
+ * Creates with default template if it doesn't exist (for apps and locales only).
+ */
+function ensurePackageJsonExists(target: PackageJsonTarget): void {
+  const filePath = getPackageJsonPath(target)
+
+  if (fs.existsSync(filePath)) {
+    return
+  }
+
+  if (target === 'root') {
+    logger.actionableError(
+      'Root package.json not found',
+      'Ensure you are in the LifeForge project root directory'
+    )
+    process.exit(1)
+  }
+
+  logger.debug(`Creating ${target}/package.json with default template...`)
+
+  const defaultContent = DEFAULT_PACKAGE_JSON[target]
+
+  fs.writeFileSync(filePath, JSON.stringify(defaultContent, null, 4) + '\n')
+
+  logger.debug(`Created ${target}/package.json`)
+}
+
+/**
+ * Reads a package.json file from the specified target.
+ * Creates the file with a default template if it doesn't exist (for apps and locales).
+ */
+export function readPackageJson(target: PackageJsonTarget): PackageJson {
+  ensurePackageJsonExists(target)
+
+  const filePath = getPackageJsonPath(target)
+
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'))
+}
+
+/**
+ * Writes a package.json file to the specified target.
+ */
+export function writePackageJson(
+  target: PackageJsonTarget,
+  packageJson: PackageJson
+): void {
+  const filePath = getPackageJsonPath(target)
+
+  logger.debug(`Writing package.json to ${target}`)
+
+  fs.writeFileSync(filePath, JSON.stringify(packageJson, null, 4) + '\n')
+
+  logger.debug(`Wrote package.json to ${target}`)
+}
+
+/**
+ * Adds a dependency to the specified package.json.
  */
 export function addDependency(
   packageName: string,
+  target: PackageJsonTarget = 'apps',
   version = 'workspace:*'
 ): void {
-  logger.debug(`Adding workspace dependency: ${packageName}`)
+  logger.debug(`Adding dependency ${packageName} to ${target}`)
 
-  const packageJson = readRootPackageJson()
+  const packageJson = readPackageJson(target)
 
   if (!packageJson.dependencies) {
     packageJson.dependencies = {}
@@ -59,51 +119,84 @@ export function addDependency(
 
   packageJson.dependencies[packageName] = version
 
-  writeRootPackageJson(packageJson)
+  writePackageJson(target, packageJson)
 
-  logger.debug(`Added workspace dependency: ${packageName}`)
+  logger.debug(`Added dependency ${packageName} to ${target}`)
 }
 
 /**
- * Removes a dependency from the root package.json file.
- *
- * @param packageName The name of the package to remove as a dependency.
+ * Removes a dependency from the specified package.json.
  */
-export function removeDependency(packageName: string): void {
-  logger.debug(`Removing workspace dependency: ${packageName}`)
+export function removeDependency(
+  packageName: string,
+  target: PackageJsonTarget = 'apps'
+): void {
+  logger.debug(`Removing dependency ${packageName} from ${target}`)
 
-  const packageJson = readRootPackageJson()
+  const packageJson = readPackageJson(target)
 
   if (packageJson.dependencies?.[packageName]) {
     delete packageJson.dependencies[packageName]
-    writeRootPackageJson(packageJson)
+    writePackageJson(target, packageJson)
   }
 
-  logger.debug(`Removed workspace dependency: ${packageName}`)
+  logger.debug(`Removed dependency ${packageName} from ${target}`)
 }
 
 /**
- * Finds a package by name in the root package.json dependencies.
- *
- * @param name - The package name to search for
- * @returns The package name if found, or null if not found
+ * Finds a package by name in the specified package.json dependencies.
  */
-export function findPackageName(name: string): string | null {
-  logger.debug(`Finding package name: ${name}`)
+export function findPackageName(
+  name: string,
+  target: PackageJsonTarget = 'apps'
+): string | null {
+  logger.debug(`Finding package ${name} in ${target}`)
 
-  const packageJson = readRootPackageJson()
+  const packageJson = readPackageJson(target)
 
   const dependencies = packageJson.dependencies || {}
 
   for (const dep of Object.keys(dependencies)) {
     if (dep === name) {
-      logger.debug(`Found package name: ${name}`)
+      logger.debug(`Found package ${name} in ${target}`)
 
       return dep
     }
   }
 
-  logger.debug(`Package name not found: ${name}`)
+  logger.debug(`Package ${name} not found in ${target}`)
 
   return null
+}
+
+/**
+ * Checks if a dependency exists in the specified package.json.
+ */
+export function hasDependency(
+  packageName: string,
+  target: PackageJsonTarget = 'apps'
+): boolean {
+  const packageJson = readPackageJson(target)
+
+  return !!packageJson.dependencies?.[packageName]
+}
+
+/**
+ * Gets all dependencies from the specified package.json.
+ */
+export function getDependencies(
+  target: PackageJsonTarget = 'apps'
+): Record<string, string> {
+  const packageJson = readPackageJson(target)
+
+  return packageJson.dependencies || {}
+}
+
+// Legacy exports for backward compatibility with root package.json
+export function readRootPackageJson(): PackageJson {
+  return readPackageJson('root')
+}
+
+export function writeRootPackageJson(packageJson: PackageJson): void {
+  writePackageJson('root', packageJson)
 }
