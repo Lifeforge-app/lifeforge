@@ -16,7 +16,7 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
   const { userData, setUserData } = useAuth()
 
   const mutation = useMutation(
-    forgeAPI.user.settings.updateProfile.mutationOptions({
+    forgeAPI.untyped('/user/settings/updateProfile').mutationOptions({
       onSuccess: (_, newData) => {
         if (!userData) return
 

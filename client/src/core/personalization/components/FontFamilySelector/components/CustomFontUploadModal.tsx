@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
-import { type InferInput, getFormFileFieldInitialData } from 'shared'
+import { getFormFileFieldInitialData } from 'shared'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -18,7 +18,8 @@ function CustomFontUploadModal({
   const queryClient = useQueryClient()
 
   const uploadMutation = useMutation(
-    forgeAPI.user.customFonts.upload
+    forgeAPI
+      .untyped('user/customFonts/upload')
       .input({
         id: openType === 'edit' && initialData ? initialData.id : undefined
       })
@@ -36,9 +37,12 @@ function CustomFontUploadModal({
       })
   )
 
-  const { formProps, formStateStore } = defineForm<
-    InferInput<typeof forgeAPI.user.customFonts.upload>['body']
-  >({
+  const { formProps, formStateStore } = defineForm<{
+    displayName: string
+    family: string
+    weight: number
+    file: any
+  }>({
     icon: openType === 'create' ? 'tabler:upload' : 'tabler:edit',
     title: `fontFamily.modals.customFonts.${openType === 'create' ? 'upload' : 'edit'}`,
     namespace: 'common.personalization',

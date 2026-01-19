@@ -19,8 +19,7 @@ function APIKeyStatusProvider({
     .map(([key]) => key)
 
   const hasRequiredAPIKeysQuery = useQuery(
-    forgeAPI.apiKeys.entries.checkKeys
-      .input({
+    forgeAPI.checkAPIKeys({
         keys: requiredAPIKeys.join(',')
       })
       .queryOptions({

@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime.js'
 import {
   Button,
   ConfirmationModal,
@@ -14,19 +15,17 @@ import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { useFederation } from 'shared'
 import COLORS from 'tailwindcss/colors'
-import relativeTime from "dayjs/plugin/relativeTime.js"
 
-import { useFederation } from '@/federation'
 import forgeAPI from '@/forgeAPI'
 
-import type { APIKeysEntry } from '..'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
 
 dayjs.extend(relativeTime)
 
-function EntryItem({ entry }: { entry: APIKeysEntry }) {
+function EntryItem({ entry }: { entry: any }) {
   const { t } = useTranslation('common.apiKeys')
 
   const { modules } = useFederation()
@@ -38,7 +37,8 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
   const [isCopying, setIsCopying] = useState(false)
 
   const deleteMutation = useMutation(
-    forgeAPI.apiKeys.entries.remove
+    forgeAPI
+      .untyped('apiKeys/entries/remove')
       .input({
         id: entry.id
       })
@@ -63,7 +63,8 @@ function EntryItem({ entry }: { entry: APIKeysEntry }) {
     setIsCopying(true)
 
     try {
-      const key = await forgeAPI.apiKeys.entries.get
+      const key = await forgeAPI
+        .untyped('apiKeys/entries/get')
         .input({
           keyId: entry.id
         })

@@ -4,15 +4,13 @@ import { toast } from 'react-toastify'
 
 import forgeAPI from '@/forgeAPI'
 
-import type { APIKeysEntry } from '..'
-
 function ModifyAPIKeyModal({
   data: { type, initialData },
   onClose
 }: {
   data: {
     type: 'create' | 'update'
-    initialData?: APIKeysEntry
+    initialData?: any
   }
   onClose: () => void
 }) {
@@ -20,8 +18,8 @@ function ModifyAPIKeyModal({
 
   const mutation = useMutation(
     (type === 'create'
-      ? forgeAPI.apiKeys.entries.create
-      : forgeAPI.apiKeys.entries.update.input({
+      ? forgeAPI.untyped('apiKeys/entries/create')
+      : forgeAPI.untyped('apiKeys/entries/update').input({
           id: initialData?.id || ''
         })
     ).mutationOptions({

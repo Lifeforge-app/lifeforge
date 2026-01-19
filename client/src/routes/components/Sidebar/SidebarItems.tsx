@@ -6,10 +6,13 @@ import {
 } from 'lifeforge-ui'
 import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
-import { normalizeSubnamespace, useLocation, useMainSidebarState } from 'shared'
+import {
+  normalizeSubnamespace,
+  useFederation,
+  useLocation,
+  useMainSidebarState
+} from 'shared'
 import { useAuth } from 'shared'
-
-import { useFederation } from '@/federation'
 
 import MainSidebarTitle from './MainSidebarTitle'
 

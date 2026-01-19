@@ -21,7 +21,7 @@ function UserCreationPage() {
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const createUserMutation = useMutation(
-    forgeAPI.user.auth.createFirstUser.mutationOptions({
+    forgeAPI.untyped('user/auth/createFirstUser').mutationOptions({
       onSuccess: () => {
         toast.success(t('messages.userCreated'))
         window.location.reload()

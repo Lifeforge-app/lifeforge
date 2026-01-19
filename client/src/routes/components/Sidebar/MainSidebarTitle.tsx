@@ -1,8 +1,6 @@
 import { SidebarTitle } from 'lifeforge-ui'
 import { useMemo } from 'react'
-import { usePersonalization } from 'shared'
-
-import { useFederation } from '@/federation'
+import { useFederation, usePersonalization } from 'shared'
 
 function MainSidebarTitle({ title }: { title: string }) {
   const { categoryTranslations } = useFederation()
