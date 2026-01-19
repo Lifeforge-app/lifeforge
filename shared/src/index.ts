@@ -21,6 +21,7 @@ export { useModalStore } from './providers/ModalStoreProvider'
 export { useAuth } from './providers/AuthProvider'
 export { useModuleSidebarState } from './providers/ModuleSidebarStateProvider'
 export { useModuleHeaderState } from './providers/ModuleHeaderStateProvider'
+export { useFederation } from './providers/FederationProvider'
 export { default as AuthProvider } from './providers/AuthProvider'
 export { default as APIEndpointProvider } from './providers/APIEndpointProvider'
 export { default as PersonalizationProvider } from './providers/PersonalizationProvider'
@@ -35,6 +36,7 @@ export { default as EncryptionProvider } from './providers/EncryptionProvider'
 export { default as ModalStoreProvider } from './providers/ModalStoreProvider'
 export { default as ModuleSidebarStateProvider } from './providers/ModuleSidebarStateProvider'
 export { default as ModuleHeaderStateProvider } from './providers/ModuleHeaderStateProvider'
+export { default as FederationProvider } from './providers/FederationProvider'
 export { type SocketEvent, useSocketContext } from './providers/SocketProvider'
 
 // Useful hooks
@@ -80,3 +82,5 @@ export type {
 } from './interfaces/module_config.types'
 export type { default as WidgetConfig } from './interfaces/widget_config.types'
 export type { ModalComponent } from './providers/ModalStoreProvider'
+
+export { SYSTEM_CATEGORIES } from './providers/FederationProvider'
