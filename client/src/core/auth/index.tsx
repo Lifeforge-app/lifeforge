@@ -7,7 +7,7 @@ import UserCreationPage from './pages/UserCreationPage'
 
 function Auth() {
   return (
-    <WithQueryData controller={forgeAPI.user.exists}>
+    <WithQueryData controller={forgeAPI.untyped('user/exists')}>
       {exists => (exists ? <LoginPage /> : <UserCreationPage />)}
     </WithQueryData>
   )

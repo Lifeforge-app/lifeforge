@@ -8,6 +8,7 @@ import {
   AuthProvider,
   BackgroundProvider,
   EncryptionProvider,
+  FederationProvider,
   MainSidebarStateProvider,
   NuqsProvider,
   PersonalizationProvider,
@@ -16,7 +17,7 @@ import {
 } from 'shared'
 
 import TwoFAModal from '@/core/auth/modals/TwoFAModal'
-import { FederationProvider } from '@/federation'
+import CoreFederationProvider from '@/federation/providers/CoreFederationProvider'
 import forgeAPI from '@/forgeAPI'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 
@@ -51,7 +52,14 @@ function Providers() {
 
         // Provider that checks if the API is online or not
         // A wrapper exported from lifeforge-ui is used to avoid circular dependencies
-        [APIOnlineStatusProvider],
+        [
+          APIOnlineStatusProvider,
+          {
+            clientEnvironment: (import.meta.env.DEV
+              ? 'development'
+              : 'production') as 'development' | 'production' | null
+          }
+        ],
         [APIOnlineStatusWrapper],
 
         // Provider that handles authentication, very obviously
@@ -74,6 +82,7 @@ function Providers() {
         [SocketProvider],
         // Provider that loads federated modules (routes and global providers)
         [FederationProvider],
+        [CoreFederationProvider],
         // GlobalProviders from federated modules
         // (loaded dynamically via ./GlobalProvider export in each module)
         [ExternalModuleProviders],

@@ -14,9 +14,11 @@ function QRCodeDisplay() {
 
   async function fetchLink() {
     try {
-      const challenge = await forgeAPI.user['2fa'].getChallenge.query()
+      const challenge = await forgeAPI.untyped('user/2fa/getChallenge').query()
 
-      const link = await forgeAPI.user['2fa'].generateAuthenticatorLink.query()
+      const link = await forgeAPI
+        .untyped('user/2fa/generateAuthenticatorLink')
+        .query()
 
       const decrypted1 = decrypt(link, localStorage.getItem('session')!)
 

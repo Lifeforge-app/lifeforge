@@ -46,7 +46,10 @@ function UsingEmail({
     setSendOtpLoading(true)
 
     try {
-      const res = await forgeAPI.user['2fa'].requestOTP.input({ email }).query()
+      const res = await forgeAPI
+        .untyped('user/2fa/requestOTP')
+        .input({ email })
+        .query()
 
       tid.current = res
       setOtpSent(true)
@@ -130,8 +133,8 @@ function UsingEmail({
               label="modals.twoFA.inputs.email"
               namespace="common.auth"
               placeholder="johndoe@gmail.com"
-              onChange={setEmail}
               value={email}
+              onChange={setEmail}
             />
             <Button
               className="w-full"

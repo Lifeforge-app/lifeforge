@@ -11,15 +11,63 @@ import {
 import _ from 'lodash'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { AutoSizer } from 'react-virtualized'
-import { type InferOutput, usePersonalization } from 'shared'
+import { usePersonalization } from 'shared'
 
 import forgeAPI from '@/forgeAPI'
 
 import FontListItem from '../components/FontListItem'
 
-export type FontFamily = InferOutput<
-  typeof forgeAPI.user.personalization.listGoogleFonts
->['items'][number]
+export interface FontFamily {
+  family: string
+  variants: string[]
+  subsets: string[]
+  version: string
+  lastModified: Date
+  files: Files
+  category: Category
+  kind: Kind
+  menu: string
+  colorCapabilities?: ColorCapability[]
+}
+
+enum Category {
+  Display = 'display',
+  Handwriting = 'handwriting',
+  Monospace = 'monospace',
+  SansSerif = 'sans-serif',
+  Serif = 'serif'
+}
+
+enum ColorCapability {
+  COLRv0 = 'COLRv0',
+  COLRv1 = 'COLRv1',
+  SVG = 'SVG'
+}
+
+interface Files {
+  regular?: string
+  italic?: string
+  '500'?: string
+  '600'?: string
+  '700'?: string
+  '800'?: string
+  '100'?: string
+  '200'?: string
+  '300'?: string
+  '900'?: string
+  '100italic'?: string
+  '200italic'?: string
+  '300italic'?: string
+  '500italic'?: string
+  '600italic'?: string
+  '700italic'?: string
+  '800italic'?: string
+  '900italic'?: string
+}
+
+enum Kind {
+  WebfontsWebfont = 'webfonts#webfont'
+}
 
 function GoogleFontSelector({
   selectedFont,
@@ -31,21 +79,24 @@ function GoogleFontSelector({
   const { fontFamily } = usePersonalization()
 
   const apiKeyAvailable = useQuery(
-    forgeAPI.apiKeys.entries.checkKeys
-      .input({
+    forgeAPI
+      .checkAPIKeys({
         keys: 'gcloud'
       })
       .queryOptions()
   )
 
-  const fontsQuery = useQuery(
-    forgeAPI.user.personalization.listGoogleFonts.queryOptions({
+  const fontsQuery = useQuery<{
+    enabled: boolean
+    items: FontFamily[]
+  }>(
+    forgeAPI.untyped('user/personalization/listGoogleFonts').queryOptions({
       enabled: apiKeyAvailable.data === true
     })
   )
 
-  const pinnedFontsQuery = useQuery(
-    forgeAPI.user.personalization.listGoogleFontsPin.queryOptions({
+  const pinnedFontsQuery = useQuery<string[]>(
+    forgeAPI.untyped('user/personalization/listGoogleFontsPin').queryOptions({
       enabled: apiKeyAvailable.data === true
     })
   )

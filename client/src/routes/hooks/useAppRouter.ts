@@ -1,9 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DataRouter } from 'shared'
-import { createBrowserRouter, useAuth } from 'shared'
-
-import { useFederation } from '@/federation'
+import { createBrowserRouter, useAuth, useFederation } from 'shared'
 
 import {
   createAuthLoadingConfig,

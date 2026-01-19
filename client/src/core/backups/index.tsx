@@ -19,7 +19,17 @@ function Backups() {
 
   const { open } = useModalStore()
 
-  const backupsQuery = useQuery(forgeAPI.backups.list.queryOptions())
+  const backupsQuery = useQuery(
+    forgeAPI
+      .untyped<
+        {
+          key: string
+          size: number
+          modified: string
+        }[]
+      >('/backups/list')
+      .queryOptions()
+  )
 
   return (
     <>

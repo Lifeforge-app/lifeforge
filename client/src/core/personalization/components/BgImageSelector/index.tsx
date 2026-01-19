@@ -29,7 +29,7 @@ function BgImageSelector() {
   }, [])
 
   const deleteMutation = useMutation(
-    forgeAPI.user.personalization.deleteBgImage.mutationOptions({
+    forgeAPI.untyped('user/personalization/deleteBgImage').mutationOptions({
       onSuccess: () => {
         setBgImage('')
         setBackdropFilters({
@@ -59,11 +59,13 @@ function BgImageSelector() {
 
   async function onSubmit(file: string | File) {
     try {
-      const data = await forgeAPI.user.personalization.updateBgImage.mutate({
-        file
-      })
+      const data = await forgeAPI
+        .untyped('user/personalization/updateBgImage')
+        .mutate({
+          file
+        })
 
-      setBgImage(forgeAPI.media.input(data).endpoint)
+      setBgImage(forgeAPI.getMedia(data))
       toast.success('Background image updated')
     } catch {
       toast.error('Failed to update background image')
