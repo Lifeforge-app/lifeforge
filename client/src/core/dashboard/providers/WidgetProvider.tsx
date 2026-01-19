@@ -7,9 +7,7 @@ import {
   useMemo,
   useState
 } from 'react'
-import type { WidgetConfig } from 'shared'
-
-import { useFederation } from '@/federation'
+import { type WidgetConfig, useFederation } from 'shared'
 
 import ClockWidget, { config as clockConfig } from '../widgets/Clock'
 import DateWidget, { config as dateConfig } from '../widgets/Date'

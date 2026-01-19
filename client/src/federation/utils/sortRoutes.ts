@@ -1,14 +1,6 @@
-import type { ModuleCategory } from 'shared'
+import { type ModuleCategory, SYSTEM_CATEGORIES } from 'shared'
 
 import forgeAPI from '@/forgeAPI'
-
-export const SYSTEM_CATEGORIES = [
-  '<START>',
-  'Miscellaneous',
-  'Settings',
-  'SSO',
-  '<END>'
-]
 
 export type CategoryOrder = Record<string, Record<string, string>>
 
@@ -17,7 +9,7 @@ export type CategoryOrder = Record<string, Record<string, string>>
  */
 export async function fetchCategoryOrder(): Promise<CategoryOrder> {
   try {
-    return (await forgeAPI.modules.categories.list.query()) ?? {}
+    return (await forgeAPI.untyped('modules/categories/list').query()) ?? {}
   } catch (e) {
     console.warn('Failed to fetch category order:', e)
 

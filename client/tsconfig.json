@@ -32,9 +32,6 @@
       "@/*": [
         "./src/*"
       ],
-      "@server/*": [
-        "../server/src/*"
-      ],
       "@core/*": [
         "../core/*"
       ],
@@ -42,10 +39,7 @@
   },
   "include": [
     "./src/**/*",
-  ],
-  "references": [
-    {
-      "path": "../server/tsconfig.json"
-    }
+    "src/federation/providers/CoreFederationProvider.tsx",
+    "src/federation",
   ]
 }

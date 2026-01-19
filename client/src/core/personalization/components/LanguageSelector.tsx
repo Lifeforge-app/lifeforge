@@ -14,7 +14,17 @@ function LanguageSelector() {
 
   const { t } = useTranslation('common.personalization')
 
-  const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
+  const languagesQuery = useQuery(
+    forgeAPI
+      .untyped<
+        {
+          name: string
+          icon: string
+          displayName: string
+        }[]
+      >('locales/listLanguages')
+      .queryOptions()
+  )
 
   return (
     <OptionsColumn

@@ -29,7 +29,7 @@ function AvatarColumn() {
     }
 
     try {
-      const data = await forgeAPI.user.settings.updateAvatar.mutate({
+      const data = await forgeAPI.untyped('user/settings/updateAvatar').mutate({
         file
       })
 
@@ -42,7 +42,7 @@ function AvatarColumn() {
   }
 
   const deleteAvatarMutation = useMutation(
-    forgeAPI.user.settings.deleteAvatar.mutationOptions({
+    forgeAPI.untyped('user/settings/deleteAvatar').mutationOptions({
       onSuccess: () => {
         setUserData(userData => (userData ? { ...userData, avatar: '' } : null))
         toast.success('Avatar removed successfully')

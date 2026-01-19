@@ -8,23 +8,20 @@ import {
   useModalStore
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { type InferOutput } from 'shared'
 
 import forgeAPI from '@/forgeAPI'
 
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './modals/ModifyAPIKeyModal'
 
-export type APIKeysEntry = InferOutput<
-  typeof forgeAPI.apiKeys.entries.list
->[number]
-
 function APIKeys() {
   const { open } = useModalStore()
 
   const { t } = useTranslation('common.apiKeys')
 
-  const entriesQuery = useQuery(forgeAPI.apiKeys.entries.list.queryOptions())
+  const entriesQuery = useQuery<any[]>(
+    forgeAPI.untyped('apiKeys/entries/list').queryOptions()
+  )
 
   const handleCreateAPIKey = () => {
     open(ModifyAPIKeyModal, {

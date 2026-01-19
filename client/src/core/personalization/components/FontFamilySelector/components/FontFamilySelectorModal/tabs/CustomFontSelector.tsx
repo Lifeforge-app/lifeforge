@@ -13,15 +13,20 @@ import {
 } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { type InferOutput, usePersonalization } from 'shared'
+import { usePersonalization } from 'shared'
 
 import forgeAPI from '@/forgeAPI'
 
 import CustomFontUploadModal from '../../CustomFontUploadModal'
 
-export type CustomFont = InferOutput<
-  typeof forgeAPI.user.customFonts.list
->[number]
+export type CustomFont = {
+  id: string
+  displayName: string
+  family: string
+  weight: number
+  file: string
+  collectionId: string
+}
 
 function CustomFontSelector({
   selectedFont,
@@ -39,11 +44,11 @@ function CustomFontSelector({
   const queryClient = useQueryClient()
 
   const customFontsQuery = useQuery(
-    forgeAPI.user.customFonts.list.queryOptions()
+    forgeAPI.untyped<CustomFont[]>('user/customFonts/list').queryOptions()
   )
 
   const deleteMutation = useMutation(
-    forgeAPI.user.customFonts.remove.mutationOptions({
+    forgeAPI.untyped('user/customFonts/remove').mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ['user', 'customFonts', 'list']

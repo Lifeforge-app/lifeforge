@@ -31,7 +31,8 @@ function BackupItem({
   const [downloadLoading, setDownloadLoading] = useState(false)
 
   const deleteMutation = useMutation(
-    forgeAPI.backups.remove
+    forgeAPI
+      .untyped('backups/remove')
       .input({
         key: backup.key
       })
@@ -48,7 +49,8 @@ function BackupItem({
   const handleDownloadBackup = useCallback(async () => {
     setDownloadLoading(true)
 
-    const buffer = (await forgeAPI.backups.download
+    const buffer = (await forgeAPI
+      .untyped('backups/download')
       .input({
         key: backup.key
       })

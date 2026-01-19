@@ -30,7 +30,7 @@ function LoginPage() {
   }, [searchParams])
 
   return (
-    <WithQueryData controller={forgeAPI.user.oauth.listProviders}>
+    <WithQueryData controller={forgeAPI.untyped('user/oauth/listProviders')}>
       {providers => (
         <>
           <section className="flex-center size-full flex-col overflow-y-auto px-8 pt-12 pb-4 sm:px-12 lg:w-1/2">

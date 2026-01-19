@@ -5,7 +5,6 @@ import apiKeys from '@/core/apiKeys/manifest'
 import backups from '@/core/backups/manifest'
 import dashboard from '@/core/dashboard/manifest'
 import documentation from '@/core/documentation/manifest'
-import modules from '@/core/moduleManager/manifest'
 import personalization from '@/core/personalization/manifest'
 
 export default function loadCoreModules(): ModuleCategory['items'][number][] {
@@ -15,7 +14,6 @@ export default function loadCoreModules(): ModuleCategory['items'][number][] {
     backups,
     dashboard,
     documentation,
-    modules,
     personalization
   ]
 }

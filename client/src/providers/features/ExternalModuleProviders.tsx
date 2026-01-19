@@ -1,4 +1,4 @@
-import { useFederation } from '@/federation'
+import { useFederation } from 'shared'
 
 function ExternalModuleProviders({ children }: { children: React.ReactNode }) {
   const { globalProviders } = useFederation()

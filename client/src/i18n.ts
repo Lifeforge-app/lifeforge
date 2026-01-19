@@ -45,7 +45,7 @@ i18n
         return
       }
 
-      await forgeAPI.locales.notifyMissing.mutate({
+      await forgeAPI.untyped('locales/notifyMissing').mutate({
         namespace,
         key
       })
@@ -67,7 +67,7 @@ i18n
           return
         }
 
-        return forgeAPI.locales.getLocale.input({
+        return forgeAPI.untyped('locales/getLocale').input({
           lang: langs[0],
           namespace: namespace as 'apps' | 'common',
           subnamespace: subnamespace

@@ -1,9 +1,8 @@
 import { Icon } from '@iconify/react'
 import { Card, ModalHeader, TagChip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+import { useFederation } from 'shared'
 import COLORS from 'tailwindcss/colors'
-
-import { useFederation } from '@/federation'
 
 function ModulesRequiredListModal({
   onClose,
