@@ -111,7 +111,7 @@ export const components: MDXComponents = {
     return (
       <Zoom zoomImg={properties.src}>
         <div className="flex-center w-full pt-2 pb-4">
-          <img {...properties} alt="" className="rounded-lg sm:w-[80%]" />
+          <img {...properties} alt="" className="rounded-lg sm:w-[90%]" />
         </div>
       </Zoom>
     )
