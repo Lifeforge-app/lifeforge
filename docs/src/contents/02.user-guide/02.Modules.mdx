@@ -160,7 +160,7 @@ Installing a module takes just a few simple steps. Before you begin, make sure:
 **Step 2:** Run the install command with the module name:
 
 ```bash
-bun run forge modules install <module-name>
+bun forge modules install <module-name>
 ```
 
 **Step 3:** Wait for the installation to complete. You'll see progress messages as the module is downloaded and set up.
@@ -172,7 +172,7 @@ bun run forge modules install <module-name>
 Let's say you want to install the Calendar module. Here's exactly what you would type:
 
 ```bash
-bun run forge modules install lifeforge--calendar
+bun forge modules install lifeforge--calendar
 ```
 
 ### Installing Multiple Modules at Once
@@ -180,7 +180,7 @@ bun run forge modules install lifeforge--calendar
 You can install several modules in one command by listing them all:
 
 ```bash
-bun run forge modules install lifeforge--calendar lifeforge--todo-list lifeforge--idea-box
+bun forge modules install lifeforge--calendar lifeforge--todo-list lifeforge--idea-box
 ```
 
 <Alert className="mt-6" type="warning">
@@ -208,7 +208,7 @@ You don't need to do anything else – just run the command and you're done!
 To see a list of all modules currently installed on your LifeForge instance:
 
 ```bash
-bun run forge modules list
+bun forge modules list
 ```
 
 This will display all installed modules along with their version numbers. 
@@ -221,12 +221,12 @@ Modules get updates over time with new features and bug fixes. To update your mo
 
 **Update a specific module:**
 ```bash
-bun run forge modules upgrade lifeforge--calendar
+bun forge modules upgrade lifeforge--calendar
 ```
 
 **Check all modules for updates:**
 ```bash
-bun run forge modules upgrade
+bun forge modules upgrade
 ```
 
 When you run the upgrade command without specifying a module, it will check all your installed modules and show you which ones have updates available.
@@ -249,7 +249,7 @@ If you no longer need a module, you can easily remove it from your system.
 **Step 2:** Run the uninstall command with the full module name:
 
 ```bash
-bun run forge modules uninstall <author>--<module-name>
+bun forge modules uninstall <author>--<module-name>
 ```
 
 **Step 3:** The module will be removed from your system.
@@ -259,7 +259,7 @@ bun run forge modules uninstall <author>--<module-name>
 To remove the Calendar module:
 
 ```bash
-bun run forge modules uninstall lifeforge--calendar
+bun forge modules uninstall lifeforge--calendar
 ```
 
 ### Uninstalling Multiple Modules
@@ -267,7 +267,7 @@ bun run forge modules uninstall lifeforge--calendar
 Just like installation, you can uninstall several modules at once:
 
 ```bash
-bun run forge modules uninstall lifeforge--calendar lifeforge--todo-list lifeforge--idea-box
+bun forge modules uninstall lifeforge--calendar lifeforge--todo-list lifeforge--idea-box
 ```
 
 <Alert className="mt-6" type="note">
@@ -344,8 +344,8 @@ Some categories have fixed positions that cannot be changed:
 This means the module is already installed. If you want to reinstall it, uninstall it first:
 
 ```bash
-bun run forge modules uninstall <module-name>
-bun run forge modules install <full-module-name>
+bun forge modules uninstall <module-name>
+bun forge modules install <full-module-name>
 ```
 
 ### "Module not found in registry" Error
@@ -359,7 +359,7 @@ Double-check that you've typed the module name correctly. Remember:
 
 1. Make sure you restarted LifeForge after installation
 2. Check that the installation completed without errors
-3. Try running `bun run forge modules list` to verify the module is installed
+3. Try running `bun forge modules list` to verify the module is installed
 
 ### Need More Help?
 
@@ -374,11 +374,11 @@ Here's a handy summary of all the module commands:
 
 | What You Want to Do | Command | Aliases |
 |---------------------|---------|---------|
-| List installed modules | `bun run forge modules list` | `ls` |
-| Install a module | `bun run forge modules install <author>--<module>` | `i`, `add` |
-| Uninstall a module | `bun run forge modules uninstall <author>--<module>` | `un`, `rm`, `remove` |
-| Update a specific module | `bun run forge modules upgrade <author>--<module>` | `up`, `u` |
-| Check all modules for updates | `bun run forge modules upgrade` | `up`, `u` |
+| List installed modules | `bun forge modules list` | `ls` |
+| Install a module | `bun forge modules install <author>--<module>` | `i`, `add` |
+| Uninstall a module | `bun forge modules uninstall <author>--<module>` | `un`, `rm`, `remove` |
+| Update a specific module | `bun forge modules upgrade <author>--<module>` | `up`, `u` |
+| Check all modules for updates | `bun forge modules upgrade` | `up`, `u` |
 
 <Alert className="mt-6" type="note">
   Remember: `<author>--<module>` means the full module name like `lifeforge--calendar` or `melvinchia3636--invoice-maker`.
@@ -386,9 +386,9 @@ Here's a handy summary of all the module commands:
 
 <Alert className="mt-6" type="tip">
   **Pro tip:** Use aliases to save time! For example:
-  - `bun run forge modules i lifeforge--calendar` instead of `install`
-  - `bun run forge modules rm lifeforge--calendar` instead of `uninstall`
-  - `bun run forge modules up` instead of `upgrade`
+  - `bun forge modules i lifeforge--calendar` instead of `install`
+  - `bun forge modules rm lifeforge--calendar` instead of `uninstall`
+  - `bun forge modules up` instead of `upgrade`
 </Alert>
 
 </section>

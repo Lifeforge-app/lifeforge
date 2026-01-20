@@ -20,26 +20,32 @@ All modules in LifeForge are located in the `apps/` directory at the root of the
 
 ```plaintext
 apps/<author>--<module-name>/
-├── manifest.ts          # Client-side configuration & routes
-├── manifest.d.ts        # TypeScript declarations for manifest
-├── package.json         # Module metadata, dependencies & exports
-├── tsconfig.json        # TypeScript config (extends client)
-├── .git/                # Independent Git repository
-├── client/              # Frontend code (React + Tailwind)
-│   ├── pages/           # Page components
-│   ├── components/      # Reusable UI components
-│   ├── providers/       # Context providers (optional)
-│   ├── hooks/           # Custom hooks (optional)
-│   ├── utils/           # Utilities (optional)
-│   ├── index.tsx        # Main entry point
+├── package.json         # Module metadata, dependencies & peer deps
+├── .gitignore           # Git ignore rules
+├── .git/                # Independent Git repository (dev mode only)
+├── client/              # Frontend code (React + Vite Federation)
+│   ├── manifest.ts      # Module configuration & routes (REQUIRED)
+│   ├── vite.config.ts   # Vite + Federation config
+│   ├── index.html       # Entry HTML
 │   ├── tsconfig.json    # Client TypeScript config
-│   └── vite-env.d.ts    # Vite environment types
-├── server/              # Backend code (Express)
-│   ├── index.ts         # Main router export
+│   ├── src/
+│   │   ├── pages/       # Route page components
+│   │   ├── components/  # Reusable UI components
+│   │   ├── widgets/     # Dashboard widgets (optional)
+│   │   ├── providers/   # Context providers (optional)
+│   │   ├── hooks/       # Custom hooks (optional)
+│   │   ├── stores/      # State management (optional)
+│   │   └── index.tsx    # Client entry point
+│   ├── dist/            # Built bundle (normal mode)
+│   └── dist-docker/     # Built bundle (Docker mode)
+├── server/              # Backend code (Express + Forge)
+│   ├── index.ts         # Route exports via forgeRouter (REQUIRED if has API)
+│   ├── forge.ts         # Forge controller factory
 │   ├── schema.ts        # Database schema (optional)
-│   ├── routes/          # Route handlers
+│   ├── routes/          # Route handler files
+│   │   └── *.ts
 │   ├── utils/           # Server utilities (optional)
-│   └── tsconfig.json    # Server TypeScript config
+│   └── dist/            # Built server bundle
 └── locales/             # Translations
     ├── en.json
     ├── ms.json
@@ -47,32 +53,24 @@ apps/<author>--<module-name>/
     └── zh-TW.json
 ```
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">manifest.ts</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">client/manifest.ts</code></div>
 
-This file is the entry point for the module and contains the module's metadata and configuration. It defines the module's routes and other settings that are used by the LifeForge runtime to properly integrate the module.
+This file is the core configuration for your module. It defines routes, navigation, widgets, and behavior. Located inside the `client/` directory, it is exposed via Vite Module Federation.
 
 <CustomLink text="Learn More" to="#client-manifest" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">tsconfig.json</code></div>
+### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">client/vite.config.ts</code></div>
 
-The root `tsconfig.json` configures TypeScript for the manifest file. It extends the client's configuration and provides path aliases:
+The Vite configuration for building the module as a federated remote. It handles:
+- Module Federation setup with shared dependencies
+- Path aliases for clean imports
+- Dual build modes (normal and Docker)
 
-```json
-{
-  "extends": "../../client/tsconfig.json",
-  "compilerOptions": {
-    "paths": {
-      "@": ["./client/index"],
-      "@/*": ["./client/*"]
-    }
-  },
-  "include": ["manifest.ts"]
-}
-```
+<CustomLink text="Learn More" to="#module-federation" />
 
 ### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
 
-This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. Here, you can define the pages, components, and styles specific to your module. A UI library called `lifeforge-ui` is provided in the `packages/` directory to maintain a consistent design language.
+This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. A UI library called `lifeforge-ui` is provided in the `packages/` directory to maintain a consistent design language.
 
 The client's `tsconfig.json` provides helpful path aliases:
 
@@ -80,9 +78,9 @@ The client's `tsconfig.json` provides helpful path aliases:
 {
   "compilerOptions": {
     "paths": {
-      "@": ["./index"],
-      "@/*": ["./*"],
-      "@server/*": ["../../../server/src/*"]
+      "@": ["./src/index"],
+      "@/*": ["./src/*"],
+      "@server/*": ["../server/*"]
     }
   }
 }
@@ -92,7 +90,13 @@ The client's `tsconfig.json` provides helpful path aliases:
 
 ### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
 
-This directory contains the backend code for the module. It is built using ExpressJS, the same framework used in the main LifeForge server codebase. Here, you can define API routes, business logic, and database interactions specific to your module. The powerful `forgeController` and `forgeRouter` utilities provide type-safe API construction with automatic validation, error handling, and response formatting.
+This directory contains the backend code for the module. It is built using ExpressJS with the powerful **Forge Controller** system for type-safe API construction with automatic validation, error handling, and response formatting.
+
+**Key files:**
+- `forge.ts` – Creates the Forge controller factory with your schema
+- `index.ts` – Exports routes using `forgeRouter`
+- `schema.ts` – Defines Zod schemas for your collections
+- `routes/*.ts` – Individual route handler files
 
 <CustomLink text="Learn More" to="#server-integration" />
 
@@ -100,50 +104,80 @@ This directory contains the backend code for the module. It is built using Expre
 
 This directory contains the localization files for the module. LifeForge features a **dynamic localization engine** powered by i18next with:
 
-- **Dynamic Loading** – Translations are fetched on-demand via HTTP backend, reducing initial bundle size
-- **Namespace Architecture** – Modular organization with `apps.<moduleName>` namespace for your module
-- **Dynamic Language Packs** – Users can install any language supported by LifeForge
+- **Dynamic Loading** – Translations are fetched on-demand via HTTP backend
+- **Namespace Architecture** – Your module uses `modules.<moduleName>` namespace
 - **Missing Key Reporting** – Automatic server-side logging for debugging
 
-Create a JSON file for each language you want to support, named with the language code (e.g., `en.json`, `ja.json`, `de.json`). Your module's translations will be automatically loaded when users have the corresponding language pack installed.
+Create a JSON file for each language you want to support. Your module's translations will be automatically loaded when users have the corresponding language pack installed.
 
 <Alert className="mt-6" type="tip">
-  LifeForge supports dynamic language pack installation. You should provide translations for at least the languages that come bundled with LifeForge (English, Bahasa Malaysia, Simplified Chinese, Traditional Chinese), but you can add support for any language.
+  Provide translations for at least the languages bundled with LifeForge (English), but you can add support for any language.
 </Alert>
 
 <CustomLink text="Learn More" to="/developer-guide/localization" />
 
 ### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:nodejs" /><code className="text-xl!">package.json</code></div>
 
-This file contains the module's metadata and dependencies. LifeForge's monorepo is managed using **bun**, which supports workspaces natively. The newest version of **bun** is mandatory since the dependencies management relies on features that are only available in the latest versions.
+This file contains the module's metadata and dependencies. LifeForge's monorepo is managed using **bun**, which supports workspaces natively.
 
-<CustomLink text="Learn More" to="#package-json-configuration" />
-
-<Alert className="mt-6" type="note">
-In bun version 1.2.x and below, workspace dependencies are shared across all workspaces. Starting from bun version 1.3.x, workspace dependencies are isolated, allowing each workspace to have its own set of dependencies without conflicts. This change is crucial for maintaining module independence.
-</Alert>
+<CustomLink text="Learn More" to="#packagejson-configuration" />
  
+</section>
+
+<section id="module-naming">
+## Module Naming
+
+Modules follow a strict naming convention that determines their identity and scope.
+
+### Naming Patterns
+
+| Type | Format | Example | Scope Key |
+|------|--------|---------|-----------|
+| Official | `lifeforge--<name>` | `lifeforge--calendar` | `calendar` |
+| Community | `<author>--<name>` | `melvinchia3636--invoice-maker` | `melvinchia3636$invoiceMaker` |
+
+### Scope Key Generation
+
+The scope key is used internally for routing and namespacing:
+
+1. **Official modules** (`lifeforge--*`): Use camelCase of the name after `--`
+   - `lifeforge--todo-list` → `todoList`
+2. **Community modules**: Combine author with camelCase name using `$`
+   - `melvinchia3636--invoice-maker` → `melvinchia3636$invoiceMaker`
+
+### Full Package Name
+
+All modules are published under the `@lifeforge` npm scope:
+
+```
+@lifeforge/<author>--<module-name>
+```
+
+Examples:
+- `@lifeforge/lifeforge--wallet`
+- `@lifeforge/melvinchia3636--invoice-maker`
+
 </section>
 
 <section id="creating-modules">
 ## Creating Modules
 
 <Alert className="mt-6" type="warning">
-  The `ForgeCLI` module creation wizard is currently a **work in progress**. The interactive prompts for module scaffolding are not yet functional. For now, you'll need to create modules manually by following the structure outlined in this guide.
+  The `ForgeCLI` module creation wizard is currently a **work in progress**. For now, create modules manually by following the structure outlined in this guide.
 </Alert>
 
 ### Manual Module Creation
 
-Until the CLI wizard is complete, follow these steps to create a new module:
+Follow these steps to create a new module:
 
-**Step 1:** Create a new directory in `apps/` with the naming convention `<your-username>--<module-name>`:
+**Step 1:** Create a new directory in `apps/`:
 
 ```bash
 mkdir apps/myusername--my-module
 cd apps/myusername--my-module
 ```
 
-**Step 2:** Create the `package.json` file with your module metadata:
+**Step 2:** Create the `package.json` file:
 
 ```json
 {
@@ -153,26 +187,20 @@ cd apps/myusername--my-module
   "author": "Your Name <your@email.com>",
   "description": "Description of what your module does",
   "scripts": {
-    "types": "cd client && bun tsc"
+    "types": "cd client && bun tsc",
+    "build:client": "cd client && bun run vite build",
+    "build:server": "bun build ./server/index.ts --outdir ./server/dist --target bun --external @lifeforge/server-utils --external zod"
   },
-  "dependencies": {
-    "@iconify/react": "^6.0.2",
-    "@tanstack/react-query": "^5.90.11",
-    "lifeforge-ui": "workspace:*",
-    "react": "^19.2.0",
-    "react-i18next": "^15.1.1",
-    "shared": "workspace:*",
-    "zod": "^4.3.5"
-  },
-  "exports": {
-    "./manifest": {
-      "types": "./manifest.d.ts",
-      "default": "./manifest.ts"
-    }
-  },
+  "dependencies": {},
+  "devDependencies": {},
   "lifeforge": {
     "icon": "tabler:cube",
     "category": "Utilities"
+  },
+  "peerDependencies": {
+    "@lifeforge/server-utils": "workspace:*",
+    "lifeforge-ui": "workspace:*",
+    "shared": "workspace:*"
   }
 }
 ```
@@ -180,28 +208,31 @@ cd apps/myusername--my-module
 **Step 3:** Create the directory structure:
 
 ```bash
-mkdir -p client server locales
+mkdir -p client/src/{pages,components} server/routes locales
 ```
 
-**Step 4:** Create the required files (manifest.ts, client/index.tsx, etc.)
+**Step 4:** Create essential files:
+- `client/manifest.ts` – Module configuration
+- `client/src/pages/Home.tsx` – Initial page
+- `client/vite.config.ts` – Vite configuration
+- `client/index.html` – Entry HTML
+- `server/index.ts` – Route exports (if needed)
+- `locales/en.json` – English translations
 
-**Step 5:** Install dependencies:
+**Step 5:** Install dependencies from root:
 
 ```bash
+cd ../../  # Back to monorepo root
 bun install
 ```
 
-**Step 6:** Initialize a Git repository:
+**Step 6:** Initialize Git (for development):
 
 ```bash
+cd apps/myusername--my-module
 git init
-```
-
-**Step 7:** Regenerate the module registries:
-
-```bash
-cd ../../  # Back to root
-bun run forge modules gen-registry
+git add .
+git commit -m "Initial commit"
 ```
 
 </section>
@@ -209,52 +240,46 @@ bun run forge modules gen-registry
 <section id="packagejson-configuration">
 ## Package.json Configuration
 
-The `package.json` file is crucial for your module's configuration. Here's a complete example with all available fields:
+The `package.json` file is crucial for your module's configuration.
+
+### Complete Example
 
 ```json
 {
-  "name": "@lifeforge/lifeforge--idea-box",
-  "displayName": "Idea Box",
-  "version": "0.0.2",
+  "name": "@lifeforge/lifeforge--wallet",
+  "displayName": "Wallet",
+  "version": "0.0.5",
   "author": "Melvin Chia <melvinchia623600@gmail.com>",
-  "description": "Capture them before the inspiration flies away!",
+  "description": "Become your own financial superhero.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lifeforge-app/lifeforge-module-ideaBox.git"
+    "url": "https://github.com/lifeforge-app/lifeforge-module-wallet.git"
   },
   "scripts": {
-    "types": "cd client && bun tsc"
+    "types": "cd client && bun tsc",
+    "build:client": "cd client && bun run vite build",
+    "build:server": "bun build ./server/index.ts --outdir ./server/dist --target bun --external @lifeforge/server-utils --external zod"
   },
   "dependencies": {
-    "@iconify/react": "^6.0.2",
-    "@tanstack/react-query": "^5.90.11",
-    "@uidotdev/usehooks": "^2.4.1",
-    "clsx": "^2.1.1",
-    "dayjs": "^1.11.18",
-    "lifeforge-ui": "workspace:*",
-    "react": "^19.2.0",
-    "react-i18next": "^15.1.1",
-    "react-toastify": "^11.0.5",
-    "shared": "workspace:*",
-    "zod": "^4.3.5"
+    "chart.js": "^4.5.0",
+    "recharts": "^2.15.0",
+    "zustand": "^5.0.8"
   },
-  "exports": {
-    "./server": "./server/index.ts",
-    "./manifest": {
-      "types": "./manifest.d.ts",
-      "default": "./manifest.ts"
-    },
-    "./server/schema": "./server/schema.ts"
-  },
+  "devDependencies": {},
   "lifeforge": {
-    "icon": "tabler:bulb",
-    "category": "Productivity",
+    "icon": "tabler:currency-dollar",
+    "category": "Finance",
     "APIKeyAccess": {
       "openai": {
-        "usage": "AI-powered suggestions",
+        "usage": "AI-powered analysis",
         "required": false
       }
     }
+  },
+  "peerDependencies": {
+    "@lifeforge/server-utils": "workspace:*",
+    "lifeforge-ui": "workspace:*",
+    "shared": "workspace:*"
   }
 }
 ```
@@ -279,48 +304,66 @@ The `lifeforge` object contains module-specific configuration:
 | `category` | `string` | Sidebar category for grouping |
 | `APIKeyAccess` | `object` | Optional API keys the module uses |
 
-### Exports Configuration
+### Required Peer Dependencies
 
-The `exports` field defines subpath exports for your module:
+All modules **must** declare these peer dependencies:
 
 ```json
 {
-  "exports": {
-    "./manifest": {
-      "types": "./manifest.d.ts",
-      "default": "./manifest.ts"
-    },
-    "./server": "./server/index.ts",
-    "./server/schema": "./server/schema.ts"
+  "peerDependencies": {
+    "@lifeforge/server-utils": "workspace:*",
+    "lifeforge-ui": "workspace:*",
+    "shared": "workspace:*"
   }
 }
 ```
 
-- `./manifest` – **Required**. The client-side manifest configuration
-- `./server` – **Optional**. Server-side routes (only if your module has backend)
-- `./server/schema` – **Optional**. Database schema (only if your module has collections)
+### Scripts
+
+Standard scripts for module development:
+
+| Script | Purpose |
+|--------|---------|
+| `types` | Type-check the client code |
+| `build:client` | Build client federation bundle |
+| `build:server` | Build server bundle for production |
 
 </section>
 
 <section id="client-manifest">
 ## Client Manifest
 
-The `manifest.ts` file at the root of your module directory defines the client-side configuration:
+The `client/manifest.ts` file defines the client-side configuration for your module:
 
 ```typescript
 import { lazy } from 'react'
 import type { ModuleConfig } from 'shared'
 
 export default {
+  // Route definitions (REQUIRED)
   routes: {
-    '/': lazy(() => import('@/pages/Home')),
+    '/': lazy(() => import('@/pages/Dashboard')),
+    '/transactions': lazy(() => import('@/pages/Transactions')),
     '/:id': lazy(() => import('@/pages/Detail')),
     '/:id/edit': lazy(() => import('@/pages/Edit'))
   },
-  provider: lazy(() => import('./client/providers/MyProvider')),
+  
+  // Sidebar navigation items
   subsection: [
-    { label: 'Archives', icon: 'tabler:archive', path: '/my-module/archives' }
+    { label: 'Dashboard', icon: 'tabler:dashboard', path: '' },
+    { label: 'Transactions', icon: 'tabler:arrows-exchange', path: 'transactions' }
   ],
+  
+  // Optional context provider that will be accessible globally
+  provider: lazy(() => import('@/providers/ModuleProvider')),
+  
+  // Dashboard widgets
+  widgets: [
+    () => import('@/widgets/AssetsBalance'),
+    () => import('@/widgets/MonthlySpending')
+  ],
+  
+  // Module visibility
   hidden: false,
   disabled: false,
   clearQueryOnUnmount: true
@@ -331,33 +374,36 @@ export default {
 
 ```typescript
 interface ModuleConfig {
-  // Define the routes for the module
-  // Key is the path pattern, value is a lazy-loaded React component
+  // Route definitions (path -> lazy component)
   routes: Record<
     string,
     | React.LazyExoticComponent<React.ComponentType<any>>
     | (() => React.ReactElement)
   >
   
-  // Optional wrapper component for all routes in this module
-  // Useful for context providers, layout wrappers, etc.
+  // Optional wrapper component for all routes
   provider?:
     | React.LazyExoticComponent<React.ComponentType<any>>
     | (() => React.ReactElement)
   
   // Sidebar sub-items under the module
-  // Path should be absolute (e.g., '/my-module/subsection')
+  // Path is RELATIVE to module base (empty string = root)
   subsection?: {
-    label: string    // Display text
+    label: string    // Display text (i18n key supported)
     icon: string     // Iconify icon
-    path: string     // Absolute path
+    path: string     // Relative path (e.g., 'transactions', not '/transactions')
   }[]
+  
+  // Dashboard widget loaders
+  widgets?: (() => Promise<{
+    default: React.ComponentType<any>
+    config: WidgetConfig
+  }>)[]
   
   // Hide from sidebar (still accessible via direct URL)
   hidden?: boolean
   
   // Completely disable the module
-  // Can be a boolean or async function for dynamic checking
   disabled?: boolean | (() => Promise<boolean>)
   
   // Clear React Query cache when navigating away
@@ -376,118 +422,173 @@ Routes are relative to your module's base path. For a module named `my-module`:
 | `'/:id/*'` | `/my-module/abc123/anything` |
 | `'/settings'` | `/my-module/settings` |
 
+### Subsection Paths
+
+Subsection paths are **relative** to the module, not absolute:
+
+```typescript
+subsection: [
+  { label: 'Home', icon: 'tabler:home', path: '' },           // /my-module
+  { label: 'Archive', icon: 'tabler:archive', path: 'archive' } // /my-module/archive
+]
+```
+
 ### Using Providers
 
 Providers wrap all routes in your module, perfect for context providers:
 
 ```typescript
-// client/providers/IdeaBoxProvider.tsx
-import { createContext, useContext } from 'react'
+// client/src/providers/ModuleProvider.tsx
+import { createContext, useContext, useState } from 'react'
 
-const IdeaBoxContext = createContext<IdeaBoxContextType | null>(null)
+const ModuleContext = createContext<ModuleContextType | null>(null)
 
-export default function IdeaBoxProvider({ children }: { children: React.ReactNode }) {
+export default function ModuleProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState(...)
   
   return (
-    <IdeaBoxContext.Provider value={{ state, setState }}>
+    <ModuleContext.Provider value={{ state, setState }}>
       {children}
-    </IdeaBoxContext.Provider>
+    </ModuleContext.Provider>
   )
 }
 
-export const useIdeaBox = () => useContext(IdeaBoxContext)
+export const useModule = () => useContext(ModuleContext)
 ```
 
+</section>
+
+<section id="dashboard-widgets">
+## Dashboard Widgets
+
+Modules can contribute widgets to the LifeForge dashboard. Widgets are grid-based components that users can add, resize, and rearrange.
+
+### Widget Definition
+
+Each widget exports a component and a configuration object:
+
+```typescript
+// client/src/widgets/AssetsBalance/index.tsx
+import type { WidgetConfig } from 'shared'
+
+function AssetsBalanceWidget() {
+  // Widget implementation
+  return (
+    <div className="p-4">
+      <h3>Assets Balance</h3>
+      {/* Widget content */}
+    </div>
+  )
+}
+
+export const config: WidgetConfig = {
+  id: 'assets-balance',    // Unique widget ID
+  icon: 'tabler:wallet',   // Dashboard icon
+  minW: 2,                 // Minimum grid width
+  minH: 2,                 // Minimum grid height
+  maxW: 4,                 // Maximum grid width (optional)
+  maxH: 3                  // Maximum grid height (optional)
+}
+
+export default AssetsBalanceWidget
+```
+
+### WidgetConfig Interface
+
+```typescript
+interface WidgetConfig {
+  namespace?: string  // Auto-filled from module
+  id: string          // Unique widget ID within module
+  icon: string        // Iconify icon name
+  minW?: number       // Minimum grid columns (default: 1)
+  minH?: number       // Minimum grid rows (default: 1)
+  maxW?: number       // Maximum grid columns
+  maxH?: number       // Maximum grid rows
+}
+```
+
+### Registering Widgets
+
+Add widgets to your manifest:
+
+```typescript
+// client/manifest.ts
+export default {
+  routes: { ... },
+  widgets: [
+    () => import('@/widgets/AssetsBalance'),
+    () => import('@/widgets/MonthlySpending'),
+    () => import('@/widgets/RecentTransactions')
+  ]
+} satisfies ModuleConfig
+```
 </section>
 
 <section id="server-integration">
 ## Server Integration
 
-LifeForge provides powerful utilities for building type-safe APIs: `forgeController` and `forgeRouter`. Your module's server entry point (`server/index.ts`) should export a router that aggregates all your route handlers.
+LifeForge uses the **Forge Controller** system from `@lifeforge/server-utils` for type-safe APIs.
+
+### Server Structure
+
+```plaintext
+server/
+├── index.ts       # Main router export
+├── forge.ts       # Forge controller factory
+├── schema.ts      # Zod schemas for collections
+└── routes/
+    └── *.ts       # Route handler files
+```
 
 ### Quick Example
 
 ```typescript
+// server/forge.ts
+import { createForge } from '@lifeforge/server-utils'
+import schema from './schema'
+export default createForge(schema)
+
+// server/routes/items.ts
+import forge from '../forge'
+export const list = forge.query().input({}).callback(({ pb }) =>
+  pb.getFullList.collection('items').execute()
+)
+
 // server/index.ts
-import { forgeRouter } from '@functions/routes'
-
-import containersRouter from './routes/containers'
-import itemsRouter from './routes/items'
-
-export default forgeRouter({
-  containers: containersRouter,
-  items: itemsRouter
-})
+import { forgeRouter } from '@lifeforge/server-utils'
+import * as itemsRouter from './routes/items'
+export default forgeRouter({ items: itemsRouter })
 ```
 
-This creates nested routes like `/containers/list` and `/items/create`.
-
-For comprehensive documentation on `forgeController`, `forgeRouter`, input validation, file uploads, existence checks, and the callback context, see the dedicated [Building API](/developer-guide/building-api) guide.
+For complete API documentation, see [Building API](/developer-guide/building-api).
 
 </section>
 
 <section id="database-schema">
 ## Database Schema
 
-If your module needs database storage, define a schema in `server/schema.ts`:
+If your module needs database storage, define schemas in `server/schema.ts`:
 
 ```typescript
+import { cleanSchemas } from '@lifeforge/server-utils'
 import z from 'zod'
 
-const myModuleSchemas = {
-  containers: {
-    schema: z.object({
-      name: z.string(),
-      icon: z.string(),
-      color: z.string(),
-      pinned: z.boolean()
-    }),
-    raw: {
-      name: 'my_module__containers',
-      type: 'base',
-      listRule: '@request.auth.id != ""',
-      viewRule: '@request.auth.id != ""',
-      createRule: '@request.auth.id != ""',
-      updateRule: '@request.auth.id != ""',
-      deleteRule: '@request.auth.id != ""',
-      fields: [
-        {
-          name: 'id',
-          type: 'text',
-          primaryKey: true,
-          required: true,
-          autogeneratePattern: '[a-z0-9]{15}'
-        },
-        {
-          name: 'name',
-          type: 'text',
-          required: true
-        },
-        {
-          name: 'icon',
-          type: 'text',
-          required: true
-        },
-        {
-          name: 'color',
-          type: 'text',
-          required: true
-        },
-        {
-          name: 'pinned',
-          type: 'bool',
-          required: false
-        }
-      ],
-      indexes: [
-        'CREATE UNIQUE INDEX `idx_name` ON `my_module__containers` (`name`)'
-      ]
-    }
-  }
+const schemas = {
+  items: z.object({
+    name: z.string(),
+    description: z.string().optional(),
+    category: z.string(),
+    pinned: z.boolean()
+  }),
+  
+  categories: z.object({
+    name: z.string(),
+    icon: z.string(),
+    color: z.string()
+  })
 }
 
-export default myModuleSchemas
+export default cleanSchemas(schemas)
 ```
 
 ### Collection Naming Convention
@@ -495,251 +596,45 @@ export default myModuleSchemas
 | Module Type | Collection Name Pattern |
 |-------------|-------------------------|
 | Official | `module_name__collection` |
-| Third-party | `username___module_name__collection` |
+| Community | `username___module_name__collection` |
 
 **Examples:**
 - `idea_box__containers` (official)
-- `melvinchia3636___invoice__entries` (third-party)
+- `melvinchia3636___invoice__entries` (community)
 
-### Schema Structure
+### Schema Workflow
 
-Each collection in your schema has two parts:
-
-**`schema`** – A Zod schema for TypeScript type inference:
-```typescript
-schema: z.object({
-  name: z.string(),
-  count: z.number(),
-  active: z.boolean()
-})
-```
-
-**`raw`** – PocketBase collection configuration:
-```typescript
-raw: {
-  name: 'collection_name',
-  type: 'base',  // or 'view'
-  listRule: '@request.auth.id != ""',
-  // ... access rules ...
-  fields: [
-    // Field definitions
-  ],
-  indexes: [
-    // SQL index definitions
-  ]
-}
-```
-
-### View Collections
-
-For computed/aggregated data, use view collections:
-
-```typescript
-stats_aggregated: {
-  schema: z.object({
-    total: z.number(),
-    category: z.string()
-  }),
-  raw: {
-    name: 'my_module__stats_aggregated',
-    type: 'view',
-    listRule: '@request.auth.id != ""',
-    viewRule: '@request.auth.id != ""',
-    createRule: null,  // Views are read-only
-    updateRule: null,
-    deleteRule: null,
-    viewQuery: `
-      SELECT 
-        id,
-        category,
-        COUNT(*) as total
-      FROM my_module__items
-      GROUP BY category
-    `
-  }
-}
-```
-
-### Managing Your Schema
-
-The recommended workflow for managing your module's database schema:
-
-**1. Design in PocketBase Dashboard**
-
-Always configure your collections through the PocketBase admin UI. This ensures:
-- Proper field type configuration
-- Valid access rules
-- Correct relation setup
-- No syntax errors in the raw collection config
-
-**2. Pull to Code**
-
-After making changes in the dashboard, pull the schema into your codebase:
-
-```bash
-bun run forge db pull <module-name>
-```
-
-This generates/updates your `server/schema.ts` file with the correct structure.
-
-**3. Commit to Version Control**
-
-Commit your updated schema file so it's tracked and can be deployed with your module.
-
-### When is <code className="text-xl!">db push</code> Used?
-
-The `db push` command is automatically used during **module installation and updates** to apply the schema to the user's PocketBase instance:
-
-```bash
-bun run forge db push <module-name>
-```
+1. **Design in PocketBase Dashboard** – Configure collections through the admin UI
+2. **Pull to Code** – `bun forge db pull <module-name>`
+3. **Commit** – Track your schema in version control
+4. **Push (on install)** – `bun forge db push <module-name>` applies schema
 
 <Alert className="mt-6" type="caution">
-  **Do not manually edit `schema.ts` files.** Always make schema changes through the PocketBase dashboard, then pull. Manual edits can cause:
-  - Discrepancies between the Zod schema and PocketBase raw config
-  - Invalid collection configurations
-  - Deployment failures
+  **Do not manually edit `schema.ts` files.** Make changes through PocketBase, then pull.
 </Alert>
 
-</section>
-
-<section id="categorizing-modules">
-## Categorizing Modules
-
-Each module can be assigned to a category using the `category` field in `package.json`:
-
-```json
-{
-  "lifeforge": {
-    "category": "Productivity"
-  }
-}
-```
-
-### Custom Category Order
-
-Create `apps/cat.config.json` to define category order:
-
-```json
-[
-  "Productivity",
-  "Finance",
-  "Creativity",
-  "Entertainment"
-]
-```
-
-### Special Categories
-
-| Category | Behavior |
-|----------|----------|
-| `<START>` | Positioned at the top of sidebar |
-| `<END>` | Positioned at the bottom of sidebar |
-| `Miscellaneous` | Default if no category specified |
-| `Settings` | System settings (fixed position) |
-| `SSO` | Single sign-on modules (fixed position) |
-
-</section>
-
-<section id="managing-dependencies">
-## Managing Dependencies
-
-Each module has its own `package.json` and manages its own dependencies independently.
-
-### Common Dependencies
-
-For your reference, most modules will need the following dependencies:
-
-| Package | Purpose |
-|---------|---------|
-| `lifeforge-ui` | UI component library (workspace) |
-| `shared` | Shared types and utilities (workspace) |
-| `@tanstack/react-query` | Data fetching and caching |
-| `react-i18next` | Internationalization |
-| `zod` | Schema validation |
-| `@iconify/react` | Icon rendering |
-| `dayjs` | Date manipulation |
-| `clsx` | Conditional classNames |
-
-### Installing Dependencies
-
-Always install from within the module directory:
-
-```bash
-cd apps/myusername--my-module
-bun add some-package
-```
-
-<Alert className="mt-6" type="warning">
-If you run `bun add` from the root directory, dependencies may be installed at the root level instead of the module level, causing potential issues.
-</Alert>
-
-<Alert className="mt-6" type="caution">
-  **Watch out for version-sensitive dependencies!** If your module uses third-party packages that share providers or contexts with the main LifeForge client (e.g., `react-query`, `react-i18next`, or UI libraries with context providers), you **must** ensure version consistency. Mismatched versions can cause:
-  - Multiple provider instances
-  - Broken context sharing
-  - Cryptic runtime errors
-  
-  Always check the versions used in the main client before adding such dependencies to your module.
-</Alert>
 </section>
 
 <section id="module-federation">
 ## Module Federation
 
-LifeForge uses **Vite Module Federation** to enable dynamic loading of modules at runtime. Each module is built as a federated remote that exposes its manifest and components to the host application.
+LifeForge uses **Vite Module Federation** to enable dynamic loading of modules at runtime.
 
 ### How It Works
 
 1. **Host Application** – The main LifeForge client acts as the federation host
-2. **Remote Modules** – Each module in `apps/` is built as a federated remote
-3. **Shared Dependencies** – Core libraries (React, React-DOM, etc.) are shared to avoid duplication
-
-### Shared Dependencies
-
-The following dependencies are shared between the host and all modules:
-
-| Package | Purpose |
-|---------|---------|
-| `react` | Core React library (must be singleton) |
-| `react-dom` | React DOM bindings (must be singleton) |
-| `shared` | LifeForge shared utilities |
-| `lifeforge-ui` | UI component library |
-| `@tanstack/react-query` | Data fetching |
-| `i18next` | Internationalization core |
-| `react-i18next` | React bindings for i18n |
-
-<Alert className="mt-6" type="important">
-  **React must be a singleton!** Any library that uses React hooks internally must use the same React instance as the host. If different React instances exist, you'll see errors like:
-  
-  ```plaintext
-  TypeError: can't access property "useRef", ReactSharedInternals.H is null
-  ```
-</Alert>
+2. **Remote Modules** – Each module is built as a federated remote
+3. **Shared Dependencies** – Core libraries are shared to avoid duplication
 
 ### Module Vite Configuration
 
-Each module has a `client/vite.config.ts` that configures federation:
-
 ```typescript
+// client/vite.config.ts
 import federation from '@originjs/vite-plugin-federation'
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
-import dotenv from 'dotenv'
-import path from 'node:path'
-import { defineConfig } from 'vite'
-
-import pkg from '../package.json'
-
-dotenv.config({ path: '../../../env/.env.local' })
-
-const apiHost = process.env.VITE_API_HOST
-
-if (!apiHost) {
-  throw new Error('VITE_API_HOST is not defined')
-}
+// ... standard imports (react, tailwindcss, dotenv, path, vite)
 
 const moduleName = pkg.name.replace('@lifeforge/', '')
+const apiHost = process.env.DOCKER_BUILD === 'true' ? '/api' : process.env.VITE_API_HOST
 
 export default defineConfig({
   base: `${apiHost}/modules/${moduleName}/`,
@@ -763,14 +658,9 @@ export default defineConfig({
       }
     })
   ],
-  resolve: {
-    alias: [
-      { find: '@server', replacement: path.resolve(__dirname, '../server') },
-      { find: /^@\/(.*)$/, replacement: path.resolve(__dirname, './src/$1') },
-      { find: /^@$/, replacement: path.resolve(__dirname, './src/index') }
-    ]
-  },
+  // ... resolve aliases (@, @/*, @server/*)
   build: {
+    outDir: process.env.DOCKER_BUILD ? 'dist-docker' : 'dist',
     target: 'esnext',
     minify: true,
     modulePreload: false
@@ -778,27 +668,48 @@ export default defineConfig({
 })
 ```
 
+### Dual Build Modes
 
-### Libraries That Use React Hooks
+Modules are built in **two modes**:
 
-Libraries like `recharts`, `react-beautiful-dnd`, or any library that uses React hooks internally need special handling.
+| Mode | Output Dir | Base URL | Use Case |
+|------|------------|----------|----------|
+| Normal | `dist/` | `http://localhost:3636` | Local development |
+| Docker | `dist-docker/` | `/api` | Docker deployment |
 
-<Alert className="mt-6" type="caution">
-  **Do NOT add these libraries to the federation `shared` config!** This causes ESM compatibility issues in Vite dev mode because federation loads shared modules directly from `node_modules`, bypassing Vite's module transformation.
+Both are built automatically during module installation.
+
+### Shared Dependencies
+
+These packages are provided by the host and **must not** be bundled:
+
+| Package | Purpose |
+|---------|---------|
+| `react` | Core React library (singleton) |
+| `react-dom` | React DOM bindings (singleton) |
+| `shared` | LifeForge shared utilities |
+| `lifeforge-ui` | UI component library |
+| `@tanstack/react-query` | Data fetching |
+| `i18next` / `react-i18next` | Internationalization |
+
+<Alert className="mt-6" type="important">
+  **React must be a singleton!** Libraries using React hooks must share the same React instance. If you see errors like `ReactSharedInternals.H is null`, check your federation shared config.
 </Alert>
 
-**The correct approach:**
+### Libraries with React Hooks
 
-1. **Keep React/React-DOM in shared** – These must be shared with `generate: false`
-2. **Let the library bundle normally** – Don't add it to shared config
-3. **Install the library in your module** – Add it to your module's dependencies
+Libraries like `recharts`, `react-beautiful-dnd`, etc., that use React hooks internally need special handling:
+
+<Alert className="mt-6" type="caution">
+  **Do NOT add these libraries to federation `shared` config!** Let them bundle normally – the federation plugin rewrites React imports to use the shared instance.
+</Alert>
+
+Install hook-using libraries in your module:
 
 ```bash
 cd apps/myusername--my-module
 bun add recharts@^2.15.0
 ```
-
-The federation plugin automatically rewrites React imports inside bundled libraries to use the shared React instance, so hooks will work correctly.
 
 <Alert className="mt-6" type="warning">
 #### Known Issues
@@ -806,17 +717,87 @@ The federation plugin automatically rewrites React imports inside bundled librar
 - `recharts@3.x` introduced breaking changes with ESM module loading. Stick to `recharts@^2.15.0` for best compatibility.
 </Alert>
 
-### Building Modules
+</section>
 
-Build your module before testing:
+<section id="building-modules">
+## Building Modules
+
+### Using the CLI
+
+Build your module using the Forge CLI:
 
 ```bash
-cd apps/myusername--my-module
-bun run build:client
+# Build normal dist
+bun forge modules build <module-name>
+
+# Build Docker dist
+bun forge modules build <module-name> --docker
+
+# Build all modules
+bun forge modules build
+```
+
+### What Gets Built
+
+| Command | Client Output | Server Output |
+|---------|---------------|---------------|
+| `build` | `client/dist/` | `server/dist/` |
+| `build --docker` | `client/dist-docker/` | `server/dist/` |
+
+### Build Output Structure
+
+```plaintext
+client/dist/
+├── remoteEntry.js    # Federation entry point
+├── assets/
+│   ├── *.js          # Code chunks
+│   └── *.css         # Styles
+└── index.html        # Fallback
+
+server/dist/
+└── index.js          # Bundled server code
 ```
 
 <Alert className="mt-6" type="tip">
-  Built modules work correctly in both dev and production. If you encounter runtime issues during development, always try rebuilding the module first.
+  During development, the server runs source TypeScript directly (Bun executes TS natively). Builds are only needed for production deployment.
+</Alert>
+
+</section>
+
+<section id="installation-modes">
+## Installation Modes
+
+When installing modules, you can choose between **production** and **development** modes.
+
+### Production Mode (Default)
+
+```bash
+bun forge modules install lifeforge--calendar
+```
+
+**Behavior:**
+- Downloads module from registry
+- Builds both `dist/` and `dist-docker/` bundles
+- Generates database migrations if schema.ts exists
+- **Removes source code** – Only compiled bundles are retained
+- No Git repository initialized
+- Optimized for deployment
+
+### Development Mode
+
+```bash
+bun forge modules install lifeforge--calendar --dev
+```
+
+**Behavior:**
+- Downloads module from registry
+- Builds both `dist/` and `dist-docker/` bundles
+- **Preserves source code** – Full source available for development
+- **Initializes Git repository** – Ready for version control
+- Ideal for contributing or customizing modules
+
+<Alert className="mt-6" type="note">
+  Use `--dev` when you want to modify or contribute to a module. Use the default mode for clean production deployments.
 </Alert>
 
 </section>
@@ -824,13 +805,10 @@ bun run build:client
 <section id="version-control">
 ## Version Control
 
-Each module **must** maintain its own independent Git repository within the `apps/` directory. This is crucial for keeping the main LifeForge codebase clean and module-free.
+Each module **should** maintain its own independent Git repository within the `apps/` directory.
 
-<Alert className="mt-6" type="caution">
-  **Always initialize Git in your module directory!** If a module doesn't have Git initialized, its files will be tracked alongside the main LifeForge repository. This pollutes the main codebase with module-specific code, making it difficult to:
-  - Separate module changes from core changes
-  - Publish modules independently
-  - Maintain a clean main repository
+<Alert className="mt-6" type="note">
+  Git repositories are only initialized when installing with the `--dev` flag, or when creating modules manually.
 </Alert>
 
 ### Why Separate Git Repositories?
@@ -839,55 +817,55 @@ Each module **must** maintain its own independent Git repository within the `app
 - **Separate release cycles** – Modules can be updated independently
 - **Clean main codebase** – LifeForge core stays free of module code
 - **Easy collaboration** – Other developers can clone just the module
-- **Clean module publishing** – Only module files are published to the registry
+- **Clean publishing** – Only module files are published to the registry
 
-### Initializing Git
+### For Development
 
-When creating a module manually, **always** initialize Git:
+When creating or installing modules for development:
 
 ```bash
+# Manual creation
 cd apps/myusername--my-module
 git init
 git add .
 git commit -m "Initial commit"
+
+# Or install with --dev
+bun forge modules install lifeforge--calendar --dev
 ```
 
-<Alert className="mt-6" type="note">
-  When you install a module via the CLI (`bun run forge modules install`), a Git repository is automatically initialized for you.
-</Alert>
+### For Production
+
+In production mode, no Git repository is created. The `apps/` directory contains only built artifacts, keeping deployments clean and lightweight.
 
 </section>
 
 <section id="publishing-modules">
 ## Publishing Modules
 
-LifeForge allows any developer to publish modules to the registry. You don't need special permissions – just authenticate with your GitHub account.
+LifeForge allows any developer to publish modules to the registry.
 
 ### Getting Your Auth Token
 
 1. Visit the [LifeForge Module Registry](https://registry.lifeforge.dev)
 2. Log in with your GitHub account
-3. Obtain your authentication token from the registry website
+3. Obtain your authentication token
 4. Configure npm/bun with your token
 
 ### Publishing Your Module
 
-Once authenticated, publish your module using the CLI:
-
 ```bash
-bun run forge modules publish <author>--<module-name>
+bun forge modules publish <author>--<module-name>
 ```
 
 ### Pre-Publish Checklist
 
-Before publishing, ensure:
-
-1. ✅ All required files exist (manifest.ts, package.json, etc.)
-2. ✅ `package.json` has valid `name`, `displayName`, `version`, `author`, `description`
-3. ✅ `lifeforge` config has `icon` and `category`
-4. ✅ `exports` are correctly configured
-5. ✅ All dependencies are properly declared
-6. ✅ Localization files exist for all supported languages
+1. All required files exist (manifest.ts, package.json, etc.)
+2. `package.json` has valid `name`, `displayName`, `version`, `author`, `description`
+3. `lifeforge` config has `icon` and `category`
+4. `peerDependencies` are correctly declared
+5. All dependencies are properly declared
+6. Localization files exist for supported languages
 
 ### Publishing Process
 
@@ -896,18 +874,20 @@ The CLI will:
 1. Validate module structure
 2. Validate author permissions (you can only publish your own modules)
 3. Bump the version number automatically
-4. Publish to the registry
+4. Rename `.gitignore` temporarily (npm excludes it)
+5. Publish to the registry
+6. Restore `.gitignore`
 
 ```bash
-$ bun run forge modules publish myusername--my-module
+$ bun forge modules publish myusername--my-module
   Version: 0.0.1 → 0.0.2
-  Published myusername--my-module v0.0.2
+  ✔ Published myusername--my-module v0.0.2
 ```
 
 <Alert className="mt-6" type="note">
   #### Ownership-based access
   
-  Only the module author (as identified by the `<author>` prefix in the module name) can publish or unpublish their own packages. You cannot modify modules owned by other users.
+  Only the module author (identified by the `<author>` prefix) can publish or unpublish their packages.
 </Alert>
 
 </section>
@@ -915,7 +895,9 @@ $ bun run forge modules publish myusername--my-module
 <section id="cli-reference">
 ## CLI Reference
 
-All module-related commands are under `bun run forge modules`:
+All module-related commands are under `bun forge modules`:
+
+### Commands
 
 | Command | Aliases | Description |
 |---------|---------|-------------|
@@ -923,29 +905,163 @@ All module-related commands are under `bun run forge modules`:
 | `install <modules...>` | `i`, `add` | Install modules from registry |
 | `uninstall <modules...>` | `un`, `rm`, `remove` | Remove modules |
 | `upgrade [module]` | `up`, `u` | Update to latest version |
+| `build [module]` | `b` | Build federation bundles |
 | `create [name]` | `new` | Create new module (WIP) |
 | `publish <module>` | – | Publish to registry |
 | `compare [module]` | – | Compare local vs registry |
-| `gen-registry` | – | Regenerate route/schema files |
+
+### Install Options
+
+| Option | Description |
+|--------|-------------|
+| `--dev` | Preserve source code and initialize Git repository |
+
+### Build Options
+
+| Option | Description |
+|--------|-------------|
+| `--docker` | Build for Docker deployment (output to `dist-docker/`) |
 
 ### Examples
 
 ```bash
-# Install a module
-bun run forge modules install lifeforge--calendar
+# List installed modules
+bun forge modules list
+
+# Install a module (production mode)
+bun forge modules install lifeforge--calendar
+
+# Install for development
+bun forge modules install lifeforge--calendar --dev
 
 # Install multiple modules
-bun run forge modules i lifeforge--calendar lifeforge--todo-list
+bun forge modules i lifeforge--calendar lifeforge--todo-list
 
 # Uninstall
-bun run forge modules rm lifeforge--calendar
+bun forge modules rm lifeforge--calendar
 
 # Check for updates
-bun run forge modules up
+bun forge modules up
 
-# Regenerate registries after manual changes
-bun run forge modules gen-registry
+# Build a specific module
+bun forge modules build lifeforge--calendar
+
+# Build all modules for Docker
+bun forge modules build --docker
 ```
+
+</section>
+
+<section id="categorizing-modules">
+## Categorizing Modules
+
+Each module is assigned to a category using the `category` field in `package.json`:
+
+```json
+{
+  "lifeforge": {
+    "category": "Productivity"
+  }
+}
+```
+
+### Default Behavior
+
+By default, categories are sorted **alphabetically** in the sidebar. Special categories have fixed positions:
+
+| Category | Behavior |
+|----------|----------|
+| `<START>` | Always at the top of sidebar |
+| `Miscellaneous` | Default if no category specified |
+| `Settings` | Fixed position at bottom |
+| `SSO` | Fixed position at bottom |
+| `<END>` | Always at the bottom of sidebar |
+
+### Category Management
+
+Category order and translations are managed server-side via the **Module Manager** module (`lifeforge--module-manager`). The UI allows you to:
+
+- **Reorder categories** – Drag and drop to customize sidebar order
+- **Add translations** – Provide category names in multiple languages
+- **AI translation** – Auto-translate category names using OpenAI
+
+Category configuration is stored in `module_categories.json` on the server with the format:
+
+```typescript
+// Record<categoryKey, Record<languageCode, translatedLabel>>
+{
+  "productivity": {
+    "en": "Productivity",
+    "zh-CN": "生产力",
+    "ms": "Produktiviti"
+  },
+  "finance": {
+    "en": "Finance",
+    "zh-CN": "财务",
+    "ms": "Kewangan"
+  }
+}
+```
+
+<Alert className="mt-6" type="tip">
+  Install the Module Manager module to access the category management UI: `bun forge modules install lifeforge--module-manager`
+</Alert>
+
+</section>
+
+<section id="managing-dependencies">
+## Managing Dependencies
+
+LifeForge uses **hoisted dependencies** – common packages are installed at the root level and shared across all workspaces.
+
+### How It Works
+
+- **Root `package.json`** – Contains common dependencies shared by all modules (React, Zod, dayjs, etc.)
+- **Module `package.json`** – Only contains **module-specific** dependencies not in root
+- **Peer dependencies** – Core packages provided by the monorepo infrastructure
+
+### Root-Level Dependencies
+
+These are already available to all modules via the root `package.json`:
+
+| Package | Purpose |
+|---------|---------|
+| `react`, `react-dom` | Core React |
+| `@tanstack/react-query` | Data fetching and caching |
+| `react-i18next`, `i18next` | Internationalization |
+| `zod` | Schema validation |
+| `@iconify/react` | Icon rendering |
+| `dayjs` | Date manipulation |
+| `clsx` | Conditional classNames |
+| `lodash` | Utility functions |
+| `react-toastify` | Toast notifications |
+
+### Peer Dependencies
+
+Modules must declare these as peer dependencies (from workspace):
+
+```json
+{
+  "peerDependencies": {
+    "@lifeforge/server-utils": "workspace:*",
+    "lifeforge-ui": "workspace:*",
+    "shared": "workspace:*"
+  }
+}
+```
+
+### Adding Module-Specific Dependencies
+
+Only add dependencies that are **not** in the root `package.json`:
+
+```bash
+cd apps/myusername--my-module
+bun add recharts zustand  # Module-specific packages
+```
+
+<Alert className="mt-6" type="tip">
+  Check the root `package.json` before adding dependencies – if it's already there, you don't need to add it to your module.
+</Alert>
 
 </section>
 
@@ -954,26 +1070,29 @@ bun run forge modules gen-registry
 
 ### Code Organization
 
-- Keep components in `client/components/`
-- Keep pages in `client/pages/`
+- Keep components in `client/src/components/`
+- Keep pages in `client/src/pages/`
 - Use providers for shared state
 - Separate route handlers into individual files in `server/routes/`
+- One component per file
 
 ### UI Components
 
-Always utilize components from `lifeforge-ui` whenever applicable. This ensures:
-- Consistent styling across the entire LifeForge ecosystem
+Always use components from `lifeforge-ui` when available:
+- Consistent styling across LifeForge
 - Built-in dark mode and theme support
 - Automatic localization integration
-- No need to reinvent common UI patterns
 
-Refer to the [lifeforge-ui documentation](https://ui.lifeforge.dev) for available components.
+Refer to the [lifeforge-ui documentation](https://ui.lifeforge.dev).
 
 ### Naming Conventions
 
-- Module name: `<username>--<kebab-case-name>`
-- Collection names: `username___module_name__collection_name`
-- Route handlers: Descriptive verb names (`list`, `create`, `update`, `remove`)
+| Element | Convention | Example |
+|---------|------------|---------|
+| Module name | `<author>--<kebab-case>` | `myuser--invoice-maker` |
+| Collection name | `<module>__<collection>` | `wallet__transactions` |
+| Route handlers | Verb names | `list`, `create`, `update`, `remove` |
+| Components | PascalCase | `TransactionList.tsx` |
 
 ### Localization
 
@@ -981,11 +1100,11 @@ Always provide translations for all supported languages. Use the localization sy
 
 ### Testing
 
-Test your module thoroughly before publishing:
+Before publishing:
 - Test all frontend pages and components
-- Test all backend routes and handlers
+- Test all backend routes
 - Test localization in all languages
-- Test database migrations
+- Verify database schema migrations
 
 </section>
 
@@ -996,7 +1115,7 @@ If you run into issues or have questions:
 
 - **Bug Reports:** [GitHub Issues](https://github.com/LifeForge-app/lifeforge/issues)
 - **Questions:** [GitHub Discussions](https://github.com/LifeForge-app/lifeforge/discussions)
-- **UI Components:** Check the [UI Library Documentation](/developer-guide/ui-library)
+- **UI Components:** Check the [UI Library Documentation](https://ui.lifeforge.dev)
 - **API Building:** See [Building APIs](/developer-guide/building-api)
 - **Localization:** Read [Localization Guide](/developer-guide/localization)
 
