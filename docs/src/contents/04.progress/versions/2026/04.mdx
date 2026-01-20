@@ -1,0 +1,91 @@
+import { Alert } from "lifeforge-ui"
+import PR from "../../components/PR"
+
+<Alert type="important" className="mb-4 mt-6">
+Due to the volume of changes introduced in versions 26w02 through 26w04, this changelog summarizes the key architectural changes rather than listing individual updates.
+</Alert>
+
+## Complete Modular Architecture Revamp
+
+Versions 26w02 through 26w04 mark a significant milestone: a **complete redesign of LifeForge's module system**. This long-awaited overhaul dramatically reduces coupling between modules and the core codebase, finally enabling true hot-swapping of modules.
+
+---
+
+### The Problem
+
+While developing Docker support, we encountered several critical issues with the original architecture:
+
+**1. Massive Docker Images (~2GB)**
+
+The registry-based module system solved *distribution*, but not *bundling*. Every module's code and dependencies were packaged into a single monolithic image.
+
+**2. Tight Build-Time Coupling**
+
+- **Client:** All modules were imported and bundled together at build time
+- **Server:** Modules loaded directly from source at runtime, requiring all dependencies in the image
+
+**3. Zero Hot-Swap Capability**
+
+Any module change—install, update, or removal—required rebuilding and redeploying the entire application. In production, this meant unnecessary downtime for what should be simple operations.
+
+---
+
+### The Solution
+
+#### Client-Side: Module Federation
+
+We replaced static imports with **Vite Module Federation**. Modules are now:
+- Built independently as separate bundles
+- Loaded dynamically at runtime via `remoteEntry.js`
+- Mountable and unmountable without rebuilding the core app
+
+This means you can install a new module and see it in your sidebar after a simple page refresh—no rebuild required.
+
+#### Server-Side: Decoupled Forge Controllers
+
+The server architecture required deeper changes. The old pattern tightly coupled module logic to the core server, creating dependency nightmares for typechecking and bundling.
+
+**The new architecture splits modules into two parts:**
+
+| Layer | Location | Purpose |
+|-------|----------|---------|
+| **Declarative Utilities** | `@lifeforge/server-utils` | Provides `createForge()`, `forgeRouter()`, Zod schemas, and type definitions |
+| **Runtime Integration** | Core Server | Discovers, mounts, and executes module routes at runtime |
+
+Modules now export pure route configurations using the `forge` factory. The core server dynamically mounts these routes without needing the module's source code bundled into the server image.
+
+**Key benefits:**
+- Modules are self-contained packages with no core dependencies beyond `@lifeforge/server-utils`
+- Server automatically discovers and loads routes from `apps/*/server/`
+- Database schemas are defined in modules and synced via `bun forge db` commands
+- API keys and permissions are declared in `package.json` manifests
+
+---
+
+### Module Manager UI
+
+A new **Module Manager** module (`lifeforge--module-manager`) provides a graphical interface for:
+- Browsing installed modules
+- Installing modules from the registry
+- Updating and removing modules
+- Managing module categories
+
+Once the official Forgistry marketplace launches, you'll be able to browse and install modules with a single click.
+
+---
+
+<Alert type="warning" className="my-4">
+#### Breaking Changes for Module Developers
+
+All existing modules require updates to be compatible with the new architecture:
+
+- **Server code** must migrate to the `forge` factory pattern from `@lifeforge/server-utils`
+- **Client code** must be buildable as a standalone federated bundle
+- **Manifests** (`package.json`) must include the `lifeforge` configuration block
+
+All official modules have been updated. Third-party modules will need manual migration. See the [Developer Guide → Modules](/developer-guide/modules) for detailed migration instructions.
+
+#### Early Stage Notice
+
+This new module system is still maturing. We recommend thorough testing after updating. Please report any issues on [GitHub](https://github.com/LifeForge-app/lifeforge/issues).
+</Alert>
