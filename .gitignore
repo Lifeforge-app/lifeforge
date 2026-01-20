@@ -55,5 +55,6 @@ env/*
 keys
 
 # user-generated files
-apps/package.json
-locales/package.json
+apps
+locales
+!locales/en

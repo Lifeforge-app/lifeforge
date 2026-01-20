@@ -28,7 +28,7 @@ function mdxListCountsPlugin(): Plugin {
         const counts: Record<string, number> = {}
 
         // Read all MDX files recursively
-        function readMdxFiles(dir: string, basePath = '') {
+        const readMdxFiles = (dir: string, basePath = '') => {
           const entries = fs.readdirSync(dir, { withFileTypes: true })
 
           for (const entry of entries) {
