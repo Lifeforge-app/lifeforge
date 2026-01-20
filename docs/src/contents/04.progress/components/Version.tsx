@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { Card } from 'lifeforge-ui'
-import { useRef, useState } from 'react'
+import { useState } from 'react'
 
 dayjs.extend(weekOfYear)
 
@@ -23,10 +23,6 @@ function Version({
 }) {
   const [collapsed, setCollapsed] = useState(!isLatest)
 
-  const [debouncedCollapsed, setDebouncedCollapsed] = useState(!isLatest)
-
-  const timeoutRef = useRef<number | null>(null)
-
   const version = `${prefix} ${dayjs().year(year).format('YY')}w${week.toString().padStart(2, '0')}`
 
   // Start from January 4th of the year (guaranteed to be in week 1 per ISO 8601)
@@ -37,34 +33,15 @@ function Version({
 
   const endOfWeek = weekDate.endOf('week').format('DD MMM YYYY')
 
-  function toggleCollapsed() {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
-      timeoutRef.current = null
-    }
-
-    if (collapsed) {
-      // Expanding: immediately show content, then animate
-      setDebouncedCollapsed(false)
-      setCollapsed(false)
-    } else {
-      // Collapsing: animate first, then hide content after animation completes
-      setCollapsed(true)
-      timeoutRef.current = setTimeout(() => {
-        setDebouncedCollapsed(true)
-      }, 200) // Match the duration-200 animation
-    }
-  }
-
   return (
     <div>
       <Card
-        className="overflow-y-hidden p-0!"
+        className="p-0!"
         id={`${prefix}-${dayjs().year(year).format('YY')}-w-${week.toString().padStart(2, '0')}`}
       >
         <header
           className="hover:bg-bg-100 dark:hover:bg-bg-800/50 flex cursor-pointer items-center justify-between gap-4 p-4 transition-colors select-none"
-          onClick={toggleCollapsed}
+          onClick={() => setCollapsed(!collapsed)}
         >
           <div className="flex items-center gap-4">
             <div className="bg-bg-500/10 text-bg-500 flex-center size-13 rounded-lg">
@@ -88,13 +65,12 @@ function Version({
           </div>
         </header>
         <div
-          className={`grid px-4 transition-all duration-200 ${
-            collapsed ? 'grid-rows-[0fr]' : 'grid-rows-[1fr]'
-          }`}
+          className="grid px-4 transition-[grid-template-rows] duration-200"
+          style={{ gridTemplateRows: collapsed ? '0fr' : '1fr' }}
         >
-          {!debouncedCollapsed && (
-            <div className="overflow-hidden pb-8">{children}</div>
-          )}
+          <div className="min-h-0" style={{ clipPath: 'inset(0)' }}>
+            <div className="pb-8">{children}</div>
+          </div>
         </div>
       </Card>
     </div>
