@@ -22,7 +22,7 @@
   ],
   "scripts": {
     "forge": "bun run tools/src/index.ts",
-    "prebuild": "bun forge modules gen-registry && bun --cwd=shared run build && bun --cwd=packages/lifeforge-ui run build"
+    "prebuild": "bun --cwd=shared run build && bun --cwd=packages/lifeforge-ui run build"
   },
   "keywords": [
     "lifeforge"
