@@ -5,10 +5,13 @@ import semver from 'semver'
 
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
 import { installPackage } from '@/utils/commands'
+import { smartReloadServer } from '@/utils/docker'
+import { isDockerMode } from '@/utils/helpers'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { getPackageLatestVersion } from '@/utils/registry'
 
+import cleanModuleSource from '../functions/cleanModuleSource'
 import listModules from '../functions/listModules'
 import { buildModuleHandler } from './buildModuleHandler'
 
@@ -57,6 +60,13 @@ async function upgradeModule(
 
     installPackage(fullName, targetDir)
 
+    // Restore gitignore to .gitignore (npm excludes .gitignore during publish)
+    const gitignorePath = path.join(targetDir, 'gitignore')
+
+    if (fs.existsSync(gitignorePath)) {
+      fs.renameSync(gitignorePath, path.join(targetDir, '.gitignore'))
+    }
+
     fs.rmSync(backupPath, { recursive: true, force: true })
 
     logger.print(
@@ -80,9 +90,9 @@ async function upgradeModule(
  * Upgrades one or all installed modules to their latest versions.
  *
  * After successful upgrades:
- * - Regenerates route and schema registries
- * - Rebuilds module client bundles for federation
- * - Regenerates database migrations
+ * - Builds module client bundles for federation (both dist and dist-docker)
+ * - Generates database migrations if schema.ts exists
+ * - Reloads the server
  */
 export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   const modules = listModules()
@@ -121,19 +131,52 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     }
   }
 
-  if (upgraded.length > 0) {
-    // Rebuild module client bundles for federation
-    for (const mod of upgraded) {
-      await buildModuleHandler(mod)
+  if (upgraded.length === 0) {
+    if (!moduleName) {
+      logger.print('')
+      logger.success('All modules are up to date')
     }
 
-    generateMigrationsHandler()
-
-    logger.success(
-      `Upgraded ${chalk.blue(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
-    )
-  } else if (!moduleName) {
-    logger.print('')
-    logger.success('All modules are up to date')
+    return
   }
+
+  // Build module client bundles for federation (both dist and dist-docker)
+  for (const mod of upgraded) {
+    logger.debug(`Building ${chalk.blue(mod)} bundles...`)
+
+    // Build regular dist
+    await buildModuleHandler(mod)
+
+    // Build dist-docker
+    await buildModuleHandler(mod, { docker: true })
+  }
+
+  // Generate migrations for upgraded modules (skip in Docker environment)
+  if (!isDockerMode()) {
+    for (const mod of upgraded) {
+      const { targetDir } = normalizePackage(mod)
+
+      if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
+        logger.debug(`Generating database migrations for ${mod}...`)
+        generateMigrationsHandler(mod)
+      }
+    }
+  }
+
+  // Clean source code (upgrades always run in production mode)
+  logger.debug('Cleaning source code...')
+
+  for (const mod of upgraded) {
+    const { targetDir } = normalizePackage(mod)
+
+    cleanModuleSource(targetDir)
+  }
+
+  logger.info('Source code removed. Only built bundles retained.')
+
+  logger.success(
+    `Upgraded ${chalk.blue(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
+  )
+
+  smartReloadServer()
 }
