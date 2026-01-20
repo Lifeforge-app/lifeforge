@@ -1,0 +1,29 @@
+import Commit from "../../components/Commit";
+import GithubUser from "@/components/GithubUser";
+import PR from "../../components/PR";
+import Code from "@/components/Code";
+
+### 🏗️ Infrastructure & Technical Improvements
+
+- <Commit hash="f2d94966b1e95f07b25708ff0135a83ad7c1950f" />: Added function in server locale management to cleanup cached but unused locales.
+- <PR number={65} />: A complete overhaul of the module management system. Replaced the old module management mechanism through git submodules with a new system that leverages a centralized module registry. See [User Guide](/user-guide/modules) and [Developer Guide](/developer-guide/modules) for more details.
+
+### 🎨 UI Components & Design System
+
+- <Commit hash="ff8d9f2763b24695e5282e1368ffc4bf8122ae71" />: the children of the `SearchInput` component will now be rendered only when it exists.
+    
+### 🐛 Bug Fixes & Chores
+
+- <Commit hash="2d57f6ba089ea460563a1ad874f8423d1ce0bb9d" />: Moved `EncryptionWrapper` into `lifeforge-ui` to prevent package cycle dependencies.
+- <PR number={61} />: Improved logging and process validation for PocketBase in ForgeCLI. Thanks <GithubUser username="lukashow" /> for the contribution!
+- <Commit hash="469ad92a8f6cd6701b0f6e29d78a1c68a92e4f9e" />: Improved error handling in module name validation when the module name is invalid.
+- <Commit hash="6792c1a156acbd30639a3d15315b559f8bd1ec85" />: Fixed a bug where button text in the `CustomFontUploadModal` show wrongly, and also the issues with file uploading.
+- <Commit hash="ce0c321bde31e99384ff12bab601080702069685" />: Minor styling adjustment to the main sidebar.
+- <Commit hash="ce0c321bde31e99384ff12bab601080702069685" />: Fixed an issue where the class name in the `Alert` component clashes with the one in `daisyui`, causing unexpected styles to be applied.
+
+### 📖 Documentation & Tooling
+
+- <Commit hash="7a32051dd0c5f87a65f6421c5d0e3a75aa07d051" />: Update forgeCLI dev command for starting all services from `bun forge dev all` to `bun forge dev`.
+- <Commit hash="ad2df39b83d798d4cc4ca5fe92b6b1c98b1f19f6" />: When starting a PocketBase instance and the PocketBase binary is missing, the binary will now be automatically downloaded instead of throwing an error.
+- <PR number={63} />: Added README documentation in Malay, Simplified Chinese, and Traditional Chinese. THanks <GithubUser username="lukashow" /> for the contribution!
+- <Commit hash="271a18c6050d28936cf2e172c78dd5935eaf83f3" />: Removed `venueMapBuilder` and `mrt-map-builder` from the core codebase and flattened the `tools` directory, which now only contains the ForgeCLI.
