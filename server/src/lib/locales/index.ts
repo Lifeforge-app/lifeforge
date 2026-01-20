@@ -1,3 +1,5 @@
+import { ROOT_DIR } from '@constants'
+import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -9,15 +11,11 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
-import { LoggingService } from '@functions/logging/loggingService'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
 
-// Get the project root directory
-const projectRoot = import.meta.dirname.split('/server')[0]
+const forge = createForge({}, 'locales')
 
 // Scan apps directory for modules with locales
-const appsDir = path.join(projectRoot, 'apps')
+const appsDir = path.join(ROOT_DIR, 'apps')
 
 function getModulesWithLocales(): string[] {
   if (!fs.existsSync(appsDir)) return []
@@ -36,16 +34,11 @@ function getModulesWithLocales(): string[] {
 
 const moduleApps = getModulesWithLocales()
 
-const listLanguages = forgeController
+const listLanguages = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'List all languages',
-    ms: 'Senarai semua bahasa',
-    'zh-CN': '列出所有语言',
-    'zh-TW': '列出所有語言'
-  })
+  .description('List all languages')
   .input({})
   .callback(async () => {
     return LocaleService.getLangManifests() as unknown as {
@@ -56,15 +49,10 @@ const listLanguages = forgeController
     }[]
   })
 
-const getLocale = forgeController
+const getLocale = forge
   .query()
   .noAuth()
-  .description({
-    en: 'Retrieve localization strings for namespace',
-    ms: 'Dapatkan rentetan penyetempatan untuk ruang nama',
-    'zh-CN': '获取命名空间的本地化字符串',
-    'zh-TW': '獲取命名空間的本地化字串'
-  })
+  .description('Retrieve localization strings for namespace')
   .input({
     query: z.object({
       lang: z.string(),
@@ -158,25 +146,17 @@ const getLocale = forgeController
     return data
   })
 
-const notifyMissing = forgeController
+const notifyMissing = forge
   .mutation()
-  .description({
-    en: 'Report missing localization key',
-    ms: 'Laporkan kunci penyetempatan yang hilang',
-    'zh-CN': '报告缺失的本地化键',
-    'zh-TW': '報告缺失的本地化鍵'
-  })
+  .description('Report missing localization key')
   .input({
     body: z.object({
       namespace: z.string(),
       key: z.string()
     })
   })
-  .callback(async ({ body: { namespace, key } }) => {
-    LoggingService.warn(
-      `Missing locale ${chalk.red(`${namespace}:${key}`)}`,
-      'LOCALES'
-    )
+  .callback(async ({ body: { namespace, key }, core: { logging } }) => {
+    logging.warn(`Missing locale ${chalk.red(`${namespace}:${key}`)}`)
   })
 
 export default forgeRouter({

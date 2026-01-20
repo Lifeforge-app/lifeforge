@@ -1,33 +1,36 @@
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
-
 import {
+  CleanedSchemas,
   CollectionKey,
   ExpandConfig,
   FieldSelection,
-  SingleItemReturnType
-} from '@functions/database/PBService/typescript/pb_service'
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
+  IGetOne,
+  IGetOneFactory
+} from '@lifeforge/server-utils'
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
 
-import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+
+import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
  * Class for retrieving a single record from PocketBase collections with field selection and expansion capabilities
+ * @template TSchemas - The flattened schemas type
  * @template TCollectionKey - The collection key type
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
 export class GetOne<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
-  TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
+  TSchemas extends CleanedSchemas,
+  TCollectionKey extends CollectionKey<TSchemas>,
+  TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
     never,
     never
-  >
-> implements PBServiceBase<TCollectionKey, TExpandConfig>
-{
+  >,
+  TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
+    Record<never, never>
+> implements IGetOne<TSchemas, TCollectionKey, TExpandConfig, TFields> {
   private _itemId: string = ''
   private _expand: string = ''
   private _fields: string = ''
@@ -59,13 +62,15 @@ export class GetOne<
    * @param fields - Object specifying which fields to include in the response
    * @returns A new GetOne instance with the specified field selection
    */
-  fields<NewFields extends FieldSelection<TCollectionKey, TExpandConfig>>(
-    fields: NewFields
-  ): GetOne<TCollectionKey, TExpandConfig, NewFields> {
-    const newInstance = new GetOne<TCollectionKey, TExpandConfig, NewFields>(
-      this._pb,
-      this.collectionKey
-    )
+  fields<
+    NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
+  >(fields: NewFields) {
+    const newInstance = new GetOne<
+      TSchemas,
+      TCollectionKey,
+      TExpandConfig,
+      NewFields
+    >(this._pb, this.collectionKey)
 
     newInstance._itemId = this._itemId
     newInstance._expand = this._expand
@@ -80,10 +85,10 @@ export class GetOne<
    * @param expandConfig - Object specifying which relations to expand
    * @returns A new GetOne instance with the specified expand configuration
    */
-  expand<NewExpandConfig extends ExpandConfig<TCollectionKey>>(
+  expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
-  ): GetOne<TCollectionKey, NewExpandConfig> {
-    const newInstance = new GetOne<TCollectionKey, NewExpandConfig>(
+  ) {
+    const newInstance = new GetOne<TSchemas, TCollectionKey, NewExpandConfig>(
       this._pb,
       this.collectionKey
     )
@@ -101,9 +106,7 @@ export class GetOne<
    * @throws Error if collection key is not set
    * @throws Error if item ID is not provided
    */
-  async execute(): Promise<
-    SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
-  > {
+  async execute() {
     if (!this.collectionKey) {
       throw new Error(
         'Collection key is required. Use .collection() method to set the collection key.'
@@ -123,17 +126,16 @@ export class GetOne<
         fields: this._fields
       })
 
-    LoggingService.debug(
+    PBLogger.debug(
       `${chalk.hex('#82c8e5').bold('getOne')} Fetched record with ID ${chalk
         .hex('#34ace0')
         .bold(
           this._itemId
-        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-      'DB'
+        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
-    return result as unknown as Promise<
-      SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
+    return result as ReturnType<
+      IGetOne<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
     >
   }
 }
@@ -151,19 +153,28 @@ export class GetOne<
  *   .execute()
  * ```
  */
-const getOne = (pb: PocketBase) => ({
+const getOne = <TSchemas extends CleanedSchemas>(
+  pb: PocketBase,
+  module: { id: string }
+): IGetOneFactory<TSchemas> => ({
   /**
    * Specifies the collection to retrieve a record from
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
    * @returns A new GetOne instance for the specified collection
    */
-  collection: <TCollectionKey extends CollectionKey>(
+  collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
-  ): GetOne<TCollectionKey> => {
-    const finalCollectionName = toPocketBaseCollectionName(collection)
+  ) => {
+    const finalCollectionName = toPocketBaseCollectionName(
+      collection,
+      module.id
+    )
 
-    return new GetOne<TCollectionKey>(pb, finalCollectionName as TCollectionKey)
+    return new GetOne<TSchemas, TCollectionKey>(
+      pb,
+      finalCollectionName as TCollectionKey
+    )
   }
 })
 

@@ -1,16 +1,18 @@
+import { forgeRouter } from '@lifeforge/server-utils'
+
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
-import { forgeController, forgeRouter } from '@functions/routes'
 
-import authRouter from './routes/auth'
-import customFontsRouter from './routes/customFonts'
-import oAuthRouter from './routes/oauth'
-import personalizationRouter from './routes/personalization'
-import qrLoginRouter from './routes/qrLogin'
-import settingsRouter from './routes/settings'
-import twoFARouter from './routes/twoFA'
+import forge from './forge'
+import * as authRoutes from './routes/auth'
+import * as customFontsRoutes from './routes/customFonts'
+import * as oAuthRoutes from './routes/oauth'
+import * as personalizationRoutes from './routes/personalization'
+import * as qrLoginRoutes from './routes/qrLogin'
+import * as settingsRoutes from './routes/settings'
+import * as twoFARoutes from './routes/twoFA'
 
 export const currentSession = {
   token: '',
@@ -19,20 +21,11 @@ export const currentSession = {
   otpId: ''
 }
 
-if (!process.env.MASTER_KEY) {
-  throw new Error('MASTER_KEY not found in environment variables')
-}
-
 export default forgeRouter({
-  exists: forgeController
+  exists: forge
     .query()
     .noAuth()
-    .description({
-      en: 'Check if user exists',
-      ms: 'Cek keadaan pengguna',
-      'zh-CN': '检查用户是否存在',
-      'zh-TW': '檢查用戶是否存在'
-    })
+    .description('Check if user exists')
     .input({})
     .callback(async () => {
       const config = validateEnvironmentVariables()
@@ -43,11 +36,11 @@ export default forgeRouter({
 
       return users.length > 0
     }),
-  auth: authRouter,
-  oauth: oAuthRouter,
-  '2fa': twoFARouter,
-  qrLogin: qrLoginRouter,
-  settings: settingsRouter,
-  personalization: personalizationRouter,
-  customFonts: customFontsRouter
+  auth: authRoutes,
+  oauth: oAuthRoutes,
+  '2fa': twoFARoutes,
+  qrLogin: qrLoginRoutes,
+  settings: settingsRoutes,
+  personalization: personalizationRoutes,
+  customFonts: customFontsRoutes
 })

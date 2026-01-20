@@ -1,0 +1,149 @@
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
+import { Switch } from 'lifeforge-ui'
+import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
+import { type IDashboardLayout, usePersonalization } from 'shared'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
+
+function ComponentListItem({
+  id,
+  icon,
+  minW,
+  minH,
+  maxW,
+  maxH,
+  namespace
+}: {
+  id: string
+  icon: string
+  minW?: number
+  minH?: number
+  maxW?: number
+  maxH?: number
+  namespace?: string
+}) {
+  const { t } = useTranslation([namespace ?? 'common.dashboard'])
+
+  const {
+    dashboardLayout: enabledWidgets,
+    setDashboardLayout: setEnabledWidgets
+  } = usePersonalization()
+
+  const { changeDashboardLayout: setDashboardLayout } = useUserPersonalization()
+
+  const isEnabled = useMemo(() => {
+    return Object.values(
+      JSON.stringify(enabledWidgets) !== '{}' ? enabledWidgets : { a: [] }
+    ).some(e => e.find(i => i.i === id) !== undefined)
+  }, [enabledWidgets, id])
+
+  function addComponent() {
+    const newEnabledWidgets = JSON.parse(JSON.stringify(enabledWidgets))
+
+    if (Object.keys(newEnabledWidgets).length === 0) {
+      for (const breakpoint of ['lg', 'md', 'sm', 'xs', 'xxs']) {
+        newEnabledWidgets[breakpoint] = [
+          {
+            x: 0,
+            y: 0,
+            w: minW ?? 4,
+            h: minH ?? 4,
+            minW: minW ?? 1,
+            minH: minH ?? 1,
+            maxW: maxW ?? 8,
+            maxH: maxH ?? 8,
+            i: id
+          }
+        ]
+      }
+      setDashboardLayout(newEnabledWidgets)
+
+      return
+    }
+
+    for (const breakpoint of ['lg', 'md', 'sm', 'xs', 'xxs']) {
+      newEnabledWidgets[breakpoint] = newEnabledWidgets[breakpoint] ?? []
+      newEnabledWidgets[breakpoint].push({
+        x: 0,
+        y: Infinity,
+        w: minW || maxW || 4,
+        h: minH || maxH || 4,
+        minW: minW ?? 1,
+        minH: minH ?? 1,
+        maxW: maxW ?? 8,
+        maxH: maxH ?? 8,
+        i: id
+      })
+    }
+
+    setEnabledWidgets(newEnabledWidgets)
+  }
+
+  function removeComponent() {
+    const newEnabledWidgets = Object.fromEntries(
+      Object.entries(
+        JSON.parse(JSON.stringify(enabledWidgets)) as IDashboardLayout
+      ).map(([k, value]) => [k, value.filter(i => i.i !== id)])
+    )
+
+    if (Object.values(newEnabledWidgets).every(e => e.length === 0)) {
+      setDashboardLayout({})
+    } else {
+      setDashboardLayout(newEnabledWidgets)
+    }
+  }
+
+  function toggleComponent() {
+    if (isEnabled) {
+      removeComponent()
+
+      return
+    }
+
+    addComponent()
+  }
+
+  return (
+    <li className="flex-between bg-bg-50 shadow-custom dark:bg-bg-800/50 flex gap-8 rounded-lg p-4">
+      <div className="flex items-center gap-3">
+        <div
+          className={clsx(
+            'flex size-10 shrink-0 items-center justify-center rounded-lg transition-all',
+            Object.keys(enabledWidgets).includes(id)
+              ? 'bg-custom-500/20 text-custom-500'
+              : 'bg-bg-200 text-bg-400 dark:bg-bg-700/50 dark:text-bg-500'
+          )}
+        >
+          <Icon className="size-6" icon={icon} />
+        </div>
+        <div className="flex flex-col">
+          <div className="font-semibold">
+            {t([
+              `widgets.${namespace}.${id}.title`,
+              `widgets.${id}.title`,
+              `widgets.${namespace}.${id}`,
+              `widgets.${id}`,
+              id
+            ])}
+          </div>
+          <div className="text-bg-500 text-sm">
+            {t([
+              `widgets.${namespace}.${id}.description`,
+              `widgets.${id}.description`
+            ])}
+          </div>
+        </div>
+      </div>
+      <Switch
+        value={isEnabled}
+        onChange={() => {
+          toggleComponent()
+        }}
+      />
+    </li>
+  )
+}
+
+export default ComponentListItem

@@ -1,4 +1,5 @@
-import moment from 'moment'
+import { ClientError } from '@lifeforge/server-utils'
+import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
@@ -6,16 +7,14 @@ import z from 'zod'
 
 import { decrypt2, encrypt, encrypt2 } from '@functions/auth/encryption'
 import { default as _validateOTP } from '@functions/auth/validateOTP'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
 
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 import { verifyAppOTP, verifyEmailOTP } from '../utils/otp'
+import forge from '../forge'
 
-export let canDisable2FA = false
-
-export let challenge = v4()
+let canDisable2FA = false
+let challenge = v4()
 
 setTimeout(
   () => {
@@ -26,26 +25,16 @@ setTimeout(
 
 let tempCode = ''
 
-const getChallenge = forgeController
+export const getChallenge = forge
   .query()
-  .description({
-    en: 'Retrieve 2FA challenge token',
-    ms: 'Dapatkan token cabaran 2FA',
-    'zh-CN': '获取二次验证挑战令牌',
-    'zh-TW': '獲取二次驗證挑戰令牌'
-  })
+  .description('Retrieve 2FA challenge token')
   .input({})
   .callback(async () => challenge)
 
-const requestOTP = forgeController
+export const requestOTP = forge
   .query()
   .noAuth()
-  .description({
-    en: 'Request OTP for two-factor authentication',
-    ms: 'Minta OTP untuk pengesahan dua faktor',
-    'zh-CN': '请求二次验证的OTP',
-    'zh-TW': '請求二次驗證的OTP'
-  })
+  .description('Request OTP for two-factor authentication')
   .input({
     query: z.object({
       email: z.string().email()
@@ -63,20 +52,15 @@ const requestOTP = forgeController
 
     currentSession.tokenId = v4()
     currentSession.otpId = otp.otpId
-    currentSession.tokenExpireAt = moment().add(5, 'minutes').toISOString()
+    currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
 
     return currentSession.tokenId
   })
 
-const validateOTP = forgeController
+export const validateOTP = forge
   .mutation()
   .noAuth()
-  .description({
-    en: 'Verify OTP for two-factor authentication',
-    ms: 'Sahkan OTP untuk pengesahan dua faktor',
-    'zh-CN': '验证二次验证的OTP',
-    'zh-TW': '驗證二次驗證的OTP'
-  })
+  .description('Verify OTP for two-factor authentication')
   .input({
     body: z.object({
       otp: z.string(),
@@ -99,14 +83,9 @@ const validateOTP = forgeController
     return false
   })
 
-const generateAuthenticatorLink = forgeController
+export const generateAuthenticatorLink = forge
   .query()
-  .description({
-    en: 'Generate authenticator app setup link',
-    ms: 'Jana pautan persediaan aplikasi pengesah',
-    'zh-CN': '生成身份验证器设置链接',
-    'zh-TW': '生成身份驗證器設置連結'
-  })
+  .description('Generate authenticator app setup link')
   .input({})
   .callback(
     async ({
@@ -133,14 +112,9 @@ const generateAuthenticatorLink = forgeController
     }
   )
 
-const verifyAndEnable = forgeController
+export const verifyAndEnable = forge
   .mutation()
-  .description({
-    en: 'Verify and activate two-factor authentication',
-    ms: 'Sahkan dan aktifkan pengesahan dua faktor',
-    'zh-CN': '验证并启用二次验证',
-    'zh-TW': '驗證並啟用二次驗證'
-  })
+  .description('Verify and activate two-factor authentication')
   .input({
     body: z.object({
       otp: z.string()
@@ -170,7 +144,7 @@ const verifyAndEnable = forgeController
       }
 
       await pb.update
-        .collection('user__users')
+        .collection('users')
         .id(pb.instance.authStore.record!.id)
         .data({
           twoFASecret: encrypt(
@@ -182,14 +156,9 @@ const verifyAndEnable = forgeController
     }
   )
 
-const disable = forgeController
+export const disable = forge
   .mutation()
-  .description({
-    en: 'Disable two-factor authentication',
-    ms: 'Lumpuhkan pengesahan dua faktor',
-    'zh-CN': '禁用二次验证',
-    'zh-TW': '禁用二次驗證'
-  })
+  .description('Disable two-factor authentication')
   .input({})
   .callback(async ({ pb }) => {
     if (!canDisable2FA) {
@@ -200,7 +169,7 @@ const disable = forgeController
     }
 
     await pb.update
-      .collection('user__users')
+      .collection('users')
       .id(pb.instance.authStore.record!.id)
       .data({
         twoFASecret: ''
@@ -210,15 +179,10 @@ const disable = forgeController
     canDisable2FA = false
   })
 
-const verify = forgeController
+export const verify = forge
   .mutation()
   .noAuth()
-  .description({
-    en: 'Verify two-factor authentication code',
-    ms: 'Sahkan kod pengesahan dua faktor',
-    'zh-CN': '验证二次验证代码',
-    'zh-TW': '驗證二次驗證代碼'
-  })
+  .description('Verify two-factor authentication code')
   .input({
     body: z.object({
       otp: z.string(),
@@ -233,7 +197,7 @@ const verify = forgeController
       throw new ClientError('Invalid token ID', 401)
     }
 
-    if (moment().isAfter(moment(currentSession.tokenExpireAt))) {
+    if (dayjs().isAfter(dayjs(currentSession.tokenExpireAt))) {
       throw new ClientError('Token expired', 401)
     }
 
@@ -275,13 +239,3 @@ const verify = forgeController
       session: pb.authStore.token
     }
   })
-
-export default forgeRouter({
-  getChallenge,
-  requestOTP,
-  validateOTP,
-  generateAuthenticatorLink,
-  verifyAndEnable,
-  disable,
-  verify
-})

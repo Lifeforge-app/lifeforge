@@ -1,4 +1,6 @@
-import Logging from '@/utils/logging'
+import chalk from 'chalk'
+
+import logger from '@/utils/logger'
 import getPBInstance from '@/utils/pocketbase'
 
 import { listLocales } from './listLocales'
@@ -7,7 +9,7 @@ async function setFirstLangInDB(shortName: string) {
   const installedLocales = listLocales()
 
   if (installedLocales.length === 1) {
-    Logging.debug('This is the first locale, setting as default...')
+    logger.debug('This is the first locale, setting as default...')
 
     const { pb, killPB } = await getPBInstance()
 
@@ -15,7 +17,7 @@ async function setFirstLangInDB(shortName: string) {
 
     await pb.collection('users').update(user.id, { language: shortName })
 
-    Logging.info(`Set ${Logging.highlight(shortName)} as default language`)
+    logger.info(`Set ${chalk.blue(shortName)} as default language`)
     killPB?.()
   }
 }

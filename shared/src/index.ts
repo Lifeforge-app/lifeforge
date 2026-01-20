@@ -17,7 +17,11 @@ export { useAPIEndpoint } from './providers/APIEndpointProvider'
 export { useAPIOnlineStatus } from './providers/APIOnlineStatusProvider'
 export { usePersonalization } from './providers/PersonalizationProvider'
 export { useMainSidebarState as useMainSidebarState } from './providers/SidebarStateProvider'
+export { useModalStore } from './providers/ModalStoreProvider'
 export { useAuth } from './providers/AuthProvider'
+export { useModuleSidebarState } from './providers/ModuleSidebarStateProvider'
+export { useModuleHeaderState } from './providers/ModuleHeaderStateProvider'
+export { useFederation } from './providers/FederationProvider'
 export { default as AuthProvider } from './providers/AuthProvider'
 export { default as APIEndpointProvider } from './providers/APIEndpointProvider'
 export { default as PersonalizationProvider } from './providers/PersonalizationProvider'
@@ -29,6 +33,10 @@ export { default as SSOAuthProvider } from './providers/SSOAuthProvider'
 export { default as SocketProvider } from './providers/SocketProvider'
 export { default as NuqsProvider } from './providers/NuqsProvider'
 export { default as EncryptionProvider } from './providers/EncryptionProvider'
+export { default as ModalStoreProvider } from './providers/ModalStoreProvider'
+export { default as ModuleSidebarStateProvider } from './providers/ModuleSidebarStateProvider'
+export { default as ModuleHeaderStateProvider } from './providers/ModuleHeaderStateProvider'
+export { default as FederationProvider } from './providers/FederationProvider'
 export { type SocketEvent, useSocketContext } from './providers/SocketProvider'
 
 // Useful hooks
@@ -38,7 +46,15 @@ export { default as useDivSize } from './hooks/useDivSize'
 // Useful utility functions
 export { default as anyColorToHex } from './utils/anyColorToHex'
 export { default as forceDown } from './utils/forceDown'
-export { encrypt, decrypt } from './utils/encryption'
+export {
+  encrypt,
+  decrypt,
+  createEncryptionSession,
+  decryptResponse,
+  encryptRequest,
+  isEncryptedResponse
+} from './utils/encryption'
+export { default as fetchAPI } from './utils/fetchAPI'
 
 export { default as getFormFileFieldInitialData } from './utils/getFormFileFieldInitialData'
 export { default as getBrowserInfo } from './utils/getBrowserInfo'
@@ -48,14 +64,12 @@ export { default as parseCollectionName } from './utils/parseCollectionName'
 export { packageJSONSchema } from './interfaces/module_config.types'
 
 // Forge API client and types
-export {
-  createForgeAPIClient,
-  ForgeAPIClientController
-} from './api/core/forgeAPIClient'
+export { default as createForgeProxy } from './api/core/createForgeProxy'
+export { default as ForgeEndpoint } from './api/core/forgeEndpoint'
 export type {
   InferClientControllerOutput as InferOutput,
   InferClientControllerInput as InferInput
-} from './api/typescript/forge_api_client.types'
+} from './api/typescript/forge_proxy.types'
 
 // Some shared types
 export type {
@@ -67,3 +81,6 @@ export type {
   ModuleCategory
 } from './interfaces/module_config.types'
 export type { default as WidgetConfig } from './interfaces/widget_config.types'
+export type { ModalComponent } from './providers/ModalStoreProvider'
+
+export { SYSTEM_CATEGORIES } from './providers/FederationProvider'

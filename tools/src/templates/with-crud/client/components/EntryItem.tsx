@@ -17,7 +17,7 @@ import ModifyEntryModal from './ModifyEntryModal'
 function EntryItem({ entry }: { entry: Entry }) {
   const queryClient = useQueryClient()
 
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const deleteMutation = useMutation(
     forgeAPI.{{camel moduleName.en}}.entries.remove

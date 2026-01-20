@@ -1,6 +1,7 @@
+import { ParseOCRFunc } from '@lifeforge/server-utils'
 import { createWorker } from 'tesseract.js'
 
-async function parseOCR(imagePath: string): Promise<string> {
+const parseOCR: ParseOCRFunc = async imagePath => {
   const worker = await createWorker('eng', 3, {
     langPath: './src/core/models',
     cachePath: './src/core/models',

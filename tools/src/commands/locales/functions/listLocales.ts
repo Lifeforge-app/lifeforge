@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { LOCALES_DIR } from '@/constants/constants'
+import logger from '@/utils/logger'
 
 export function listLocales(): string[] {
   return fs.readdirSync(LOCALES_DIR).filter(dir => {

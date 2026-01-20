@@ -1,5 +1,5 @@
 import { getEnvVars } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import { checkRunningPBInstances } from '@/utils/pocketbase'
 
 import { downloadPocketBaseBinary } from '../functions/database-initialization/download-pocketbase'
@@ -25,5 +25,5 @@ export async function initializeDatabaseHandler() {
 
   generateMigrationsHandler()
 
-  Logging.success('Database initialized successfully')
+  logger.success('Database initialized successfully')
 }

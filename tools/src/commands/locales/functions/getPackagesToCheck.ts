@@ -1,4 +1,4 @@
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
 import { listLocalesWithMeta } from './listLocales'
@@ -7,7 +7,7 @@ function getPackagesToCheck(langCode?: string) {
   const localePackages = listLocalesWithMeta()
 
   if (!localePackages.length) {
-    Logging.info('No locales installed')
+    logger.info('No locales installed')
 
     process.exit(0)
   }
@@ -19,7 +19,7 @@ function getPackagesToCheck(langCode?: string) {
     : localePackages
 
   if (!packagesToCheck?.length) {
-    Logging.actionableError(
+    logger.actionableError(
       `Locale "${langCode}" is not installed`,
       'Run "bun forge locales list" to see installed locales'
     )

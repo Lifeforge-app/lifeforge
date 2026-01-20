@@ -1,9 +1,10 @@
+import { Decrypt2Func, DecryptFunc, Encrypt2Func, EncryptFunc } from '@lifeforge/server-utils'
 import crypto from 'crypto'
 import CryptoJS from 'crypto-js'
 
 const ALGORITHM = 'aes-256-ctr'
 
-const encrypt = (buffer: Buffer, key: string) => {
+const encrypt: EncryptFunc = (buffer: Buffer, key: string) => {
   const iv = crypto.randomBytes(16)
 
   key = crypto
@@ -19,7 +20,7 @@ const encrypt = (buffer: Buffer, key: string) => {
   return result
 }
 
-const decrypt = (encrypted: Buffer, key: string) => {
+const decrypt: DecryptFunc = (encrypted: Buffer, key: string) => {
   const iv = encrypted.slice(0, 16)
 
   encrypted = encrypted.slice(16)
@@ -36,10 +37,10 @@ const decrypt = (encrypted: Buffer, key: string) => {
   return result
 }
 
-const encrypt2 = (message: string, key: string) =>
+const encrypt2: Encrypt2Func = (message: string, key: string) =>
   CryptoJS.AES.encrypt(message, key).toString()
 
-const decrypt2 = (encrypted: string, key: string) =>
+const decrypt2: Decrypt2Func = (encrypted: string, key: string) =>
   CryptoJS.AES.decrypt(encrypted, key).toString(CryptoJS.enc.Utf8)
 
 export { decrypt, decrypt2, encrypt, encrypt2 }

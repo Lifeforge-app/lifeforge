@@ -4,8 +4,14 @@ import { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 
+import MermaidChart from './MermaidChart'
+
 function Code({ language, children }: { language?: string; children: string }) {
   const [copied, setCopied] = useState(false)
+
+  if (language === 'mermaid') {
+    return <MermaidChart chart={children} />
+  }
 
   return (
     <div className="code bg-bg-200/30! dark:bg-bg-800/50! border-bg-200 dark:border-bg-700/30 mt-6 rounded-md border shadow-sm">
@@ -18,9 +24,7 @@ function Code({ language, children }: { language?: string; children: string }) {
           className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 flex items-center gap-2 font-mono text-sm transition-all"
           onClick={() => {
             copy(children)
-
             setCopied(true)
-
             setTimeout(() => {
               setCopied(false)
             }, 2000)

@@ -1,21 +1,27 @@
+import {
+  CleanedSchemas,
+  ClientError,
+  CollectionKey,
+  IDelete,
+  IDeleteFactory
+} from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
-import { CollectionKey } from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
-import { ClientError } from '@functions/routes/utils/response'
 
-import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
  * Class for deleting records from PocketBase collections with type safety
+ * @template TSchemas - The flattened schemas type
  * @template TCollectionKey - The collection key type
  */
-export class Delete<TCollectionKey extends CollectionKey>
-  implements PBServiceBase<TCollectionKey>
-{
+export class Delete<
+  TSchemas extends CleanedSchemas,
+  TCollectionKey extends CollectionKey<TSchemas>
+> implements IDelete<TSchemas, TCollectionKey> {
   private _recordId: string = ''
 
   /**
@@ -45,7 +51,7 @@ export class Delete<TCollectionKey extends CollectionKey>
    * @throws Error if collection key is not set
    * @throws Error if record ID is not provided
    */
-  async execute(): Promise<boolean> {
+  async execute() {
     if (!this.collectionKey) {
       throw new Error(
         'Collection key is required. Use .collection() method to set the collection key.'
@@ -63,13 +69,12 @@ export class Delete<TCollectionKey extends CollectionKey>
         .collection(getFinalCollectionName(this.collectionKey))
         .delete(this._recordId)
 
-      LoggingService.debug(
+      PBLogger.debug(
         `${chalk.hex('#ff5252').bold('delete')} Deleted record with ID ${chalk
           .hex('#34ace0')
           .bold(
             this._recordId
-          )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-        'DB'
+          )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`
       )
 
       return result
@@ -103,19 +108,28 @@ export class Delete<TCollectionKey extends CollectionKey>
  *   .execute()
  * ```
  */
-const deleteRecord = (pb: PocketBase) => ({
+const deleteRecord = <TSchemas extends CleanedSchemas>(
+  pb: PocketBase,
+  module: { id: string }
+): IDeleteFactory<TSchemas> => ({
   /**
    * Specifies the collection to delete records from
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
    * @returns A new Delete instance for the specified collection
    */
-  collection: <TCollectionKey extends CollectionKey>(
+  collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
-  ): Delete<TCollectionKey> => {
-    const finalCollectionName = toPocketBaseCollectionName(collection)
+  ) => {
+    const finalCollectionName = toPocketBaseCollectionName(
+      collection,
+      module.id
+    )
 
-    return new Delete<TCollectionKey>(pb, finalCollectionName as TCollectionKey)
+    return new Delete<TSchemas, TCollectionKey>(
+      pb,
+      finalCollectionName as TCollectionKey
+    )
   }
 })
 

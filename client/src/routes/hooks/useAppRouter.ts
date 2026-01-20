@@ -1,23 +1,20 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { DataRouter } from 'shared'
-import { createBrowserRouter, useAuth } from 'shared'
+import { createBrowserRouter, useAuth, useFederation } from 'shared'
 
-import ROUTES from '..'
 import {
   createAuthLoadingConfig,
   createAuthRouterConfig,
   createRouterConfig
 } from '../utils/routerFactory'
 
-/**
- * Custom hook that creates and manages the application router
- * based on authentication state and user preferences
- */
 export function useAppRouter() {
   const { t } = useTranslation('common.misc')
 
   const { auth, authLoading } = useAuth()
+
+  const { modules, loading: modulesLoading } = useFederation()
 
   const [appRouter, setAppRouter] = useState<DataRouter | null>(null)
 
@@ -32,16 +29,14 @@ export function useAppRouter() {
   )
 
   useEffect(() => {
-    if (authLoading || !auth) {
-      setAppRouter(null)
-
+    if (authLoading || !auth || modulesLoading) {
       return
     }
 
     let cancelled = false
 
     createRouterConfig({
-      routes: ROUTES,
+      routes: modules,
       loadingMessage: t('loadingModule')
     }).then(routerConfig => {
       if (!cancelled) {
@@ -52,10 +47,10 @@ export function useAppRouter() {
     return () => {
       cancelled = true
     }
-  }, [auth, t, authLoading])
+  }, [auth, t, authLoading, modules, modulesLoading])
 
   const router = useMemo(() => {
-    if (authLoading) {
+    if (authLoading || modulesLoading) {
       return loadingRouter
     }
 
@@ -64,7 +59,7 @@ export function useAppRouter() {
     }
 
     return appRouter ?? loadingRouter
-  }, [auth, authLoading, appRouter, loadingRouter, authRouter])
+  }, [auth, authLoading, modulesLoading, appRouter, loadingRouter, authRouter])
 
   return { router, isAuthenticated: !!auth }
 }

@@ -1,52 +1,49 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import z from 'zod'
 
-import getMedia from '@functions/external/media'
-import { forgeController, forgeRouter } from '@functions/routes'
+import forge from '../forge'
 
-const updateAvatar = forgeController
+export const updateAvatar = forge
   .mutation()
-  .description({
-    en: 'Upload new user avatar',
-    ms: 'Muat naik avatar pengguna baharu',
-    'zh-CN': '上传新的用户头像',
-    'zh-TW': '上傳新的用戶頭像'
-  })
+  .description('Upload new user avatar')
   .input({})
   .media({
     file: {
       optional: false
     }
   })
-  .callback(async ({ media: { file: rawFile }, pb }) => {
-    const fileResult = await getMedia('avatar', rawFile)
+  .callback(
+    async ({
+      media: { file: rawFile },
+      pb,
+      core: {
+        media: { retrieveMedia }
+      }
+    }) => {
+      const fileResult = await retrieveMedia('avatar', rawFile)
 
-    const { id } = pb.instance.authStore.record!
+      const { id } = pb.instance.authStore.record!
 
-    const newRecord = await pb.update
-      .collection('user__users')
-      .id(id)
-      .data(fileResult)
-      .execute()
+      const newRecord = await pb.update
+        .collection('users')
+        .id(id)
+        .data(fileResult)
+        .execute()
 
-    return newRecord.avatar
-  })
+      return newRecord.avatar
+    }
+  )
 
-const deleteAvatar = forgeController
+export const deleteAvatar = forge
   .mutation()
-  .description({
-    en: 'Remove user avatar',
-    ms: 'Alih keluar avatar pengguna',
-    'zh-CN': '移除用户头像',
-    'zh-TW': '移除用戶頭像'
-  })
+  .description('Remove user avatar')
   .input({})
   .statusCode(204)
   .callback(async ({ pb }) => {
     const { id } = pb.instance.authStore.record!
 
     await pb.update
-      .collection('user__users')
+      .collection('users')
       .id(id)
       .data({
         avatar: ''
@@ -54,14 +51,9 @@ const deleteAvatar = forgeController
       .execute()
   })
 
-const updateProfile = forgeController
+export const updateProfile = forge
   .mutation()
-  .description({
-    en: 'Update user profile information',
-    ms: 'Kemas kini maklumat profil pengguna',
-    'zh-CN': '更新用户资料信息',
-    'zh-TW': '更新用戶資料信息'
-  })
+  .description('Update user profile information')
   .input({
     body: z.object({
       data: z.object({
@@ -95,36 +87,20 @@ const updateProfile = forgeController
     if (data.name) updateData.name = data.name
 
     if (data.dateOfBirth) {
-      updateData.dateOfBirth = moment(data.dateOfBirth).format('YYYY-MM-DD')
+      updateData.dateOfBirth = dayjs(data.dateOfBirth).format('YYYY-MM-DD')
     }
 
     if (Object.keys(updateData).length > 0) {
-      await pb.update
-        .collection('user__users')
-        .id(id)
-        .data(updateData)
-        .execute()
+      await pb.update.collection('users').id(id).data(updateData).execute()
     }
   })
 
-const requestPasswordReset = forgeController
+export const requestPasswordReset = forge
   .mutation()
-  .description({
-    en: 'Request password reset email',
-    ms: 'Minta e-mel tetapan semula kata laluan',
-    'zh-CN': '请求密码重置邮件',
-    'zh-TW': '請求密碼重置郵件'
-  })
+  .description('Request password reset email')
   .input({})
   .callback(({ pb }) =>
     pb.instance
       .collection('users')
       .requestPasswordReset(pb.instance.authStore.record?.email)
   )
-
-export default forgeRouter({
-  updateAvatar,
-  deleteAvatar,
-  updateProfile,
-  requestPasswordReset
-})

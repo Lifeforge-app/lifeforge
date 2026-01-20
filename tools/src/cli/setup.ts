@@ -1,8 +1,11 @@
+import { LOG_LEVELS } from '@lifeforge/log'
 import { Command, program } from 'commander'
 import fs from 'fs'
 import path from 'path'
 
-import Logging, { LOG_LEVELS } from '../utils/logging'
+import logger, { setLogLevel } from '@/utils/logger'
+
+import { commands } from './commands'
 import { configureHelp } from './help'
 
 function getVersion(): string {
@@ -15,25 +18,16 @@ function getVersion(): string {
   }
 }
 
-async function setupCommands(program: Command): Promise<void> {
-  const commandsPath = path.resolve(
-    import.meta.dirname.split('src')[0],
-    'src/commands'
-  )
-
-  const commandIndexes = fs.globSync(`${commandsPath}/*/index.ts`)
-
-  for (const index of commandIndexes) {
-    const command = await import(index)
-
-    command.default(program)
+function setupCommands(program: Command): void {
+  for (const registerCommand of commands) {
+    registerCommand(program)
   }
 }
 
 /**
  * Sets up the CLI program with all commands
  */
-export async function setupCLI(): Promise<void> {
+export function setupCLI(): void {
   configureHelp(program)
 
   program
@@ -46,15 +40,27 @@ export async function setupCLI(): Promise<void> {
       `Set log level (${LOG_LEVELS.join(', ')})`,
       'info'
     )
-    .hook('preAction', thisCommand => {
+    .hook('preAction', (thisCommand, actionCommand) => {
       const level = thisCommand.opts().logLevel as (typeof LOG_LEVELS)[number]
 
       if (LOG_LEVELS.includes(level)) {
-        Logging.setLevel(level)
+        setLogLevel(level)
       }
+
+      // Build full command path (e.g., "modules list")
+      const commandPath: string[] = []
+
+      let cmd: Command | null = actionCommand
+
+      while (cmd && cmd !== program) {
+        commandPath.unshift(cmd.name())
+        cmd = cmd.parent
+      }
+
+      logger.debug(`Executing command "${commandPath.join(' ')}"`)
     })
 
-  await setupCommands(program)
+  setupCommands(program)
 }
 
 /**

@@ -19,7 +19,7 @@ export const Default: Story = {
     onClose: () => {}
   },
   render: args => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     return (
       <Button icon="tabler:icons" onClick={() => open(Index, args.data)}>

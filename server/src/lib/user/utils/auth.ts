@@ -1,9 +1,9 @@
-import COLLECTION_SCHEMAS from '@schema'
+import { SchemaWithPB } from '@lifeforge/server-utils'
 import _ from 'lodash'
 import Pocketbase from 'pocketbase'
 import z from 'zod'
 
-import { SchemaWithPB } from '@functions/database/PBService/typescript/pb_service'
+import schema from '../schema'
 
 export function removeSensitiveData(userData: Record<string, any>) {
   const newUserData = _.cloneDeep(userData)
@@ -23,7 +23,7 @@ export function removeSensitiveData(userData: Record<string, any>) {
 
   return newUserData as SchemaWithPB<
     Omit<
-      z.infer<(typeof COLLECTION_SCHEMAS)['user__users']>,
+      z.infer<(typeof schema)['users']>,
       | 'masterPasswordHash'
       | 'journalMasterPasswordHash'
       | 'APIKeysMasterPasswordHash'

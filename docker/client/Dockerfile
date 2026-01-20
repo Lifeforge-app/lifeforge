@@ -1,32 +1,53 @@
 # syntax=docker/dockerfile:1
+
+# ============================================
+# Builder stage - build client and tools
+# ============================================
 FROM oven/bun:alpine AS builder
 
-# Build args (Vite inlines env vars at build time)
-ARG VITE_API_HOST
+# Accept build arg for API host
+ARG VITE_API_HOST=/api
+ENV VITE_API_HOST=$VITE_API_HOST
 
-# Set working directory
 WORKDIR /app
 
-# Copy all source code
+# Copy source
 COPY . .
 
-# Install all dependencies with cache mount for faster rebuilds
+# Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --ignore-scripts --linker isolated
+    bun install --frozen-lockfile --linker isolated
 
-# Generate module registry
-RUN bun forge modules gen-registry
-RUN cd client && bun run build
+# Build @lifeforge/log (required by forge CLI used in prebuild)
+RUN cd /app/packages/lifeforge-log && bun run build
 
-# Production stage - serve static files
+# Build shared package (required by server types)
+RUN cd /app/shared && bun run build
+
+# Build @lifeforge/server-utils (required by server types)
+RUN cd /app/packages/lifeforge-server-utils && bun run build
+
+# Build client
+RUN cd /app/client && bun run build
+
+# ============================================
+# Production stage - Nginx static server
+# ============================================
 FROM nginx:alpine
 
-# Copy built files to nginx
-COPY --from=builder /app/client/dist /usr/share/nginx/html
+# Install curl for health check
+RUN apk add --no-cache curl
 
-# Copy nginx config for SPA routing
+# Copy nginx config for SPA routing and API proxying
 COPY docker/client/nginx.conf /etc/nginx/conf.d/default.conf
 
+# Copy built client from builder
+COPY --from=builder /app/client/dist /usr/share/nginx/html
+
 EXPOSE 80
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]

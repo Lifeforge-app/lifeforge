@@ -1,0 +1,55 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { FormModal, defineForm } from 'lifeforge-ui'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import forgeAPI from '@/forgeAPI'
+
+function CreateBackupModal({ onClose }: { onClose: () => void }) {
+  const { t } = useTranslation('common.backups')
+
+  const queryClient = useQueryClient()
+
+  const mutation = useMutation(
+    forgeAPI.untyped('backups/create').mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['backups'] })
+      },
+      onError: (error: Error) => {
+        toast.error('Failed to create backup: ' + error.message)
+      }
+    })
+  )
+
+  const { formProps } = defineForm<any>({
+    icon: 'tabler:plus',
+    namespace: 'common.backups',
+    submitButton: {
+      children: 'Start Backup',
+      icon: 'tabler:arrow-right',
+      namespace: 'common.backups',
+      iconPosition: 'end'
+    },
+    title: 'Create Backup',
+    onClose
+  })
+    .typesMap({
+      backupName: 'text'
+    })
+    .setupFields({
+      backupName: {
+        label: 'Backup Name',
+        icon: 'tabler:file-zip',
+        placeholder: t('inputs.backupName.placeholder')
+      }
+    })
+    .initialData({})
+    .onSubmit(async data => {
+      await mutation.mutateAsync(data)
+    })
+    .build()
+
+  return <FormModal {...formProps} />
+}
+
+export default CreateBackupModal

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useModalStore } from 'shared'
 
 import ModalWrapper from './components/ModalWrapper'
-import { useModalStore } from './useModalStore'
 
 function FinalElement({ index }: { index: number }) {
   const { stack, close } = useModalStore()

@@ -1,6 +1,6 @@
 import clsx from 'clsx'
+import { useModuleSidebarState } from 'shared'
 
-import { useModuleSidebarState } from '@components/layout'
 import { Scrollbar } from '@components/utilities'
 
 import GoBackButton from '../GoBackButton'

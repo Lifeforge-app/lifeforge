@@ -1,6 +1,6 @@
+import { coreLogger } from '@functions/logging'
 import path from 'path'
 
-import { LoggingService } from '@functions/logging/loggingService'
 
 /**
  * Ensures the root directory name is 'lifeforge'.
@@ -12,7 +12,7 @@ export default function ensureRootName(): void {
   )
 
   if (projectRoot !== 'lifeforge') {
-    LoggingService.error(
+    coreLogger.error(
       `Project root directory must be named 'lifeforge', but found '${projectRoot}'. Please rename the root directory.`
     )
     process.exit(1)
