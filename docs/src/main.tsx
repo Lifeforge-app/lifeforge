@@ -5,6 +5,8 @@ import {
   createForgeProxy
 } from 'shared'
 
+import ModalProvider from 'shared/dist/providers/ModalStoreProvider'
+
 import App from './App'
 import './index.css'
 
@@ -20,7 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       }}
       forgeAPI={forgeAPI}
     >
-      <App />
+      <ModalProvider>
+        <App />
+      </ModalProvider>
     </PersonalizationProvider>
   </APIEndpointProvider>
 )
