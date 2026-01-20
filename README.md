@@ -48,10 +48,6 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
 - [💡 Credits](#-credits)
 - [📄 License](#-license)
 
-## 📚 Translations
-
-
-
 ## 🔥 Support the Author
 
 <a href="https://www.buymeacoffee.com/melvinchiah" target="_blank">
