@@ -1,7 +1,7 @@
+import { Forge, ForgeRouter, RouterInput } from '@lifeforge/server-utils'
 import { Router } from 'express'
 
-import { ForgeRouter, RouterInput } from '../typescript/forge_router.types'
-import { ForgeControllerBuilder } from './forgeController'
+import { registerController } from './controllerLogic'
 
 function isRouter(value: unknown): value is Router {
   return !!(
@@ -12,31 +12,13 @@ function isRouter(value: unknown): value is Router {
   )
 }
 
-/**
- * A utility function to define a router configuration object.
- *
- * This function serves as a type-safe way to create a router configuration
- * object that maps route names to either ForgeControllerBuilder instances,
- * Express Router instances, or nested router objects. It ensures that the
- * provided routes conform to the expected structure defined by the RouterInput type.
- *
- * @template T - The type of the router input configuration, extending RouterInput
- * @param routes - An object mapping route names to controllers, routers, or nested objects
- * @returns The same routes object, typed as T
- *
- * @example
- * ```typescript
- * const routes = forgeRouter({
- *   users: forgeController.query()...,
- *   posts: {
- *     list: forgeController.query()...,
- *     create: forgeController.mutation()...
- *   },
- * });
- * ```
- */
-function forgeRouter<T extends RouterInput>(routes: T): T {
-  return routes
+function isForgeController(value: unknown): value is Forge<any> {
+  return !!(
+    value &&
+    typeof value === 'object' &&
+    '__isForgeController' in value &&
+    (value as Record<string, unknown>).__isForgeController === true
+  )
 }
 
 /**
@@ -69,23 +51,33 @@ function registerRoutes<T extends RouterInput>(
 ): Router {
   const expressRouter = Router()
 
-  function registerRoutesRecursive(routes: RouterInput, router: Router): void {
+  function registerRoutesRecursive(
+    routes: RouterInput,
+    router: Router,
+    parentPath = ''
+  ): void {
     for (const [route, controller] of Object.entries(routes)) {
-      const finalRoute = route.replace(/\$/g, '__')
+      const finalRoute = route.replace(/\$/g, '--')
 
-      if (controller instanceof ForgeControllerBuilder) {
-        controller.register(router, finalRoute)
+      const currentPath = `${parentPath}/${finalRoute}`
+
+      if (isForgeController(controller)) {
+        registerController(controller, router, finalRoute)
       } else if (isRouter(controller)) {
         router.use(`/${finalRoute}`, controller)
       } else if (typeof controller === 'object' && controller !== null) {
         const nestedRouter = Router()
 
-        registerRoutesRecursive(controller as RouterInput, nestedRouter)
+        registerRoutesRecursive(
+          controller as RouterInput,
+          nestedRouter,
+          currentPath
+        )
 
         router.use(`/${finalRoute}`, nestedRouter)
       } else {
         console.warn(
-          `Skipping route ${route}: not a valid controller, router, or nested object`
+          `Skipping route "${route}" at path "${currentPath}": not a valid controller, router, or nested object. Value type: ${typeof controller}, Value: ${JSON.stringify(controller)?.slice(0, 100)}`
         )
       }
     }
@@ -95,7 +87,5 @@ function registerRoutes<T extends RouterInput>(
 
   return expressRouter
 }
-
-export default forgeRouter
 
 export { registerRoutes }

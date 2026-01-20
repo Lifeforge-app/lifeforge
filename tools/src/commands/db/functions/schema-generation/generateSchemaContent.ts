@@ -53,7 +53,7 @@ async function processCollectionSchema(
  * // const schemas = {
  * //   events: {
  * //     schema: z.object({ title: z.string(), ... }),
- * //     raw: { name: 'calendar__events', ... }
+ * //     raw: { name: 'events', ... }
  * //   },
  * // }
  * //
@@ -70,10 +70,11 @@ export default async function generateSchemaContent(
   }
 
   return `import z from 'zod'
+import { cleanSchemas } from '@lifeforge/server-utils'
 
-const schemas = {
+export const schemas = {
 ${schemaEntries.join('\n')}
 }
 
-export default schemas`
+export default cleanSchemas(schemas)`
 }

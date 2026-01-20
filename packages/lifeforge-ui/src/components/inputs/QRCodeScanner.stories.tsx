@@ -24,7 +24,7 @@ export const Default: Story = {
     }
   },
   render: args => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     const handleOpenScanner = () => {
       open(QrCodeScanner, args.data)
@@ -50,7 +50,7 @@ export const BarcodeScanner: Story = {
   },
 
   render: args => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     const handleOpenScanner = () => {
       open(QrCodeScanner, args.data)

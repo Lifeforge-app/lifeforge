@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 /**
  * Discovers all module directories that contain schema files.
@@ -38,7 +38,7 @@ export function listSchemaPaths(): string[] {
       .flat()
       .map(entry => path.dirname(entry).replace(/\/server$/, ''))
   } catch (error) {
-    Logging.error(`Failed to read modules directory: ${error}`)
+    logger.error(`Failed to read modules directory: ${error}`)
     process.exit(1)
   }
 

@@ -1,5 +1,5 @@
-import { createForgeAPIClient } from 'shared'
+import { createForgeProxy } from 'shared'
 
-const forgeAPI = createForgeAPIClient()
+const forgeAPI = createForgeProxy()
 
 export default forgeAPI

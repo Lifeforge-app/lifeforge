@@ -3,7 +3,7 @@ import path from 'path'
 import z from 'zod'
 
 import { validateMaintainerAccess } from '@/utils/github-cli'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import { checkAuth } from '@/utils/registry'
 
 export default async function validateModuleAuthor(modulePath: string) {
@@ -17,7 +17,7 @@ export default async function validateModuleAuthor(modulePath: string) {
   )
 
   if (!packageJson.success) {
-    Logging.actionableError(
+    logger.actionableError(
       'Invalid package.json',
       'Please fix the package.json file'
     )
@@ -32,7 +32,7 @@ export default async function validateModuleAuthor(modulePath: string) {
     if (usernamePrefix === 'lifeforge') {
       validateMaintainerAccess(auth.username || '')
     } else {
-      Logging.actionableError(
+      logger.actionableError(
         `Cannot publish as "${auth.username}" - package belongs to "${usernamePrefix}"`,
         `You can only publish packages starting with @lifeforge/${auth.username}--`
       )

@@ -1,9 +1,10 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { type IBackdropFilters, type IDashboardLayout } from 'shared'
 import { usePersonalization } from 'shared'
 import { useAuth } from 'shared'
+
+import forgeAPI from '@/forgeAPI'
 
 const UserPersonalizationContext = createContext<{
   changeFontFamily: (font: string) => Promise<void>
@@ -23,9 +24,11 @@ async function syncUserData(
   setUserData: React.Dispatch<React.SetStateAction<any>>
 ) {
   try {
-    await forgeAPI.user.personalization.updatePersonalization.mutate({
-      data
-    })
+    await forgeAPI
+      .untyped('/user/personalization/updatePersonalization')
+      .mutate({
+        data
+      })
 
     if (setUserData) {
       setUserData((oldData: any) => {
@@ -127,11 +130,11 @@ function UserPersonalizationProvider({
 
     if (userData?.bgImage !== '') {
       setBgImage(
-        forgeAPI.media.input({
+        forgeAPI.getMedia({
           collectionId: userData.collectionId,
           recordId: userData.id,
           fieldId: userData.bgImage
-        }).endpoint
+        })
       )
     }
 

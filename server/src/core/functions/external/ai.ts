@@ -1,38 +1,28 @@
+import {
+  ClientError,
+  FetchAIFunc,
+  getCallerModuleId
+} from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import Groq from 'groq-sdk'
 import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
 import OpenAI from 'openai'
 import { ResponseInputItem } from 'openai/resources/responses/responses.mjs'
-import z from 'zod'
 
-import { PBService, getAPIKey } from '@functions/database'
-import {
-  getCallerModuleId,
-  validateCallerAccess
-} from '@functions/database/getAPIKey'
-import { LoggingService } from '@functions/logging/loggingService'
-import { ClientError } from '@functions/routes/utils/response'
+import { getAPIKey } from '@functions/database'
+import { validateCallerAccess } from '@functions/database/getAPIKey'
+import { createServiceLogger } from '@functions/logging'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 
-export interface FetchAIParams<T extends z.ZodType<any> | undefined> {
-  pb: PBService
-  provider: 'groq' | 'openai'
-  model: string
-  messages: ResponseInputItem[]
-  structure?: T
-}
+const logger = createServiceLogger('AI')
 
-export async function fetchAI<
-  T extends z.ZodType<any> | undefined = undefined
->({
+const fetchAI: FetchAIFunc = async ({
   pb,
   provider,
   model,
   messages,
   structure
-}: FetchAIParams<T>): Promise<
-  (T extends z.ZodType<any> ? z.infer<T> : string) | null
-> {
+}) => {
   if (structure && provider !== 'openai') {
     throw new Error('Structure is only supported for OpenAI provider')
   }
@@ -45,11 +35,17 @@ export async function fetchAI<
 
   await validateCallerAccess(callerModule, provider)
 
-  const apiKey = await getAPIKey(provider, pb)
+  const apiKey = await getAPIKey(pb)(provider)
 
   if (!apiKey) {
     throw new ClientError(`API key for ${provider} not found.`)
   }
+
+  logger.debug(
+    `${chalk.blue(callerModule)} is sending ${chalk.blue(messages.length)} message(s) to ${chalk.green(
+      model
+    )} on provider ${chalk.green(provider)} using model: ${chalk.green(model)}.`
+  )
 
   if (provider === 'groq') {
     const client = new Groq({
@@ -64,8 +60,14 @@ export async function fetchAI<
     const res = response.choices[0]?.message?.content
 
     if (!res) {
+      logger.error('No response received from Groq model.')
+
       return null
     }
+
+    logger.debug(
+      `Received response (${chalk.blue(res.length)} characters) from Groq model: ${chalk.green(model)}`
+    )
 
     return res as any
   }
@@ -86,12 +88,13 @@ export async function fetchAI<
     const parsedResponse = completion.output_parsed
 
     if (!parsedResponse) {
+      logger.error('No structured response received from OpenAI model.')
+
       return null
     }
 
-    LoggingService.debug(
-      `Received structured response (${chalk.blue(Object.keys(parsedResponse).length)} fields) from OpenAI model: ${chalk.green(model)}`,
-      'AI'
+    logger.debug(
+      `Received structured response (${chalk.blue(Object.keys(parsedResponse).length)} fields) from OpenAI model: ${chalk.green(model)}`
     )
 
     return parsedResponse
@@ -105,13 +108,16 @@ export async function fetchAI<
   const res = response.output_text
 
   if (!res) {
+    logger.error('No text response received from OpenAI model.')
+
     return null
   }
 
-  LoggingService.debug(
-    `Received text response (${chalk.blue(res.length)} characters) from OpenAI model: ${chalk.green(model)}`,
-    'AI'
+  logger.debug(
+    `Received text response (${chalk.blue(res.length)} characters) from OpenAI model: ${chalk.green(model)}`
   )
 
   return res as any
 }
+
+export default fetchAI

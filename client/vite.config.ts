@@ -1,4 +1,5 @@
 // import MillionLint from '@million/lint'
+import federation from '@originjs/vite-plugin-federation'
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { globSync } from 'glob'
@@ -17,8 +18,44 @@ export const alias: Alias[] = [
     replacement: path.resolve(__dirname, './src/providers')
   },
   { find: '@utils', replacement: path.resolve(__dirname, './src/utils') },
-  { find: '@apps', replacement: path.resolve(__dirname, './src/apps') },
-  { find: '@server', replacement: path.resolve(__dirname, '../server/src') },
+  { find: '@core', replacement: path.resolve(__dirname, './src/core') },
+  {
+    find: '@server',
+    replacement: '@server',
+    customResolver: (id, importer) => {
+      // Check if importing from a module (apps/**/client/)
+      const moduleMatch = importer?.match(/\/apps\/([^/]+)\/client\//)
+      if (moduleMatch) {
+        // Resolve to the module's server directory
+        const moduleName = moduleMatch[1]
+        const serverPath = path.resolve(
+          __dirname,
+          '../apps',
+          moduleName,
+          'server',
+          id.replace('@server/', '').replace('@server', '')
+        )
+        const matched = globSync([
+          serverPath + '.ts',
+          serverPath + '/index.ts',
+          serverPath
+        ])
+        return matched[0] || serverPath
+      }
+      // Default: resolve to core server
+      const corePath = path.resolve(
+        __dirname,
+        '../server/src',
+        id.replace('@server/', '').replace('@server', '')
+      )
+      const matched = globSync([
+        corePath + '.ts',
+        corePath + '/index.ts',
+        corePath
+      ])
+      return matched[0] || corePath
+    }
+  },
   { find: '@modules', replacement: path.resolve(__dirname, '../apps') },
   {
     find: '@',
@@ -31,7 +68,7 @@ export const alias: Alias[] = [
         !importer?.includes('/client/src/')
 
       if (importer?.endsWith('manifest.ts')) {
-        rootDir = importer.replace('manifest.ts', 'client/')
+        rootDir = importer.replace('manifest.ts', 'src/')
       } else if (isAppModule) {
         const clientMatch = importer?.match(/(.+\/client)\//)
         rootDir = clientMatch?.[1] || ''
@@ -69,7 +106,28 @@ export default defineConfig({
         plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
       }
     }),
-    tailwindcss()
+    tailwindcss(),
+    federation({
+      name: 'host',
+      remotes: {
+        None: ''
+      },
+      shared: [
+        'react',
+        'react-dom',
+        {
+          shared: {
+            packagePath: './node_modules/shared'
+          },
+          'lifeforge-ui': {
+            packagePath: './node_modules/lifeforge-ui'
+          }
+        },
+        '@tanstack/react-query',
+        'i18next',
+        'react-i18next'
+      ]
+    })
   ],
   server: {
     fs: {

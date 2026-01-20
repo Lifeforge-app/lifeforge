@@ -1,47 +1,39 @@
+import {
+  CleanedSchemas,
+  CollectionKey,
+  ExpandConfig,
+  FieldSelection,
+  IUpdate,
+  IUpdateData,
+  IUpdateFactory
+} from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
-import {
-  CollectionKey,
-  ExpandConfig,
-  FieldKey,
-  FieldSelection,
-  SingleItemReturnType
-} from '@functions/database/PBService/typescript/pb_service'
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
-import { LoggingService } from '@functions/logging/loggingService'
 
-import { PBServiceBase } from '../typescript/PBServiceBase.interface'
+import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
- * Type for update data - allows any field from the collection with any value
- * @template TCollectionKey - The collection key type
- */
-type UpdateData<TCollectionKey extends CollectionKey> = Partial<
-  Record<
-    FieldKey<TCollectionKey> | `${FieldKey<TCollectionKey>}${'+' | '-'}`,
-    unknown
-  >
->
-
-/**
  * Class for updating existing records in PocketBase collections with type safety
+ * @template TSchemas - The flattened schemas type
  * @template TCollectionKey - The collection key type
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
 export class Update<
-  TCollectionKey extends CollectionKey,
-  TExpandConfig extends ExpandConfig<TCollectionKey> = Record<never, never>,
-  TFields extends FieldSelection<TCollectionKey, TExpandConfig> = Record<
+  TSchemas extends CleanedSchemas,
+  TCollectionKey extends CollectionKey<TSchemas>,
+  TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
     never,
     never
-  >
-> implements PBServiceBase<TCollectionKey, TExpandConfig>
-{
+  >,
+  TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
+    Record<never, never>
+> implements IUpdate<TSchemas, TCollectionKey, TExpandConfig, TFields> {
   private _recordId: string = ''
-  private _data: UpdateData<TCollectionKey> = {}
+  private _data: IUpdateData<TSchemas, TCollectionKey> = {}
   private _expand: string = ''
   private _fields: string = ''
 
@@ -71,7 +63,7 @@ export class Update<
    * @param data - The data object containing the fields to update
    * @returns The current Update instance for method chaining
    */
-  data(data: UpdateData<TCollectionKey>) {
+  data(data: IUpdateData<TSchemas, TCollectionKey>) {
     this._data = data
 
     return this
@@ -83,13 +75,15 @@ export class Update<
    * @param fields - Object specifying which fields to include in the response
    * @returns A new Update instance with the specified field selection
    */
-  fields<NewFields extends FieldSelection<TCollectionKey, TExpandConfig>>(
-    fields: NewFields
-  ): Update<TCollectionKey, TExpandConfig, NewFields> {
-    const newInstance = new Update<TCollectionKey, TExpandConfig, NewFields>(
-      this._pb,
-      this.collectionKey
-    )
+  fields<
+    NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
+  >(fields: NewFields) {
+    const newInstance = new Update<
+      TSchemas,
+      TCollectionKey,
+      TExpandConfig,
+      NewFields
+    >(this._pb, this.collectionKey)
 
     newInstance._recordId = this._recordId
     newInstance._data = this._data
@@ -105,10 +99,10 @@ export class Update<
    * @param expandConfig - Object specifying which relations to expand
    * @returns A new Update instance with the specified expand configuration
    */
-  expand<NewExpandConfig extends ExpandConfig<TCollectionKey>>(
+  expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
-  ): Update<TCollectionKey, NewExpandConfig> {
-    const newInstance = new Update<TCollectionKey, NewExpandConfig>(
+  ) {
+    const newInstance = new Update<TSchemas, TCollectionKey, NewExpandConfig>(
       this._pb,
       this.collectionKey
     )
@@ -128,9 +122,7 @@ export class Update<
    * @throws Error if record ID is not provided
    * @throws Error if data is not provided
    */
-  async execute(): Promise<
-    SingleItemReturnType<TCollectionKey, TExpandConfig, TFields>
-  > {
+  async execute() {
     if (!this.collectionKey) {
       throw new Error(
         `Collection key is required. Use .collection() method to set the collection key.`
@@ -156,19 +148,18 @@ export class Update<
         fields: this._fields
       })
 
-    LoggingService.debug(
+    PBLogger.debug(
       `${chalk.hex('#2ed573').bold('update')} Updated record with ID ${chalk
         .hex('#34ace0')
         .bold(
           this._recordId
-        )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`,
-      'DB'
+        )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
-    return result as unknown as SingleItemReturnType<
-      TCollectionKey,
-      TExpandConfig,
-      TFields
+    return result as Awaited<
+      ReturnType<
+        IUpdate<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
+      >
     >
   }
 }
@@ -186,19 +177,28 @@ export class Update<
  *   .execute()
  * ```
  */
-const update = (pb: PocketBase) => ({
+const update = <TSchemas extends CleanedSchemas>(
+  pb: PocketBase,
+  module: { id: string }
+): IUpdateFactory<TSchemas> => ({
   /**
    * Specifies the collection to update records in
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
    * @returns A new Update instance for the specified collection
    */
-  collection: <TCollectionKey extends CollectionKey>(
+  collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
-  ): Update<TCollectionKey> => {
-    const finalCollectionName = toPocketBaseCollectionName(collection)
+  ) => {
+    const finalCollectionName = toPocketBaseCollectionName(
+      collection,
+      module.id
+    )
 
-    return new Update<TCollectionKey>(pb, finalCollectionName as TCollectionKey)
+    return new Update<TSchemas, TCollectionKey>(
+      pb,
+      finalCollectionName as TCollectionKey
+    )
   }
 })
 

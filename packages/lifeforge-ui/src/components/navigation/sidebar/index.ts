@@ -8,3 +8,5 @@ export { default as SidebarTitle } from './SidebarTitle'
 export { default as SidebarWrapper } from './SidebarWrapper'
 
 export { default as MainSidebarItem } from './MainSidebarItem'
+
+export { useModuleSidebarState } from 'shared'

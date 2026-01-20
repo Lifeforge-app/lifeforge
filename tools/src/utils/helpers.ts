@@ -2,7 +2,7 @@ import { spawnSync } from 'child_process'
 import prompts from 'prompts'
 
 import executeCommand from './commands'
-import Logging from './logging'
+import logger from './logger'
 
 /**
  * Validates and retrieves multiple required environment variables.
@@ -29,7 +29,7 @@ export function getEnvVars<const T extends readonly string[]>(
   }
 
   if (missing.length > 0) {
-    Logging.actionableError(
+    logger.actionableError(
       `Missing required environment variables: ${missing.join(', ')}`,
       'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
     )
@@ -58,7 +58,7 @@ export function getEnvVar(varName: string, fallback?: string): string {
     return fallback
   }
 
-  Logging.actionableError(
+  logger.actionableError(
     `Missing required environment variable: ${varName}`,
     'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
   )
@@ -78,9 +78,7 @@ export function killExistingProcess(
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
 
-      Logging.debug(
-        `Killed process with PID: ${Logging.highlight(String(processKeywordOrPID))}`
-      )
+      logger.debug(`Killed process with PID: ${String(processKeywordOrPID)}`)
 
       return
     }
@@ -93,8 +91,8 @@ export function killExistingProcess(
     if (serverInstance) {
       executeCommand(`pkill -f "${processKeywordOrPID}"`)
 
-      Logging.debug(
-        `Killed process matching keyword: ${Logging.highlight(processKeywordOrPID)} (PID: ${Logging.highlight(serverInstance)})`
+      logger.debug(
+        `Killed process matching keyword: ${processKeywordOrPID} (PID: ${serverInstance})`
       )
 
       return parseInt(serverInstance, 10)

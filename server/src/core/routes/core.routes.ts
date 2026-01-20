@@ -1,34 +1,26 @@
-import moment from 'moment'
+import corsAnywhere from '@lib/corsAnywhere'
+import { forgeRouter } from '@lifeforge/server-utils'
+import dayjs from 'dayjs'
 import request from 'request'
 import z from 'zod'
 
-import { getEncryptionConfig, getPublicKey } from '@functions/encryption'
-import { LoggingService } from '@functions/logging/loggingService'
-import { forgeController, forgeRouter } from '@functions/routes'
+import { getPublicKey } from '@functions/encryption'
 
-const welcome = forgeController
+import forge from './forge'
+
+const welcome = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'Welcome to LifeForge API',
-    ms: 'Selamat datang ke API LifeForge',
-    'zh-CN': '欢迎使用LifeForge API',
-    'zh-TW': '歡迎使用LifeForge API'
-  })
+  .description('Welcome to LifeForge API')
   .input({})
   .callback(async () => 'Get ready to forge your life!' as const)
 
-const ping = forgeController
+const ping = forge
   .mutation()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'Ping the server',
-    ms: 'Ping pelayan',
-    'zh-CN': '向伺服器发送Ping',
-    'zh-TW': '向伺服器發送Ping'
-  })
+  .description('Ping the server')
   .input({
     body: z.object({
       timestamp: z.number().min(0)
@@ -36,34 +28,24 @@ const ping = forgeController
   })
   .callback(
     async ({ body: { timestamp } }) =>
-      `Pong at ${moment(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
+      `Pong at ${dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
   )
 
-const status = forgeController
+const status = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'Get server status',
-    ms: 'Dapatkan status pelayan',
-    'zh-CN': '获取服务器状态',
-    'zh-TW': '獲取伺服器狀態'
-  })
+  .description('Get server status')
   .input({})
   .callback(async () => ({
     environment: process.env.NODE_ENV || 'development'
   }))
 
-const getMedia = forgeController
+const getMedia = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'Retrieve media file from PocketBase',
-    ms: 'Dapatkan fail media dari PocketBase',
-    'zh-CN': '从PocketBase获取媒体文件',
-    'zh-TW': '從PocketBase獲取媒體文件'
-  })
+  .description('Retrieve media file from PocketBase')
   .input({
     query: z.object({
       collectionId: z.string(),
@@ -95,61 +77,13 @@ const getMedia = forgeController
     }
   )
 
-const corsAnywhere = forgeController
-  .query()
-  .description({
-    en: 'CORS Anywhere - Fetch external URL content',
-    ms: 'CORS Anywhere - Dapatkan kandungan URL luaran',
-    'zh-CN': 'CORS Anywhere - 获取外部URL内容',
-    'zh-TW': 'CORS Anywhere - 獲取外部URL內容'
-  })
-  .input({
-    query: z.object({
-      url: z.url()
-    })
-  })
-  .callback(async ({ query: { url } }) => {
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-      }
-    }).catch(() => {
-      LoggingService.error(`Failed to fetch URL: ${url}`)
-    })
-
-    if (!response) {
-      return
-    }
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch URL: ${url}`)
-    }
-
-    if (response.headers.get('content-type')?.includes('application/json')) {
-      const json = await response.json()
-
-      return json
-    }
-
-    return response.text()
-  })
-
-const encryptionPublicKey = forgeController
+const encryptionPublicKey = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'Get server public key for end-to-end encryption',
-    ms: 'Dapatkan kunci awam pelayan untuk penyulitan hujung-ke-hujung',
-    'zh-CN': '获取服务器公钥用于端到端加密',
-    'zh-TW': '獲取伺服器公鑰用於端到端加密'
-  })
+  .description('Get server public key for end-to-end encryption')
   .input({})
-  .callback(async () => ({
-    publicKey: getPublicKey(),
-    config: getEncryptionConfig()
-  }))
+  .callback(async () => getPublicKey())
 
 const coreRoutes = forgeRouter({
   '': welcome,

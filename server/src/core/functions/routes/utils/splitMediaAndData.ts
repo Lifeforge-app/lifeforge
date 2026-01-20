@@ -1,8 +1,7 @@
+import { MediaConfig } from '@lifeforge/server-utils'
 import chalk from 'chalk'
 
-import { LoggingService } from '@functions/logging/loggingService'
-
-import { MediaConfig } from '../typescript/forge_controller.types'
+import { coreLogger } from '@functions/logging'
 
 type MediaResponse = Record<
   string,
@@ -50,9 +49,8 @@ export const splitMediaAndData = (
   }
 
   if (Object.keys(media).length !== 0) {
-    LoggingService.debug(
-      'Received media: ' + chalk.blue(Object.keys(media).join(', ')),
-      'API'
+    coreLogger.debug(
+      'Received media: ' + chalk.blue(Object.keys(media).join(', '))
     )
   }
 

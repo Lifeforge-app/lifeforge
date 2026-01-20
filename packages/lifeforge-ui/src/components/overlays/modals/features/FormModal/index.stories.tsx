@@ -233,7 +233,7 @@ export const Default: Story = {
     }
   } as never,
   render: () => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     return (
       <Button
@@ -264,7 +264,7 @@ export const ListboxInputWithActionButtonOption: Story = {
     }
   } as never,
   render: () => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     const FormWithListboxInputActionButtonOption = ({
       onClose
@@ -334,7 +334,7 @@ export const DisabledFieldsWithTooltips: Story = {
     }
   } as never,
   render: () => {
-    const open = useModalStore(state => state.open)
+    const { open } = useModalStore()
 
     const FormWithDisabledFieldsAndTooltips = ({
       onClose

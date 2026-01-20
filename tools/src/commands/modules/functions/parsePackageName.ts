@@ -1,4 +1,5 @@
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
+import chalk from 'chalk'
 
 /**
  * Extract username and module name from a package name format
@@ -18,8 +19,8 @@ export function parsePackageName(
 
   if (!withoutScope.includes('--')) {
     if (!isLibModule) {
-      Logging.actionableError(
-        `Invalid package name: ${Logging.highlight(packageName)}`,
+      logger.actionableError(
+        `Invalid package name: ${chalk.blue(packageName)}`,
         'Package name must include "--" separator (e.g., username--module-name)'
       )
       process.exit(1)

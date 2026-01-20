@@ -1,10 +1,9 @@
-import moment from 'moment'
+import { ClientError } from '@lifeforge/server-utils'
+import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import z from 'zod'
 
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
-
+import forge from '../forge'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 
 // In-memory storage for pending QR login sessions
@@ -23,10 +22,10 @@ const pendingQRSessions = new Map<string, PendingQRSession>()
 
 // Cleanup expired sessions every minute
 setInterval(() => {
-  const now = moment()
+  const now = dayjs()
 
   for (const [sessionId, session] of pendingQRSessions) {
-    if (moment(session.expiresAt).isBefore(now)) {
+    if (dayjs(session.expiresAt).isBefore(now)) {
       pendingQRSessions.delete(sessionId)
     }
   }
@@ -37,15 +36,10 @@ setInterval(() => {
  * Called by the unauthenticated desktop client.
  * Data is already encrypted by forgeAPI layer.
  */
-const registerQRSession = forgeController
+export const registerQRSession = forge
   .mutation()
   .noAuth()
-  .description({
-    en: 'Register a new QR login session',
-    ms: 'Daftarkan sesi log masuk QR baharu',
-    'zh-CN': '注册新的二维码登录会话',
-    'zh-TW': '註冊新的二維碼登入會話'
-  })
+  .description('Register a new QR login session')
   .input({
     body: z.object({
       sessionId: z.string().uuid(),
@@ -62,8 +56,8 @@ const registerQRSession = forgeController
     const session: PendingQRSession = {
       sessionId,
       browserInfo,
-      createdAt: moment().toISOString(),
-      expiresAt: moment().add(5, 'minutes').toISOString(),
+      createdAt: dayjs().toISOString(),
+      expiresAt: dayjs().add(5, 'minutes').toISOString(),
       status: 'pending'
     }
 
@@ -78,14 +72,9 @@ const registerQRSession = forgeController
 /**
  * Approve a QR login session from an authenticated mobile device.
  */
-const approveQRLogin = forgeController
+export const approveQRLogin = forge
   .mutation()
-  .description({
-    en: 'Approve a QR login request',
-    ms: 'Luluskan permintaan log masuk QR',
-    'zh-CN': '批准二维码登录请求',
-    'zh-TW': '批准二維碼登入請求'
-  })
+  .description('Approve a QR login request')
   .input({
     body: z.object({
       sessionId: z.string().uuid()
@@ -105,7 +94,7 @@ const approveQRLogin = forgeController
     }
 
     // Check if expired
-    if (moment(pendingSession.expiresAt).isBefore(moment())) {
+    if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
       pendingQRSessions.delete(sessionId)
       throw new ClientError('Session expired', 400)
     }
@@ -158,15 +147,10 @@ const approveQRLogin = forgeController
  * Check the status of a QR login session.
  * Fallback for WebSocket connection issues.
  */
-const checkQRSessionStatus = forgeController
+export const checkQRSessionStatus = forge
   .query()
   .noAuth()
-  .description({
-    en: 'Check QR login session status',
-    ms: 'Semak status sesi log masuk QR',
-    'zh-CN': '检查二维码登录会话状态',
-    'zh-TW': '檢查二維碼登入會話狀態'
-  })
+  .description('Check QR login session status')
   .input({
     query: z.object({
       sessionId: z.string().uuid()
@@ -180,7 +164,7 @@ const checkQRSessionStatus = forgeController
     }
 
     // Check if expired
-    if (moment(pendingSession.expiresAt).isBefore(moment())) {
+    if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
       pendingQRSessions.delete(sessionId)
 
       return { status: 'expired' as const }
@@ -204,9 +188,3 @@ const checkQRSessionStatus = forgeController
       expiresAt: pendingSession.expiresAt
     }
   })
-
-export default forgeRouter({
-  registerQRSession,
-  approveQRLogin,
-  checkQRSessionStatus
-})

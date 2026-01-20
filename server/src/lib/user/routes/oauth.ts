@@ -1,24 +1,18 @@
-import moment from 'moment'
+import { ClientError } from '@lifeforge/server-utils'
+import dayjs from 'dayjs'
 import { v4 } from 'uuid'
 import z from 'zod'
 
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
-
 import { currentSession } from '..'
+import forge from '../forge'
 
 let currentCodeVerifier: string | null = null
 
-const listProviders = forgeController
+export const listProviders = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'Retrieve available OAuth providers',
-    ms: 'Dapatkan penyedia OAuth yang tersedia',
-    'zh-CN': '获取可用的OAuth提供商',
-    'zh-TW': '獲取可用的OAuth提供商'
-  })
+  .description('Retrieve available OAuth providers')
   .input({})
   .callback(async ({ pb }) => {
     return (
@@ -26,16 +20,11 @@ const listProviders = forgeController
     ).oauth2.providers.map(e => e.name)
   })
 
-const getEndpoint = forgeController
+export const getEndpoint = forge
   .query()
   .noAuth()
   .noEncryption()
-  .description({
-    en: 'Get OAuth authorization URL for provider',
-    ms: 'Dapatkan URL kebenaran OAuth untuk penyedia',
-    'zh-CN': '获取提供商的OAuth授权URL',
-    'zh-TW': '獲取提供商的OAuth授權URL'
-  })
+  .description('Get OAuth authorization URL for provider')
   .input({
     query: z.object({
       provider: z.string()
@@ -59,15 +48,10 @@ const getEndpoint = forgeController
     return endpoint
   })
 
-const verify = forgeController
+export const verify = forge
   .mutation()
   .noAuth()
-  .description({
-    en: 'Verify OAuth authorization callback',
-    ms: 'Sahkan panggilan balik kebenaran OAuth',
-    'zh-CN': '验证OAuth授权回调',
-    'zh-TW': '驗證OAuth授權回調'
-  })
+  .description('Verify OAuth authorization callback')
   .input({
     body: z.object({
       provider: z.string(),
@@ -101,9 +85,7 @@ const verify = forgeController
       if (authData) {
         if (pb.instance.authStore.record?.twoFASecret) {
           currentSession.token = pb.instance.authStore.token
-          currentSession.tokenExpireAt = moment()
-            .add(5, 'minutes')
-            .toISOString()
+          currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
           currentSession.tokenId = v4()
 
           return {
@@ -123,9 +105,3 @@ const verify = forgeController
       currentCodeVerifier = null
     }
   })
-
-export default forgeRouter({
-  listProviders,
-  getEndpoint,
-  verify
-})

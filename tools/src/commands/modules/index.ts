@@ -1,7 +1,6 @@
 import type { Command } from 'commander'
 
-import generateRouteRegistry from './functions/registry/generateRouteRegistry'
-import generateSchemaRegistry from './functions/registry/generateSchemaRegistry'
+import { buildModuleHandler } from './handlers/buildModuleHandler'
 import { compareModuleHandler } from './handlers/compareModuleHandler'
 import { createModuleHandler } from './handlers/createModuleHandler'
 import { installModuleHandler } from './handlers/installModuleHandler'
@@ -30,6 +29,7 @@ export default function setup(program: Command): void {
       '<modules...>',
       'Modules to install, e.g., @lifeforge/lifeforge--calendar'
     )
+    .option('--dev', 'Keep source code and git repository for development')
     .action(installModuleHandler)
 
   command
@@ -50,6 +50,17 @@ export default function setup(program: Command): void {
     .action(upgradeModuleHandler)
 
   command
+    .command('build')
+    .alias('b')
+    .description('Build module client bundles for federation')
+    .argument('[module]', 'Module to build (optional, builds all if omitted)')
+    .option(
+      '--docker',
+      'Build for Docker (outputs to dist-docker with /api base)'
+    )
+    .action(buildModuleHandler)
+
+  command
     .command('create')
     .alias('new')
     .description('Create a new LifeForge module scaffold')
@@ -68,14 +79,6 @@ export default function setup(program: Command): void {
       'Publish as official module (requires maintainer access)'
     )
     .action(publishModuleHandler)
-
-  command
-    .command('gen-registry')
-    .description('Generate routes and schema registry files for all modules')
-    .action(() => {
-      generateRouteRegistry()
-      generateSchemaRegistry()
-    })
 
   command
     .command('compare')

@@ -2,11 +2,11 @@ import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 import { useMainSidebarState } from 'shared'
+import { useModuleHeaderState } from 'shared'
 
 import { Button } from '@components/inputs'
 
 import ContextMenu from '../overlays/ContextMenu'
-import { useModuleHeaderState } from './ModuleHeaderStateProvider'
 
 interface ModuleHeaderProps {
   icon?: string

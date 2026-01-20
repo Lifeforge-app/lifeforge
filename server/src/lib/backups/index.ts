@@ -1,20 +1,17 @@
-import moment from 'moment'
+import { createForge, forgeRouter } from '@lifeforge/server-utils'
+import dayjs from 'dayjs'
 import z from 'zod'
 
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
-import { forgeController, forgeRouter } from '@functions/routes'
 
-const list = forgeController
+const forge = createForge({}, 'backups')
+
+const list = forge
   .query()
-  .description({
-    en: 'Retrieve all database backups',
-    ms: 'Dapatkan semua sandaran pangkalan data',
-    'zh-CN': '获取所有数据库备份',
-    'zh-TW': '獲取所有資料庫備份'
-  })
+  .description('Retrieve all database backups')
   .input({})
   .callback(async () => {
     const pb = await connectToPocketBase(validateEnvironmentVariables())
@@ -28,14 +25,9 @@ const list = forgeController
     }[]
   })
 
-const download = forgeController
+const download = forge
   .query()
-  .description({
-    en: 'Download a database backup file',
-    ms: 'Muat turun fail sandaran pangkalan data',
-    'zh-CN': '下载数据库备份文件',
-    'zh-TW': '下載資料庫備份文件'
-  })
+  .description('Download a database backup file')
   .input({
     query: z.object({
       key: z.string()
@@ -61,18 +53,13 @@ const download = forgeController
     res.setHeader('Content-Disposition', `attachment; filename="${key}.zip"`)
     res.setHeader('Content-Length', buffer.length)
 
-    // @ts-expect-error - custom response type
+    // @ts-expect-error - res type
     res.send(buffer)
   })
 
-const create = forgeController
+const create = forge
   .mutation()
-  .description({
-    en: 'Create a new database backup',
-    ms: 'Cipta sandaran pangkalan data baharu',
-    'zh-CN': '创建新的数据库备份',
-    'zh-TW': '創建新的資料庫備份'
-  })
+  .description('Create a new database backup')
   .input({
     body: z.object({
       backupName: z.string().optional()
@@ -83,20 +70,15 @@ const create = forgeController
     const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     if (!backupName) {
-      backupName = `pb_backup_lifeforge_${moment().format('YYYYMMDD_HHmmss')}.zip`
+      backupName = `pb_backup_lifeforge_${dayjs().format('YYYYMMDD_HHmmss')}.zip`
     }
 
     await pb.backups.create(backupName)
   })
 
-const remove = forgeController
+const remove = forge
   .mutation()
-  .description({
-    en: 'Delete a database backup',
-    ms: 'Padam sandaran pangkalan data',
-    'zh-CN': '删除数据库备份',
-    'zh-TW': '刪除資料庫備份'
-  })
+  .description('Delete a database backup')
   .input({
     query: z.object({
       key: z.string()

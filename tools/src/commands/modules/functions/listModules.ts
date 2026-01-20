@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
-import Logging from '@/utils/logging'
-import { readRootPackageJson } from '@/utils/packageJson'
+import logger from '@/utils/logger'
+import { readPackageJson } from '@/utils/packageJson'
 
 import normalizePackage from '../../../utils/normalizePackage'
 
@@ -24,9 +24,9 @@ interface ModuleBasicInfo {
 export default function listModules(
   exitIfNoModule = false
 ): Record<string, ModuleBasicInfo> {
-  const rootPackageJson = readRootPackageJson()
+  const appsPackageJson = readPackageJson('apps')
 
-  const allModules = Object.keys(rootPackageJson.dependencies ?? {})
+  const allModules = Object.keys(appsPackageJson.dependencies ?? {})
     .filter(dep => dep.startsWith('@lifeforge/'))
     .filter(dep => !dep.replace('@lifeforge/', '').startsWith('lang-'))
 
@@ -47,7 +47,7 @@ export default function listModules(
   }
 
   if (exitIfNoModule && Object.keys(modules).length === 0) {
-    Logging.info('No @lifeforge/* modules found. Exiting...')
+    logger.info('No @lifeforge/* modules found. Exiting...')
     process.exit(0)
   }
 
