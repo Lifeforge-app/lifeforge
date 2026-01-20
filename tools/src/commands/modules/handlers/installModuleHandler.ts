@@ -31,7 +31,7 @@ interface InstallOptions {
  *
  * After installation:
  * - Builds module client bundles for federation (both modes)
- * - Generates database migrations if schema.ts exists (--dev only)
+ * - Generates database migrations if schema.ts exists
  */
 export async function installModuleHandler(
   moduleNames: string[],
@@ -103,8 +103,8 @@ export async function installModuleHandler(
     await buildModuleHandler(moduleName, { docker: true })
   }
 
-  // Generate migrations for new modules (only in dev mode and non-Docker environment)
-  if (isDevMode && !isDockerMode()) {
+  // Generate migrations for new modules (skip in Docker environment)
+  if (!isDockerMode()) {
     for (const moduleName of installed) {
       const { targetDir } = normalizePackage(moduleName)
 
