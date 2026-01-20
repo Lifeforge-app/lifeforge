@@ -3,7 +3,7 @@ import weekOfYear from 'dayjs/plugin/weekOfYear'
 import fs from 'fs'
 import path from 'path'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 dayjs.extend(weekOfYear)
 
@@ -30,7 +30,7 @@ export default function createChangelogHandler(year?: string, week?: string) {
   const currentWeek = Number(week) || dayjs().week()
 
   if (!fs.existsSync(CHANGELOG_PATH)) {
-    Logging.error(`Changelog directory not found at path: ${CHANGELOG_PATH}`)
+    logger.error(`Changelog directory not found at path: ${CHANGELOG_PATH}`)
     process.exit(1)
   }
 
@@ -43,7 +43,7 @@ export default function createChangelogHandler(year?: string, week?: string) {
   const filePath = `${yearPath}/${String(currentWeek).padStart(2, '0')}.mdx`
 
   if (fs.existsSync(filePath)) {
-    Logging.error(
+    logger.error(
       `Changelog file for year ${targetYear} week ${currentWeek} already exists at path: ${filePath}`
     )
     process.exit(1)
@@ -51,5 +51,5 @@ export default function createChangelogHandler(year?: string, week?: string) {
 
   fs.writeFileSync(filePath, boilerPlate)
 
-  Logging.success(`Created changelog file at path: ${filePath}`)
+  logger.success(`Created changelog file at path: ${filePath}`)
 }

@@ -10,7 +10,7 @@
   ],
   "importOrder": [
     "^shared/(.*)$",
-    "@apps/(.*)$",
+    "@core/(.*)$",
     "@components/(.*)$",
     "@functions/(.*)$",
     "@/(.*)$",

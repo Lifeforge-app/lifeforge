@@ -1,6 +1,8 @@
+import chalk from 'chalk'
+
 import { bunInstall, installPackage } from '@/utils/commands'
 import { confirmAction } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
 import { checkAuth } from '../../../utils/registry'
@@ -19,7 +21,7 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
   let upgradedCount = 0
 
   for (const upgrade of upgrades) {
-    Logging.info(`Upgrading ${Logging.highlight(upgrade.name)}...`)
+    logger.info(`Upgrading ${chalk.blue(upgrade.name)}...`)
 
     try {
       installPackage(
@@ -27,18 +29,16 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
         normalizePackage(upgrade.name, 'locale').targetDir
       )
 
-      Logging.success(`Upgraded ${Logging.highlight(upgrade.name)}`)
+      logger.success(`Upgraded ${chalk.blue(upgrade.name)}`)
       upgradedCount++
     } catch (error) {
-      Logging.error(
-        `Failed to upgrade ${Logging.highlight(upgrade.name)}: ${error}`
-      )
+      logger.error(`Failed to upgrade ${chalk.blue(upgrade.name)}: ${error}`)
     }
   }
 
   if (upgradedCount > 0) {
     bunInstall()
-    Logging.success(
+    logger.success(
       `Upgraded ${upgradedCount} locale${upgradedCount > 1 ? 's' : ''}`
     )
   }

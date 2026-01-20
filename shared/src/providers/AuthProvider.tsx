@@ -260,12 +260,12 @@ export default function AuthProvider({
 
   const getAvatarURL = useCallback((): string => {
     if (userData) {
-      return forgeAPI.media.input({
+      return forgeAPI.getMedia({
         collectionId: userData.collectionId,
         recordId: userData.id,
         fieldId: userData.avatar,
         thumb: '256x0'
-      }).endpoint
+      })
     }
 
     return ''

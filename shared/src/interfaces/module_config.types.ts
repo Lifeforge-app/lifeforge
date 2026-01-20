@@ -1,14 +1,10 @@
 import z from 'zod'
 
+import type WidgetConfig from './widget_config.types'
+
 export interface ModuleConfig {
-  provider?:
-    | React.LazyExoticComponent<React.ComponentType<any>>
-    | (() => React.ReactElement)
-  routes: Record<
-    string,
-    | React.LazyExoticComponent<React.ComponentType<any>>
-    | (() => React.ReactElement)
-  >
+  provider?: React.LazyExoticComponent<React.ComponentType<any>>
+  routes: Record<string, React.LazyExoticComponent<React.ComponentType<any>>>
   subsection?: {
     label: string
     icon: string
@@ -17,6 +13,10 @@ export interface ModuleConfig {
   hidden?: boolean
   disabled?: boolean | (() => Promise<boolean>)
   clearQueryOnUnmount?: boolean
+  widgets?: (() => Promise<{
+    default: React.ComponentType<any>
+    config: WidgetConfig
+  }>)[]
 }
 
 export const packageJSONSchema = z.object({

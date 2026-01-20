@@ -1,9 +1,9 @@
 import { type UseQueryOptions, useQuery } from '@tanstack/react-query'
-import type { ForgeAPIClientController, InferOutput } from 'shared'
+import type { ForgeEndpoint, InferOutput } from 'shared'
 
 import { ErrorScreen, LoadingScreen } from '@components/feedback'
 
-function WithQueryData<T extends ForgeAPIClientController>({
+function WithQueryData<T extends ForgeEndpoint>({
   controller,
   queryOptions,
   children,

@@ -2,9 +2,10 @@ import fs from 'fs'
 import prompts from 'prompts'
 
 import { ROOT_DIR } from '@/constants/constants'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../handlers/createModuleHandler'
+import chalk from 'chalk'
 
 export async function promptModuleType(): Promise<
   keyof typeof AVAILABLE_TEMPLATE_MODULE_TYPES
@@ -16,14 +17,14 @@ export async function promptModuleType(): Promise<
       message: 'Select the type of module to create:',
       choices: Object.entries(AVAILABLE_TEMPLATE_MODULE_TYPES).map(
         ([value, title]) => ({
-          title: `${title} ${Logging.dim(`(${value})`)}`,
+          title: `${title} ${chalk.dim(`(${value})`)}`,
           value
         })
       )
     },
     {
       onCancel: () => {
-        Logging.error('Module creation cancelled by user.')
+        logger.error('Module creation cancelled by user.')
         process.exit(0)
       }
     }
@@ -38,26 +39,26 @@ export function checkModuleTypeAvailability(
   const templateDir = `${ROOT_DIR}/tools/src/templates/${moduleType}`
 
   if (!fs.existsSync(templateDir)) {
-    Logging.error(
+    logger.error(
       `Template for module type "${moduleType}" does not exist at path: ${templateDir}`
     )
     process.exit(1)
   }
 
-  Logging.debug(
+  logger.debug(
     `Template for module type "${moduleType}" found at path: ${templateDir}`
   )
 
   const files = fs.readdirSync(templateDir)
 
   if (files.length === 0) {
-    Logging.error(
+    logger.error(
       `Template directory for module type "${moduleType}" is empty at path: ${templateDir}`
     )
     process.exit(1)
   }
 
-  Logging.debug(
+  logger.debug(
     `Template for module type "${moduleType}" is available and ready to use.`
   )
 }

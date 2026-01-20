@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
-
-import { useModuleSidebarState } from '@components/layout'
+import { useModuleSidebarState } from 'shared'
 
 function SidebarActionButton({
   icon,

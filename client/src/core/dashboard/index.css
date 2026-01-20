@@ -1,0 +1,29 @@
+@import 'tailwindcss' source ('.');
+
+@reference '../../../../packages/lifeforge-ui/dist';
+
+.react-grid-layout {
+  @apply isolate;
+}
+
+.react-grid-item {
+  z-index: 0;
+}
+
+.react-grid-item:has(.higher-z) {
+  z-index: 1;
+}
+
+.react-grid-item.react-grid-placeholder {
+  @apply bg-custom-500!;
+}
+
+.agent-response {
+  & ul {
+    @apply list-disc pl-5;
+  }
+
+  & ol {
+    @apply list-decimal pl-5;
+  }
+}

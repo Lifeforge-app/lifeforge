@@ -2,13 +2,15 @@ import ReactDOM from 'react-dom/client'
 import {
   APIEndpointProvider,
   PersonalizationProvider,
-  createForgeAPIClient
+  createForgeProxy
 } from 'shared'
+
+import ModalProvider from 'shared/dist/providers/ModalStoreProvider'
 
 import App from './App'
 import './index.css'
 
-const forgeAPI = createForgeAPIClient()
+const forgeAPI = createForgeProxy()
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <APIEndpointProvider endpoint={import.meta.env.VITE_API_URL}>
@@ -20,7 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       }}
       forgeAPI={forgeAPI}
     >
-      <App />
+      <ModalProvider>
+        <App />
+      </ModalProvider>
     </PersonalizationProvider>
   </APIEndpointProvider>
 )

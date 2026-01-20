@@ -27,24 +27,19 @@
     "verbatimModuleSyntax": true,
     "composite": true,
     "rootDir": "../",
+    "baseUrl": "./",
     "paths": {
       "@/*": [
         "./src/*"
       ],
-      "@server/*": [
-        "../server/src/*"
+      "@core/*": [
+        "../core/*"
       ],
-      "@modules/*": [
-        "../apps/*"
-      ]
     }
   },
   "include": [
     "./src/**/*",
-  ],
-  "references": [
-    {
-      "path": "../server/tsconfig.json"
-    }
+    "src/federation/providers/CoreFederationProvider.tsx",
+    "src/federation",
   ]
 }

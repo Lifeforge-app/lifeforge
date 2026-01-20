@@ -25,16 +25,10 @@ function SidebarSubsectionItem({
 
   const locationDependentStyles = useMemo(
     () =>
-      location.pathname.split('/').slice(1)[0] ===
-        _.kebabCase(label.toString()) &&
-      (location.pathname.split('/').slice(1)[1] === path ||
-        (location.pathname
-          .replace(_.kebabCase(label.toString()), '')
-          .replace(/\//g, '') === '' &&
-          subsectionLabel === 'Dashboard'))
+      location.pathname === path
         ? 'bg-bg-200/50 hover:bg-bg-200/50! shadow-custom dark:bg-bg-800 dark:hover:bg-bg-800!'
         : 'text-bg-500',
-    [path, subsectionLabel, location.pathname]
+    [path, location.pathname]
   )
 
   const handleClick = useCallback(() => {

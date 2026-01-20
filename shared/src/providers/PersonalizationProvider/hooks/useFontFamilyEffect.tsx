@@ -67,11 +67,11 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
           }
 
           // Construct the PocketBase file URL
-          const fileUrl = forgeAPI.media.input({
+          const fileUrl = forgeAPI.getMedia({
             collectionId: fontData.collectionId,
             recordId: fontData.id,
             fieldId: fontData.file
-          }).endpoint
+          })
 
           // Create @font-face rule for the custom font
           const fontFace = `@font-face {

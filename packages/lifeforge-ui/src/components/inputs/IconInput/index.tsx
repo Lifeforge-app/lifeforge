@@ -43,7 +43,7 @@ function IconInput({
   namespace,
   errorMsg
 }: IconInputProps) {
-  const open = useModalStore(state => state.open)
+  const { open } = useModalStore()
 
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 

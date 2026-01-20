@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { getEnvVar, isDockerMode } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import { ROOT_DIR } from './constants'
 
@@ -12,7 +12,9 @@ dotenv.config({
   quiet: true
 })
 
-export const PB_DIR = getEnvVar('PB_DIR', isDockerMode() ? '' : 'database')
+export const PB_DIR = path.resolve(
+  getEnvVar('PB_DIR', isDockerMode() ? '' : 'database')
+)
 
 export const PB_DATA_DIR = isDockerMode()
   ? path.resolve(PB_DIR)
@@ -29,10 +31,12 @@ export const PB_KWARGS = [
   `--migrationsDir=${PB_MIGRATIONS_DIR}`
 ]
 
-// Straightaway exit if PB_DIR is not accessible
-try {
-  fs.accessSync(PB_DIR)
-} catch (error) {
-  Logging.error(`PB_DIR is not accessible: ${error}`)
-  process.exit(1)
+// Straightaway exit if PB_DIR is not accessible (skip in Docker mode)
+if (!isDockerMode()) {
+  try {
+    fs.accessSync(PB_DIR)
+  } catch (error) {
+    logger.error(`PB_DIR is not accessible: ${error}`)
+    process.exit(1)
+  }
 }

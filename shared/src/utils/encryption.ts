@@ -139,7 +139,7 @@ export async function initializeEncryption(apiHost: string): Promise<void> {
 
     const result = await response.json()
 
-    const { publicKey } = result.data || result
+    const publicKey = result.data || result
 
     if (!publicKey) {
       throw new Error('No public key in response')

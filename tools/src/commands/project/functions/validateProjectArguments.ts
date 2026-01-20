@@ -1,4 +1,4 @@
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import { PROJECTS } from '../constants/projects'
 
@@ -26,7 +26,7 @@ export function validateProjectArguments(projects: string[] | undefined): void {
   const validation = validateProjects(projects, validProjects)
 
   if (!validation.isValid) {
-    Logging.actionableError(
+    logger.actionableError(
       `Invalid project(s): ${validation.invalidProjects.join(', ')}`,
       'Available projects: ' + validProjects.join(', ')
     )

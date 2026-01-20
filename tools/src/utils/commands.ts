@@ -1,11 +1,12 @@
+import { LOG_LEVELS, type LogLevel } from '@lifeforge/log'
 import { type IOType, spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 
-import Logging, { LEVEL_ORDER } from './logging'
-import { addDependency } from './packageJson'
+import logger from './logger'
+import { type PackageJsonTarget, addDependency } from './packageJson'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
@@ -33,7 +34,7 @@ export default function executeCommand(
   try {
     cmd = typeof command === 'function' ? command() : command
   } catch (error) {
-    Logging.actionableError(
+    logger.actionableError(
       `Failed to generate command: ${error}`,
       'Check the command generation logic for errors'
     )
@@ -41,7 +42,7 @@ export default function executeCommand(
   }
 
   try {
-    Logging.debug(`Executing: ${cmd}`)
+    logger.debug(`Executing: ${cmd}`)
 
     const [toBeExecuted, ...args] = cmd.split(' ')
 
@@ -61,7 +62,7 @@ export default function executeCommand(
     }
 
     if (!options.stdio || options.stdio === 'inherit') {
-      Logging.debug(`Completed: ${cmd}`)
+      logger.debug(`Completed: ${cmd}`)
     }
 
     return result.stdout?.toString().trim() || ''
@@ -70,11 +71,11 @@ export default function executeCommand(
       throw error
     }
 
-    Logging.actionableError(
+    logger.actionableError(
       `Command execution failed: ${cmd}`,
       'Check if the command exists and you have the necessary permissions'
     )
-    Logging.debug(`Error details: ${error}`)
+    logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }
@@ -85,7 +86,11 @@ export default function executeCommand(
 export function bunInstall() {
   executeCommand('bun install', {
     cwd: ROOT_DIR,
-    stdio: Logging.level > LEVEL_ORDER['debug'] ? 'pipe' : 'inherit'
+    stdio:
+      LOG_LEVELS.indexOf(logger.instance.level as LogLevel) >
+      LOG_LEVELS.indexOf('debug')
+        ? 'pipe'
+        : 'inherit'
   })
 }
 
@@ -97,35 +102,44 @@ export function bunInstall() {
  *
  * @param fullName - The full package name (e.g., `@lifeforge/lifeforge--calendar`)
  * @param targetDir - The absolute path to copy the package to
+ * @param target - The package.json target to update (defaults to 'apps')
  */
-export function installPackage(fullName: string, targetDir: string) {
+export function installPackage(
+  fullName: string,
+  targetDir: string,
+  target: PackageJsonTarget = 'apps'
+) {
   if (fs.existsSync(targetDir)) {
     fs.rmSync(targetDir, { recursive: true, force: true })
   }
 
-  Logging.debug(`Installing ${Logging.highlight(fullName)} from registry...`)
+  logger.debug(`Installing ${fullName} from registry...`)
 
   executeCommand(`bun add ${fullName}@latest`, {
     cwd: ROOT_DIR,
-    stdio: Logging.level > LEVEL_ORDER['info'] ? 'pipe' : 'inherit'
+    stdio:
+      LOG_LEVELS.indexOf(logger.instance.level as LogLevel) >
+      LOG_LEVELS.indexOf('info')
+        ? 'pipe'
+        : 'inherit'
   })
 
   const installedPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
   if (!fs.existsSync(installedPath)) {
-    Logging.actionableError(
-      `Failed to install ${Logging.highlight(fullName)}`,
+    logger.actionableError(
+      `Failed to install ${fullName}`,
       'Check if the package exists in the registry'
     )
 
     process.exit(1)
   }
 
-  Logging.debug(`Copying ${Logging.highlight(fullName)} to ${targetDir}...`)
+  logger.debug(`Copying ${fullName} to ${targetDir}...`)
 
   fs.cpSync(installedPath, targetDir, { recursive: true, dereference: true })
 
-  addDependency(fullName)
+  addDependency(fullName, target)
 
   if (fs.existsSync(installedPath)) {
     fs.rmSync(installedPath, { recursive: true, force: true })

@@ -1,0 +1,148 @@
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
+import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
+import { useMemo } from 'react'
+import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
+import { useTranslation } from 'react-i18next'
+import { useDivSize, usePersonalization } from 'shared'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
+
+import { useWidgets } from '../providers/WidgetProvider'
+import NotFoundWidget from './NotFoundWidget'
+
+function getBreakpointFromWidth(width: number) {
+  if (width >= 1200) {
+    return 'lg'
+  } else if (width >= 996) {
+    return 'md'
+  } else if (width >= 768) {
+    return 'sm'
+  } else if (width >= 480) {
+    return 'xs'
+  } else {
+    return 'xxs'
+  }
+}
+
+function DashboardGrid({
+  wrapperRef,
+  canLayoutChange
+}: {
+  wrapperRef: React.RefObject<HTMLDivElement | null>
+  canLayoutChange: boolean
+}) {
+  const { t } = useTranslation('common.dashboard')
+
+  const { widgets } = useWidgets()
+
+  const COMPONENTS = useMemo(
+    () =>
+      Object.fromEntries(
+        Object.entries(widgets).map(([key, value]) => [key, value.component])
+      ),
+    [widgets]
+  )
+
+  const { width, height } = useDivSize(wrapperRef)
+
+  const { dashboardLayout: enabledWidgets } = usePersonalization()
+
+  const { changeDashboardLayout } = useUserPersonalization()
+
+  if (width === 0) {
+    return <LoadingScreen message={t('loading')} />
+  }
+
+  if (Object.values(enabledWidgets).every(e => e.length === 0)) {
+    return (
+      <div className="flex h-full flex-1 items-center justify-center">
+        <EmptyStateScreen
+          icon="tabler:hammer"
+          message={{
+            id: 'welcome',
+            namespace: 'common.dashboard'
+          }}
+        />
+      </div>
+    )
+  }
+
+  return (
+    <ResponsiveGridLayout
+      autoSize
+      className={canLayoutChange ? 'pb-64' : undefined}
+      cols={
+        {
+          lg: 8,
+          md: 8,
+          sm: 4,
+          xs: 4,
+          xxs: 4
+        } as any
+      }
+      containerPadding={[0, 0]}
+      isDraggable={canLayoutChange}
+      isDroppable={canLayoutChange}
+      isResizable={canLayoutChange}
+      layouts={enabledWidgets}
+      margin={[10, 10]}
+      rowHeight={100}
+      width={width}
+      onLayoutChange={(_: any, layouts: any) => {
+        changeDashboardLayout(layouts)
+      }}
+    >
+      {[
+        ...new Set(
+          Object.values(enabledWidgets)
+            .map(widgetArray => widgetArray.map(widget => widget.i))
+            .flat()
+        )
+      ].map(widgetId => (
+        <div
+          key={widgetId}
+          className={clsx('relative', canLayoutChange && 'cursor-move')}
+        >
+          {(() => {
+            if (!width || !height) {
+              return null
+            }
+
+            const Component = (COMPONENTS[
+              widgetId as keyof typeof COMPONENTS
+            ] ?? NotFoundWidget) as React.FC<{
+              dimension: { w: number; h: number }
+              widgetId?: string
+            }>
+
+            const dimension = (
+              enabledWidgets[getBreakpointFromWidth(width)] || []
+            ).find(l => l.i === widgetId)
+
+            return (
+              <Component
+                dimension={{
+                  w: dimension?.w ?? 0,
+                  h: dimension?.h ?? 0
+                }}
+                widgetId={widgetId}
+              />
+            )
+          })()}
+          {canLayoutChange && (
+            <>
+              <div className="bg-bg-900/30 absolute inset-0 top-0 left-0 rounded" />
+              <Icon
+                className="absolute right-0 bottom-0 text-2xl"
+                icon="clarity:drag-handle-corner-line"
+              />
+            </>
+          )}
+        </div>
+      ))}
+    </ResponsiveGridLayout>
+  )
+}
+
+export default DashboardGrid

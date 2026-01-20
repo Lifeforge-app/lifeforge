@@ -3,7 +3,7 @@ import { Button, Card, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { Link, type ModuleCategory } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import forgeAPI from '@/forgeAPI'
 
 function APIKeyStatusProvider({
   APIKeyAccess,
@@ -19,8 +19,7 @@ function APIKeyStatusProvider({
     .map(([key]) => key)
 
   const hasRequiredAPIKeysQuery = useQuery(
-    forgeAPI.apiKeys.entries.checkKeys
-      .input({
+    forgeAPI.checkAPIKeys({
         keys: requiredAPIKeys.join(',')
       })
       .queryOptions({

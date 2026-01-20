@@ -1,4 +1,4 @@
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
 /**
@@ -33,7 +33,7 @@ export default function filterCollectionsMap(
     : moduleCollectionsMap
 
   if (targetModule && Object.keys(filteredModuleCollectionsMap).length === 0) {
-    Logging.error(`Module "${shortName}" not found or has no collections`)
+    logger.error(`Module "${shortName}" not found or has no collections`)
     process.exit(1)
   }
 

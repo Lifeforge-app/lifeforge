@@ -1,11 +1,9 @@
+import { ClientError } from '@lifeforge/server-utils'
 import z from 'zod'
 
-import { getAPIKey } from '@functions/database'
-import getMedia from '@functions/external/media'
-import { forgeController, forgeRouter } from '@functions/routes'
-import { ClientError } from '@functions/routes/utils/response'
+import forge from '../forge'
 
-export interface FontFamily {
+interface FontFamily {
   family: string
   variants: string[]
   subsets: string[]
@@ -18,7 +16,7 @@ export interface FontFamily {
   colorCapabilities?: ColorCapability[]
 }
 
-export enum Category {
+enum Category {
   Display = 'display',
   Handwriting = 'handwriting',
   Monospace = 'monospace',
@@ -26,13 +24,13 @@ export enum Category {
   Serif = 'serif'
 }
 
-export enum ColorCapability {
+enum ColorCapability {
   COLRv0 = 'COLRv0',
   COLRv1 = 'COLRv1',
   SVG = 'SVG'
 }
 
-export interface Files {
+interface Files {
   regular?: string
   italic?: string
   '500'?: string
@@ -53,83 +51,83 @@ export interface Files {
   '900italic'?: string
 }
 
-export enum Kind {
+enum Kind {
   WebfontsWebfont = 'webfonts#webfont'
 }
 
-const listGoogleFonts = forgeController
+export const listGoogleFonts = forge
   .query()
-  .description({
-    en: 'Retrieve available Google Fonts',
-    ms: 'Dapatkan fon Google yang tersedia',
-    'zh-CN': '获取可用的Google字体',
-    'zh-TW': '獲取可用的Google字體'
-  })
+  .description('Retrieve available Google Fonts')
   .input({})
-  .callback(async ({ pb }) => {
-    const key = await getAPIKey('gcloud', pb)
+  .callback(
+    async ({
+      pb,
+      core: {
+        api: { getAPIKey }
+      }
+    }) => {
+      const key = await getAPIKey('gcloud', pb)
 
-    if (!key) {
+      if (!key) {
+        return {
+          enabled: false,
+          items: []
+        }
+      }
+
+      const target = `https://www.googleapis.com/webfonts/v1/webfonts?key=${key}`
+
+      const response = await fetch(target)
+
+      const data = await response.json()
+
       return {
-        enabled: false,
-        items: []
+        enabled: true,
+        items: data.items as FontFamily[]
       }
     }
+  )
 
-    const target = `https://www.googleapis.com/webfonts/v1/webfonts?key=${key}`
-
-    const response = await fetch(target)
-
-    const data = await response.json()
-
-    return {
-      enabled: true,
-      items: data.items as FontFamily[]
-    }
-  })
-
-const getGoogleFont = forgeController
+export const getGoogleFont = forge
   .query()
-  .description({
-    en: 'Get details of a specific Google Font',
-    ms: 'Dapatkan butiran fon Google tertentu',
-    'zh-CN': '获取特定Google字体详情',
-    'zh-TW': '獲取特定Google字體詳情'
-  })
+  .description('Get details of a specific Google Font')
   .input({
     query: z.object({
       family: z.string()
     })
   })
-  .callback(async ({ pb, query: { family } }) => {
-    const key = await getAPIKey('gcloud', pb).catch(() => null)
+  .callback(
+    async ({
+      pb,
+      query: { family },
+      core: {
+        api: { getAPIKey }
+      }
+    }) => {
+      const key = await getAPIKey('gcloud', pb).catch(() => null)
 
-    if (!key) {
+      if (!key) {
+        return {
+          enabled: false
+        }
+      }
+
+      const target = `https://www.googleapis.com/webfonts/v1/webfonts?family=${encodeURIComponent(family)}&key=${key}`
+
+      const response = await fetch(target)
+
+      const data = await response.json()
+
       return {
-        enabled: false
+        enabled: true,
+        items: data.items
       }
     }
+  )
 
-    const target = `https://www.googleapis.com/webfonts/v1/webfonts?family=${encodeURIComponent(family)}&key=${key}`
-
-    const response = await fetch(target)
-
-    const data = await response.json()
-
-    return {
-      enabled: true,
-      items: data.items
-    }
-  })
-
-const listGoogleFontsPin = forgeController
+export const listGoogleFontsPin = forge
   .query()
-  .description({
-    en: 'Retrieve pinned Google Fonts',
-    ms: 'Dapatkan fon Google yang disemat',
-    'zh-CN': '获取已固定的Google字体',
-    'zh-TW': '獲取已固定的Google字體'
-  })
+  .description('Retrieve pinned Google Fonts')
   .input({})
   .callback(async ({ pb }) => {
     if (!pb.instance.authStore.record) {
@@ -137,21 +135,16 @@ const listGoogleFontsPin = forgeController
     }
 
     const record = await pb.getOne
-      .collection('user__users')
+      .collection('users')
       .id(pb.instance.authStore.record.id)
       .execute()
 
     return (record.pinnedFontFamilies || []) as string[]
   })
 
-const toggleGoogleFontsPin = forgeController
+export const toggleGoogleFontsPin = forge
   .mutation()
-  .description({
-    en: 'Pin or unpin a Google Font',
-    ms: 'Semat atau nyahsemat fon Google',
-    'zh-CN': '固定或取消固定Google字体',
-    'zh-TW': '固定或取消固定Google字體'
-  })
+  .description('Pin or unpin a Google Font')
   .input({
     body: z.object({
       family: z.string()
@@ -164,7 +157,7 @@ const toggleGoogleFontsPin = forgeController
     }
 
     const record = await pb.getOne
-      .collection('user__users')
+      .collection('users')
       .id(pb.instance.authStore.record.id)
       .execute()
 
@@ -175,7 +168,7 @@ const toggleGoogleFontsPin = forgeController
       : [...pinnedFontFamilies, family]
 
     await pb.update
-      .collection('user__users')
+      .collection('users')
       .id(pb.instance.authStore.record.id)
       .data({
         pinnedFontFamilies: updatedPinnedFontFamilies
@@ -183,56 +176,54 @@ const toggleGoogleFontsPin = forgeController
       .execute()
   })
 
-const updateBgImage = forgeController
+export const updateBgImage = forge
   .mutation()
-  .description({
-    en: 'Upload new background image',
-    ms: 'Muat naik imej latar belakang baharu',
-    'zh-CN': '上传新的背景图片',
-    'zh-TW': '上傳新的背景圖片'
-  })
+  .description('Upload new background image')
   .input({})
   .media({
     file: {
       optional: false
     }
   })
-  .callback(async ({ pb, media: { file } }) => {
-    const newRecord = await pb.update
-      .collection('user__users')
-      .id(pb.instance.authStore.record!.id)
-      .data({
-        ...(await getMedia('bgImage', file)),
-        backdropFilters: {
-          brightness: 100,
-          blur: 'none',
-          contrast: 100,
-          saturation: 100,
-          overlayOpacity: 50
-        }
-      })
-      .execute()
+  .callback(
+    async ({
+      pb,
+      media: { file },
+      core: {
+        media: { retrieveMedia }
+      }
+    }) => {
+      const newRecord = await pb.update
+        .collection('users')
+        .id(pb.instance.authStore.record!.id)
+        .data({
+          ...(await retrieveMedia('bgImage', file)),
+          backdropFilters: {
+            brightness: 100,
+            blur: 'none',
+            contrast: 100,
+            saturation: 100,
+            overlayOpacity: 50
+          }
+        })
+        .execute()
 
-    return {
-      collectionId: newRecord.collectionId,
-      recordId: newRecord.id,
-      fieldId: newRecord.bgImage
+      return {
+        collectionId: newRecord.collectionId,
+        recordId: newRecord.id,
+        fieldId: newRecord.bgImage
+      }
     }
-  })
+  )
 
-const deleteBgImage = forgeController
+export const deleteBgImage = forge
   .mutation()
-  .description({
-    en: 'Remove background image',
-    ms: 'Alih keluar imej latar belakang',
-    'zh-CN': '移除背景图片',
-    'zh-TW': '移除背景圖片'
-  })
+  .description('Remove background image')
   .input({})
   .statusCode(204)
   .callback(({ pb }) =>
     pb.update
-      .collection('user__users')
+      .collection('users')
       .id(pb.instance.authStore.record!.id)
       .data({
         bgImage: null
@@ -240,14 +231,9 @@ const deleteBgImage = forgeController
       .execute()
   )
 
-const updatePersonalization = forgeController
+export const updatePersonalization = forge
   .mutation()
-  .description({
-    en: 'Update user personalization preferences',
-    ms: 'Kemas kini keutamaan pemperibadian pengguna',
-    'zh-CN': '更新用户个性化偏好',
-    'zh-TW': '更新用戶個性化偏好'
-  })
+  .description('Update user personalization preferences')
   .input({
     body: z.object({
       data: z.object({
@@ -290,18 +276,8 @@ const updatePersonalization = forgeController
     }
 
     await pb.update
-      .collection('user__users')
+      .collection('users')
       .id(pb.instance.authStore.record!.id)
       .data(toBeUpdated)
       .execute()
   })
-
-export default forgeRouter({
-  listGoogleFonts,
-  getGoogleFont,
-  listGoogleFontsPin,
-  toggleGoogleFontsPin,
-  updateBgImage,
-  deleteBgImage,
-  updatePersonalization
-})

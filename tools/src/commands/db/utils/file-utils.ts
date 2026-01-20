@@ -2,7 +2,8 @@ import fs from 'fs'
 import path from 'path'
 import prettier from 'prettier'
 
-import Logging from '@/utils/logging'
+import { ROOT_DIR } from '@/constants/constants'
+import logger from '@/utils/logger'
 
 import { PRETTIER_OPTIONS } from './constants'
 
@@ -26,7 +27,7 @@ export async function writeFormattedFile(
 
     fs.writeFileSync(filePath, formattedContent)
   } catch (error) {
-    Logging.error(`Failed to write file ${filePath}: ${error}`)
+    logger.error(`Failed to write file ${filePath}: ${error}`)
     throw error
   }
 }
@@ -48,8 +49,8 @@ function getModuleName(schemaPath: string): string | null {
  */
 export function getSchemaFiles(targetModule?: string): string[] {
   const allSchemas = [
-    ...fs.globSync('./server/src/lib/**/schema.ts'),
-    ...fs.globSync('./apps/**/server/schema.ts')
+    ...fs.globSync(path.resolve(ROOT_DIR, './server/src/lib/**/schema.ts')),
+    ...fs.globSync(path.resolve(ROOT_DIR, './apps/**/server/schema.ts'))
   ]
 
   const filteredSchemas = targetModule
@@ -63,7 +64,7 @@ export function getSchemaFiles(targetModule?: string): string[] {
       .map((schemaPath: string) => getModuleName(schemaPath))
       .join(', ')
 
-    Logging.error(
+    logger.error(
       `Module "${targetModule}" not found. Available modules: ${availableModules}`
     )
     process.exit(1)
@@ -89,7 +90,7 @@ export async function importSchemaModules(targetModule?: string): Promise<
 
       return {
         moduleName: getModuleName(schemaPath) || 'unknown-module',
-        schema: module.default
+        schema: module.schemas
       }
     })
   )

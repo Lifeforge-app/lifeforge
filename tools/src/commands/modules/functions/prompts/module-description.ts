@@ -3,7 +3,7 @@ import prompts from 'prompts'
 import z from 'zod'
 
 import { fetchAI } from '@/utils/ai'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 export async function promptModuleDescription(): Promise<{
   en: string
@@ -26,7 +26,7 @@ export async function promptModuleDescription(): Promise<{
     },
     {
       onCancel: () => {
-        Logging.error('Module creation cancelled by user.')
+        logger.error('Module creation cancelled by user.')
         process.exit(0)
       }
     }
@@ -53,7 +53,7 @@ export async function promptModuleDescription(): Promise<{
   })
 
   if (!translationResponse) {
-    Logging.warn(
+    logger.warn(
       "Failed to translate description. Please edit it manually in the module's localization files."
     )
 
@@ -66,7 +66,7 @@ export async function promptModuleDescription(): Promise<{
   }
 
   for (const [key, value] of Object.entries(translationResponse)) {
-    Logging.debug(`Translated module description [${key}]: ${value}`)
+    logger.debug(`Translated module description [${key}]: ${value}`)
   }
 
   return {

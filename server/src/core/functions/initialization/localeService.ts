@@ -1,14 +1,15 @@
+import { ROOT_DIR } from '@constants'
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { LoggingService } from '@functions/logging/loggingService'
+import { createServiceLogger } from '@functions/logging'
+
+const localeLogger = createServiceLogger('Locale')
 
 export const ALLOWED_NAMESPACE = ['apps', 'common'] as const
 
-export const LANGUAGE_PACK_PATH = path.resolve(
-  import.meta.dirname.split('/server')[0],
-  'locales'
-)
+export const LANGUAGE_PACK_PATH = path.resolve(ROOT_DIR, 'locales')
 
 interface LangManifest {
   name: string
@@ -50,9 +51,8 @@ export class LocaleService {
    */
   static validateAndLoad(): void {
     if (!fs.existsSync(LANGUAGE_PACK_PATH)) {
-      LoggingService.error(
-        'Language pack path does not exist. Please install at least one language pack through the Forge CLI.',
-        'LOCALES'
+      localeLogger.error(
+        'Language pack path does not exist. Please install at least one language pack through the Forge CLI.'
       )
 
       process.exit(1)
@@ -60,12 +60,11 @@ export class LocaleService {
 
     this.languagePacks = fs
       .readdirSync(LANGUAGE_PACK_PATH)
-      .filter(e => e !== '.gitkeep')
+      .filter(e => !['.gitkeep', 'package.json'].includes(e))
 
     if (!this.languagePacks.length) {
-      LoggingService.error(
-        'Language pack path is empty. Please install at least one language pack through the Forge CLI.',
-        'LOCALES'
+      localeLogger.error(
+        'Language pack path is empty. Please install at least one language pack through the Forge CLI.'
       )
 
       process.exit(1)
@@ -76,9 +75,8 @@ export class LocaleService {
     )
 
     if (!isAllFolder) {
-      LoggingService.error(
-        'Language pack path contains non-folder files. Please check the language pack path.',
-        'LOCALES'
+      localeLogger.error(
+        'Language pack path contains non-folder files. Please check the language pack path.'
       )
 
       process.exit(1)
@@ -88,9 +86,8 @@ export class LocaleService {
       const packagePath = path.join(LANGUAGE_PACK_PATH, e, 'package.json')
 
       if (!fs.existsSync(packagePath)) {
-        LoggingService.error(
-          `Language pack ${e} does not have a package.json file. Please check the language pack path.`,
-          'LOCALES'
+        localeLogger.error(
+          `Language pack ${e} does not have a package.json file. Please check the language pack path.`
         )
 
         process.exit(1)
@@ -103,9 +100,8 @@ export class LocaleService {
         !content.lifeforge?.displayName ||
         !content.lifeforge?.icon
       ) {
-        LoggingService.error(
-          `Language pack ${e} does not have a valid package.json. Required fields: name, lifeforge.displayName, lifeforge.icon`,
-          'LOCALES'
+        localeLogger.error(
+          `Language pack ${e} does not have a valid package.json. Required fields: name, lifeforge.displayName, lifeforge.icon`
         )
 
         process.exit(1)
@@ -133,9 +129,8 @@ export class LocaleService {
             const itemPath = path.join(LANGUAGE_PACK_PATH, lang, item)
 
             if (!fs.lstatSync(itemPath).isFile() || !item.endsWith('.json')) {
-              LoggingService.error(
-                `Language pack ${lang} contains non-json files. Please check the language pack path.`,
-                'LOCALES'
+              localeLogger.error(
+                `Language pack ${lang} contains non-json files. Please check the language pack path.`
               )
 
               process.exit(1)
@@ -157,9 +152,8 @@ export class LocaleService {
             )
           ]
         } catch (e) {
-          LoggingService.error(
-            `Language pack ${lang} failed to load. Please check the language pack path. Error: ${e}`,
-            'LOCALES'
+          localeLogger.error(
+            `Language pack ${lang} failed to load. Please check the language pack path. Error: ${e}`
           )
 
           process.exit(1)
@@ -177,17 +171,15 @@ export class LocaleService {
       .filter((e, i) => this.allowedLang.flat().indexOf(e) !== i)
 
     if (duplicatedLang.length) {
-      LoggingService.error(
-        `Language ${duplicatedLang.join(', ')} is duplicated. Please check the language pack path.`,
-        'LOCALES'
+      localeLogger.error(
+        `Language ${duplicatedLang.join(', ')} is duplicated. Please check the language pack path.`
       )
 
       process.exit(1)
     }
 
-    LoggingService.info(
-      `Loaded ${this.languagePacks.length} language pack(s): ${this.languagePacks.join(', ')}`,
-      'LOCALES'
+    localeLogger.info(
+      `Loaded ${chalk.green(this.languagePacks.length)} language pack(s): ${chalk.dim(this.languagePacks.join(', '))}`
     )
   }
 }

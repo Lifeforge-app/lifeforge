@@ -2,7 +2,7 @@ import chalk from 'chalk'
 import { Request, Response } from 'express'
 import morgan from 'morgan'
 
-import { LoggingService } from '@functions/logging/loggingService'
+import { coreLogger } from '@functions/logging'
 
 const METHOD_COLOR = {
   GET: '#34ace0',
@@ -48,7 +48,7 @@ const m =
           STATUS_COLOR[status?.toString()?.[0] as keyof typeof STATUS_COLOR] ||
           '#ffffff'
 
-        LoggingService.info(
+        coreLogger.info(
           [
             chalk.hex(color).bold(method),
             `${url.pathname.split('/').slice(0, -1).join('/')}/${chalk
@@ -60,8 +60,7 @@ const m =
             chalk
               .hex(responseTimeColor)
               .bold(`${tokens['response-time'](req, res)} ms`)
-          ].join(' '),
-          'API'
+          ].join(' ')
         )
 
         return undefined

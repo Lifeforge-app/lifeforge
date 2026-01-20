@@ -1,6 +1,8 @@
 import fs from 'fs'
 import semver from 'semver'
 
+import logger from '@/utils/logger'
+
 /**
  * Bumps the patch version in a module's package.json file.
  *

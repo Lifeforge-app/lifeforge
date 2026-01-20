@@ -1,55 +1,15 @@
+import { ROOT_DIR } from '@constants'
+import { IPBService } from '@lifeforge/server-utils'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { decrypt2 } from '@functions/auth/encryption'
-import { LoggingService } from '@functions/logging/loggingService'
+import { createServiceLogger } from '@functions/logging'
 
 import PBService from './PBService'
 
-export function getCallerModuleId():
-  | { source: 'app' | 'core'; id: string }
-  | undefined {
-  const obj: { stack?: string } = {}
-
-  Error.captureStackTrace(obj)
-
-  const lines = obj.stack?.split('\n') || []
-
-  const callerLine = lines[3]
-
-  const pathMatch =
-    callerLine?.match(/\((.+):\d+:\d+\)/) ||
-    callerLine?.match(/at (.+):\d+:\d+/)
-
-  const filePath = pathMatch?.[1]
-
-  if (!filePath) return undefined
-
-  // Try external app module: /apps/{moduleId}/server/
-  const appMatch = filePath.match(/lifeforge\/apps\/([^/]+)\/server\//)
-
-  if (appMatch)
-    return {
-      source: 'app',
-      id: appMatch[1]
-    }
-
-  // Try core module:
-  // - /lifeforge/server/src/lib/{coreModuleId}/
-  // - /lifeforge/server/src/core/{coreModuleId}/
-  const coreMatch = filePath.match(
-    /lifeforge\/server\/src\/(?:lib|core)\/([^/]+)\//
-  )
-
-  if (coreMatch)
-    return {
-      source: 'core',
-      id: coreMatch[1]
-    }
-
-  return undefined
-}
+const logger = createServiceLogger('API Key Vault')
 
 export async function validateCallerAccess(
   callerModule: { source: 'app' | 'core'; id: string },
@@ -60,7 +20,7 @@ export async function validateCallerAccess(
   }
 
   const packageJSONPath = path.resolve(
-    import.meta.dirname.split('/server')[0],
+    ROOT_DIR,
     'apps',
     callerModule.id,
     'package.json'
@@ -83,10 +43,12 @@ export async function validateCallerAccess(
   }
 }
 
-export default async function getAPIKey(id: string, pb: PBService) {
+async function getAPIKey(
+  id: string,
+  pb: PBService<{ entries: any }>,
+  callerModule?: { source: 'app' | 'core'; id: string }
+): Promise<string> {
   try {
-    const callerModule = getCallerModuleId()
-
     if (!callerModule) {
       throw new Error(
         'Unable to determine caller module for API key validation.'
@@ -95,24 +57,16 @@ export default async function getAPIKey(id: string, pb: PBService) {
 
     await validateCallerAccess(callerModule, id)
 
-    const { key } = await pb.getFirstListItem
+    const { key } = await pb.instance
       .collection('api_keys__entries')
-      .filter([
-        {
-          field: 'keyId',
-          operator: '=',
-          value: id
-        }
-      ])
-      .execute()
+      .getFirstListItem(`keyId = "${id}"`)
       .catch(err => {
-        throw new Error(err.message)
+        throw new Error(`Failed to retrieve API key for ${id}: ${err.message}`)
       })
 
     try {
-      LoggingService.info(
-        `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`,
-        'KEY VAULT'
+      logger.info(
+        `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`
       )
 
       return decrypt2(key, process.env.MASTER_KEY!)
@@ -124,4 +78,12 @@ export default async function getAPIKey(id: string, pb: PBService) {
       `Failed to retrieve API key for ${id}: ${err instanceof Error ? err.message : String(err)}`
     )
   }
+}
+
+export default function getAPIKeyFactory(
+  pb: IPBService<any>,
+  callerModule?: { source: 'app' | 'core'; id: string }
+): (id: string) => Promise<string> {
+  return (id: string) =>
+    getAPIKey(id, pb as PBService<{ entries: any }>, callerModule)
 }

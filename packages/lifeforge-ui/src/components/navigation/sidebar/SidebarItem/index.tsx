@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
-
-import { useModuleSidebarState } from '@components/layout'
+import { useModuleSidebarState } from 'shared'
 
 import SidebarCancelButton from './components/SidebarCancelButton'
 import SidebarItemContent from './components/SidebarItemContent'

@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 import executeCommand from './commands'
 
@@ -79,7 +79,7 @@ export async function checkAuth(): Promise<{
 
     throw new Error('Not authenticated')
   } catch {
-    Logging.warn('Not authenticated. Please login first.')
+    logger.warn('Not authenticated. Please login first.')
 
     process.exit(1)
   }

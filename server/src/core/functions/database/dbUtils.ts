@@ -1,59 +1,38 @@
-import COLLECTION_SCHEMAS, { SCHEMAS } from '@schema'
-import chalk from 'chalk'
 import Pocketbase from 'pocketbase'
 import { parseCollectionName } from 'shared'
 
-import { LoggingService } from '@functions/logging/loggingService'
+import { PBLogger } from './PBService'
 
 /**
  * Converts a code-format collection name to PocketBase format
- * e.g., "melvinchia3636$invoiceMaker__clients" -> "melvinchia3636___melvinchia3636$invoiceMaker__clients"
+ * e.g., "clients" -> "melvinchia3636___clients"
  */
-export function toPocketBaseCollectionName(codeCollectionName: string): string {
+export function toPocketBaseCollectionName(
+  codeCollectionName: string,
+  moduleID: string
+): string {
+  codeCollectionName = `${moduleID.replace('--', '___')}__${codeCollectionName}`
+
   const { username, moduleName, collectionName } = parseCollectionName(
     codeCollectionName,
-    'code'
+    'pb'
   )
 
   if (username === 'lifeforge' || !username) {
+    if (collectionName === 'users' && moduleName === 'user') {
+      return collectionName
+    }
+
     return `${moduleName}__${collectionName}`
   }
 
   return `${username}___${moduleName}__${collectionName}`
 }
 
-/**
- * Parses a code-format collection name into module key and collection key
- * for looking up in SCHEMAS
- */
-function parseCodeCollectionName(codeCollectionName: string): {
-  moduleKey: string
-  collectionKey: string
-} {
-  // Handle third-party modules: "melvinchia3636$invoiceMaker__clients"
-  if (codeCollectionName.includes('$')) {
-    const [moduleKey, collectionKey] = codeCollectionName.split('__')
-
-    return { moduleKey, collectionKey }
-  }
-
-  // Handle official modules: "achievements__entries"
-  const [moduleKey, collectionKey] = codeCollectionName.split('__')
-
-  return { moduleKey, collectionKey }
-}
-
 interface DBConnectionConfig {
   host: string
   email: string
   password: string
-}
-
-interface CollectionValidationResult {
-  isValid: boolean
-  missingCollections: string[]
-  totalCollections: number
-  collectionsWithDiscrepancies: string[]
 }
 
 class DatabaseConnectionError extends Error {
@@ -117,7 +96,7 @@ export async function connectToPocketBase(
       )
     }
 
-    LoggingService.info('Successfully connected to PocketBase', 'DB')
+    PBLogger.debug('Successfully connected to PocketBase')
 
     return pb
   } catch (error) {
@@ -128,85 +107,6 @@ export async function connectToPocketBase(
       `Failed to connect to PocketBase: ${errorMessage}`,
       error instanceof Error ? error : undefined
     )
-  }
-}
-
-/**
- * Validates that all required collections exist in PocketBase
- * @param pb Authenticated PocketBase instance
- * @returns Validation result with details about missing collections
- */
-async function validateCollections(
-  pb: Pocketbase
-): Promise<CollectionValidationResult> {
-  const allCollections = await pb.collections.getFullList()
-
-  const existingCollectionNames = new Set(allCollections.map(c => c.name))
-
-  const requiredCollections = Object.keys(COLLECTION_SCHEMAS)
-
-  const missingCollections: string[] = []
-
-  const collectionsWithDiscrepancies: string[] = []
-
-  for (const collection of requiredCollections) {
-    // Convert code format to PocketBase format
-    // e.g., "melvinchia3636$invoiceMaker__clients" -> "melvinchia3636___melvinchia3636$invoiceMaker__clients"
-    let targetCollection = toPocketBaseCollectionName(collection)
-
-    // Special case for users collection
-    if (targetCollection === 'user__users') {
-      targetCollection = 'users'
-    }
-
-    if (!existingCollectionNames.has(targetCollection)) {
-      missingCollections.push(targetCollection)
-    }
-
-    const existingCollection = allCollections.find(
-      c => c.name === targetCollection
-    )
-
-    // Parse the collection name to get module and collection keys for SCHEMAS lookup
-    const { moduleKey, collectionKey } = parseCodeCollectionName(collection)
-
-    const requiredSchema =
-      // @ts-expect-error: Dynamic schema lookup
-      SCHEMAS[moduleKey]?.[collectionKey]?.raw
-
-    delete (existingCollection as any)?.id
-    delete existingCollection?.updated
-    delete existingCollection?.created
-    delete (requiredSchema as any)?.id
-    delete requiredSchema?.updated
-    delete requiredSchema?.created
-
-    existingCollection?.fields.forEach((field: any) => {
-      delete field.id
-      delete field.collectionId
-    })
-    requiredSchema?.fields.forEach((field: any) => {
-      delete field.id
-      delete field.collectionId
-    })
-
-    if ('oauth2' in requiredCollections) {
-      delete requiredCollections?.oauth2
-    }
-    delete existingCollection?.oauth2
-
-    if (JSON.stringify(existingCollection) !== JSON.stringify(requiredSchema)) {
-      collectionsWithDiscrepancies.push(collection)
-    }
-  }
-
-  return {
-    isValid:
-      missingCollections.length === 0 &&
-      collectionsWithDiscrepancies.length === 0,
-    missingCollections,
-    collectionsWithDiscrepancies,
-    totalCollections: requiredCollections.length
   }
 }
 
@@ -223,44 +123,15 @@ export default async function checkDB(): Promise<void> {
     const config = validateEnvironmentVariables()
 
     // Establish database connection
-    const pb = await connectToPocketBase(config)
-
-    // Validate collection schema
-    const validationResult = await validateCollections(pb)
-
-    if (!validationResult.isValid) {
-      if (validationResult.missingCollections.length > 0) {
-        throw new DatabaseValidationError(
-          `Missing collections in PocketBase: ${validationResult.missingCollections.join(', ')}`
-        )
-      }
-
-      if (validationResult.collectionsWithDiscrepancies.length > 0) {
-        throw new DatabaseValidationError(
-          `Collections with schema discrepancies: ${validationResult.collectionsWithDiscrepancies.join(', ')}. If the collection has been updated in the database, please run "${chalk.cyan('bun forge db pull')}" to synchronize the schema. If the collection has been modified outside of LifeForge, please revert the changes to ensure compatibility.`
-        )
-      }
-
-      throw new DatabaseValidationError(
-        'Database validation failed due to unknown reasons'
-      )
-    }
-
-    LoggingService.info(
-      `Database validation complete. All ${validationResult.totalCollections} collections are present`,
-      'DB'
-    )
+    await connectToPocketBase(config)
   } catch (error) {
     if (
       error instanceof DatabaseConnectionError ||
       error instanceof DatabaseValidationError
     ) {
-      LoggingService.error(error.message, 'DB')
+      PBLogger.error(error.message)
     } else {
-      LoggingService.error(
-        `Unexpected error during database validation: ${error}`,
-        'DB'
-      )
+      PBLogger.error(`Unexpected error during database validation: ${error}`)
     }
     process.exit(1)
   }

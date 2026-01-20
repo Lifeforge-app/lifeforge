@@ -1,9 +1,10 @@
+import chalk from 'chalk'
 import fs from 'fs'
 
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import executeCommand from '@/utils/commands'
 import { checkPortInUse, delay, killExistingProcess } from '@/utils/helpers'
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 /**
  * Service command configurations
@@ -24,7 +25,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       }
 
       if (checkPortInUse(8090)) {
-        Logging.actionableError(
+        logger.actionableError(
           'No Pocketbase instance found running, but port 8090 is already in use.',
           'Please free up the port. Are you using the port for another application? (e.g., port forwarding, etc.)'
         )
@@ -32,9 +33,9 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       }
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
-        Logging.actionableError(
+        logger.actionableError(
           `PocketBase binary does not exist: ${PB_BINARY_PATH}`,
-          `Please run "${Logging.highlight('bun forge db init')}" to initialize the database`
+          `Please run "${chalk.blue('bun forge db init')}" to initialize the database`
         )
         process.exit(1)
       }
@@ -57,14 +58,14 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       const PORT = process.env.PORT || '3636'
 
       if (checkPortInUse(Number(PORT))) {
-        Logging.actionableError(
+        logger.actionableError(
           `Port ${PORT} is already in use.`,
           'Please free up the port or set a different PORT environment variable.'
         )
         process.exit(1)
       }
 
-      return 'bun tsx watch --env-file=../env/.env.local ./src/index.ts'
+      return 'bun run dev'
     },
     cwd: 'server'
   },

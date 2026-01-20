@@ -1,6 +1,8 @@
 import fs from 'fs'
 import path from 'path'
 
+import logger from '@/utils/logger'
+
 export const ROOT_DIR = import.meta.dirname.split('/tools')[0]
 
 const GENERATED_DIR = path.join(

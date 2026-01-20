@@ -37,7 +37,10 @@ async function checkAPIStatus(
 
 interface IAPIOnlineStatus {
   isOnline: boolean | 'loading'
-  environment: 'production' | 'development' | null
+  environment: {
+    server: 'production' | 'development' | null
+    client: 'production' | 'development' | null
+  }
   retry: () => void
 }
 
@@ -46,8 +49,10 @@ const APIOnlineStatusContext = createContext<IAPIOnlineStatus | undefined>(
 )
 
 export default function APIOnlineStatusProvider({
+  clientEnvironment,
   children
 }: {
+  clientEnvironment: 'production' | 'development' | null
   children: React.ReactNode
 }) {
   const apiEndpoint = useAPIEndpoint()
@@ -78,7 +83,10 @@ export default function APIOnlineStatusProvider({
     <APIOnlineStatusContext
       value={{
         isOnline,
-        environment,
+        environment: {
+          server: environment,
+          client: clientEnvironment
+        },
         retry: handleRetry
       }}
     >

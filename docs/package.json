@@ -13,12 +13,9 @@
   },
   "type": "module",
   "scripts": {
-    "build:shared": "cd ../shared && bun run build",
-    "build:ui": "cd ../packages/lifeforge-ui && bun run build",
-    "prebuild": "bun run build:shared && bun run build:ui",
     "dev": "vite",
     "types": "tsc -b",
-    "build": "bun run prebuild && tsc && vite build",
+    "build": "bun --cwd .. prebuild && bun types && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -34,6 +31,7 @@
     "i18next": "^25.6.0",
     "lifeforge-ui": "workspace:*",
     "lodash": "^4.17.21",
+    "mermaid": "^11.12.2",
     "postcss": "^8.5.6",
     "react": "^19.2.0",
     "react-custom-scrollbars": "^4.2.1",

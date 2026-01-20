@@ -1,4 +1,7 @@
+import { CleanedSchemas, IPBService } from '@lifeforge/server-utils'
 import PocketBase from 'pocketbase'
+
+import { createServiceLogger } from '@functions/logging'
 
 import create from './services/create'
 import deleteRecord from './services/delete'
@@ -7,6 +10,8 @@ import getFullList from './services/getFullList'
 import getList from './services/getList'
 import getOne from './services/getOne'
 import update from './services/update'
+
+export const PBLogger = createServiceLogger('Pocketbase')
 
 /**
  * Main class that provides type-safe CRUD operations for PocketBase collections
@@ -68,19 +73,24 @@ import update from './services/update'
  *   .execute()
  * ```
  */
-class PBService {
+class PBService<
+  TSchemas extends CleanedSchemas
+> implements IPBService<TSchemas> {
   /**
    * Creates an instance of PocketBaseCRUDActions
    * @param instance - The PocketBase instance to use for all operations
    */
-  constructor(public instance: PocketBase) {}
+  constructor(
+    public instance: PocketBase,
+    public module: { id: string }
+  ) {}
 
   /**
    * Provides access to getFullList operations for retrieving multiple records
    * with filtering, sorting, field selection, and relation expansion capabilities
    */
   get getFullList() {
-    return getFullList(this.instance)
+    return getFullList<TSchemas>(this.instance, this.module)
   }
 
   /**
@@ -88,7 +98,7 @@ class PBService {
    * with filtering, sorting, field selection, relation expansion, and pagination capabilities
    */
   get getList() {
-    return getList(this.instance)
+    return getList<TSchemas>(this.instance, this.module)
   }
 
   /**
@@ -96,7 +106,7 @@ class PBService {
    * with filtering, sorting, field selection, and relation expansion capabilities
    */
   get getFirstListItem() {
-    return getFirstListItem(this.instance)
+    return getFirstListItem<TSchemas>(this.instance, this.module)
   }
 
   /**
@@ -104,7 +114,7 @@ class PBService {
    * with field selection and relation expansion capabilities
    */
   get getOne() {
-    return getOne(this.instance)
+    return getOne<TSchemas>(this.instance, this.module)
   }
 
   /**
@@ -112,7 +122,7 @@ class PBService {
    * with field selection and relation expansion capabilities for the response
    */
   get create() {
-    return create(this.instance)
+    return create<TSchemas>(this.instance, this.module)
   }
 
   /**
@@ -120,14 +130,14 @@ class PBService {
    * with field selection and relation expansion capabilities for the response
    */
   get update() {
-    return update(this.instance)
+    return update<TSchemas>(this.instance, this.module)
   }
 
   /**
    * Provides access to delete operations for removing records from collections
    */
   get delete() {
-    return deleteRecord(this.instance)
+    return deleteRecord<TSchemas>(this.instance, this.module)
   }
 }
 

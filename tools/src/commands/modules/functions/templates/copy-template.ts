@@ -3,6 +3,7 @@ import Handlebars from 'handlebars'
 import _ from 'lodash'
 
 import { ROOT_DIR } from '@/constants/constants'
+import logger from '@/utils/logger'
 
 import type { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../handlers/createModuleHandler'
 

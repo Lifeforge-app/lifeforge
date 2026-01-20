@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 const MODULE_STRUCTURE: Array<{
   type: 'folder' | 'file'
@@ -31,12 +31,6 @@ const MODULE_STRUCTURE: Array<{
   },
   {
     type: 'file',
-    name: 'manifest.ts',
-    required: true,
-    errorMessage: 'Missing manifest.ts'
-  },
-  {
-    type: 'file',
     name: 'package.json',
     required: true,
     validate: async (content: string) => {
@@ -52,15 +46,21 @@ const MODULE_STRUCTURE: Array<{
   },
   {
     type: 'file',
-    name: 'manifest.d.ts',
+    name: 'client/manifest.ts',
     required: true,
-    errorMessage: 'Missing manifest.d.ts'
+    errorMessage: 'Missing client/manifest.ts (federation manifest)'
   },
   {
     type: 'file',
-    name: 'tsconfig.json',
+    name: 'client/vite.config.ts',
     required: true,
-    errorMessage: 'Missing tsconfig.json'
+    errorMessage: 'Missing client/vite.config.ts (federation config)'
+  },
+  {
+    type: 'file',
+    name: 'client/tsconfig.json',
+    required: true,
+    errorMessage: 'Missing client/tsconfig.json'
   }
 ]
 
@@ -102,9 +102,9 @@ export default async function validateModuleStructure(
   }
 
   if (errors.length > 0) {
-    Logging.error('Module validation failed:')
+    logger.error('Module validation failed:')
     errors.forEach(error => {
-      Logging.error(`  ✗ ${error}`)
+      logger.error(`  ✗ ${error}`)
     })
     process.exit(1)
   }

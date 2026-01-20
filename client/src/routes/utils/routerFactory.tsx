@@ -3,8 +3,10 @@ import type { RouteObject } from 'shared'
 import { Navigate } from 'shared'
 import type { ModuleCategory } from 'shared'
 
-import Auth from '../../auth'
+import Auth from '@/core/auth'
+
 import RootLayout from '../components/RootLayout'
+import RouteErrorScreen from '../components/RouteErrorScreen'
 import { createModuleRoute } from './routeBuilder'
 
 interface CreateRouterConfigOptions {
@@ -66,6 +68,7 @@ export async function createRouterConfig({
   return [
     {
       path: '/',
+      ErrorBoundary: RouteErrorScreen,
       element: <RootLayout />,
       children: [
         ...moduleRoutes,

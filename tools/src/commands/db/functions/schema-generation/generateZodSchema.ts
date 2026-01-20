@@ -1,4 +1,4 @@
-import Logging from '@/utils/logging'
+import logger from '@/utils/logger'
 
 /**
  * PocketBase field definition with common properties.
@@ -64,7 +64,7 @@ function convertFieldToZodSchema(field: PocketBaseField): string | null {
   const converter = FIELD_TYPE_MAPPING[field.type]
 
   if (!converter) {
-    Logging.warn(
+    logger.warn(
       `Unknown field type '${field.type}' for field '${field.name}'. Skipping.`
     )
 

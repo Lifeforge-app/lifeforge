@@ -46,18 +46,10 @@ validate_env() {
 # Run validation
 validate_env
 
-# Generate migration schemas
-echo "Generating database migrations..."
-cd /app && bun run forge db push
-
-# Apply migrations
-echo "Applying database migrations..."
-/usr/local/bin/pocketbase migrate up --dir=/pb_data --migrationsDir=/pb_data/pb_migrations
-
 # Create or update superuser
 echo "Setting up superuser..."
 /usr/local/bin/pocketbase superuser upsert "$PB_EMAIL" "$PB_PASSWORD" --dir=/pb_data
 echo "Superuser configured successfully"
 
-# Start PocketBase
+# Start PocketBase (migrations are applied by db-init container)
 exec /usr/local/bin/pocketbase serve --http=0.0.0.0:8090 --dir=/pb_data --migrationsDir=/pb_data/pb_migrations
