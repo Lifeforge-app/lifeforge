@@ -3,13 +3,13 @@ import { createRoot } from 'react-dom/client'
 import {
   APIEndpointProvider,
   PersonalizationProvider,
-  createForgeAPIClient
+  createForgeProxy
 } from 'shared'
 
 import App from './App.tsx'
 import './index.css'
 
-const forgeAPI = createForgeAPIClient()
+const forgeAPI = createForgeProxy()
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
