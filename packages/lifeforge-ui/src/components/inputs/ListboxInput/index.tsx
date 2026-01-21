@@ -12,6 +12,7 @@ import ListboxOptions from './components/ListboxOptions'
 interface ListboxInputProps<T> {
   /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
   variant?: 'classic' | 'plain'
+  size?: 'small' | 'default'
   /** The label text displayed above the listbox field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the listbox button. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -44,6 +45,7 @@ interface ListboxInputProps<T> {
 
 function ListboxInput<T>({
   variant = 'classic',
+  size = 'default',
   label,
   icon,
   value,
@@ -97,6 +99,7 @@ function ListboxInput<T>({
       disabled={disabled}
       errorMsg={errorMsg}
       multiple={multiple}
+      size={size}
       value={value}
       variant={variant}
       onChange={onChange}
@@ -108,8 +111,13 @@ function ListboxInput<T>({
           variant === 'classic' ? 'pl-6' : ''
         )}
       >
-        {variant === 'classic' && icon && (
-          <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
+        {icon && (
+          <InputIcon
+            active={isActive}
+            hasError={!!errorMsg}
+            icon={icon}
+            variant={variant}
+          />
         )}
         {variant === 'classic' && label && (
           <InputLabel

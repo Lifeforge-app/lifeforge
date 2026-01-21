@@ -10,7 +10,8 @@ function ListboxInputWrapper<T>({
   disabled,
   onClick,
   errorMsg,
-  variant = 'classic'
+  variant = 'classic',
+  size
 }: {
   value: T
   onChange: (value: T) => void
@@ -21,6 +22,7 @@ function ListboxInputWrapper<T>({
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   errorMsg?: string
   variant?: 'classic' | 'plain'
+  size?: 'small' | 'default'
 }) {
   return (
     <div className={clsx('flex-1 space-y-2', className)}>
@@ -30,7 +32,10 @@ function ListboxInputWrapper<T>({
           'relative flex w-full items-center gap-1 transition-all',
           variant === 'classic'
             ? 'shadow-custom component-bg-lighter-with-hover rounded-t-lg border-b-2 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
-            : 'component-bg-lighter-with-hover rounded-lg p-4 px-5',
+            : clsx(
+                'component-bg-lighter-with-hover rounded-lg',
+                size === 'small' ? 'p-2 px-3' : 'p-4 px-5'
+              ),
           variant === 'classic' &&
             (errorMsg
               ? 'border-red-500'
