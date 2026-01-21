@@ -52,7 +52,7 @@ export default function parseBodyPayload<TMedia extends MediaConfig>(
   const result = validator.safeParse(finalData)
 
   if (!result.success) {
-    throw new ClientError(z.formatError(result.error).toString(), 400)
+    throw new ClientError(JSON.stringify(z.formatError(result.error)), 400)
   }
 
   req.body = result.data as any
