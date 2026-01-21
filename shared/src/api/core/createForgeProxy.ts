@@ -4,7 +4,7 @@ import type {
   UntypedEndpointType
 } from '../typescript/forge_proxy.types'
 import ForgeEndpoint from './forgeEndpoint'
-import CORE_HELPERS, { type CoreHelperReturnTypes } from './helpers/config'
+import CORE_HELPERS from './helpers/config'
 import createCoreHelper from './helpers/createCoreHelper'
 import createGetMediaHelper from './helpers/getMediaHelper'
 
@@ -47,18 +47,7 @@ import createGetMediaHelper from './helpers/getMediaHelper'
 export default function createForgeProxy<T>(
   apiHost?: string,
   path: string[] | string = []
-): ProxyTree<T> & {
-  untyped: <TOutput = any, TBody = any, TQuery = any>(
-    url: string
-  ) => ForgeEndpoint<UntypedEndpointType<TOutput, TBody, TQuery>>
-  getMedia: (params: {
-    collectionId: string
-    recordId: string
-    fieldId: string
-    thumb?: string
-    token?: string
-  }) => string
-} & CoreHelperReturnTypes {
+): ProxyTree<T> {
   path = Array.isArray(path) ? path : [path]
 
   const endpoint = new ForgeEndpoint<

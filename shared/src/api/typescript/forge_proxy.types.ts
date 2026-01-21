@@ -3,6 +3,7 @@ import type z from 'zod'
 import type { ZodIntersection, ZodObject, ZodRawShape, ZodTypeAny } from 'zod'
 
 import type ForgeEndpoint from '../core/forgeEndpoint'
+import type { CoreHelperReturnTypes } from '../core/helpers/config'
 
 type ZodObjectOrIntersection =
   | ZodObject<ZodRawShape>
@@ -143,7 +144,18 @@ export type ProxyTree<T> = {
   [K in keyof T]: T[K] extends { __isForgeController: true }
     ? ForgeEndpoint<T[K]>
     : ProxyTree<T[K]>
-}
+} & {
+  untyped: <TOutput = any, TBody = any, TQuery = any>(
+    url: string
+  ) => ForgeEndpoint<UntypedEndpointType<TOutput, TBody, TQuery>>
+  getMedia: (params: {
+    collectionId: string
+    recordId: string
+    fieldId: string
+    thumb?: string
+    token?: string
+  }) => string
+} & CoreHelperReturnTypes
 
 /**
  * Helper type for creating untyped endpoints.

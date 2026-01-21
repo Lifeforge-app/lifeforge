@@ -1,4 +1,3 @@
-import type ForgeEndpoint from '@shared/api/core/forgeEndpoint'
 import type { ProxyTree } from '@shared/api/typescript/forge_proxy.types'
 
 export default function getFormFileFieldInitialData(
@@ -31,11 +30,11 @@ export default function getFormFileFieldInitialData(
   if (typeof file === 'string') {
     // Generate preview URL for existing file
     if (file.match(/^.*?(png|jpe?g|webp|gif)$/i)) {
-      preview = (forgeAPI.media! as ForgeEndpoint).input({
+      preview = forgeAPI.getMedia({
         collectionId: initialData.collectionId!,
         recordId: initialData.id!,
         fieldId: file
-      } as never).endpoint
+      })
     } else {
       preview = file
     }
