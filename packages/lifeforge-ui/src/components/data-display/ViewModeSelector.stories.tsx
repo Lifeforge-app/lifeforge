@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { SearchInput } from '@components/inputs'
 
 import ViewModeSelector from './ViewModeSelector'
+import Widget from './Widget'
 
 const meta = {
   component: ViewModeSelector,
@@ -22,9 +23,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const VIEW_OPTIONS = [
-  { value: 'list', icon: 'tabler:list' },
-  { value: 'grid', icon: 'tabler:grid-dots' },
-  { value: 'gallery', icon: 'tabler:layout-grid' }
+  { value: 'list', icon: 'tabler:list', text: 'List' },
+  { value: 'grid', icon: 'tabler:grid-dots', text: 'Grid' },
+  { value: 'gallery', icon: 'tabler:layout-grid', text: 'Gallery' }
 ] as const
 
 /**
@@ -34,7 +35,59 @@ export const Default: Story = {
   args: {
     currentMode: 'list',
     onModeChange: () => {},
+    options: VIEW_OPTIONS.map(({ value, icon }) => ({
+      value,
+      icon
+    }))
+  },
+  render: args => {
+    const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
+      'list'
+    )
+
+    return (
+      <div className="flex-center h-full w-full">
+        <ViewModeSelector
+          {...args}
+          currentMode={viewMode}
+          onModeChange={setViewMode}
+        />
+      </div>
+    )
+  }
+}
+
+export const WithText: Story = {
+  args: {
+    currentMode: 'list',
+    onModeChange: () => {},
     options: VIEW_OPTIONS
+  },
+  render: args => {
+    const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
+      'list'
+    )
+
+    return (
+      <div className="flex-center h-full w-full">
+        <ViewModeSelector
+          {...args}
+          currentMode={viewMode}
+          onModeChange={setViewMode}
+        />
+      </div>
+    )
+  }
+}
+
+export const TextOnly: Story = {
+  args: {
+    currentMode: 'list',
+    onModeChange: () => {},
+    options: VIEW_OPTIONS.map(({ value, text }) => ({
+      value,
+      text
+    }))
   },
   render: args => {
     const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
@@ -83,6 +136,38 @@ export const BesideSearchBar: Story = {
           onModeChange={setViewMode}
         />
       </div>
+    )
+  }
+}
+
+export const InsideWidget: Story = {
+  args: {
+    currentMode: '1M',
+    onModeChange: () => {},
+    options: ['1W', '1M', '3M', 'YTD', '1Y', 'ALL'].map(item => ({
+      value: item,
+      text: item
+    }))
+  },
+  render: args => {
+    const [viewMode, setViewMode] = useState<
+      '1W' | '1M' | '3M' | 'YTD' | '1Y' | 'ALL'
+    >('1M')
+
+    return (
+      <Widget
+        actionComponent={
+          <ViewModeSelector
+            className="component-bg-lighter"
+            size="small"
+            {...args}
+            currentMode={viewMode}
+            onModeChange={setViewMode}
+          />
+        }
+        icon="tabler:chart-dots"
+        title="A Chart Or Something"
+      ></Widget>
     )
   }
 }
