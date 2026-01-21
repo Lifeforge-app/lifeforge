@@ -21,16 +21,16 @@ export default function LoadingScreen({
   return (
     <div
       className={clsx(
-        'flex-center size-full flex-1 flex-col gap-[1.5rem]',
+        'flex-center size-full flex-1 flex-col gap-[1rem]',
         className
       )}
     >
       <Icon
         className="text-bg-500"
         icon="svg-spinners:ring-resize"
-        style={{ fontSize: loaderSize || '2.5rem' }}
+        style={{ fontSize: loaderSize || '2rem' }}
       />
-      {message && <p className="text-bg-500 text-lg font-medium">{message}</p>}
+      {message && <p className="text-bg-500 font-medium">{message}</p>}
     </div>
   )
 }
