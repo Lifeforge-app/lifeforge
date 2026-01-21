@@ -129,7 +129,7 @@ function createHandler<
         media: (req.media || {}) as ConvertMedia<NonNullable<TMedia>>,
         core: createCoreContext({
           pb: req.pb(callerModule || { id: '' }),
-          module: callerModule
+          module: callerModule as never
         })
       })
 
