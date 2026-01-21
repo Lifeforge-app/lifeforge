@@ -61,7 +61,6 @@
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
-    "@lifeforge/lifeforge--achievements": "^0.0.8",
     "@tanstack/react-query": "^5.90.2",
     "@uidotdev/usehooks": "^2.4.1",
     "clsx": "^2.1.1",
