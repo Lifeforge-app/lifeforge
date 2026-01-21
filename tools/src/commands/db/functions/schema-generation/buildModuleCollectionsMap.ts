@@ -1,5 +1,6 @@
 import chalk from 'chalk'
 
+import listModules from '@/commands/modules/functions/listModules'
 import logger from '@/utils/logger'
 
 import { listSchemaPaths } from './listSchemaPaths'
@@ -25,10 +26,12 @@ export default async function buildModuleCollectionsMap(
 ): Promise<Record<string, Record<string, unknown>[]>> {
   const moduleCollectionsMap: Record<string, Record<string, unknown>[]> = {}
 
-  const allModules = listSchemaPaths()
+  const modulesWithSchema = listSchemaPaths()
+
+  const allModules = Object.keys(listModules())
 
   logger.debug(
-    `Found ${chalk.blue(String(allModules.length))} modules with schema files`
+    `Found ${chalk.blue(String(modulesWithSchema.length))} modules with schema files`
   )
 
   let matchedCount = 0
@@ -36,6 +39,7 @@ export default async function buildModuleCollectionsMap(
 
   for (const collection of collections) {
     const matchingModuleDir = await matchCollectionToModule(
+      modulesWithSchema,
       allModules,
       collection
     )
