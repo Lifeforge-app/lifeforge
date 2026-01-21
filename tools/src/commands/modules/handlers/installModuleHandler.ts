@@ -70,7 +70,7 @@ export async function installModuleHandler(
 
     logger.debug(`Installing ${chalk.blue(fullName)}...`)
 
-    installPackage(fullName, targetDir)
+    installPackage(fullName, targetDir, 'apps')
 
     // Restore gitignore to .gitignore (npm excludes .gitignore during publish)
     const gitignorePath = path.join(targetDir, 'gitignore')
