@@ -46,6 +46,38 @@ export const Default: Story = {
   )
 }
 
+export const WithDescription: Story = {
+  args: {
+    icon: 'tabler:cube',
+    title: 'Cool Widget',
+    description: 'Cool Widget Description'
+  },
+  render: args => (
+    <div className="grid h-full w-full grid-cols-3 grid-rows-3 gap-6 p-16">
+      <Widget {...args}>
+        <p className="text-bg-600 dark:text-bg-400">
+          This is a dashboard item.
+        </p>
+      </Widget>
+      <Widget {...args} className="col-span-2 row-span-2">
+        <p className="text-bg-600 dark:text-bg-400">
+          This is a larger dashboard item.
+        </p>
+      </Widget>
+      <Widget {...args} className="row-span-2">
+        <p className="text-bg-600 dark:text-bg-400">
+          This is a tall dashboard item.
+        </p>
+      </Widget>
+      <Widget {...args} className="col-span-2">
+        <p className="text-bg-600 dark:text-bg-400">
+          This is a wide dashboard item.
+        </p>
+      </Widget>
+    </div>
+  )
+}
+
 export const WithActionComponent: Story = {
   args: {
     icon: 'tabler:cube',

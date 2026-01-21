@@ -2,12 +2,14 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+import { anyColorToHex } from 'shared'
 
 export interface WidgetProps {
   /** Additional CSS class names to apply to the outer wrapper of the component. */
   className?: string
   /** The icon to display beside the title. Should be a valid icon name from Iconify. */
   icon: string
+  iconColor?: string
   /** The title of the widget. This title will be used as a key for translation if a namespace is provided.
    *
    * The translation shall be looked up using the keys:
@@ -17,6 +19,14 @@ export interface WidgetProps {
    * If no translation is found, the raw title string will be displayed.
    */
   title?: React.ReactNode
+  /** The description of the widget. This description will be used as a key for translation if a namespace is provided.
+   *
+   * The translation shall be looked up using the keys:
+   * - `widgets.[camelCasedTitle].description`
+   *
+   * If no translation is found, the raw description string will be displayed.
+   */
+  description?: React.ReactNode
   /** The content of the widget. */
   children?: React.ReactNode | string
   /** An optional component to render beside the title, such as action buttons or dropdowns. */
@@ -36,7 +46,9 @@ export interface WidgetProps {
 export default function Widget({
   className = '',
   icon,
+  iconColor,
   title,
+  description,
   children,
   actionComponent: componentBesideTitle,
   namespace = 'common.dashboard',
@@ -64,36 +76,95 @@ export default function Widget({
             )}
           >
             {variant === 'large-icon' ? (
-              <div className="shadow-custom component-bg-lighter bg-bg-100 flex rounded-lg p-2 sm:p-4">
+              <div
+                className={clsx(
+                  'shadow-custom flex rounded-lg p-2 sm:p-4',
+                  !iconColor && 'component-bg-lighter bg-bg-100'
+                )}
+                style={
+                  iconColor
+                    ? { backgroundColor: anyColorToHex(iconColor) + '20' }
+                    : undefined
+                }
+              >
                 <Icon
-                  className="text-bg-500 dark:text-bg-50 text-2xl sm:text-3xl"
+                  className={clsx(
+                    'text-2xl sm:text-3xl',
+                    !iconColor && 'text-bg-500 dark:text-bg-50'
+                  )}
                   icon={icon}
+                  style={
+                    iconColor
+                      ? {
+                          color: iconColor
+                        }
+                      : undefined
+                  }
                 />
               </div>
             ) : (
-              <div className="bg-bg-500/10 flex-center size-9 shrink-0 rounded-md">
+              <div
+                className={clsx(
+                  'flex-center shrink-0 rounded-md',
+                  description ? 'size-11' : 'size-9',
+                  !iconColor && 'bg-bg-500/10'
+                )}
+                style={
+                  iconColor
+                    ? { backgroundColor: anyColorToHex(iconColor) + '20' }
+                    : undefined
+                }
+              >
                 <Icon
-                  className="text-bg-500 dark:text-bg-50 size-5 shrink-0"
+                  className={clsx(
+                    'size-5 shrink-0',
+                    !iconColor && 'text-bg-500 dark:text-bg-50'
+                  )}
                   icon={icon}
+                  style={
+                    iconColor
+                      ? {
+                          color: iconColor
+                        }
+                      : undefined
+                  }
                 />
               </div>
             )}
-            <span
-              className={clsx(
-                'w-full min-w-0 truncate',
-                variant === 'large-icon'
-                  ? 'text-bg-500 text-lg sm:text-xl'
-                  : 'text-bg-500 dark:text-bg-50 text-lg'
+            <div className="min-w-0">
+              <h3
+                className={clsx(
+                  'text-bg-500 w-full min-w-0 truncate',
+                  variant === 'large-icon'
+                    ? 'text-lg sm:text-xl'
+                    : 'dark:text-bg-50 text-lg'
+                )}
+              >
+                {namespace !== false && typeof title === 'string'
+                  ? t([
+                      `widgets.${_.camelCase(title)}.title`,
+                      `widgets.${_.camelCase(title)}`,
+                      title
+                    ])
+                  : title}
+              </h3>
+              {description && (
+                <p
+                  className={clsx(
+                    'text-bg-500 w-full min-w-0',
+                    variant === 'large-icon' ? 'text-base' : 'text-sm'
+                  )}
+                >
+                  {namespace !== false && typeof description === 'string'
+                    ? t([
+                        `widgets.${_.camelCase(description)}.description`,
+                        `widgets.${_.camelCase(description)}`,
+                        description
+                      ])
+                    : description}
+                </p>
               )}
-            >
-              {namespace !== false && typeof title === 'string'
-                ? t([
-                    `widgets.${_.camelCase(title)}.title`,
-                    `widgets.${_.camelCase(title)}`,
-                    title
-                  ])
-                : title}
-            </span>
+            </div>
           </h2>
           {componentBesideTitle}
         </div>
