@@ -110,7 +110,7 @@ export async function installModuleHandler(
 
       if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
         logger.debug(`Generating database migrations for ${moduleName}...`)
-        generateMigrationsHandler(moduleName)
+        await generateMigrationsHandler(moduleName)
       }
     }
   }
