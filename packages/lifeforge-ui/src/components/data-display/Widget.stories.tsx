@@ -82,7 +82,7 @@ export const WithActionComponent: Story = {
         actionComponent={
           <Listbox
             buttonContent={<>Last 7 Days</>}
-            className="max-w-56"
+            className="component-bg-lighter max-w-56"
             value="last_7_days"
             onChange={() => {}}
           >
