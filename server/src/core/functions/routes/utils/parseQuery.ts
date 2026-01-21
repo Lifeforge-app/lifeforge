@@ -11,7 +11,7 @@ export default function parseQuery(
   const result = validator.safeParse(req.query)
 
   if (!result.success) {
-    throw new ClientError(z.formatError(result.error).toString(), 400)
+    throw new ClientError(JSON.stringify(z.formatError(result.error)), 400)
   }
 
   req.query = result.data as any
