@@ -32,8 +32,6 @@ function getModulesWithLocales(): string[] {
     .map(dir => path.join(appsDir, dir))
 }
 
-const moduleApps = getModulesWithLocales()
-
 const listLanguages = forge
   .query()
   .noAuth()
@@ -61,6 +59,8 @@ const getLocale = forge
     })
   })
   .callback(async ({ query: { lang, namespace, subnamespace } }) => {
+    const moduleApps = getModulesWithLocales()
+
     subnamespace = normalizeSubnamespace(subnamespace)
 
     const finalLang = LocaleService.getAllowedLang().find(e =>
