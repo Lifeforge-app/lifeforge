@@ -6,7 +6,7 @@ import path from 'path'
 import { ROOT_DIR } from '@/constants/constants'
 
 import logger from './logger'
-import { type PackageJsonTarget, addDependency } from './packageJson'
+import { addDependency, removeDependency } from './packageJson'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
@@ -97,17 +97,18 @@ export function bunInstall() {
 /**
  * Installs a package from the registry and copies it to the target directory.
  *
- * Downloads the package using `bun add`, copies it from node_modules to the target
- * directory, adds it as a workspace dependency, and runs `bun install`.
+ * Downloads the package using `bun add` at root, copies from node_modules to the target
+ * directory, adds it as a dependency to the appropriate package.json (apps or locales),
+ * removes it from root package.json, and runs `bun install`.
  *
  * @param fullName - The full package name (e.g., `@lifeforge/lifeforge--calendar`)
  * @param targetDir - The absolute path to copy the package to
- * @param target - The package.json target to update (defaults to 'apps')
+ * @param target - The package.json target to add the dependency to (defaults to 'apps')
  */
 export function installPackage(
   fullName: string,
   targetDir: string,
-  target: PackageJsonTarget = 'apps'
+  target: 'apps' | 'locales' = 'apps'
 ) {
   if (fs.existsSync(targetDir)) {
     fs.rmSync(targetDir, { recursive: true, force: true })
@@ -139,7 +140,11 @@ export function installPackage(
 
   fs.cpSync(installedPath, targetDir, { recursive: true, dereference: true })
 
+  // Add to target package.json (apps or locales)
   addDependency(fullName, target)
+
+  // Remove from root package.json to keep it clean
+  removeDependency(fullName, 'root')
 
   if (fs.existsSync(installedPath)) {
     fs.rmSync(installedPath, { recursive: true, force: true })
