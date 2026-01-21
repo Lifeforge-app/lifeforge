@@ -17,6 +17,8 @@ import {
 import { ToastProvider } from 'shared'
 import { themes } from 'storybook/theming'
 
+import ModalProvider from 'shared/dist/providers/ModalStoreProvider'
+
 import { ModalManager } from '@components/overlays'
 
 import forgeAPI from '@/utils/forgeAPI'
@@ -127,9 +129,11 @@ const withBodyClass = (Story: any, context: any) => {
             }}
           >
             <ToastProvider>
-              <MainElement theme={context.globals.theme}>
-                <Story />
-              </MainElement>
+              <ModalProvider>
+                <MainElement theme={context.globals.theme}>
+                  <Story />
+                </MainElement>
+              </ModalProvider>
             </ToastProvider>
           </PersonalizationProvider>
         </div>
