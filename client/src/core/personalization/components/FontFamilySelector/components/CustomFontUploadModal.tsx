@@ -43,7 +43,7 @@ function CustomFontUploadModal({
     weight: number
     file: any
   }>({
-    icon: openType === 'create' ? 'tabler:upload' : 'tabler:edit',
+    icon: openType === 'create' ? 'tabler:upload' : 'tabler:pencil',
     title: `fontFamily.modals.customFonts.${openType === 'create' ? 'upload' : 'edit'}`,
     namespace: 'common.personalization',
     onClose,
