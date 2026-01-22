@@ -23,7 +23,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:user',
-    label: 'Username',
+    label: 'Username Lorem Ipsum Dolor Sit Amet Consectectur Adisiplin Elit',
     placeholder: 'John Doe',
     onChange: () => {},
     value: '',
@@ -33,7 +33,7 @@ export const Default: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} onChange={onChange} value={value} />
+    return <TextInput {...args} value={value} onChange={onChange} />
   }
 }
 
@@ -50,7 +50,7 @@ export const PasswordInput: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} onChange={onChange} value={value} />
+    return <TextInput {...args} value={value} onChange={onChange} />
   }
 }
 
@@ -70,7 +70,7 @@ export const WithActionButton: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} onChange={onChange} value={value} />
+    return <TextInput {...args} value={value} onChange={onChange} />
   }
 }
 
@@ -88,6 +88,6 @@ export const Required: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} onChange={onChange} value={value} />
+    return <TextInput {...args} value={value} onChange={onChange} />
   }
 }
