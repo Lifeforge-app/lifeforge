@@ -11,6 +11,7 @@ import TextInputBox from './components/TextInputBox'
 export type TextInputProps = {
   /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
   variant?: 'classic' | 'plain'
+  size?: 'small' | 'default'
   /** The label text displayed above the input field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -51,6 +52,7 @@ export type TextInputProps = {
 
 function TextInput({
   variant = 'classic',
+  size = 'default',
   label,
   icon,
   placeholder,
@@ -84,6 +86,7 @@ function TextInput({
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={inputRef}
+      size={size}
       variant={variant}
     >
       {variant === 'classic' && icon && (
@@ -110,6 +113,7 @@ function TextInput({
           isPassword={isPassword}
           placeholder={placeholder}
           showPassword={showPassword}
+          size={size}
           value={value}
           variant={variant}
           onChange={onChange}
