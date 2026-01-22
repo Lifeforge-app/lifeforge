@@ -14,6 +14,7 @@ function TextInputBox({
   className = '',
   autoFocus = false,
   variant = 'classic',
+  size = 'default',
   ...inputProps
 }: {
   value: string
@@ -36,6 +37,7 @@ function TextInputBox({
   disabled?: boolean
   className?: string
   variant?: 'classic' | 'plain'
+  size?: 'small' | 'default'
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>) {
   return (
     <>
@@ -50,7 +52,7 @@ function TextInputBox({
           'caret-custom-500 focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wider focus:outline-hidden',
           variant === 'classic'
             ? 'mt-6 h-13 p-6 pl-4 placeholder:text-transparent'
-            : 'h-7 p-0',
+            : clsx('p-0', size === 'small' ? 'h-5 text-sm' : 'h-7'),
           className
         )}
         disabled={disabled}

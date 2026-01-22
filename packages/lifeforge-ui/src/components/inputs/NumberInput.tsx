@@ -6,6 +6,7 @@ import TextInput from './TextInput'
 interface NumberInputProps {
   /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
   variant?: 'classic' | 'plain'
+  size?: 'small' | 'default'
   /** The label text displayed above the number input field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -38,6 +39,7 @@ interface NumberInputProps {
 
 function NumberInput({
   variant = 'classic',
+  size = 'default',
   label,
   icon,
   value,
@@ -74,6 +76,7 @@ function NumberInput({
       namespace={namespace}
       placeholder={placeholder}
       required={required}
+      size={size}
       value={currentStringValue}
       variant={variant}
       onBlur={() => {

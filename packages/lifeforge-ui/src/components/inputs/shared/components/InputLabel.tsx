@@ -35,7 +35,7 @@ function InputLabel({
   return (
     <span
       className={clsx(
-        'pointer-events-none absolute left-17 font-medium tracking-wide transition-all',
+        'pointer-events-none absolute left-17 w-[calc(100%-5.75rem)] min-w-0 truncate text-left font-medium tracking-wide transition-all',
         hasError
           ? 'text-red-500 group-focus-within:text-red-500! group-data-open:text-red-500!'
           : focused
