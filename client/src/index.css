@@ -19,5 +19,5 @@ layer(base);
 @source '../../packages/lifeforge-ui/dist';
 
 /* App styles */
-@source '../../apps';
+@source '../../apps/**/*';
 @import '@core/dashboard/index.css';
