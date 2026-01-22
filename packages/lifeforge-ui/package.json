@@ -25,7 +25,7 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "types": "tsc -b",
-    "build": "rm -rf dist && vite build",
+    "build": "tsc -b && rm -rf dist && vite build",
     "build-storybook": "cd ../../shared && bun run build && cd ../packages/lifeforge-ui && storybook build"
   },
   "dependencies": {
