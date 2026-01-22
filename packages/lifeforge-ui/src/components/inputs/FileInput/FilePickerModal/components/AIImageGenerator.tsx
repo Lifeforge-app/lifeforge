@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useAPIEndpoint, usePromiseLoading } from 'shared'
@@ -6,6 +5,8 @@ import { useAPIEndpoint, usePromiseLoading } from 'shared'
 import { EmptyStateScreen } from '@components/feedback'
 import { Button } from '@components/inputs'
 import { WithQueryData } from '@components/utilities'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import TextAreaInput from '../../../TextAreaInput'
 
@@ -63,7 +64,7 @@ function AIImageGenerator({
             <>
               <TextAreaInput
                 required
-                icon="tabler:edit"
+                icon="tabler:pencil"
                 label="imagePicker.inputs.prompt"
                 namespace="common.modals"
                 placeholder="A description of the image you want to generate"
