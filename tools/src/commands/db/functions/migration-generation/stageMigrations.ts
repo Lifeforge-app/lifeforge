@@ -1,9 +1,9 @@
 import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+import type { CollectionModel } from 'pocketbase'
 
 import logger from '@/utils/logger'
 
-import applyMigrations from './applyMigrations'
-import createSingleMigration from './createSingleMigration'
 import generateSkeletonContent from './generateContent/skeleton'
 import generateStructureContent from './generateContent/structure'
 import generateViewsContent from './generateContent/views'
@@ -30,18 +30,17 @@ const generateContentMap = {
  * @param phase - The migration phase: 'skeleton', 'structure', or 'views'
  * @param index - Zero-based index of the phase (used for logging)
  * @param importedSchemas - Array of module schemas to process
- * @param idToNameMap - Map of collection IDs to names for resolving relations
  *
  * @throws Error if any module's migration fails to generate
  */
 export default async function stageMigration(
+  pb: PocketBase,
   phase: 'skeleton' | 'structure' | 'views',
   index: number,
   importedSchemas: Array<{
     moduleName: string
-    schema: Record<string, { raw: Record<string, unknown> }>
-  }>,
-  idToNameMap: Map<string, string>
+    schema: Record<string, { raw: CollectionModel }>
+  }>
 ) {
   logger.debug(`Phase ${index + 1}: Creating ${phase} migrations...`)
 
@@ -49,10 +48,7 @@ export default async function stageMigration(
 
   for (const { moduleName, schema } of importedSchemas) {
     try {
-      await createSingleMigration(
-        `${phase}_${moduleName}`,
-        phaseFn(schema, idToNameMap)
-      )
+      await phaseFn(pb, schema)
 
       logger.debug(`Created ${phase} migration for ${chalk.blue(moduleName)}`)
     } catch (error) {
@@ -64,6 +60,4 @@ export default async function stageMigration(
       )
     }
   }
-
-  applyMigrations()
 }
