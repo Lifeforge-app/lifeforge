@@ -84,7 +84,7 @@ export default function executeCommand(
  * Runs `bun install` in the root directory to install dependencies.
  */
 export function bunInstall() {
-  executeCommand('bun install', {
+  executeCommand('bun install --ignore-scripts', {
     cwd: ROOT_DIR,
     stdio:
       LOG_LEVELS.indexOf(logger.instance.level as LogLevel) >
@@ -116,7 +116,7 @@ export function installPackage(
 
   logger.debug(`Installing ${fullName} from registry...`)
 
-  executeCommand(`bun add ${fullName}@latest`, {
+  executeCommand(`bun add ${fullName}@latest --ignore-scripts`, {
     cwd: ROOT_DIR,
     stdio:
       LOG_LEVELS.indexOf(logger.instance.level as LogLevel) >
