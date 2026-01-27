@@ -22,7 +22,8 @@
     ],
     "scripts": {
         "forge": "bun run tools/src/index.ts",
-        "prebuild": "bun --cwd=shared run build && bun --cwd=packages/lifeforge-ui run build"
+        "prebuild": "bun --cwd=shared run build && bun --cwd=packages/lifeforge-ui run build",
+        "postinstall": "bun --cwd=packages/lifeforge-log run build && bun --cwd=packages/lifeforge-server-utils run build && bun prebuild"
     },
     "keywords": [
         "lifeforge"
