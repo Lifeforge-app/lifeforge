@@ -1,3 +1,5 @@
+import PocketBase, { type CollectionModel } from 'pocketbase'
+
 /**
  * Removes auto-generated IDs and timestamps from a raw collection config.
  *
@@ -12,57 +14,52 @@
  * @param raw - The raw collection configuration from the schema
  * @returns Cleaned config without id, created, updated fields
  */
-function stripIdsFromRaw(
-  raw: Record<string, unknown>
-): Record<string, unknown> {
-  const cleaned = { ...raw }
+async function mapCollectionRelation(
+  pb: PocketBase,
+  raw: CollectionModel
+): Promise<CollectionModel> {
+  const allCollectionsInPB = await pb.collections.getFullList()
 
-  delete cleaned.id
-  delete cleaned.created
-  delete cleaned.updated
+  const mapped = { ...raw }
 
-  if (cleaned.fields && Array.isArray(cleaned.fields)) {
-    cleaned.fields = cleaned.fields.map((field: Record<string, unknown>) => {
+  const realCollectionId = allCollectionsInPB.find(
+    collection => collection.name === raw.name
+  )?.id
+
+  if (!realCollectionId) {
+    throw new Error(
+      `Collection "${raw.name}" not found in PocketBase for relation field "${raw.name}"`
+    )
+  }
+
+  mapped.id = realCollectionId
+
+  delete mapped.created
+  delete mapped.updated
+
+  if (mapped.fields && Array.isArray(mapped.fields)) {
+    mapped.fields = mapped.fields.map(field => {
       const cleanedField = { ...field }
 
-      delete cleanedField.id
+      if (cleanedField.type === 'relation' && cleanedField.collectionId) {
+        const targetCollection = allCollectionsInPB.find(
+          collection => collection.name === cleanedField.collectionId
+        )
+
+        if (!targetCollection) {
+          throw new Error(
+            `Collection "${cleanedField.collectionId}" not found in PocketBase for relation field "${cleanedField.name}" in collection "${raw.name}"`
+          )
+        }
+
+        cleanedField.collectionId = targetCollection.id
+      }
 
       return cleanedField
     })
   }
 
-  return cleaned
-}
-
-/**
- * Extracts relation fields from a collection that need dynamic collectionId resolution.
- *
- * Relation fields store the target collection's ID, but IDs aren't portable.
- * This function identifies which fields need their collectionId resolved
- * at migration runtime using `findCollectionByNameOrId`.
- *
- * @param raw - The raw collection configuration
- * @returns Array of relation field info with field name and target collection name
- */
-function extractRelationFields(
-  raw: Record<string, unknown>
-): Array<{ fieldName: string; collectionName: string }> {
-  const relations: Array<{ fieldName: string; collectionName: string }> = []
-
-  const fields = raw.fields as Array<Record<string, unknown>> | undefined
-
-  if (fields) {
-    for (const field of fields) {
-      if (field.type === 'relation' && field.collectionId) {
-        relations.push({
-          fieldName: field.name as string,
-          collectionName: field.collectionId as string // Already converted to name in schema
-        })
-      }
-    }
-  }
-
-  return relations
+  return mapped
 }
 
 /**
@@ -78,57 +75,20 @@ function extractRelationFields(
  * in the separate views phase.
  *
  * @param schema - Module schema with collection definitions
- * @param idToNameMap - Map of collection IDs to names for resolving relations
  * @returns JavaScript code string for the up migration
  */
-export default function generateContent(
-  schema: Record<string, { raw: Record<string, unknown> }>,
-  idToNameMap: Map<string, string>
-): string {
+export default async function generateContent(
+  pb: PocketBase,
+  schema: Record<string, { raw: CollectionModel }>
+) {
   // Filter out view collections - they are handled in view query migration
   const nonViewCollections = Object.entries(schema).filter(
     ([, { raw }]) => raw.type !== 'view'
   )
 
-  const lines: string[] = []
+  for (const [_, { raw }] of nonViewCollections) {
+    const mappedRaw = await mapCollectionRelation(pb, raw)
 
-  lines.push('// Update collections with full schema (excluding views)')
-
-  for (const [name, { raw }] of nonViewCollections) {
-    const cleanedRaw = stripIdsFromRaw(raw)
-
-    const relations = extractRelationFields(cleanedRaw)
-
-    lines.push('')
-    lines.push(`  // Get existing collection and update it`)
-    lines.push(
-      `  const ${name}Existing = app.findCollectionByNameOrId('${raw.name}');`
-    )
-    lines.push(
-      `  const ${name}Collection = ${JSON.stringify(cleanedRaw, null, 2)
-        .split('\n')
-        .map((l, i) => (i === 0 ? l : '  ' + l))
-        .join('\n')};`
-    )
-
-    // For each relation field, resolve the collectionId dynamically using NAME not ID
-    for (const { fieldName, collectionName } of relations) {
-      // Convert ID to name if needed
-      const resolvedName = idToNameMap.get(collectionName) || collectionName
-
-      lines.push(
-        `  const ${name}_${fieldName}_rel = app.findCollectionByNameOrId('${resolvedName}');`
-      )
-      lines.push(
-        `  ${name}Collection.fields.find(f => f.name === '${fieldName}').collectionId = ${name}_${fieldName}_rel.id;`
-      )
-    }
-
-    lines.push(`  ${name}Collection.id = ${name}Existing.id;`)
-    lines.push(`  app.importCollections([${name}Collection], false);`)
+    await pb.collections.update(raw.name, mappedRaw)
   }
-
-  const upContent = lines.join('\n')
-
-  return upContent
 }

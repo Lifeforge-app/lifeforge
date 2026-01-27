@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import type { CollectionModel } from 'pocketbase'
 import prettier from 'prettier'
 
 import { ROOT_DIR } from '@/constants/constants'
@@ -79,7 +80,7 @@ export function getSchemaFiles(targetModule?: string): string[] {
 export async function importSchemaModules(targetModule?: string): Promise<
   Array<{
     moduleName: string
-    schema: Record<string, { raw: Record<string, unknown> }>
+    schema: Record<string, { raw: CollectionModel }>
   }>
 > {
   const schemaFiles = getSchemaFiles(targetModule)
