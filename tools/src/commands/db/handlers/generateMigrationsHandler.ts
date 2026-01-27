@@ -1,6 +1,6 @@
 import logger from '@/utils/logger'
+import getPBInstance from '@/utils/pocketbase'
 
-import buildIdToNameMap from '../functions/migration-generation/buildIdToNameMap'
 import stageMigration from '../functions/migration-generation/stageMigrations'
 import { importSchemaModules } from '../utils'
 import { cleanupOldMigrations } from '../utils/pocketbase-utils'
@@ -16,15 +16,17 @@ export async function generateMigrationsHandler(
 
     const importedSchemas = await importSchemaModules(targetModule)
 
-    const idToNameMap = await buildIdToNameMap(targetModule)
+    const { pb, killPB } = await getPBInstance()
 
     for (const [index, phase] of Object.entries([
       'skeleton',
       'structure',
       'views'
     ] as const)) {
-      await stageMigration(phase, Number(index), importedSchemas, idToNameMap)
+      await stageMigration(pb, phase, Number(index), importedSchemas)
     }
+
+    killPB?.()
 
     logger.success('Migrations generated successfully')
   } catch (error) {

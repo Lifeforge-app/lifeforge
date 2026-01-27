@@ -1,3 +1,5 @@
+import Pocketbase, { type CollectionModel } from 'pocketbase'
+
 /**
  * Generates skeleton migration content for the first phase of migration.
  *
@@ -20,26 +22,22 @@
  * // try { usersExisting = app.findCollectionByNameOrId('users'); } catch (e) {}
  * // if (!usersExisting) { app.importCollections([usersStub], false); }
  */
-export default function generateContent(
-  schema: Record<string, { raw: Record<string, unknown> }>
-): string {
-  const lines: string[] = []
+export default async function generateContent(
+  pb: Pocketbase,
+  schema: Record<string, { raw: CollectionModel }>
+) {
+  // console.log(await pb.collections.getFullList())
 
-  lines.push('// Create skeleton collections (only if they do not exist)')
-
-  for (const [name, { raw }] of Object.entries(schema)) {
+  for (const [_, { raw }] of Object.entries(schema)) {
     const collectionName = raw.name as string
 
-    lines.push(`
-  // ${collectionName}
-  let ${name}Existing = null;
-  try {
-    ${name}Existing = app.findCollectionByNameOrId('${collectionName}');
-  } catch (e) {
-    // Collection doesn't exist yet
-  }
+    const collection = await pb.collections
+      .getFirstListItem(`name = '${collectionName}'`)
+      .catch(() => null)
 
-  if (!${name}Existing) {`)
+    if (collection) {
+      continue
+    }
 
     const stubCollection: Record<string, unknown> = {
       name: collectionName,
@@ -57,15 +55,6 @@ export default function generateContent(
       stubCollection.viewQuery = 'SELECT (ROW_NUMBER() OVER()) as id'
     }
 
-    lines.push(
-      `    const ${name}Stub = ${JSON.stringify(stubCollection, null, 2)
-        .split('\n')
-        .map((l, i) => (i === 0 ? l : '    ' + l))
-        .join('\n')};`
-    )
-    lines.push(`    app.importCollections([${name}Stub], false);`)
-    lines.push(`  }`)
+    await pb.collections.create(stubCollection)
   }
-
-  return lines.join('\n')
 }
