@@ -1,3 +1,5 @@
+import PocketBase, { type CollectionModel } from 'pocketbase'
+
 /**
  * Generates view query migration content for the third phase of migration.
  *
@@ -21,32 +23,29 @@
  * // users_aggregated.viewQuery = 'SELECT ... FROM users GROUP BY ...';
  * // app.save(users_aggregated);
  */
-export default function generateContent(
-  schema: Record<string, { raw: Record<string, unknown> }>
-): string {
+export default async function generateContent(
+  pb: PocketBase,
+  schema: Record<string, { raw: CollectionModel }>
+) {
   const viewCollections = Object.entries(schema).filter(
     ([, { raw }]) => raw.type === 'view'
   )
 
   if (viewCollections.length === 0) {
-    return ''
+    return
   }
 
-  const lines: string[] = []
+  for (const [_, { raw }] of viewCollections) {
+    const collection = await pb.collections
+      .getFirstListItem(`name = "${raw.name}"`)
+      .catch(() => null)
 
-  lines.push('// Update view collections with their actual viewQuery')
+    if (!collection) {
+      throw new Error(`Collection "${raw.name}" not found in PocketBase`)
+    }
 
-  for (const [name, { raw }] of viewCollections) {
-    lines.push('')
-    lines.push(`  // ${raw.name}`)
-    lines.push(
-      `  const ${name}Collection = app.findCollectionByNameOrId('${raw.name}');`
-    )
-    lines.push(
-      `  ${name}Collection.viewQuery = ${JSON.stringify(raw.viewQuery)};`
-    )
-    lines.push(`  app.save(${name}Collection);`)
+    collection.viewQuery = raw.viewQuery
+
+    await pb.collections.update(collection.id, collection)
   }
-
-  return lines.join('\n')
 }
