@@ -102,7 +102,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
     // Clean up zip file and unnecessary files
     fs.unlinkSync(zipPath)
 
-    const changelogPath = path.join(PB_DIR, 'CHANGElogger.md')
+    const changelogPath = path.join(PB_DIR, 'CHANGELOG.md')
 
     const licensePath = path.join(PB_DIR, 'LICENSE.md')
 
