@@ -10,6 +10,8 @@ import listModules from '../functions/listModules'
 
 interface BuildOptions {
   docker?: boolean
+  buildClient?: boolean
+  buildServer?: boolean
 }
 
 /**
@@ -29,6 +31,10 @@ export async function buildModuleHandler(
   const modules = listModules()
 
   const isDocker = options?.docker ?? false
+
+  const buildClient = options?.buildClient ?? true
+
+  const buildServer = options?.buildServer ?? true
 
   const moduleNames = moduleName
     ? [normalizePackage(moduleName).fullName]
@@ -66,23 +72,27 @@ export async function buildModuleHandler(
     }
 
     // Build client
-    if (hasClient) {
-      logger.info(`Building ${chalk.blue(shortName)} client...`)
+    if (hasClient && buildClient) {
+      if (!isDocker && !process.env.VITE_API_HOST) {
+        logger.warn(`VITE_API_HOST not set. Skipping local build.`)
+      } else {
+        logger.info(`Building ${chalk.blue(shortName)} client...`)
 
-      try {
-        executeCommand('bun run build:client', {
-          cwd: targetDir,
-          stdio: 'pipe',
-          env: isDocker ? { ...process.env, DOCKER_BUILD: 'true' } : undefined
-        })
-        clientBuiltCount++
-      } catch (error) {
-        logger.error(`Failed to build ${shortName} client: ${error}`)
+        try {
+          executeCommand('bun run build:client', {
+            cwd: targetDir,
+            stdio: 'pipe',
+            env: isDocker ? { ...process.env, DOCKER_BUILD: 'true' } : undefined
+          })
+          clientBuiltCount++
+        } catch (error) {
+          logger.error(`Failed to build ${shortName} client: ${error}`)
+        }
       }
     }
 
     // Build server
-    if (hasServer) {
+    if (hasServer && buildServer) {
       logger.info(`Building ${chalk.blue(shortName)} server...`)
 
       try {
