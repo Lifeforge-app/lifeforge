@@ -37,15 +37,6 @@ async function mapCollectionRelation(
   delete mapped.created
   delete mapped.updated
 
-  for (const index of mapped.indexes) {
-    const found = realCollection.indexes.find(idx => idx === index)
-
-    // If the index is already in the collection, we don't need to add it again
-    if (found) {
-      mapped.indexes = mapped.indexes.filter(idx => idx !== index)
-    }
-  }
-
   if (mapped.fields && Array.isArray(mapped.fields)) {
     mapped.fields = mapped.fields.map(field => {
       const cleanedField = { ...field }
@@ -98,6 +89,6 @@ export default async function generateContent(
   for (const [_, { raw }] of nonViewCollections) {
     const mappedRaw = await mapCollectionRelation(pb, raw)
 
-    await pb.collections.update(raw.name, mappedRaw)
+    await pb.collections.import([mappedRaw])
   }
 }
