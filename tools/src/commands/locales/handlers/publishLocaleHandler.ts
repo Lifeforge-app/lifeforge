@@ -8,14 +8,11 @@ import executeCommand from '@/utils/commands'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
-import { validateMaintainerAccess } from '../../../utils/github-cli'
-import { checkAuth, getRegistryUrl } from '../../../utils/registry'
+import { getRegistryUrl } from '../../../utils/registry'
 import { validateLocaleStructure } from '../functions/validateLocaleStructure'
+import validateLocalesAuthor from '../functions/validateLocalesAuthor'
 
-export async function publishLocaleHandler(
-  langCode: string,
-  options?: { official?: boolean }
-): Promise<void> {
+export async function publishLocaleHandler(langCode: string): Promise<void> {
   const { fullName, targetDir } = normalizePackage(langCode, 'locale')
 
   if (!fs.existsSync(targetDir)) {
@@ -30,12 +27,8 @@ export async function publishLocaleHandler(
   logger.info('Validating locale structure...')
   validateLocaleStructure(targetDir)
 
-  const auth = await checkAuth()
-
-  if (options?.official) {
-    logger.info('Validating maintainer access...')
-    validateMaintainerAccess(auth.username ?? '')
-  }
+  logger.debug('Validating module author...')
+  await validateLocalesAuthor(targetDir)
 
   const { oldVersion, newVersion } = bumpPackageVersion(targetDir)
 

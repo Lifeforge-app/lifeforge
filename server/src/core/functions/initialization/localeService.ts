@@ -2,6 +2,7 @@ import { ROOT_DIR } from '@constants'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
+import z from 'zod'
 
 import { createServiceLogger } from '@functions/logging'
 
@@ -12,6 +13,7 @@ export const ALLOWED_NAMESPACE = ['apps', 'common'] as const
 export const LANGUAGE_PACK_PATH = path.resolve(ROOT_DIR, 'locales')
 
 interface LangManifest {
+  packName: string
   name: string
   icon: string
   displayName: string
@@ -23,6 +25,25 @@ export interface LocaleData {
   subsections?: Record<string, unknown>
   [key: string]: unknown
 }
+
+const localesPackageJSONSchema = z.object({
+  name: z.string().regex(/^@lifeforge\/.+--lang-.+$/),
+  version: z.string().regex(/^\d+\.\d+\.\d+$/),
+  description: z.string(),
+  author: z.string(),
+  repository: z
+    .object({
+      type: z.literal('git'),
+      url: z.string()
+    })
+    .optional(),
+  lifeforge: z.object({
+    code: z.string(),
+    displayName: z.string(),
+    icon: z.string(),
+    alternative: z.array(z.string()).optional()
+  })
+})
 
 export class LocaleService {
   private static languagePacks: string[] = []
@@ -93,28 +114,24 @@ export class LocaleService {
         process.exit(1)
       }
 
-      const content = JSON.parse(fs.readFileSync(packagePath, 'utf-8'))
+      const content = localesPackageJSONSchema.safeParse(
+        JSON.parse(fs.readFileSync(packagePath, 'utf-8'))
+      )
 
-      if (
-        !content.name ||
-        !content.lifeforge?.displayName ||
-        !content.lifeforge?.icon
-      ) {
+      if (!content.success) {
         localeLogger.error(
-          `Language pack ${e} does not have a valid package.json. Required fields: name, lifeforge.displayName, lifeforge.icon`
+          `Language pack ${e} does not have a valid package.json. Please check the language pack path:\n${content.error.issues.map(e => ` - ${e.path.join('.')}: ${e.message}`).join('\n')}`
         )
 
         process.exit(1)
       }
 
-      // Extract language code from package name (e.g., "@lifeforge/lang-en" -> "en")
-      const langCode = content.name.replace('@lifeforge/lang-', '')
-
       return {
-        name: langCode,
-        icon: content.lifeforge.icon,
-        displayName: content.lifeforge.displayName,
-        alternative: content.lifeforge.alternative
+        packName: e,
+        name: content.data.lifeforge.code,
+        icon: content.data.lifeforge.icon,
+        displayName: content.data.lifeforge.displayName,
+        alternative: content.data.lifeforge.alternative
       }
     })
 
@@ -138,7 +155,7 @@ export class LocaleService {
           }
 
           return [
-            lang,
+            this.langManifests.find(e => e.packName === lang)?.name,
             Object.fromEntries(
               languagePackContent.map(file => [
                 file.replace('.json', ''),
