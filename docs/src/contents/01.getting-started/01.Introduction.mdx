@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import GithubUser from "@/components/GithubUser"
 
 import CustomLink from '../../components/CustomLink'
 import { Alert } from "lifeforge-ui"
@@ -28,6 +29,13 @@ Welcome to the official documentation for LifeForge, a comprehensive self-hosted
 
 Before you begin, let's take a look at some background story of this project.
 
+<Alert className="mt-6" type="tips">
+
+Before becoming so popular today, LifeForge started as just a little personal project of mine back in late 2023.
+
+This page mostly contains the stories behind the creation of LifeForge. If you are not interested and just want to get started, feel free to skip to the next page.
+</Alert>
+
 </section>
 
 ---
@@ -44,18 +52,38 @@ And the rest was history. I started a new project and started spamming code like
 <CustomLink to="/progress/changelog" text="View the Changelog" />
 </section>
 
-<section id="the-current-stage">
-## The Current Stage
+<section id="help-and-support-from-friends">
+## Help and Support from Friends
 
-Fast forward almost two years later, the project is still in active development stage. From conception to actual realization, I was mostly on my own the whole time. Despite the difficulties, I had a lot of fun and the feeling of having achieved something. Fortunately, this project is slowly but surely gaining attentions from people around the world. Now, with few contributors joining in to help out with the development, the project is becoming more and more mature. Hopefully in the foreseeable future, there'll be a community of developers built for this project.
+I have to admit that I couldn't have made it this far without the help and support from my friends. Shoutout to <GithubUser username="lukashow" /> and <GithubUser username="jiahuiiiii" />. They are friends of mine for years that I've met back in high school. They have been accompanying me throughout the journey of my programming life.
 
-This project is built with modularity, meaning that each function is its own separate module. With the modularization mechanism finally in place, it is now possible to add new features to the system without affecting the existing ones. This opens up a lot of possibilities for the future of this project.
+As I was grinding hard on the LifeForge, they are the ones I can meet with face-to-face for real-time discussions. They are the one behind a lot of the ideas and suggestions that I have implemented in the system. They are also the ones who actually helped me test the system, create modules themselves, and provide feedbacks to improve the user experience.
+
+Huge thanks to both of them for their continuous support and help throughout the journey of LifeForge. Couldn't have done it without you guys! 🔥
+</section>
+
+<section id="the-best-christmas-gift">
+## The Best Christmas Gift
+
+In the Christmas Eve of the year 2025, I woke up early in the morning, checked my phone, and was surprised with an email notification from GitHub saying that someone had opened a pull request to contribute a Russian translation for the LifeForge project. I was overjoyed. However, my excitement reached a new high when I saw that the repository had suddenly surged past 300 stars. It was a surreal moment for me, as I never expected that my little project would gain such recognition and appreciation from the community.
+
+And the momentum didn't stop there. The star count kept climbing, and soon enough, the repository had surpassed 500 stars. It was a testament to the hard work and dedication that I had put into the project, and it was incredibly rewarding to see that others were finding value in it as well.
+
+With the unprecedented motivation gained from the community, I pushed myself even harder to improve the system. Weeks after weeks were spent re-engineering the core architecture of the system to finally achieve true modularity.
+
+The stars kept coming in, and my curious mind kept wondering: there must be someone out there who helps to promote this project, right? After some investigation, it turned out that there were mainly two sources of traffic: one from Zhihu, a popular Chinese Q&A website similar to Quora, and the other from X (formerly known as Twitter). Reading their posts and comments, it was amazing to see how the project had gained traction in different parts of the world, and it was a humbling experience to see how my work had resonated with people from different cultures and backgrounds.
+
+Just when I was thinking that the peak had been reached, one day I was told by my friend <GithubUser username="jiahuiiiii" /> that the repository's star count suddenly skyrocketed past 1000 stars. It was an absolute WTF moment for me, and I couldn't help but feel a sense of craziness. It was like a dream come true, could have never thought that my humble project would gain such massive recognition and appreciation from the community.
+
+However, with great recognition comes great responsibility. Dozens of issues and feature requests started pouring in. Working on school stuff as well as client's projects, I found myself in an extremely busy year of 2026. It was tired for sure, but the satisfaction of seeing the project grow and improve kept me going. Time to create a time management module for LifeForge, I guess? 👀
 
 <CustomLink to="/progress/roadmap" text="View the Roadmap" />
 </section>
 
 <section id="the-future">
 ## The Future
+
+Heading into the third year of the project, LifeForge is still being actively worked on. From conception to actual realization, I was mostly on my own the whole time for the past two years. These hard works have finally paid off, with the system being used by hundreds of users worldwide.
 
 A good beginning is half done. Now that half is done, i.e. the basis of the system, it is time for the system to become bigger. As the saying goes: many hands make light work. What one can achieve is always limited. If you are reading this documentation and are a web developer, I call on you to contribute to this project. Let us make the system the next Notion, but better!
 
@@ -65,7 +93,7 @@ A good beginning is half done. Now that half is done, i.e. the basis of the syst
 <section id="why-life-forge">
 ## Why LifeForge?
 
-Did I just mention notion? The absolute GOAT for personal management? Why should you choose LifeForge instead of Notion? Notion is good, but it has its downsides. Primarily:
+Did I just mention Notion? The absolute GOAT for personal management? Why should you choose LifeForge instead of Notion? Notion is good, but it has its downsides. Primarily:
 
 - **Open Source vs Closed Source**: First, unlike the completely open sourced LifeForge, it's a closed sourced program, which means you have absolutely no idea what it's doing with your data.
 - **Data Control**: With Notion, your data is stored on their servers. You have no control over your data. If they decide to shut down their service, you lose everything. With LifeForge, you can self-host it on your own server or even on your local machine. You have complete control over your data.
@@ -74,14 +102,21 @@ Did I just mention notion? The absolute GOAT for personal management? Why should
 
 Speaking of closed sourced programs, a lot of the downsides mentioned above also apply to other software. With the trend of software becoming more and more subscription-based, people are starting to realize the importance of actually owning their software and data. LifeForge is here to provide an alternative for those who value freedom and control over their digital lives.
 
+<Alert className="mt-6" type="important">
+
+  #### Disclaimer
+
+  All of the comparisons made above are purely my personal opinions based on my own experiences and research. They are not meant to discredit or undermine the value of any other software or service. Different people have different needs and preferences, and what works for one person may not work for another. I encourage you to do your own research and make your own decisions based on your own needs and preferences.
+</Alert>
+
 </section>
 
 <section id="however">
 ## However...
 
-LifeForge is still in its early stages of development. There are still many features that are not yet implemented, and there may be bugs and issues that need to be fixed. If you decide to use LifeForge, please be aware of this and be prepared to encounter some issues along the way. Your feedback and contributions are highly appreciated to help improve the system.
+I can't promise you when LifeForge will be fully stable. There are still many features that are not yet implemented, and there may be bugs and issues that need to be fixed. If you decide to use LifeForge, please be aware of this and be prepared to encounter some issues along the way. Your feedback and contributions are highly appreciated to help improve the system.
 
-Also, despite my best efforts to make the system as intuitive as possible, LifeForge being an open sourced self-hosted system means that it may require some technical knowledge to set up and maintain, unlike those closed sourced SaaS solutions where you can simply sign up and start using it right away. But don't worry, the documentation is here to help you through the process. Feel free to take a look at the [Setup Guide](/getting-started/installation), and you will notice that it's not as hard as you think!
+Also, despite my best efforts to make the system as intuitive as possible, LifeForge being an open sourced self-hosted system means that it may require a little bit of technical knowledge to set up and maintain, unlike those closed sourced SaaS solutions where you can simply sign up and start using it right away. But don't worry, Docker is there to ease the process significantly, and the documentation is here to assist you. Feel free to take a look at the [Setup Guide](/getting-started/installation), and you will notice that it's not as hard as you think!
 
 If you encounter any issues, feel free to reach out for help by either opening an issue on GitHub or by emailing me personally at melvinchia623600@gmail.com. I'll respond as soon as I can (usually will be really quick since I'm currently a university student with not much workload and plenty of free time).
 
