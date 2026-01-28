@@ -47,8 +47,6 @@ export default async function generateContent(
       deleteRule: raw.deleteRule
     }
 
-    console.log(stubCollection)
-
     // View collections require a viewQuery
     if (raw.type === 'view') {
       // Use placeholder query with required id column - real query will be set in structure migration
