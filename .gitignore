@@ -57,4 +57,4 @@ keys
 # user-generated files
 apps
 locales/*
-!locales/en
+!locales/lifeforge--lang-en

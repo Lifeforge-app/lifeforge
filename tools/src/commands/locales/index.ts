@@ -5,6 +5,7 @@ import { listLocalesHandler } from './handlers/listLocalesHandler'
 import { publishLocaleHandler } from './handlers/publishLocaleHandler'
 import { uninstallLocaleHandler } from './handlers/uninstallLocaleHandler'
 import { upgradeLocaleHandler } from './handlers/upgradeLocalesHandler'
+import { validateLocaleStructureHandler } from './handlers/validateLocaleStructure'
 
 export default function setup(program: Command): void {
   const command = program
@@ -44,6 +45,12 @@ export default function setup(program: Command): void {
       'Language code to upgrade (optional, checks all if omitted)'
     )
     .action(upgradeLocaleHandler)
+
+  command
+    .command('validate')
+    .description('Validate a language pack')
+    .argument('<lang>', 'Language code to validate')
+    .action(validateLocaleStructureHandler)
 
   command
     .command('publish')
