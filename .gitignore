@@ -56,5 +56,5 @@ keys
 
 # user-generated files
 apps
-locales
+locales/*
 !locales/en
