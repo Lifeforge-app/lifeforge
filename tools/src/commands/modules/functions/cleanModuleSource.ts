@@ -24,7 +24,7 @@ export default function cleanModuleSource(targetDir: string): void {
   // Clean server directory - keep only dist
   if (fs.existsSync(serverDir)) {
     for (const item of fs.readdirSync(serverDir)) {
-      if (item !== 'dist') {
+      if (!['dist', 'assets', 'schema.ts'].includes(item)) {
         const itemPath = path.join(serverDir, item)
 
         fs.rmSync(itemPath, { recursive: true, force: true })
