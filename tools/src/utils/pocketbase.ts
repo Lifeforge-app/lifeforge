@@ -194,11 +194,12 @@ export default async function getPBInstance(createNewInstance = true): Promise<{
 }> {
   const killPB = createNewInstance ? await startPocketbase() : null
 
-  const { PB_HOST, PB_EMAIL, PB_PASSWORD } = getEnvVars([
-    'PB_HOST',
-    'PB_EMAIL',
-    'PB_PASSWORD'
-  ])
+  const { PB_HOST, PB_EMAIL, PB_PASSWORD } = getEnvVars(
+    ['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'],
+    {
+      PB_HOST: 'http://localhost:8090'
+    }
+  )
 
   const pb = new PocketBase(PB_HOST)
 
