@@ -9,8 +9,8 @@ import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
 import { getRegistryUrl } from '../../../utils/registry'
-import { validateLocaleStructure } from '../functions/validateLocaleStructure'
 import validateLocalesAuthor from '../functions/validateLocalesAuthor'
+import { validateLocaleStructureHandler } from './validateLocaleStructure'
 
 export async function publishLocaleHandler(langCode: string): Promise<void> {
   const { fullName, targetDir } = normalizePackage(langCode, 'locale')
@@ -25,7 +25,7 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
   }
 
   logger.info('Validating locale structure...')
-  validateLocaleStructure(targetDir)
+  validateLocaleStructureHandler({ lang: langCode })
 
   logger.debug('Validating module author...')
   await validateLocalesAuthor(targetDir)
