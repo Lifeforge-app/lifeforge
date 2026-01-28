@@ -2,17 +2,14 @@ import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
-import logger from '@/utils/logger'
 
 type PackageType = 'module' | 'locale'
 
 const TYPE_CONFIG = {
   module: {
-    prefix: '@lifeforge/',
     dir: 'apps'
   },
   locale: {
-    prefix: '@lifeforge/lang-',
     dir: 'locales'
   }
 } as const
@@ -44,13 +41,13 @@ export default function normalizePackage(
   packageName: string,
   type: PackageType = 'module'
 ) {
-  const { prefix, dir } = TYPE_CONFIG[type]
+  const { dir } = TYPE_CONFIG[type]
 
-  const fullName = packageName.startsWith(prefix)
+  const fullName = packageName.startsWith('@lifeforge/')
     ? packageName
-    : `${prefix}${packageName}`
+    : `@lifeforge/${packageName}`
 
-  const shortName = fullName.replace(prefix, '')
+  const shortName = fullName.replace('@lifeforge/', '')
 
   const targetDir = path.join(ROOT_DIR, dir, shortName)
 
