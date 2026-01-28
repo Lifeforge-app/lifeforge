@@ -21,15 +21,9 @@ const envPath = path.resolve(ROOT_DIR, 'env/.env.local')
 
 const dockerEnvPath = path.resolve(ROOT_DIR, 'env/.env.docker')
 
-if (fs.existsSync(envPath)) {
-  dotenv.config({ path: envPath, quiet: true })
-} else if (fs.existsSync(dockerEnvPath)) {
-  dotenv.config({ path: dockerEnvPath, quiet: true })
-} else {
-  logger.warn(
-    `Environment file not found at ${envPath}. Continuing without loading environment variables from file.`
-  )
-}
+const paths = [envPath, dockerEnvPath].filter(fs.existsSync)
+
+dotenv.config({ path: paths, quiet: true })
 
 // Setup and run CLI
 try {
