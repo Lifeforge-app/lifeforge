@@ -96,11 +96,11 @@ export async function installModuleHandler(
   for (const moduleName of installed) {
     logger.debug(`Building ${chalk.blue(moduleName)} bundles...`)
 
-    // Build regular dist
+    // Build regular dist for client and server
     await buildModuleHandler(moduleName)
 
-    // Build dist-docker
-    await buildModuleHandler(moduleName, { docker: true })
+    // Build dist-docker for client only
+    await buildModuleHandler(moduleName, { docker: true, buildServer: false })
   }
 
   // Generate migrations for new modules (skip in Docker environment)
