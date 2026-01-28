@@ -150,6 +150,20 @@ For the full story, visit the [Documentation](https://docs.lifeforge.dev).
 
 Huge credits to the open-source community for their invaluable contributions, libraries, and tools that have made LifeForge possible.
 
+## ⭐️ Star History
+
+That's a crazy exponential growth. Huge thanks to all of you guys supporting this project!
+
+<div align="center">
+<a href="https://www.star-history.com/#lifeforge-app/lifeforge&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=lifeforge-app/lifeforge&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=lifeforge-app/lifeforge&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=lifeforge-app/lifeforge&type=date&legend=top-left" />
+ </picture>
+</a>
+</div>
+
 ## 📄 License
 
 <p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/LifeForge-app/lifeforge">LifeForge</a> is a project initiated by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://github.com/melvinchia3636">Melvin Chia</a>, and is licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" alt=""></a></p>
