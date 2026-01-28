@@ -8,7 +8,6 @@ import type { Command } from 'commander'
 import changelog from '@/commands/changelog'
 import db from '@/commands/db'
 import dev from '@/commands/dev'
-import docker from '@/commands/docker'
 import locales from '@/commands/locales'
 import modules from '@/commands/modules'
 import project from '@/commands/project'
@@ -19,7 +18,6 @@ export const commands: CommandSetup[] = [
   changelog,
   db,
   dev,
-  docker,
   locales,
   modules,
   project
