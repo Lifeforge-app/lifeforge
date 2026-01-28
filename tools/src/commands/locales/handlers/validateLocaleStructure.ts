@@ -1,8 +1,10 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
 import logger from '@/utils/logger'
+import normalizePackage from '@/utils/normalizePackage'
 
 const localesPackageJSONSchema = z.object({
   name: z.string().regex(/^@lifeforge\/.+--lang-.+$/),
@@ -23,12 +25,23 @@ const localesPackageJSONSchema = z.object({
   })
 })
 
-export function validateLocaleStructure(localePath: string) {
-  const packageJsonPath = path.join(localePath, 'package.json')
+export function validateLocaleStructureHandler(lang: string) {
+  const { targetDir } = normalizePackage(lang, 'locale')
+
+  if (!fs.existsSync(targetDir)) {
+    logger.actionableError(
+      `Locale "${lang}" not found in locales/`,
+      'Run "bun forge locales list" to see available locales'
+    )
+
+    process.exit(1)
+  }
+
+  const packageJsonPath = path.join(targetDir, 'package.json')
 
   if (!fs.existsSync(packageJsonPath)) {
     logger.actionableError(
-      `Locale "${localePath}" is missing package.json`,
+      `Locale "${lang}" is missing package.json`,
       'Run "bun forge locales list" to see available locales'
     )
 
@@ -49,11 +62,9 @@ export function validateLocaleStructure(localePath: string) {
     process.exit(1)
   }
 
-  const folderName = path.basename(localePath)
-
-  if (`@lifeforge/${folderName}` !== packageJson.data.name) {
+  if (`@lifeforge/${lang}` !== packageJson.data.name) {
     logger.actionableError(
-      `The folder name "${folderName}" does not match the package name "${packageJson.data.name}"`,
+      `The folder name "${lang}" does not match the package name "${packageJson.data.name}"`,
       'Please make sure the folder name matches the package name'
     )
 
@@ -61,18 +72,18 @@ export function validateLocaleStructure(localePath: string) {
   }
 
   const folderContents = fs
-    .readdirSync(localePath)
+    .readdirSync(targetDir)
     .filter(file => !['package.json', '.git'].includes(file))
 
   if (
     !folderContents.every(
       file =>
-        fs.statSync(path.join(localePath, file)).isFile() &&
+        fs.statSync(path.join(targetDir, file)).isFile() &&
         file.endsWith('.json')
     )
   ) {
     logger.actionableError(
-      `Locale "${folderName}" contains non-JSON files`,
+      `Locale "${lang}" contains non-JSON files`,
       'Please make sure all files in the locale directory are JSON files'
     )
 
@@ -80,17 +91,19 @@ export function validateLocaleStructure(localePath: string) {
   }
 
   for (const file of folderContents) {
-    const filePath = path.join(localePath, file)
+    const filePath = path.join(targetDir, file)
 
     try {
       JSON.parse(fs.readFileSync(filePath, 'utf-8'))
     } catch {
       logger.actionableError(
-        `Locale "${folderName}" contains invalid JSON files "${file}"`,
+        `Locale "${lang}" contains invalid JSON files "${file}"`,
         'Please make sure all files in the locale directory are valid JSON files'
       )
 
       process.exit(1)
     }
   }
+
+  logger.success(`Locale ${chalk.blue(lang)} is valid`)
 }
