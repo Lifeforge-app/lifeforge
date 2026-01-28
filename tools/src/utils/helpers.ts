@@ -8,11 +8,13 @@ import logger from './logger'
  * Validates and retrieves multiple required environment variables.
  *
  * @param requiredVars - Array of environment variable names to retrieve
+ * @param fallback - Optional fallback values for environment variables
  * @returns A record of variable names to their values
  * @throws Exits the process if any required variables are missing
  */
 export function getEnvVars<const T extends readonly string[]>(
-  requiredVars: T
+  requiredVars: T,
+  fallback?: Record<string, string>
 ): Record<T[number], string> {
   const vars: Record<string, string> = {}
 
@@ -23,6 +25,8 @@ export function getEnvVars<const T extends readonly string[]>(
 
     if (value) {
       vars[varName] = value
+    } else if (fallback?.[varName]) {
+      vars[varName] = fallback[varName]
     } else {
       missing.push(varName)
     }
