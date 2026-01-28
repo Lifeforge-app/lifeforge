@@ -62,6 +62,34 @@
         "shared": "workspace:*",
       },
     },
+    "apps/lifeforge--movies": {
+      "name": "@lifeforge/lifeforge--movies",
+      "version": "0.0.5",
+      "dependencies": {
+        "qrcode.react": "^4.2.0",
+      },
+      "peerDependencies": {
+        "@lifeforge/server-utils": "workspace:*",
+        "lifeforge-ui": "workspace:*",
+        "shared": "workspace:*",
+      },
+    },
+    "apps/lifeforge--pomodoro-timer": {
+      "name": "@lifeforge/lifeforge--pomodoro-timer",
+      "version": "0.0.5",
+      "dependencies": {
+        "culori": "^4.0.2",
+        "react-virtualized": "^9.22.6",
+      },
+      "devDependencies": {
+        "@types/react-virtualized": "^9.22.3",
+      },
+      "peerDependencies": {
+        "@lifeforge/server-utils": "workspace:*",
+        "lifeforge-ui": "workspace:*",
+        "shared": "workspace:*",
+      },
+    },
     "client": {
       "name": "@lifeforge/client",
       "version": "0.0.0",
@@ -653,6 +681,10 @@
     "@lifeforge/lang-en": ["@lifeforge/lang-en@workspace:locales/en"],
 
     "@lifeforge/lifeforge--achievements": ["@lifeforge/lifeforge--achievements@workspace:apps/lifeforge--achievements"],
+
+    "@lifeforge/lifeforge--movies": ["@lifeforge/lifeforge--movies@workspace:apps/lifeforge--movies"],
+
+    "@lifeforge/lifeforge--pomodoro-timer": ["@lifeforge/lifeforge--pomodoro-timer@workspace:apps/lifeforge--pomodoro-timer"],
 
     "@lifeforge/log": ["@lifeforge/log@workspace:packages/lifeforge-log"],
 
