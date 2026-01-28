@@ -28,7 +28,8 @@ export const PB_BINARY_PATH = path.resolve(
 
 export const PB_KWARGS = [
   `--dir=${PB_DATA_DIR}`,
-  `--migrationsDir=${PB_MIGRATIONS_DIR}`
+  `--migrationsDir=${PB_MIGRATIONS_DIR}`,
+  '--automigrate=0'
 ]
 
 // Straightaway exit if PB_DIR is not accessible (skip in Docker mode)

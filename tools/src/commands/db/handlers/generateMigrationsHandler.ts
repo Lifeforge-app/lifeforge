@@ -1,6 +1,7 @@
 import logger from '@/utils/logger'
 import getPBInstance from '@/utils/pocketbase'
 
+import { cleanupOldMigrations } from '../functions/migration-generation/cleanupOldMigrations'
 import stageMigration from '../functions/migration-generation/stageMigrations'
 import { importSchemaModules } from '../utils'
 
@@ -10,10 +11,12 @@ import { importSchemaModules } from '../utils'
 export async function generateMigrationsHandler(
   targetModule?: string
 ): Promise<void> {
+  cleanupOldMigrations()
+
+  const { pb, killPB } = await getPBInstance()
+
   try {
     const importedSchemas = await importSchemaModules(targetModule)
-
-    const { pb, killPB } = await getPBInstance()
 
     for (const [index, phase] of Object.entries([
       'skeleton',
@@ -21,6 +24,7 @@ export async function generateMigrationsHandler(
       'views'
     ] as const)) {
       await stageMigration(pb, phase, Number(index), importedSchemas)
+      cleanupOldMigrations()
     }
 
     killPB?.()
@@ -34,6 +38,8 @@ export async function generateMigrationsHandler(
     logger.debug(
       `Error details: ${error instanceof Error ? error.message : String(error)}`
     )
+
+    killPB?.()
     process.exit(1)
   }
 }

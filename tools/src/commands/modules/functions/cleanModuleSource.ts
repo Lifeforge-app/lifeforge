@@ -13,7 +13,7 @@ export default function cleanModuleSource(targetDir: string): void {
   // Clean client directory - keep only dist and dist-docker
   if (fs.existsSync(clientDir)) {
     for (const item of fs.readdirSync(clientDir)) {
-      if (item !== 'dist' && item !== 'dist-docker') {
+      if (item !== 'dist' && item !== 'dist-docker' && item !== 'assets') {
         const itemPath = path.join(clientDir, item)
 
         fs.rmSync(itemPath, { recursive: true, force: true })
