@@ -26,29 +26,20 @@ LifeForge uses **[i18next](https://www.i18next.com/)** with **react-i18next** fo
 
 - <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
     <Icon icon="tabler:language" className="translate-y-1" />
-    **4 Supported Languages** (for now)
+    **Community Driven Language Support**
   </div>
-  English (`en`), Simplified Chinese (`zh-CN`), Traditional Chinese (`zh-TW`), and Bahasa Malaysia (`ms`). 
+  LifeForge is translated by the community. Anyone can contribute a new language pack or improve existing translations. 
 - <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
     <Icon icon="tabler:download" className="translate-y-1" />
-    **Dynamic Loading**
+    **Package-based Architecture**
   </div>
-  Translations are fetched on-demand via HTTP backend, reducing initial bundle size
+  Translations are managed as NPM packages, allowing for easy updates and versioning.
 - <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
     <Icon icon="tabler:folders" className="translate-y-1" />
     **Namespace Architecture**
   </div>
   Modular organization with `apps.\*` and `common.*` namespaces for clean separation
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="tabler:tool" className="translate-y-1" />
-    **UI-based Management**
-  </div>
-  Dedicated Localization Manager tool for easy editing and maintenance
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="tabler:sparkles" className="translate-y-1" />
-    **AI Translation Assistance**
-  </div>
-  Built-in Gemini API integration for translation suggestions in the Localization Manager tool
+
 - <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
     <Icon icon="tabler:alert-triangle" className="translate-y-1" />
     **Missing Key Reporting**
@@ -62,13 +53,13 @@ LifeForge uses **[i18next](https://www.i18next.com/)** with **react-i18next** fo
 
 ### Module Locales (<code className='text-xl!'>apps.*</code> namespace)
 
-Each module has its own `locales/` directory containing 4 JSON files, one for each supported language:
+Each module has its own `locales/` directory containing a single JSON file for each supported language:
 
 ```plaintext
 apps/
-└── myModule/
+└── melvinchia3636--my-module/
     └── locales/
-        ├── en.json      # English (primary)
+        ├── en.json      # English
         ├── ms.json      # Bahasa Malaysia
         ├── zh-CN.json   # Simplified Chinese
         └── zh-TW.json   # Traditional Chinese
@@ -76,21 +67,16 @@ apps/
 
 ### Core Locales (<code className='text-xl!'>common.*</code> namespace)
 
-Shared translations used across the entire application are stored in the server's core locales:
+Shared translations used across the entire application are stored in the language pack packages within the `locales/` directory. Each package contains multiple JSON files representing different namespaces:
 
 ```plaintext
-server/src/core/locales/
-├── en/
-│   ├── auth.json       # Authentication strings
-│   ├── buttons.json    # Common button labels
-│   ├── fetch.json      # Loading/fetch states
-│   ├── misc.json       # Miscellaneous strings
-│   ├── modals.json     # Common modal strings
-│   ├── sidebar.json    # Sidebar navigation
-│   └── vault.json      # Master password vault
-├── ms/
-├── zh-CN/
-└── zh-TW/
+locales/
+└── lifeforge--lang-en/
+    ├── package.json    # Manifest
+    ├── auth.json       # common.auth
+    ├── buttons.json    # common.buttons
+    ├── fetch.json      # common.fetch
+    ├── ...
 ```
 
 </section>
@@ -266,35 +252,7 @@ When using `ForgeCLI` to create a module, locale files are automatically generat
 
 </section>
 
-<section id="localization-manager">
-## Localization Manager
 
-LifeForge includes a dedicated web-based **Localization Manager** tool for managing translations across your entire application:
-
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="tabler:binary-tree" className="translate-y-1" />
-    **Visual Tree Editor**
-  </div>
-  Navigate and edit locale keys in a hierarchical tree structure
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="tabler:columns" className="translate-y-1" />
-    **Side-by-Side Editing**
-  </div>
-  Edit translations for all languages simultaneously
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="tabler:sparkles" className="translate-y-1" />
-    **AI Translation Suggestions**
-  </div>
-  Get translation suggestions powered by Gemini API
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="tabler:search" className="translate-y-1" />
-    **Search Functionality**
-  </div>
-  Quickly find keys across all namespaces
-
-The Localization Manager is accessible via SSO from the main application and is located in the `tools/localizationManager` directory.
-
-</section>
 
 <section id="best-practices">
 ## Best Practices
@@ -373,27 +331,90 @@ When adding a key to English, immediately add placeholder or translated values t
 <section id="creating-language-packs">
 ## Creating Language Packs
 
-Want to contribute a new language to LifeForge? Here's how to create a language pack:
+Want to contribute a new language to LifeForge? The localization system is built on top of NPM packages, making it easy to create, share, and manage language packs.
 
-1. **Fork an existing language pack** — Start with the English ([lang-en](https://github.com/lifeforge-app/lang-en)) repository as a template
-2. **Translate all JSON files** — Maintain the same structure and keys
-3. **Update `manifest.json`** — Set the correct `name`, `icon`, and `displayName`
-4. **Create the repository** — Name it `lang-<code>` (e.g., `lang-ja` for Japanese)
-5. **Submit for inclusion** — Open an issue in the main LifeForge repository
+### 1. Creation Workflow
 
-### Manifest File Structure
+1.  **Preparation** — Decide on your language and region code (e.g., `es-ES` for Spanish (Spain)).
+2.  **Naming Convention** — Packages must follow the format `@lifeforge/<owner>--lang-<code>`:
+    *   `<owner>`: Your GitHub username or organization name (e.g., `melvinchia3636`)
+    *   `<code>`: The language code (e.g., `ms`, `zh-CN`)
+    *   Example: `@lifeforge/melvinchia3636--lang-ms`
+3.  **Directory Structure** — Create a directory in `locales/` matching your package name sans scope:
+    *   Directory: `locales/melvinchia3636--lang-ms`
+
+### 2. Package Structure
+
+Every language pack MUST contain a `package.json` file and a set of JSON translation files.
+
+#### <code className='text-lg!'>package.json</code> Configuration
+
+The `package.json` acts as the manifest for your language pack. It is strictly validated using Zod schemas.
 
 ```json
 {
-    "name": "ja",
-    "icon": "circle-flags:jp",
-    "displayName": "日本語"
+  "name": "@lifeforge/melvinchia3636--lang-ms",
+  "version": "0.0.1",
+  "description": "Bahasa Malaysia language support for LifeForge.",
+  "author": "melvinchia3636 <melvinchia623600@gmail.com>",
+  "lifeforge": {
+    "code": "ms",
+    "displayName": "Bahasa Malaysia",
+    "icon": "circle-flags:my",
+    "alternative": ["Bahasa Melayu", "Malay"]
+  }
 }
 ```
 
-<Alert className="mt-6" type="note">
-The `icon` field uses [Iconify](https://icon-sets.iconify.design/) icon names. The `circle-flags` set is recommended for country flags.
-</Alert>
+**Required Fields:**
+
+| Field | Description | Validation Rule |
+|-------|-------------|-----------------|
+| `name` | Package name | Must match regex `/^@lifeforge\/.+--lang-.+$/` |
+| `version` | Semver version | Must match regex `/^\d+\.\d+\.\d+$/` |
+| `lifeforge.code` | Language code | Standard language code |
+| `lifeforge.displayName` | Human-readable name | Displayed in UI |
+| `lifeforge.icon` | Iconify icon name | e.g. `circle-flags:my` |
+
+**Optional Fields:**
+
+| Field | Description |
+|-------|-------------|
+| `lifeforge.alternative` | Array of alternative names | Used for search aliases |
+| `repository` | Git repository info | Standard `package.json` format |
+
+#### Translation Files
+
+All other files in the directory must be flat `.json` files corresponding to namespaces (e.g., `auth.json`, `buttons.json`). Use the official English language pack (`lifeforge--lang-en`) as the source of truth for the latest keys and structure.
+
+*   **Allowed:** `.json` files, `package.json`, `.git` directory
+*   **Prohibited:** Nested directories, or any non-JSON files
+
+### 3. Validation
+
+The `ForgeCLI` enforces strict validation rules. Run the following to validate your structure:
+
+```bash
+bun forge locales validate <lang>
+```
+
+If your locale appears in the list without errors, it is valid. Common validation errors include:
+*   Folder name mismatch with `package.name`
+*   Presence of non-JSON files
+*   Invalid JSON syntax
+*   Missing required `lifeforge` metadata in `package.json`
+
+### 4. Publishing
+
+Once your language pack is ready, you can publish it to the LifeForge registry.
+
+```bash
+bun forge locales publish <lang-code>
+```
+
+*   **Package Structure Validation**: The CLI will validate your package structure to make sure it is valid.
+*   **Automatic Versioning**: The CLI will automatically bump the patch version in `package.json`.
+*   **Author Validation**: The CLI verifies that you are the author defined in `package.json`.
 
 </section>
 
