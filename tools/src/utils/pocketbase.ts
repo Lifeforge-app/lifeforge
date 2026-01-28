@@ -6,6 +6,7 @@ import { getEnvVars } from '@/utils/helpers'
 import logger from '@/utils/logger'
 
 import executeCommand from './commands'
+import { startService, stopService } from './docker'
 import { killExistingProcess } from './helpers'
 
 /**
@@ -87,6 +88,8 @@ export async function startPBServer(): Promise<number> {
   logger.debug('Starting PocketBase server...')
 
   return new Promise((resolve, reject) => {
+    stopService('lifeforge-db')
+
     const pbProcess = spawn(PB_BINARY_PATH, ['serve', ...PB_KWARGS], {
       stdio: ['ignore', 'pipe', 'pipe']
     })
@@ -154,6 +157,7 @@ export async function startPocketbase(): Promise<(() => void) | null> {
 
     return () => {
       killExistingProcess(pbPid)
+      startService('lifeforge-db')
     }
   } catch (error) {
     logger.actionableError(

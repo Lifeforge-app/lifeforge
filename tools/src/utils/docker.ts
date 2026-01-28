@@ -79,3 +79,31 @@ export function smartReloadServer(): void {
     logger.info('Refresh the browser to load module changes')
   }
 }
+
+export function stopService(serviceName: string): void {
+  if (!isDockerRunning()) {
+    return
+  }
+
+  try {
+    logger.info(`Stopping Docker service ${serviceName}...`)
+    execSync(`docker stop ${serviceName}`, { stdio: 'inherit' })
+    logger.success(`Service ${serviceName} stopped`)
+  } catch (error) {
+    logger.error(`Failed to stop Docker service ${serviceName}: ${error}`)
+  }
+}
+
+export function startService(serviceName: string): void {
+  if (!isDockerRunning()) {
+    return
+  }
+
+  try {
+    logger.info(`Starting Docker service ${serviceName}...`)
+    execSync(`docker start ${serviceName}`, { stdio: 'inherit' })
+    logger.success(`Service ${serviceName} started`)
+  } catch (error) {
+    logger.error(`Failed to start Docker service ${serviceName}: ${error}`)
+  }
+}
