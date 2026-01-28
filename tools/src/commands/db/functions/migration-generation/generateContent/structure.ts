@@ -22,20 +22,29 @@ async function mapCollectionRelation(
 
   const mapped = { ...raw }
 
-  const realCollectionId = allCollectionsInPB.find(
+  const realCollection = allCollectionsInPB.find(
     collection => collection.name === raw.name
-  )?.id
+  )
 
-  if (!realCollectionId) {
+  if (!realCollection?.id) {
     throw new Error(
       `Collection "${raw.name}" not found in PocketBase for relation field "${raw.name}"`
     )
   }
 
-  mapped.id = realCollectionId
+  mapped.id = realCollection.id
 
   delete mapped.created
   delete mapped.updated
+
+  for (const index of mapped.indexes) {
+    const found = realCollection.indexes.find(idx => idx === index)
+
+    // If the index is already in the collection, we don't need to add it again
+    if (found) {
+      mapped.indexes = mapped.indexes.filter(idx => idx !== index)
+    }
+  }
 
   if (mapped.fields && Array.isArray(mapped.fields)) {
     mapped.fields = mapped.fields.map(field => {
