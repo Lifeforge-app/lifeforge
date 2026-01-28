@@ -26,8 +26,6 @@ export default async function generateContent(
   pb: Pocketbase,
   schema: Record<string, { raw: CollectionModel }>
 ) {
-  // console.log(await pb.collections.getFullList())
-
   for (const [_, { raw }] of Object.entries(schema)) {
     const collectionName = raw.name as string
 
@@ -39,7 +37,7 @@ export default async function generateContent(
       continue
     }
 
-    const stubCollection: Record<string, unknown> = {
+    const stubCollection: Partial<CollectionModel> = {
       name: collectionName,
       type: raw.type || 'base',
       listRule: raw.listRule,
@@ -48,6 +46,8 @@ export default async function generateContent(
       updateRule: raw.updateRule,
       deleteRule: raw.deleteRule
     }
+
+    console.log(stubCollection)
 
     // View collections require a viewQuery
     if (raw.type === 'view') {
