@@ -74,6 +74,10 @@ function ContextMenuItem({
       )}
       disabled={disabled || loading}
       onClick={e => {
+        if (disabled || loading) {
+          return
+        }
+
         e.stopPropagation()
 
         if (!shouldCloseMenuOnClick) {
