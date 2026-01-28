@@ -36,10 +36,6 @@ export default function scanFederatedModules(
     .filter(d => d.isDirectory() && !d.name.startsWith('.'))
 
   for (const dir of dirs) {
-    const isDevMode =
-      process.env.NODE_ENV !== 'production' &&
-      devModeModules?.includes(`@lifeforge/${dir.name}`)
-
     const pkgPath = path.join(baseDir, dir.name, 'package.json')
 
     if (!fs.existsSync(pkgPath)) continue
@@ -63,7 +59,26 @@ export default function scanFederatedModules(
         'remoteEntry.js'
       )
 
-      if (!fs.existsSync(remoteEntryPath) && !isDevMode) continue
+      const hasDist = fs.existsSync(remoteEntryPath)
+
+      const hasSource = fs.existsSync(
+        path.join(baseDir, dir.name, 'client/src')
+      )
+
+      if (
+        !(hasDist || hasSource) ||
+        (process.env.NODE_ENV === 'production' && !hasDist)
+      )
+        continue
+
+      const isDevMode = (() => {
+        if (process.env.NODE_ENV === 'production') return false
+
+        if (!hasDist) return true
+        if (!hasSource) return false
+
+        return devModeModules?.includes(`@lifeforge/${dir.name}`)
+      })()
 
       modules.push({
         name: dir.name,

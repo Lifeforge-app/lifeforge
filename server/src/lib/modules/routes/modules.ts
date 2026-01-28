@@ -4,24 +4,12 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { checkModulesAvailability as cma } from '@functions/utils/checkModulesAvailability'
-
 import forge from '../forge'
 import scanFederatedModules, {
-  ModuleManifestEntry
+  type ModuleManifestEntry
 } from '../utils/scanFederatedModules'
 
 const APPS_DIR = path.join(ROOT_DIR, 'apps')
-
-export const checkModuleAvailability = forge
-  .query()
-  .description('Check if a module is available')
-  .input({
-    query: z.object({
-      moduleId: z.string().min(1)
-    })
-  })
-  .callback(async ({ query: { moduleId } }) => cma(moduleId))
 
 export const manifest = forge
   .query()
@@ -51,8 +39,9 @@ export interface InstalledModule {
   icon: string
   category: string
   isInternal: boolean
-  isDevMode?: boolean
-  hasClientDist: boolean
+  isDevMode: boolean
+  hasDist: boolean
+  hasSource: boolean
 }
 
 export const list = forge
@@ -92,7 +81,17 @@ export const list = forge
           'remoteEntry.js'
         )
 
-        const hasClientDist = fs.existsSync(clientDistPath)
+        const hasDist = fs.existsSync(clientDistPath)
+
+        const hasSource = fs.existsSync(
+          path.join(APPS_DIR, dir.name, 'client/src')
+        )
+
+        if (
+          !(hasSource || hasDist) ||
+          (process.env.NODE_ENV === 'production' && !hasDist)
+        )
+          continue
 
         modules.push({
           name: pkg.name,
@@ -103,15 +102,21 @@ export const list = forge
           icon: pkg.lifeforge?.icon || 'tabler:package',
           category: pkg.lifeforge?.category || 'Miscellaneous',
           isInternal: false,
-          isDevMode: devModeModules.includes(pkg.name),
-          hasClientDist
+          isDevMode: (() => {
+            if (!hasSource) return false
+            if (!hasDist) return true
+
+            return devModeModules.includes(pkg.name)
+          })(),
+          hasDist,
+          hasSource
         })
       } catch {
         // Skip invalid packages
       }
     }
 
-    return { modules }
+    return modules
   })
 
 export const uninstall = forge
