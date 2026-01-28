@@ -26,6 +26,7 @@ The `ForgeCLI` provides commands to manage language packs:
 | `bun forge locales list` | List all installed language packs |
 | `bun forge locales add <lang>` | Install a new language pack |
 | `bun forge locales remove <lang>` | Remove an installed language pack |
+| `bun forge locales validate <lang>` | Validate a language pack structure |
 
 </section>
 
@@ -53,26 +54,26 @@ Installed language packs (4):
 <section id="installing-a-language-pack">
 ## Installing a Language Pack
 
-To install a new language pack, use the `add` command with the language code:
+To install a new language pack, use the `add` command with the package name:
 
 ```bash
-bun forge locales add <lang>
+bun forge locales add <package-name>
 ```
 
 For example, to install Japanese:
 
 ```bash
-bun forge locales add ja
+bun forge locales add lifeforge--lang-ja
 ```
 
 <Alert className="mt-6" type="note">
-Language packs are fetched from the official LifeForge repository at `lifeforge-app/lang-<lang>`. Make sure the language pack exists before attempting to install it.
+Language packs are fetched from the official LifeForge registry. The package name follows the format `<owner>--lang-<code>`.
 </Alert>
 
 ### What Happens During Installation
 
-1. **Git Submodule** — The language pack is cloned as a git submodule into `locales/<lang>`
-2. **Structure Validation** — The CLI verifies that `manifest.json` exists
+1. **Package Installation** — The language pack is downloaded into `locales/<package-name>`
+2. **Structure Validation** — The CLI verifies that `package.json` is valid
 3. **Database Update** — If this is the first language being installed, all users' language preferences are automatically set to this language
 
 <Alert className="mt-6" type="important">
@@ -87,20 +88,19 @@ After installing a language pack, restart the server for the changes to take eff
 To remove an installed language pack:
 
 ```bash
-bun forge locales remove <lang>
+bun forge locales remove <package-name>
 ```
 
 For example, to remove Simplified Chinese:
 
 ```bash
-bun forge locales remove zh-CN
+bun forge locales remove melvinchia3636--lang-zh-CN
 ```
 
 ### What Happens During Removal
 
 1. **User Migration** — Any users with the removed language as their preference are automatically switched to the first remaining language
-2. **Git Submodule Cleanup** — The submodule is deinitialized and removed from `.gitmodules`
-3. **Directory Removal** — The language pack directory is deleted
+2. **Directory Removal** — The language pack directory is deleted
 
 <Alert className="mt-6" type="caution">
 You cannot remove the last remaining language pack. At least one language must always be installed.
@@ -117,13 +117,13 @@ The removal process requires database access. If PocketBase is not running, a te
 
 The following official language packs are available:
 
-| Code | Language | Repository | Author / Contributors |
-|------|----------|------------|--------|
-| `en` | English | [lifeforge-app/lang-en](https://github.com/lifeforge-app/lang-en) | <GithubUser username="melvinchia3636" /> |
-| `ms` | Bahasa Malaysia | [lifeforge-app/lang-ms](https://github.com/lifeforge-app/lang-ms) | <GithubUser username="melvinchia3636" /> |
-| `zh-CN` | 简体中文 | [lifeforge-app/lang-zh-CN](https://github.com/lifeforge-app/lang-zh-CN) | <GithubUser username="melvinchia3636" /> |
-| `zh-TW` | 繁體中文 | [lifeforge-app/lang-zh-TW](https://github.com/lifeforge-app/lang-zh-TW) | <GithubUser username="melvinchia3636" /> |
-| `tr` | Türkçe | [lifeforge-app/lang-tr](https://github.com/lifeforge-app/lang-tr) | <GithubUser username="tahabugracck" /> |
+| Package Name | Language | Repository | Author / Contributors |
+|--------------|----------|------------|--------|
+| `lifeforge--lang-en` | English | [lifeforge-app/lang-en](https://github.com/lifeforge-app/lang-en) | <GithubUser username="melvinchia3636" /> |
+| `melvinchia3636--lang-ms` | Bahasa Malaysia | [lifeforge-app/lang-ms](https://github.com/lifeforge-app/lang-ms) | <GithubUser username="melvinchia3636" /> |
+| `melvinchia3636--lang-zh-CN` | 简体中文 | [lifeforge-app/lang-zh-CN](https://github.com/lifeforge-app/lang-zh-CN) | <GithubUser username="melvinchia3636" /> |
+| `melvinchia3636--lang-zh-TW` | 繁體中文 | [lifeforge-app/lang-zh-TW](https://github.com/lifeforge-app/lang-zh-TW) | <GithubUser username="melvinchia3636" /> |
+| `lifeforge--lang-tr` | Türkçe | [lifeforge-app/lang-tr](https://github.com/lifeforge-app/lang-tr) | <GithubUser username="tahabugracck" /> |
 
 <Alert className="mt-6" type="tip">
 Want to contribute a new language? See the [Creating Language Packs](/developer-guide/localization#creating-language-packs) section in the Developer Guide.
@@ -137,7 +137,7 @@ Want to contribute a new language? See the [Creating Language Packs](/developer-
 ### Language Pack Not Loading After Installation
 
 - Restart the development server (`bun forge dev`)
-- Verify the `manifest.json` file exists and is valid JSON
+- Verify the `package.json` file exists and is valid
 - Check server logs for any error messages
 
 ### "Language is already installed" Error
@@ -145,8 +145,8 @@ Want to contribute a new language? See the [Creating Language Packs](/developer-
 The language pack directory already exists. If you want to reinstall:
 
 ```bash
-bun forge locales remove <lang>
-bun forge locales add <lang>
+bun forge locales remove <package-name>
+bun forge locales add <package-name>
 ```
 
 ### Git Submodule Errors
