@@ -25,5 +25,5 @@ export const toggle = forge
 
     devModeFile.write(JSON.stringify(modules))
 
-    return { success: true, isDevMode: index === -1 }
+    return true
   })
