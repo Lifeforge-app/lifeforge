@@ -47,11 +47,21 @@ export default function executeCommand(
     const [toBeExecuted, ...args] = cmd.split(' ')
 
     const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
-      stdio: 'inherit',
       encoding: 'utf8',
       shell: true,
-      ...options
+      ...options,
+      stdio: options.stdio ?? 'pipe'
     })
+
+    if (logger.level === 'debug') {
+      if (result.stdout) {
+        process.stdout.write(result.stdout.toString())
+      }
+
+      if (result.stderr) {
+        process.stderr.write(result.stderr.toString())
+      }
+    }
 
     if (result.error) {
       throw result.error
@@ -61,7 +71,7 @@ export default function executeCommand(
       throw result.status
     }
 
-    if (!options.stdio || options.stdio === 'inherit') {
+    if (!options.stdio || options.stdio === 'pipe') {
       logger.debug(`Completed: ${cmd}`)
     }
 

@@ -25,7 +25,7 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
   }
 
   logger.info('Validating locale structure...')
-  validateLocaleStructureHandler({ lang: langCode })
+  validateLocaleStructureHandler(langCode)
 
   logger.debug('Validating module author...')
   await validateLocalesAuthor(targetDir)
