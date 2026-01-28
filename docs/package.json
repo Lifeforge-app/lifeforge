@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "vite",
     "types": "tsc -b",
-    "build": "bun --cwd .. prebuild && bun types && vite build",
+    "build": "bun types && vite build",
     "preview": "vite preview"
   },
   "dependencies": {
