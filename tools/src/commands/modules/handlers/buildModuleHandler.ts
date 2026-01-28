@@ -81,7 +81,6 @@ export async function buildModuleHandler(
         try {
           executeCommand('bun run build:client', {
             cwd: targetDir,
-            stdio: 'pipe',
             env: isDocker ? { ...process.env, DOCKER_BUILD: 'true' } : undefined
           })
           clientBuiltCount++
@@ -97,8 +96,7 @@ export async function buildModuleHandler(
 
       try {
         executeCommand('bun run build:server', {
-          cwd: targetDir,
-          stdio: 'pipe'
+          cwd: targetDir
         })
         serverBuiltCount++
       } catch (error) {

@@ -13,6 +13,12 @@ export interface CLILogger extends Logger {
 function wrapWithCLIMethods(logger: Logger): CLILogger {
   return {
     ...logger,
+    get level(): LogLevel {
+      return logger.level
+    },
+    setLevel(level: LogLevel) {
+      logger.setLevel(level)
+    },
     success(message: string) {
       logger.info(`${chalk.green('✔')} ${message}`)
     },
