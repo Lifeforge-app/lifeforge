@@ -37,6 +37,10 @@ async function mapCollectionRelation(
   delete mapped.created
   delete mapped.updated
 
+  if (mapped.name !== 'users') {
+    mapped.indexes = []
+  }
+
   if (mapped.fields && Array.isArray(mapped.fields)) {
     mapped.fields = mapped.fields.map(field => {
       const cleanedField = { ...field }
