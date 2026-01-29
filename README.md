@@ -1,3 +1,12 @@
+> [!CAUTION]
+> ## ⚠️ Development Paused - Critical CSS Issue
+> 
+> **All progress on the new module system (Forgistry) is currently postponed** until a severe CSS layering conflict between the host application and federated modules is resolved.
+> 
+> **The Issue:** When both host and modules bundle Tailwind CSS independently, CSS cascade layer conflicts cause styles to override each other unexpectedly. This breaks responsive utilities (e.g., `flex md:grid`) and can cause host styles to be overridden by module styles.
+> 
+> **Breaking changes may occur** as we resolve this architectural issue. Please follow the [Changelog](https://docs.lifeforge.dev/progress/changelog) for updates.
+
 <div align="center">
 <img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/lifeforge-logo.svg" alt="LifeForge Logo" width="240" height="80"/></img>
 </div>

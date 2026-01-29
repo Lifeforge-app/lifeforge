@@ -39,7 +39,7 @@ function Modules() {
     onSuccess: (data, moduleName) => {
       if (data.success) {
         toast.success(`Uninstalled ${moduleName}`)
-        queryClient.invalidateQueries({ queryKey: ['moduleManager', 'list'] })
+        queryClient.invalidateQueries({ queryKey: ['modules', 'list'] })
         refetchFederation.current()
       } else {
         toast.error(data.error || 'Failed to uninstall module')
@@ -105,8 +105,12 @@ function Modules() {
                         key={mod.name}
                         module={mod}
                         onDevModeChange={() => {
+                          console.log(
+                            queryClient.getQueryState(['modules', 'list'])
+                          )
+
                           queryClient.invalidateQueries({
-                            queryKey: ['moduleManager', 'list']
+                            queryKey: ['modules', 'list']
                           })
                         }}
                         onUninstall={async moduleName => {
