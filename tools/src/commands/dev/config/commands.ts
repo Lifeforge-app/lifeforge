@@ -1,7 +1,7 @@
 import chalk from 'chalk'
 import fs from 'fs'
 
-import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
+import { PB_BINARY_PATH, PB_DIR, PB_KWARGS } from '@/constants/db'
 import executeCommand from '@/utils/commands'
 import { checkPortInUse, delay, killExistingProcess } from '@/utils/helpers'
 import logger from '@/utils/logger'
@@ -42,8 +42,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
 
       return `${PB_BINARY_PATH} serve ${PB_KWARGS.join(' ')}`
     },
-    cwd: () => process.env.PB_DIR!,
-    requiresEnv: ['PB_DIR']
+    cwd: PB_DIR
   },
   server: {
     command: async () => {
