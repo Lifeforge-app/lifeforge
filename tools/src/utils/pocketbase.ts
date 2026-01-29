@@ -63,9 +63,8 @@ export function checkRunningPBInstances(exitOnError = true): boolean {
 
     if (validPids.length > 0) {
       if (exitOnError) {
-        logger.actionableError(
-          `PocketBase is already running (PID: ${validPids.join(', ')})`,
-          'Stop the existing instance with "pkill -f pocketbase" before proceeding'
+        logger.error(
+          `PocketBase is already running (PID: ${validPids.join(', ')})`
         )
         process.exit(1)
       }
@@ -108,10 +107,7 @@ export async function startPBServer(): Promise<number> {
       }
 
       if (output.includes('bind: address already in use')) {
-        logger.actionableError(
-          'Port 8090 is already in use',
-          'Run "pkill -f pocketbase" to stop existing instances, or check for other apps using port 8090'
-        )
+        logger.error('Port 8090 is already in use')
         process.exit(1)
       }
     })
@@ -160,10 +156,10 @@ export async function startPocketbase(): Promise<(() => void) | null> {
       killExistingProcess(pbPid)
     }
   } catch (error) {
-    logger.actionableError(
-      `Failed to start PocketBase server: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      'Run "bun forge db init" to initialize the database or check if the PocketBase binary exists'
+    logger.error(
+      `Failed to start PocketBase server: ${error instanceof Error ? error.message : 'Unknown error'}`
     )
+    logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }
@@ -230,10 +226,8 @@ export default async function getPBInstance(createNewInstance = true): Promise<{
       killPB
     }
   } catch (error) {
-    logger.actionableError(
-      `Authentication failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      'Check PB_EMAIL and PB_PASSWORD in env/.env.local are correct'
-    )
+    logger.error(`Pocketbase authentication failed.`)
+    logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }

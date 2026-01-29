@@ -32,7 +32,8 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
       logger.success(`Upgraded ${chalk.blue(upgrade.name)}`)
       upgradedCount++
     } catch (error) {
-      logger.error(`Failed to upgrade ${chalk.blue(upgrade.name)}: ${error}`)
+      logger.error(`Failed to upgrade ${chalk.blue(upgrade.name)}`)
+      logger.debug(`Error details: ${error}`)
     }
   }
 

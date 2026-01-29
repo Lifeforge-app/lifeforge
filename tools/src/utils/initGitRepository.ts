@@ -49,6 +49,7 @@ export default function initGitRepository(targetDir: string): void {
 
     logger.debug(`Git repository initialized with remote: ${repoUrl}`)
   } catch (error) {
-    logger.debug(`Failed to initialize git repository: ${error}`)
+    logger.error(`Failed to initialize git repository.`)
+    logger.debug(`Error details: ${error}`)
   }
 }

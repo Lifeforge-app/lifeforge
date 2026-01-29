@@ -44,26 +44,19 @@ export async function installModuleHandler(
     const { fullName, shortName, targetDir } = normalizePackage(moduleName)
 
     if (!/^@lifeforge\/[a-z0-9-_]+--[a-z0-9-_]+$/i.test(fullName)) {
-      logger.actionableError(
-        `Invalid module name: ${chalk.blue(moduleName)}`,
-        'Module names can only contain letters, numbers, hyphens, and underscores.'
+      logger.error(
+        `Invalid module name: ${chalk.blue(moduleName)}. Module names can only contain letters, numbers, hyphens, and underscores.`
       )
       continue
     }
 
     if (fs.existsSync(targetDir)) {
-      logger.actionableError(
-        `Module already exists at apps/${shortName}`,
-        `Remove it first with: bun forge modules uninstall ${shortName}`
-      )
+      logger.error(`Module already exists at apps/${shortName}`)
       continue
     }
 
     if (!(await checkPackageExists(fullName))) {
-      logger.actionableError(
-        `Module ${chalk.blue(fullName)} does not exist in registry`,
-        'Check the module name and try again'
-      )
+      logger.error(`Module ${chalk.blue(fullName)} does not exist in registry`)
       continue
     }
 

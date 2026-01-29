@@ -75,7 +75,8 @@ async function upgradeModule(
 
     return true
   } catch (error) {
-    logger.error(`Failed to upgrade ${chalk.blue(fullName)}: ${error}`)
+    logger.error(`Failed to upgrade ${chalk.blue(fullName)}.`)
+    logger.debug(`Error details: ${error}`)
 
     if (fs.existsSync(backupPath)) {
       fs.renameSync(backupPath, targetDir)
@@ -105,9 +106,8 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     const mod = modules[fullName]
 
     if (!mod) {
-      logger.actionableError(
-        `Module ${chalk.blue(moduleName)} is not installed`,
-        'Run "bun forge modules list" to see installed modules'
+      logger.error(
+        `Module ${chalk.blue(moduleName)} not found in apps/package.json`
       )
       process.exit(1)
     }

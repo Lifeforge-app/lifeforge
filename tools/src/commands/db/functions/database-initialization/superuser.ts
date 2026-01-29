@@ -14,9 +14,8 @@ export function validatePocketBaseNotInitialized(
   const pbInitialized = fs.existsSync(PB_DATA_DIR)
 
   if (pbInitialized && exitOnFailure) {
-    logger.actionableError(
-      `PocketBase is already initialized in ${chalk.blue(PB_DATA_DIR)}, aborting.`,
-      'If you want to re-initialize, please remove the existing pb_data folder in the database directory.'
+    logger.warn(
+      `PocketBase is already initialized in ${chalk.blue(PB_DATA_DIR)}, skipping.`
     )
     process.exit(1)
   }
@@ -48,10 +47,8 @@ export function createPocketBaseSuperuser(
 
     logger.success('Created superuser')
   } catch (error) {
-    logger.actionableError(
-      `Failed to create superuser: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      'Check your PocketBase configuration and try again'
-    )
+    logger.error(`Failed to create superuser`)
+    logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }
