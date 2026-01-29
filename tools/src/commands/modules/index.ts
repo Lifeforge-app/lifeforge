@@ -8,6 +8,7 @@ import { listModulesHandler } from './handlers/listModuleHandler'
 import { publishModuleHandler } from './handlers/publishModuleHandler'
 import { uninstallModuleHandler } from './handlers/uninstallModuleHandler'
 import { upgradeModuleHandler } from './handlers/upgradeModuleHandler'
+import { viewModuleHandler } from './handlers/viewModuleHandler'
 
 export default function setup(program: Command): void {
   const command = program
@@ -85,4 +86,15 @@ export default function setup(program: Command): void {
     .description('Compare local module content with registry version')
     .argument('[module]', 'Module to compare (optional, checks all if omitted)')
     .action(compareModuleHandler)
+
+  command
+    .command('view')
+    .alias('v')
+    .alias('info')
+    .description('View package info from the registry')
+    .argument(
+      '<module>',
+      'Module to view, e.g., calendar or @lifeforge/lifeforge--calendar'
+    )
+    .action(viewModuleHandler)
 }

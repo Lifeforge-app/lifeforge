@@ -104,7 +104,7 @@ function compareDirectories(localDir: string, registryDir: string): FileDiff {
 }
 
 /**
- * Downloads and extracts an npm package tarball.
+ * Downloads and extracts a package tarball.
  */
 async function downloadAndExtractTarball(
   tarballUrl: string,
