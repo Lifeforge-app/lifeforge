@@ -1,5 +1,3 @@
-import { execSync } from 'child_process'
-
 import executeCommand from './commands'
 import { isDockerMode } from './helpers'
 import logger from './logger'
@@ -11,7 +9,7 @@ const SERVER_CONTAINER = 'lifeforge-server'
  */
 export function isDockerRunning(): boolean {
   try {
-    execSync('docker info', { stdio: 'pipe' })
+    executeCommand('docker info', { exitOnError: false })
 
     return true
   } catch {
@@ -24,9 +22,9 @@ export function isDockerRunning(): boolean {
  */
 export function isContainerRunning(containerName: string): boolean {
   try {
-    const status = execSync(
+    const status = executeCommand(
       `docker ps --filter "name=${containerName}" --format "{{.Status}}"`,
-      { encoding: 'utf8', stdio: 'pipe' }
+      { exitOnError: false }
     ).trim()
 
     return status.length > 0
@@ -58,7 +56,7 @@ export function restartServerContainer(): void {
 
   try {
     logger.info('Restarting Docker server container...')
-    execSync(`docker restart ${SERVER_CONTAINER}`, { stdio: 'inherit' })
+    executeCommand(`docker restart ${SERVER_CONTAINER}`, { exitOnError: false })
     logger.success('Server container restarted')
   } catch (error) {
     logger.error(`Failed to restart Docker server.`)
@@ -89,7 +87,7 @@ export function stopService(serviceName: string): void {
 
   try {
     logger.debug(`Stopping Docker service ${serviceName}...`)
-    executeCommand(`docker stop ${serviceName}`, { stdio: 'inherit' })
+    executeCommand(`docker stop ${serviceName}`, { exitOnError: false })
     logger.success(`Service ${serviceName} stopped`)
   } catch (error) {
     logger.error(`Failed to stop Docker service ${serviceName}.`)
@@ -104,7 +102,7 @@ export function startService(serviceName: string): void {
 
   try {
     logger.debug(`Starting Docker service ${serviceName}...`)
-    executeCommand(`docker start ${serviceName}`, { stdio: 'inherit' })
+    executeCommand(`docker start ${serviceName}`, { exitOnError: false })
     logger.success(`Service ${serviceName} started`)
   } catch (error) {
     logger.error(`Failed to start Docker service ${serviceName}.`)
