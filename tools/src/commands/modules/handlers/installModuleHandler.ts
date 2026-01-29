@@ -5,7 +5,6 @@ import path from 'path'
 import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
 import { installPackage } from '@/utils/commands'
 import { smartReloadServer } from '@/utils/docker'
-import { isDockerMode } from '@/utils/helpers'
 import initGitRepository from '@/utils/initGitRepository'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
@@ -103,15 +102,13 @@ export async function installModuleHandler(
     await buildModuleHandler(moduleName, { docker: true, buildServer: false })
   }
 
-  // Generate migrations for new modules (skip in Docker environment)
-  if (!isDockerMode()) {
-    for (const moduleName of installed) {
-      const { targetDir } = normalizePackage(moduleName)
+  // Generate migrations for new modules
+  for (const moduleName of installed) {
+    const { targetDir } = normalizePackage(moduleName)
 
-      if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
-        logger.debug(`Generating database migrations for ${moduleName}...`)
-        await generateMigrationsHandler(moduleName)
-      }
+    if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
+      logger.debug(`Generating database migrations for ${moduleName}...`)
+      await generateMigrationsHandler(moduleName)
     }
   }
 
