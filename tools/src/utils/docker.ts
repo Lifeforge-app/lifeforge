@@ -1,5 +1,6 @@
 import { execSync } from 'child_process'
 
+import executeCommand from './commands'
 import { isDockerMode } from './helpers'
 import logger from './logger'
 
@@ -86,8 +87,8 @@ export function stopService(serviceName: string): void {
   }
 
   try {
-    logger.info(`Stopping Docker service ${serviceName}...`)
-    execSync(`docker stop ${serviceName}`, { stdio: 'inherit' })
+    logger.debug(`Stopping Docker service ${serviceName}...`)
+    executeCommand(`docker stop ${serviceName}`, { stdio: 'inherit' })
     logger.success(`Service ${serviceName} stopped`)
   } catch (error) {
     logger.error(`Failed to stop Docker service ${serviceName}: ${error}`)
@@ -100,8 +101,8 @@ export function startService(serviceName: string): void {
   }
 
   try {
-    logger.info(`Starting Docker service ${serviceName}...`)
-    execSync(`docker start ${serviceName}`, { stdio: 'inherit' })
+    logger.debug(`Starting Docker service ${serviceName}...`)
+    executeCommand(`docker start ${serviceName}`, { stdio: 'inherit' })
     logger.success(`Service ${serviceName} started`)
   } catch (error) {
     logger.error(`Failed to start Docker service ${serviceName}: ${error}`)
