@@ -16,7 +16,7 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --frozen-lockfile --linker isolated
+    bun install --linker isolated
 
 # Build @lifeforge/log (required by forge CLI used in prebuild)
 RUN cd /app/packages/lifeforge-log && bun run build
