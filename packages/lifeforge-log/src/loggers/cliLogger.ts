@@ -5,8 +5,8 @@ import { LogLevel } from '@/utils/config'
 import { type Logger, createLogger } from './logger'
 
 export interface CLILogger extends Logger {
-  success(message: string): void
-  print(message: string): void
+  success(message?: string): void
+  print(message?: string): void
 }
 
 function wrapWithCLIMethods(logger: Logger): CLILogger {
@@ -18,10 +18,18 @@ function wrapWithCLIMethods(logger: Logger): CLILogger {
     setLevel(level: LogLevel) {
       logger.setLevel(level)
     },
-    success(message: string) {
+    success(message?: string) {
+      if (message === undefined) {
+        return
+      }
+
       logger.info(`${chalk.green('✔')} ${message}`)
     },
-    print(message: string) {
+    print(message?: string) {
+      if (message === undefined) {
+        return
+      }
+
       logger.info(message)
     },
 

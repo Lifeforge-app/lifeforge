@@ -75,11 +75,11 @@ export interface Logger {
   instance: pino.Logger
   level: LogLevel
   setLevel(level: LogLevel): void
-  debug(message: string, meta?: object): void
-  info(message: string, meta?: object): void
-  warn(message: string, meta?: object): void
-  error(message: string, meta?: object): void
-  fatal(message: string, meta?: object): void
+  debug(message?: string, meta?: object): void
+  info(message?: string, meta?: object): void
+  warn(message?: string, meta?: object): void
+  error(message?: string, meta?: object): void
+  fatal(message?: string, meta?: object): void
   child(bindings: object): Logger
 }
 
@@ -147,19 +147,39 @@ function wrapPinoLogger(pinoLogger: pino.Logger): Logger {
     setLevel(level: LogLevel) {
       pinoLogger.level = level
     },
-    debug(message: string, meta?: object) {
+    debug(message?: string, meta?: object) {
+      if (message === undefined) {
+        return
+      }
+
       pinoLogger.debug(meta ?? {}, message)
     },
-    info(message: string, meta?: object) {
+    info(message?: string, meta?: object) {
+      if (message === undefined) {
+        return
+      }
+
       pinoLogger.info(meta ?? {}, message)
     },
-    warn(message: string, meta?: object) {
+    warn(message?: string, meta?: object) {
+      if (message === undefined) {
+        return
+      }
+
       pinoLogger.warn(meta ?? {}, message)
     },
-    error(message: string, meta?: object) {
+    error(message?: string, meta?: object) {
+      if (message === undefined) {
+        return
+      }
+
       pinoLogger.error(meta ?? {}, message)
     },
-    fatal(message: string, meta?: object) {
+    fatal(message?: string, meta?: object) {
+      if (message === undefined) {
+        return
+      }
+
       pinoLogger.fatal(meta ?? {}, message)
     },
     child(bindings: object): Logger {
