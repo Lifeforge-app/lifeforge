@@ -30,7 +30,7 @@ export async function startSingleService(
 
     const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
 
-    executeCommand(command, { cwd }, extraArgs)
+    executeCommand(command, { cwd, stdio: 'inherit' }, extraArgs)
 
     return
   }
@@ -39,7 +39,11 @@ export async function startSingleService(
   if (service in PROJECTS) {
     const projectPath = PROJECTS[service as keyof typeof PROJECTS]
 
-    executeCommand(`cd ${projectPath} && bun run dev`, {}, extraArgs)
+    executeCommand(
+      `cd ${projectPath} && bun run dev`,
+      { stdio: 'inherit' },
+      extraArgs
+    )
 
     return
   }
