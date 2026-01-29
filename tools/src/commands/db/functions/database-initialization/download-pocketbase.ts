@@ -93,9 +93,7 @@ export async function downloadPocketBaseBinary(): Promise<void> {
     logger.debug('Download complete, extracting...')
 
     // Extract using unzip command
-    executeCommand(`unzip -o "${zipPath}" -d "${PB_DIR}"`, {
-      stdio: ['pipe', 'pipe', 'pipe']
-    })
+    executeCommand(`unzip -o "${zipPath}" -d "${PB_DIR}"`)
 
     // Clean up zip file and unnecessary files
     fs.unlinkSync(zipPath)
