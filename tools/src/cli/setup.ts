@@ -1,4 +1,5 @@
 import { LOG_LEVELS } from '@lifeforge/log'
+import chalk from 'chalk'
 import { Command, program } from 'commander'
 import fs from 'fs'
 import path from 'path'
@@ -57,7 +58,7 @@ export function setupCLI(): void {
         cmd = cmd.parent
       }
 
-      logger.debug(`Executing command "${commandPath.join(' ')}"`)
+      logger.info(`Executing command "${chalk.green(commandPath.join(' '))}"`)
     })
 
   setupCommands(program)

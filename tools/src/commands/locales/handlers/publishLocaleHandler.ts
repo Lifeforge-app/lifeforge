@@ -8,13 +8,11 @@ import executeCommand from '@/utils/commands'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
-import { checkNPM, getRegistryUrl } from '../../../utils/registry'
+import { getRegistryUrl } from '../../../utils/registry'
 import validateLocalesAuthor from '../functions/validateLocalesAuthor'
 import { validateLocaleStructureHandler } from './validateLocaleStructure'
 
 export async function publishLocaleHandler(langCode: string): Promise<void> {
-  checkNPM()
-
   const { fullName, targetDir } = normalizePackage(langCode, 'locale')
 
   if (!fs.existsSync(targetDir)) {
@@ -38,7 +36,7 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
   logger.info(`Publishing ${chalk.blue(fullName)}...`)
 
   try {
-    executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
+    executeCommand(`bun publish --registry ${getRegistryUrl()}`, {
       cwd: targetDir
     })
 
