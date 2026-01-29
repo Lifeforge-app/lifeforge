@@ -7,7 +7,6 @@ import { type Logger, createLogger } from './logger'
 export interface CLILogger extends Logger {
   success(message: string): void
   print(message: string): void
-  actionableError(message: string, suggestion: string): void
 }
 
 function wrapWithCLIMethods(logger: Logger): CLILogger {
@@ -25,12 +24,7 @@ function wrapWithCLIMethods(logger: Logger): CLILogger {
     print(message: string) {
       logger.info(message)
     },
-    actionableError(message: string, suggestion: string) {
-      logger.error(message)
-      logger.info(
-        `${chalk.yellow('→')} ${chalk.dim('Suggestion:')} ${suggestion}`
-      )
-    },
+
     child(bindings: object): CLILogger {
       return wrapWithCLIMethods(logger.child(bindings))
     }

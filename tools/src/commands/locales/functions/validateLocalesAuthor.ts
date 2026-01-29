@@ -20,9 +20,8 @@ export default async function validateLocalesAuthor(modulePath: string) {
     if (usernamePrefix === 'lifeforge') {
       validateMaintainerAccess(auth.username || '')
     } else {
-      logger.actionableError(
-        `Cannot publish as "${auth.username}" - package belongs to "${usernamePrefix}"`,
-        `You can only publish packages starting with @lifeforge/${auth.username}--`
+      logger.error(
+        `Cannot publish as "${auth.username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${auth.username}--`
       )
       process.exit(1)
     }

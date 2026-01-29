@@ -19,12 +19,9 @@ export async function uninstallLocaleHandler(langCode: string): Promise<void> {
   const found = findPackageName(fullName)
 
   if (!found) {
-    logger.actionableError(
-      `Locale "${shortName}" is not installed`,
-      'Run "bun forge locales list" to see installed locales'
-    )
+    logger.error(`Locale "${shortName}" is not installed`)
 
-    return
+    process.exit(1)
   }
 
   await ensureLocaleNotInUse(shortName)
