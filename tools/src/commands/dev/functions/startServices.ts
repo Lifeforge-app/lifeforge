@@ -58,12 +58,14 @@ export async function startAllServices(): Promise<void> {
   try {
     const concurrentServices = await getConcurrentServices()
 
-    concurrently(concurrentServices, {
+    const { result } = concurrently(concurrentServices, {
       killOthersOn: ['failure', 'success'],
       restartTries: 0,
       prefix: 'name',
       prefixColors: ['cyan', 'green', 'magenta']
     })
+
+    await result
   } catch (error) {
     logger.error('Failed to start all services')
     logger.debug(`Error details: ${error}`)
