@@ -8,11 +8,13 @@ import executeCommand from '@/utils/commands'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
-import { getRegistryUrl } from '../../../utils/registry'
+import { checkNPM, getRegistryUrl } from '../../../utils/registry'
 import validateLocalesAuthor from '../functions/validateLocalesAuthor'
 import { validateLocaleStructureHandler } from './validateLocaleStructure'
 
 export async function publishLocaleHandler(langCode: string): Promise<void> {
+  checkNPM()
+
   const { fullName, targetDir } = normalizePackage(langCode, 'locale')
 
   if (!fs.existsSync(targetDir)) {

@@ -9,7 +9,7 @@ import logger from '@/utils/logger'
 import bumpPackageVersion, {
   revertPackageVersion
 } from '../../../utils/bumpPackageVersion'
-import { getRegistryUrl } from '../../../utils/registry'
+import { checkNPM, getRegistryUrl } from '../../../utils/registry'
 import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
@@ -57,6 +57,8 @@ function restoreGitignoreAfterPublish(modulePath: string): void {
  * 7. Reverts version on failure
  */
 export async function publishModuleHandler(moduleName: string): Promise<void> {
+  checkNPM()
+
   const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
 
   if (!fs.existsSync(modulePath)) {
