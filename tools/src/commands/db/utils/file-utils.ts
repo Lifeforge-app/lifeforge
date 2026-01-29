@@ -34,15 +34,14 @@ export async function writeFormattedFile(
 }
 
 function getModuleName(schemaPath: string): string | null {
-  return (
-    schemaPath
-      .split('/')
-      .slice(0, -1)
-      .join('/')
-      .replace(/\/server$/, '')
-      .split('/')
-      .pop() || null
-  )
+  let dir = path.dirname(schemaPath)
+
+  // Remove trailing /server if present
+  if (path.basename(dir) === 'server') {
+    dir = path.dirname(dir)
+  }
+
+  return path.basename(dir) || null
 }
 
 /**

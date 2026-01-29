@@ -74,7 +74,7 @@ export async function matchCollectionToModule(
       const schemaPath = path.resolve(
         ROOT_DIR,
         'apps',
-        targetModule.split('/').pop()!,
+        path.basename(targetModule),
         'server',
         'schema.ts'
       )
@@ -86,7 +86,7 @@ export async function matchCollectionToModule(
 
         fs.writeFileSync(schemaPath, '')
 
-        return targetModule.split('/').pop()!
+        return path.basename(targetModule)
       }
     }
   }
