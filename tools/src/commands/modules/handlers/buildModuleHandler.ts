@@ -85,7 +85,8 @@ export async function buildModuleHandler(
           })
           clientBuiltCount++
         } catch (error) {
-          logger.error(`Failed to build ${shortName} client: ${error}`)
+          logger.error(`Failed to build ${shortName} client.`)
+          logger.debug(`Error details: ${error}`)
         }
       }
     }
@@ -100,7 +101,8 @@ export async function buildModuleHandler(
         })
         serverBuiltCount++
       } catch (error) {
-        logger.error(`Failed to build ${shortName} server: ${error}`)
+        logger.error(`Failed to build ${shortName} server.`)
+        logger.debug(`Error details: ${error}`)
       }
     }
   }

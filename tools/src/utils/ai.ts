@@ -38,8 +38,9 @@ export async function getAPIKey(): Promise<string | null> {
     return CryptoJS.AES.decrypt(apiKey.key, MASTER_KEY).toString(
       CryptoJS.enc.Utf8
     )
-  } catch {
+  } catch (error) {
     logger.error('Failed to decrypt OpenAI API key.')
+    logger.debug(`Error details: ${error}`)
 
     return null
   } finally {

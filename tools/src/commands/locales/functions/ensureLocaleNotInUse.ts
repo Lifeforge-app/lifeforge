@@ -11,9 +11,8 @@ async function ensureLocaleNotInUse(shortName: string) {
   killPB?.()
 
   if (user.language === shortName) {
-    logger.actionableError(
-      `Cannot uninstall locale "${shortName}"`,
-      'This language is currently selected. Change your language first.'
+    logger.error(
+      `Cannot uninstall locale "${shortName}". It is currently selected by the user.`
     )
 
     process.exit(1)

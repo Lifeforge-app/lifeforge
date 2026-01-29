@@ -31,13 +31,8 @@ export async function generateMigrationsHandler(
 
     logger.success('Migrations generated successfully')
   } catch (error) {
-    logger.actionableError(
-      'Migration script failed',
-      'Check the schema definitions and PocketBase configuration'
-    )
-    logger.debug(
-      `Error details: ${error instanceof Error ? error.message : String(error)}`
-    )
+    logger.error('Migration script failed')
+    logger.debug(`Error details: ${error}`)
 
     killPB?.()
     process.exit(1)

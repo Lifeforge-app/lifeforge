@@ -31,9 +31,8 @@ export async function uninstallModuleHandler(
     const { targetDir, fullName } = normalizePackage(moduleName)
 
     if (!findPackageName(fullName, 'apps')) {
-      logger.actionableError(
-        `Module ${chalk.blue(fullName)} is not installed`,
-        'Run "bun forge modules list" to see installed modules'
+      logger.error(
+        `Module ${chalk.blue(fullName)} not found in apps/package.json`
       )
       continue
     }

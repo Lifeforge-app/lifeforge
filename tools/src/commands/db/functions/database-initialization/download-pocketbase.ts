@@ -43,9 +43,8 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       osName = 'windows'
       break
     default:
-      logger.actionableError(
-        `Unsupported platform: ${platform}`,
-        'PocketBase supports darwin, linux, and windows'
+      logger.error(
+        `Unsupported platform: ${platform}. PocketBase supports darwin, linux, and windows`
       )
       process.exit(1)
   }
@@ -63,9 +62,8 @@ export async function downloadPocketBaseBinary(): Promise<void> {
       archName = 'amd64'
       break
     default:
-      logger.actionableError(
-        `Unsupported architecture: ${arch}`,
-        'PocketBase supports arm64 and amd64'
+      logger.error(
+        `Unsupported architecture: ${arch}. PocketBase supports arm64 and amd64`
       )
       process.exit(1)
   }
@@ -116,10 +114,8 @@ export async function downloadPocketBaseBinary(): Promise<void> {
 
     logger.success(`Downloaded PocketBase ${chalk.blue(`v${PB_VERSION}`)}`)
   } catch (error) {
-    logger.actionableError(
-      `Failed to download PocketBase: ${error instanceof Error ? error.message : 'Unknown error'}`,
-      'Check your internet connection and try again'
-    )
+    logger.error('Failed to download PocketBase.')
+    logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
 }

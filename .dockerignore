@@ -15,7 +15,7 @@
 # IDE and editor files
 **/.vscode
 **/.idea
-**/*.swp
+**/*.swe
 **/*.swo
 
 # Test files

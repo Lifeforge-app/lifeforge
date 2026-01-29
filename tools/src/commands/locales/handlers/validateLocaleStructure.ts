@@ -29,10 +29,7 @@ export function validateLocaleStructureHandler(lang: string) {
   const { targetDir } = normalizePackage(lang, 'locale')
 
   if (!fs.existsSync(targetDir)) {
-    logger.actionableError(
-      `Locale "${lang}" not found in locales/`,
-      'Run "bun forge locales list" to see available locales'
-    )
+    logger.error(`Locale "${lang}" not found in locales/`)
 
     process.exit(1)
   }
@@ -40,10 +37,7 @@ export function validateLocaleStructureHandler(lang: string) {
   const packageJsonPath = path.join(targetDir, 'package.json')
 
   if (!fs.existsSync(packageJsonPath)) {
-    logger.actionableError(
-      `Locale "${lang}" is missing package.json`,
-      'Run "bun forge locales list" to see available locales'
-    )
+    logger.error(`Locale "${lang}" is missing package.json`)
 
     process.exit(1)
   }
@@ -63,9 +57,8 @@ export function validateLocaleStructureHandler(lang: string) {
   }
 
   if (`@lifeforge/${lang}` !== packageJson.data.name) {
-    logger.actionableError(
-      `The folder name "${lang}" does not match the package name "${packageJson.data.name}"`,
-      'Please make sure the folder name matches the package name'
+    logger.error(
+      `The folder name "${lang}" does not match the package name "${packageJson.data.name}"`
     )
 
     process.exit(1)
@@ -82,10 +75,7 @@ export function validateLocaleStructureHandler(lang: string) {
         file.endsWith('.json')
     )
   ) {
-    logger.actionableError(
-      `Locale "${lang}" contains non-JSON files`,
-      'Please make sure all files in the locale directory are JSON files'
-    )
+    logger.error(`Locale "${lang}" contains non-JSON files`)
 
     process.exit(1)
   }
@@ -96,10 +86,7 @@ export function validateLocaleStructureHandler(lang: string) {
     try {
       JSON.parse(fs.readFileSync(filePath, 'utf-8'))
     } catch {
-      logger.actionableError(
-        `Locale "${lang}" contains invalid JSON files "${file}"`,
-        'Please make sure all files in the locale directory are valid JSON files'
-      )
+      logger.error(`Locale "${lang}" contains invalid JSON files "${file}"`)
 
       process.exit(1)
     }

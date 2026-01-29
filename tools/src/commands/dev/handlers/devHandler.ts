@@ -30,10 +30,7 @@ export function devHandler(service: string, extraArgs: string[] = []): void {
   try {
     startSingleService(service, extraArgs)
   } catch (error) {
-    logger.actionableError(
-      `Failed to start ${chalk.blue(service)} service`,
-      'Check if all required dependencies are installed and environment variables are set'
-    )
+    logger.error(`Failed to start ${chalk.blue(service)} service`)
     logger.debug(`Error details: ${error}`)
     process.exit(1)
   }

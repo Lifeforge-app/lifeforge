@@ -32,7 +32,7 @@ const addFontToStylesheet = (font: FontFamily) => {
       sheet.insertRule(fontFaceRule, ruleIndex)
       ruleIndices.push(ruleIndex)
     } catch (err) {
-      console.error('Failed to insert font rule:', fontFaceRule, err)
+      console.error('Failed to insert font rule: ', fontFaceRule, err)
     }
   })
 

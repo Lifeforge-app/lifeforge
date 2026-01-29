@@ -65,10 +65,7 @@ export async function startAllServices(): Promise<void> {
       prefixColors: ['cyan', 'green', 'magenta']
     })
   } catch (error) {
-    logger.actionableError(
-      'Failed to start all services',
-      'Ensure PocketBase is properly configured and all dependencies are installed'
-    )
+    logger.error('Failed to start all services')
     logger.debug(`Error details: ${error}`)
     process.exit(1)
   }

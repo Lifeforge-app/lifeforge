@@ -61,7 +61,8 @@ export function restartServerContainer(): void {
     execSync(`docker restart ${SERVER_CONTAINER}`, { stdio: 'inherit' })
     logger.success('Server container restarted')
   } catch (error) {
-    logger.error(`Failed to restart Docker server: ${error}`)
+    logger.error(`Failed to restart Docker server.`)
+    logger.debug(`Error details: ${error}`)
   }
 }
 
@@ -91,7 +92,8 @@ export function stopService(serviceName: string): void {
     executeCommand(`docker stop ${serviceName}`, { stdio: 'inherit' })
     logger.success(`Service ${serviceName} stopped`)
   } catch (error) {
-    logger.error(`Failed to stop Docker service ${serviceName}: ${error}`)
+    logger.error(`Failed to stop Docker service ${serviceName}.`)
+    logger.debug(`Error details: ${error}`)
   }
 }
 
@@ -105,6 +107,7 @@ export function startService(serviceName: string): void {
     executeCommand(`docker start ${serviceName}`, { stdio: 'inherit' })
     logger.success(`Service ${serviceName} started`)
   } catch (error) {
-    logger.error(`Failed to start Docker service ${serviceName}: ${error}`)
+    logger.error(`Failed to start Docker service ${serviceName}.`)
+    logger.debug(`Error details: ${error}`)
   }
 }

@@ -33,9 +33,8 @@ export function getEnvVars<const T extends readonly string[]>(
   }
 
   if (missing.length > 0) {
-    logger.actionableError(
-      `Missing required environment variables: ${missing.join(', ')}`,
-      'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
+    logger.error(
+      `Missing required environment variables: ${missing.join(', ')}`
     )
     process.exit(1)
   }
@@ -62,10 +61,7 @@ export function getEnvVar(varName: string, fallback?: string): string {
     return fallback
   }
 
-  logger.actionableError(
-    `Missing required environment variable: ${varName}`,
-    'Use the "forge db init" command to set up the environment variables, or set them manually in your env/.env.local file'
-  )
+  logger.error(`Missing required environment variable: ${varName}`)
   process.exit(1)
 }
 
