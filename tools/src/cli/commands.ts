@@ -11,6 +11,7 @@ import dev from '@/commands/dev'
 import locales from '@/commands/locales'
 import modules from '@/commands/modules'
 import project from '@/commands/project'
+import whoami from '@/commands/whoami'
 
 type CommandSetup = (program: Command) => void
 
@@ -20,5 +21,6 @@ export const commands: CommandSetup[] = [
   dev,
   locales,
   modules,
-  project
+  project,
+  whoami
 ]
