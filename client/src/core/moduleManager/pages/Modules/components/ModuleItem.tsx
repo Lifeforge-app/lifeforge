@@ -50,7 +50,7 @@ function ModuleItem({
         .untyped('modules/devMode/toggle')
         .mutate({ moduleName: module.name }),
     onSuccess: data => {
-      if (data.success) {
+      if (data) {
         toast.success(
           data.isDevMode
             ? t('common.moduleManager:devMode.enabled', {
