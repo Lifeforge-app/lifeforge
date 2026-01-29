@@ -19,10 +19,7 @@ function getPackagesToCheck(langCode?: string) {
     : localePackages
 
   if (!packagesToCheck?.length) {
-    logger.actionableError(
-      `Locale "${langCode}" is not installed`,
-      'Run "bun forge locales list" to see installed locales'
-    )
+    logger.error(`Locale "${langCode}" is not installed`)
 
     process.exit(0)
   }

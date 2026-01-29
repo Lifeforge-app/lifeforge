@@ -16,12 +16,9 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
   const { fullName, targetDir } = normalizePackage(langCode, 'locale')
 
   if (!fs.existsSync(targetDir)) {
-    logger.actionableError(
-      `Locale "${langCode}" not found in locales/`,
-      'Run "bun forge locales list" to see available locales'
-    )
+    logger.error(`Locale "${langCode}" not found in locales/`)
 
-    return
+    process.exit(1)
   }
 
   logger.info('Validating locale structure...')
@@ -48,11 +45,8 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
   } catch (error) {
     revertPackageVersion(targetDir, oldVersion)
 
-    logger.actionableError(
-      `Failed to publish ${chalk.blue(fullName)}`,
-      'Check if you are properly authenticated with the registry'
-    )
-
-    throw error
+    logger.error(`Failed to publish ${chalk.blue(fullName)}`)
+    logger.debug(`Error details: ${error}`)
+    process.exit(1)
   }
 }

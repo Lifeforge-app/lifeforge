@@ -194,10 +194,7 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const { fullName, shortName, targetDir } = normalizePackage(packageName)
 
   if (!fs.existsSync(targetDir)) {
-    logger.actionableError(
-      `Module ${chalk.blue(shortName)} is not installed`,
-      'Run "bun forge modules list" to see installed modules'
-    )
+    logger.error(`Module ${chalk.blue(shortName)} is not installed`)
 
     return null
   }

@@ -244,7 +244,7 @@ export default function useQRLoginSession({
         // Connect WebSocket
         connectWebSocket(sessionId)
       } catch (error) {
-        console.error('Failed to initialize QR session:', error)
+        console.error('Failed to initialize QR session: ', error)
         setStatus('error')
         toast.error(t('messages.unknownError'))
       }
