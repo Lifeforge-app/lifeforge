@@ -4,22 +4,7 @@ import path from 'path'
 import { ROOT_DIR } from '@/constants/constants'
 import logger from '@/utils/logger'
 
-import executeCommand from './commands'
-
-export function checkNPM(): void {
-  try {
-    executeCommand('npm --version', { cwd: ROOT_DIR })
-  } catch (err) {
-    const errorMsg = err instanceof Error ? err.message : String(err)
-
-    if (errorMsg.includes('not found')) {
-      logger.error(
-        'npm not found. Please make sure npm is installed and accessible.'
-      )
-      process.exit(1)
-    }
-  }
-}
+import { getEnvVar } from './helpers'
 
 /**
  * Gets the registry URL for the @lifeforge scope from bunfig.toml.
@@ -51,17 +36,16 @@ export function getRegistryUrl(): string {
 export async function checkPackageExists(
   packageName: string
 ): Promise<boolean> {
-  checkNPM()
-
   const registry = getRegistryUrl()
 
   try {
-    executeCommand(`npm view ${packageName} --registry ${registry}`, {
-      cwd: ROOT_DIR,
-      exitOnError: false
-    })
+    const targetURL = new URL(registry)
 
-    return true
+    targetURL.pathname = packageName
+
+    const response = await fetch(targetURL.toString())
+
+    return response.ok
   } catch {
     return false
   }
@@ -77,23 +61,29 @@ export async function checkAuth(): Promise<{
   authenticated: boolean
   username?: string
 }> {
-  checkNPM()
-
   const registry = getRegistryUrl()
 
+  const token = getEnvVar('FORGISTRY_AUTH_TOKEN')
+
   try {
-    const result = executeCommand(
-      `npm whoami --registry ${registry} 2>/dev/null`,
-      {
-        cwd: ROOT_DIR,
-        exitOnError: false
+    const targetURL = new URL(registry)
+
+    targetURL.pathname = '/-/whoami'
+
+    const response = await fetch(targetURL.toString(), {
+      headers: {
+        Authorization: `Bearer ${token}`
       }
-    )
+    })
 
-    const username = result?.toString().trim()
+    if (!response.ok) {
+      throw new Error('Not authenticated')
+    }
 
-    if (username) {
-      return { authenticated: true, username }
+    const data = (await response.json()) as { username?: string }
+
+    if (data.username) {
+      return { authenticated: true, username: data.username }
     }
 
     throw new Error('Not authenticated')
@@ -103,9 +93,21 @@ export async function checkAuth(): Promise<{
   }
 }
 
-interface PackageMetadata {
+export interface PackageVersionData {
+  displayName?: string
+  description?: string
+  author?: string | { name?: string }
+  license?: string
+  homepage?: string
+  repository?: { url?: string } | string
+  dependencies?: Record<string, string>
+  dist?: { tarball?: string }
+}
+
+export interface PackageMetadata {
+  name?: string
   'dist-tags'?: { latest?: string }
-  versions?: Record<string, { dist?: { tarball?: string } }>
+  versions?: Record<string, PackageVersionData>
 }
 
 /**
@@ -114,7 +116,7 @@ interface PackageMetadata {
  * @param packageName - The full package name to fetch metadata for
  * @returns The package metadata, or null if not found
  */
-async function getPackageMetadata(
+export async function getPackageMetadata(
   packageName: string
 ): Promise<PackageMetadata | null> {
   const registry = getRegistryUrl()

@@ -9,7 +9,7 @@ import logger from '@/utils/logger'
 import bumpPackageVersion, {
   revertPackageVersion
 } from '../../../utils/bumpPackageVersion'
-import { checkNPM, getRegistryUrl } from '../../../utils/registry'
+import { getRegistryUrl } from '../../../utils/registry'
 import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
@@ -52,13 +52,11 @@ function restoreGitignoreAfterPublish(modulePath: string): void {
  * 2. Validates author permissions
  * 3. Bumps version in package.json
  * 4. Renames .gitignore to gitignore (npm excludes .gitignore)
- * 5. Publishes to npm registry
+ * 5. Publishes to LifeForge registry
  * 6. Restores gitignore to .gitignore
  * 7. Reverts version on failure
  */
 export async function publishModuleHandler(moduleName: string): Promise<void> {
-  checkNPM()
-
   const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
 
   if (!fs.existsSync(modulePath)) {
@@ -84,7 +82,7 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
   logger.debug(`Publishing ${chalk.blue(moduleName)}...`)
 
   try {
-    executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
+    executeCommand(`bun publish --registry ${getRegistryUrl()}`, {
       cwd: modulePath
     })
 
