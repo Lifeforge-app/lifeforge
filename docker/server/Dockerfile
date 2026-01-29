@@ -14,7 +14,7 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --frozen-lockfile --linker isolated
+    bun install --linker isolated
 
 # Build shared package
 RUN cd /lifeforge/shared && bun run build
@@ -70,7 +70,8 @@ RUN mkdir -p /lifeforge/apps
 
 # Copy entrypoint
 COPY docker/server/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh && \
+    sed -i 's/\r$//' /entrypoint.sh
 
 EXPOSE 3636
 
