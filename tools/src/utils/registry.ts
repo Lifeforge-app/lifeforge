@@ -6,6 +6,21 @@ import logger from '@/utils/logger'
 
 import executeCommand from './commands'
 
+export function checkNPM(): void {
+  try {
+    executeCommand('npm --version', { cwd: ROOT_DIR })
+  } catch (err) {
+    const errorMsg = err instanceof Error ? err.message : String(err)
+
+    if (errorMsg.includes('not found')) {
+      logger.error(
+        'npm not found. Please make sure npm is installed and accessible.'
+      )
+      process.exit(1)
+    }
+  }
+}
+
 /**
  * Gets the registry URL for the @lifeforge scope from bunfig.toml.
  *
@@ -36,6 +51,8 @@ export function getRegistryUrl(): string {
 export async function checkPackageExists(
   packageName: string
 ): Promise<boolean> {
+  checkNPM()
+
   const registry = getRegistryUrl()
 
   try {
@@ -60,6 +77,8 @@ export async function checkAuth(): Promise<{
   authenticated: boolean
   username?: string
 }> {
+  checkNPM()
+
   const registry = getRegistryUrl()
 
   try {
@@ -79,8 +98,7 @@ export async function checkAuth(): Promise<{
 
     throw new Error('Not authenticated')
   } catch {
-    logger.warn('Not authenticated. Please login first.')
-
+    logger.error('Not authenticated. Please login first.')
     process.exit(1)
   }
 }
