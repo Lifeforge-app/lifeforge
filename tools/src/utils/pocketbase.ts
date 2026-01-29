@@ -1,6 +1,7 @@
 import { spawn } from 'child_process'
 import PocketBase from 'pocketbase'
 
+import { downloadPocketBaseBinary } from '@/commands/db/functions/database-initialization/download-pocketbase'
 import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
 import { getEnvVars } from '@/utils/helpers'
 import logger from '@/utils/logger'
@@ -151,24 +152,12 @@ export async function startPocketbase(): Promise<(() => void) | null> {
       return null
     }
 
-    const isDBServiceRunning = isContainerRunning('lifeforge-db')
-
-    if (isDBServiceRunning) {
-      logger.debug('Stopping Docker service lifeforge-db...')
-
-      stopService('lifeforge-db')
-    }
+    await downloadPocketBaseBinary()
 
     const pbPid = await startPBServer()
 
     return () => {
       killExistingProcess(pbPid)
-
-      if (isDBServiceRunning) {
-        logger.debug('Starting Docker service lifeforge-db...')
-
-        startService('lifeforge-db')
-      }
     }
   } catch (error) {
     logger.actionableError(
@@ -192,7 +181,33 @@ export default async function getPBInstance(createNewInstance = true): Promise<{
   pb: PocketBase
   killPB: (() => void) | null
 }> {
-  const killPB = createNewInstance ? await startPocketbase() : null
+  const isDBServiceRunning = isContainerRunning('lifeforge-db')
+
+  if (isDBServiceRunning) {
+    logger.debug('Stopping Docker service lifeforge-db...')
+
+    stopService('lifeforge-db')
+  }
+
+  const killPB = createNewInstance
+    ? await (async () => {
+        const stopPB = await startPocketbase()
+
+        return () => {
+          stopPB?.()
+
+          if (isDBServiceRunning) {
+            logger.debug('Starting Docker service lifeforge-db...')
+
+            startService('lifeforge-db')
+          }
+        }
+      })()
+    : () => {
+        if (isDBServiceRunning) {
+          startService('lifeforge-db')
+        }
+      }
 
   const { PB_HOST, PB_EMAIL, PB_PASSWORD } = getEnvVars(
     ['PB_HOST', 'PB_EMAIL', 'PB_PASSWORD'],
