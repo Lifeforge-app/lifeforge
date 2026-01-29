@@ -1,4 +1,3 @@
-import chalk from 'chalk'
 import fs from 'fs'
 
 import { PB_BINARY_PATH, PB_DIR, PB_KWARGS } from '@/constants/db'
@@ -25,17 +24,15 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       }
 
       if (checkPortInUse(8090)) {
-        logger.actionableError(
-          'No Pocketbase instance found running, but port 8090 is already in use.',
-          'Please free up the port. Are you using the port for another application? (e.g., port forwarding, etc.)'
+        logger.error(
+          'No Pocketbase instance found running, but port 8090 is already in use.'
         )
         process.exit(1)
       }
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
-        logger.actionableError(
-          `PocketBase binary does not exist: ${PB_BINARY_PATH}`,
-          `Please run "${chalk.blue('bun forge db init')}" to initialize the database`
+        logger.error(
+          `PocketBase binary does not exist: ${PB_BINARY_PATH}. Please run "bun forge db init" to initialize the database.`
         )
         process.exit(1)
       }
@@ -57,10 +54,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       const PORT = process.env.PORT || '3636'
 
       if (checkPortInUse(Number(PORT))) {
-        logger.actionableError(
-          `Port ${PORT} is already in use.`,
-          'Please free up the port or set a different PORT environment variable.'
-        )
+        logger.error(`Port ${PORT} is already in use.`)
         process.exit(1)
       }
 

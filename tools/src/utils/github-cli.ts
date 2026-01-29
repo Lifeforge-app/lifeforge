@@ -28,10 +28,8 @@ export function validateMaintainerAccess(username: string): void {
 
     process.exit(1)
   } catch (error) {
-    logger.actionableError(
-      `Failed to check maintainer access for ${username}.`,
-      `Error: ${error instanceof Error ? error.message : String(error)}`
-    )
+    logger.error(`Failed to check maintainer access for ${username}.`)
+    logger.debug(`Error details: ${error}`)
 
     process.exit(1)
   }
@@ -74,7 +72,8 @@ export function getGithubUser(): { name: string; email: string } | null {
 
     return null
   } catch (error) {
-    logger.debug(`Failed to fetch GitHub user info: ${error}`)
+    logger.error(`Failed to fetch GitHub user info.`)
+    logger.debug(`Error details: ${error}`)
 
     return null
   }

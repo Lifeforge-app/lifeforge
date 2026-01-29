@@ -17,9 +17,8 @@ export default async function validateModuleAuthor(modulePath: string) {
   )
 
   if (!packageJson.success) {
-    logger.actionableError(
-      'Invalid package.json',
-      'Please fix the package.json file'
+    logger.error(
+      'Invalid package.json. Please refer to the documentation for the correct format.'
     )
     process.exit(1)
   }
@@ -32,9 +31,8 @@ export default async function validateModuleAuthor(modulePath: string) {
     if (usernamePrefix === 'lifeforge') {
       validateMaintainerAccess(auth.username || '')
     } else {
-      logger.actionableError(
-        `Cannot publish as "${auth.username}" - package belongs to "${usernamePrefix}"`,
-        `You can only publish packages starting with @lifeforge/${auth.username}--`
+      logger.error(
+        `Cannot publish as "${auth.username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${auth.username}--`
       )
       process.exit(1)
     }

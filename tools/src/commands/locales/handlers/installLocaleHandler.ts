@@ -15,17 +15,15 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
   )
 
   if (!/^@lifeforge\/lang-[a-z]{2}(-[A-Z]{2})?$/i.test(fullName)) {
-    logger.actionableError(
-      `Invalid locale name: ${chalk.blue(langCode)}`,
-      'Locale names should follow the format "xx" or "xx-XX", where "xx" is a two-letter language code and "XX" is a two-letter country code.'
+    logger.error(
+      `Invalid locale name: ${chalk.blue(langCode)}. Locale names should follow the format "xx" or "xx-XX", where "xx" is a two-letter language code and "XX" is a two-letter country code.`
     )
     process.exit(1)
   }
 
   if (fs.existsSync(targetDir)) {
-    logger.actionableError(
-      `Locale already exists at locales/${shortName}`,
-      `Remove it first with: bun forge locales uninstall ${shortName}`
+    logger.error(
+      `Locale already exists at locales/${shortName}. Remove it first with: bun forge locales uninstall ${shortName}`
     )
 
     process.exit(1)
@@ -41,10 +39,8 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
 
     logger.success(`Installed ${chalk.blue(fullName)}`)
   } catch (error) {
-    logger.actionableError(
-      `Failed to install ${chalk.blue(fullName)}`,
-      'Make sure the locale exists in the registry'
-    )
-    throw error
+    logger.error(`Failed to install ${chalk.blue(fullName)}`)
+    logger.debug(`Error details: ${error}`)
+    process.exit(1)
   }
 }
