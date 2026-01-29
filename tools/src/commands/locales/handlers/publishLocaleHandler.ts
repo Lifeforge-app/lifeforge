@@ -37,8 +37,7 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
 
   try {
     executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
-      cwd: targetDir,
-      stdio: 'inherit'
+      cwd: targetDir
     })
 
     logger.success(`Published ${chalk.blue(fullName)}`)

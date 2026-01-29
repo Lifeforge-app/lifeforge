@@ -35,9 +35,7 @@ export function createPocketBaseSuperuser(
   try {
     const result = executeCommand(
       `${PB_BINARY_PATH} superuser create ${PB_KWARGS.join(' ')}`,
-      {
-        stdio: ['pipe', 'pipe', 'pipe']
-      },
+      {},
       [email, password]
     )
 

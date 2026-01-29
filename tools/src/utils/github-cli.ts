@@ -6,8 +6,7 @@ export function validateMaintainerAccess(username: string): void {
   try {
     // Check permission level on the official repo
     const result = executeCommand(
-      `gh api repos/lifeforge-app/lifeforge/collaborators/${username}/permission`,
-      { stdio: 'pipe' }
+      `gh api repos/lifeforge-app/lifeforge/collaborators/${username}/permission`
     )
 
     const response = JSON.parse(result) as {
@@ -38,7 +37,7 @@ export function validateMaintainerAccess(username: string): void {
 export function getGithubUser(): { name: string; email: string } | null {
   try {
     // Try getting basic user info first
-    const basicInfo = executeCommand('gh api user', { stdio: 'pipe' })
+    const basicInfo = executeCommand('gh api user')
 
     const user = JSON.parse(basicInfo) as { name: string; email: string | null }
 
@@ -47,9 +46,7 @@ export function getGithubUser(): { name: string; email: string } | null {
     // If email is private/null, try fetching from /user/emails
     if (!email) {
       try {
-        const emailsJson = executeCommand('gh api user/emails', {
-          stdio: 'pipe'
-        })
+        const emailsJson = executeCommand('gh api user/emails')
 
         const emails = JSON.parse(emailsJson) as Array<{
           email: string
