@@ -1,4 +1,3 @@
-import { LOG_LEVELS, type LogLevel } from '@lifeforge/log'
 import { type IOType, spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
@@ -53,11 +52,11 @@ export default function executeCommand(
 
     if (logger.level === 'debug') {
       if (result.stdout) {
-        process.stdout.write(result.stdout.toString())
+        logger.debug(result.stdout.toString())
       }
 
       if (result.stderr) {
-        process.stderr.write(result.stderr.toString())
+        logger.debug(result.stderr.toString())
       }
     }
 
@@ -90,12 +89,7 @@ export default function executeCommand(
  */
 export function bunInstall() {
   executeCommand('bun install --ignore-scripts', {
-    cwd: ROOT_DIR,
-    stdio:
-      LOG_LEVELS.indexOf(logger.instance.level as LogLevel) >
-      LOG_LEVELS.indexOf('debug')
-        ? 'pipe'
-        : 'inherit'
+    cwd: ROOT_DIR
   })
 }
 
@@ -122,12 +116,7 @@ export function installPackage(
   logger.debug(`Installing ${fullName} from registry...`)
 
   executeCommand(`bun add ${fullName}@latest --ignore-scripts`, {
-    cwd: ROOT_DIR,
-    stdio:
-      LOG_LEVELS.indexOf(logger.instance.level as LogLevel) >
-      LOG_LEVELS.indexOf('info')
-        ? 'pipe'
-        : 'inherit'
+    cwd: ROOT_DIR
   })
 
   const installedPath = path.join(ROOT_DIR, 'node_modules', fullName)

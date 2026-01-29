@@ -33,18 +33,24 @@ export default function initGitRepository(targetDir: string): void {
   logger.info(`Initializing git repository...`)
 
   try {
-    executeCommand('git init', { cwd: targetDir, stdio: 'pipe' })
+    executeCommand('git init', { cwd: targetDir, exitOnError: false })
     executeCommand(`git remote add origin ${repoUrl}`, {
       cwd: targetDir,
-      stdio: 'pipe'
+      exitOnError: false
     })
-    executeCommand('git fetch origin', { cwd: targetDir, stdio: 'pipe' })
-    executeCommand('git checkout -b main', { cwd: targetDir, stdio: 'pipe' })
-    executeCommand('git reset origin/main', { cwd: targetDir, stdio: 'pipe' })
-    executeCommand('git add .', { cwd: targetDir, stdio: 'pipe' })
+    executeCommand('git fetch origin', { cwd: targetDir, exitOnError: false })
+    executeCommand('git checkout -b main', {
+      cwd: targetDir,
+      exitOnError: false
+    })
+    executeCommand('git reset origin/main', {
+      cwd: targetDir,
+      exitOnError: false
+    })
+    executeCommand('git add .', { cwd: targetDir, exitOnError: false })
     executeCommand(
       'git commit --allow-empty -m "feat: update to latest version from forgistry"',
-      { cwd: targetDir, stdio: 'pipe' }
+      { cwd: targetDir, exitOnError: false }
     )
 
     logger.debug(`Git repository initialized with remote: ${repoUrl}`)
