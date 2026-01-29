@@ -23,8 +23,7 @@ function isValidPocketbaseProcess(pid: number): boolean {
 
     // Verify it's actually a pocketbase process by checking the command
     const psResult = executeCommand(`ps -p ${pid} -o comm=`, {
-      exitOnError: false,
-      stdio: 'pipe'
+      exitOnError: false
     })
 
     return psResult?.toLowerCase().includes('pocketbase') ?? false
@@ -43,8 +42,7 @@ function isValidPocketbaseProcess(pid: number): boolean {
 export function checkRunningPBInstances(exitOnError = true): boolean {
   try {
     const result = executeCommand(`pgrep -f "pocketbase serve"`, {
-      exitOnError: false,
-      stdio: 'pipe'
+      exitOnError: false
     })
 
     if (!result?.trim()) {

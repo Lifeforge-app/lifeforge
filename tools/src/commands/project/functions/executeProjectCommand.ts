@@ -18,8 +18,7 @@ export function executeProjectCommand(
     const projectPath = PROJECTS[projectType as ProjectType]
 
     executeCommand(`bun run ${commandType}`, {
-      cwd: projectPath,
-      stdio: 'inherit'
+      cwd: projectPath
     })
   }
 }

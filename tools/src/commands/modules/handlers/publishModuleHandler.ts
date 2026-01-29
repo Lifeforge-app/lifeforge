@@ -83,8 +83,7 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
 
   try {
     executeCommand(`npm publish --registry ${getRegistryUrl()}`, {
-      cwd: modulePath,
-      stdio: 'pipe'
+      cwd: modulePath
     })
 
     logger.success(
