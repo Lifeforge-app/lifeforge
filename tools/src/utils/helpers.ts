@@ -1,4 +1,3 @@
-import { spawnSync } from 'child_process'
 import prompts from 'prompts'
 
 import executeCommand from './commands'
@@ -84,12 +83,13 @@ export function killExistingProcess(
     }
 
     const serverInstance = executeCommand(`pgrep -f "${processKeywordOrPID}"`, {
-      exitOnError: false,
-      stdio: 'pipe'
+      exitOnError: false
     })
 
     if (serverInstance) {
-      executeCommand(`pkill -f "${processKeywordOrPID}"`)
+      executeCommand(`pkill -f "${processKeywordOrPID}"`, {
+        exitOnError: false
+      })
 
       logger.debug(
         `Killed process matching keyword: ${processKeywordOrPID} (PID: ${serverInstance})`
@@ -110,12 +110,13 @@ export function killExistingProcess(
  */
 export function checkPortInUse(port: number): boolean {
   try {
-    const result = spawnSync('nc', ['-zv', 'localhost', port.toString()], {
-      stdio: 'pipe',
-      encoding: 'utf8'
-    })
+    executeCommand('nc', { exitOnError: false }, [
+      '-zv',
+      'localhost',
+      port.toString()
+    ])
 
-    return result.status === 0
+    return true
   } catch {
     return false
   }

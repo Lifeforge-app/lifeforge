@@ -41,7 +41,7 @@ export async function checkPackageExists(
   try {
     executeCommand(`npm view ${packageName} --registry ${registry}`, {
       cwd: ROOT_DIR,
-      stdio: 'pipe'
+      exitOnError: false
     })
 
     return true
@@ -67,7 +67,7 @@ export async function checkAuth(): Promise<{
       `npm whoami --registry ${registry} 2>/dev/null`,
       {
         cwd: ROOT_DIR,
-        stdio: 'pipe'
+        exitOnError: false
       }
     )
 
