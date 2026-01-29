@@ -17,7 +17,7 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --frozen-lockfile --linker isolated
+    bun install --linker isolated
 
 # Build @lifeforge/log (required by tools)
 RUN cd /app/packages/lifeforge-log && bun run build
@@ -71,6 +71,7 @@ ENV PB_BINARY_PATH=/usr/local/bin/pocketbase
 
 # Copy entrypoint
 COPY docker/db-init/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh && \
+    sed -i 's/\r$//' /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
