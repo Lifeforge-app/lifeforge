@@ -60,10 +60,7 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
   const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
 
   if (!fs.existsSync(modulePath)) {
-    logger.actionableError(
-      `Module ${chalk.blue(moduleName)} not found in apps/`,
-      'Make sure the module exists in the apps directory'
-    )
+    logger.error(`Module ${chalk.blue(moduleName)} not found in apps/`)
     process.exit(1)
   }
 
@@ -96,10 +93,7 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
   } catch (error) {
     revertPackageVersion(modulePath, oldVersion)
 
-    logger.actionableError(
-      `Publish failed for ${chalk.blue(moduleName)}`,
-      'Check npm authentication and try again'
-    )
+    logger.error(`Publish failed for ${chalk.blue(moduleName)}`)
     logger.debug(`Error: ${error}`)
     process.exit(1)
   } finally {

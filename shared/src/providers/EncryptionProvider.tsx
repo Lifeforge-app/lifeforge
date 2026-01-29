@@ -33,7 +33,7 @@ export default function EncryptionProvider({
     initializeEncryption(apiHost)
       .then(() => setReady(true))
       .catch(err => {
-        console.error('Failed to initialize encryption:', err)
+        console.error('Failed to initialize encryption: ', err)
         setError(err.message)
       })
   }, [apiHost, ready])

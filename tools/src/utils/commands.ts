@@ -34,10 +34,8 @@ export default function executeCommand(
   try {
     cmd = typeof command === 'function' ? command() : command
   } catch (error) {
-    logger.actionableError(
-      `Failed to generate command: ${error}`,
-      'Check the command generation logic for errors'
-    )
+    logger.error(`Failed to generate command.`)
+    logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
 
@@ -81,10 +79,7 @@ export default function executeCommand(
       throw error
     }
 
-    logger.actionableError(
-      `Command execution failed: ${cmd}`,
-      'Check if the command exists and you have the necessary permissions'
-    )
+    logger.error(`Command execution failed: ${cmd}`)
     logger.debug(`Error details: ${error}`)
     process.exit(1)
   }
@@ -138,11 +133,7 @@ export function installPackage(
   const installedPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
   if (!fs.existsSync(installedPath)) {
-    logger.actionableError(
-      `Failed to install ${fullName}`,
-      'Check if the package exists in the registry'
-    )
-
+    logger.error(`Failed to find installed package at ${installedPath}`)
     process.exit(1)
   }
 

@@ -57,10 +57,7 @@ function ensurePackageJsonExists(target: PackageJsonTarget): void {
   }
 
   if (target === 'root') {
-    logger.actionableError(
-      'Root package.json not found',
-      'Ensure you are in the LifeForge project root directory'
-    )
+    logger.error('Root package.json not found')
     process.exit(1)
   }
 
