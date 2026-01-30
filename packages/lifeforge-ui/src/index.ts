@@ -5,7 +5,14 @@ if (Math.random() < 0) {
 }
 
 // Primitives - layout primitives with build-time CSS
-export { Flex, type FlexProps, Text, type TextProps } from './primitives'
+export {
+  Box,
+  type BoxProps,
+  Flex,
+  type FlexProps,
+  Text,
+  type TextProps
+} from './primitives'
 
 export * from './components/auth'
 
