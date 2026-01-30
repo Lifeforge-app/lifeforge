@@ -43,6 +43,7 @@
     "@tanstack/react-query": "^5.90.11",
     "@uidotdev/usehooks": "^2.4.1",
     "@uiw/react-color": "^2.9.0",
+    "@vanilla-extract/vite-plugin": "^5.1.4",
     "@vitejs/plugin-react": "^4.7.0",
     "@yudiel/react-qr-scanner": "^2.3.1",
     "clsx": "^2.1.1",
