@@ -17,7 +17,7 @@ type SpaceValue = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 /**
  * Flex direction values
  */
-type DirectionValue = 'row' | 'column'
+type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
 
 /**
  * Align items values
@@ -28,6 +28,11 @@ type AlignValue = 'stretch' | 'center' | 'start' | 'end'
  * Justify content values
  */
 type JustifyValue = 'start' | 'center' | 'between' | 'around' | 'evenly' | 'end'
+
+/**
+ * Flex wrap values
+ */
+type WrapValue = 'nowrap' | 'wrap' | 'wrap-reverse'
 
 /**
  * Default element type for Flex component
@@ -64,6 +69,18 @@ interface FlexOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT> {
    * Justify content on the main axis
    */
   justify?: ResponsiveProp<JustifyValue>
+  /**
+   * Flex grow - responsive
+   */
+  grow?: ResponsiveProp<boolean>
+  /**
+   * Flex shrink - responsive
+   */
+  shrink?: ResponsiveProp<boolean>
+  /**
+   * Flex wrap - responsive
+   */
+  wrap?: ResponsiveProp<WrapValue>
   /**
    * Use inline-flex instead of flex
    * @default false
@@ -138,6 +155,9 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
   gap,
   align,
   justify,
+  grow,
+  shrink,
+  wrap,
   inline = false,
   className,
   children,
@@ -158,7 +178,14 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
     justifyContent: normalizeResponsiveProp(
       justify,
       v => justifyMap[v]
-    ) as FlexSprinkles['justifyContent']
+    ) as FlexSprinkles['justifyContent'],
+    flexGrow: normalizeResponsiveProp(grow, v =>
+      v ? 1 : 0
+    ) as FlexSprinkles['flexGrow'],
+    flexShrink: normalizeResponsiveProp(shrink, v =>
+      v ? 1 : 0
+    ) as FlexSprinkles['flexShrink'],
+    flexWrap: normalizeResponsiveProp(wrap) as FlexSprinkles['flexWrap']
   })
 
   return (
