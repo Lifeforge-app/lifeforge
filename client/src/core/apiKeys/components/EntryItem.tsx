@@ -8,6 +8,7 @@ import {
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  Flex,
   OptionsColumn,
   TagChip
 } from 'lifeforge-ui'
@@ -141,19 +142,25 @@ function EntryItem({ entry }: { entry: any }) {
       }
     >
       <div className="w-full">
-        <code className="flex items-center gap-1 text-lg md:justify-end">
+        <Flex
+          align="center"
+          as="code"
+          className="text-lg"
+          gap="sm"
+          justify={{ base: 'start', md: 'end' }}
+        >
           {Array(12)
             .fill(0)
             .map((_, i) => (
               <Icon key={i} className="size-1" icon="tabler:circle-filled" />
             ))}
           <span className="ml-0.5">{entry.key}</span>
-        </code>
+        </Flex>
         <span className="text-bg-500 text-sm">
           {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}
         </span>
       </div>
-      <div className="ml-2 flex gap-2">
+      <Flex className="ml-2" gap="sm">
         {entry.exposable && (
           <Button
             className="shrink-0"
@@ -178,7 +185,7 @@ function EntryItem({ entry }: { entry: any }) {
             onClick={handleDeleteEntry}
           />
         </ContextMenu>
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

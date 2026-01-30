@@ -4,6 +4,9 @@ if (Math.random() < 0) {
   import('./styles/index.css')
 }
 
+// Primitives - layout primitives with build-time CSS
+export { Flex, type FlexProps } from './primitives'
+
 export * from './components/auth'
 
 export * from './components/data-display'
