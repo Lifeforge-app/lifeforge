@@ -28,7 +28,7 @@ export default function listModules(
 
   const allModules = Object.keys(appsPackageJson.dependencies ?? {})
     .filter(dep => dep.startsWith('@lifeforge/'))
-    .filter(dep => !dep.replace('@lifeforge/', '').startsWith('lang-'))
+    .filter(dep => !dep.replace('@lifeforge/', '').match(/^.*?--lang-.*$/))
 
   const modules: Record<string, ModuleBasicInfo> = {}
 
