@@ -14,7 +14,7 @@ const flexProperties = defineProperties({
   defaultCondition,
   properties: {
     display: ['flex', 'inline-flex'],
-    flexDirection: ['row', 'column'],
+    flexDirection: ['row', 'column', 'row-reverse', 'column-reverse'],
     justifyContent: [
       'flex-start',
       'center',
@@ -24,7 +24,10 @@ const flexProperties = defineProperties({
       'flex-end'
     ],
     alignItems: ['stretch', 'center', 'flex-start', 'flex-end'],
-    gap: vars.space
+    gap: vars.space,
+    flexGrow: [0, 1],
+    flexShrink: [0, 1],
+    flexWrap: ['nowrap', 'wrap', 'wrap-reverse']
   }
 })
 
