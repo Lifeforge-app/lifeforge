@@ -53,6 +53,15 @@
         "vite": "^7.1.9",
       },
     },
+    "apps/lifeforge--achievements": {
+      "name": "@lifeforge/lifeforge--achievements",
+      "version": "0.0.10",
+      "peerDependencies": {
+        "@lifeforge/server-utils": "0.0.1",
+        "lifeforge-ui": "0.25.29-1",
+        "shared": "0.0.1",
+      },
+    },
     "client": {
       "name": "@lifeforge/client",
       "version": "0.0.0",
@@ -673,6 +682,8 @@
     "@lifeforge/TedMeadow--lang-ru": ["@lifeforge/TedMeadow--lang-ru@workspace:locales/TedMeadow--lang-ru"],
 
     "@lifeforge/client": ["@lifeforge/client@workspace:client"],
+
+    "@lifeforge/lifeforge--achievements": ["@lifeforge/lifeforge--achievements@workspace:apps/lifeforge--achievements"],
 
     "@lifeforge/lifeforge--lang-en": ["@lifeforge/lifeforge--lang-en@workspace:locales/lifeforge--lang-en"],
 
