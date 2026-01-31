@@ -1,16 +1,17 @@
 import { clsx } from 'clsx'
 import {
+  type CSSProperties,
   type ComponentPropsWithRef,
   type ElementType,
   type ReactNode,
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../system'
-import { Slot } from './Slot'
+import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
+import { Slot } from '../Slot'
+import { getResponsiveLayoutStyles } from '../propDefs'
+import { type LayoutProps, type MarginProps } from '../types'
 import { type BoxSprinkles, boxBase, boxSprinkles } from './box.css'
-
-type SpaceValue = 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl'
 
 type BgColor =
   | 'transparent'
@@ -40,36 +41,18 @@ type RadiusValue = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full'
 
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
 
-type PositionValue = 'static' | 'relative' | 'absolute' | 'fixed' | 'sticky'
-
-type OverflowValue = 'visible' | 'hidden' | 'scroll' | 'auto'
-
 const DEFAULT_ELEMENT = 'div' as const
 
-interface BoxOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT> {
+interface BoxOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
+  extends LayoutProps, MarginProps {
   as?: T
   asChild?: boolean
   ref?: Ref<HTMLElement>
-  p?: ResponsiveProp<SpaceValue>
-  px?: ResponsiveProp<SpaceValue>
-  py?: ResponsiveProp<SpaceValue>
-  pt?: ResponsiveProp<SpaceValue>
-  pb?: ResponsiveProp<SpaceValue>
-  pl?: ResponsiveProp<SpaceValue>
-  pr?: ResponsiveProp<SpaceValue>
-  m?: ResponsiveProp<SpaceValue>
-  mx?: ResponsiveProp<SpaceValue>
-  my?: ResponsiveProp<SpaceValue>
-  mt?: ResponsiveProp<SpaceValue>
-  mb?: ResponsiveProp<SpaceValue>
-  ml?: ResponsiveProp<SpaceValue>
-  mr?: ResponsiveProp<SpaceValue>
+  display?: ResponsiveProp<DisplayValue>
   bg?: ResponsiveProp<BgColor>
   rounded?: ResponsiveProp<RadiusValue>
-  display?: ResponsiveProp<DisplayValue>
-  position?: ResponsiveProp<PositionValue>
-  overflow?: ResponsiveProp<OverflowValue>
   className?: string
+  style?: CSSProperties
   children?: ReactNode
 }
 
@@ -80,6 +63,7 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
   as,
   asChild = false,
   ref,
+  // Padding
   p,
   px,
   py,
@@ -87,6 +71,7 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
   pb,
   pl,
   pr,
+  // Margin
   m,
   mx,
   my,
@@ -94,19 +79,49 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
   mb,
   ml,
   mr,
-  bg,
-  rounded,
+  // Layout props (CSS string - now responsive!)
+  width,
+  minWidth,
+  maxWidth,
+  height,
+  minHeight,
+  maxHeight,
+  inset,
+  top,
+  right,
+  bottom,
+  left,
+  flexBasis,
+  flexGrow,
+  flexShrink,
+  gridArea,
+  gridColumn,
+  gridColumnStart,
+  gridColumnEnd,
+  gridRow,
+  gridRowStart,
+  gridRowEnd,
+  // Sprinkle props
   display,
   position,
   overflow,
+  overflowX,
+  overflowY,
+  bg,
+  rounded,
+  // Standard props
   className,
+  style,
   children,
   ...rest
 }: BoxProps<T>) {
+  // Build sprinkles className for tokenized props
   const sprinklesClassName = boxSprinkles({
     display: normalizeResponsiveProp(display) as BoxSprinkles['display'],
     position: normalizeResponsiveProp(position) as BoxSprinkles['position'],
-    overflow: normalizeResponsiveProp(overflow) as BoxSprinkles['overflow'],
+    overflow: normalizeResponsiveProp(
+      overflow ?? overflowX ?? overflowY
+    ) as BoxSprinkles['overflow'],
     padding: normalizeResponsiveProp(p) as BoxSprinkles['padding'],
     paddingTop: normalizeResponsiveProp(pt ?? py) as BoxSprinkles['paddingTop'],
     paddingBottom: normalizeResponsiveProp(
@@ -135,12 +150,48 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
     ) as BoxSprinkles['borderRadius']
   })
 
+  // Build responsive styles for CSS string props (now with breakpoint support!)
+  const responsiveStyles = getResponsiveLayoutStyles({
+    width,
+    minWidth,
+    maxWidth,
+    height,
+    minHeight,
+    maxHeight,
+    inset,
+    top,
+    right,
+    bottom,
+    left,
+    flexBasis,
+    flexGrow,
+    flexShrink,
+    gridArea,
+    gridColumn,
+    gridColumnStart,
+    gridColumnEnd,
+    gridRow,
+    gridRowStart,
+    gridRowEnd
+  })
+
+  const mergedStyle =
+    Object.keys(responsiveStyles.style).length > 0
+      ? { ...responsiveStyles.style, ...style }
+      : style
+
   const Component = asChild ? Slot : (as ?? DEFAULT_ELEMENT)
 
   return (
     <Component
       ref={ref as Ref<never>}
-      className={clsx(boxBase(), sprinklesClassName, className)}
+      className={clsx(
+        boxBase(),
+        sprinklesClassName,
+        responsiveStyles.className,
+        className
+      )}
+      style={mergedStyle}
       {...rest}
     >
       {children}

@@ -7,8 +7,9 @@ import {
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../system'
-import { Slot } from './Slot'
+import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
+import { Slot } from '../Slot'
+import type { MarginProps } from '../types'
 import { type TextSprinkles, textBase, textSprinkles } from './text.css'
 
 type TextSize =
@@ -60,9 +61,15 @@ type TextDecoration = 'underline' | 'line-through' | 'none'
 
 type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'none'
 
+type TextWrap = 'wrap' | 'nowrap' | 'pretty' | 'balance'
+
+type TextTrim = 'normal' | 'start' | 'end' | 'both'
+
 const DEFAULT_ELEMENT = 'span' as const
 
-interface TextOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT> {
+interface TextOwnProps<
+  T extends ElementType = typeof DEFAULT_ELEMENT
+> extends MarginProps {
   as?: T
   asChild?: boolean
   ref?: Ref<HTMLElement>
@@ -72,6 +79,8 @@ interface TextOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT> {
   align?: ResponsiveProp<TextAlign>
   decoration?: ResponsiveProp<TextDecoration>
   transform?: ResponsiveProp<TextTransform>
+  wrap?: ResponsiveProp<TextWrap>
+  trim?: ResponsiveProp<TextTrim>
   truncate?: boolean
   lineClamp?: number
   className?: string
@@ -80,6 +89,14 @@ interface TextOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT> {
 
 export type TextProps<T extends ElementType = typeof DEFAULT_ELEMENT> =
   TextOwnProps<T> & Omit<ComponentPropsWithRef<T>, keyof TextOwnProps<T>>
+
+// Trim support - using CSS text-box-trim (experimental, use className for fallback)
+const trimClassMap: Record<TextTrim, string> = {
+  normal: '',
+  start: 'trim-start',
+  end: 'trim-end',
+  both: 'trim-both'
+}
 
 export function Text<T extends ElementType = typeof DEFAULT_ELEMENT>({
   as,
@@ -91,8 +108,18 @@ export function Text<T extends ElementType = typeof DEFAULT_ELEMENT>({
   align,
   decoration,
   transform,
+  wrap,
+  trim,
   truncate,
   lineClamp,
+  // Margin props
+  m,
+  mx,
+  my,
+  mt,
+  mb,
+  ml,
+  mr,
   className,
   style,
   children,
@@ -109,7 +136,19 @@ export function Text<T extends ElementType = typeof DEFAULT_ELEMENT>({
     ) as TextSprinkles['textDecoration'],
     textTransform: normalizeResponsiveProp(
       transform
-    ) as TextSprinkles['textTransform']
+    ) as TextSprinkles['textTransform'],
+    textWrap: normalizeResponsiveProp(wrap) as TextSprinkles['textWrap'],
+    margin: normalizeResponsiveProp(m) as TextSprinkles['margin'],
+    marginTop: normalizeResponsiveProp(mt ?? my) as TextSprinkles['marginTop'],
+    marginBottom: normalizeResponsiveProp(
+      mb ?? my
+    ) as TextSprinkles['marginBottom'],
+    marginLeft: normalizeResponsiveProp(
+      ml ?? mx
+    ) as TextSprinkles['marginLeft'],
+    marginRight: normalizeResponsiveProp(
+      mr ?? mx
+    ) as TextSprinkles['marginRight']
   })
 
   const truncateStyle: CSSProperties | undefined = truncate
@@ -129,6 +168,11 @@ export function Text<T extends ElementType = typeof DEFAULT_ELEMENT>({
       }
     : undefined
 
+  // Trim class
+  const trimValue = typeof trim === 'object' ? trim.base : trim
+
+  const trimClass = trimValue ? trimClassMap[trimValue] : ''
+
   const mergedStyle =
     truncateStyle || lineClampStyle
       ? { ...style, ...truncateStyle, ...lineClampStyle }
@@ -139,7 +183,7 @@ export function Text<T extends ElementType = typeof DEFAULT_ELEMENT>({
   return (
     <Component
       ref={ref as Ref<never>}
-      className={clsx(textBase(), sprinklesClassName, className)}
+      className={clsx(textBase(), sprinklesClassName, trimClass, className)}
       style={mergedStyle}
       {...rest}
     >

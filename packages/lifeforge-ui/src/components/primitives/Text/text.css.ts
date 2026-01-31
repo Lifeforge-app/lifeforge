@@ -1,7 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { defaultCondition, responsiveConditions, vars } from '../system'
+import { defaultCondition, responsiveConditions, vars } from '../../../system'
 
 export const textBase = recipe({
   base: {}
@@ -23,7 +23,14 @@ const textProperties = defineProperties({
     },
     textAlign: ['left', 'center', 'right'],
     textDecoration: ['underline', 'line-through', 'none'],
-    textTransform: ['uppercase', 'lowercase', 'capitalize', 'none']
+    textTransform: ['uppercase', 'lowercase', 'capitalize', 'none'],
+    textWrap: ['wrap', 'nowrap', 'pretty', 'balance'],
+    // Margin props for Text
+    margin: vars.space,
+    marginTop: vars.space,
+    marginBottom: vars.space,
+    marginLeft: vars.space,
+    marginRight: vars.space
   }
 })
 
