@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import { Slot } from '../../primitives/Slot'
+import { Slot } from '../primitives/Slot'
 
 export interface CardBaseProps {
   children: React.ReactNode

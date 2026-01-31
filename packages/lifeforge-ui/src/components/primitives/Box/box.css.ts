@@ -1,7 +1,9 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { defaultCondition, responsiveConditions, vars } from '../system'
+import { defaultCondition, responsiveConditions, vars } from '../../../system'
+// Import to ensure responsive layout CSS is generated
+import '../styles/responsive.css'
 
 export const boxBase = recipe({
   base: {

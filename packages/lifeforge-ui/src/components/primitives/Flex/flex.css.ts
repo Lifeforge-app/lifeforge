@@ -1,7 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { defaultCondition, responsiveConditions, vars } from '../system'
+import { defaultCondition, responsiveConditions, vars } from '../../../system'
 
 export const flexBase = recipe({
   base: {
@@ -25,6 +25,8 @@ const flexProperties = defineProperties({
     ],
     alignItems: ['stretch', 'center', 'flex-start', 'flex-end'],
     gap: vars.space,
+    rowGap: vars.space,
+    columnGap: vars.space,
     flexGrow: [0, 1],
     flexShrink: [0, 1],
     flexWrap: ['nowrap', 'wrap', 'wrap-reverse']
