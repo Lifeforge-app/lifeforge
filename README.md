@@ -1,11 +1,16 @@
 > [!CAUTION]
-> ## ⚠️ Development Paused - Critical CSS Issue
-> 
-> **All progress on the new module system (Forgistry) is currently postponed** until a severe CSS layering conflict between the host application and federated modules is resolved.
-> 
-> **The Issue:** When both host and modules bundle Tailwind CSS independently, CSS cascade layer conflicts cause styles to override each other unexpectedly. This breaks responsive utilities (e.g., `flex md:grid`) and can cause host styles to be overridden by module styles.
-> 
-> **Breaking changes may occur** as we resolve this architectural issue. Please follow the [Changelog](https://docs.lifeforge.dev/progress/changelog) for updates.
+>
+> ## ⚠️ Development Paused – Critical CSS Architecture Issue
+>
+> **Progress on the entire system was temporarily blocked** due to a severe CSS layering conflict between the host application and federated modules.
+>
+> **Root Cause:** When both the host and federated modules bundle Tailwind CSS independently, CSS cascade layer conflicts occur. This leads to unpredictable style overrides across module boundaries, breaking responsive utilities (for example `flex md:grid`) and causing module styles to unintentionally override host styles. This issue is inherent to utility-driven global CSS in a module federation environment and cannot be reliably mitigated with configuration alone.
+>
+> **Resolution Direction:**
+> PR **#93** introduces an enhanced version of the internal UI library designed to **replace Tailwind entirely**. The new system is token-driven, component-based, and avoids global utility CSS, eliminating cross-boundary cascade conflicts by design. This change establishes a single, predictable styling contract across the host and all federated modules.
+>
+> **Important:**
+> This migration involves **breaking changes** and represents a deliberate architectural shift. While disruptive in the short term, it is necessary to ensure long-term stability and correctness of the module federation system. Please refer to the [issue](https://github.com/lifeforge-app/lifeforge/issues/93) for ongoing updates and migration details.
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/lifeforge-logo.svg" alt="LifeForge Logo" width="240" height="80"/></img>
