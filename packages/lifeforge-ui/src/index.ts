@@ -11,8 +11,17 @@ export {
   Flex,
   type FlexProps,
   Text,
-  type TextProps
-} from './primitives'
+  type TextProps,
+  Grid,
+  type GridProps,
+  Section,
+  type SectionProps,
+  Container,
+  type ContainerProps,
+  Slot,
+  type LayoutProps,
+  type MarginProps
+} from './components/primitives'
 
 export * from './components/auth'
 
