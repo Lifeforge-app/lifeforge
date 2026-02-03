@@ -50,14 +50,12 @@ export default function executeCommand(
       stdio: options.stdio ?? 'pipe'
     })
 
-    if (logger.level === 'debug') {
-      if (result.stdout) {
-        logger.debug(result.stdout.toString())
-      }
+    if (result.stdout) {
+      logger.debug(result.stdout.toString())
+    }
 
-      if (result.stderr) {
-        logger.debug(result.stderr.toString())
-      }
+    if (result.stderr) {
+      logger.debug(result.stderr.toString())
     }
 
     if (result.error) {
