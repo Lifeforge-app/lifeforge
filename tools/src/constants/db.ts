@@ -26,10 +26,14 @@ export const PB_BINARY_PATH = path.resolve(
   process.env.PB_BINARY_PATH || `${PB_DIR}/pocketbase`
 )
 
+// Remove http:// prefix if present
+export const PB_HOST = getEnvVar('PB_HOST').replace(/^http:\/\//, '')
+
 export const PB_KWARGS = [
   `--dir=${PB_DATA_DIR}`,
   `--migrationsDir=${PB_MIGRATIONS_DIR}`,
-  '--automigrate=0'
+  '--automigrate=0',
+  `--http ${PB_HOST || 'localhost:8090'}`
 ]
 
 // Straightaway exit if PB_DIR is not accessible (skip in Docker mode)
