@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import concurrently from 'concurrently'
 
 import { PROJECTS } from '@/commands/project/constants/projects'
@@ -30,7 +31,9 @@ export async function startSingleService(
 
     const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
 
-    executeCommand(command, { cwd }, extraArgs)
+    logger.debug(`Current Working Directory: ${chalk.blue(cwd)}`)
+
+    executeCommand(command, { cwd, stdio: 'inherit' }, extraArgs)
 
     return
   }
