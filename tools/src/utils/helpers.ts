@@ -123,6 +123,28 @@ export function checkPortInUse(port: number): boolean {
 }
 
 /**
+ * Checks if a specific port is currently in use.
+ *
+ * @param port - The port number to check
+ * @returns True if the port is in use, false otherwise
+ */
+export function checkAddressInUse(address: string, port: string): boolean {
+	logger.debug(`Checking if address ${address}:${port} is in use...`);
+
+	try {
+		executeCommand('nc', { exitOnError: false }, [
+			'-zv',
+			address,
+			port,
+		]);
+
+		return true;
+	} catch {
+		return false;
+	}
+}
+
+/**
  * Creates a promise that resolves after the specified delay.
  *
  * @param ms - The delay duration in milliseconds
