@@ -1,10 +1,21 @@
+import chalk from 'chalk'
 import fs from 'fs'
 
-import { PB_BINARY_PATH, PB_DIR, PB_KWARGS, PB_HOST, PB_PORT } from '@/constants/db'
+import {
+  PB_BINARY_PATH,
+  PB_DIR,
+  PB_HOST,
+  PB_KWARGS,
+  PB_PORT
+} from '@/constants/db'
 import executeCommand from '@/utils/commands'
-import { checkAddressInUse, checkPortInUse, delay, killExistingProcess } from '@/utils/helpers'
+import {
+  checkAddressInUse,
+  checkPortInUse,
+  delay,
+  killExistingProcess
+} from '@/utils/helpers'
 import logger from '@/utils/logger'
-import chalk from 'chalk'
 
 /**
  * Service command configurations
@@ -18,12 +29,12 @@ interface ServiceConfig {
 export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   db: {
     command: async () => {
-			if (checkAddressInUse(PB_HOST, PB_PORT)) {
-				logger.error(
-					`Database address ${chalk.blue(`${PB_HOST}:${PB_PORT}`)} is already in use.`
-				)
-				process.exit(1)
-			}
+      if (checkAddressInUse(PB_HOST, PB_PORT)) {
+        logger.error(
+          `Database address ${chalk.blue(`${PB_HOST}:${PB_PORT}`)} is already in use.`
+        )
+        process.exit(1)
+      }
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
         logger.error(
