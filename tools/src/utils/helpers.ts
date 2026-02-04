@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import prompts from 'prompts'
 
 import executeCommand from './commands'
@@ -60,7 +61,7 @@ export function getEnvVar(varName: string, fallback?: string): string {
     return fallback
   }
 
-  logger.error(`Missing required environment variable: ${varName}`)
+  logger.error(`Missing required environment variable: ${chalk.red(varName)}`)
   process.exit(1)
 }
 
@@ -77,7 +78,9 @@ export function killExistingProcess(
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
 
-      logger.debug(`Killed process with PID: ${String(processKeywordOrPID)}`)
+      logger.debug(
+        `Killed process with PID: ${chalk.blue(String(processKeywordOrPID))}`
+      )
 
       return
     }
@@ -92,7 +95,7 @@ export function killExistingProcess(
       })
 
       logger.debug(
-        `Killed process matching keyword: ${processKeywordOrPID} (PID: ${serverInstance})`
+        `Killed process matching keyword: ${chalk.blue(processKeywordOrPID)} (PID: ${chalk.blue(serverInstance)})`
       )
 
       return parseInt(serverInstance, 10)
@@ -115,6 +118,60 @@ export function checkPortInUse(port: number): boolean {
       'localhost',
       port.toString()
     ])
+
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Checks if a specific port is currently in use.
+ *
+ * @param port - The port number to check
+ * @returns True if the port is in use, false otherwise
+ */
+export function checkAddressInUse(address: string, port: string): boolean {
+  logger.debug(
+    `Checking if address ${chalk.blue(address)}:${chalk.blue(port)} is in use...`
+  )
+
+  try {
+    executeCommand('nc', { exitOnError: false }, ['-zv', address, port])
+
+    const ssOutput = executeCommand('ss', { exitOnError: false }, [
+      '-tlnp',
+      'src',
+      `${address}:${port}`
+    ])
+
+    const lines = ssOutput.trim().split('\n')
+
+    if (lines.length > 1) {
+      const processLine = lines[1]
+
+      const processMatch = processLine.match(
+        /users:\(\("([^"]+)",pid=(\d+),fd=\d+\)\)/
+      )
+
+      if (processMatch) {
+        const processName = processMatch[1]
+
+        const pid = processMatch[2]
+
+        logger.error(
+          `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(processName)} (PID: ${chalk.blue(pid)})`
+        )
+      } else {
+        logger.error(
+          `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but could not parse process info.`
+        )
+      }
+    } else {
+      logger.error(
+        `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but no process info found.`
+      )
+    }
 
     return true
   } catch {
