@@ -1,9 +1,10 @@
 import fs from 'fs'
 
-import { PB_BINARY_PATH, PB_DIR, PB_KWARGS } from '@/constants/db'
+import { PB_BINARY_PATH, PB_DIR, PB_KWARGS, PB_HOST, PB_PORT } from '@/constants/db'
 import executeCommand from '@/utils/commands'
-import { checkPortInUse, delay, killExistingProcess } from '@/utils/helpers'
+import { checkAddressInUse, checkPortInUse, delay, killExistingProcess } from '@/utils/helpers'
 import logger from '@/utils/logger'
+import chalk from 'chalk'
 
 /**
  * Service command configurations
@@ -17,22 +18,16 @@ interface ServiceConfig {
 export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   db: {
     command: async () => {
-      const killedProcess = killExistingProcess('./pocketbase serve')
-
-      if (killedProcess) {
-        await delay(2000)
-      }
-
-      if (checkPortInUse(8090)) {
-        logger.error(
-          'No Pocketbase instance found running, but port 8090 is already in use.'
-        )
-        process.exit(1)
-      }
+			if (checkAddressInUse(PB_HOST, PB_PORT)) {
+				logger.error(
+					`Database address ${chalk.blue(`${PB_HOST}:${PB_PORT}`)} is already in use.`
+				)
+				process.exit(1)
+			}
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
         logger.error(
-          `PocketBase binary does not exist: ${PB_BINARY_PATH}. Please run "bun forge db init" to initialize the database.`
+          `PocketBase binary does not exist: ${chalk.blue(PB_BINARY_PATH)}. Please run "bun forge db init" to initialize the database.`
         )
         process.exit(1)
       }
