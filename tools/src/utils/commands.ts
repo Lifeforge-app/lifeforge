@@ -6,6 +6,7 @@ import { ROOT_DIR } from '@/constants/constants'
 
 import logger from './logger'
 import { addDependency, removeDependency } from './packageJson'
+import chalk from 'chalk'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
@@ -34,12 +35,12 @@ export default function executeCommand(
     cmd = typeof command === 'function' ? command() : command
   } catch (error) {
     logger.error(`Failed to generate command.`)
-    logger.debug(`Error details: ${error}`)
+    logger.debug(`Error details: ${chalk.grey(String(error))}`)
     process.exit(1)
   }
 
   try {
-    logger.debug(`Executing: ${cmd}`)
+    logger.debug(`Executing command ${chalk.blue(cmd)} with arguments: ${chalk.blue(_arguments.length ? _arguments.join(' ') : `${chalk.red('none')}`)}`)
 
     const [toBeExecuted, ...args] = cmd.split(' ')
 
@@ -51,11 +52,11 @@ export default function executeCommand(
     })
 
     if (result.stdout) {
-      logger.debug(result.stdout.toString())
+      logger.debug(chalk.grey(result.stdout.toString()))
     }
 
     if (result.stderr) {
-      logger.debug(result.stderr.toString())
+      logger.debug(chalk.grey(result.stderr.toString()))
     }
 
     if (result.error) {
@@ -67,7 +68,7 @@ export default function executeCommand(
     }
 
     if (!options.stdio || options.stdio === 'pipe') {
-      logger.debug(`Completed: ${cmd}`)
+      logger.debug(`Command Completed: ${chalk.blue(cmd)}, exit code: ${chalk.blue(String(result.status))}`)
     }
 
     return result.stdout?.toString().trim() || ''
@@ -76,8 +77,8 @@ export default function executeCommand(
       throw error
     }
 
-    logger.error(`Command execution failed: ${cmd}`)
-    logger.debug(`Error details: ${error}`)
+    logger.error(`Command execution failed: ${chalk.blue(cmd)}`)
+    logger.debug(`Error details: ${chalk.grey(String(error))}`)
     process.exit(1)
   }
 }
@@ -111,7 +112,7 @@ export function installPackage(
     fs.rmSync(targetDir, { recursive: true, force: true })
   }
 
-  logger.debug(`Installing ${fullName} from registry...`)
+  logger.debug(`Installing ${chalk.blue(fullName)} from registry...`)
 
   executeCommand(`bun add ${fullName}@latest --ignore-scripts`, {
     cwd: ROOT_DIR
@@ -120,12 +121,11 @@ export function installPackage(
   const installedPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
   if (!fs.existsSync(installedPath)) {
-    logger.error(`Failed to find installed package at ${installedPath}`)
+    logger.error(`Failed to find installed package at ${chalk.blue(installedPath)}`)
     process.exit(1)
   }
 
-  logger.debug(`Copying ${fullName} to ${targetDir}...`)
-
+  logger.debug(`Copying ${chalk.blue(fullName)} to ${chalk.blue(targetDir)}...`)
   fs.cpSync(installedPath, targetDir, { recursive: true, dereference: true })
 
   // Add to target package.json (apps or locales)
