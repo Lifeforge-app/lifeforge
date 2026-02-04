@@ -139,38 +139,80 @@ export function checkAddressInUse(address: string, port: string): boolean {
   try {
     executeCommand('nc', { exitOnError: false }, ['-zv', address, port])
 
-    const ssOutput = executeCommand('ss', { exitOnError: false }, [
-      '-tlnp',
-      'src',
-      `${address}:${port}`
-    ])
+    const isMacOS = process.platform === 'darwin'
 
-    const lines = ssOutput.trim().split('\n')
+    if (isMacOS) {
+      const netstatOutput = executeCommand('netstat', { exitOnError: false }, [
+        '-anv',
+        '-p',
+        'tcp'
+      ])
 
-    if (lines.length > 1) {
-      const processLine = lines[1]
+      const lines = netstatOutput.trim().split('\n')
 
-      const processMatch = processLine.match(
-        /users:\(\("([^"]+)",pid=(\d+),fd=\d+\)\)/
+      const matchingLine = lines.find(
+        line =>
+          line.includes(`${address}.${port}`) ||
+          line.includes(`*.${port}`) ||
+          (address === 'localhost' && line.includes(`127.0.0.1.${port}`)) ||
+          (address === '127.0.0.1' && line.includes(`localhost.${port}`))
       )
 
-      if (processMatch) {
-        const processName = processMatch[1]
+      if (matchingLine) {
+        const parts = matchingLine.trim().split(/\s+/)
 
-        const pid = processMatch[2]
+        const processInfo = parts.find(part => /^.+:\d+$/.test(part))
 
-        logger.error(
-          `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(processName)} (PID: ${chalk.blue(pid)})`
-        )
+        if (processInfo) {
+          const [processName, pid] = processInfo.split(':')
+
+          logger.error(
+            `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(processName)} (PID: ${chalk.blue(pid)})`
+          )
+        } else {
+          logger.error(
+            `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but could not parse process info.`
+          )
+        }
       } else {
         logger.error(
-          `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but could not parse process info.`
+          `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but no process info found.`
         )
       }
     } else {
-      logger.error(
-        `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but no process info found.`
-      )
+      const ssOutput = executeCommand('ss', { exitOnError: false }, [
+        '-tlnp',
+        'src',
+        `${address}:${port}`
+      ])
+
+      const lines = ssOutput.trim().split('\n')
+
+      if (lines.length > 1) {
+        const processLine = lines[1]
+
+        const processMatch = processLine.match(
+          /users:\(\("([^"]+)",pid=(\d+),fd=\d+\)\)/
+        )
+
+        if (processMatch) {
+          const processName = processMatch[1]
+
+          const pid = processMatch[2]
+
+          logger.error(
+            `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(processName)} (PID: ${chalk.blue(pid)})`
+          )
+        } else {
+          logger.error(
+            `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but could not parse process info.`
+          )
+        }
+      } else {
+        logger.error(
+          `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but no process info found.`
+        )
+      }
     }
 
     return true
