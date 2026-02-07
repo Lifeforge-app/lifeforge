@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import React from 'react'
 
+import { Slot } from '../primitives/Slot'
+
 export interface CardBaseProps {
-  /** The content to be displayed within the Card component. */
   children: React.ReactNode
-  /** Additional CSS class names to apply to the Card component. */
   className?: string
-  /** Whether the Card is interactive (e.g., clickable) and should have hover effects. */
   isInteractive?: boolean
+  asChild?: boolean
 }
 
 export type CardProps<C extends React.ElementType = 'div'> = {
@@ -16,32 +16,28 @@ export type CardProps<C extends React.ElementType = 'div'> = {
 } & CardBaseProps &
   Omit<React.ComponentProps<C>, keyof CardBaseProps | 'as'>
 
-/**
- * A versatile Card component that can be rendered as different HTML elements.
- */
 function Card<C extends React.ElementType = 'div'>({
   children,
   as,
+  asChild = false,
   className,
   isInteractive,
   ref,
   ...props
 }: CardProps<C>) {
-  const Component = as || 'div'
+  const cardClassName = clsx(
+    'shadow-custom border-bg-500/20 relative rounded-lg p-4 in-[.bordered]:border-2',
+    isInteractive
+      ? 'component-bg-with-hover cursor-pointer transition-all'
+      : 'component-bg',
+    !className?.includes('flex') && 'block',
+    className
+  )
+
+  const Component = asChild ? Slot : as || 'div'
 
   return (
-    <Component
-      ref={ref}
-      {...props}
-      className={clsx(
-        'shadow-custom border-bg-500/20 relative rounded-lg p-4 in-[.bordered]:border-2',
-        isInteractive
-          ? 'component-bg-with-hover cursor-pointer transition-all'
-          : 'component-bg',
-        !className?.includes('flex') && 'block',
-        className
-      )}
-    >
+    <Component ref={ref} {...props} className={cardClassName}>
       {children}
     </Component>
   )
