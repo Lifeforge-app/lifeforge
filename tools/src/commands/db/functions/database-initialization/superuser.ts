@@ -34,7 +34,8 @@ export function createPocketBaseSuperuser(
 
   try {
     const result = executeCommand(
-      `${PB_BINARY_PATH} superuser create ${PB_KWARGS.join(' ')}`,
+	  // Remove flags with --http flag because PocketBase don't take http flag for superuser creation
+      `${PB_BINARY_PATH} superuser create ${PB_KWARGS.filter(flag => !flag.startsWith('--http')).join(' ')}`,
       {},
       [email, password]
     )
