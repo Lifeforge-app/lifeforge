@@ -32,7 +32,7 @@ services:
     environment:
       - DOCKER_MODE=true
       - PB_DIR=/pb_data
-      - PB_HOST=http://db:8090
+      - PB_HOST=http://0.0.0.0:8090
     volumes:
       - ./database/pb_data:/pb_data
       - ./apps:/app/apps
