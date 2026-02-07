@@ -36,7 +36,7 @@ export const PB_KWARGS = [
   `--dir=${PB_DATA_DIR}`,
   `--migrationsDir=${PB_MIGRATIONS_DIR}`,
   '--automigrate=0',
-  `--http ${PB_URL || 'localhost:8090'}`
+  `--http=${PB_URL || 'localhost:8090'}`
 ]
 
 // Straightaway exit if PB_DIR is not accessible (skip in Docker mode)
