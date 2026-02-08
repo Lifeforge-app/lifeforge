@@ -1,4 +1,4 @@
-import { ContextMenuItem, ModuleHeader } from 'lifeforge-ui'
+import { ContextMenuItem, ModuleHeader, Button } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
@@ -27,8 +27,8 @@ function DashboardContent() {
           children: (
             <>
               <ContextMenuItem
-                icon={canLayoutChange ? 'tabler:lock-open' : 'tabler:lock'}
-                label={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
+                icon='tabler:pencil'
+                label={'Edit Layout'}
                 namespace="common.dashboard"
                 onClick={() => {
                   setCanLayoutChange(!canLayoutChange)
@@ -48,6 +48,20 @@ function DashboardContent() {
         canLayoutChange={canLayoutChange}
         wrapperRef={wrapperRef}
       />
+
+	  {/* Save Button Popup */}
+      {canLayoutChange && (
+        <div className="fixed right-6 bottom-6 z-50">
+          <div className="bg-bg-100 dark:bg-bg-800 rounded-md shadow-lg p-4 flex items-center gap-4">
+            <div className="min-w-0">
+              <div className="text-sm font-medium">You are Editing Dashboard Layout</div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button icon='tabler:device-floppy' onClick={() => setCanLayoutChange(false)}>Save</Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
