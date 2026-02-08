@@ -27,7 +27,7 @@ function DashboardContent() {
           children: (
             <>
               <ContextMenuItem
-                icon={canLayoutChange ? 'tabler:lock' : 'tabler:pencil'}
+                icon='tabler:pencil'
                 label={'Edit Layout'}
                 namespace="common.dashboard"
                 onClick={() => {
@@ -54,10 +54,10 @@ function DashboardContent() {
         <div className="fixed right-6 bottom-6 z-50">
           <div className="bg-bg-100 dark:bg-bg-800 rounded-md shadow-lg p-4 flex items-center gap-4">
             <div className="min-w-0">
-              <div className="text-sm font-medium">Editing Dashboard Layout</div>
+              <div className="text-sm font-medium">You are Editing Dashboard Layout</div>
             </div>
             <div className="flex items-center gap-2">
-              <Button onClick={() => setCanLayoutChange(false)}>Save</Button>
+              <Button icon='tabler:device-floppy' onClick={() => setCanLayoutChange(false)}>Save</Button>
             </div>
           </div>
         </div>
