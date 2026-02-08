@@ -106,7 +106,7 @@ function ComponentListItem({
   }
 
   return (
-    <li className="flex-between bg-bg-50 shadow-custom dark:bg-bg-800/50 flex gap-8 rounded-lg p-4">
+    <li className="flex-between bg-bg-50 shadow-custom dark:bg-bg-800/50 flex gap-8 rounded-lg p-4" onClick={toggleComponent}>
       <div className="flex items-center gap-3">
         <div
           className={clsx(
