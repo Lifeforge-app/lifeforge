@@ -4,12 +4,15 @@ import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime.js'
 import {
+  Box,
   Button,
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  Flex,
   OptionsColumn,
-  TagChip
+  TagChip,
+  Text
 } from 'lifeforge-ui'
 import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useState } from 'react'
@@ -108,55 +111,76 @@ function EntryItem({ entry }: { entry: any }) {
       key={entry.id}
       description={
         modulesRequiredCount > 0 && (
-          <p className="text-bg-500 mt-2 flex items-center gap-1">
-            {t('misc.requiredBy', { count: modulesRequiredCount })}
-            <Button
-              className="p-1!"
-              icon="tabler:info-circle"
-              variant="plain"
-              onClick={() =>
-                open(ModulesRequiredListModal, {
-                  keyId: entry.keyId
-                })
-              }
-            />
-          </p>
+          <Box mt="sm">
+            <Flex align="center" gap="sm">
+              <Text color="muted">
+                {t('misc.requiredBy', { count: modulesRequiredCount })}
+              </Text>
+              <Button
+                className="p-1!"
+                icon="tabler:info-circle"
+                variant="plain"
+                onClick={() =>
+                  open(ModulesRequiredListModal, {
+                    keyId: entry.keyId
+                  })
+                }
+              />
+            </Flex>
+          </Box>
         )
       }
       icon={entry.icon}
       title={
         <>
-          {entry.name}
-          <code className="text-bg-500 text-sm">({entry.keyId})</code>
-          <TagChip
-            className="ml-2 text-xs!"
-            color={entry.exposable ? COLORS.green['500'] : COLORS.red['500']}
-            icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
-            iconClassName="size-3.5!"
-            label={
-              entry.exposable ? t('misc.exposable') : t('misc.internalOnly')
-            }
-          />
+          <Text>
+            {entry.name}
+            <Box asChild ml="sm">
+              <Text as="code" color="muted" size="sm">
+                ({entry.keyId})
+              </Text>
+            </Box>
+          </Text>
+          <Box asChild ml="sm">
+            <TagChip
+              color={entry.exposable ? COLORS.green['500'] : COLORS.red['500']}
+              icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
+              label={
+                entry.exposable ? t('misc.exposable') : t('misc.internalOnly')
+              }
+            />
+          </Box>
         </>
       }
     >
-      <div className="w-full">
-        <code className="flex items-center gap-1 text-lg md:justify-end">
+      <Box mr="sm">
+        <Flex
+          align="center"
+          className="text-lg"
+          gap="sm"
+          justify={{ base: 'start', md: 'end' }}
+        >
           {Array(12)
             .fill(0)
             .map((_, i) => (
-              <Icon key={i} className="size-1" icon="tabler:circle-filled" />
+              <Icon
+                key={i}
+                icon="tabler:circle-filled"
+                style={{
+                  width: '4px',
+                  height: '4px'
+                }}
+              />
             ))}
-          <span className="ml-0.5">{entry.key}</span>
-        </code>
-        <span className="text-bg-500 text-sm">
+          <Text>{entry.key}</Text>
+        </Flex>
+        <Text as="code" color="muted">
           {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}
-        </span>
-      </div>
-      <div className="ml-2 flex gap-2">
+        </Text>
+      </Box>
+      <Flex gap="sm">
         {entry.exposable && (
           <Button
-            className="shrink-0"
             icon="tabler:copy"
             loading={isCopying}
             variant="plain"
@@ -178,7 +202,7 @@ function EntryItem({ entry }: { entry: any }) {
             onClick={handleDeleteEntry}
           />
         </ContextMenu>
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

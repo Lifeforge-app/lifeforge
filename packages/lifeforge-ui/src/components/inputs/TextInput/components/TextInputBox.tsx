@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 
+import { textInputBoxRecipe } from '@components/inputs/shared/input.css'
 import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
 
 function TextInputBox({
@@ -39,6 +40,11 @@ function TextInputBox({
   variant?: 'classic' | 'plain'
   size?: 'small' | 'default'
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>) {
+  const inputClassName = textInputBoxRecipe({
+    variant,
+    size: variant === 'plain' ? size : undefined
+  })
+
   return (
     <>
       {isPassword && (
@@ -48,13 +54,7 @@ function TextInputBox({
         ref={autoFocusableRef(autoFocus, inputRef)}
         aria-label={placeholder}
         autoComplete="off"
-        className={clsx(
-          'caret-custom-500 focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wider focus:outline-hidden',
-          variant === 'classic'
-            ? 'mt-6 h-13 p-6 pl-4 placeholder:text-transparent'
-            : clsx('p-0', size === 'small' ? 'h-5 text-sm' : 'h-7'),
-          className
-        )}
+        className={clsx(inputClassName, className)}
         disabled={disabled}
         inputMode={inputMode}
         placeholder={placeholder}

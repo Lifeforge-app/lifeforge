@@ -1,5 +1,15 @@
 import clsx from 'clsx'
-import { memo, useMemo } from 'react'
+import { memo } from 'react'
+
+import {
+  inputLabelActiveStyle,
+  inputLabelBaseStyle,
+  inputLabelErrorStyle,
+  inputLabelFocusedStyle,
+  inputLabelInactiveStyle,
+  inputLabelNormalStyle,
+  inputLabelRequiredStyle
+} from '../input.css'
 
 interface InputLabelProps {
   label: string
@@ -14,38 +24,24 @@ interface InputLabelProps {
 function InputLabel({
   label,
   active,
-  focused,
-  isListboxOrCombobox = false,
-  isCombobox = false,
+  focused = false,
   required = false,
   hasError = false
 }: InputLabelProps) {
-  const labelPositionClasses = useMemo(() => {
-    if (!active) {
-      return `top-1/2 -translate-y-1/2 text-sm ${
-        isListboxOrCombobox
-          ? `${isCombobox && 'group-focus-within:top-5 group-focus-within:text-base'} group-data-open:top-5 group-data-open:text-base`
-          : 'group-focus-within:top-5 group-focus-within:text-base'
-      }`
-    }
-
-    return 'top-5 -translate-y-1/2 text-base'
-  }, [active, isListboxOrCombobox, isCombobox])
-
   return (
     <span
       className={clsx(
-        'pointer-events-none absolute left-17 w-[calc(100%-5.75rem)] min-w-0 truncate text-left font-medium tracking-wide transition-all',
+        inputLabelBaseStyle,
+        active ? inputLabelActiveStyle : inputLabelInactiveStyle,
         hasError
-          ? 'text-red-500 group-focus-within:text-red-500! group-data-open:text-red-500!'
+          ? inputLabelErrorStyle
           : focused
-            ? 'text-custom-500'
-            : 'text-bg-500 group-focus-within:text-custom-500! group-data-open:text-custom-500!',
-        labelPositionClasses
+            ? inputLabelFocusedStyle
+            : inputLabelNormalStyle
       )}
     >
       {label}
-      {required && <span className="text-red-500"> *</span>}
+      {required && <span className={inputLabelRequiredStyle}> *</span>}
     </span>
   )
 }

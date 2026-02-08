@@ -4,9 +4,71 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* TODO: TO BE REMOVED WHEN OFFICIALLY DITCH TAILWIND */
 @theme {
-  --shadow-custom: var(--custom-shadow);
+  --color-custom-50: rgb(var(--color-custom-50));
+  --color-custom-100: rgb(var(--color-custom-100));
+  --color-custom-200: rgb(var(--color-custom-200));
+  --color-custom-300: rgb(var(--color-custom-300));
+  --color-custom-400: rgb(var(--color-custom-400));
+  --color-custom-500: rgb(var(--color-custom-500));
+  --color-custom-600: rgb(var(--color-custom-600));
+  --color-custom-700: rgb(var(--color-custom-700));
+  --color-custom-800: rgb(var(--color-custom-800));
+  --color-custom-900: rgb(var(--color-custom-900));
 
+  --color-bg-50: rgb(var(--color-bg-50)) !important;
+  --color-bg-100: rgb(var(--color-bg-100)) !important;
+  --color-bg-200: rgb(var(--color-bg-200)) !important;
+  --color-bg-300: rgb(var(--color-bg-300)) !important;
+  --color-bg-400: rgb(var(--color-bg-400)) !important;
+  --color-bg-500: rgb(var(--color-bg-500)) !important;
+  --color-bg-600: rgb(var(--color-bg-600)) !important;
+  --color-bg-700: rgb(var(--color-bg-700)) !important;
+  --color-bg-800: rgb(var(--color-bg-800)) !important;
+  --color-bg-900: rgb(var(--color-bg-900)) !important;
+  --color-bg-950: rgb(var(--color-bg-950)) !important;
+
+  --text-xs: calc(0.75rem * var(--custom-font-scale));
+  --text-sm: calc(0.875rem * var(--custom-font-scale));
+  --text-base: calc(1rem * var(--custom-font-scale));
+  --text-lg: calc(1.125rem * var(--custom-font-scale));
+  --text-xl: calc(1.25rem * var(--custom-font-scale));
+  --text-2xl: calc(1.5rem * var(--custom-font-scale));
+  --text-3xl: calc(1.875rem * var(--custom-font-scale));
+  --text-4xl: calc(2.25rem * var(--custom-font-scale));
+  --text-5xl: calc(3rem * var(--custom-font-scale));
+  --text-6xl: calc(3.75rem * var(--custom-font-scale));
+  --text-7xl: calc(4.5rem * var(--custom-font-scale));
+  --text-8xl: calc(6rem * var(--custom-font-scale));
+  --text-9xl: calc(8rem * var(--custom-font-scale));
+
+  --spacing: calc(0.25rem * var(--custom-font-scale));
+
+  /* Border radius variables with multiplier */
+  --radius-sm: calc(0.125rem * var(--custom-border-radius-multiplier));
+  --radius-md: calc(0.375rem * var(--custom-border-radius-multiplier));
+  --radius-lg: calc(0.5rem * var(--custom-border-radius-multiplier));
+  --radius-xl: calc(0.75rem * var(--custom-border-radius-multiplier));
+  --radius-2xl: calc(1rem * var(--custom-border-radius-multiplier));
+  --radius-3xl: calc(1.5rem * var(--custom-border-radius-multiplier));
+
+  --text-xs--line-height: calc(1 / 0.75);
+  --text-sm--line-height: calc(1.25 / 0.875);
+  --text-base--line-height: calc(1.5 / 1);
+  --text-lg--line-height: calc(1.75 / 1.125);
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl--line-height: calc(2.25 / 1.875);
+  --text-4xl--line-height: calc(2.5 / 2.25);
+  --text-5xl--line-height: 1;
+  --text-6xl--line-height: 1;
+  --text-7xl--line-height: 1;
+  --text-8xl--line-height: 1;
+  --text-9xl--line-height: 1;
+}
+
+:root {
   --color-custom-50: rgb(var(--color-custom-50));
   --color-custom-100: rgb(var(--color-custom-100));
   --color-custom-200: rgb(var(--color-custom-200));
@@ -74,8 +136,12 @@
   background-color: var(--color-bg-500);
 }
 
+@utility shadow-custom {
+  box-shadow: var(--custom-shadow);
+}
+
 body {
-  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
+  --custom-shadow: 2px 2px 6px 0px var(--color-bg-300);
 
   .dark &,
   &.dark {
