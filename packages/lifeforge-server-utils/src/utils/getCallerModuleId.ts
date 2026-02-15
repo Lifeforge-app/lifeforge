@@ -1,3 +1,5 @@
+import path from 'path'
+
 export default function getCallerModuleId():
   | { source: 'app' | 'core'; id: string }
   | undefined {
@@ -17,8 +19,33 @@ export default function getCallerModuleId():
 
   if (!filePath) return undefined
 
-  // Try external app module: /apps/{moduleId}/server/
-  const appMatch = filePath.match(/lifeforge\/apps\/([^/]+)\/server\//)
+  // Extract project root from file path
+  let projectRoot: string | undefined
+
+  // For app modules: /path/to/projectRoot/apps/moduleId/server/...
+  const appsIndex = filePath.indexOf('/apps/')
+
+  if (appsIndex !== -1) {
+    const pathBeforeApps = filePath.substring(0, appsIndex)
+
+    projectRoot = path.basename(pathBeforeApps)
+  } else {
+    // For core modules: /path/to/projectRoot/server/src/...
+    const serverIndex = filePath.indexOf('/server/')
+
+    if (serverIndex !== -1) {
+      const pathBeforeServer = filePath.substring(0, serverIndex)
+	  
+      projectRoot = path.basename(pathBeforeServer)
+    }
+  }
+
+  if (!projectRoot) return undefined
+
+  // Try external app module: /{projectRoot}/apps/{moduleId}/server/
+  const appMatch = filePath.match(
+    new RegExp(`${projectRoot}\\/apps\\/([^/]+)\\/server\\/`)
+  )
 
   if (appMatch)
     return {
@@ -27,10 +54,10 @@ export default function getCallerModuleId():
     }
 
   // Try core module:
-  // - /lifeforge/server/src/lib/{coreModuleId}/
-  // - /lifeforge/server/src/core/{coreModuleId}/
+  // - /{projectRoot}/server/src/lib/{coreModuleId}/
+  // - /{projectRoot}/server/src/core/{coreModuleId}/
   const coreMatch = filePath.match(
-    /lifeforge\/server\/src\/(?:lib|core)\/([^/]+)\//
+    new RegExp(`${projectRoot}\\/server\\/src\\/(?:lib|core)\\/([^/]+)\\/`)
   )
 
   if (coreMatch)
