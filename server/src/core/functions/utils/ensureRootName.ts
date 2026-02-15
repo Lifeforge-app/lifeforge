@@ -1,10 +1,10 @@
-import { coreLogger } from '@functions/logging'
 import path from 'path'
 
+import { coreLogger } from '@functions/logging'
 
 /**
- * Ensures the root directory name is 'lifeforge'.
- * Exits the process if the root directory name is not 'lifeforge'.
+ * Logs a warning if the root directory name is not 'lifeforge'.
+ * This is for informational purposes only and does not prevent execution.
  */
 export default function ensureRootName(): void {
   const projectRoot = path.basename(
@@ -12,9 +12,8 @@ export default function ensureRootName(): void {
   )
 
   if (projectRoot !== 'lifeforge') {
-    coreLogger.error(
-      `Project root directory must be named 'lifeforge', but found '${projectRoot}'. Please rename the root directory.`
+    coreLogger.warn(
+      `Project root directory is '${projectRoot}', not 'lifeforge'. Some features may not work as expected.`
     )
-    process.exit(1)
   }
 }
