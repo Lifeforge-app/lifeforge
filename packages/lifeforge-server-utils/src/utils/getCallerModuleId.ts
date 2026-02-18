@@ -1,4 +1,4 @@
-import path from 'path'
+import getProjectRootDir from './extractProjectRoot'
 
 export default function getCallerModuleId():
   | { source: 'app' | 'core'; id: string }
@@ -19,26 +19,7 @@ export default function getCallerModuleId():
 
   if (!filePath) return undefined
 
-  // Extract project root from file path
-  let projectRoot: string | undefined
-
-  // For app modules: /path/to/projectRoot/apps/moduleId/server/...
-  const appsIndex = filePath.indexOf('/apps/')
-
-  if (appsIndex !== -1) {
-    const pathBeforeApps = filePath.substring(0, appsIndex)
-
-    projectRoot = path.basename(pathBeforeApps)
-  } else {
-    // For core modules: /path/to/projectRoot/server/src/...
-    const serverIndex = filePath.indexOf('/server/')
-
-    if (serverIndex !== -1) {
-      const pathBeforeServer = filePath.substring(0, serverIndex)
-	  
-      projectRoot = path.basename(pathBeforeServer)
-    }
-  }
+  const projectRoot = getProjectRootDir(filePath)
 
   if (!projectRoot) return undefined
 
