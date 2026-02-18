@@ -10,7 +10,6 @@ import { LocaleService } from '@functions/initialization/localeService'
 import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { LOG_LEVELS, type LogLevel, coreLogger } from '@functions/logging'
 import createSocketServer from '@functions/socketio/createSocketServer'
-import ensureRootName from '@functions/utils/ensureRootName'
 
 import app from './core/app'
 
@@ -57,7 +56,6 @@ function startServer(server: ReturnType<typeof createServer>): void {
 
 async function main(): Promise<void> {
   LocaleService.validateAndLoad()
-  ensureRootName()
   ensureDirectories()
   ensureCredentials()
   await checkDB()
