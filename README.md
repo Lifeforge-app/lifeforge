@@ -1,16 +1,18 @@
 > [!CAUTION]
 >
-> ## ⚠️ Development Paused – Critical CSS Architecture Issue
+> ## Re:Forge - The Next Major Update of Lifeforge
 >
-> **Progress on the entire system was temporarily blocked** due to a severe CSS layering conflict between the host application and federated modules.
+> **Be sure you are clearly know what to do with this branch! This branch does completely ignore any backward capabilities and compabilities to stable LifeForge branch!**
 >
-> **Root Cause:** When both the host and federated modules bundle Tailwind CSS independently, CSS cascade layer conflicts occur. This leads to unpredictable style overrides across module boundaries, breaking responsive utilities (for example `flex md:grid`) and causing module styles to unintentionally override host styles. This issue is inherent to utility-driven global CSS in a module federation environment and cannot be reliably mitigated with configuration alone.
+> Re:Forge is a new branch where developers and contributors are feel free to work with extremely major changes to the codebase. This including
+> - Working with more package managers
+> - New database systems
+> - Code structure, and
+> - a lot more...
 >
-> **Resolution Direction:**
-> PR **#93** introduces an enhanced version of the internal UI library designed to **replace Tailwind entirely**. The new system is token-driven, component-based, and avoids global utility CSS, eliminating cross-boundary cascade conflicts by design. This change establishes a single, predictable styling contract across the host and all federated modules.
->
-> **Important:**
-> This migration involves **breaking changes** and represents a deliberate architectural shift. While disruptive in the short term, it is necessary to ensure long-term stability and correctness of the module federation system. Please refer to the [issue](https://github.com/lifeforge-app/lifeforge/issues/93) for ongoing updates and migration details.
+> Before you start, make sure you have clearly read the ReForge project so that you clearly know what is the current progress.
+
+
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/lifeforge-logo.svg" alt="LifeForge Logo" width="240" height="80"/></img>
