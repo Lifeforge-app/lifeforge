@@ -14,7 +14,9 @@ import getConcurrentServices from './getConcurrentServices'
  */
 export async function startSingleService(
   service: string,
-  extraArgs: string[] = []
+  extraArgs: string[] = [],
+  host?: boolean,
+  port?: string
 ): Promise<void> {
   // Handle core services
   if (service in SERVICE_COMMANDS) {
@@ -33,7 +35,18 @@ export async function startSingleService(
 
     logger.debug(`Current Working Directory: ${chalk.blue(cwd)}`)
 
-    executeCommand(command, { cwd, stdio: 'inherit' }, extraArgs)
+    // Add --host and --port flags for client service if provided
+    const finalExtraArgs = [...extraArgs]
+    if (service === 'client') {
+      if (host) {
+        finalExtraArgs.push('--host')
+      }
+      if (port) {
+        finalExtraArgs.push('--port', port)
+      }
+    }
+
+    executeCommand(command, { cwd, stdio: 'inherit' }, finalExtraArgs)
 
     return
   }
@@ -53,9 +66,12 @@ export async function startSingleService(
 /**
  * Starts all development services concurrently
  */
-export async function startAllServices(): Promise<void> {
+export async function startAllServices(
+  host?: boolean,
+  port?: string
+): Promise<void> {
   try {
-    const concurrentServices = await getConcurrentServices()
+    const concurrentServices = await getConcurrentServices(host, port)
 
     const { result } = concurrently(concurrentServices, {
       killOthersOn: ['failure', 'success'],
