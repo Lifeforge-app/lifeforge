@@ -41,6 +41,11 @@ export function setupCLI(): void {
       `Set log level (${LOG_LEVELS.join(', ')})`,
       'info'
     )
+    .option('--host', 'Expose frontend client on the local network')
+    .option(
+      '--port <port>',
+      'Specify the port for the client dev server (default: 5173)'
+    )
     .hook('preAction', (thisCommand, actionCommand) => {
       const level = thisCommand.opts().logLevel as (typeof LOG_LEVELS)[number]
 
