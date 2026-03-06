@@ -1,4 +1,5 @@
 import chalk from 'chalk'
+import type { Command } from 'commander'
 
 import logger from '@/utils/logger'
 
@@ -8,10 +9,20 @@ import {
   startSingleService
 } from '../functions/startServices'
 
-export function devHandler(service: string, extraArgs: string[] = []): void {
+export function devHandler(
+  this: Command,
+  service: string,
+  extraArgs: string[] = []
+): void {
+  const options = this.parent?.opts()
+
+  const host = options?.host
+
+  const port = options?.port
+
   if (!service) {
     logger.info('Starting all services...')
-    startAllServices()
+    startAllServices(host, port)
 
     return
   }
@@ -28,7 +39,7 @@ export function devHandler(service: string, extraArgs: string[] = []): void {
   }
 
   try {
-    startSingleService(service, extraArgs)
+    startSingleService(service, extraArgs, host, port)
   } catch (error) {
     logger.error(`Failed to start ${chalk.blue(service)} service`)
     logger.debug(`Error details: ${error}`)
