@@ -8,6 +8,30 @@ import { Alert } from "lifeforge-ui"
 
 Back in the day, LifeForge used to be a collection of multiple repositories, where the frontend and backend are separated into different repositories. This made it hard for new users and developers to get started with the project, as they had to clone multiple repositories and set up the environment for each of them. To solve this problem, I decided to merge all the repositories into a single monorepo. This way, people only need to clone a single repository and set up the environment once.
 
+## Which installation method is right for me?
+
+The installation process can be a bit tricky, especially for those who are not familiar with Docker or Node.js. Therefore, I will provide two different installation methods: one for Docker and one for manual installation. 
+
+
+### Choose [Docker Installation](#docker-installation) if 
+
+- You have the experience to set up and use Docker on your machine.
+- You don't want to worry about setting up dependencies manually.
+- You want more isolation between the LifeForge system and your host machine, to prevent potential issues with conflicts between dependencies and network ports.
+
+<Alert className="mt-6" type="note">
+#### Docker Installation Can be Trickier to Debug
+While Docker simplifies the installation process, it can be more difficult to debug issues that arise within the containerized environment. 
+
+Currently, Docker installation method is not yet stable. If you encounter any issues during the Docker installation process, please don't hesitate to submit an [issue](https://github.com/lifeforge-app/lifeforge/issues).
+</Alert>
+
+### Or, choose [Manual Installation](#manual-installation) if
+
+- You are **having issues with Docker.** 
+- You are a developer who wants to contribute to the project and needs to set up a local development environment.
+- You want more control over the installation process and the environment configuration.
+
 ---
 
 <section id="docker-installation">
