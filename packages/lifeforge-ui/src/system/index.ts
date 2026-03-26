@@ -1,20 +1,22 @@
-// Internal system exports - not for public consumption
+// Internal system exports — not for public consumption
+
 export {
   vars,
+  type SpaceToken,
+  type RadiusToken,
+  type FontSizeToken,
+  type FontWeightToken
+} from './vars.css'
+
+export {
   colors,
   bg,
   custom,
-  type BgColorSlot,
-  type CustomColorSlot,
-  type SurfaceToken,
-  type SpaceToken,
-  type RadiusToken,
+  withOpacity,
   type ColorToken,
-  type FontSizeToken,
-  type FontWeightToken
-} from './tokens.css'
-
-export { withOpacity } from './utils'
+  type BgColorSlot,
+  type CustomColorSlot
+} from './colors'
 
 export {
   normalizeResponsiveProp,
@@ -49,4 +51,11 @@ export {
   type PropDef,
   type LayoutPropDefsKey,
   type CommonSprinkleInput
-} from './propDefs'
+} from './layout-utils'
+
+export {
+  commonProperties,
+  themeColorProperties,
+  commonSprinkles,
+  type CommonSprinkles
+} from './sprinkles.css'
