@@ -9,7 +9,7 @@ import {
 
 import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
 import { Slot } from '../Slot'
-import type { MarginProps } from '../types'
+import type { MarginProps, PaddingProps } from '../types'
 import { type TextSprinkles, textBase, textSprinkles } from './text.css'
 
 type TextSize =
@@ -67,9 +67,8 @@ type TextTrim = 'normal' | 'start' | 'end' | 'both'
 
 const DEFAULT_ELEMENT = 'span' as const
 
-interface TextOwnProps<
-  T extends ElementType = typeof DEFAULT_ELEMENT
-> extends MarginProps {
+interface TextOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
+  extends MarginProps, PaddingProps {
   as?: T
   asChild?: boolean
   ref?: Ref<HTMLElement>
@@ -120,6 +119,14 @@ export function Text<T extends ElementType = typeof DEFAULT_ELEMENT>({
   mb,
   ml,
   mr,
+  // Padding props
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
   className,
   style,
   children,
@@ -148,7 +155,20 @@ export function Text<T extends ElementType = typeof DEFAULT_ELEMENT>({
     ) as TextSprinkles['marginLeft'],
     marginRight: normalizeResponsiveProp(
       mr ?? mx
-    ) as TextSprinkles['marginRight']
+    ) as TextSprinkles['marginRight'],
+    padding: normalizeResponsiveProp(p) as TextSprinkles['padding'],
+    paddingTop: normalizeResponsiveProp(
+      pt ?? py
+    ) as TextSprinkles['paddingTop'],
+    paddingBottom: normalizeResponsiveProp(
+      pb ?? py
+    ) as TextSprinkles['paddingBottom'],
+    paddingLeft: normalizeResponsiveProp(
+      pl ?? px
+    ) as TextSprinkles['paddingLeft'],
+    paddingRight: normalizeResponsiveProp(
+      pr ?? px
+    ) as TextSprinkles['paddingRight']
   })
 
   const truncateStyle: CSSProperties | undefined = truncate

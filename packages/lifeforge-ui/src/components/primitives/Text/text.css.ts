@@ -35,7 +35,13 @@ const textProperties = defineProperties({
     marginTop: vars.space,
     marginBottom: vars.space,
     marginLeft: vars.space,
-    marginRight: vars.space
+    marginRight: vars.space,
+    // Padding props for Text
+    padding: vars.space,
+    paddingTop: vars.space,
+    paddingBottom: vars.space,
+    paddingLeft: vars.space,
+    paddingRight: vars.space
   }
 })
 

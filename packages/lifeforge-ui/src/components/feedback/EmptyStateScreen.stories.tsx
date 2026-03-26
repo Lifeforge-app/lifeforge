@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Box, Text } from '@components/primitives'
+
 import EmptyStateScreen from './EmptyStateScreen'
 
 const meta = {
@@ -49,9 +51,9 @@ export const Default: Story = {
     icon: 'tabler:clipboard-off'
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <EmptyStateScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -67,9 +69,9 @@ export const CustomContent: Story = {
     icon: 'tabler:search-off'
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <EmptyStateScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -84,9 +86,9 @@ export const WithoutDescription: Story = {
     icon: 'tabler:database-off'
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <EmptyStateScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -107,9 +109,9 @@ export const WithCTAButton: Story = {
     }
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <EmptyStateScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -126,9 +128,9 @@ export const Smaller: Story = {
     smaller: true
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <EmptyStateScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -141,11 +143,11 @@ export const CustomIcon: Story = {
       title: 'Congratulations!',
       description: 'You have completed all your tasks for today.'
     },
-    icon: <span className="text-6xl">🎉</span>
+    icon: <Text size="6xl">🎉</Text>
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <EmptyStateScreen {...args} />
-    </div>
+    </Box>
   )
 }

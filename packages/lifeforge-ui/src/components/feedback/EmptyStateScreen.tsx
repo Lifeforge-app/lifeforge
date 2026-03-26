@@ -2,7 +2,10 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
+import { Box, Flex, Text } from '@components/primitives'
+
 import Button from '../inputs/Button'
+import * as styles from './EmptyStateScreen.css'
 
 export interface EmptyStateScreenProps {
   /** Props for the call-to-action button. Refer to the Button component for available props. */
@@ -50,30 +53,36 @@ function EmptyStateScreen({
   )
 
   return (
-    <div
-      className={clsx(
-        'flex-center size-full flex-col',
-        smaller ? 'gap-3' : 'gap-6',
-        className
-      )}
+    <Flex
+      align="center"
+      className={className}
+      direction="column"
+      height="100%"
+      justify="center"
+      style={{ gap: smaller ? '0.75rem' : '1.5rem' }}
+      width="100%"
     >
       {icon !== undefined &&
         (typeof icon === 'string' ? (
           <Icon
-            className={clsx(
-              'text-bg-400 dark:text-bg-600 shrink-0',
-              smaller ? 'size-18' : 'size-32'
-            )}
+            className={styles.mutedColor}
             icon={icon}
+            style={{
+              width: smaller ? '4.5rem' : '8rem',
+              height: smaller ? '4.5rem' : '8rem',
+              flexShrink: 0
+            }}
           />
         ) : (
           icon
         ))}
-      <h2
-        className={clsx(
-          'text-bg-400 dark:text-bg-600 px-6 text-center font-semibold',
-          smaller ? 'text-2xl' : 'text-3xl'
-        )}
+      <Text
+        align="center"
+        as="h2"
+        className={styles.mutedColor}
+        size={smaller ? '2xl' : '3xl'}
+        style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
+        weight="semibold"
       >
         {'id' in message
           ? t(
@@ -82,45 +91,54 @@ function EmptyStateScreen({
                 .join('.')
             )
           : message.title}
-      </h2>
+      </Text>
       {(() => {
         if ('title' in message) {
           return typeof message.description === 'string' ? (
-            <p
-              className={clsx(
-                'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
-                smaller ? 'text-base' : 'text-lg'
-              )}
+            <Text
+              align="center"
+              as="p"
+              className={clsx(styles.mutedColor, styles.preWrap)}
+              size={smaller ? 'base' : 'lg'}
+              style={{
+                marginTop: '-0.5rem',
+                paddingLeft: '1.5rem',
+                paddingRight: '1.5rem'
+              }}
             >
               {message.description}
-            </p>
+            </Text>
           ) : (
             message.description
           )
         }
 
         return (
-          <p
-            className={clsx(
-              'text-bg-400 dark:text-bg-600 -mt-2 px-6 text-center whitespace-pre-wrap',
-              smaller ? 'text-base' : 'text-lg'
-            )}
+          <Text
+            align="center"
+            as="p"
+            className={clsx(styles.mutedColor, styles.preWrap)}
+            size={smaller ? 'base' : 'lg'}
+            style={{
+              marginTop: '-0.5rem',
+              paddingLeft: '1.5rem',
+              paddingRight: '1.5rem'
+            }}
           >
             {t(
               [message.tKey, 'empty', message.id, 'description']
                 .filter(e => e)
                 .join('.')
             )}
-          </p>
+          </Text>
         )
       })()}
       {CTAButtonProps && (
-        <Button
-          {...CTAButtonProps}
-          className={clsx('mt-4', CTAButtonProps.className)}
-        />
+        <Box mt="md">
+          <Button {...CTAButtonProps} />
+        </Box>
       )}
-    </div>
+    </Flex>
   )
 }
 
