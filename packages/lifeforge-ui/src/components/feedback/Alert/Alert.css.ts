@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { vars } from '../../system'
+import { vars } from '@/system'
 
 export const wrapper = style({
   borderRadius: vars.radii.md,
