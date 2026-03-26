@@ -3,8 +3,6 @@ import { Icon } from '@iconify/react'
 import { Button } from '@components/inputs'
 import { Flex, Text } from '@components/primitives'
 
-import * as styles from './ErrorScreen.css'
-
 interface ErrorScreenProps {
   /** The error message to display. Can be a string or a React node for more complex formatting. */
   message: string | React.ReactNode
@@ -26,15 +24,17 @@ function ErrorScreen({ message, showRetryButton }: ErrorScreenProps) {
       width="100%"
     >
       <Icon
-        className={styles.errorColor}
+        color="var(--color-red-500)"
         icon="tabler:alert-triangle"
         style={{ width: '4rem', height: '4rem' }}
       />
       <Text
-        as="p"
         align="center"
-        className={styles.errorColor}
+        as="p"
         size="lg"
+        style={{
+          color: 'var(--color-red-500)'
+        }}
         weight="medium"
       >
         {message}

@@ -60,12 +60,15 @@ export default function Widget({
   return (
     <Flex
       ref={ref as React.Ref<HTMLElement>}
+      shadow
       as="div"
+      bg={{ base: 'bg-50', dark: 'bg-900' }}
       className={clsx(styles.wrapper, className)}
       direction="column"
       gap="lg"
       height="100%"
       p="md"
+      rounded="lg"
       width="100%"
     >
       {title && (

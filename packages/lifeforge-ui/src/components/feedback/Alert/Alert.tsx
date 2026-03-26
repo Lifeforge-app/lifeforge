@@ -36,16 +36,14 @@ const STYLES = {
 
 function Alert({
   type,
-  className,
   children
 }: {
   type: typeof STYLES extends Record<infer K, unknown> ? K : never
-  className?: string
   children: React.ReactNode
 }) {
   return (
     <Flex
-      className={clsx('_alert', styles.wrapper, className)}
+      className={clsx('_alert', styles.wrapper)}
       direction="column"
       gap="md"
       p="sm"

@@ -22,6 +22,7 @@ function Card({
 }: CardProps) {
   return (
     <Box
+      shadow
       bg={
         isInteractive
           ? {
@@ -32,16 +33,15 @@ function Card({
             }
           : { base: 'bg-50', dark: 'bg-900' }
       }
-      className={clsx(
-        styles.base,
-        isInteractive && styles.interactive,
-        className
-      )}
+      className={clsx(styles.base, className)}
       display="block"
       p="md"
       position="relative"
       rounded="lg"
-      style={{ boxShadow: 'var(--custom-shadow)', ...style }}
+      style={{
+        ...(isInteractive ? { cursor: 'pointer', transition: 'all 0.2s' } : {}),
+        ...style
+      }}
       {...props}
     >
       {children}
