@@ -26,5 +26,7 @@ export type {
   OverflowValue,
   DisplayValue,
   FlexDisplayValue,
-  GridDisplayValue
-} from './types'
+  GridDisplayValue,
+  ThemeCondition,
+  ThemeConditionProp
+} from '@/system'

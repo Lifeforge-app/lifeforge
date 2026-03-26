@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { bg } from '@/styles/vanilla-extract'
+import { bg } from '@/system'
 
 export const mutedColor = style({
   color: bg[400],

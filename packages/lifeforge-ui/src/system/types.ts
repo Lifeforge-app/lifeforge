@@ -1,4 +1,28 @@
-import type { ResponsiveProp, SpaceToken } from '../../system'
+import type { ResponsiveProp } from './responsive'
+import type { SpaceToken } from './tokens.css'
+
+// ============================================================================
+// Theme-condition types (Option A: prop-level dark/hover conditions)
+// ============================================================================
+
+/** The condition keys used in sprinkles for theme-adaptive props. */
+export type ThemeCondition =
+  | 'base'
+  | 'dark'
+  | 'hover'
+  | 'darkHover'
+  | 'hasBgImage'
+  | 'darkHasBgImage'
+
+/**
+ * A prop that accepts either a plain value or a map of per-condition values.
+ * Mirrors the vanilla-extract sprinkles condition syntax.
+ *
+ * @example
+ * bg="surface"                              // single value
+ * bg={{ base: 'bg-50', dark: 'bg-900' }}   // per-condition
+ */
+export type ThemeConditionProp<T> = T | Partial<Record<ThemeCondition, T>>
 
 // ============================================================================
 // Granular prop groups

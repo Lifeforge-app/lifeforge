@@ -1,0 +1,75 @@
+/* =============================================================================
+ * Semantic surface tokens
+ *
+ * These CSS custom properties encode the `component-bg` / `component-bg-*`
+ * patterns as single-variable tokens so that vanilla-extract style() calls and
+ * primitive props no longer need explicit dark / has-bg-image selectors.
+ *
+ * Usage in .css.ts:
+ *   backgroundColor: bg.surface          ← light / dark / bg-image all handled
+ *   backgroundColor: bg['surface-hover'] ← hover variant
+ *
+ * See: componentbg.css for the original Tailwind equivalents.
+ * ============================================================================= */
+
+:root {
+  --color-surface: var(--color-bg-50);
+  --color-surface-hover: var(--color-bg-100);
+  --color-surface-lighter: var(--color-bg-100);
+  --color-surface-lighter-hover: color-mix(
+    in srgb,
+    var(--color-bg-200) 50%,
+    transparent
+  );
+  --backdrop-filter-surface: none;
+}
+
+.dark {
+  --color-surface: var(--color-bg-900);
+  --color-surface-hover: color-mix(
+    in srgb,
+    var(--color-bg-800) 70%,
+    transparent
+  );
+  --color-surface-lighter: color-mix(
+    in srgb,
+    var(--color-bg-800) 50%,
+    transparent
+  );
+  --color-surface-lighter-hover: var(--color-bg-800);
+}
+
+.has-bg-image {
+  --color-surface: color-mix(in srgb, var(--color-bg-50) 50%, transparent);
+  --color-surface-hover: color-mix(
+    in srgb,
+    var(--color-bg-100) 50%,
+    transparent
+  );
+  --color-surface-lighter: var(--color-bg-100);
+  --color-surface-lighter-hover: color-mix(
+    in srgb,
+    var(--color-bg-200) 50%,
+    transparent
+  );
+  --backdrop-filter-surface: blur(4px);
+}
+
+.dark .has-bg-image {
+  --color-surface: color-mix(in srgb, var(--color-bg-900) 50%, transparent);
+  --color-surface-hover: color-mix(
+    in srgb,
+    var(--color-bg-800) 50%,
+    transparent
+  );
+  --color-surface-lighter: color-mix(
+    in srgb,
+    var(--color-bg-800) 70%,
+    transparent
+  );
+  --color-surface-lighter-hover: color-mix(
+    in srgb,
+    var(--color-bg-700) 50%,
+    transparent
+  );
+}

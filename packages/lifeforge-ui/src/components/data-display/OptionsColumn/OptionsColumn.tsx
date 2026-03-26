@@ -23,8 +23,6 @@ interface OptionsColumnProps {
   children: React.ReactNode
   /** The breakpoint at which the layout should wrap. Only applies when orientation is 'horizontal' */
   breakpoint?: 'sm' | 'md' | 'lg' | 'xl' | false
-  /** Additional CSS classes to apply to the configuration column */
-  className?: string
 }
 
 /**
@@ -37,8 +35,7 @@ function OptionsColumn({
   orientation = 'horizontal',
   tooltip,
   children,
-  breakpoint = 'md',
-  className
+  breakpoint = 'md'
 }: OptionsColumnProps) {
   const getDirection = (): ResponsiveProp<DirectionValue> => {
     if (orientation === 'vertical') return 'column'
@@ -62,7 +59,7 @@ function OptionsColumn({
   }
 
   return (
-    <Card className={className}>
+    <Card asChild>
       <Flex direction={getDirection()} gap="xl" justify="between">
         <Flex align="center" flexShrink="1" gap="md">
           <Icon

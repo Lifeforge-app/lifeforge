@@ -7,15 +7,21 @@ import {
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
-import type { SpaceToken } from '../../../system'
-import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles, resolveCommonSprinkleProps } from '../propDefs'
 import {
+  type ColorToken,
   type FlexDisplayValue,
   type LayoutProps,
-  type MarginProps
-} from '../types'
+  type MarginProps,
+  type RadiusToken,
+  type ResponsiveProp,
+  type SpaceToken,
+  type ThemeConditionProp,
+  getResponsiveLayoutStyles,
+  normalizeResponsiveProp,
+  resolveCommonSprinkleProps
+} from '@/system'
+
+import { Slot } from '../Slot'
 import { type FlexSprinkles, flexBase, flexSprinkles } from './flex.css'
 
 type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
@@ -41,6 +47,8 @@ interface FlexOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   align?: ResponsiveProp<AlignValue>
   justify?: ResponsiveProp<JustifyValue>
   wrap?: ResponsiveProp<WrapValue>
+  bg?: ThemeConditionProp<ColorToken>
+  rounded?: ResponsiveProp<RadiusToken>
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -78,6 +86,8 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
   align,
   justify,
   wrap,
+  bg,
+  rounded,
   // Layout props (CSS string - responsive)
   width,
   minWidth,
@@ -127,6 +137,10 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
 }: FlexProps<T>) {
   const sprinklesClassName = flexSprinkles({
     display: normalizeResponsiveProp(display) as FlexSprinkles['display'],
+    backgroundColor: bg as FlexSprinkles['backgroundColor'],
+    borderRadius: normalizeResponsiveProp(
+      rounded
+    ) as FlexSprinkles['borderRadius'],
     flexDirection: normalizeResponsiveProp(
       direction
     ) as FlexSprinkles['flexDirection'],
@@ -142,7 +156,26 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
       v => justifyMap[v]
     ) as FlexSprinkles['justifyContent'],
     flexWrap: normalizeResponsiveProp(wrap) as FlexSprinkles['flexWrap'],
-    ...resolveCommonSprinkleProps({ p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, position, overflow, overflowX, overflowY })
+    ...resolveCommonSprinkleProps({
+      p,
+      px,
+      py,
+      pt,
+      pr,
+      pb,
+      pl,
+      m,
+      mx,
+      my,
+      mt,
+      mr,
+      mb,
+      ml,
+      position,
+      overflow,
+      overflowX,
+      overflowY
+    })
   })
 
   // Build responsive styles for CSS string props

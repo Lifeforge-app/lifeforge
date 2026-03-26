@@ -7,11 +7,20 @@ import {
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
-import type { SpaceToken } from '../../../system'
+import {
+  type ColorToken,
+  type LayoutProps,
+  type MarginProps,
+  type RadiusToken,
+  type ResponsiveProp,
+  type SpaceToken,
+  type ThemeConditionProp,
+  getResponsiveLayoutStyles,
+  normalizeResponsiveProp,
+  resolveCommonSprinkleProps
+} from '@/system'
+
 import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles, resolveCommonSprinkleProps } from '../propDefs'
-import { type LayoutProps, type MarginProps } from '../types'
 import { type GridSprinkles, gridBase, gridSprinkles } from './grid.css'
 
 type AlignValue = 'stretch' | 'center' | 'start' | 'end' | 'baseline'
@@ -38,6 +47,8 @@ interface GridOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   gap?: ResponsiveProp<SpaceToken>
   gapX?: ResponsiveProp<SpaceToken>
   gapY?: ResponsiveProp<SpaceToken>
+  bg?: ThemeConditionProp<ColorToken>
+  rounded?: ResponsiveProp<RadiusToken>
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -64,6 +75,8 @@ export function Grid<T extends ElementType = typeof DEFAULT_ELEMENT>({
   gap,
   gapX,
   gapY,
+  bg,
+  rounded,
   align,
   justify,
   // Layout props (CSS string - responsive)
@@ -115,6 +128,10 @@ export function Grid<T extends ElementType = typeof DEFAULT_ELEMENT>({
 }: GridProps<T>) {
   const sprinklesClassName = gridSprinkles({
     display: normalizeResponsiveProp(display) as GridSprinkles['display'],
+    backgroundColor: bg as GridSprinkles['backgroundColor'],
+    borderRadius: normalizeResponsiveProp(
+      rounded
+    ) as GridSprinkles['borderRadius'],
     gap: normalizeResponsiveProp(gap) as GridSprinkles['gap'],
     rowGap: normalizeResponsiveProp(gapY) as GridSprinkles['rowGap'],
     columnGap: normalizeResponsiveProp(gapX) as GridSprinkles['columnGap'],
@@ -123,8 +140,29 @@ export function Grid<T extends ElementType = typeof DEFAULT_ELEMENT>({
       justify,
       v => justifyMap[v]
     ) as GridSprinkles['justifyContent'],
-    gridAutoFlow: normalizeResponsiveProp(flow) as GridSprinkles['gridAutoFlow'],
-    ...resolveCommonSprinkleProps({ p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, position, overflow, overflowX, overflowY })
+    gridAutoFlow: normalizeResponsiveProp(
+      flow
+    ) as GridSprinkles['gridAutoFlow'],
+    ...resolveCommonSprinkleProps({
+      p,
+      px,
+      py,
+      pt,
+      pr,
+      pb,
+      pl,
+      m,
+      mx,
+      my,
+      mt,
+      mr,
+      mb,
+      ml,
+      position,
+      overflow,
+      overflowX,
+      overflowY
+    })
   })
 
   // Build responsive styles for CSS string props

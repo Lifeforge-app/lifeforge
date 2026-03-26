@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Button } from '@components/inputs'
+import { Box, Flex, Grid, Text } from '@components/primitives'
 
 import Card from './Card'
 
@@ -30,175 +31,165 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-/**
- * A simple card with default styling.
- */
 export const Default: Story = {
   args: {
-    children: <div className="p-4">This is a card</div>
+    children: <Box p="md">This is a card</Box>
   },
   render: args => (
-    <div className="w-96 p-8">
+    <Box p="xl" width="24rem">
       <Card {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * An interactive card with hover effects.
- */
 export const Interactive: Story = {
   args: {
     isInteractive: true,
-    children: <div className="p-4">Click or hover me!</div>
+    children: <Box p="md">Click or hover me!</Box>
   },
   render: args => (
-    <div className="w-96 p-8">
+    <Box p="xl" width="24rem">
       <Card {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * An card rendered as a button.
- */
 export const AsButton: Story = {
   args: {
     as: 'button',
     isInteractive: true,
-    children: <div className="p-4">I&apos;m a button card</div>,
+    children: <Box p="md">I&apos;m a button card</Box>,
     onClick: () => alert('Button clicked!')
   },
   render: args => (
-    <div className="w-96 p-8">
+    <Box p="xl" width="24rem">
       <Card {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * An card rendered as a link.
- */
 export const AsLink: Story = {
   args: {
     as: 'a',
     isInteractive: true,
     href: 'https://docs.lifeforge.dev',
-    target: '_blank',
+    children: <Box p="md">I&apos;m a link card</Box>,
     rel: 'noopener noreferrer',
-    children: <div className="p-4">I&apos;m a link card</div>
+    target: '_blank'
   },
   render: args => (
-    <div className="w-96 p-8">
+    <Box p="xl" width="24rem">
       <Card {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * Multiple cards in a grid.
- */
 export const MultipleItems: Story = {
   args: {
     children: <></>
   },
   render: () => (
-    <div className="grid grid-cols-2 gap-4 p-8">
+    <Grid columns="repeat(2, minmax(0, 1fr))" gap="md" p="xl">
       <Card>
-        <div className="p-4">Item 1</div>
+        <Box p="md">Item 1</Box>
       </Card>
       <Card isInteractive>
-        <div className="p-4">Item 2 (Interactive)</div>
+        <Box p="md">Item 2 (Interactive)</Box>
       </Card>
       <Card>
-        <div className="p-4">Item 3</div>
+        <Box p="md">Item 3</Box>
       </Card>
       <Card isInteractive>
-        <div className="p-4">Item 4 (Interactive)</div>
+        <Box p="md">Item 4 (Interactive)</Box>
       </Card>
-    </div>
+    </Grid>
   )
 }
 
-/**
- * A card with a title and description.
- */
 export const WithTitle: Story = {
   args: {
     children: <></>
   },
   render: () => (
-    <div className="w-80 p-8">
+    <Box p="xl" style={{ width: '20rem' }}>
       <Card>
-        <div className="p-4">
-          <h2 className="mb-2 text-xl font-semibold">Card Title</h2>
-          <p className="text-bg-500">
+        <Box p="md">
+          <Text as="h2" mb="sm" size="xl" weight="semibold">
+            Card Title
+          </Text>
+          <Text as="p" color="bg-500">
             This is an example of an card styled as a card with shadow.
-          </p>
-        </div>
+          </Text>
+        </Box>
       </Card>
-    </div>
+    </Box>
   )
 }
 
-/**
- * A card with an image at the top.
- */
 export const WithImage: Story = {
   args: {
     children: <></>
   },
   render: () => (
-    <div className="flex-center w-[60vw] p-8">
-      <Card className="w-96 p-0!">
+    <Flex align="center" justify="center" p="xl" style={{ width: '60vw' }}>
+      <Card style={{ padding: 0, width: '24rem' }}>
         <img
           alt="Card Image"
-          className="aspect-video w-full rounded-t-lg object-cover"
           src="https://placehold.co/1600x900/png"
+          style={{
+            aspectRatio: '16 / 9',
+            borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0',
+            objectFit: 'cover',
+            width: '100%'
+          }}
         />
-        <div className="p-4">
-          <h2 className="mb-2 text-xl font-semibold">Card with Image</h2>
-          <p className="text-bg-500">
+        <Box p="md">
+          <Text as="h2" mb="sm" size="xl" weight="semibold">
+            Card with Image
+          </Text>
+          <Text as="p" color="bg-500">
             This card includes an image at the top to enhance visual appeal.
-          </p>
-        </div>
+          </Text>
+        </Box>
       </Card>
-    </div>
+    </Flex>
   )
 }
 
-/**
- * A card with an image and a button.
- */
 export const WithImageAndButton: Story = {
   args: {
     children: <></>
   },
   render: () => (
-    <div className="flex-center w-[60vw] p-8">
-      <Card className="w-96 p-0!">
+    <Flex align="center" justify="center" p="xl" style={{ width: '60vw' }}>
+      <Card style={{ padding: 0, width: '24rem' }}>
         <img
           alt="Card Image"
-          className="aspect-video w-full rounded-t-lg object-cover"
           src="https://placehold.co/1600x900/png"
+          style={{
+            aspectRatio: '16 / 9',
+            borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0',
+            objectFit: 'cover',
+            width: '100%'
+          }}
         />
-        <div className="p-4">
-          <h2 className="mb-2 text-xl font-semibold">
-            Card with Image & Button
-          </h2>
-          <p className="text-bg-500 mb-4">
+        <Box p="md">
+          <Text as="h2" mb="sm" size="xl" weight="semibold">
+            Card with Image &amp; Button
+          </Text>
+          <Text as="p" color="bg-500" mb="md">
             This card includes an image and a call-to-action button.
-          </p>
+          </Text>
           <Button
-            className="w-full"
             icon="tabler:arrow-right"
             iconPosition="end"
+            style={{ width: '100%' }}
             variant="secondary"
           >
             Learn More
           </Button>
-        </div>
+        </Box>
       </Card>
-    </div>
+    </Flex>
   )
 }

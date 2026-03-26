@@ -18,9 +18,7 @@ export {
   type SectionProps,
   Container,
   type ContainerProps,
-  Slot,
-  type LayoutProps,
-  type MarginProps
+  Slot
 } from './components/primitives'
 
 export * from './components/auth'
@@ -45,6 +43,7 @@ export * from './components/utilities'
 export {
   bg,
   custom,
+  withOpacity,
   type BgColorSlot,
   type CustomColorSlot
-} from './styles/vanilla-extract'
+} from './system'

@@ -1,7 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { bg } from '@/styles/vanilla-extract'
-import { withOpacity } from '@/styles/vanilla-extract/utils'
+import { bg, withOpacity } from '@/system'
 
 // interactive hover/cursor style used by TagChip
 export const interactiveClass = style({

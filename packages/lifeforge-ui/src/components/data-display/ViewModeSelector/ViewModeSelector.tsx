@@ -16,8 +16,6 @@ export interface ViewModeSelectorProps<
   onModeChange: (value: TKey) => void
   /** An array of objects representing the available view modes */
   options: T
-  /** Additional class name for the container */
-  className?: string
 }
 
 /**
@@ -30,13 +28,12 @@ function ViewModeSelector<
   currentMode,
   size = 'default',
   onModeChange,
-  options,
-  className
+  options
 }: ViewModeSelectorProps<T, TKey>) {
   return (
     <Flex
       align="center"
-      className={clsx(styles.container, styles.containerSize[size], className)}
+      className={clsx(styles.container, styles.containerSize[size])}
       gap="sm"
     >
       {options.map(({ value, icon, text }) => (

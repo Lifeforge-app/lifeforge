@@ -1,7 +1,12 @@
-import type { Breakpoint, ResponsiveProp, SpaceToken } from '../../system'
-import { normalizeResponsiveProp } from '../../system'
-import type { CommonSprinkles } from './styles/common.css'
-import type { OverflowValue, PositionValue } from './types'
+import type { CommonSprinkles } from '../components/primitives/styles/common.css'
+import type { Breakpoint, ResponsiveProp } from './responsive'
+import { normalizeResponsiveProp } from './responsive'
+import type {
+  MarginProps,
+  OverflowProps,
+  PaddingProps,
+  PositionValue
+} from './types'
 
 // ============================================================================
 // Prop Definition Types
@@ -236,25 +241,9 @@ export function getResponsiveLayoutStyles(
 // Common Sprinkle Props Resolver
 // ============================================================================
 
-export interface CommonSprinkleInput {
-  p?: ResponsiveProp<SpaceToken>
-  px?: ResponsiveProp<SpaceToken>
-  py?: ResponsiveProp<SpaceToken>
-  pt?: ResponsiveProp<SpaceToken>
-  pr?: ResponsiveProp<SpaceToken>
-  pb?: ResponsiveProp<SpaceToken>
-  pl?: ResponsiveProp<SpaceToken>
-  m?: ResponsiveProp<SpaceToken>
-  mx?: ResponsiveProp<SpaceToken>
-  my?: ResponsiveProp<SpaceToken>
-  mt?: ResponsiveProp<SpaceToken>
-  mr?: ResponsiveProp<SpaceToken>
-  mb?: ResponsiveProp<SpaceToken>
-  ml?: ResponsiveProp<SpaceToken>
+export interface CommonSprinkleInput
+  extends PaddingProps, MarginProps, OverflowProps {
   position?: ResponsiveProp<PositionValue>
-  overflow?: ResponsiveProp<OverflowValue>
-  overflowX?: ResponsiveProp<OverflowValue>
-  overflowY?: ResponsiveProp<OverflowValue>
 }
 
 /**

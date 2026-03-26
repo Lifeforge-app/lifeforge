@@ -1,15 +1,11 @@
 import { style } from '@vanilla-extract/css'
 
-import { bg } from '@/styles/vanilla-extract'
-import { withOpacity } from '@/styles/vanilla-extract/utils'
-
-import { vars } from '../../../system'
+import { bg, vars, withOpacity } from '@/system'
 
 // ── Outer wrapper ────────────────────────────────────────────────────────────
 
 export const wrapper = style({
   boxShadow: 'var(--custom-shadow)',
-  backgroundColor: bg[50],
   borderColor: withOpacity(bg[500], 0.2),
   borderRadius: vars.radii.lg,
   selectors: {
@@ -25,31 +21,11 @@ export const wrapper = style({
 
 // ── Default variant icon wrapper ──────────────────────────────────────────────
 
-export const defaultIconWrapper = style({
-  borderRadius: vars.radii.md
-})
-
-export const defaultIconWrapperWithDesc = style({
-  width: '2.75rem',
-  height: '2.75rem'
-})
-
-export const defaultIconWrapperNoDesc = style({
-  width: '2.25rem',
-  height: '2.25rem'
-})
-
 export const defaultIconWrapperNoColor = style({
   backgroundColor: withOpacity(bg[500], 0.1)
 })
 
 // ── Default variant icon ──────────────────────────────────────────────────────
-
-export const defaultIcon = style({
-  width: '1.25rem',
-  height: '1.25rem',
-  flexShrink: 0
-})
 
 export const defaultIconNoColor = style({
   color: bg[500],
