@@ -3,6 +3,8 @@ import clsx from 'clsx'
 import { formatHex, parse } from 'culori'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
+import { Flex, Text, Box } from '@components/primitives'
+import { interactiveClass, noColorOutlined, noColorFilled } from './TagChip.css'
 
 interface TagChipProps {
   /** The text label displayed on the tag chip. */
@@ -26,11 +28,8 @@ interface TagChipProps {
   iconClassName?: string
 }
 
-const CLASSNAMES_WITHOUT_COLOR = {
-  outlined:
-    'text-bg-500 dark:text-bg-400 border-bg-200 dark:border-bg-700/50 component-bg-lighter bg-bg-50',
-  filled: 'bg-bg-200 dark:bg-bg-800 dark:text-bg-500 border-transparent'
-}
+// fallback classes have been replaced by vanilla-extract styles
+
 
 /**
  * A tag chip component that displays a label with an optional icon and customizable color.
@@ -51,66 +50,89 @@ function TagChip({
     ? formatHex(parse(color))
     : color
 
+  const computedStyle: React.CSSProperties =
+    convertedColor !== undefined
+      ? variant === 'outlined'
+        ? {
+          borderColor: tinycolor(convertedColor)
+            .setAlpha(0.25)
+            .toString(),
+          backgroundColor: tinycolor(convertedColor)
+            .setAlpha(0.125)
+            .toString(),
+          color
+        }
+        : {
+          backgroundColor: convertedColor,
+          color: tinycolor(convertedColor).isLight()
+            ? bgTempPalette[800]
+            : bgTempPalette[100],
+          border: 'none'
+        }
+      : {}
+
   return (
-    <span
+    <Box
+      as="span"
       className={clsx(
-        'flex-center shrink-0 gap-1 rounded-full border px-3 py-1 text-sm whitespace-nowrap!',
-        color === undefined && CLASSNAMES_WITHOUT_COLOR[variant],
-        onClick !== undefined &&
-          'cursor-pointer transition-all hover:brightness-120',
+        color === undefined && (variant === 'outlined' ? noColorOutlined : noColorFilled),
+        onClick && interactiveClass,
         className
       )}
-      style={
-        convertedColor !== undefined
-          ? variant === 'outlined'
-            ? {
-                borderColor: tinycolor(convertedColor)
-                  .setAlpha(0.25)
-                  .toString(),
-                backgroundColor: tinycolor(convertedColor)
-                  .setAlpha(0.125)
-                  .toString(),
-                color
-              }
-            : {
-                backgroundColor: convertedColor,
-                color: tinycolor(convertedColor).isLight()
-                  ? bgTempPalette[800]
-                  : bgTempPalette[100],
-                border: 'none'
-              }
-          : {}
-      }
+      px="sm"
+      py="xs"
+      rounded="full"
+      style={computedStyle}
       onClick={onClick}
     >
-      {(() => {
-        if (!icon) return null
+      <Flex align="center" flexShrink="0" gap="sm">
+        {(() => {
+          if (!icon) return null
 
-        if (icon.startsWith('customHTML:')) {
-          if (icon.replace(/^customHTML:/, '') === '') return null
+          if (icon.startsWith('customHTML:')) {
+            if (icon.replace(/^customHTML:/, '') === '') return null
 
-          return (
-            <span
-              className={clsx('size-4', iconClassName)}
-              dangerouslySetInnerHTML={{
-                __html: icon.replace(/^customHTML:/, '')
-              }}
-            />
-          )
-        } else {
-          return <Icon className={clsx('size-4', iconClassName)} icon={icon} />
-        }
-      })()}
-      {label}
-      {actionButtonProps && (
-        <>
-          <span className="w-1" />
-          <button onClick={actionButtonProps.onClick}>
-            <Icon className="size-4" icon={actionButtonProps.icon} />
-          </button>
-        </>
-      )}
-    </span>
+            return (
+              <Flex as="span" className={iconClassName} height="md" width="md">
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: icon.replace(/^customHTML:/, '')
+                  }}
+                />
+              </Flex>
+            )
+          } else {
+            return (
+              <Icon
+                className={iconClassName}
+                height="1em"
+                icon={icon}
+                width="1em"
+              />
+            )
+          }
+        })()}
+        {typeof label === 'string' ? (
+          <Text truncate size="sm">
+            {label}
+          </Text>
+        ) : (
+          label
+        )}
+        {actionButtonProps && (
+          <>
+            <Box as="span" width="xs" />
+            <button onClick={actionButtonProps.onClick}>
+              <Icon
+                height="1em"
+                icon={actionButtonProps.icon}
+                width="1em"
+              />
+            </button>
+          </>
+        )}
+      </Flex>
+    </Box>
   )
 }
 

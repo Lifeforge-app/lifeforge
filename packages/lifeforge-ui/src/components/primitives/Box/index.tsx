@@ -9,7 +9,7 @@ import {
 
 import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
 import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles } from '../propDefs'
+import { getResponsiveLayoutStyles, resolveCommonSprinkleProps } from '../propDefs'
 import { type LayoutProps, type MarginProps } from '../types'
 import { type BoxSprinkles, boxBase, boxSprinkles } from './box.css'
 
@@ -118,36 +118,9 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
   // Build sprinkles className for tokenized props
   const sprinklesClassName = boxSprinkles({
     display: normalizeResponsiveProp(display) as BoxSprinkles['display'],
-    position: normalizeResponsiveProp(position) as BoxSprinkles['position'],
-    overflow: normalizeResponsiveProp(
-      overflow ?? overflowX ?? overflowY
-    ) as BoxSprinkles['overflow'],
-    padding: normalizeResponsiveProp(p) as BoxSprinkles['padding'],
-    paddingTop: normalizeResponsiveProp(pt ?? py) as BoxSprinkles['paddingTop'],
-    paddingBottom: normalizeResponsiveProp(
-      pb ?? py
-    ) as BoxSprinkles['paddingBottom'],
-    paddingLeft: normalizeResponsiveProp(
-      pl ?? px
-    ) as BoxSprinkles['paddingLeft'],
-    paddingRight: normalizeResponsiveProp(
-      pr ?? px
-    ) as BoxSprinkles['paddingRight'],
-    margin: normalizeResponsiveProp(m) as BoxSprinkles['margin'],
-    marginTop: normalizeResponsiveProp(mt ?? my) as BoxSprinkles['marginTop'],
-    marginBottom: normalizeResponsiveProp(
-      mb ?? my
-    ) as BoxSprinkles['marginBottom'],
-    marginLeft: normalizeResponsiveProp(ml ?? mx) as BoxSprinkles['marginLeft'],
-    marginRight: normalizeResponsiveProp(
-      mr ?? mx
-    ) as BoxSprinkles['marginRight'],
-    backgroundColor: normalizeResponsiveProp(
-      bg
-    ) as BoxSprinkles['backgroundColor'],
-    borderRadius: normalizeResponsiveProp(
-      rounded
-    ) as BoxSprinkles['borderRadius']
+    backgroundColor: normalizeResponsiveProp(bg) as BoxSprinkles['backgroundColor'],
+    borderRadius: normalizeResponsiveProp(rounded) as BoxSprinkles['borderRadius'],
+    ...resolveCommonSprinkleProps({ p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, position, overflow, overflowX, overflowY })
   })
 
   // Build responsive styles for CSS string props (now with breakpoint support!)

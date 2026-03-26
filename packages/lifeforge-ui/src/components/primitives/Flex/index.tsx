@@ -10,7 +10,7 @@ import {
 import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
 import type { SpaceToken } from '../../../system'
 import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles } from '../propDefs'
+import { getResponsiveLayoutStyles, resolveCommonSprinkleProps } from '../propDefs'
 import {
   type FlexDisplayValue,
   type LayoutProps,
@@ -20,7 +20,7 @@ import { type FlexSprinkles, flexBase, flexSprinkles } from './flex.css'
 
 type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
 
-type AlignValue = 'stretch' | 'center' | 'start' | 'end'
+type AlignValue = 'stretch' | 'center' | 'start' | 'end' | 'baseline'
 
 type JustifyValue = 'start' | 'center' | 'between' | 'around' | 'evenly' | 'end'
 
@@ -53,7 +53,8 @@ const alignMap: Record<AlignValue, FlexSprinkles['alignItems']> = {
   stretch: 'stretch',
   center: 'center',
   start: 'flex-start',
-  end: 'flex-end'
+  end: 'flex-end',
+  baseline: 'baseline'
 }
 
 const justifyMap: Record<JustifyValue, FlexSprinkles['justifyContent']> = {
@@ -140,7 +141,8 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
       justify,
       v => justifyMap[v]
     ) as FlexSprinkles['justifyContent'],
-    flexWrap: normalizeResponsiveProp(wrap) as FlexSprinkles['flexWrap']
+    flexWrap: normalizeResponsiveProp(wrap) as FlexSprinkles['flexWrap'],
+    ...resolveCommonSprinkleProps({ p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, position, overflow, overflowX, overflowY })
   })
 
   // Build responsive styles for CSS string props
