@@ -6,7 +6,7 @@ import { type WidgetConfig } from 'shared'
 function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   const [time, setTime] = useState(dayjs().format('HH:mm'))
 
-  const [second, setSecond] = useState(dayjs().format('ss') as any)
+  const [second, setSecond] = useState(dayjs().format('ss'))
 
   useEffect(() => {
     const interval = setInterval(() => {

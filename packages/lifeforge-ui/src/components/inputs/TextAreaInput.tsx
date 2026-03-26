@@ -6,6 +6,7 @@ import InputLabel from './shared/components/InputLabel'
 import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
 import { autoFocusableRef } from './shared/utils/autoFocusableRef'
+import { textareaRecipe } from './textarea.css'
 
 export interface TextAreaInputProps {
   /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
@@ -85,12 +86,7 @@ function TextAreaInput({
         )}
         <textarea
           ref={autoFocusableRef(autoFocus, ref)}
-          className={clsx(
-            'focus:placeholder:text-bg-400 dark:focus:placeholder:text-bg-600 max-h-128 min-h-8 w-full resize-none rounded-lg bg-transparent tracking-wide outline-hidden focus:outline-hidden',
-            variant === 'classic'
-              ? 'mt-9 px-6 pb-3 pl-4 placeholder:text-transparent'
-              : 'p-0'
-          )}
+          className={clsx(textareaRecipe({ variant }))}
           placeholder={placeholder}
           value={value}
           onInput={e => {
