@@ -108,7 +108,7 @@ function UserPersonalizationProvider({
 
     setTheme(userData.theme)
 
-    if (userData?.color !== '') {
+    if (userData?.color) {
       setRawThemeColor(
         userData.color.startsWith('#')
           ? userData.color
@@ -116,7 +116,7 @@ function UserPersonalizationProvider({
       )
     }
 
-    if (userData?.bgTemp !== '') {
+    if (userData?.bgTemp) {
       setBgTemp(
         userData.bgTemp.startsWith('#')
           ? userData.bgTemp

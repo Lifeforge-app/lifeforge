@@ -21,6 +21,27 @@ export const currentSession = {
   otpId: ''
 }
 
+// Per-user 2FA state management (replaces global mutable state)
+interface TwoFAState {
+  canDisable?: boolean
+  expiresAt?: string
+  tempCode?: string
+  tempCodeExpiresAt?: string
+  challenge?: string
+  challengeExpiresAt?: string
+}
+
+export const twoFAStates = new Map<string, TwoFAState>()
+
+// OAuth state management (replaces global codeVerifier)
+interface OAuthState {
+  codeVerifier: string
+  provider: string
+  expiresAt: string
+}
+
+export const oauthStates = new Map<string, OAuthState>()
+
 export default forgeRouter({
   exists: forge
     .query()

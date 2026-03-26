@@ -1,4 +1,5 @@
 import { ClientError } from '@lifeforge/server-utils'
+import { createLogger } from '@lifeforge/log'
 import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
@@ -13,6 +14,8 @@ import {
 import { currentSession } from '..'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 import forge from '../forge'
+
+const logger = createLogger({ name: 'auth' })
 
 export const validateOTP = forge
   .mutation()
@@ -51,15 +54,23 @@ export const login = forge
     })
   })
   .callback(async ({ body: { email, password } }) => {
-    const pb = new PocketBase(process.env.PB_HOST)
+    const pbHost = process.env.PB_HOST
+    if (!pbHost) {
+      throw new ClientError('Server configuration error', 500)
+    }
+
+    const pb = new PocketBase(pbHost)
 
     let failed = false
+    let authError: Error | null = null
 
     await pb
       .collection('users')
       .authWithPassword(email, password)
-      .catch(() => {
+      .catch((error) => {
         failed = true
+        authError = error instanceof Error ? error : new Error(String(error))
+        logger.warn('Authentication failed', { email, error: authError.message })
       })
 
     if (pb.authStore.isValid && !failed) {
@@ -111,7 +122,11 @@ export const verifySessionToken = forge
     await pb
       .collection('users')
       .authRefresh()
-      .catch(() => {})
+      .catch((error) => {
+        logger.warn('Session refresh failed', {
+          error: error instanceof Error ? error.message : String(error)
+        })
+      })
 
     if (!pb.authStore.isValid) {
       throw new ClientError('Invalid session', 401)

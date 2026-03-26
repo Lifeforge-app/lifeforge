@@ -3,10 +3,12 @@ import dayjs from 'dayjs'
 import { v4 } from 'uuid'
 import z from 'zod'
 
-import { currentSession } from '..'
+import { createLogger } from '@lifeforge/log'
+
+import { currentSession, oauthStates } from '..'
 import forge from '../forge'
 
-let currentCodeVerifier: string | null = null
+const logger = createLogger({ name: 'oauth' })
 
 export const listProviders = forge
   .query()
@@ -43,9 +45,21 @@ export const getEndpoint = forge
       throw new ClientError('Invalid provider')
     }
 
-    currentCodeVerifier = endpoint.codeVerifier
+    // Generate a state token to track this OAuth flow
+    const stateToken = v4()
 
-    return endpoint
+    // Store codeVerifier per-state instead of globally
+    oauthStates.set(stateToken, {
+      codeVerifier: endpoint.codeVerifier,
+      provider: endpoint.name,
+      expiresAt: dayjs().add(10, 'minutes').toISOString()
+    })
+
+    // Return state token to client for use in verify step
+    return {
+      ...endpoint,
+      state: stateToken
+    }
   })
 
 export const verify = forge
@@ -55,17 +69,33 @@ export const verify = forge
   .input({
     body: z.object({
       provider: z.string(),
-      code: z.string()
+      code: z.string(),
+      state: z.string() // State token from getEndpoint
     })
   })
-  .callback(async ({ req, pb, body: { provider: providerName, code } }) => {
+  .callback(async ({ req, pb, body: { provider: providerName, code, state } }) => {
+    const oauthState = oauthStates.get(state)
+
+    if (!oauthState) {
+      throw new ClientError('Invalid or expired OAuth session', 400)
+    }
+
+    if (dayjs().isAfter(dayjs(oauthState.expiresAt))) {
+      oauthStates.delete(state)
+      throw new ClientError('OAuth session expired. Please start over.', 400)
+    }
+
+    if (oauthState.provider !== providerName) {
+      throw new ClientError('Provider mismatch', 400)
+    }
+
     const providers = await pb.instance.collection('users').listAuthMethods()
 
     const provider = providers.oauth2.providers.find(
       item => item.name === providerName
     )
 
-    if (!provider || !currentCodeVerifier) {
+    if (!provider) {
       throw new ClientError('Invalid login attempt')
     }
 
@@ -75,12 +105,15 @@ export const verify = forge
         .authWithOAuth2Code(
           provider.name,
           code,
-          currentCodeVerifier,
+          oauthState.codeVerifier,
           `${req.headers.origin}/auth`,
           {
             emailVisibility: false
           }
         )
+
+      // Clean up OAuth state after successful authentication
+      oauthStates.delete(state)
 
       if (authData) {
         if (pb.instance.authStore.record?.twoFASecret) {
@@ -99,9 +132,10 @@ export const verify = forge
         throw new ClientError('Invalid credentials', 401)
       }
     } catch (err) {
-      console.error(err)
+      logger.error('OAuth verification failed', {
+        error: err instanceof Error ? err.message : String(err),
+        provider: providerName
+      })
       throw new ClientError('Invalid credentials', 401)
-    } finally {
-      currentCodeVerifier = null
     }
   })
