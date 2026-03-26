@@ -1,9 +1,8 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { responsiveConditions, vars } from '@/system'
-
-import { commonProperties, themeColorProperties } from '../styles/common.css'
+import { commonProperties, responsiveConditions, vars } from '@/system'
+import { themeColorProperties } from '@/system'
 
 export const flexBase = recipe({
   base: {

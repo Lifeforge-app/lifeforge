@@ -1,20 +1,19 @@
 import { globalStyle } from '@vanilla-extract/css'
 
 // ============================================================================
-// Responsive Layout Styles
+// CSS Custom-Property Layout Classes
 // ============================================================================
-// This generates static CSS that applies CSS custom properties at each breakpoint.
-// The component sets the custom property value, the class applies it.
+// This file generates static CSS classes that read their value from a CSS
+// custom property at runtime, enabling responsive layout props in primitives.
 //
-// Example:
-// <Box width={{ base: "100px", md: "200px" }} />
-// Generates: className="lf-w md:lf-w" style="--lf-w: 100px; --lf-w-md: 200px"
+// Pattern:
+//   Component sets:  style="--lf-w: 100px; --lf-w-md: 200px"
+//   Component adds:  className="lf-w md:lf-w"
+//   CSS here wires:  .lf-w { width: var(--lf-w) }
+//                    @media (min-width: 768px) { .md\:lf-w { width: var(--lf-w-md) } }
 //
-// CSS here applies:
-// .lf-w { width: var(--lf-w); }
-// @media (min-width: 768px) { .md\:lf-w { width: var(--lf-w-md); } }
+// This file has no exports — it is imported for its side effects only.
 
-// Define all responsive layout props
 const responsiveProps = [
   { className: 'lf-w', property: 'width', customProp: '--lf-w' },
   { className: 'lf-min-w', property: 'minWidth', customProp: '--lf-min-w' },
