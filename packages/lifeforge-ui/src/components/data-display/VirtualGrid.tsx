@@ -6,6 +6,8 @@ import {
   List
 } from 'react-virtualized'
 
+import { Box } from '@components/primitives'
+
 export interface VirtualGridProps<T> {
   /** The array of items to render in the grid */
   items: T[]
@@ -81,7 +83,8 @@ function VirtualGrid<T>({
                   parent={parent}
                   rowIndex={index}
                 >
-                  <div
+                  <Box
+                    as="div"
                     className={rowClassName}
                     style={{
                       ...style,
@@ -93,15 +96,16 @@ function VirtualGrid<T>({
                     }}
                   >
                     {items.slice(fromIndex, toIndex).map(item => (
-                      <div
+                      <Box
                         key={getItemKey(item)}
-                        className="w-full min-w-0"
-                        style={{ flex: 1 }}
+                        as="div"
+                        minWidth="0"
+                        width="100%"
                       >
                         {renderItem(item)}
-                      </div>
+                      </Box>
                     ))}
-                  </div>
+                  </Box>
                 </CellMeasurer>
               )
             }}

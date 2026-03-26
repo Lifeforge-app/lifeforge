@@ -1,5 +1,35 @@
 import { createGlobalTheme } from '@vanilla-extract/css'
 
+// Colors are kept as a plain object (NOT inside createGlobalTheme) so that
+// vanilla-extract does not generate intermediate hash variables for them.
+// Sprinkles built from this object will emit e.g. `color: var(--color-bg-500)`
+// directly, which resolves lazily at the element scope and correctly inherits
+// the value set by the theme body class (e.g. `.bg-zinc`).
+export const colors = {
+  transparent: 'transparent',
+  'bg-50': 'var(--color-bg-50)',
+  'bg-100': 'var(--color-bg-100)',
+  'bg-200': 'var(--color-bg-200)',
+  'bg-300': 'var(--color-bg-300)',
+  'bg-400': 'var(--color-bg-400)',
+  'bg-500': 'var(--color-bg-500)',
+  'bg-600': 'var(--color-bg-600)',
+  'bg-700': 'var(--color-bg-700)',
+  'bg-800': 'var(--color-bg-800)',
+  'bg-900': 'var(--color-bg-900)',
+  'bg-950': 'var(--color-bg-950)',
+  'custom-50': 'var(--color-custom-50)',
+  'custom-100': 'var(--color-custom-100)',
+  'custom-200': 'var(--color-custom-200)',
+  'custom-300': 'var(--color-custom-300)',
+  'custom-400': 'var(--color-custom-400)',
+  'custom-500': 'var(--color-custom-500)',
+  'custom-600': 'var(--color-custom-600)',
+  'custom-700': 'var(--color-custom-700)',
+  'custom-800': 'var(--color-custom-800)',
+  'custom-900': 'var(--color-custom-900)'
+} as const
+
 export const vars = createGlobalTheme(':root', {
   space: {
     none: '0',
@@ -20,30 +50,6 @@ export const vars = createGlobalTheme(':root', {
     '2xl': 'var(--radius-2xl)',
     '3xl': 'var(--radius-3xl)',
     full: '9999px'
-  },
-  colors: {
-    transparent: 'transparent',
-    'bg-50': 'var(--color-bg-50)',
-    'bg-100': 'var(--color-bg-100)',
-    'bg-200': 'var(--color-bg-200)',
-    'bg-300': 'var(--color-bg-300)',
-    'bg-400': 'var(--color-bg-400)',
-    'bg-500': 'var(--color-bg-500)',
-    'bg-600': 'var(--color-bg-600)',
-    'bg-700': 'var(--color-bg-700)',
-    'bg-800': 'var(--color-bg-800)',
-    'bg-900': 'var(--color-bg-900)',
-    'bg-950': 'var(--color-bg-950)',
-    'custom-50': 'var(--color-custom-50)',
-    'custom-100': 'var(--color-custom-100)',
-    'custom-200': 'var(--color-custom-200)',
-    'custom-300': 'var(--color-custom-300)',
-    'custom-400': 'var(--color-custom-400)',
-    'custom-500': 'var(--color-custom-500)',
-    'custom-600': 'var(--color-custom-600)',
-    'custom-700': 'var(--color-custom-700)',
-    'custom-800': 'var(--color-custom-800)',
-    'custom-900': 'var(--color-custom-900)'
   },
   fontSize: {
     sm: 'var(--text-sm)',
@@ -85,7 +91,7 @@ export type SpaceToken = keyof typeof vars.space
 
 export type RadiusToken = keyof typeof vars.radii
 
-export type ColorToken = keyof typeof vars.colors
+export type ColorToken = keyof typeof colors
 
 export type FontSizeToken = keyof typeof vars.fontSize
 

@@ -1,5 +1,5 @@
 // Data display components
-export { default as Widget } from './Widget'
+export { default as Widget } from './Widget/Widget'
 
 export { default as OptionsColumn } from './OptionsColumn'
 
