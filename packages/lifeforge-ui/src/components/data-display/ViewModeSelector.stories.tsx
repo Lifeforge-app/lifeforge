@@ -5,7 +5,7 @@ import { SearchInput } from '@components/inputs'
 import { Box, Flex } from '@components/primitives'
 
 import ViewModeSelector from './ViewModeSelector'
-import Widget from './Widget'
+import Widget from './Widget/Widget'
 
 const meta = {
   component: ViewModeSelector,

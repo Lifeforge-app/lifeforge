@@ -1,7 +1,12 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { defaultCondition, responsiveConditions, vars } from '../../../system'
+import {
+  colors,
+  defaultCondition,
+  responsiveConditions,
+  vars
+} from '../../../system'
 
 export const textBase = recipe({
   base: {}
@@ -15,7 +20,7 @@ const textProperties = defineProperties({
     lineHeight: vars.lineHeight,
     fontWeight: vars.fontWeight,
     color: {
-      ...vars.colors,
+      ...colors,
       inherit: 'inherit',
       default: 'var(--color-bg-900)',
       muted: 'var(--color-bg-500)',

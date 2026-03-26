@@ -1,6 +1,7 @@
 // Internal system exports - not for public consumption
 export {
   vars,
+  colors,
   type SpaceToken,
   type RadiusToken,
   type ColorToken,

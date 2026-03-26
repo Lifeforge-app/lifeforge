@@ -40,9 +40,17 @@ export function interpolateColors(
   const colorPalette = getColorPalette(color, type, theme)
 
   Object.entries(colorPalette).forEach(([key, value]) => {
+    const prefix = type === 'bg' ? 'bg' : 'custom'
+
+    const { r, g, b } = tinycolor(value).toRgb()
+
     rootElement.style.setProperty(
-      `--color-${type === 'bg' ? 'bg' : 'custom'}-${key}`,
-      tinycolor(value).toRgbString()
+      `--color-${prefix}-${key}`,
+      `rgb(${r} ${g} ${b})`
+    )
+    rootElement.style.setProperty(
+      `--color-${prefix}-${key}-ch`,
+      `${r} ${g} ${b}`
     )
   })
 }
@@ -54,8 +62,9 @@ export function clearCustomColorProperties(
   const number = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
   for (let i = 0; i < number.length; i++) {
-    rootElement.style.removeProperty(
-      `--color-${type === 'bg' ? 'bg' : 'custom'}-${number[i]}`
-    )
+    const prefix = type === 'bg' ? 'bg' : 'custom'
+
+    rootElement.style.removeProperty(`--color-${prefix}-${number[i]}`)
+    rootElement.style.removeProperty(`--color-${prefix}-${number[i]}-ch`)
   }
 }

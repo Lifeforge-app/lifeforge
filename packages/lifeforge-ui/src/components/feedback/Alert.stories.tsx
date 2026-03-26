@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Box } from '@components/primitives'
+
 import Alert from './Alert'
 
 const meta = {
@@ -15,9 +17,6 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-/**
- * A notealert for informational content.
- */
 export const Note: Story = {
   args: {
     type: 'note',
@@ -25,15 +24,12 @@ export const Note: Story = {
       'Useful information that users should be aware of, even when skimming content.'
   },
   render: args => (
-    <div className="w-[600px] p-8">
+    <Box p="xl" width="600px">
       <Alert {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * A warningalert for important warnings.
- */
 export const Warning: Story = {
   args: {
     type: 'warning',
@@ -41,53 +37,44 @@ export const Warning: Story = {
       'Urgent info that needs immediate user attention to avoid problems.'
   },
   render: args => (
-    <div className="w-[600px] p-8">
+    <Box p="xl" width="600px">
       <Alert {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * A tipalert for helpful advice.
- */
 export const Tip: Story = {
   args: {
     type: 'tip',
     children: 'Helpful advices for doing things better or more easily.'
   },
   render: args => (
-    <div className="w-[600px] p-8">
+    <Box p="xl" width="600px">
       <Alert {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * A cautionalert for advising about risks or negative outcomes.
- */
 export const Caution: Story = {
   args: {
     type: 'caution',
     children: 'Advise about risks or negative outcomes of certain actions.'
   },
   render: args => (
-    <div className="w-[600px] p-8">
+    <Box p="xl" width="600px">
       <Alert {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * Aalert for important information.
- */
 export const Important: Story = {
   args: {
     type: 'important',
     children: 'Key information that users need to know to achieve their goal.'
   },
   render: args => (
-    <div className="w-[600px] p-8">
+    <Box p="xl" width="600px">
       <Alert {...args} />
-    </div>
+    </Box>
   )
 }

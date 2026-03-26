@@ -2,47 +2,38 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import React from 'react'
 
+import { Flex, Text } from '@components/primitives'
+
+import * as styles from './Alert.css'
+
 const STYLES = {
   note: {
     title: 'Note',
     icon: 'tabler:info-circle',
-    bgColor: 'bg-blue-500',
-    textColor: 'text-blue-500',
-    before: 'before:bg-blue-500'
+    color: '#3b82f6'
   },
   warning: {
     title: 'Warning',
     icon: 'tabler:alert-triangle',
-    bgColor: 'bg-yellow-500',
-    textColor: 'text-yellow-500',
-    before: 'before:bg-yellow-500'
+    color: '#eab308'
   },
   caution: {
     title: 'Caution',
     icon: 'tabler:alert-hexagon',
-    bgColor: 'bg-orange-500',
-    textColor: 'text-orange-500',
-    before: 'before:bg-orange-500'
+    color: '#f97316'
   },
   tip: {
     title: 'Tip',
     icon: 'tabler:bulb',
-    bgColor: 'bg-green-500',
-    textColor: 'text-green-500',
-    before: 'before:bg-green-500'
+    color: '#22c55e'
   },
   important: {
     title: 'Important',
     icon: 'tabler:message-exclamation',
-    bgColor: 'bg-purple-500',
-    textColor: 'text-purple-500',
-    before: 'before:bg-purple-500'
+    color: '#a855f7'
   }
 }
 
-/**
- * Alert component to display different types of alerts such as notes, warnings, tips, and cautions.
- */
 function Alert({
   type,
   className,
@@ -53,15 +44,31 @@ function Alert({
   children: React.ReactNode
 }) {
   return (
-    <div
-      className={`_alert relative w-full space-y-4 rounded-md p-2 pl-6 before:absolute before:top-0 before:left-0 before:h-full before:w-1 before:rounded-full ${STYLES[type].before} ${className}`}
+    <Flex
+      className={clsx('_alert', styles.wrapper, className)}
+      direction="column"
+      gap="md"
+      p="sm"
+      pl="lg"
+      position="relative"
+      style={
+        { '--_alert-stripe-color': STYLES[type].color } as React.CSSProperties
+      }
+      width="100%"
     >
-      <div className={clsx('flex items-center gap-2', STYLES[type].textColor)}>
-        <Icon className="h-6 w-6" icon={STYLES[type].icon} />
-        <h4 className="text-lg font-medium">{STYLES[type].title}</h4>
-      </div>
-      <p className="-mt-2 text-base">{children}</p>
-    </div>
+      <Flex align="center" gap="sm" style={{ color: STYLES[type].color }}>
+        <Icon
+          icon={STYLES[type].icon}
+          style={{ width: '1.5rem', height: '1.5rem' }}
+        />
+        <Text as="h4" size="lg" weight="medium">
+          {STYLES[type].title}
+        </Text>
+      </Flex>
+      <Text as="p" size="base" style={{ marginTop: '-0.5rem' }}>
+        {children}
+      </Text>
+    </Flex>
   )
 }
 

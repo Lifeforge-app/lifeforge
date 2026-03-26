@@ -1,7 +1,12 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { defaultCondition, responsiveConditions, vars } from '../../../system'
+import {
+  colors,
+  defaultCondition,
+  responsiveConditions,
+  vars
+} from '../../../system'
 import { commonProperties } from '../styles/common.css'
 // Import to ensure responsive layout CSS is generated
 import '../styles/responsive.css'
@@ -17,7 +22,7 @@ const boxProperties = defineProperties({
   defaultCondition,
   properties: {
     display: ['block', 'inline', 'inline-block', 'none', 'contents'],
-    backgroundColor: vars.colors,
+    backgroundColor: colors,
     borderRadius: vars.radii
   }
 })
