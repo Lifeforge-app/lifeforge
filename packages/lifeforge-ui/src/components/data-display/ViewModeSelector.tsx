@@ -1,6 +1,10 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
+import { Box, Flex } from '@components/primitives'
+
+import * as styles from './ViewModeSelector.css'
+
 export interface ViewModeSelectorProps<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
   TKey = T[number]['value']
@@ -30,32 +34,31 @@ function ViewModeSelector<
   className
 }: ViewModeSelectorProps<T, TKey>) {
   return (
-    <div
-      className={clsx(
-        'shadow-custom component-bg bg-bg-50 border-bg-500/20 flex items-center gap-2 rounded-lg in-[.bordered]:border-2',
-        size === 'small' ? 'p-1' : 'p-2',
-        className
-      )}
+    <Flex
+      align="center"
+      className={clsx(styles.container, styles.containerSize[size], className)}
+      gap="sm"
     >
       {options.map(({ value, icon, text }) => (
-        <button
+        <Box
           key={value}
+          as="button"
           className={clsx(
-            'flex-center flex-1 gap-2 rounded-md transition-all',
-            size === 'small' ? 'px-3 py-2 text-sm' : 'px-4 py-3 text-base',
-            value === currentMode
-              ? 'bg-bg-200/50 dark:bg-bg-800 shadow-custom border-bg-500/20 font-semibold in-[.bordered]:border-2'
-              : 'text-bg-500 hover:text-bg-800 dark:hover:text-bg-50'
+            styles.option,
+            styles.optionSize[size],
+            value === currentMode ? styles.optionActive : styles.optionInactive
           )}
           onClick={() => {
             onModeChange(value as TKey)
           }}
         >
-          {icon && <Icon className="size-6" icon={icon} />}
-          {text && <span>{text}</span>}
-        </button>
+          <Flex align="center" gap="sm">
+            {icon && <Icon className={styles.iconSize} icon={icon} />}
+            {text && <span>{text}</span>}
+          </Flex>
+        </Box>
       ))}
-    </div>
+    </Flex>
   )
 }
 
