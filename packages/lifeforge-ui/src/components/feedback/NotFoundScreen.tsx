@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@components/inputs'
+import { Flex, Text } from '@components/primitives'
 
 interface NotFoundScreenProps {
   /** The title to display on the Not Found screen. Defaults to a translated "Not Found" message. */
@@ -11,11 +12,6 @@ interface NotFoundScreenProps {
   reportIssueLink?: string
 }
 
-/**
- * A reusable 404 Not Found screen component.
- * This is the default screen shown when a user navigates to a non-existent route.
- * Can also be used to indicate missing resources.
- */
 function NotFoundScreen({
   title,
   message,
@@ -24,13 +20,28 @@ function NotFoundScreen({
   const { t } = useTranslation('common.misc')
 
   return (
-    <div className="flex-center w-full flex-1 flex-col gap-6 px-8 text-center">
-      <span className="text-custom-500 text-[10rem] leading-52">;-;</span>
-      <h1 className="text-4xl font-semibold">{title ?? t('notFound.title')}</h1>
-      <p className="text-bg-500 text-xl">
+    <Flex
+      align="center"
+      direction="column"
+      flexGrow="1"
+      gap="lg"
+      justify="center"
+      px="xl"
+      width="100%"
+    >
+      <Text
+        color="custom-500"
+        style={{ fontSize: '10rem', lineHeight: '13rem' }}
+      >
+        ;-;
+      </Text>
+      <Text align="center" as="h1" size="4xl" weight="semibold">
+        {title ?? t('notFound.title')}
+      </Text>
+      <Text align="center" as="p" color="bg-500" size="xl">
         {message ?? t('notFound.description')}
-      </p>
-      <div className="flex-center mt-6 gap-3">
+      </Text>
+      <Flex align="center" justify="center" mt="lg" style={{ gap: '0.75rem' }}>
         <Button as="a" href="/" icon="tabler:arrow-left">
           Go Back
         </Button>
@@ -45,8 +56,8 @@ function NotFoundScreen({
         >
           Report Bug
         </Button>
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
 
