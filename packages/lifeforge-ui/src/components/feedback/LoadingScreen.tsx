@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
+
+import { Flex, Text } from '@components/primitives'
 
 interface LoadingScreenProps {
   /** An optional message to display below the loading indicator. */
@@ -10,27 +11,34 @@ interface LoadingScreenProps {
   className?: string
 }
 
-/**
- * A reusable loading screen component for displaying a loading indicator.
- */
 export default function LoadingScreen({
   message,
   className,
   loaderSize
 }: LoadingScreenProps) {
   return (
-    <div
-      className={clsx(
-        'flex-center size-full flex-1 flex-col gap-[1rem]',
-        className
-      )}
+    <Flex
+      align="center"
+      className={className}
+      direction="column"
+      flexGrow="1"
+      gap="md"
+      height="100%"
+      justify="center"
+      width="100%"
     >
       <Icon
-        className="text-bg-500"
         icon="svg-spinners:ring-resize"
-        style={{ fontSize: loaderSize || '2rem' }}
+        style={{
+          fontSize: loaderSize || '2rem',
+          color: 'var(--color-bg-500)'
+        }}
       />
-      {message && <p className="text-bg-500 font-medium">{message}</p>}
-    </div>
+      {message && (
+        <Text color="bg-500" weight="medium">
+          {message}
+        </Text>
+      )}
+    </Flex>
   )
 }
