@@ -1,36 +1,27 @@
 import { recipe } from '@vanilla-extract/recipes'
 
+import { vars } from '@/system'
+
 export const switchRootRecipe = recipe({
   base: {
     position: 'relative',
     display: 'inline-flex',
-    height: '1.5rem', // 6
-    width: '2.75rem', // 11
+    justifyContent: 'center',
+    alignContent: 'center',
+    height: vars.space.lg,
+    width: vars.space['2xl'],
     flexShrink: 0,
     cursor: 'pointer',
     alignItems: 'center',
     borderRadius: '9999px',
     border: '2px solid transparent',
-    transition:
-      'background-color 200ms ease-in-out, box-shadow 200ms ease-in-out',
-    outline: 'none',
-    selectors: {
-      '&:focus-visible': {
-        outline: 'none',
-        boxShadow:
-          '0 0 0 2px var(--color-bg-50), 0 0 0 4px var(--color-custom-500)'
-      },
-      '.dark &:focus-visible': {
-        boxShadow:
-          '0 0 0 2px var(--color-bg-900), 0 0 0 4px var(--color-custom-500)'
-      }
-    }
+    transition: 'background-color 200ms ease-in-out',
+    outline: 'none'
   },
   variants: {
     checked: {
       true: {
-        backgroundColor: 'var(--color-custom-500)',
-        boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)'
+        backgroundColor: 'var(--color-custom-500)'
       },
       false: {
         backgroundColor: 'var(--color-bg-300)',
@@ -59,20 +50,18 @@ export const switchThumbRecipe = recipe({
   base: {
     pointerEvents: 'none',
     display: 'inline-block',
-    width: '1rem', // 4
-    height: '1rem', // 4
+    width: vars.space.md, // 4
+    height: vars.space.md, // 4
     borderRadius: '9999px',
-    boxShadow:
-      '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
     transition: 'transform 200ms ease-in-out'
   },
   variants: {
     checked: {
       true: {
-        transform: 'translateX(1.4rem)' // 6
+        transform: 'translateX(calc(100% - var(--spacing)))'
       },
       false: {
-        transform: 'translateX(0.15rem)' // 1
+        transform: 'translateX(calc(-100% + var(--spacing)))'
       }
     },
     colorMode: {

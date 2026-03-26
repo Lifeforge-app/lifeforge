@@ -121,12 +121,13 @@ const withBodyClass = (Story: any, context: any) => {
       <QueryClientProvider client={queryClient}>
         <div id="body" className="flex-center h-full flex-col transition-all">
           <PersonalizationProvider
-            key={context.globals.themeColor}
+            key={`${context.globals.themeColor}-${context.globals.fontScale}`}
             forgeAPI={forgeAPI}
             defaultValueOverride={{
               rawThemeColor: context.globals.themeColor || '#a9d066',
               theme: context.globals.theme,
-              rootElement: document.body
+              rootElement: document.body,
+              fontScale: context.globals.fontScale || 1
             }}
           >
             <ToastProvider>
@@ -224,12 +225,29 @@ const preview: Preview = {
         showName: true,
         dynamicTitle: true
       }
+    },
+    fontScale: {
+      name: 'Font Scale',
+      description: 'Font scale',
+      defaultValue: 1,
+      toolbar: {
+        icon: 'grow',
+        items: [
+          { value: 0.5, title: 'Small', left: '🤏' },
+          { value: 1, title: 'Medium', left: '👥' },
+          { value: 2, title: 'Large', left: '👥👥' },
+          { value: 3, title: 'Extra Large', left: '👥👥👥' }
+        ],
+        showName: true,
+        dynamicTitle: true
+      }
     }
   },
   tags: ['autodocs'],
   initialGlobals: {
     theme: 'light',
-    themeColor: '#4caf50'
+    themeColor: '#4caf50',
+    fontScale: 1
   }
 }
 
