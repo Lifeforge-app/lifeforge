@@ -121,9 +121,10 @@ const withBodyClass = (Story: any, context: any) => {
       <QueryClientProvider client={queryClient}>
         <div id="body" className="flex-center h-full flex-col transition-all">
           <PersonalizationProvider
+            key={context.globals.themeColor}
             forgeAPI={forgeAPI}
             defaultValueOverride={{
-              rawThemeColor: '#a9d066',
+              rawThemeColor: context.globals.themeColor || '#a9d066',
               theme: context.globals.theme,
               rootElement: document.body
             }}
@@ -192,11 +193,43 @@ const preview: Preview = {
         showName: true,
         dynamicTitle: true
       }
+    },
+    themeColor: {
+      name: 'Theme Color',
+      description: 'Primary theme color',
+      defaultValue: '#4caf50',
+      toolbar: {
+        icon: 'paintbrush',
+        items: [
+          { value: '#f44336', title: 'Red', left: '🔴' },
+          { value: '#e91e63', title: 'Pink', left: '🩷' },
+          { value: '#9c27b0', title: 'Purple', left: '🟣' },
+          { value: '#673ab7', title: 'Deep Purple', left: '🔮' },
+          { value: '#3f51b5', title: 'Indigo', left: '🔵' },
+          { value: '#2196f3', title: 'Blue', left: 'ew' },
+          { value: '#03a9f4', title: 'Light Blue', left: '💧' },
+          { value: '#00bcd4', title: 'Cyan', left: '🥶' },
+          { value: '#009688', title: 'Teal', left: '🍵' },
+          { value: '#4caf50', title: 'Green', left: '🟢' },
+          { value: '#8bc34a', title: 'Light Green', left: '🌱' },
+          { value: '#cddc39', title: 'Lime', left: '🍋' },
+          { value: '#ffeb3b', title: 'Yellow', left: '💛' },
+          { value: '#ffc107', title: 'Amber', left: 'qh' },
+          { value: '#ff9800', title: 'Orange', left: '🟠' },
+          { value: '#ff5722', title: 'Deep Orange', left: '🦀' },
+          { value: '#795548', title: 'Brown', left: '🪵' },
+          { value: '#9e9e9e', title: 'Grey', left: '🩶' },
+          { value: 'custom', title: 'Custom Color...' }
+        ],
+        showName: true,
+        dynamicTitle: true
+      }
     }
   },
   tags: ['autodocs'],
   initialGlobals: {
-    theme: 'light'
+    theme: 'light',
+    themeColor: '#4caf50'
   }
 }
 
