@@ -1,8 +1,12 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 
 import { Card } from '@components/layout'
+import { Flex, Text } from '@components/primitives'
 import { Tooltip } from '@components/utilities'
+
+import type { ResponsiveProp, SpaceToken } from '../../system'
+
+type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
 
 interface OptionsColumnProps {
   /** The title of the configuration column */
@@ -36,68 +40,78 @@ function OptionsColumn({
   breakpoint = 'md',
   className
 }: OptionsColumnProps) {
+  const getDirection = (): ResponsiveProp<DirectionValue> => {
+    if (orientation === 'vertical') return 'column'
+    if (!breakpoint) return 'row'
+
+    return { base: 'column', [breakpoint]: 'row' }
+  }
+
+  const getChildrenWidth = (): ResponsiveProp<string> | undefined => {
+    if (orientation !== 'horizontal') return undefined
+    if (!breakpoint) return undefined
+
+    return { base: 'full', [breakpoint]: 'auto' }
+  }
+
+  const getChildrenMarginRight = (): ResponsiveProp<SpaceToken> | undefined => {
+    if (orientation !== 'horizontal') return undefined
+    if (!breakpoint) return 'sm'
+
+    return { [breakpoint]: 'sm' }
+  }
+
   return (
-    <>
-      <Card
-        className={clsx(
-          'flex justify-between gap-8',
-          (() => {
-            if (orientation === 'vertical') {
-              return 'flex-col'
-            }
-
-            if (!breakpoint) {
-              return 'flex-row'
-            }
-
-            return `flex-col ${
-              {
-                sm: 'sm:flex-row',
-                md: 'md:flex-row',
-                lg: 'lg:flex-row',
-                xl: 'xl:flex-row'
-              }[breakpoint]
-            }`
-          })(),
-          className
-        )}
-      >
-        <div className="flex shrink items-center gap-3">
-          <Icon className="text-bg-500 mx-3 size-6 shrink-0" icon={icon} />
-          <div>
-            <h3 className="flex w-full items-center gap-2 text-xl leading-normal font-medium md:w-auto">
-              {title}
+    <Card className={className}>
+      <Flex direction={getDirection()} gap="xl" justify="between">
+        <Flex align="center" flexShrink="1" gap="md">
+          <Icon
+            icon={icon}
+            style={{
+              color: 'var(--color-bg-500)',
+              flexShrink: 0,
+              width: '24px',
+              height: '24px',
+              margin: '0 0.5rem'
+            }}
+          />
+          <Flex direction="column">
+            <Flex
+              align="center"
+              as="h3"
+              gap="sm"
+              width={{ base: 'full', md: 'auto' }}
+            >
+              <Text size="xl" weight="medium">
+                {title}
+              </Text>
               {tooltip !== undefined && (
                 <Tooltip icon="tabler:info-circle" id={title?.toString() || ''}>
                   {tooltip}
                 </Tooltip>
               )}
-            </h3>
+            </Flex>
             {typeof description === 'string' ? (
-              <p className="text-bg-500">{description}</p>
+              <Text as="p" color="bg-500">
+                {description}
+              </Text>
             ) : (
               description
             )}
-          </div>
-        </div>
-        <div
-          className={clsx(
-            'flex min-w-0 shrink-0 items-center gap-3',
-            orientation === 'horizontal' &&
-              (breakpoint
-                ? {
-                    sm: 'w-full sm:mr-2 sm:w-auto',
-                    md: 'w-full md:mr-2 md:w-auto',
-                    lg: 'w-full lg:mr-2 lg:w-auto',
-                    xl: 'w-full xl:mr-2 xl:w-auto'
-                  }[breakpoint]
-                : 'mr-2')
-          )}
+          </Flex>
+        </Flex>
+        <Flex
+          align="center"
+          flexShrink="0"
+          gap="sm"
+          minWidth="0"
+          mr={getChildrenMarginRight()}
+          width={getChildrenWidth()}
         >
           {children}
-        </div>
-      </Card>
-    </>
+        </Flex>
+      </Flex>
+    </Card>
   )
 }
 

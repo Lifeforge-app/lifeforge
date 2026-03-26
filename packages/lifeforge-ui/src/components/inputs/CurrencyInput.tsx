@@ -1,14 +1,19 @@
-import clsx from 'clsx'
 import { useEffect, useRef, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 
+import {
+  currencyInputContainerRecipe,
+  currencyInputFieldRecipe,
+  currencySymbolStyle
+} from './currencyInput.css'
 import InputIcon from './shared/components/InputIcon'
 import InputLabel from './shared/components/InputLabel'
 import InputWrapper from './shared/components/InputWrapper'
 import useInputLabel from './shared/hooks/useInputLabel'
 import { autoFocusableRef } from './shared/utils/autoFocusableRef'
 
-interface CurrencyInputProps {
+export interface CurrencyInputProps {
+  /** The currency symbol to display (e.g., "$", "€"). */
   currency?: string
   /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
   variant?: 'classic' | 'plain'
@@ -84,25 +89,20 @@ function CurrencyInputComponent({
             required={required === true}
           />
         )}
-        <div
-          className={clsx(
-            'flex-between gap-2',
-            variant === 'classic' ? 'mt-6 h-8 p-6 pl-4' : 'h-7 p-0'
-          )}
-        >
-          {currency && (
-            <span className="text-bg-400 dark:text-bg-600">{currency}</span>
-          )}
+        <div className={currencyInputContainerRecipe({ variant })}>
+          {currency && <span className={currencySymbolStyle}>{currency}</span>}
           <CurrencyInput
             ref={autoFocusableRef(autoFocus, inputRef)}
-            className={clsx(
-              'focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wider focus:outline-hidden',
-              variant === 'classic' && 'placeholder:text-transparent'
-            )}
+            className={currencyInputFieldRecipe({ variant })}
             decimalsLimit={2}
             name={label}
             placeholder={placeholder}
             value={innerValue}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            onValueChange={(value: any) => {
+              setInnerValue(value)
+              onChange(Number(value))
+            }}
             onBlur={() => {
               const numericValue = parseFloat(innerValue)
 
@@ -112,7 +112,6 @@ function CurrencyInputComponent({
                 onChange(0)
               }
             }}
-            onValueChange={value => setInnerValue(value || '')}
           />
         </div>
       </div>
