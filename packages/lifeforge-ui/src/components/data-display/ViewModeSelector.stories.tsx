@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { SearchInput } from '@components/inputs'
+import { Box, Flex } from '@components/primitives'
 
 import ViewModeSelector from './ViewModeSelector'
 import Widget from './Widget'
@@ -46,13 +47,13 @@ export const Default: Story = {
     )
 
     return (
-      <div className="flex-center h-full w-full">
+      <Flex align="center" height="full" justify="center" width="full">
         <ViewModeSelector
           {...args}
           currentMode={viewMode}
           onModeChange={setViewMode}
         />
-      </div>
+      </Flex>
     )
   }
 }
@@ -69,13 +70,13 @@ export const WithText: Story = {
     )
 
     return (
-      <div className="flex-center h-full w-full">
+      <Flex align="center" height="full" justify="center" width="full">
         <ViewModeSelector
           {...args}
           currentMode={viewMode}
           onModeChange={setViewMode}
         />
-      </div>
+      </Flex>
     )
   }
 }
@@ -95,13 +96,13 @@ export const TextOnly: Story = {
     )
 
     return (
-      <div className="flex-center h-full w-full">
+      <Flex align="center" height="full" justify="center" width="full">
         <ViewModeSelector
           {...args}
           currentMode={viewMode}
           onModeChange={setViewMode}
         />
-      </div>
+      </Flex>
     )
   }
 }
@@ -123,19 +124,25 @@ export const BesideSearchBar: Story = {
     const [searchValue, setSearchValue] = useState('')
 
     return (
-      <div className="flex w-full items-center gap-2 px-24">
+      <Flex align="center" gap="md" width="full">
         <SearchInput
           searchTarget="stuff"
           value={searchValue}
           onChange={setSearchValue}
         />
-        <ViewModeSelector
-          {...args}
-          className="hidden md:flex"
-          currentMode={viewMode}
-          onModeChange={setViewMode}
-        />
-      </div>
+        <Box
+          display={{
+            base: 'none',
+            md: 'block'
+          }}
+        >
+          <ViewModeSelector
+            {...args}
+            currentMode={viewMode}
+            onModeChange={setViewMode}
+          />
+        </Box>
+      </Flex>
     )
   }
 }
@@ -158,7 +165,6 @@ export const InsideWidget: Story = {
       <Widget
         actionComponent={
           <ViewModeSelector
-            className="component-bg-lighter"
             size="small"
             {...args}
             currentMode={viewMode}

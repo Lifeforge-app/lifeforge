@@ -141,7 +141,7 @@
 }
 
 body {
-  --custom-shadow: 2px 2px 6px 0px var(--color-bg-300);
+  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
 
   .dark &,
   &.dark {
