@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Box } from '@components/primitives'
+
 import ErrorScreen from './ErrorScreen'
 
 const meta = {
@@ -31,9 +33,9 @@ export const Default: Story = {
     message: 'Something went wrong. Please try again later.'
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <ErrorScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -46,9 +48,9 @@ export const WithRetryButton: Story = {
     showRetryButton: true
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <ErrorScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -61,9 +63,9 @@ export const NetworkError: Story = {
     showRetryButton: true
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <ErrorScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -81,8 +83,8 @@ export const ServerError: Story = {
     )
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <ErrorScreen {...args} />
-    </div>
+    </Box>
   )
 }
