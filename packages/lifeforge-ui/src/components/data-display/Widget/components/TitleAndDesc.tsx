@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next'
 
 import { Box, Text } from '@components/primitives'
 
-import * as styles from '../Widget.css'
-
 function TitleAndDesc({
   title,
   description,
@@ -23,8 +21,10 @@ function TitleAndDesc({
       <Text
         truncate
         as="h3"
-        className={
-          variant !== 'large-icon' ? styles.titleTextDefault : undefined
+        color={
+          variant === 'large-icon'
+            ? { base: 'bg-900', dark: 'bg-50' }
+            : undefined
         }
         size={variant === 'large-icon' ? { base: 'lg', sm: 'xl' } : 'lg'}
         style={{ width: '100%', minWidth: 0 }}

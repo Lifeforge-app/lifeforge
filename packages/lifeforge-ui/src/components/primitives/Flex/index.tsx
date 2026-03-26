@@ -22,6 +22,7 @@ import {
 } from '@/system'
 
 import { Slot } from '../Slot'
+import { shadowClass } from '../styles/common.css'
 import { type FlexSprinkles, flexBase, flexSprinkles } from './flex.css'
 
 type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
@@ -49,6 +50,7 @@ interface FlexOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   wrap?: ResponsiveProp<WrapValue>
   bg?: ThemeConditionProp<ColorToken>
   rounded?: ResponsiveProp<RadiusToken>
+  shadow?: boolean
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -88,6 +90,7 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
   wrap,
   bg,
   rounded,
+  shadow,
   // Layout props (CSS string - responsive)
   width,
   minWidth,
@@ -217,6 +220,7 @@ export function Flex<T extends ElementType = typeof DEFAULT_ELEMENT>({
         flexBase(),
         sprinklesClassName,
         responsiveStyles.className,
+        shadow && shadowClass,
         className
       )}
       style={mergedStyle}
