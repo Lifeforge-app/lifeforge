@@ -10,7 +10,7 @@ import {
 import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
 import { type BoxSprinkles, boxBase, boxSprinkles } from '../Box/box.css'
 import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles } from '../propDefs'
+import { getResponsiveLayoutStyles, resolveCommonSprinkleProps } from '../propDefs'
 import { type LayoutProps, type MarginProps } from '../types'
 
 type SectionSize = '1' | '2' | '3' | '4'
@@ -108,6 +108,8 @@ export function Section<T extends ElementType = typeof DEFAULT_ELEMENT>({
       : undefined)
 
   const sprinklesClassName = boxSprinkles({
+    ...resolveCommonSprinkleProps({ m, mx, my, mt, mr, mb, ml, position, overflow, overflowX, overflowY }),
+    // Section uses size-driven padding; explicit props override
     paddingTop: normalizeResponsiveProp(
       resolvedPt ?? resolvedPy
     ) as BoxSprinkles['paddingTop'],
@@ -119,20 +121,7 @@ export function Section<T extends ElementType = typeof DEFAULT_ELEMENT>({
     ) as BoxSprinkles['paddingLeft'],
     paddingRight: normalizeResponsiveProp(
       pr ?? px ?? p
-    ) as BoxSprinkles['paddingRight'],
-    margin: normalizeResponsiveProp(m) as BoxSprinkles['margin'],
-    marginTop: normalizeResponsiveProp(mt ?? my) as BoxSprinkles['marginTop'],
-    marginBottom: normalizeResponsiveProp(
-      mb ?? my
-    ) as BoxSprinkles['marginBottom'],
-    marginLeft: normalizeResponsiveProp(ml ?? mx) as BoxSprinkles['marginLeft'],
-    marginRight: normalizeResponsiveProp(
-      mr ?? mx
-    ) as BoxSprinkles['marginRight'],
-    position: normalizeResponsiveProp(position) as BoxSprinkles['position'],
-    overflow: normalizeResponsiveProp(
-      overflow ?? overflowX ?? overflowY
-    ) as BoxSprinkles['overflow']
+    ) as BoxSprinkles['paddingRight']
   })
 
   // Build responsive styles for CSS string props

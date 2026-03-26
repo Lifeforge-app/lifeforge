@@ -1,4 +1,7 @@
-import type { Breakpoint, ResponsiveProp } from '../../system'
+import type { Breakpoint, ResponsiveProp, SpaceToken } from '../../system'
+import { normalizeResponsiveProp } from '../../system'
+import type { CommonSprinkles } from './styles/common.css'
+import type { OverflowValue, PositionValue } from './types'
 
 // ============================================================================
 // Prop Definition Types
@@ -226,5 +229,89 @@ export function getResponsiveLayoutStyles(
   return {
     className: classNames.join(' '),
     style
+  }
+}
+
+// ============================================================================
+// Common Sprinkle Props Resolver
+// ============================================================================
+
+export interface CommonSprinkleInput {
+  p?: ResponsiveProp<SpaceToken>
+  px?: ResponsiveProp<SpaceToken>
+  py?: ResponsiveProp<SpaceToken>
+  pt?: ResponsiveProp<SpaceToken>
+  pr?: ResponsiveProp<SpaceToken>
+  pb?: ResponsiveProp<SpaceToken>
+  pl?: ResponsiveProp<SpaceToken>
+  m?: ResponsiveProp<SpaceToken>
+  mx?: ResponsiveProp<SpaceToken>
+  my?: ResponsiveProp<SpaceToken>
+  mt?: ResponsiveProp<SpaceToken>
+  mr?: ResponsiveProp<SpaceToken>
+  mb?: ResponsiveProp<SpaceToken>
+  ml?: ResponsiveProp<SpaceToken>
+  position?: ResponsiveProp<PositionValue>
+  overflow?: ResponsiveProp<OverflowValue>
+  overflowX?: ResponsiveProp<OverflowValue>
+  overflowY?: ResponsiveProp<OverflowValue>
+}
+
+/**
+ * Resolves common layout sprinkle props (position, overflow, padding, margin)
+ * shared by all layout primitives. Spread the result into the component's
+ * sprinkles call.
+ */
+export function resolveCommonSprinkleProps({
+  p,
+  px,
+  py,
+  pt,
+  pr,
+  pb,
+  pl,
+  m,
+  mx,
+  my,
+  mt,
+  mr,
+  mb,
+  ml,
+  position,
+  overflow,
+  overflowX,
+  overflowY
+}: CommonSprinkleInput): CommonSprinkles {
+  return {
+    position: normalizeResponsiveProp(position) as CommonSprinkles['position'],
+    overflow: normalizeResponsiveProp(
+      overflow ?? overflowX ?? overflowY
+    ) as CommonSprinkles['overflow'],
+    padding: normalizeResponsiveProp(p) as CommonSprinkles['padding'],
+    paddingTop: normalizeResponsiveProp(
+      pt ?? py
+    ) as CommonSprinkles['paddingTop'],
+    paddingBottom: normalizeResponsiveProp(
+      pb ?? py
+    ) as CommonSprinkles['paddingBottom'],
+    paddingLeft: normalizeResponsiveProp(
+      pl ?? px
+    ) as CommonSprinkles['paddingLeft'],
+    paddingRight: normalizeResponsiveProp(
+      pr ?? px
+    ) as CommonSprinkles['paddingRight'],
+    margin: normalizeResponsiveProp(m) as CommonSprinkles['margin'],
+    marginTop: normalizeResponsiveProp(
+      mt ?? my
+    ) as CommonSprinkles['marginTop'],
+    marginBottom: normalizeResponsiveProp(
+      mb ?? my
+    ) as CommonSprinkles['marginBottom'],
+    marginLeft: normalizeResponsiveProp(
+      ml ?? mx
+    ) as CommonSprinkles['marginLeft'],
+    marginRight: normalizeResponsiveProp(
+      mr ?? mx
+    ) as CommonSprinkles['marginRight']
   }
 }
