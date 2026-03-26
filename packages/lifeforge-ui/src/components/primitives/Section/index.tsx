@@ -7,11 +7,17 @@ import {
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
+import {
+  type LayoutProps,
+  type MarginProps,
+  type ResponsiveProp,
+  getResponsiveLayoutStyles,
+  normalizeResponsiveProp,
+  resolveCommonSprinkleProps
+} from '@/system'
+
 import { type BoxSprinkles, boxBase, boxSprinkles } from '../Box/box.css'
 import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles, resolveCommonSprinkleProps } from '../propDefs'
-import { type LayoutProps, type MarginProps } from '../types'
 
 type SectionSize = '1' | '2' | '3' | '4'
 
@@ -108,7 +114,19 @@ export function Section<T extends ElementType = typeof DEFAULT_ELEMENT>({
       : undefined)
 
   const sprinklesClassName = boxSprinkles({
-    ...resolveCommonSprinkleProps({ m, mx, my, mt, mr, mb, ml, position, overflow, overflowX, overflowY }),
+    ...resolveCommonSprinkleProps({
+      m,
+      mx,
+      my,
+      mt,
+      mr,
+      mb,
+      ml,
+      position,
+      overflow,
+      overflowX,
+      overflowY
+    }),
     // Section uses size-driven padding; explicit props override
     paddingTop: normalizeResponsiveProp(
       resolvedPt ?? resolvedPy

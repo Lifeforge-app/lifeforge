@@ -7,6 +7,11 @@ import { createGlobalTheme } from '@vanilla-extract/css'
 // the value set by the theme body class (e.g. `.bg-zinc`).
 export const colors = {
   transparent: 'transparent',
+  // Semantic surface tokens (switch automatically with dark mode and .has-bg-image)
+  surface: 'var(--color-surface)',
+  'surface-hover': 'var(--color-surface-hover)',
+  'surface-lighter': 'var(--color-surface-lighter)',
+  'surface-lighter-hover': 'var(--color-surface-lighter-hover)',
   'bg-50': 'var(--color-bg-50)',
   'bg-100': 'var(--color-bg-100)',
   'bg-200': 'var(--color-bg-200)',
@@ -96,3 +101,52 @@ export type ColorToken = keyof typeof colors
 export type FontSizeToken = keyof typeof vars.fontSize
 
 export type FontWeightToken = keyof typeof vars.fontWeight
+
+// ── Grouped token objects for use in vanilla-extract style() calls ────────────
+//
+// Use these instead of raw var() strings in .css.ts files:
+//   backgroundColor: bg[500]          ← resolves to 'var(--color-bg-500)'
+//   backgroundColor: bg.surface       ← semantic, auto-switches dark/bg-image
+//   backgroundColor: custom[500]      ← resolves to 'var(--color-custom-500)'
+
+export const bg = {
+  // Semantic surface tokens (auto-switch with .dark and .has-bg-image)
+  surface: 'var(--color-surface)',
+  'surface-hover': 'var(--color-surface-hover)',
+  'surface-lighter': 'var(--color-surface-lighter)',
+  'surface-lighter-hover': 'var(--color-surface-lighter-hover)',
+  50: 'var(--color-bg-50)',
+  100: 'var(--color-bg-100)',
+  200: 'var(--color-bg-200)',
+  300: 'var(--color-bg-300)',
+  400: 'var(--color-bg-400)',
+  500: 'var(--color-bg-500)',
+  600: 'var(--color-bg-600)',
+  700: 'var(--color-bg-700)',
+  800: 'var(--color-bg-800)',
+  900: 'var(--color-bg-900)',
+  950: 'var(--color-bg-950)'
+} as const
+
+export const custom = {
+  50: 'var(--color-custom-50)',
+  100: 'var(--color-custom-100)',
+  200: 'var(--color-custom-200)',
+  300: 'var(--color-custom-300)',
+  400: 'var(--color-custom-400)',
+  500: 'var(--color-custom-500)',
+  600: 'var(--color-custom-600)',
+  700: 'var(--color-custom-700)',
+  800: 'var(--color-custom-800)',
+  900: 'var(--color-custom-900)'
+} as const
+
+export type SurfaceToken =
+  | 'surface'
+  | 'surface-hover'
+  | 'surface-lighter'
+  | 'surface-lighter-hover'
+
+export type BgColorSlot = keyof typeof bg
+
+export type CustomColorSlot = keyof typeof custom

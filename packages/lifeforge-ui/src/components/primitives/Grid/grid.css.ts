@@ -1,8 +1,9 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { defaultCondition, responsiveConditions, vars } from '../../../system'
-import { commonProperties } from '../styles/common.css'
+import { responsiveConditions, vars } from '@/system'
+
+import { commonProperties, themeColorProperties } from '../styles/common.css'
 
 export const gridBase = recipe({
   base: {
@@ -12,7 +13,7 @@ export const gridBase = recipe({
 
 const gridProperties = defineProperties({
   conditions: responsiveConditions,
-  defaultCondition,
+  defaultCondition: 'base',
   properties: {
     display: ['grid', 'inline-grid', 'none'],
     alignItems: ['stretch', 'center', 'start', 'end', 'baseline'],
@@ -27,10 +28,15 @@ const gridProperties = defineProperties({
     gap: vars.space,
     rowGap: vars.space,
     columnGap: vars.space,
-    gridAutoFlow: ['row', 'column', 'dense', 'row dense', 'column dense']
+    gridAutoFlow: ['row', 'column', 'dense', 'row dense', 'column dense'],
+    borderRadius: vars.radii
   }
 })
 
-export const gridSprinkles = createSprinkles(gridProperties, commonProperties)
+export const gridSprinkles = createSprinkles(
+  gridProperties,
+  themeColorProperties,
+  commonProperties
+)
 
 export type GridSprinkles = Parameters<typeof gridSprinkles>[0]

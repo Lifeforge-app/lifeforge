@@ -1,8 +1,7 @@
 import { style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
-import { bg, custom } from '@/styles/vanilla-extract'
-import { vars } from '@/system'
+import { bg, custom, vars } from '@/system'
 
 export const checkboxWrapperStyle = style({
   display: 'flex',
