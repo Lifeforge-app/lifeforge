@@ -60,7 +60,7 @@ function ViewModeSelector<
             styles.optionSize[size],
             value === currentMode && styles.optionActive
           )}
-          flexBasis="1"
+          flex="1"
           gap="sm"
           rounded="md"
           style={{
