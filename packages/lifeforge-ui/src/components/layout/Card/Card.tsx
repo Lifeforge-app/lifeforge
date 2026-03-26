@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import { Box, type BoxProps } from '../primitives'
+import { Box, type BoxProps } from '../../primitives'
 import * as styles from './Card.css'
 
 export interface CardProps extends Omit<

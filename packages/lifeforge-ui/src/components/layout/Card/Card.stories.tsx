@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Button } from '@components/inputs'
 import { Box, Flex, Grid, Text } from '@components/primitives'
 
-import Card from './Card'
+import Card from '../Card'
 
 const meta = {
   component: Card,

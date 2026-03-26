@@ -78,6 +78,11 @@ export const layoutPropDefs = {
     customProperties: ['--lf-l'],
     responsive: true
   },
+  flex: {
+    className: 'lf-fl',
+    customProperties: ['--lf-fl'],
+    responsive: true
+  },
   flexBasis: {
     className: 'lf-fb',
     customProperties: ['--lf-fb'],
@@ -137,6 +142,11 @@ export const layoutPropDefs = {
   rows: {
     className: 'lf-gtr',
     customProperties: ['--lf-gtr'],
+    responsive: true
+  },
+  zIndex: {
+    className: 'lf-zi',
+    customProperties: ['--lf-zi'],
     responsive: true
   }
 } as const satisfies Record<string, PropDef>
