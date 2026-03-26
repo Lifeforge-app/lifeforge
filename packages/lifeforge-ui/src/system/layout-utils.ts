@@ -1,6 +1,6 @@
-import type { CommonSprinkles } from '../components/primitives/styles/common.css'
 import type { Breakpoint, ResponsiveProp } from './responsive'
 import { normalizeResponsiveProp } from './responsive'
+import type { CommonSprinkles } from './sprinkles.css'
 import type {
   MarginProps,
   OverflowProps,

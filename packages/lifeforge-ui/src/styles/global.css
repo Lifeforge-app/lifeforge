@@ -6,7 +6,6 @@
 * {
   scrollbar-color: transparent transparent;
   scrollbar-width: thin;
-  overscroll-behavior: none;
 }
 
 .virtual-grid {

@@ -59,7 +59,7 @@ function OptionsColumn({
   }
 
   return (
-    <Card asChild>
+    <Card>
       <Flex direction={getDirection()} gap="xl" justify="between">
         <Flex align="center" flexShrink="1" gap="md">
           <Icon
