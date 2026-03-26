@@ -1,15 +1,10 @@
 import type { ResponsiveProp, SpaceToken } from '../../system'
 
 // ============================================================================
-// Shared Layout Props
+// Granular prop groups
 // ============================================================================
 
-/**
- * Common layout props shared by Box, Flex, Grid, Section, Container.
- * Following Radix UI Themes patterns.
- */
-export interface LayoutProps {
-  // Padding (tokenized - uses space scale)
+export interface PaddingProps {
   p?: ResponsiveProp<SpaceToken>
   px?: ResponsiveProp<SpaceToken>
   py?: ResponsiveProp<SpaceToken>
@@ -17,46 +12,8 @@ export interface LayoutProps {
   pr?: ResponsiveProp<SpaceToken>
   pb?: ResponsiveProp<SpaceToken>
   pl?: ResponsiveProp<SpaceToken>
-
-  // Size (CSS string - accepts any CSS value, supports responsive)
-  width?: ResponsiveProp<string>
-  minWidth?: ResponsiveProp<string>
-  maxWidth?: ResponsiveProp<string>
-  height?: ResponsiveProp<string>
-  minHeight?: ResponsiveProp<string>
-  maxHeight?: ResponsiveProp<string>
-
-  // Positioning
-  position?: ResponsiveProp<PositionValue>
-  inset?: ResponsiveProp<string>
-  top?: ResponsiveProp<string>
-  right?: ResponsiveProp<string>
-  bottom?: ResponsiveProp<string>
-  left?: ResponsiveProp<string>
-
-  // Overflow
-  overflow?: ResponsiveProp<OverflowValue>
-  overflowX?: ResponsiveProp<OverflowValue>
-  overflowY?: ResponsiveProp<OverflowValue>
-
-  // Flex children props
-  flexBasis?: ResponsiveProp<string>
-  flexGrow?: ResponsiveProp<string>
-  flexShrink?: ResponsiveProp<string>
-
-  // Grid children props
-  gridArea?: ResponsiveProp<string>
-  gridColumn?: ResponsiveProp<string>
-  gridColumnStart?: ResponsiveProp<string>
-  gridColumnEnd?: ResponsiveProp<string>
-  gridRow?: ResponsiveProp<string>
-  gridRowStart?: ResponsiveProp<string>
-  gridRowEnd?: ResponsiveProp<string>
 }
 
-/**
- * Margin props - shared by most components, not just layout.
- */
 export interface MarginProps {
   m?: ResponsiveProp<SpaceToken>
   mx?: ResponsiveProp<SpaceToken>
@@ -66,6 +23,63 @@ export interface MarginProps {
   mb?: ResponsiveProp<SpaceToken>
   ml?: ResponsiveProp<SpaceToken>
 }
+
+export interface SizeProps {
+  width?: ResponsiveProp<string>
+  minWidth?: ResponsiveProp<string>
+  maxWidth?: ResponsiveProp<string>
+  height?: ResponsiveProp<string>
+  minHeight?: ResponsiveProp<string>
+  maxHeight?: ResponsiveProp<string>
+}
+
+export interface PositionProps {
+  position?: ResponsiveProp<PositionValue>
+  inset?: ResponsiveProp<string>
+  top?: ResponsiveProp<string>
+  right?: ResponsiveProp<string>
+  bottom?: ResponsiveProp<string>
+  left?: ResponsiveProp<string>
+}
+
+export interface OverflowProps {
+  overflow?: ResponsiveProp<OverflowValue>
+  overflowX?: ResponsiveProp<OverflowValue>
+  overflowY?: ResponsiveProp<OverflowValue>
+}
+
+export interface FlexChildProps {
+  flexBasis?: ResponsiveProp<string>
+  flexGrow?: ResponsiveProp<string>
+  flexShrink?: ResponsiveProp<string>
+}
+
+export interface GridChildProps {
+  gridArea?: ResponsiveProp<string>
+  gridColumn?: ResponsiveProp<string>
+  gridColumnStart?: ResponsiveProp<string>
+  gridColumnEnd?: ResponsiveProp<string>
+  gridRow?: ResponsiveProp<string>
+  gridRowStart?: ResponsiveProp<string>
+  gridRowEnd?: ResponsiveProp<string>
+}
+
+// ============================================================================
+// Composite layout interface
+// ============================================================================
+
+/**
+ * Common layout props shared by Box, Flex, Grid, Section, Container.
+ * Composed from granular interfaces for easier extension and reuse.
+ */
+export interface LayoutProps
+  extends
+    PaddingProps,
+    SizeProps,
+    PositionProps,
+    OverflowProps,
+    FlexChildProps,
+    GridChildProps {}
 
 // ============================================================================
 // Value Types

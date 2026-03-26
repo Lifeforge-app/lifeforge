@@ -16,6 +16,12 @@ export { Slot } from './Slot'
 export type {
   LayoutProps,
   MarginProps,
+  PaddingProps,
+  SizeProps,
+  PositionProps,
+  OverflowProps,
+  FlexChildProps,
+  GridChildProps,
   PositionValue,
   OverflowValue,
   DisplayValue,
