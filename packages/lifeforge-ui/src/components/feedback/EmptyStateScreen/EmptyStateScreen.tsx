@@ -2,9 +2,9 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
+import { Button } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-import Button from '../inputs/Button'
 import * as styles from './EmptyStateScreen.css'
 
 export interface EmptyStateScreenProps {

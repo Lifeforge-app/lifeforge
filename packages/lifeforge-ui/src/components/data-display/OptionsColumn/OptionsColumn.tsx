@@ -4,7 +4,7 @@ import { Card } from '@components/layout'
 import { Flex, Text } from '@components/primitives'
 import { Tooltip } from '@components/utilities'
 
-import type { ResponsiveProp, SpaceToken } from '../../system'
+import type { ResponsiveProp, SpaceToken } from '@/system'
 
 type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
 

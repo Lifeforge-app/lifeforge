@@ -2,8 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 import { bg } from '@/styles/vanilla-extract'
 import { withOpacity } from '@/styles/vanilla-extract/utils'
-
-import { vars } from '../../system'
+import { vars } from '@/system'
 
 // container styling (shadow, background, border, radius)
 export const container = style({
