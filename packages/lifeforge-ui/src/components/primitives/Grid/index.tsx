@@ -21,6 +21,7 @@ import {
 } from '@/system'
 
 import { Slot } from '../Slot'
+import { shadowClass } from '../styles/common.css'
 import { type GridSprinkles, gridBase, gridSprinkles } from './grid.css'
 
 type AlignValue = 'stretch' | 'center' | 'start' | 'end' | 'baseline'
@@ -49,6 +50,7 @@ interface GridOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   gapY?: ResponsiveProp<SpaceToken>
   bg?: ThemeConditionProp<ColorToken>
   rounded?: ResponsiveProp<RadiusToken>
+  shadow?: boolean
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -77,6 +79,7 @@ export function Grid<T extends ElementType = typeof DEFAULT_ELEMENT>({
   gapY,
   bg,
   rounded,
+  shadow,
   align,
   justify,
   // Layout props (CSS string - responsive)
@@ -203,6 +206,7 @@ export function Grid<T extends ElementType = typeof DEFAULT_ELEMENT>({
         gridBase(),
         sprinklesClassName,
         responsiveStyles.className,
+        shadow && shadowClass,
         className
       )}
       style={Object.keys(mergedStyle).length > 0 ? mergedStyle : undefined}

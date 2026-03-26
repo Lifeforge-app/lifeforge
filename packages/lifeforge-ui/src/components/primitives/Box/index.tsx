@@ -20,6 +20,7 @@ import {
 } from '@/system'
 
 import { Slot } from '../Slot'
+import { shadowClass } from '../styles/common.css'
 import { type BoxSprinkles, boxBase, boxSprinkles } from './box.css'
 
 type RadiusValue = RadiusToken
@@ -36,6 +37,7 @@ interface BoxOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   display?: ResponsiveProp<DisplayValue>
   bg?: ThemeConditionProp<ColorToken>
   rounded?: ResponsiveProp<RadiusValue>
+  shadow?: boolean
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -94,6 +96,7 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
   overflowY,
   bg,
   rounded,
+  shadow,
   // Standard props
   className,
   style,
@@ -168,6 +171,7 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
         boxBase(),
         sprinklesClassName,
         responsiveStyles.className,
+        shadow && shadowClass,
         className
       )}
       style={mergedStyle}

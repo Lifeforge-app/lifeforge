@@ -11,8 +11,3 @@ export const base = style({
     }
   }
 })
-
-export const interactive = style({
-  cursor: 'pointer',
-  transition: 'all 0.2s'
-})

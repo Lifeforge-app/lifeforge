@@ -17,7 +17,7 @@ Before touching ANY file, you MUST:
 
 - DO NOT leave any Tailwind utility class in a file you have edited.
 - DO NOT use `style={{}}` when a primitive prop exists for the same property.
-- DO NOT hardcode hex strings or raw `var(--color-bg-*)` in `.css.ts` — always use `bg[n]` tokens from `@/styles/vanilla-extract`.
+- DO NOT hardcode hex strings or raw `var(--color-*)` in `.css.ts` — always use `bg[n]` / `custom[n]` / `withOpacity()` imported from `@/system`.
 - DO NOT create `.css.ts` files for stories (`.stories.tsx`) — primitives only.
 - DO NOT add comments, docstrings, or explanations to code you did not change.
 - DO NOT refactor logic, rename variables, or make any change beyond the styling migration.
@@ -25,27 +25,84 @@ Before touching ANY file, you MUST:
 
 ## Approach
 
-1. **Audit the file** — catalogue every Tailwind class found; classify each as layout (→ primitive prop) or theming/interactive (→ `.css.ts`).
+1. **Audit the file** — catalogue every Tailwind class found; classify each as layout, theme-adaptive color, structural/interactive, or context-selector.
+
 2. **Plan primitive replacements** — map `flex`, `grid`, bare `div`/`span`/`p` wrappers to `<Flex>`, `<Grid>`, `<Box>`, `<Text>` with correct props using §3 of the instructions.
-3. **For components (`.tsx`)** — create or update the sibling `ComponentName.css.ts` for all background colors, border colors, shadows, hover/focus states, dark-mode selectors, and context selectors (`.bordered &`, `.has-bg-image &`).
-4. **For stories (`.stories.tsx`)** — use primitives only; no `.css.ts`.
-5. **Apply edits** — replace layout `div`/`span` wrappers and `className` props with primitives; import `* as styles from './ComponentName.css'`; use `clsx()` for conditional class composition.
-6. **Verify** — search the edited file for any remaining Tailwind class names and fix them. Run `get_errors` to confirm zero TypeScript errors.
+
+3. **Apply the theme-color decision tree for every colored element:**
+   ```
+   Is it a container primitive (Box/Flex/Grid/Container/Section)?
+     └─ YES → use `bg` prop: bg={{ base: 'bg-50', dark: 'bg-900' }}
+              use `shadow` prop for box-shadow
+     └─ NO  → Is it a <Text>?
+                └─ YES → use `color`/`bg` props: color={{ base: 'bg-500', dark: 'bg-50' }}
+                └─ NO  → write a .css.ts using themeColorProperties sprinkle (Pattern B)
+   ```
+
+4. **For components (`.tsx`)** — create or update the sibling `ComponentName.css.ts`:
+   - **Pattern A — `style()`**: for `transition`, `cursor`, `borderWidth`, complex shadows, and `.bordered &` / `.has-bg-image &` context selectors that sprinkles cannot express.
+   - **Pattern B — `themeColorProperties` sprinkle**: for theme-adaptive `backgroundColor`, `color`, or `borderColor` on non-primitive child elements.
+     ```ts
+     import { createSprinkles } from '@vanilla-extract/sprinkles'
+     import { themeColorProperties } from '@/system'
+     const sprinkles = createSprinkles(themeColorProperties)
+     export const title = sprinkles({ color: { base: 'bg-500', dark: 'bg-50' } })
+     ```
+
+5. **For stories (`.stories.tsx`)** — use primitives only; no `.css.ts`.
+
+6. **Apply edits** — replace layout `div`/`span` wrappers and `className` props with primitives; import `* as styles from './ComponentName.css'`; use `clsx()` for conditional class composition.
+
+7. **Verify** — search the edited file for any remaining Tailwind class names and fix them. Run `get_errors` to confirm zero TypeScript errors.
 
 ## Styling Categorisation Rules
 
 | Property type | Destination |
 |---|---|
 | `display`, `flex-direction`, `gap`, `padding`, `margin`, `width`, `height`, `overflow`, `position`, `inset` | Primitive prop |
-| `background-color` (theme tokens, dark-mode) | `.css.ts` |
-| `border-color`, `border-width` (themed or context) | `.css.ts` |
-| `border-radius` | `rounded` prop on `<Box>` OR `borderRadius: vars.radii.*` in `.css.ts` |
-| `box-shadow` | `.css.ts` — `boxShadow: 'var(--custom-shadow)'` |
-| `color` (theme-aware, interactive) | `.css.ts` |
+| `background-color` on a container primitive | **`bg` prop** — `bg={{ base: 'bg-50', dark: 'bg-900' }}` |
+| `background-color` on a non-primitive child element | **Pattern B** — `.css.ts` sprinkle |
+| `color` on `<Text>` | **`color` prop** — `color={{ base: 'bg-500', dark: 'bg-50' }}` |
+| `color` on a non-Text element | **Pattern B** — `.css.ts` sprinkle |
+| `border-color` | **Pattern B** — `.css.ts` sprinkle |
+| `border-radius` | **`rounded` prop** on container OR `borderRadius: vars.radii.*` in `.css.ts` |
+| `box-shadow` (`shadow-custom`) | **`shadow` prop** on container primitive |
+| `box-shadow` (complex/non-standard) | **Pattern A** — `.css.ts` `style()` |
+| `transition`, `cursor`, `hover`, `focus`, `active` | **Pattern A** — `.css.ts` `style()` |
+| Dark-mode variants | **`bg`/`color` prop** (preferred) OR **Pattern B** OR **Pattern A** selectors |
+| Context selectors (`.bordered &`, `.has-bg-image &`) | **Pattern A** — `.css.ts` `style()` selectors |
 | `font-weight`, `font-size` | `<Text weight= size=>` props |
-| `transition`, `hover`, `focus`, `active` | `.css.ts` selectors |
-| Dark-mode variants | `.css.ts` — `selectors: { '.dark &': { ... } }` |
 | Spacing not in token table | `style={{ ... }}` inline on the primitive |
+
+## `ThemeConditionProp` — condition keys
+
+All `bg`, `color`, and `borderColor` (sprinkle) props accept a per-condition map:
+
+| Key | Selector |
+|-----|----------|
+| `base` | (default) |
+| `dark` | `.dark &` |
+| `hover` | `&:hover` |
+| `darkHover` | `.dark &:hover` |
+| `hasBgImage` | `.has-bg-image &` |
+| `darkHasBgImage` | `.dark .has-bg-image &` |
+
+```tsx
+<Box bg={{ base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }} shadow />
+<Text color={{ base: 'bg-500', dark: 'bg-50', hover: 'bg-800' }} />
+```
+
+## Token helpers (`.css.ts` only)
+
+| Need | Import from `@/system` |
+|------|------------------------|
+| Background by shade | `bg[50]` … `bg[950]` |
+| Accent by shade | `custom[50]` … `custom[900]` |
+| With opacity | `withOpacity(bg[500], 0.2)` |
+| Border radius | `vars.radii.sm/md/lg/xl/2xl/3xl/full` |
+| Space value | `vars.space.xs/sm/md/lg/xl/2xl/3xl` |
+| Font size | `vars.fontSize.*` |
+| Font weight | `vars.fontWeight.*` |
 
 ## Space Token Quick Reference
 
@@ -67,9 +124,9 @@ Any Tailwind spacing value not in this table (e.g. `gap-3`, `mt-5`, `p-10`) must
 Before marking a file done, verify:
 
 - [ ] All conditional class logic reproduced (variant props, boolean flags)
-- [ ] All dark-mode styles present (`.dark &` selectors in `.css.ts`)
+- [ ] All dark-mode styles present (`dark` condition on `bg`/`color` prop, or `.dark &` selector)
 - [ ] All responsive styles present (`@media` blocks or responsive primitive props)
-- [ ] All hover/focus/active states present
+- [ ] All hover/focus/active states present (`hover`/`darkHover` conditions or `.css.ts` selectors)
 - [ ] All context-selector styles present (`.bordered &`, `.has-bg-image &`)
 - [ ] Dynamic inline styles that cannot be tokenised are still passed via `style={{}}`
 - [ ] Zero Tailwind class names remain in the file

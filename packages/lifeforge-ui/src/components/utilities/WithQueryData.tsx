@@ -9,8 +9,7 @@ function WithQueryData<T extends ForgeEndpoint>({
   children,
   showLoading = true,
   showRetryButton = true,
-  loaderSize,
-  loaderClassName
+  loaderSize
 }: {
   controller: T
   queryOptions?: Omit<UseQueryOptions, 'queryKey' | 'queryFn'> & {
@@ -20,7 +19,6 @@ function WithQueryData<T extends ForgeEndpoint>({
   showLoading?: boolean
   showRetryButton?: boolean
   loaderSize?: string
-  loaderClassName?: string
 }) {
   const query = useQuery(
     controller.queryOptions({
@@ -30,11 +28,7 @@ function WithQueryData<T extends ForgeEndpoint>({
   )
 
   if (query.isLoading || query.isEnabled === false) {
-    return showLoading ? (
-      <LoadingScreen className={loaderClassName} loaderSize={loaderSize} />
-    ) : (
-      <></>
-    )
+    return showLoading ? <LoadingScreen loaderSize={loaderSize} /> : <></>
   }
 
   if (query.isError) {

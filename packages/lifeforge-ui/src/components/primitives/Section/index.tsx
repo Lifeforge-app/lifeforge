@@ -18,6 +18,7 @@ import {
 
 import { type BoxSprinkles, boxBase, boxSprinkles } from '../Box/box.css'
 import { Slot } from '../Slot'
+import { shadowClass } from '../styles/common.css'
 
 type SectionSize = '1' | '2' | '3' | '4'
 
@@ -29,6 +30,7 @@ interface SectionOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   asChild?: boolean
   ref?: Ref<HTMLElement>
   size?: ResponsiveProp<SectionSize>
+  shadow?: boolean
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -50,6 +52,7 @@ export function Section<T extends ElementType = typeof DEFAULT_ELEMENT>({
   asChild = false,
   ref,
   size = '2',
+  shadow,
   // Layout props (CSS string - responsive)
   width,
   minWidth,
@@ -181,6 +184,7 @@ export function Section<T extends ElementType = typeof DEFAULT_ELEMENT>({
         boxBase(),
         sprinklesClassName,
         responsiveStyles.className,
+        shadow && shadowClass,
         className
       )}
       style={mergedStyle}

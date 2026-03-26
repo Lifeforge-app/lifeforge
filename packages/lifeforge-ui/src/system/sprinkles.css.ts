@@ -46,7 +46,9 @@ export const themeColorProperties = defineProperties({
   },
   defaultCondition: 'base',
   properties: {
-    backgroundColor: colors
+    backgroundColor: colors,
+    color: colors,
+    borderColor: colors
   }
 })
 

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
-import { Box, Flex } from '@components/primitives'
+import { Flex, Text } from '@components/primitives'
 
 import * as styles from './ViewModeSelector.css'
 
@@ -32,28 +32,54 @@ function ViewModeSelector<
 }: ViewModeSelectorProps<T, TKey>) {
   return (
     <Flex
+      shadow
       align="center"
-      className={clsx(styles.container, styles.containerSize[size])}
+      bg={{ base: 'bg-50', dark: 'bg-900' }}
+      className={styles.container}
       gap="sm"
+      p={size === 'small' ? 'xs' : 'sm'}
+      rounded="lg"
     >
       {options.map(({ value, icon, text }) => (
-        <Box
+        <Flex
           key={value}
+          align="center"
           as="button"
+          bg={
+            value === currentMode
+              ? {
+                  base: 'bg-200',
+                  dark: 'bg-800'
+                }
+              : {
+                  hover: 'bg-100',
+                  darkHover: 'bg-900'
+                }
+          }
           className={clsx(
-            styles.option,
             styles.optionSize[size],
-            value === currentMode ? styles.optionActive : styles.optionInactive
+            value === currentMode && styles.optionActive
           )}
+          flexBasis="1"
+          gap="sm"
+          rounded="md"
+          style={{
+            transition: 'all 0.2s'
+          }}
           onClick={() => {
             onModeChange(value as TKey)
           }}
         >
-          <Flex align="center" gap="sm">
-            {icon && <Icon className={styles.iconSize} icon={icon} />}
-            {text && <span>{text}</span>}
-          </Flex>
-        </Box>
+          {icon && <Icon height="1.5rem" icon={icon} width="1.5rem" />}
+          {text && (
+            <Text
+              size={size === 'small' ? 'sm' : 'base'}
+              weight={value === currentMode ? 'semibold' : 'normal'}
+            >
+              {text}
+            </Text>
+          )}
+        </Flex>
       ))}
     </Flex>
   )
