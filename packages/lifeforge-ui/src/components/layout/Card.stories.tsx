@@ -56,30 +56,38 @@ export const Interactive: Story = {
 
 export const AsButton: Story = {
   args: {
-    as: 'button',
     isInteractive: true,
     children: <Box p="md">I&apos;m a button card</Box>,
     onClick: () => alert('Button clicked!')
   },
   render: args => (
     <Box p="xl" width="24rem">
-      <Card {...args} />
+      <Card asChild {...args} width="100%">
+        <Text align="left" as="button">
+          I&apos;m a button card
+        </Text>
+      </Card>
     </Box>
   )
 }
 
 export const AsLink: Story = {
   args: {
-    as: 'a',
     isInteractive: true,
-    href: 'https://docs.lifeforge.dev',
-    children: <Box p="md">I&apos;m a link card</Box>,
-    rel: 'noopener noreferrer',
-    target: '_blank'
+    children: (
+      <a
+        href="https://docs.lifeforge.dev"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        I&apos;m a link card
+      </a>
+    ),
+    rel: 'noopener noreferrer'
   },
   render: args => (
     <Box p="xl" width="24rem">
-      <Card {...args} />
+      <Card asChild {...args} />
     </Box>
   )
 }

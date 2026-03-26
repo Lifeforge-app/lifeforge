@@ -1,45 +1,51 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import { Slot } from '../primitives/Slot'
+import { Box, type BoxProps } from '../primitives'
 import * as styles from './Card.css'
 
-export interface CardBaseProps {
+export interface CardProps extends Omit<
+  BoxProps,
+  'bg' | 'display' | 'p' | 'position' | 'rounded'
+> {
   children: React.ReactNode
   className?: string
   isInteractive?: boolean
-  asChild?: boolean
 }
 
-export type CardProps<C extends React.ElementType = 'div'> = {
-  as?: C
-  ref?: React.ComponentPropsWithRef<C>['ref']
-} & CardBaseProps &
-  Omit<React.ComponentProps<C>, keyof CardBaseProps | 'as'>
-
-function Card<C extends React.ElementType = 'div'>({
+function Card({
   children,
-  as,
-  asChild = false,
   className,
   isInteractive,
-  ref,
+  style,
   ...props
-}: CardProps<C>) {
-  const Component = asChild ? Slot : as || 'div'
-
+}: CardProps) {
   return (
-    <Component
-      ref={ref}
-      {...props}
+    <Box
+      bg={
+        isInteractive
+          ? {
+              base: 'bg-50',
+              dark: 'bg-900',
+              hover: 'bg-100',
+              darkHover: 'bg-800'
+            }
+          : { base: 'bg-50', dark: 'bg-900' }
+      }
       className={clsx(
         styles.base,
         isInteractive && styles.interactive,
         className
       )}
+      display="block"
+      p="md"
+      position="relative"
+      rounded="lg"
+      style={{ boxShadow: 'var(--custom-shadow)', ...style }}
+      {...props}
     >
       {children}
-    </Component>
+    </Box>
   )
 }
 

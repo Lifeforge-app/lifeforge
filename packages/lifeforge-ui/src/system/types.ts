@@ -1,8 +1,10 @@
+import type { CSSProperties } from 'react'
+
 import type { ResponsiveProp } from './responsive'
-import type { SpaceToken } from './tokens.css'
+import type { SpaceToken } from './vars.css'
 
 // ============================================================================
-// Theme-condition types (Option A: prop-level dark/hover conditions)
+// Theme-condition types
 // ============================================================================
 
 /** The condition keys used in sprinkles for theme-adaptive props. */
@@ -19,8 +21,7 @@ export type ThemeCondition =
  * Mirrors the vanilla-extract sprinkles condition syntax.
  *
  * @example
- * bg="surface"                              // single value
- * bg={{ base: 'bg-50', dark: 'bg-900' }}   // per-condition
+ * bg={{ base: 'bg-50', dark: 'bg-900' }}
  */
 export type ThemeConditionProp<T> = T | Partial<Record<ThemeCondition, T>>
 
@@ -109,21 +110,11 @@ export interface LayoutProps
 // Value Types
 // ============================================================================
 
-export type PositionValue =
-  | 'static'
-  | 'relative'
-  | 'absolute'
-  | 'fixed'
-  | 'sticky'
+export type PositionValue = CSSProperties['position']
 
-export type OverflowValue = 'visible' | 'hidden' | 'scroll' | 'auto'
+export type OverflowValue = CSSProperties['overflow']
 
-export type DisplayValue =
-  | 'block'
-  | 'inline'
-  | 'inline-block'
-  | 'none'
-  | 'contents'
+export type DisplayValue = CSSProperties['display']
 
 export type FlexDisplayValue = 'none' | 'flex' | 'inline-flex'
 
