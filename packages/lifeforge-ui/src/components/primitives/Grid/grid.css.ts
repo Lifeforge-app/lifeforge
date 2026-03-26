@@ -2,6 +2,7 @@ import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
 import { defaultCondition, responsiveConditions, vars } from '../../../system'
+import { commonProperties } from '../styles/common.css'
 
 export const gridBase = recipe({
   base: {
@@ -30,6 +31,6 @@ const gridProperties = defineProperties({
   }
 })
 
-export const gridSprinkles = createSprinkles(gridProperties)
+export const gridSprinkles = createSprinkles(gridProperties, commonProperties)
 
 export type GridSprinkles = Parameters<typeof gridSprinkles>[0]

@@ -2,6 +2,7 @@
 import { usePersonalization } from 'shared'
 
 import TagChip from './TagChip'
+import { Flex } from '@components/primitives'
 
 interface HeaderFilterProps<
   T extends Record<string, string | string[] | null>
@@ -59,70 +60,70 @@ function TagsFilter<T extends Record<string, string | string[] | null>>({
   }
 
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-2">
+    <Flex align="center" gap="sm" wrap="wrap">
       {Object.entries(items).map(([query, { data, isColored }]) => {
         return values[query]
           ? (() => {
-              const target = Array.isArray(values[query])
-                ? data.filter(d => (values[query] as string[]).includes(d.id))
-                : data.find(d => d.id === values[query])
+            const target = Array.isArray(values[query])
+              ? data.filter(d => (values[query] as string[]).includes(d.id))
+              : data.find(d => d.id === values[query])
 
-              if (
-                target === undefined ||
-                (Array.isArray(target) && target.length === 0)
-              ) {
-                return null
-              }
+            if (
+              target === undefined ||
+              (Array.isArray(target) && target.length === 0)
+            ) {
+              return null
+            }
 
-              if (Array.isArray(target)) {
-                return target.map(t => (
-                  <TagChip
-                    key={t.id}
-                    actionButtonProps={{
-                      icon: 'tabler:x',
-                      onClick: () => {
-                        const newValues = (values[query] as string[]).filter(
-                          v => v !== t.id
-                        )
-
-                        onChange[query](
-                          (newValues.length > 0 ? newValues : null) as any
-                        )
-                      }
-                    }}
-                    color={
-                      isColored === true
-                        ? (t.color ?? derivedThemeColor)
-                        : undefined
-                    }
-                    icon={t.icon ?? ''}
-                    label={t.label ?? ''}
-                  />
-                ))
-              }
-
-              return (
+            if (Array.isArray(target)) {
+              return target.map(t => (
                 <TagChip
-                  key={query}
+                  key={t.id}
                   actionButtonProps={{
                     icon: 'tabler:x',
                     onClick: () => {
-                      onChange[query](null as any)
+                      const newValues = (values[query] as string[]).filter(
+                        v => v !== t.id
+                      )
+
+                      onChange[query](
+                        (newValues.length > 0 ? newValues : null) as any
+                      )
                     }
                   }}
                   color={
                     isColored === true
-                      ? (target.color ?? derivedThemeColor)
+                      ? (t.color ?? derivedThemeColor)
                       : undefined
                   }
-                  icon={target.icon ?? ''}
-                  label={target.label ?? ''}
+                  icon={t.icon ?? ''}
+                  label={t.label ?? ''}
                 />
-              )
-            })()
+              ))
+            }
+
+            return (
+              <TagChip
+                key={query}
+                actionButtonProps={{
+                  icon: 'tabler:x',
+                  onClick: () => {
+                    onChange[query](null as any)
+                  }
+                }}
+                color={
+                  isColored === true
+                    ? (target.color ?? derivedThemeColor)
+                    : undefined
+                }
+                icon={target.icon ?? ''}
+                label={target.label ?? ''}
+              />
+            )
+          })()
           : null
       })}
-    </div>
+    </Flex>
   )
 }
 

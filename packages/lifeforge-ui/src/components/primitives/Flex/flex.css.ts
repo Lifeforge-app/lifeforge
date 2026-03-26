@@ -2,6 +2,7 @@ import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
 import { defaultCondition, responsiveConditions, vars } from '../../../system'
+import { commonProperties } from '../styles/common.css'
 
 export const flexBase = recipe({
   base: {
@@ -23,7 +24,7 @@ const flexProperties = defineProperties({
       'space-evenly',
       'flex-end'
     ],
-    alignItems: ['stretch', 'center', 'flex-start', 'flex-end'],
+    alignItems: ['stretch', 'center', 'flex-start', 'flex-end', 'baseline'],
     gap: vars.space,
     rowGap: vars.space,
     columnGap: vars.space,
@@ -33,6 +34,6 @@ const flexProperties = defineProperties({
   }
 })
 
-export const flexSprinkles = createSprinkles(flexProperties)
+export const flexSprinkles = createSprinkles(flexProperties, commonProperties)
 
 export type FlexSprinkles = Parameters<typeof flexSprinkles>[0]
