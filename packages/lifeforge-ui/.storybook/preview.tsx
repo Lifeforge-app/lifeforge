@@ -52,6 +52,19 @@ function MainElement({
 const withBodyClass = (Story: any, context: any) => {
   useEffect(() => {
     const body = document.body
+
+    const allBgTemps = [
+      'bg-slate',
+      'bg-gray',
+      'bg-zinc',
+      'bg-neutral',
+      'bg-stone'
+    ]
+    body.classList.remove(...allBgTemps)
+    if (context.globals.bgTemp) {
+      body.classList.add(context.globals.bgTemp)
+    }
+
     document.querySelectorAll('.sbdocs-preview').forEach(preview => {
       preview.classList.remove('bg-black!', 'bg-white!', 'border-bg-800!')
 
@@ -114,20 +127,21 @@ const withBodyClass = (Story: any, context: any) => {
     html.classList.add(
       context.globals.theme === 'dark' ? 'bg-black!' : 'bg-white!'
     )
-  }, [context.globals.theme])
+  }, [context.globals.theme, context.globals.bgTemp])
 
   return (
     <APIEndpointProvider endpoint={'https://lifeforge-api-proxy.onrender.com'}>
       <QueryClientProvider client={queryClient}>
         <div id="body" className="flex-center h-full flex-col transition-all">
           <PersonalizationProvider
-            key={`${context.globals.themeColor}-${context.globals.fontScale}`}
+            key={`${context.globals.themeColor}-${context.globals.fontScale}-${context.globals.bgTemp}`}
             forgeAPI={forgeAPI}
             defaultValueOverride={{
               rawThemeColor: context.globals.themeColor || '#a9d066',
               theme: context.globals.theme,
               rootElement: document.body,
-              fontScale: context.globals.fontScale || 1
+              fontScale: context.globals.fontScale || 1,
+              bgTemp: context.globals.bgTemp || 'bg-zinc'
             }}
           >
             <ToastProvider>
@@ -241,13 +255,31 @@ const preview: Preview = {
         showName: true,
         dynamicTitle: true
       }
+    },
+    bgTemp: {
+      name: 'BG Temp',
+      description: 'Background color temperature',
+      defaultValue: 'bg-zinc',
+      toolbar: {
+        icon: 'contrast',
+        items: [
+          { value: 'bg-slate', title: 'Slate', left: '🪨' },
+          { value: 'bg-gray', title: 'Gray', left: '🩶' },
+          { value: 'bg-zinc', title: 'Zinc', left: '⚙️' },
+          { value: 'bg-neutral', title: 'Neutral', left: '⬜' },
+          { value: 'bg-stone', title: 'Stone', left: '🪵' }
+        ],
+        showName: true,
+        dynamicTitle: true
+      }
     }
   },
   tags: ['autodocs'],
   initialGlobals: {
     theme: 'light',
     themeColor: '#4caf50',
-    fontScale: 1
+    fontScale: 1,
+    bgTemp: 'bg-zinc'
   }
 }
 
