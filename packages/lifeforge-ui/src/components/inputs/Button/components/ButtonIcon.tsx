@@ -2,6 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { memo, useMemo } from 'react'
 
+import { buttonIconStyle } from '../button.css'
+
 function ButtonIcon({
   icon,
   disabled,
@@ -25,10 +27,10 @@ function ButtonIcon({
     }
 
     return icon
-  }, [icon, disabled, loading])
+  }, [icon, disabled, loading, hasChildren])
 
   return (
-    <Icon className={clsx('size-5 shrink-0', iconClassName)} icon={finalIcon} />
+    <Icon className={clsx(buttonIconStyle, iconClassName)} icon={finalIcon} />
   )
 }
 
