@@ -1,6 +1,9 @@
 import { style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
+import { bg, custom } from '@/styles/vanilla-extract'
+import { vars } from '@/system'
+
 export const checkboxWrapperStyle = style({
   display: 'flex',
   alignItems: 'center',
@@ -14,11 +17,11 @@ export const checkboxRootRecipe = recipe({
     justifyContent: 'center',
     position: 'relative',
     zIndex: 50,
-    width: '1.5rem', // 6
-    height: '1.5rem', // 6
+    width: vars.space.lg,
+    height: vars.space.lg,
     flexShrink: 0,
     cursor: 'pointer',
-    borderRadius: '0.375rem', // rounded-md
+    borderRadius: vars.radii.md,
     borderWidth: '2px',
     borderStyle: 'solid',
     transition: 'all 150ms ease-in-out',
@@ -28,39 +31,39 @@ export const checkboxRootRecipe = recipe({
         opacity: 0.5
       },
       '&[data-state="checked"]': {
-        borderColor: 'var(--color-custom-500)',
-        backgroundColor: 'var(--color-custom-500)'
+        borderColor: custom[500],
+        backgroundColor: custom[500]
       },
       '&[data-state="unchecked"]': {
-        borderColor: 'var(--color-bg-300)',
+        borderColor: bg[300],
         backgroundColor: 'transparent'
       },
       '.dark &[data-state="unchecked"]': {
-        borderColor: 'var(--color-bg-600)'
+        borderColor: bg[600]
       },
       '&[data-state="unchecked"]:hover': {
-        borderColor: 'var(--color-bg-500)'
+        borderColor: bg[500]
       },
       '.dark &[data-state="unchecked"]:hover': {
-        borderColor: 'var(--color-bg-200)'
+        borderColor: bg[200]
       }
     }
   }
 })
 
 export const checkboxIndicatorStyle = style({
-  width: '1.25rem', // 5
-  height: '1.25rem', // 5
+  width: vars.space.lg,
+  height: vars.space.lg,
   strokeWidth: '0.5px',
-  transition: 'all 150ms ease-in-out'
-})
-
-export const checkboxIndicatorLightStyle = style({
-  color: 'var(--color-bg-900)',
-  stroke: 'var(--color-bg-900)'
-})
-
-export const checkboxIndicatorDarkStyle = style({
-  color: 'var(--color-bg-100)',
-  stroke: 'var(--color-bg-100)'
+  transition: 'all 150ms ease-in-out',
+  selectors: {
+    '&.light': {
+      color: bg[900],
+      stroke: bg[900]
+    },
+    '&.dark': {
+      color: bg[100],
+      stroke: bg[100]
+    }
+  }
 })
