@@ -4,6 +4,30 @@
 export type Breakpoint = 'base' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 /**
+ * Tailwind CSS-compatible breakpoint conditions for vanilla-extract sprinkles.
+ * Use this with `defineProperties` to create responsive sprinkles.
+ *
+ * @example
+ * ```ts
+ * const myProperties = defineProperties({
+ *   conditions: responsiveConditions,
+ *   defaultCondition: 'base',
+ *   properties: {
+ *     // your properties here
+ *   }
+ * })
+ * ```
+ */
+export const responsiveConditions = {
+  base: {},
+  sm: { '@media': '(min-width: 640px)' },
+  md: { '@media': '(min-width: 768px)' },
+  lg: { '@media': '(min-width: 1024px)' },
+  xl: { '@media': '(min-width: 1280px)' },
+  '2xl': { '@media': '(min-width: 1536px)' }
+} as const satisfies Record<Breakpoint, object>
+
+/**
  * Responsive prop type - allows a single value or an object with breakpoint keys
  */
 export type ResponsiveProp<T> = T | { [K in Breakpoint]?: T }

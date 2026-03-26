@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { anyColorToHex } from 'shared'
 
-import { Flex } from '@components/primitives'
+import { Box, Flex } from '@components/primitives'
 
 import * as styles from '../Widget.css'
 
@@ -47,31 +47,28 @@ export default function WidgetIcon({
   }
 
   return (
-    <Flex
-      align="center"
-      className={clsx(
-        styles.defaultIconWrapper,
-        description
-          ? styles.defaultIconWrapperWithDesc
-          : styles.defaultIconWrapperNoDesc,
-        !iconColor && styles.defaultIconWrapperNoColor
-      )}
-      flexShrink="0"
-      justify="center"
-      style={
-        iconColor
-          ? { backgroundColor: anyColorToHex(iconColor) + '20' }
-          : undefined
-      }
-    >
-      <Icon
-        className={clsx(
-          styles.defaultIcon,
-          !iconColor && styles.defaultIconNoColor
-        )}
-        icon={icon}
-        style={iconColor ? { color: iconColor } : undefined}
-      />
-    </Flex>
+    <Box asChild rounded="md">
+      <Flex
+        align="center"
+        className={clsx(!iconColor && styles.defaultIconWrapperNoColor)}
+        flexShrink="0"
+        height={description ? '2.75rem' : '2.25rem'}
+        justify="center"
+        style={
+          iconColor
+            ? { backgroundColor: anyColorToHex(iconColor) + '20' }
+            : undefined
+        }
+        width={description ? '2.75rem' : '2.25rem'}
+      >
+        <Icon
+          className={clsx(!iconColor && styles.defaultIconNoColor)}
+          height="1.25rem"
+          icon={icon}
+          style={iconColor ? { color: iconColor } : undefined}
+          width="1.25rem"
+        />
+      </Flex>
+    </Box>
   )
 }

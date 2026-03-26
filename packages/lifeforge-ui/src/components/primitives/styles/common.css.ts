@@ -1,6 +1,6 @@
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { defaultCondition, responsiveConditions, vars } from '../../../system'
+import { colors, responsiveConditions, vars } from '@/system'
 
 /**
  * Shared CSS properties used by all layout primitives (Box, Flex, Grid, Section).
@@ -8,7 +8,7 @@ import { defaultCondition, responsiveConditions, vars } from '../../../system'
  */
 export const commonProperties = defineProperties({
   conditions: responsiveConditions,
-  defaultCondition,
+  defaultCondition: 'base',
   properties: {
     position: ['static', 'relative', 'absolute', 'fixed', 'sticky'],
     overflow: ['visible', 'hidden', 'scroll', 'auto'],
@@ -22,6 +22,29 @@ export const commonProperties = defineProperties({
     marginBottom: vars.space,
     marginLeft: vars.space,
     marginRight: vars.space
+  }
+})
+
+/**
+ * Theme-aware color properties shared by all container primitives.
+ * Supports dark / hover / has-bg-image conditions so components can express
+ * full adaptive colours directly in JSX props instead of selector blocks.
+ *
+ * @example
+ * <Box bg={{ base: 'bg-50', dark: 'bg-900', hover: 'surface-hover' }} />
+ */
+export const themeColorProperties = defineProperties({
+  conditions: {
+    base: {},
+    dark: { selector: '.dark &' },
+    hover: { selector: '&:hover' },
+    darkHover: { selector: '.dark &:hover' },
+    hasBgImage: { selector: '.has-bg-image &' },
+    darkHasBgImage: { selector: '.dark .has-bg-image &' }
+  },
+  defaultCondition: 'base',
+  properties: {
+    backgroundColor: colors
   }
 })
 
