@@ -65,56 +65,70 @@ function TagChip({
       : {}
 
   return (
-    <Box
-      as="span"
-      className={clsx(
-        color === undefined &&
-          (variant === 'outlined' ? noColorOutlined : noColorFilled),
-        onClick && interactiveClass
-      )}
-      px="sm"
-      py="xs"
-      rounded="full"
-      style={computedStyle}
-      onClick={onClick}
+    <Text
+      asChild
+      color={
+        color === undefined
+          ? { base: 'bg-500', dark: 'bg-400' }
+          : { dark: 'bg-500' }
+      }
     >
-      <Flex align="center" flexShrink="0" gap="sm">
-        {(() => {
-          if (!icon) return null
-
-          if (icon.startsWith('customHTML:')) {
-            if (icon.replace(/^customHTML:/, '') === '') return null
-
-            return (
-              <Flex as="span" height="md" width="md">
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: icon.replace(/^customHTML:/, '')
-                  }}
-                />
-              </Flex>
-            )
-          } else {
-            return <Icon height="1em" icon={icon} width="1em" />
-          }
-        })()}
-        {typeof label === 'string' ? (
-          <Text truncate size="sm">
-            {label}
-          </Text>
-        ) : (
-          label
+      <Box
+        as="span"
+        bg={
+          color === undefined
+            ? { base: 'bg-50' }
+            : { base: 'bg-200', dark: 'bg-800' }
+        }
+        className={clsx(
+          color === undefined &&
+            (variant === 'outlined' ? noColorOutlined : noColorFilled),
+          onClick && interactiveClass
         )}
-        {actionButtonProps && (
-          <>
-            <Box as="span" width="xs" />
-            <button onClick={actionButtonProps.onClick}>
-              <Icon height="1em" icon={actionButtonProps.icon} width="1em" />
-            </button>
-          </>
-        )}
-      </Flex>
-    </Box>
+        px="sm"
+        py="xs"
+        rounded="full"
+        style={computedStyle}
+        onClick={onClick}
+      >
+        <Flex align="center" flexShrink="0" gap="sm">
+          {(() => {
+            if (!icon) return null
+
+            if (icon.startsWith('customHTML:')) {
+              if (icon.replace(/^customHTML:/, '') === '') return null
+
+              return (
+                <Flex as="span" height="md" width="md">
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: icon.replace(/^customHTML:/, '')
+                    }}
+                  />
+                </Flex>
+              )
+            } else {
+              return <Icon height="1em" icon={icon} width="1em" />
+            }
+          })()}
+          {typeof label === 'string' ? (
+            <Text truncate size="sm">
+              {label}
+            </Text>
+          ) : (
+            label
+          )}
+          {actionButtonProps && (
+            <>
+              <Box as="span" width="xs" />
+              <button onClick={actionButtonProps.onClick}>
+                <Icon height="1em" icon={actionButtonProps.icon} width="1em" />
+              </button>
+            </>
+          )}
+        </Flex>
+      </Box>
+    </Text>
   )
 }
 

@@ -17,6 +17,7 @@ import {
 
 import { type BoxSprinkles, boxBase, boxSprinkles } from '../Box/box.css'
 import { Slot } from '../Slot'
+import { shadowClass } from '../styles/common.css'
 
 type ContainerSize = '1' | '2' | '3' | '4'
 
@@ -28,6 +29,7 @@ interface ContainerOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   asChild?: boolean
   ref?: Ref<HTMLElement>
   size?: ResponsiveProp<ContainerSize>
+  shadow?: boolean
   className?: string
   style?: CSSProperties
   children?: ReactNode
@@ -50,6 +52,7 @@ export function Container<T extends ElementType = typeof DEFAULT_ELEMENT>({
   asChild = false,
   ref,
   size = '4',
+  shadow,
   // Layout props (CSS string - responsive)
   width,
   minWidth,
@@ -178,6 +181,7 @@ export function Container<T extends ElementType = typeof DEFAULT_ELEMENT>({
         boxBase(),
         sprinklesClassName,
         responsiveStyles.className,
+        shadow && shadowClass,
         className
       )}
       style={mergedStyle}
