@@ -60,6 +60,7 @@ export interface SizeProps {
 
 export interface PositionProps {
   position?: ResponsiveProp<PositionValue>
+  zIndex?: ResponsiveProp<string>
   inset?: ResponsiveProp<string>
   top?: ResponsiveProp<string>
   right?: ResponsiveProp<string>
@@ -74,6 +75,7 @@ export interface OverflowProps {
 }
 
 export interface FlexChildProps {
+  flex?: ResponsiveProp<string>
   flexBasis?: ResponsiveProp<string>
   flexGrow?: ResponsiveProp<string>
   flexShrink?: ResponsiveProp<string>

@@ -26,6 +26,7 @@ const responsiveProps = [
   { className: 'lf-r', property: 'right', customProp: '--lf-r' },
   { className: 'lf-b', property: 'bottom', customProp: '--lf-b' },
   { className: 'lf-l', property: 'left', customProp: '--lf-l' },
+  { className: 'lf-fl', property: 'flex', customProp: '--lf-fl' },
   { className: 'lf-fb', property: 'flexBasis', customProp: '--lf-fb' },
   { className: 'lf-fg', property: 'flexGrow', customProp: '--lf-fg' },
   { className: 'lf-fs', property: 'flexShrink', customProp: '--lf-fs' },
@@ -41,7 +42,8 @@ const responsiveProps = [
     property: 'gridTemplateColumns',
     customProp: '--lf-gtc'
   },
-  { className: 'lf-gtr', property: 'gridTemplateRows', customProp: '--lf-gtr' }
+  { className: 'lf-gtr', property: 'gridTemplateRows', customProp: '--lf-gtr' },
+  { className: 'lf-zi', property: 'zIndex', customProp: '--lf-zi' }
 ] as const
 
 // Breakpoint media queries
