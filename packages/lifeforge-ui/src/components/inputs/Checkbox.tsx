@@ -5,8 +5,6 @@ import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
 import {
-  checkboxIndicatorDarkStyle,
-  checkboxIndicatorLightStyle,
   checkboxIndicatorStyle,
   checkboxRootRecipe,
   checkboxWrapperStyle
@@ -47,9 +45,7 @@ function Checkbox({
           <Icon
             className={clsx(
               checkboxIndicatorStyle,
-              tinycolor(derivedThemeColor).isDark()
-                ? checkboxIndicatorDarkStyle
-                : checkboxIndicatorLightStyle
+              tinycolor(derivedThemeColor).isDark() ? 'dark' : 'light'
             )}
             icon="uil:check"
           />
