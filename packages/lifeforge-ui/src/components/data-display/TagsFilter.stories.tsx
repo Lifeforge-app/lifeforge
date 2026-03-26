@@ -3,6 +3,7 @@ import { useState } from 'react'
 import colors from 'tailwindcss/colors'
 
 import { Button } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 import TagsFilter from './TagsFilter'
 
@@ -94,21 +95,33 @@ export const SingleFilter: Story = {
     const [category, setCategory] = useState<string | null>('work')
 
     return (
-      <div className="w-[60vw]">
-        <header className="flex-between mb-2 flex w-full">
-          <div className="flex min-w-0 items-end">
-            <h1 className="truncate text-2xl font-semibold lg:text-3xl">
+      <div style={{ width: '60vw' }}>
+        <Flex as="header" justify="between" mb="md">
+          <Flex align="end" minWidth="0">
+            <Text
+              truncate
+              as="h1"
+              size={{
+                base: '2xl',
+                lg: '3xl'
+              }}
+              weight="semibold"
+            >
               All Tasks
-            </h1>
-            <span className="text-bg-500 mr-8 ml-2 text-base">(87)</span>
-          </div>
-          <Button
-            className="lg:hidden"
-            icon="tabler:menu"
-            variant="plain"
-            onClick={() => {}}
-          />
-        </header>
+            </Text>
+            <Text color="muted" ml="sm">
+              (87)
+            </Text>
+          </Flex>
+          <Box
+            display={{
+              base: 'block',
+              lg: 'none'
+            }}
+          >
+            <Button icon="tabler:menu" variant="plain" onClick={() => {}} />
+          </Box>
+        </Flex>
         <TagsFilter
           {...args}
           values={{ category }}
@@ -140,21 +153,25 @@ export const MultipleFilters: Story = {
     const [status, setStatus] = useState<string | null>('active')
 
     return (
-      <div className="w-[60vw]">
-        <header className="flex-between mb-2 flex w-full">
-          <div className="flex min-w-0 items-end">
-            <h1 className="truncate text-2xl font-semibold lg:text-3xl">
+      <div style={{ width: '60vw' }}>
+        <Flex as="header" justify="between" mb="md">
+          <Flex align="end" minWidth="0">
+            <Text
+              truncate
+              as="h1"
+              size={{ base: '2xl', lg: '3xl' }}
+              weight="semibold"
+            >
               All Tasks
-            </h1>
-            <span className="text-bg-500 mr-8 ml-2 text-base">(87)</span>
-          </div>
-          <Button
-            className="lg:hidden"
-            icon="tabler:menu"
-            variant="plain"
-            onClick={() => {}}
-          />
-        </header>
+            </Text>
+            <Text color="muted" ml="sm">
+              (87)
+            </Text>
+          </Flex>
+          <Box display={{ base: 'block', lg: 'none' }}>
+            <Button icon="tabler:menu" variant="plain" onClick={() => {}} />
+          </Box>
+        </Flex>
         <TagsFilter
           {...args}
           values={{ category, status }}
@@ -185,21 +202,25 @@ export const ArrayFilters: Story = {
     ])
 
     return (
-      <div className="w-[60vw]">
-        <header className="flex-between mb-2 flex w-full">
-          <div className="flex min-w-0 items-end">
-            <h1 className="truncate text-2xl font-semibold lg:text-3xl">
+      <div style={{ width: '60vw' }}>
+        <Flex as="header" justify="between" mb="md">
+          <Flex align="end" minWidth="0">
+            <Text
+              truncate
+              as="h1"
+              size={{ base: '2xl', lg: '3xl' }}
+              weight="semibold"
+            >
               All Tasks
-            </h1>
-            <span className="text-bg-500 mr-8 ml-2 text-base">(87)</span>
-          </div>
-          <Button
-            className="lg:hidden"
-            icon="tabler:menu"
-            variant="plain"
-            onClick={() => {}}
-          />
-        </header>
+            </Text>
+            <Text color="muted" ml="sm">
+              (87)
+            </Text>
+          </Flex>
+          <Box display={{ base: 'block', lg: 'none' }}>
+            <Button icon="tabler:menu" variant="plain" onClick={() => {}} />
+          </Box>
+        </Flex>
         <TagsFilter
           {...args}
           values={{ categories }}
@@ -227,21 +248,25 @@ export const Uncolored: Story = {
     const [categories, setCategories] = useState<string | null>('work')
 
     return (
-      <div className="w-[60vw]">
-        <header className="flex-between mb-2 flex w-full">
-          <div className="flex min-w-0 items-end">
-            <h1 className="truncate text-2xl font-semibold lg:text-3xl">
+      <div style={{ width: '60vw' }}>
+        <Flex as="header" justify="between" mb="md">
+          <Flex align="end" minWidth="0">
+            <Text
+              truncate
+              as="h1"
+              size={{ base: '2xl', lg: '3xl' }}
+              weight="semibold"
+            >
               All Tasks
-            </h1>
-            <span className="text-bg-500 mr-8 ml-2 text-base">(87)</span>
-          </div>
-          <Button
-            className="lg:hidden"
-            icon="tabler:menu"
-            variant="plain"
-            onClick={() => {}}
-          />
-        </header>
+            </Text>
+            <Text color="muted" ml="sm">
+              (87)
+            </Text>
+          </Flex>
+          <Box display={{ base: 'block', lg: 'none' }}>
+            <Button icon="tabler:menu" variant="plain" onClick={() => {}} />
+          </Box>
+        </Flex>
         <TagsFilter
           {...args}
           values={{ categories }}
