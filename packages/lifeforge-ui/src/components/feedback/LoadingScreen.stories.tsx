@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Box } from '@components/primitives'
+
 import LoadingScreen from './LoadingScreen'
 
 const meta = {
@@ -10,42 +12,33 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-/**
- * A loading screen with just the default spinner.
- */
 export const Default: Story = {
   args: {},
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <LoadingScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * A loading screen with custom message.
- */
 export const WithMessage: Story = {
   args: {
     message: 'Loading your data...'
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <LoadingScreen {...args} />
-    </div>
+    </Box>
   )
 }
 
-/**
- * A loading screen with longer custom message.
- */
 export const LongMessage: Story = {
   args: {
     message: 'Please wait while we load your content. This may take a moment.'
   },
   render: args => (
-    <div className="h-96 w-full">
+    <Box height="24rem" width="100%">
       <LoadingScreen {...args} />
-    </div>
+    </Box>
   )
 }
