@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
+import { Flex } from '@components/primitives'
+
 import TagChip from './TagChip'
 
 const meta = {
@@ -30,10 +32,10 @@ export const Default: Story = {
     label: 'JavaScript'
   },
   render: args => (
-    <div className="flex-center h-full w-full gap-2">
+    <Flex align="center" gap="sm" height="full" justify="center" width="full">
       <TagChip {...args} />
       <TagChip {...args} variant="filled" />
-    </div>
+    </Flex>
   )
 }
 
@@ -46,10 +48,10 @@ export const WithIcon: Story = {
     icon: 'tabler:brand-react'
   },
   render: args => (
-    <div className="flex-center h-full w-full gap-2">
+    <Flex align="center" gap="sm" height="full" justify="center" width="full">
       <TagChip {...args} />
       <TagChip {...args} variant="filled" />
-    </div>
+    </Flex>
   )
 }
 
@@ -63,10 +65,10 @@ export const WithColor: Story = {
     color: 'oklch(0.55 0.18 248)'
   },
   render: args => (
-    <div className="flex-center h-full w-full gap-2">
+    <Flex align="center" gap="sm" height="full" justify="center" width="full">
       <TagChip {...args} />
       <TagChip {...args} variant="filled" />
-    </div>
+    </Flex>
   )
 }
 
@@ -84,10 +86,10 @@ export const WithActionButton: Story = {
     }
   },
   render: args => (
-    <div className="flex-center h-full w-full gap-2">
+    <Flex align="center" gap="sm" height="full" justify="center" width="full">
       <TagChip {...args} />
       <TagChip {...args} variant="filled" />
-    </div>
+    </Flex>
   )
 }
 
@@ -99,8 +101,15 @@ export const MultipleTags: Story = {
     label: ''
   },
   render: () => (
-    <div className="flex-center h-full w-full flex-col gap-2">
-      <div className="flex items-center gap-2">
+    <Flex
+      align="center"
+      direction="column"
+      gap="sm"
+      height="full"
+      justify="center"
+      width="full"
+    >
+      <Flex align="center" gap="sm">
         <TagChip icon="tabler:brand-react" label="React" />
         <TagChip
           color="oklch(0.55 0.18 248)"
@@ -117,8 +126,8 @@ export const MultipleTags: Story = {
           icon="tabler:brand-angular"
           label="Angular"
         />
-      </div>
-      <div className="flex items-center gap-2">
+      </Flex>
+      <Flex align="center" gap="sm">
         <TagChip icon="tabler:brand-react" label="React" variant="filled" />
         <TagChip
           color="oklch(0.55 0.18 248)"
@@ -138,8 +147,8 @@ export const MultipleTags: Story = {
           label="Angular"
           variant="filled"
         />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -150,14 +159,14 @@ export const ClickableTag: Story = {
     color: 'oklch(0.6 0.2 220)'
   },
   render: args => (
-    <div className="flex-center h-full w-full">
+    <Flex align="center" height="full" justify="center" width="full">
       <TagChip
         {...args}
         onClick={() => {
           alert('Tag clicked!')
         }}
       />
-    </div>
+    </Flex>
   )
 }
 
@@ -184,7 +193,7 @@ export const SelectableTags: Story = {
     }
 
     return (
-      <div className="flex-center h-full w-full gap-2">
+      <Flex align="center" gap="sm" height="full" justify="center" width="full">
         {tags.map(tag => (
           <TagChip
             key={tag}
@@ -201,7 +210,7 @@ export const SelectableTags: Story = {
             onClick={() => toggleTag(tag)}
           />
         ))}
-      </div>
+      </Flex>
     )
   }
 }
