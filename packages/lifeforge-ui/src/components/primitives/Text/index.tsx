@@ -7,9 +7,14 @@ import {
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
+import {
+  type MarginProps,
+  type PaddingProps,
+  type ResponsiveProp,
+  normalizeResponsiveProp
+} from '@/system'
+
 import { Slot } from '../Slot'
-import type { MarginProps, PaddingProps } from '../types'
 import { type TextSprinkles, textBase, textSprinkles } from './text.css'
 
 type TextSize =

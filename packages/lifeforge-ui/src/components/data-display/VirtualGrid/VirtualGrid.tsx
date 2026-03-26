@@ -21,8 +21,6 @@ export interface VirtualGridProps<T> {
   defaultRowHeight?: number
   /** Gap between items in pixels. Defaults to 12px (equivalent to gap-3 in Tailwind) */
   gap?: number
-  /** Additional CSS class names to apply to each row container */
-  rowClassName?: string
 }
 
 /**
@@ -36,8 +34,7 @@ function VirtualGrid<T>({
   getItemKey,
   itemMinWidth = 240,
   defaultRowHeight = 320,
-  gap = 12,
-  rowClassName = ''
+  gap = 12
 }: VirtualGridProps<T>) {
   const listRef = useRef<List>(null)
 
@@ -85,7 +82,6 @@ function VirtualGrid<T>({
                 >
                   <Box
                     as="div"
-                    className={rowClassName}
                     style={{
                       ...style,
                       display: 'grid',

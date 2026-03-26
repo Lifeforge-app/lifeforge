@@ -3,8 +3,10 @@ import clsx from 'clsx'
 import { formatHex, parse } from 'culori'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
-import { Flex, Text, Box } from '@components/primitives'
-import { interactiveClass, noColorOutlined, noColorFilled } from './TagChip.css'
+
+import { Box, Flex, Text } from '@components/primitives'
+
+import { interactiveClass, noColorFilled, noColorOutlined } from './TagChip.css'
 
 interface TagChipProps {
   /** The text label displayed on the tag chip. */
@@ -22,14 +24,9 @@ interface TagChipProps {
   }
   /** Optional click handler for the entire tag chip. */
   onClick?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
-  /** Additional class names to apply to the tag chip container. */
-  className?: string
-  /** Additional class names to apply to the icon. */
-  iconClassName?: string
 }
 
 // fallback classes have been replaced by vanilla-extract styles
-
 
 /**
  * A tag chip component that displays a label with an optional icon and customizable color.
@@ -40,9 +37,7 @@ function TagChip({
   color,
   variant = 'outlined',
   actionButtonProps,
-  onClick,
-  className,
-  iconClassName
+  onClick
 }: TagChipProps) {
   const { bgTempPalette } = usePersonalization()
 
@@ -54,30 +49,28 @@ function TagChip({
     convertedColor !== undefined
       ? variant === 'outlined'
         ? {
-          borderColor: tinycolor(convertedColor)
-            .setAlpha(0.25)
-            .toString(),
-          backgroundColor: tinycolor(convertedColor)
-            .setAlpha(0.125)
-            .toString(),
-          color
-        }
+            borderColor: tinycolor(convertedColor).setAlpha(0.25).toString(),
+            backgroundColor: tinycolor(convertedColor)
+              .setAlpha(0.125)
+              .toString(),
+            color
+          }
         : {
-          backgroundColor: convertedColor,
-          color: tinycolor(convertedColor).isLight()
-            ? bgTempPalette[800]
-            : bgTempPalette[100],
-          border: 'none'
-        }
+            backgroundColor: convertedColor,
+            color: tinycolor(convertedColor).isLight()
+              ? bgTempPalette[800]
+              : bgTempPalette[100],
+            border: 'none'
+          }
       : {}
 
   return (
     <Box
       as="span"
       className={clsx(
-        color === undefined && (variant === 'outlined' ? noColorOutlined : noColorFilled),
-        onClick && interactiveClass,
-        className
+        color === undefined &&
+          (variant === 'outlined' ? noColorOutlined : noColorFilled),
+        onClick && interactiveClass
       )}
       px="sm"
       py="xs"
@@ -93,7 +86,7 @@ function TagChip({
             if (icon.replace(/^customHTML:/, '') === '') return null
 
             return (
-              <Flex as="span" className={iconClassName} height="md" width="md">
+              <Flex as="span" height="md" width="md">
                 <span
                   dangerouslySetInnerHTML={{
                     __html: icon.replace(/^customHTML:/, '')
@@ -102,14 +95,7 @@ function TagChip({
               </Flex>
             )
           } else {
-            return (
-              <Icon
-                className={iconClassName}
-                height="1em"
-                icon={icon}
-                width="1em"
-              />
-            )
+            return <Icon height="1em" icon={icon} width="1em" />
           }
         })()}
         {typeof label === 'string' ? (
@@ -123,11 +109,7 @@ function TagChip({
           <>
             <Box as="span" width="xs" />
             <button onClick={actionButtonProps.onClick}>
-              <Icon
-                height="1em"
-                icon={actionButtonProps.icon}
-                width="1em"
-              />
+              <Icon height="1em" icon={actionButtonProps.icon} width="1em" />
             </button>
           </>
         )}

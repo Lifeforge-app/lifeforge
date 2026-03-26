@@ -7,11 +7,16 @@ import {
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
+import {
+  type LayoutProps,
+  type MarginProps,
+  type ResponsiveProp,
+  getResponsiveLayoutStyles,
+  normalizeResponsiveProp
+} from '@/system'
+
 import { type BoxSprinkles, boxBase, boxSprinkles } from '../Box/box.css'
 import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles } from '../propDefs'
-import { type LayoutProps, type MarginProps } from '../types'
 
 type ContainerSize = '1' | '2' | '3' | '4'
 

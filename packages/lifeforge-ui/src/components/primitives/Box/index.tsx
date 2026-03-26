@@ -7,37 +7,22 @@ import {
   type Ref
 } from 'react'
 
-import { type ResponsiveProp, normalizeResponsiveProp } from '../../../system'
+import {
+  type ColorToken,
+  type LayoutProps,
+  type MarginProps,
+  type RadiusToken,
+  type ResponsiveProp,
+  type ThemeConditionProp,
+  getResponsiveLayoutStyles,
+  normalizeResponsiveProp,
+  resolveCommonSprinkleProps
+} from '@/system'
+
 import { Slot } from '../Slot'
-import { getResponsiveLayoutStyles, resolveCommonSprinkleProps } from '../propDefs'
-import { type LayoutProps, type MarginProps } from '../types'
 import { type BoxSprinkles, boxBase, boxSprinkles } from './box.css'
 
-type BgColor =
-  | 'transparent'
-  | 'bg-50'
-  | 'bg-100'
-  | 'bg-200'
-  | 'bg-300'
-  | 'bg-400'
-  | 'bg-500'
-  | 'bg-600'
-  | 'bg-700'
-  | 'bg-800'
-  | 'bg-900'
-  | 'bg-950'
-  | 'custom-50'
-  | 'custom-100'
-  | 'custom-200'
-  | 'custom-300'
-  | 'custom-400'
-  | 'custom-500'
-  | 'custom-600'
-  | 'custom-700'
-  | 'custom-800'
-  | 'custom-900'
-
-type RadiusValue = 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | 'full'
+type RadiusValue = RadiusToken
 
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
 
@@ -49,7 +34,7 @@ interface BoxOwnProps<T extends ElementType = typeof DEFAULT_ELEMENT>
   asChild?: boolean
   ref?: Ref<HTMLElement>
   display?: ResponsiveProp<DisplayValue>
-  bg?: ResponsiveProp<BgColor>
+  bg?: ThemeConditionProp<ColorToken>
   rounded?: ResponsiveProp<RadiusValue>
   className?: string
   style?: CSSProperties
@@ -118,9 +103,30 @@ export function Box<T extends ElementType = typeof DEFAULT_ELEMENT>({
   // Build sprinkles className for tokenized props
   const sprinklesClassName = boxSprinkles({
     display: normalizeResponsiveProp(display) as BoxSprinkles['display'],
-    backgroundColor: normalizeResponsiveProp(bg) as BoxSprinkles['backgroundColor'],
-    borderRadius: normalizeResponsiveProp(rounded) as BoxSprinkles['borderRadius'],
-    ...resolveCommonSprinkleProps({ p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml, position, overflow, overflowX, overflowY })
+    backgroundColor: bg as BoxSprinkles['backgroundColor'],
+    borderRadius: normalizeResponsiveProp(
+      rounded
+    ) as BoxSprinkles['borderRadius'],
+    ...resolveCommonSprinkleProps({
+      p,
+      px,
+      py,
+      pt,
+      pr,
+      pb,
+      pl,
+      m,
+      mx,
+      my,
+      mt,
+      mr,
+      mb,
+      ml,
+      position,
+      overflow,
+      overflowX,
+      overflowY
+    })
   })
 
   // Build responsive styles for CSS string props (now with breakpoint support!)
