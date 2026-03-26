@@ -6,28 +6,28 @@
 
 /* TODO: TO BE REMOVED WHEN OFFICIALLY DITCH TAILWIND */
 @theme {
-  --color-custom-50: rgb(var(--color-custom-50));
-  --color-custom-100: rgb(var(--color-custom-100));
-  --color-custom-200: rgb(var(--color-custom-200));
-  --color-custom-300: rgb(var(--color-custom-300));
-  --color-custom-400: rgb(var(--color-custom-400));
-  --color-custom-500: rgb(var(--color-custom-500));
-  --color-custom-600: rgb(var(--color-custom-600));
-  --color-custom-700: rgb(var(--color-custom-700));
-  --color-custom-800: rgb(var(--color-custom-800));
-  --color-custom-900: rgb(var(--color-custom-900));
+  --color-custom-50: var(--color-custom-50-ch);
+  --color-custom-100: var(--color-custom-100-ch);
+  --color-custom-200: var(--color-custom-200-ch);
+  --color-custom-300: var(--color-custom-300-ch);
+  --color-custom-400: var(--color-custom-400-ch);
+  --color-custom-500: var(--color-custom-500-ch);
+  --color-custom-600: var(--color-custom-600-ch);
+  --color-custom-700: var(--color-custom-700-ch);
+  --color-custom-800: var(--color-custom-800-ch);
+  --color-custom-900: var(--color-custom-900-ch);
 
-  --color-bg-50: rgb(var(--color-bg-50)) !important;
-  --color-bg-100: rgb(var(--color-bg-100)) !important;
-  --color-bg-200: rgb(var(--color-bg-200)) !important;
-  --color-bg-300: rgb(var(--color-bg-300)) !important;
-  --color-bg-400: rgb(var(--color-bg-400)) !important;
-  --color-bg-500: rgb(var(--color-bg-500)) !important;
-  --color-bg-600: rgb(var(--color-bg-600)) !important;
-  --color-bg-700: rgb(var(--color-bg-700)) !important;
-  --color-bg-800: rgb(var(--color-bg-800)) !important;
-  --color-bg-900: rgb(var(--color-bg-900)) !important;
-  --color-bg-950: rgb(var(--color-bg-950)) !important;
+  --color-bg-50: var(--color-bg-50-ch) !important;
+  --color-bg-100: var(--color-bg-100-ch) !important;
+  --color-bg-200: var(--color-bg-200-ch) !important;
+  --color-bg-300: var(--color-bg-300-ch) !important;
+  --color-bg-400: var(--color-bg-400-ch) !important;
+  --color-bg-500: var(--color-bg-500-ch) !important;
+  --color-bg-600: var(--color-bg-600-ch) !important;
+  --color-bg-700: var(--color-bg-700-ch) !important;
+  --color-bg-800: var(--color-bg-800-ch) !important;
+  --color-bg-900: var(--color-bg-900-ch) !important;
+  --color-bg-950: var(--color-bg-950-ch) !important;
 
   --text-xs: calc(0.75rem * var(--custom-font-scale));
   --text-sm: calc(0.875rem * var(--custom-font-scale));
@@ -69,28 +69,28 @@
 }
 
 :root {
-  --color-custom-50: rgb(var(--color-custom-50));
-  --color-custom-100: rgb(var(--color-custom-100));
-  --color-custom-200: rgb(var(--color-custom-200));
-  --color-custom-300: rgb(var(--color-custom-300));
-  --color-custom-400: rgb(var(--color-custom-400));
-  --color-custom-500: rgb(var(--color-custom-500));
-  --color-custom-600: rgb(var(--color-custom-600));
-  --color-custom-700: rgb(var(--color-custom-700));
-  --color-custom-800: rgb(var(--color-custom-800));
-  --color-custom-900: rgb(var(--color-custom-900));
+  --color-custom-50: var(--color-custom-50-ch);
+  --color-custom-100: var(--color-custom-100-ch);
+  --color-custom-200: var(--color-custom-200-ch);
+  --color-custom-300: var(--color-custom-300-ch);
+  --color-custom-400: var(--color-custom-400-ch);
+  --color-custom-500: var(--color-custom-500-ch);
+  --color-custom-600: var(--color-custom-600-ch);
+  --color-custom-700: var(--color-custom-700-ch);
+  --color-custom-800: var(--color-custom-800-ch);
+  --color-custom-900: var(--color-custom-900-ch);
 
-  --color-bg-50: rgb(var(--color-bg-50)) !important;
-  --color-bg-100: rgb(var(--color-bg-100)) !important;
-  --color-bg-200: rgb(var(--color-bg-200)) !important;
-  --color-bg-300: rgb(var(--color-bg-300)) !important;
-  --color-bg-400: rgb(var(--color-bg-400)) !important;
-  --color-bg-500: rgb(var(--color-bg-500)) !important;
-  --color-bg-600: rgb(var(--color-bg-600)) !important;
-  --color-bg-700: rgb(var(--color-bg-700)) !important;
-  --color-bg-800: rgb(var(--color-bg-800)) !important;
-  --color-bg-900: rgb(var(--color-bg-900)) !important;
-  --color-bg-950: rgb(var(--color-bg-950)) !important;
+  --color-bg-50: var(--color-bg-50-ch) !important;
+  --color-bg-100: var(--color-bg-100-ch) !important;
+  --color-bg-200: var(--color-bg-200-ch) !important;
+  --color-bg-300: var(--color-bg-300-ch) !important;
+  --color-bg-400: var(--color-bg-400-ch) !important;
+  --color-bg-500: var(--color-bg-500-ch) !important;
+  --color-bg-600: var(--color-bg-600-ch) !important;
+  --color-bg-700: var(--color-bg-700-ch) !important;
+  --color-bg-800: var(--color-bg-800-ch) !important;
+  --color-bg-900: var(--color-bg-900-ch) !important;
+  --color-bg-950: var(--color-bg-950-ch) !important;
 
   --text-xs: calc(0.75rem * var(--custom-font-scale));
   --text-sm: calc(0.875rem * var(--custom-font-scale));
