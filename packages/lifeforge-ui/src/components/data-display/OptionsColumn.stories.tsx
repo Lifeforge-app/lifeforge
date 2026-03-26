@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { SliderInput, Switch } from '@components/inputs'
+import { Flex, Text } from '@components/primitives'
 import { Tooltip } from '@components/utilities'
 
 import OptionsColumn from './OptionsColumn'
@@ -36,7 +37,7 @@ export const Default: Story = {
     const [enabled, setEnabled] = useState(false)
 
     return (
-      <div className="w-[60vw]">
+      <div style={{ width: '60vw' }}>
         <OptionsColumn {...args}>
           <Switch value={enabled} onChange={setEnabled} />
         </OptionsColumn>
@@ -60,7 +61,7 @@ export const WithTooltip: Story = {
     const [enabled, setEnabled] = useState(true)
 
     return (
-      <div className="w-[60vw]">
+      <div style={{ width: '60vw' }}>
         <OptionsColumn {...args}>
           <Switch value={enabled} onChange={setEnabled} />
         </OptionsColumn>
@@ -82,7 +83,7 @@ export const Vertical: Story = {
   },
   render: args => {
     return (
-      <div className="w-[60vw]">
+      <div style={{ width: '60vw' }}>
         <OptionsColumn {...args}>
           <SliderInput
             label="Brightness"
@@ -115,7 +116,7 @@ export const MultipleColumns: Story = {
     const [darkMode, setDarkMode] = useState(true)
 
     return (
-      <div className="w-[60vw] space-y-3">
+      <Flex direction="column" gap="md" style={{ width: '60vw' }}>
         <OptionsColumn
           description="Receive notifications for important updates"
           icon="tabler:bell"
@@ -137,7 +138,7 @@ export const MultipleColumns: Story = {
         >
           <Switch value={darkMode} onChange={setDarkMode} />
         </OptionsColumn>
-      </div>
+      </Flex>
     )
   }
 }
@@ -154,9 +155,9 @@ export const NAColumn: Story = {
   },
   render: args => {
     return (
-      <div className="w-[60vw]">
+      <div style={{ width: '60vw' }}>
         <OptionsColumn {...args}>
-          <span className="text-bg-500">N/A</span>
+          <Text color="muted">N/A</Text>
           <Tooltip icon="tabler:info-circle" id="data-sync-na">
             Google Cloud API key (<code>gcloud</code>) is required for this
             feature, but it is not found in your API key vault. <br />
