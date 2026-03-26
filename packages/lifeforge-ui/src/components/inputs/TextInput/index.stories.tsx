@@ -1,5 +1,8 @@
+import { Icon } from '@iconify/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
+
+import { Flex, Text } from '@components/primitives'
 
 import TextInput from '.'
 
@@ -23,7 +26,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     icon: 'tabler:user',
-    label: 'Username Lorem Ipsum Dolor Sit Amet Consectectur Adisiplin Elit',
+    label: 'Username',
     placeholder: 'John Doe',
     onChange: () => {},
     value: '',
@@ -33,7 +36,11 @@ export const Default: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} value={value} onChange={onChange} />
+    return (
+      <div>
+        <TextInput {...args} value={value} onChange={onChange} />
+      </div>
+    )
   }
 }
 
@@ -50,7 +57,11 @@ export const PasswordInput: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} value={value} onChange={onChange} />
+    return (
+      <div>
+        <TextInput {...args} value={value} onChange={onChange} />
+      </div>
+    )
   }
 }
 
@@ -70,7 +81,11 @@ export const WithActionButton: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} value={value} onChange={onChange} />
+    return (
+      <div>
+        <TextInput {...args} value={value} onChange={onChange} />
+      </div>
+    )
   }
 }
 
@@ -88,6 +103,39 @@ export const Required: Story = {
   render: args => {
     const [value, onChange] = useState('')
 
-    return <TextInput {...args} value={value} onChange={onChange} />
+    return (
+      <div>
+        <TextInput {...args} value={value} onChange={onChange} />
+      </div>
+    )
+  }
+}
+
+export const PlainVariant: Story = {
+  args: {
+    icon: 'tabler:user',
+    label: 'Username',
+    placeholder: 'John Doe',
+    value: '',
+    namespace: '',
+    required: false,
+    variant: 'plain',
+    onChange: () => {}
+  },
+
+  render: args => {
+    const [value, onChange] = useState('')
+
+    return (
+      <Flex direction="column" gap="sm">
+        <Text asChild color="muted">
+          <Flex align="center" gap="sm">
+            <Icon height="16" icon="tabler:user" width="16" />
+            <Text weight="medium">Username</Text>
+          </Flex>
+        </Text>
+        <TextInput {...args} value={value} onChange={onChange} />
+      </Flex>
+    )
   }
 }

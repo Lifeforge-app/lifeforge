@@ -51,8 +51,6 @@
 }
 
 .sb-show-main {
-  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
-
   &.sb-main-padded {
     @apply p-0!;
   }

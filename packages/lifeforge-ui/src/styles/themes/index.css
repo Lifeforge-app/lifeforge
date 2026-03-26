@@ -6,8 +6,6 @@
 
 /* TODO: TO BE REMOVED WHEN OFFICIALLY DITCH TAILWIND */
 @theme {
-  --shadow-custom: var(--custom-shadow);
-
   --color-custom-50: rgb(var(--color-custom-50));
   --color-custom-100: rgb(var(--color-custom-100));
   --color-custom-200: rgb(var(--color-custom-200));
@@ -71,8 +69,6 @@
 }
 
 :root {
-  --shadow-custom: var(--custom-shadow);
-
   --color-custom-50: rgb(var(--color-custom-50));
   --color-custom-100: rgb(var(--color-custom-100));
   --color-custom-200: rgb(var(--color-custom-200));
@@ -140,8 +136,12 @@
   background-color: var(--color-bg-500);
 }
 
+@utility shadow-custom {
+  box-shadow: var(--custom-shadow);
+}
+
 body {
-  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
+  --custom-shadow: 2px 2px 6px 0px var(--color-bg-300);
 
   .dark &,
   &.dark {
