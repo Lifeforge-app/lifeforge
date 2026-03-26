@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import clsx from 'clsx'
 import _ from 'lodash'
+import { type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
+import tinycolor from 'tinycolor2'
 
-import { generateClassName } from './buttonUtils'
+import { buttonRecipe, buttonTextStyle } from './button.css'
 import ButtonIcon from './components/ButtonIcon'
 
 export interface ButtonProps {
@@ -31,6 +34,7 @@ export interface ButtonProps {
   namespace?: string
   /** Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   tProps?: Record<string, unknown>
+  style?: CSSProperties
 }
 
 type ButtonComponentProps<C extends React.ElementType = 'button'> = {
@@ -58,21 +62,29 @@ function Button<C extends React.ElementType = 'button'>({
   namespace = 'common.buttons',
   iconClassName,
   tProps,
+  style,
   ...props
 }: ButtonComponentProps<C>) {
   const { derivedThemeColor } = usePersonalization()
 
   const Component = as || 'button'
 
-  const finalClassName = generateClassName(
-    derivedThemeColor,
-    Boolean(children),
-    !!icon,
-    iconPosition === 'end',
-    dangerous,
+  const hasIconWithChildren = icon && children ? iconPosition : false
+
+  const recipeClassName = buttonRecipe({
     variant,
-    className || ''
-  )
+    dangerous,
+    hasIconWithChildren
+  })
+
+  const buttonStyle: CSSProperties = {
+    ...style,
+    ...(variant === 'primary' && {
+      '--button-text-color': tinycolor(derivedThemeColor).isLight()
+        ? 'var(--color-bg-800)'
+        : 'var(--color-bg-50)'
+    })
+  } as CSSProperties
 
   const { t } = useTranslation(namespace)
 
@@ -80,8 +92,9 @@ function Button<C extends React.ElementType = 'button'>({
     <Component
       {...(props as any)}
       ref={ref}
-      className={finalClassName}
+      className={clsx(recipeClassName, className)}
       disabled={loading || disabled}
+      style={buttonStyle}
       type="button"
       onClick={onClick}
     >
@@ -95,7 +108,7 @@ function Button<C extends React.ElementType = 'button'>({
         />
       )}
       {children && typeof children === 'string' ? (
-        <div className="min-w-0 truncate">
+        <div className={buttonTextStyle}>
           {t(
             [
               `${_.camelCase(children)}`,

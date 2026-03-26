@@ -3,6 +3,13 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 
+import {
+  inputWrapperContainerStyle,
+  inputWrapperErrorIconStyle,
+  inputWrapperErrorTextStyle,
+  inputWrapperRecipe
+} from '../input.css'
+
 function InputWrapper({
   className = '',
   variant = 'classic',
@@ -59,23 +66,17 @@ function InputWrapper({
     [inputRef]
   )
 
+  const wrapperClassName = inputWrapperRecipe({
+    variant,
+    size,
+    hasError: !!errorMsg,
+    disabled
+  })
+
   return (
-    <div className={clsx('flex-1 space-y-2', className)}>
+    <div className={clsx(inputWrapperContainerStyle, className)}>
       <div
-        className={clsx(
-          'group relative flex w-full shrink-0 items-center gap-1 transition-all',
-          variant === 'classic'
-            ? 'bg-bg-200/50 shadow-custom hover:bg-bg-200 component-bg-lighter-with-hover rounded-t-lg border-b-2 pl-6 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
-            : clsx(
-                'component-bg-lighter-with-hover rounded-lg',
-                size === 'small' ? 'p-2 px-3' : 'p-4 px-5'
-              ),
-          variant === 'classic' &&
-            (errorMsg
-              ? 'border-red-500 focus-within:border-red-500!'
-              : 'border-bg-500 in-[.bordered]:border-bg-500/20 focus-within:border-custom-500!'),
-          disabled ? 'pointer-events-none! opacity-50' : 'cursor-text'
-        )}
+        className={clsx('group', wrapperClassName)}
         role="button"
         tabIndex={0}
         onClick={focusInput}
@@ -85,12 +86,12 @@ function InputWrapper({
         {children}
         {errorMsg && (
           <Icon
-            className="mr-6 size-6 text-red-500"
+            className={inputWrapperErrorIconStyle}
             icon="tabler:alert-circle"
           />
         )}
       </div>
-      {errorMsg && <div className="px-6 text-sm text-red-500">{errorMsg}</div>}
+      {errorMsg && <div className={inputWrapperErrorTextStyle}>{errorMsg}</div>}
     </div>
   )
 }

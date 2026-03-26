@@ -108,7 +108,7 @@ export const Loading: Story = {
     icon: 'tabler:arrow-right',
     children: 'Loading',
     tProps: {},
-    iconPosition: 'end',
+    iconPosition: 'start',
     loading: true,
     disabled: false
   },
