@@ -67,10 +67,10 @@ export default function WidgetIcon({
           color={iconColor ? undefined : { base: 'bg-600', dark: 'bg-400' }}
         >
           <Icon
-            height="1.25rem"
+            height="1.25em"
             icon={icon}
             style={iconColor ? { color: iconColor } : undefined}
-            width="1.25rem"
+            width="1.25em"
           />
         </Text>
       </Flex>

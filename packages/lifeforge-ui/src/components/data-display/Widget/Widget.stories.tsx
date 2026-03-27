@@ -213,7 +213,7 @@ export const LargeIconVariant: Story = {
     variant: 'large-icon'
   },
   render: args => (
-    <Box minWidth="16rem">
+    <Box minWidth="16em">
       <Widget {...args}>
         <Text as="p" size="3xl" weight="semibold">
           69 days
