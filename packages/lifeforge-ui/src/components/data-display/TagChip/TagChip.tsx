@@ -76,9 +76,7 @@ function TagChip({
       <Box
         as="span"
         bg={
-          color === undefined
-            ? { base: 'bg-50' }
-            : { base: 'bg-200', dark: 'bg-800' }
+          color === undefined ? { base: 'bg-200', dark: 'bg-800' } : undefined
         }
         className={clsx(
           color === undefined &&
