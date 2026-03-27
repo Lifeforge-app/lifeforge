@@ -33,7 +33,7 @@ function LanguageSelector() {
       icon="tabler:language"
       title={t('languageSelector.title')}
     >
-      <WithQuery loaderSize="1.5rem" query={languagesQuery}>
+      <WithQuery loaderSize="1.5em" query={languagesQuery}>
         {langs => (
           <Listbox
             buttonContent={

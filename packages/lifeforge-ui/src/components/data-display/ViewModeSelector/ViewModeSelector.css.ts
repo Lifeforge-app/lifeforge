@@ -1,6 +1,6 @@
 import { style } from '@vanilla-extract/css'
 
-import { bg, vars, withOpacity } from '@/system'
+import { bg, withOpacity } from '@/system'
 
 // container styling (shadow, background, border, radius)
 export const container = style([
@@ -12,16 +12,6 @@ export const container = style([
     }
   }
 ])
-
-// padding/font sizes for each button variant
-export const optionSize = {
-  small: style({
-    padding: `${vars.space.xs} ${vars.space.sm}`
-  }),
-  default: style({
-    padding: `${vars.space.sm} ${vars.space.md}`
-  })
-}
 
 // styles applied when an option is active/selected
 export const optionActive = style({
