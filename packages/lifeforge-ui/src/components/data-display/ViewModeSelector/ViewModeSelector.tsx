@@ -36,7 +36,7 @@ function ViewModeSelector<
       align="center"
       bg={{ base: 'bg-50', dark: 'bg-900' }}
       className={styles.container}
-      gap="sm"
+      gap="xs"
       p={size === 'small' ? 'xs' : 'sm'}
       rounded="lg"
     >
@@ -52,16 +52,15 @@ function ViewModeSelector<
                   dark: 'bg-800'
                 }
               : {
-                  hover: 'bg-100',
+                  hover: 'bg-200',
                   darkHover: 'bg-900'
                 }
           }
-          className={clsx(
-            styles.optionSize[size],
-            value === currentMode && styles.optionActive
-          )}
+          className={clsx(value === currentMode && styles.optionActive)}
           flex="1"
           gap="sm"
+          px={size === 'small' ? 'sm' : 'md'}
+          py={size === 'small' ? 'xs' : 'sm'}
           rounded="md"
           style={{
             transition: 'all 0.2s'
@@ -70,7 +69,7 @@ function ViewModeSelector<
             onModeChange(value as TKey)
           }}
         >
-          {icon && <Icon height="1.5rem" icon={icon} width="1.5rem" />}
+          {icon && <Icon height="1.5em" icon={icon} width="1.5em" />}
           {text && (
             <Text
               size={size === 'small' ? 'sm' : 'base'}
