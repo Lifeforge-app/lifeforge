@@ -26,3 +26,11 @@ export const WithLabel: Story = {
     label: 'Accept terms and conditions'
   }
 }
+
+export const Unchecked: Story = {
+  args: {
+    checked: false,
+    disabled: false,
+    label: 'Accept terms and conditions'
+  }
+}

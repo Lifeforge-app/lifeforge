@@ -69,7 +69,7 @@ function SidebarItems({ query }: { query: string }) {
   }, [modules])
 
   return (
-    <ul className="flex flex-1 flex-col gap-1 overscroll-none pb-6">
+    <ul className="flex flex-1 flex-col gap-1 pb-6">
       <Scrollbar usePaddingRight={false}>
         <div className="space-y-1">
           {filteredRoutes.length > 0 ? (

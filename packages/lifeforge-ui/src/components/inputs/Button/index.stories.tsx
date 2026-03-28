@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Flex } from '@components/primitives'
+
 import Button from './index'
 
 const meta = {
@@ -15,7 +17,6 @@ type Story = StoryObj<typeof meta>
  */
 export const PrimaryVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     disabled: false,
     children: 'Button',
@@ -31,7 +32,6 @@ export const PrimaryVariant: Story = {
  */
 export const SecondaryVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     children: 'Secondary',
     tProps: {},
@@ -45,7 +45,6 @@ export const SecondaryVariant: Story = {
  */
 export const TertiaryVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     children: 'Tertiary',
     tProps: {},
@@ -60,7 +59,6 @@ export const TertiaryVariant: Story = {
  */
 export const PlaintVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     children: 'Plain Button',
     tProps: {},
@@ -74,7 +72,6 @@ export const PlaintVariant: Story = {
  */
 export const IconAtEnd: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Proceed',
     tProps: {},
@@ -89,7 +86,6 @@ export const IconAtEnd: Story = {
  */
 export const Disabled: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Submit',
     tProps: {},
@@ -104,11 +100,10 @@ export const Disabled: Story = {
  */
 export const Loading: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Loading',
     tProps: {},
-    iconPosition: 'end',
+    iconPosition: 'start',
     loading: true,
     disabled: false
   },
@@ -120,7 +115,6 @@ export const Loading: Story = {
  */
 export const IconsOnly: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrows-exchange',
     children: '',
     tProps: {}
@@ -133,7 +127,6 @@ export const IconsOnly: Story = {
  */
 export const IconsOnlyWithNoBg: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrows-exchange',
     children: '',
     tProps: {},
@@ -147,7 +140,6 @@ export const IconsOnlyWithNoBg: Story = {
  */
 export const RedButton: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:trash',
     children: 'Delete',
     tProps: {},
@@ -155,4 +147,33 @@ export const RedButton: Story = {
     dangerous: true
   },
   render: props => <Button {...props} />
+}
+
+/**
+ * A button with a long text that exceeds the typical length. This tests how the button handles overflow and truncation of text.
+ */
+export const WithLongText: Story = {
+  args: {
+    icon: 'tabler:text-wrap',
+    children:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    tProps: {}
+  },
+  render: props => (
+    <Flex
+      align="center"
+      direction="column"
+      justify="center"
+      minWidth="0"
+      width="100%"
+    >
+      <Flex
+        style={{
+          width: 'clamp(40vw, 40em, 80vw)'
+        }}
+      >
+        <Button style={{ width: '100%' }} {...props} />
+      </Flex>
+    </Flex>
+  )
 }

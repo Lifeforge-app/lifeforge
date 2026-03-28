@@ -1,0 +1,28 @@
+import { style } from '@vanilla-extract/css'
+
+import { bg, withOpacity } from '@/system'
+
+// interactive hover/cursor style used by TagChip
+export const interactiveClass = style({
+  cursor: 'pointer',
+  transition: 'all 0.2s',
+  selectors: {
+    '&:hover': {
+      filter: 'brightness(1.2)'
+    }
+  }
+})
+
+// fallback styles when no color prop is provided
+export const noColorOutlined = style([
+  {
+    borderStyle: 'solid',
+    borderWidth: '1px',
+    borderColor: bg[200],
+    selectors: {
+      '.dark &': { borderColor: withOpacity(bg[700], 0.5) }
+    }
+  }
+])
+
+export const noColorFilled = style([{ border: '1px solid transparent' }])

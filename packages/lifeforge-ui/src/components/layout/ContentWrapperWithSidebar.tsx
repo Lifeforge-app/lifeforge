@@ -1,12 +1,22 @@
+import { Flex } from '@components/primitives'
+
 function ContentWrapperWithSidebar({
   children
 }: {
   children: React.ReactNode
 }) {
   return (
-    <div className="relative z-0 flex h-full min-w-0 flex-1 flex-col">
+    <Flex
+      className="z-0"
+      direction="column"
+      flex="1"
+      height="100%"
+      minWidth="0"
+      position="relative"
+      zIndex="0"
+    >
       {children}
-    </div>
+    </Flex>
   )
 }
 

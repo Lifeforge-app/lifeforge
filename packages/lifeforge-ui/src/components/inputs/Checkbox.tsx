@@ -4,6 +4,12 @@ import clsx from 'clsx'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
+import {
+  checkboxIndicatorStyle,
+  checkboxRootRecipe,
+  checkboxWrapperStyle
+} from './checkbox.css'
+
 /**
  * A checkbox component with optional label support.
  */
@@ -28,23 +34,18 @@ function Checkbox({
   const { derivedThemeColor } = usePersonalization()
 
   return (
-    <div className="flex items-center gap-3">
+    <div className={checkboxWrapperStyle}>
       <CheckboxPrimitive.Root
         checked={checked}
-        className={clsx(
-          'flex-center group data-[state=checked]:border-custom-500 data-[state=checked]:bg-custom-500 data-[state=unchecked]:border-bg-300 data-[state=unchecked]:dark:border-bg-600 data-[state=unchecked]:hover:border-bg-500 data-[state=unchecked]:dark:hover:border-bg-200 relative z-50 size-6 shrink-0 cursor-pointer rounded-md border-2 transition-all disabled:cursor-not-allowed disabled:opacity-50',
-          className
-        )}
+        className={clsx(checkboxRootRecipe(), className)}
         disabled={disabled}
         onCheckedChange={onCheckedChange}
       >
         <CheckboxPrimitive.Indicator asChild>
           <Icon
             className={clsx(
-              'stroke-0.5 size-5 transition-all',
-              tinycolor(derivedThemeColor).isDark()
-                ? 'text-bg-100 stroke-bg-100'
-                : 'text-bg-900 stroke-bg-900'
+              checkboxIndicatorStyle,
+              tinycolor(derivedThemeColor).isDark() ? 'dark' : 'light'
             )}
             icon="uil:check"
           />
