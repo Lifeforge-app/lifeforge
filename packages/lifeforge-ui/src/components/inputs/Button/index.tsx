@@ -1,17 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from 'clsx'
 import _ from 'lodash'
-import { type CSSProperties } from 'react'
+import React, { type CSSProperties } from 'react'
 import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import { Box, Text } from '@components/primitives'
+import { Box, Flex, Slot, Text } from '@components/primitives'
 
 import { buttonRecipe } from './button.css'
 import ButtonIcon from './components/ButtonIcon'
 
 export interface ButtonProps {
+  ref?: React.RefObject<HTMLButtonElement | null>
+  /** Whether to merge button styles into a single child element instead of rendering a native button. */
+  asChild?: boolean
   /** The content to display inside the button. Can be text or any valid React node. */
   children?: React.ReactNode
   /** The icon to display in the button. Should be a valid icon name from Iconify in the format `<icon-library>:<icon-name>`. */
@@ -39,19 +42,12 @@ export interface ButtonProps {
   style?: CSSProperties
 }
 
-type ButtonComponentProps<C extends React.ElementType = 'button'> = {
-  ref?: React.RefObject<HTMLButtonElement | null>
-  /** The HTML element or React component to render as the button. */
-  as?: C
-} & ButtonProps &
-  Omit<React.ComponentPropsWithoutRef<C>, keyof ButtonProps>
-
 /**
  * A button component for user interactions. Should be used consistently throughout the application. When designing pages, custom defined button should be avoided as much as possible.
  */
-function Button<C extends React.ElementType = 'button'>({
+function Button({
   ref,
-  as = 'button' as C,
+  asChild = false,
   children,
   icon,
   onClick,
@@ -66,10 +62,9 @@ function Button<C extends React.ElementType = 'button'>({
   tProps,
   style,
   ...props
-}: ButtonComponentProps<C>) {
+}: ButtonProps &
+  Omit<React.ComponentPropsWithoutRef<'button'>, keyof ButtonProps>) {
   const { derivedThemeColor } = usePersonalization()
-
-  const Component = as || 'button'
 
   const hasIconWithChildren = icon && children ? iconPosition : false
 
@@ -90,41 +85,33 @@ function Button<C extends React.ElementType = 'button'>({
 
   const { t } = useTranslation(namespace)
 
-  return (
-    <Component
-      {...(props as any)}
-      ref={ref}
-      className={clsx(recipeClassName, className)}
-      disabled={loading || disabled}
-      style={buttonStyle}
-      type="button"
-      onClick={onClick}
-    >
+  const renderContent = (text: React.ReactNode) => (
+    <>
       {icon && iconPosition === 'start' && (
         <ButtonIcon
           disabled={disabled}
-          hasChildren={Boolean(children)}
+          hasChildren={Boolean(text)}
           icon={icon}
           iconClassName={iconClassName}
           loading={loading}
         />
       )}
-      {children && typeof children === 'string' ? (
+      {text && typeof text === 'string' ? (
         <Box asChild minWidth="0">
           <Text truncate>
             {t(
               [
-                `${_.camelCase(children)}`,
-                `buttons.${_.camelCase(children)}`,
-                `common.buttons:${_.camelCase(children)}`,
-                children
+                `${_.camelCase(text)}`,
+                `buttons.${_.camelCase(text)}`,
+                `common.buttons:${_.camelCase(text)}`,
+                text
               ],
               tProps
             )}
           </Text>
         </Box>
       ) : (
-        children
+        text
       )}
       {icon && iconPosition === 'end' && (
         <ButtonIcon
@@ -134,7 +121,35 @@ function Button<C extends React.ElementType = 'button'>({
           loading={loading}
         />
       )}
-    </Component>
+    </>
+  )
+
+  if (asChild) {
+    return (
+      <Slot
+        ref={ref as any}
+        className={clsx(recipeClassName, className)}
+        style={buttonStyle}
+        {...props}
+      >
+        {children}
+      </Slot>
+    )
+  }
+
+  return (
+    <Flex
+      as="button"
+      {...(props as any)}
+      ref={ref}
+      className={clsx(recipeClassName, className)}
+      disabled={loading || disabled}
+      style={buttonStyle}
+      type="button"
+      onClick={onClick}
+    >
+      {renderContent(children)}
+    </Flex>
   )
 }
 

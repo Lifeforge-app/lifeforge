@@ -14,7 +14,7 @@ const flexProperties = defineProperties({
   conditions: responsiveConditions,
   defaultCondition: 'base',
   properties: {
-    display: ['flex', 'inline-flex'],
+    display: ['flex', 'inline-flex', 'none'],
     flexDirection: ['row', 'column', 'row-reverse', 'column-reverse'],
     justifyContent: [
       'flex-start',
