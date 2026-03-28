@@ -79,6 +79,15 @@ interface TextOwnProps<T extends ElementType = 'span'>
   whiteSpace?: ResponsiveProp<TextWhiteSpace>
   wordBreak?: ResponsiveProp<TextWordBreak>
   overflowWrap?: ResponsiveProp<TextOverflowWrap>
+  display?: ResponsiveProp<
+    | 'block'
+    | 'inline'
+    | 'inline-block'
+    | 'flex'
+    | 'inline-flex'
+    | 'none'
+    | 'contents'
+  >
   trim?: ResponsiveProp<TextTrim>
   truncate?: boolean
   lineClamp?: number
@@ -106,6 +115,7 @@ export function Text<T extends ElementType = 'span'>({
   bg,
   weight,
   align,
+  display,
   decoration,
   transform,
   wrap,
@@ -143,6 +153,7 @@ export function Text<T extends ElementType = 'span'>({
     backgroundColor: bg as TextSprinkles['backgroundColor'],
     fontWeight: normalizeResponsiveProp(weight) as TextSprinkles['fontWeight'],
     textAlign: normalizeResponsiveProp(align) as TextSprinkles['textAlign'],
+    display: normalizeResponsiveProp(display) as TextSprinkles['display'],
     textDecoration: normalizeResponsiveProp(
       decoration
     ) as TextSprinkles['textDecoration'],
