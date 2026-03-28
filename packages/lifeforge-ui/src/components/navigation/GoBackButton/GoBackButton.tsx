@@ -13,8 +13,11 @@ function GoBackButton({
 }) {
   return (
     <Button
-      className="mb-2 w-min px-0 py-2 pl-2 hover:bg-transparent! dark:hover:bg-transparent!"
       icon="tabler:chevron-left"
+      style={{
+        padding: '0.5em 0.9em 0.5em 0.5em !important',
+        width: 'fit-content'
+      }}
       variant="plain"
       onClick={onClick}
     >

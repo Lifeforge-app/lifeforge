@@ -1,4 +1,3 @@
-import { style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
 export const buttonRecipe = recipe({
@@ -16,6 +15,7 @@ export const buttonRecipe = recipe({
     transition: 'all 150ms ease-in-out',
     border: 'none',
     outline: 'none',
+    minWidth: 0,
     selectors: {
       '&:disabled': {
         cursor: 'not-allowed'
@@ -230,16 +230,3 @@ export const buttonRecipe = recipe({
 })
 
 export type ButtonVariants = Parameters<typeof buttonRecipe>[0]
-
-export const buttonIconStyle = style({
-  width: '1.25rem',
-  height: '1.25rem',
-  flexShrink: 0
-})
-
-export const buttonTextStyle = style({
-  minWidth: 0,
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap'
-})

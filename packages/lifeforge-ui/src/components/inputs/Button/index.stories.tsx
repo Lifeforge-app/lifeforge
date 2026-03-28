@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Flex } from '@components/primitives'
+
 import Button from './index'
 
 const meta = {
@@ -155,4 +157,34 @@ export const RedButton: Story = {
     dangerous: true
   },
   render: props => <Button {...props} />
+}
+
+/**
+ * A button with a long text that exceeds the typical length. This tests how the button handles overflow and truncation of text.
+ */
+export const WithLongText: Story = {
+  args: {
+    as: 'button',
+    icon: 'tabler:text-wrap',
+    children:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    tProps: {}
+  },
+  render: props => (
+    <Flex
+      align="center"
+      direction="column"
+      justify="center"
+      minWidth="0"
+      width="100%"
+    >
+      <Flex
+        style={{
+          width: 'clamp(40vw, 40em, 80vw)'
+        }}
+      >
+        <Button style={{ width: '100%' }} {...props} />
+      </Flex>
+    </Flex>
+  )
 }
