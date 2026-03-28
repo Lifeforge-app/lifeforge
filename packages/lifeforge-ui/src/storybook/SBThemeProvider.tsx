@@ -6,6 +6,12 @@ import forgeAPI from '@/utils/forgeAPI'
 
 import { useSBTheme } from './useSBTheme'
 
+function deriveFinalValue(value: any, fallback: any) {
+  if (value === '_reset' || value === undefined) return fallback
+
+  return value
+}
+
 export function SBThemeProvider({
   children,
   context
@@ -20,14 +26,11 @@ export function SBThemeProvider({
       // Force remount when theme changes
       key={`${context.globals.themeColor}-${context.globals.fontScale}-${context.globals.bgTemp}-${context.globals.theme}`}
       defaultValueOverride={{
-        rawThemeColor: context.globals.themeColor || '#a9d066',
+        rawThemeColor: deriveFinalValue(context.globals.themeColor, '#a9d066'),
         theme: context.globals.theme,
         rootElement: document.body,
-        fontScale: context.globals.fontScale || 1,
-        bgTemp:
-          context.globals.bgTemp === '_reset'
-            ? 'bg-zinc'
-            : context.globals.bgTemp
+        fontScale: deriveFinalValue(context.globals.fontScale, 1),
+        bgTemp: deriveFinalValue(context.globals.bgTemp, 'bg-zinc')
       }}
       forgeAPI={forgeAPI}
     >
