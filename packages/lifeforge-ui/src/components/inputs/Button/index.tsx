@@ -6,7 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import { buttonRecipe, buttonTextStyle } from './button.css'
+import { Box, Text } from '@components/primitives'
+
+import { buttonRecipe } from './button.css'
 import ButtonIcon from './components/ButtonIcon'
 
 export interface ButtonProps {
@@ -108,17 +110,19 @@ function Button<C extends React.ElementType = 'button'>({
         />
       )}
       {children && typeof children === 'string' ? (
-        <div className={buttonTextStyle}>
-          {t(
-            [
-              `${_.camelCase(children)}`,
-              `buttons.${_.camelCase(children)}`,
-              `common.buttons:${_.camelCase(children)}`,
-              children
-            ],
-            tProps
-          )}
-        </div>
+        <Box asChild minWidth="0">
+          <Text truncate>
+            {t(
+              [
+                `${_.camelCase(children)}`,
+                `buttons.${_.camelCase(children)}`,
+                `common.buttons:${_.camelCase(children)}`,
+                children
+              ],
+              tProps
+            )}
+          </Text>
+        </Box>
       ) : (
         children
       )}
