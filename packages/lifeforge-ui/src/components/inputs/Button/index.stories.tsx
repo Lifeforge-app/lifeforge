@@ -17,7 +17,6 @@ type Story = StoryObj<typeof meta>
  */
 export const PrimaryVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     disabled: false,
     children: 'Button',
@@ -33,7 +32,6 @@ export const PrimaryVariant: Story = {
  */
 export const SecondaryVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     children: 'Secondary',
     tProps: {},
@@ -47,7 +45,6 @@ export const SecondaryVariant: Story = {
  */
 export const TertiaryVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     children: 'Tertiary',
     tProps: {},
@@ -62,7 +59,6 @@ export const TertiaryVariant: Story = {
  */
 export const PlaintVariant: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:cube',
     children: 'Plain Button',
     tProps: {},
@@ -76,7 +72,6 @@ export const PlaintVariant: Story = {
  */
 export const IconAtEnd: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Proceed',
     tProps: {},
@@ -91,7 +86,6 @@ export const IconAtEnd: Story = {
  */
 export const Disabled: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Submit',
     tProps: {},
@@ -106,7 +100,6 @@ export const Disabled: Story = {
  */
 export const Loading: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrow-right',
     children: 'Loading',
     tProps: {},
@@ -122,7 +115,6 @@ export const Loading: Story = {
  */
 export const IconsOnly: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrows-exchange',
     children: '',
     tProps: {}
@@ -135,7 +127,6 @@ export const IconsOnly: Story = {
  */
 export const IconsOnlyWithNoBg: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:arrows-exchange',
     children: '',
     tProps: {},
@@ -149,7 +140,6 @@ export const IconsOnlyWithNoBg: Story = {
  */
 export const RedButton: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:trash',
     children: 'Delete',
     tProps: {},
@@ -164,7 +154,6 @@ export const RedButton: Story = {
  */
 export const WithLongText: Story = {
   args: {
-    as: 'button',
     icon: 'tabler:text-wrap',
     children:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',

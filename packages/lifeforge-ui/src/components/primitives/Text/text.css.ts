@@ -53,6 +53,15 @@ const textProperties = defineProperties({
     ],
     wordBreak: ['normal', 'break-all', 'keep-all'],
     overflowWrap: ['normal', 'break-word', 'anywhere'],
+    display: [
+      'block',
+      'inline',
+      'inline-block',
+      'flex',
+      'inline-flex',
+      'none',
+      'contents'
+    ],
     // Margin props for Text
     margin: vars.space,
     marginTop: vars.space,

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import Pagination from './Pagination'
+import Pagination from '.'
 
 const meta = {
   component: Pagination,
@@ -33,6 +33,31 @@ export const Default: Story = {
   },
   render: args => {
     const [currentPage, setCurrentPage] = useState(1)
+
+    return (
+      <div className="flex-center h-full w-full">
+        <Pagination
+          {...args}
+          page={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+    )
+  }
+}
+
+/**
+ * A pagination component with few pages.
+ */
+export const FewPages: Story = {
+  args: {
+    totalPages: 3,
+    page: 50,
+    onPageChange: () => {}
+  },
+
+  render: args => {
+    const [currentPage, setCurrentPage] = useState(2)
 
     return (
       <div className="flex-center h-full w-full">
