@@ -1,5 +1,7 @@
 import { recipe } from '@vanilla-extract/recipes'
 
+import { vars } from '@/system'
+
 export const buttonRecipe = recipe({
   base: {
     display: 'flex',
@@ -9,7 +11,7 @@ export const buttonRecipe = recipe({
     gap: 'calc(var(--spacing) * 2)',
     whiteSpace: 'nowrap',
     borderRadius: 'var(--radius-lg)',
-    padding: 'calc(var(--spacing) * 4)',
+    padding: vars.space.md,
     fontWeight: 500,
     letterSpacing: '0.025em',
     transition: 'all 150ms ease-in-out',
