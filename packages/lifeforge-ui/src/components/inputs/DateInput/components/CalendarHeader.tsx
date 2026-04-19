@@ -5,6 +5,9 @@ import { range } from 'lodash'
 import React from 'react'
 
 import { Button } from '@components/inputs'
+import { Box, Flex } from '@components/primitives'
+
+import * as styles from './CalendarHeader.css'
 
 function CalendarHeader({
   date,
@@ -41,73 +44,99 @@ function CalendarHeader({
   ]
 
   return (
-    <div className="flex-between text-bg-800 dark:text-bg-100 px-4 py-2">
+    <Flex
+      align="center"
+      className={styles.header}
+      justify="between"
+      px="md"
+      py="sm"
+    >
       <Button
-        className="dark:hover:bg-bg-700/30! p-2!"
+        className={styles.navButton}
         disabled={prevMonthButtonDisabled}
         icon="tabler:chevron-left"
         variant="plain"
         onClick={decreaseMonth}
       />
-      <div className="flex items-center gap-2">
-        <div className="relative">
-          <Select
-            className="hover:bg-bg-200/30 dark:hover:bg-bg-700/30 appearance-none rounded-md px-3 py-2 pr-8 text-base font-medium transition-all"
-            value={dayjs(date).year()}
-            onChange={({ target: { value } }) => changeYear(+value)}
+      <Flex align="center" gap="sm">
+        <Box position="relative">
+          <Box
+            asChild
+            className={styles.select}
+            pr="xl"
+            py="sm"
+            rounded="md"
+            style={{ paddingLeft: '0.75rem' }}
           >
-            {years.map(option => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </Select>
-          <Icon
-            className="text-bg-500 absolute top-1/2 right-3 size-4.5 -translate-y-1/2"
-            icon="uil:angle-down"
-          />
-        </div>
-        <div className="relative">
-          <Select
-            className="hover:bg-bg-200/30 dark:hover:bg-bg-700/30 hidden appearance-none rounded-md px-3 py-2 pr-8 text-base font-medium transition-all sm:block"
-            value={months[dayjs(date).month()]}
-            onChange={({ target: { value } }) =>
-              changeMonth(months.indexOf(value))
-            }
+            <Select
+              value={dayjs(date).year()}
+              onChange={({ target: { value } }) => changeYear(+value)}
+            >
+              {years.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Icon className={styles.selectArrow} icon="uil:angle-down" />
+        </Box>
+        <Box position="relative">
+          <Box
+            asChild
+            className={styles.select}
+            display={{ base: 'none', sm: 'block' }}
+            pr="xl"
+            py="sm"
+            rounded="md"
+            style={{ paddingLeft: '0.75rem' }}
           >
-            {months.map(option => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </Select>
-          <Select
-            className="hover:bg-bg-200/30 dark:hover:bg-bg-700/30 appearance-none rounded-md px-3 py-2 pr-8 text-base font-medium transition-all sm:hidden"
-            value={months[dayjs(date).month()]}
-            onChange={({ target: { value } }) =>
-              changeMonth(months.indexOf(value))
-            }
+            <Select
+              value={months[dayjs(date).month()]}
+              onChange={({ target: { value } }) =>
+                changeMonth(months.indexOf(value))
+              }
+            >
+              {months.map(option => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Box
+            asChild
+            className={styles.select}
+            display={{ base: 'block', sm: 'none' }}
+            pr="xl"
+            py="sm"
+            rounded="md"
+            style={{ paddingLeft: '0.75rem' }}
           >
-            {months.map(option => (
-              <option key={option} value={option}>
-                {option.slice(0, 3)}
-              </option>
-            ))}
-          </Select>
-          <Icon
-            className="text-bg-500 absolute top-1/2 right-3 size-4.5 -translate-y-1/2"
-            icon="uil:angle-down"
-          />
-        </div>
-      </div>
+            <Select
+              value={months[dayjs(date).month()]}
+              onChange={({ target: { value } }) =>
+                changeMonth(months.indexOf(value))
+              }
+            >
+              {months.map(option => (
+                <option key={option} value={option.slice(0, 3)}>
+                  {option.slice(0, 3)}
+                </option>
+              ))}
+            </Select>
+          </Box>
+          <Icon className={styles.selectArrow} icon="uil:angle-down" />
+        </Box>
+      </Flex>
       <Button
-        className="dark:hover:bg-bg-700/30! p-2!"
+        className={styles.navButton}
         disabled={nextMonthButtonDisabled}
         icon="tabler:chevron-right"
         variant="plain"
         onClick={increaseMonth}
       />
-    </div>
+    </Flex>
   )
 }
 

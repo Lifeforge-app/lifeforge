@@ -5,7 +5,7 @@ import { bg, custom } from '@/system'
 export const inputLabelBaseStyle = style({
   pointerEvents: 'none',
   position: 'absolute',
-  left: 'calc(var(--spacing) * 17)',
+  left: 'calc(var(--spacing) * 16)',
   width: 'calc(100% - 5.75rem)',
   minWidth: 0,
   overflow: 'hidden',
