@@ -134,7 +134,10 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
         // Only log error and apply fallback if not aborted
         if (!currentController.signal.aborted) {
           document.body.style.fontFamily = 'Onest, sans-serif'
-          console.error('Failed to update font family:', error)
+          console.warn(
+            'Failed to update font family, applying fallback',
+            (error as Error).message
+          )
         }
       }
     }
