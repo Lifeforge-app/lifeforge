@@ -33,7 +33,9 @@ function PreviewWrapper(Story: any, context: any) {
                   height="100%"
                   id="app"
                   justify="center"
+                  maxWidth="50vw"
                   minHeight="0"
+                  px="3xl"
                   width="100%"
                 >
                   <Story />

@@ -9,7 +9,7 @@ export const currencyInputContainerRecipe = recipe({
         marginTop: vars.space.lg, // 6
         height: vars.space.xl, // 8
         padding: vars.space.lg, // 6
-        paddingLeft: '0.8em' // 4
+        paddingLeft: vars.space.sm, // 4
       },
       plain: {
         height: '1.75rem', // 7

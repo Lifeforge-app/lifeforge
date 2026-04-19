@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
+import { Box } from '@components/primitives'
+
 import DateInput from '.'
 
 const meta = {
@@ -27,9 +29,9 @@ export const Default: Story = {
     const [date, setDate] = useState(args.value)
 
     return (
-      <div className="p-12">
+      <Box p="2xl">
         <DateInput {...args} value={date} onChange={setDate} />
-      </div>
+      </Box>
     )
   }
 }
@@ -52,9 +54,29 @@ export const WithTime: Story = {
     const [date, setDate] = useState(args.value)
 
     return (
-      <div>
+      <Box>
         <DateInput {...args} value={date} onChange={setDate} />
-      </div>
+      </Box>
+    )
+  }
+}
+
+export const Required: Story = {
+  args: {
+    value: new Date(),
+    onChange: () => {},
+    label: 'Date',
+    icon: 'tabler:calendar',
+    required: true
+  },
+
+  render: args => {
+    const [date, setDate] = useState(args.value)
+
+    return (
+      <Box p="2xl">
+        <DateInput {...args} value={date} onChange={setDate} />
+      </Box>
     )
   }
 }

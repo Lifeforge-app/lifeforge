@@ -61,7 +61,7 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 - [x] `ColorInput`
 - [x] `ComboboxInput`
 - [x] `CurrencyInput`
-- [ ] `DateInput`
+- [x] `DateInput`
 - [ ] `FAB`
 - [x] `FileInput`
 - [x] `IconInput`
@@ -86,8 +86,8 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 - [x] `Card`
 - [x] `ContentWrapperWithSidebar`
 - [x] `LayoutWithSidebar`
-- [ ] `ModuleHeader`
-- [ ] `ModuleWrapper`
+- [x] `ModuleHeader`
+- [x] `ModuleWrapper`
 
 ---
 
@@ -127,8 +127,8 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 | Auth           |        0 |     7 |     0% |
 | Data Display   |        8 |     8 |   100% |
 | Feedback       |        5 |     5 |   100% |
-| Inputs         |       12 |    22 |    55% |
-| Layout         |        3 |     5 |    60% |
+| Inputs         |       13 |    22 |    59% |
+| Layout         |        5 |     5 |   100% |
 | Navigation     |        3 |     9 |    33% |
 | Overlays       |        5 |     9 |    56% |
-| **Total**      |   **43** |**73** | **59%**|
+| **Total**      |   **46** |**73** | **63%**|
