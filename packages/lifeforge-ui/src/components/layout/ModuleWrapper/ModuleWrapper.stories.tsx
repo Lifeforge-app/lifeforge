@@ -65,7 +65,12 @@ export const Default: Story = {
       <ModuleWrapper {...args}>
         <ModuleHeader />
 
-        <Grid columns="repeat(3, minmax(0, 1fr))" gap="md" mb="xl" width="100%">
+        <Grid
+          columns="repeat(auto-fit, minmax(200px, 1fr))"
+          gap="md"
+          mb="xl"
+          width="100%"
+        >
           <StatCard label="Total Items" value="1,284" />
           <StatCard label="Active" value="847" />
           <StatCard label="Completed" value="437" />

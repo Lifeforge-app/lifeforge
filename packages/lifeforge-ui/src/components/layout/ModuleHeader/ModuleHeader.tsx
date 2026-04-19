@@ -5,8 +5,10 @@ import { useMainSidebarState } from 'shared'
 import { useModuleHeaderState } from 'shared'
 
 import { Button } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 import ContextMenu from '../../overlays/ContextMenu'
+import * as styles from './ModuleHeader.css'
 
 interface ModuleHeaderProps {
   icon?: string
@@ -51,41 +53,79 @@ function ModuleHeader({
   const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
 
   return (
-    <header className="flex-between mb-6 flex w-full min-w-0 gap-8">
-      <div className="flex w-full min-w-0 items-center gap-2">
+    <Flex
+      align="center"
+      as="header"
+      gap="xl"
+      justify="between"
+      mb="lg"
+      minWidth="0"
+      width="100%"
+    >
+      <Flex align="center" gap="md" minWidth="0" width="100%">
         {!sidebarExpanded && (
-          <Button
-            className="flex sm:hidden"
-            icon="tabler:menu"
-            variant="plain"
-            onClick={toggleSidebar}
-          />
+          <Box asChild display={{ base: 'block', sm: 'none' }}>
+            <Button
+              icon="tabler:menu"
+              variant="plain"
+              onClick={toggleSidebar}
+            />
+          </Box>
         )}
         {icon !== undefined && (
-          <div className="bg-custom-500/20 border-custom-500/30 flex size-14 shrink-0 items-center justify-center rounded-lg in-[.bordered]:border-2 sm:size-16">
-            <Icon className="text-custom-500 size-8" icon={icon} />
-          </div>
+          <Flex
+            align="center"
+            className={styles.iconWrapper}
+            justify="center"
+            rounded="lg"
+          >
+            <Icon className={styles.moduleIcon} icon={icon} />
+          </Flex>
         )}
-        <div className="w-full min-w-0 sm:space-y-1">
-          <h1 className="flex w-full min-w-0 items-end gap-3 text-2xl font-semibold whitespace-nowrap sm:text-3xl">
-            <span className="block truncate">
-              {t([
-                `${namespace}:${tKey}.${title}.title`,
-                `${namespace}:${title}.title`,
-                `apps.${title}:title`,
-                `common.${title}:title`,
-                'common.misc:title',
-                'title',
-                title?.toString() ?? ''
-              ])}
-            </span>
-            <span className="text-bg-500 min-w-0 text-sm font-medium sm:text-base">
-              {totalItems !== undefined
-                ? `(${totalItems.toLocaleString()})`
-                : ''}
-            </span>
-          </h1>
-          <div className="text-bg-500 w-full min-w-0 truncate text-sm whitespace-nowrap sm:text-base">
+        <Flex direction="column" gap="xs" minWidth="0" width="100%">
+          <Text
+            asChild
+            size={{ base: '2xl', sm: '3xl' }}
+            weight="semibold"
+            whiteSpace="nowrap"
+          >
+            <Flex
+              align="end"
+              as="h1"
+              minWidth="0"
+              style={{ gap: '0.75rem' }}
+              width="100%"
+            >
+              <Text truncate display="block">
+                {t([
+                  `${namespace}:${tKey}.${title}.title`,
+                  `${namespace}:${title}.title`,
+                  `apps.${title}:title`,
+                  `common.${title}:title`,
+                  'common.misc:title',
+                  'title',
+                  title?.toString() ?? ''
+                ])}
+              </Text>
+              <Text
+                color="bg-500"
+                size={{ base: 'sm', sm: 'base' }}
+                style={{ minWidth: 0 }}
+                weight="medium"
+              >
+                {totalItems !== undefined
+                  ? `(${totalItems.toLocaleString()})`
+                  : ''}
+              </Text>
+            </Flex>
+          </Text>
+          <Text
+            truncate
+            color="bg-500"
+            size={{ base: 'sm', sm: 'base' }}
+            style={{ minWidth: 0, width: '100%' }}
+            whiteSpace="nowrap"
+          >
             {t([
               `${namespace}:${tKey}.${title}.description`,
               `${namespace}:${title}.description`,
@@ -95,41 +135,56 @@ function ModuleHeader({
               'description',
               `Description for ${title?.toString() ?? ''}`
             ])}
-          </div>
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
+          </Text>
+        </Flex>
+      </Flex>
+      <Flex align="center" gap="sm">
         {actionButton}
         {tips && (
-          <div className="relative hidden md:block">
-            <Menu as="div" className="relative z-50">
-              <MenuButton className="text-bg-500 hover:bg-bg-200/50 hover:text-bg-800 dark:hover:bg-bg-900 dark:hover:text-bg-50 rounded-lg p-4 transition-all">
-                <Icon className="size-5" icon="tabler:question-circle" />
-              </MenuButton>
+          <Box
+            asChild
+            display={{ base: 'none', md: 'block' }}
+            position="relative"
+            style={{ zIndex: 50 }}
+          >
+            <Menu as="div">
+              <Box asChild p="md" rounded="lg">
+                <MenuButton className={styles.menuButton}>
+                  <Icon
+                    className={styles.tipsIcon}
+                    icon="tabler:question-circle"
+                  />
+                </MenuButton>
+              </Box>
               <MenuItems
                 transition
                 anchor="bottom end"
-                className="bg-bg-100 dark:bg-bg-800 w-96 overflow-hidden overscroll-contain rounded-md shadow-lg outline-hidden transition duration-100 ease-out [--anchor-gap:8px] focus:outline-hidden data-closed:scale-95 data-closed:opacity-0"
+                className={styles.menuItems}
               >
-                <div className="text-bg-800 dark:border-bg-700 dark:text-bg-200 flex items-center gap-2 p-4">
-                  <Icon className="size-6" icon="tabler:question-circle" />
-                  <h2 className="text-lg font-semibold">
-                    {typeof tips === 'string'
-                      ? t('common.misc:tipsAndTricks')
-                      : tips.title}
-                  </h2>
-                </div>
-                <div className="text-bg-500 p-4 pt-0">
+                <Text asChild color={{ base: 'bg-800', dark: 'bg-200' }}>
+                  <Flex align="center" gap="sm" p="md">
+                    <Icon
+                      className={styles.tipsHeaderIcon}
+                      icon="tabler:question-circle"
+                    />
+                    <Text as="h2" size="lg" weight="semibold">
+                      {typeof tips === 'string'
+                        ? t('common.misc:tipsAndTricks')
+                        : tips.title}
+                    </Text>
+                  </Flex>
+                </Text>
+                <Text as="div" color={{ base: 'bg-500' }} p="md" pt="none">
                   {typeof tips === 'string' ? tips : tips.content}
-                </div>
+                </Text>
               </MenuItems>
             </Menu>
-          </div>
+          </Box>
         )}
         {customElement}
         {contextMenuProps && <ContextMenu {...contextMenuProps} />}
-      </div>
-    </header>
+      </Flex>
+    </Flex>
   )
 }
 
