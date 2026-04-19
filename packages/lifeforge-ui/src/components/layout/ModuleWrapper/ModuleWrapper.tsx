@@ -7,8 +7,12 @@ import {
   normalizeSubnamespace
 } from 'shared'
 
+import { Flex } from '@components/primitives'
 import { Scrollbar } from '@components/utilities'
 
+/**
+ * The wrapper component for all modules in the app. It provides the layout and context for the module header and sidebar, as well as handling query cleanup on unmount if specified. If being used within LifeForge instance, it will be automatically wrapped around the module content. Therefore, no explicit usage is needed in most cases.
+ */
 function ModuleWrapper({
   children,
   config: { title, icon, clearQueryOnUnmount = true }
@@ -38,14 +42,20 @@ function ModuleWrapper({
       value={{ title: normalizeSubnamespace(title).replace('__', '$'), icon }}
     >
       <ModuleSidebarStateProvider>
-        <Scrollbar
-          className="no-overflow-x flex min-h-0 flex-col transition-all"
-          usePaddingRight={false}
-        >
-          <div className="flex w-full flex-1 flex-col px-4 pt-8 sm:px-12">
-            {children}
-          </div>
-        </Scrollbar>
+        <Flex asChild direction="column" minHeight="0">
+          <Scrollbar className="no-overflow-x" usePaddingRight={false}>
+            <Flex
+              direction="column"
+              flex="1"
+              overflowX="hidden"
+              pt="xl"
+              px={{ base: 'md', sm: '2xl' }}
+              width="100%"
+            >
+              {children}
+            </Flex>
+          </Scrollbar>
+        </Flex>
       </ModuleSidebarStateProvider>
     </ModuleHeaderStateProvider>
   )
