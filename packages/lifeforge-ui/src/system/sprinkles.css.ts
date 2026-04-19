@@ -1,3 +1,4 @@
+import { style } from '@vanilla-extract/css'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
 import { colors } from './colors'
@@ -55,3 +56,8 @@ export const themeColorProperties = defineProperties({
 export const commonSprinkles = createSprinkles(commonProperties)
 
 export type CommonSprinkles = Parameters<typeof commonSprinkles>[0]
+
+/** Applied when `shadow={true}` on any container primitive. */
+export const shadowClass = style({
+  boxShadow: 'var(--custom-shadow)'
+})

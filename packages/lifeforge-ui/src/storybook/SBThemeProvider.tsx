@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { type ReactNode } from 'react'
+import { type ReactNode, useMemo } from 'react'
 import { PersonalizationProvider } from 'shared'
 
 import forgeAPI from '@/utils/forgeAPI'
@@ -19,18 +19,28 @@ export function SBThemeProvider({
   children: ReactNode
   context: any
 }) {
-  useSBTheme(context)
+  const derivedContext = useMemo(() => {
+    return {
+      ...context,
+      globals: {
+        ...context.globals,
+        themeColor: deriveFinalValue(context.globals.themeColor, '#a9d066'),
+        theme: deriveFinalValue(context.globals.theme, 'light'),
+        fontScale: deriveFinalValue(context.globals.fontScale, 1),
+        bgTemp: deriveFinalValue(context.globals.bgTemp, 'bg-zinc')
+      }
+    }
+  }, [context])
+
+  useSBTheme(derivedContext)
 
   return (
     <PersonalizationProvider
       // Force remount when theme changes
-      key={`${context.globals.themeColor}-${context.globals.fontScale}-${context.globals.bgTemp}-${context.globals.theme}`}
+      key={`${derivedContext.globals.themeColor}-${derivedContext.globals.fontScale}-${derivedContext.globals.bgTemp}-${derivedContext.globals.theme}`}
       defaultValueOverride={{
-        rawThemeColor: deriveFinalValue(context.globals.themeColor, '#a9d066'),
-        theme: context.globals.theme,
         rootElement: document.body,
-        fontScale: deriveFinalValue(context.globals.fontScale, 1),
-        bgTemp: deriveFinalValue(context.globals.bgTemp, 'bg-zinc')
+        ...derivedContext.globals
       }}
       forgeAPI={forgeAPI}
     >

@@ -5,13 +5,13 @@ function ButtonIcon({
   icon,
   disabled,
   loading,
-  iconClassName,
+  iconStyle,
   hasChildren
 }: {
   icon: string
   disabled?: boolean
   loading?: boolean
-  iconClassName?: string
+  iconStyle?: React.CSSProperties
   hasChildren?: boolean
 }) {
   const finalIcon = useMemo(() => {
@@ -28,11 +28,11 @@ function ButtonIcon({
 
   return (
     <Icon
-      className={iconClassName}
       height="1.25em"
       icon={finalIcon}
       style={{
-        flexShrink: 0
+        flexShrink: 0,
+        ...iconStyle
       }}
       width="1.25em"
     />

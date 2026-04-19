@@ -8,16 +8,16 @@ if (Math.random() < 0) {
 export {
   Box,
   type BoxProps,
+  Bordered,
+  type BorderedProps,
+  type BorderSide,
+  type BorderStyleValue,
   Flex,
   type FlexProps,
   Text,
   type TextProps,
   Grid,
   type GridProps,
-  Section,
-  type SectionProps,
-  Container,
-  type ContainerProps,
   Slot
 } from './components/primitives'
 

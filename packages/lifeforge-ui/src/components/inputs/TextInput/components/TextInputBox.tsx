@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 
-import { textInputBoxRecipe } from '@components/inputs/shared/input.css'
 import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
+
+import { textInputBoxRecipe } from './TextInputBox.css'
 
 function TextInputBox({
   value,

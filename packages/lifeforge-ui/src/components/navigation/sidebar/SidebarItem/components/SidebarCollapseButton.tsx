@@ -1,5 +1,3 @@
-import clsx from 'clsx'
-
 import { Button } from '@components/inputs'
 
 function SidebarCollapseButton({
@@ -11,9 +9,14 @@ function SidebarCollapseButton({
 }) {
   return (
     <Button
-      className="p-2!"
       icon="tabler:chevron-down"
-      iconClassName={clsx('transition', isCollapsed && 'rotate-180')}
+      iconStyle={{
+        transform: isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)',
+        transition: 'transform 0.3s'
+      }}
+      style={{
+        padding: '0.5em'
+      }}
       variant="plain"
       onClick={e => {
         e.preventDefault()

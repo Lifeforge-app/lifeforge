@@ -2,10 +2,10 @@ import { useTranslation } from 'react-i18next'
 
 import { NumberInput } from '@components/inputs'
 
-import type { FreqSpecificParams } from '../..'
 import SelectableFormWrapper from '../SelectableFormWrapper'
 import MonthlyExactDateForm from './components/MonthlyExactDateForm'
 import MonthlyRelativeDayForm from './components/MonthlyRelativeDayForm'
+import type { FreqSpecificParams } from '../../RRuleInput'
 
 function MonthlyForm({
   data,

@@ -4,6 +4,12 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
+import { Flex, Text } from '@components/primitives'
+
+import { vars } from '@/system'
+
+import * as styles from './ContextMenuItem.css'
+
 interface ContextMenuItemProps {
   /** The text label for the menu item. */
   label: string
@@ -29,24 +35,16 @@ interface ContextMenuItemProps {
   onClick: () => void
 }
 
-function getBaseClassNames(
+function getStateClassName(
   disabled: boolean,
   active: boolean,
   dangerous: boolean
 ): string {
-  if (disabled) {
-    return 'text-bg-400 dark:text-bg-600 cursor-not-allowed'
-  }
+  if (disabled) return styles.itemDisabled
+  if (active)
+    return dangerous ? styles.itemActiveDangerous : styles.itemActiveSafe
 
-  if (active) {
-    return `${dangerous === true ? 'text-red-600' : 'text-bg-800 dark:text-bg-50'} hover:text-bg-800 dark:hover:text-bg-50 font-medium`
-  } else {
-    return dangerous ? 'text-red-500' : 'text-bg-500 dark:hover:text-bg-600'
-  }
-}
-
-function getToggleIconClass(dangerous?: boolean): string {
-  return dangerous === true ? 'text-red-600' : 'text-bg-800 dark:text-bg-50'
+  return dangerous ? styles.itemInactiveDangerous : styles.itemInactiveSafe
 }
 
 function ContextMenuItem({
@@ -66,12 +64,7 @@ function ContextMenuItem({
 
   return (
     <DropdownMenuPrimitive.Item
-      className={clsx(
-        getBaseClassNames(disabled || loading, checked, dangerous),
-        !disabled && !loading && 'hover:bg-bg-200 dark:hover:bg-bg-700/50',
-        'flex w-full cursor-default items-center gap-3 p-4 text-left outline-hidden transition-all select-none',
-        className
-      )}
+      asChild
       disabled={disabled || loading}
       onClick={e => {
         if (disabled || loading) {
@@ -87,36 +80,62 @@ function ContextMenuItem({
         onClick()
       }}
     >
-      {(() => {
-        if (loading) {
-          return (
-            <Icon className="size-5 shrink-0" icon="svg-spinners:ring-resize" />
-          )
-        }
-
-        if (typeof icon === 'string') {
-          return <Icon className="size-5 shrink-0" icon={icon} />
-        }
-
-        return icon
-      })()}
-      <span className="w-full truncate whitespace-nowrap">
-        {namespace
-          ? t(
-              [_.camelCase(label), `buttons.${_.camelCase(label)}`, label],
-              tProps
+      <Flex
+        align="center"
+        className={clsx(
+          styles.item,
+          getStateClassName(disabled || loading, checked, dangerous),
+          !disabled && !loading && styles.itemHoverable,
+          className
+        )}
+        p="md"
+        style={{ gap: '0.75rem' }}
+        width="100%"
+      >
+        {(() => {
+          if (loading) {
+            return (
+              <Icon
+                icon="svg-spinners:ring-resize"
+                style={{ width: '1.25rem', height: '1.25rem', flexShrink: 0 }}
+              />
             )
-          : label}
-      </span>
-      {checked && (
-        <Icon
-          className={clsx(
-            getToggleIconClass(dangerous),
-            'ml-4 size-5 shrink-0'
-          )}
-          icon="tabler:check"
-        />
-      )}
+          }
+
+          if (typeof icon === 'string') {
+            return (
+              <Icon
+                icon={icon}
+                style={{ width: '1.25rem', height: '1.25rem', flexShrink: 0 }}
+              />
+            )
+          }
+
+          return icon
+        })()}
+        <Text truncate style={{ width: '100%' }}>
+          {namespace
+            ? t(
+                [_.camelCase(label), `buttons.${_.camelCase(label)}`, label],
+                tProps
+              )
+            : label}
+        </Text>
+        {checked && (
+          <Icon
+            className={
+              dangerous ? styles.checkIconDangerous : styles.checkIconSafe
+            }
+            icon="tabler:check"
+            style={{
+              marginLeft: vars.space.md,
+              width: '1.25rem',
+              height: '1.25rem',
+              flexShrink: 0
+            }}
+          />
+        )}
+      </Flex>
     </DropdownMenuPrimitive.Item>
   )
 }

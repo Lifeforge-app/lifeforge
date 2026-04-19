@@ -42,7 +42,7 @@ export const Default: Story = {
     )
   },
   render: props => (
-    <ContextMenu classNames={{ menu: 'w-64' }}>
+    <ContextMenu>
       <ContextMenuGroup {...props} />
     </ContextMenu>
   )
@@ -74,7 +74,7 @@ export const Togglable: Story = {
     )
   },
   render: props => (
-    <ContextMenu classNames={{ menu: 'w-64' }}>
+    <ContextMenu>
       <ContextMenuGroup {...props} />
     </ContextMenu>
   )

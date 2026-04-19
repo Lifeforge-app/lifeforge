@@ -57,5 +57,6 @@ export {
   commonProperties,
   themeColorProperties,
   commonSprinkles,
-  type CommonSprinkles
+  type CommonSprinkles,
+    shadowClass
 } from './sprinkles.css'
