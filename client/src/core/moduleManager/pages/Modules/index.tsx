@@ -105,10 +105,6 @@ function Modules() {
                         key={mod.name}
                         module={mod}
                         onDevModeChange={() => {
-                          console.log(
-                            queryClient.getQueryState(['modules', 'list'])
-                          )
-
                           queryClient.invalidateQueries({
                             queryKey: ['modules', 'list']
                           })
