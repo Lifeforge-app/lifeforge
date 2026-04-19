@@ -19,7 +19,7 @@ export const Default: Story = {
     data: {
       color: '#ff0000',
       setColor: (color: string) => {
-        console.log(color)
+        alert(color)
       }
     }
   },
