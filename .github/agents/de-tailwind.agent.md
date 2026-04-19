@@ -22,6 +22,7 @@ Before touching ANY file, you MUST:
 - DO NOT add comments, docstrings, or explanations to code you did not change.
 - DO NOT refactor logic, rename variables, or make any change beyond the styling migration.
 - ONLY work on files under `packages/lifeforge-ui/src/`.
+- **Prefer `asChild` over `.css.ts`**: before writing a new `.css.ts` style, check whether wrapping the target element with a primitive using `asChild` achieves the same result. Using `asChild` eliminates wrapper DOM nodes AND removes the need for a CSS export entirely. Only fall back to `.css.ts` for properties that primitives cannot express (e.g. `transition`, complex selectors, context selectors like `.bordered &`).
 
 ## Approach
 
@@ -29,17 +30,31 @@ Before touching ANY file, you MUST:
 
 2. **Plan primitive replacements** — map `flex`, `grid`, bare `div`/`span`/`p` wrappers to `<Flex>`, `<Grid>`, `<Box>`, `<Text>` with correct props using §3 of the instructions.
 
-3. **Apply the theme-color decision tree for every colored element:**
+3. **Prefer `asChild` over `.css.ts`** — for every element where you would write a new `.css.ts` export, first check whether the element is a 3rd-party or Headless UI component that accepts `className`. If it does, wrap it with a primitive using `asChild` instead:
+   ```tsx
+   // ✅ Preferred — no .css.ts export needed
+   <Box asChild p="md" rounded="lg" bg={{ base: 'bg-50', dark: 'bg-900' }}>
+     <HeadlessUIComponent />
+   </Box>
+
+   // ❌ Only if primitive props cannot express the property
+   <HeadlessUIComponent className={styles.wrapper} />
+   ```
+   Reserve `.css.ts` exports exclusively for properties primitives cannot express: `transition`, `cursor`, `border-width/style`, complex `box-shadow`, hover/focus interactive states, and context selectors (`.bordered &`, `.has-bg-image &`).
+
+4. **Apply the theme-color decision tree for every colored element:**
    ```
    Is it a container primitive (Box/Flex/Grid/Container/Section)?
      └─ YES → use `bg` prop: bg={{ base: 'bg-50', dark: 'bg-900' }}
               use `shadow` prop for box-shadow
      └─ NO  → Is it a <Text>?
                 └─ YES → use `color`/`bg` props: color={{ base: 'bg-500', dark: 'bg-50' }}
-                └─ NO  → write a .css.ts using themeColorProperties sprinkle (Pattern B)
+                └─ NO  → Can `asChild` on a primitive replace the wrapper?
+                           └─ YES → use `asChild`
+                           └─ NO  → write a .css.ts using themeColorProperties sprinkle (Pattern B)
    ```
 
-4. **For components (`.tsx`)** — create or update the sibling `ComponentName.css.ts`:
+5. **For components (`.tsx`)** — create or update the sibling `ComponentName.css.ts`:
    - **Pattern A — `style()`**: for `transition`, `cursor`, `borderWidth`, complex shadows, and `.bordered &` / `.has-bg-image &` context selectors that sprinkles cannot express.
    - **Pattern B — `themeColorProperties` sprinkle**: for theme-adaptive `backgroundColor`, `color`, or `borderColor` on non-primitive child elements.
      ```ts
@@ -49,11 +64,13 @@ Before touching ANY file, you MUST:
      export const title = sprinkles({ color: { base: 'bg-500', dark: 'bg-50' } })
      ```
 
-5. **For stories (`.stories.tsx`)** — use primitives only; no `.css.ts`.
+6. **For stories (`.stories.tsx`)** — use primitives only; no `.css.ts`.
 
-6. **Apply edits** — replace layout `div`/`span` wrappers and `className` props with primitives; import `* as styles from './ComponentName.css'`; use `clsx()` for conditional class composition.
+7. **Apply edits** — replace layout `div`/`span` wrappers and `className` props with primitives; import `* as styles from './ComponentName.css'`; use `clsx()` for conditional class composition.
 
-7. **Verify** — search the edited file for any remaining Tailwind class names and fix them. Run `get_errors` to confirm zero TypeScript errors.
+8. **Verify** — search the edited file for any remaining Tailwind class names and fix them. Run `get_errors` to confirm zero TypeScript errors.
+
+9. **Update `TAILWIND_MIGRATION.md`** — after `get_errors` passes, mark the migrated component(s) as `[x]` in `packages/lifeforge-ui/TAILWIND_MIGRATION.md` and update the progress summary table (Migrated count, Total, and % Done for the affected category row and the **Total** row).
 
 ## Styling Categorisation Rules
 

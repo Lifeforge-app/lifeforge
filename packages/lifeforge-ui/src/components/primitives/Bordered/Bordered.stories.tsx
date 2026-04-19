@@ -251,7 +251,7 @@ export const AccentBar: Story = {
         borderColor="custom-500"
         borderSide="left"
         borderWidth="4px"
-        pl="lg"
+        px="lg"
         py="md"
         rounded="sm"
       >
@@ -294,41 +294,34 @@ export const AccentBar: Story = {
 export const AsChild: Story = {
   args: {},
   render: () => (
-    <Flex align="center" height="100%" justify="center" p="3xl" width="100%">
-      <Flex
-        direction="column"
-        gap="md"
-        style={{ maxWidth: '24rem', width: '100%' }}
+    <Flex direction="column" gap="md">
+      <Alert type="note">
+        Open the browser dev tools to inspect the DOM structure of the given
+        examples.
+      </Alert>
+      <Bordered
+        asChild
+        borderColor="custom-500"
+        borderWidth="2px"
+        p="lg"
+        rounded="lg"
       >
-        <Alert type="note">
-          Open the browser dev tools to inspect the DOM structure of the given
-          examples.
-        </Alert>
-        <Bordered
-          asChild
-          borderColor="custom-500"
-          borderWidth="2px"
-          p="lg"
-          rounded="lg"
+        <Flex
+          align="center"
+          bg={{ base: 'bg-50', dark: 'bg-900' }}
+          direction="column"
+          gap="sm"
         >
-          <Flex
+          <Text weight="semibold">asChild composition</Text>
+          <Text
             align="center"
-            bg={{ base: 'bg-50', dark: 'bg-900' }}
-            direction="column"
-            gap="sm"
-            width="20rem"
+            color={{ base: 'bg-500', dark: 'bg-400' }}
+            size="sm"
           >
-            <Text weight="semibold">asChild composition</Text>
-            <Text
-              align="center"
-              color={{ base: 'bg-500', dark: 'bg-400' }}
-              size="sm"
-            >
-              Bordered merges onto the Flex child — no extra DOM node.
-            </Text>
-          </Flex>
-        </Bordered>
-      </Flex>
+            Bordered merges onto the Flex child — no extra DOM node.
+          </Text>
+        </Flex>
+      </Bordered>
     </Flex>
   )
 }
