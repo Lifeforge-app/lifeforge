@@ -109,7 +109,6 @@ function DateInput({
                 : 'theme-dark'
             }
             className={clsx(
-              styles.datePickerInput,
               variant === 'classic'
                 ? styles.datePickerInputClassic
                 : styles.datePickerInputPlain
