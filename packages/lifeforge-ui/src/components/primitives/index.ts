@@ -1,14 +1,17 @@
 export { Box, type BoxProps } from './Box'
 
+export {
+  Bordered,
+  type BorderedProps,
+  type BorderSide,
+  type BorderStyleValue
+} from './Bordered'
+
 export { Flex, type FlexProps } from './Flex'
 
 export { Text, type TextProps } from './Text'
 
 export { Grid, type GridProps } from './Grid'
-
-export { Section, type SectionProps } from './Section'
-
-export { Container, type ContainerProps } from './Container'
 
 export { Slot } from './Slot'
 

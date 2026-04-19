@@ -24,6 +24,7 @@ function clearBgTextStyles(el: HTMLElement) {
  * Background is set with `!important` to override any conflicting stylesheet rules.
  */
 function applyBgTextStyles(mode: 'dark' | 'light', el: HTMLElement) {
+  console.log(mode)
   el.style.setProperty(
     'background-color',
     BG_TEXT_STYLES[mode].backgroundColor,

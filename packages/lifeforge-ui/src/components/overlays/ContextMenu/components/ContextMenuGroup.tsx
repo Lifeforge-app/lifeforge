@@ -1,6 +1,10 @@
 import { Icon } from '@iconify/react'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 
+import { Box, Flex, Text } from '@components/primitives'
+
+import * as styles from './ContextMenuGroup.css'
+
 interface ContextMenuGroupProps {
   /** The icon to display before the group label. Should be a valid icon name from Iconify. */
   icon: string
@@ -23,15 +27,25 @@ function ContextMenuGroup({
 }: ContextMenuGroupProps) {
   return (
     <DropdownMenuPrimitive.Group className={className}>
-      <DropdownMenuPrimitive.Label className="text-bg-500 flex items-center gap-3 p-4">
-        <Icon className="size-5" icon={icon} />
-        {label}
+      <DropdownMenuPrimitive.Label asChild>
+        <Flex align="center" gap="sm" p="md">
+          <Icon icon={icon} style={{ width: '1.25rem', height: '1.25rem' }} />
+          <Text size="sm" weight="medium">
+            {label}
+          </Text>
+        </Flex>
       </DropdownMenuPrimitive.Label>
-      <div className="p-4 pt-0">
-        <div className="divide-bg-200/80 bg-bg-200/30 shadow-custom dark:divide-bg-700 dark:bg-bg-700/50 flex flex-col divide-y overflow-hidden rounded-lg">
+      <Box p="md" pt="none">
+        <Flex
+          shadow
+          className={styles.groupContainer}
+          direction="column"
+          overflow="hidden"
+          rounded="lg"
+        >
           {children}
-        </div>
-      </div>
+        </Flex>
+      </Box>
     </DropdownMenuPrimitive.Group>
   )
 }

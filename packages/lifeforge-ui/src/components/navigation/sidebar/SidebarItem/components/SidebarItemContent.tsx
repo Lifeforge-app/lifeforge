@@ -100,9 +100,9 @@ function SidebarItemContent({
       )}
       {!active && contextMenuItems !== undefined && (
         <ContextMenu
-          classNames={{
-            wrapper: 'relative overscroll-contain',
-            button: 'p-2!'
+          styles={{
+            wrapper: { position: 'relative', overscrollBehavior: 'contain' },
+            button: { padding: '0.5em' }
           }}
           onOpenChange={setIsMenuOpen}
         >

@@ -21,15 +21,24 @@ function PreviewWrapper(Story: any, context: any) {
           height="100%"
           id="body"
           justify="center"
+          minHeight="0"
           style={{ transition: 'all 0.2s' }}
         >
           <SBThemeProvider context={context}>
             <ToastProvider>
               <ModalProvider>
-                <main className="flex-center w-full flex-1 flex-col" id="app">
+                <Flex
+                  align="center"
+                  direction="column"
+                  height="100%"
+                  id="app"
+                  justify="center"
+                  minHeight="0"
+                  width="100%"
+                >
                   <Story />
                   <ModalManager />
-                </main>
+                </Flex>
               </ModalProvider>
             </ToastProvider>
           </SBThemeProvider>

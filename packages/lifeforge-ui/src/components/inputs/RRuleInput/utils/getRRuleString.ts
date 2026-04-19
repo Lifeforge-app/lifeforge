@@ -7,8 +7,8 @@ import {
   type Options as RRuleOptions,
   datetime
 } from 'rrule'
+import type { FreqSpecificParams, RRuleParams } from '../RRuleInput'
 
-import type { FreqSpecificParams, RRuleParams } from '..'
 
 dayjs.extend(utc)
 
