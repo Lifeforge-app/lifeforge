@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
-import { Box, Flex, Text } from '@components/primitives'
+import { Bordered, Box, Flex, Text } from '@components/primitives'
 
 import * as styles from './Tabs.css'
 
@@ -39,58 +39,72 @@ function Tabs<
       {items
         .filter(({ id }) => enabled.includes(id as TKey))
         .map(({ name, icon, id, color }) => (
-          <Flex
+          <Bordered
             key={id}
-            align="center"
-            as="button"
-            bg="transparent"
-            className={clsx(
-              styles.tab,
+            asChild
+            borderColor={
               currentTab !== id
-                ? styles.inactiveTab
-                : !color
-                  ? styles.activeTab
-                  : undefined
-            )}
-            flex="1 1 0%"
-            gap="sm"
-            justify="center"
-            p="md"
-            style={
-              color && currentTab === id
                 ? {
-                    borderColor: color,
-                    color: color
+                    base: 'bg-400',
+                    hover: 'bg-800',
+                    dark: 'bg-500',
+                    darkHover: 'bg-200'
                   }
-                : {}
+                : !color
+                  ? { base: 'custom-500' }
+                  : undefined
             }
-            onClick={() => {
-              onTabChange(id as TKey)
-            }}
+            borderSide="bottom"
+            borderWidth="2px"
+            style={
+              color && currentTab === id ? { borderColor: color } : undefined
+            }
           >
-            {icon && (
-              <Icon
-                icon={icon}
-                style={{ width: '1.25rem', height: '1.25rem', flexShrink: 0 }}
-              />
-            )}
-            <Text
-              as="span"
-              display="block"
-              weight={currentTab === id ? 'medium' : 'normal'}
+            <Flex
+              align="center"
+              as="button"
+              bg="transparent"
+              className={clsx(
+                styles.tab,
+                currentTab !== id
+                  ? styles.inactiveTab
+                  : !color
+                    ? styles.activeTab
+                    : undefined
+              )}
+              flex="1 1 0%"
+              gap="sm"
+              justify="center"
+              p="md"
+              style={color && currentTab === id ? { color } : {}}
+              onClick={() => {
+                onTabChange(id as TKey)
+              }}
             >
-              {name}
-            </Text>
-            {items.find(item => item.name === name)?.amount !== undefined && (
-              <Box
+              {icon && (
+                <Icon
+                  icon={icon}
+                  style={{ width: '1.25rem', height: '1.25rem', flexShrink: 0 }}
+                />
+              )}
+              <Text
                 as="span"
-                className={styles.amount}
-                display={{ base: 'none', sm: 'block' }}
+                display="block"
+                weight={currentTab === id ? 'medium' : 'normal'}
               >
-                ({items.find(item => item.name === name)?.amount})
-              </Box>
-            )}
-          </Flex>
+                {name}
+              </Text>
+              {items.find(item => item.name === name)?.amount !== undefined && (
+                <Box
+                  as="span"
+                  className={styles.amount}
+                  display={{ base: 'none', sm: 'block' }}
+                >
+                  ({items.find(item => item.name === name)?.amount})
+                </Box>
+              )}
+            </Flex>
+          </Bordered>
         ))}
     </Flex>
   )

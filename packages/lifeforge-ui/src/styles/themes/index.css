@@ -142,10 +142,13 @@
 }
 
 body {
-  --custom-shadow: 2px 2px 6px 0px var(--color-bg-200);
+  --custom-shadow: 2px 2px 4px 0px
+    color-mix(in srgb, var(--color-bg-300) 70%, transparent);
 
   .dark &,
   &.dark {
-    --custom-shadow: 0px 0px 0px 0px var(--color-bg-800);
+    /* no shadow in dark mode, 
+       hierarchy is mostly defined by background colours */
+    --custom-shadow: 0px 0px 0px 0px transparent;
   }
 }

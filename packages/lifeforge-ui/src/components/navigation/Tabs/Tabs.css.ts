@@ -7,9 +7,6 @@ const sprinkles = createSprinkles(themeColorProperties)
 
 export const tab = style({
   cursor: 'pointer',
-  borderStyle: 'none',
-  borderBottomStyle: 'solid',
-  borderBottomWidth: '2px',
   letterSpacing: '0.1em',
   whiteSpace: 'nowrap',
   textTransform: 'uppercase',
@@ -17,18 +14,11 @@ export const tab = style({
 })
 
 export const activeTab = sprinkles({
-  color: { base: 'custom-500' },
-  borderColor: { base: 'custom-500' }
+  color: { base: 'custom-500' }
 })
 
 export const inactiveTab = sprinkles({
   color: {
-    base: 'bg-400',
-    hover: 'bg-800',
-    dark: 'bg-500',
-    darkHover: 'bg-200'
-  },
-  borderColor: {
     base: 'bg-400',
     hover: 'bg-800',
     dark: 'bg-500',

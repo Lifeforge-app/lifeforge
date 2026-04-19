@@ -1,4 +1,4 @@
-import type { FreqSpecificParams } from '../..'
+import type { FreqSpecificParams } from '../../RRuleInput'
 import SelectableFormWrapper from '../SelectableFormWrapper'
 import YearlyExactDateForm from './components/YearlyExactDateForm'
 import YearlyRelativeDayForm from './components/YearlyRelativeDayForm'
