@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
 import { useDebounce } from '@uidotdev/usehooks'
-import clsx from 'clsx'
 import _ from 'lodash'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { Box, Flex, Text } from '@components/primitives'
 
 import Button from '../../../../inputs/Button'
 
@@ -35,37 +36,64 @@ function ModalHeader({
   const innerIcon = useDebounce(icon, 100)
 
   return (
-    <div className={clsx('flex-between mb-4 flex gap-3', className)}>
-      <h1 className="flex w-full min-w-0 items-center gap-3 text-xl font-semibold">
-        <Icon className="size-6 shrink-0" icon={innerIcon} />
-        {typeof innerTitle === 'string' ? (
-          <>
-            <span className="min-w-0 truncate">
-              {t([
-                `modals.${_.camelCase(innerTitle)}.title`,
-                `modals.${_.camelCase(innerTitle)}`,
-                `${_.camelCase(innerTitle)}.title`,
-                `${_.camelCase(innerTitle)}`,
-                `${innerTitle}.title`,
-                `${innerTitle}`,
-                `modals.${innerTitle}.title`,
-                `modals.${innerTitle}`,
-                innerTitle
-              ])}
-            </span>
-            {appendTitle}
-            {hasAI && (
-              <Icon
-                className="size-5 shrink-0 text-yellow-500"
-                icon="mage:stars-c"
-              />
-            )}
-          </>
-        ) : (
-          innerTitle
-        )}
-      </h1>
-      <div className="flex items-center gap-2">
+    <Flex
+      align="center"
+      className={className}
+      justify="between"
+      mb="md"
+      style={{ gap: '0.75rem' }}
+    >
+      <Text asChild size="xl" weight="semibold">
+        <Flex
+          align="center"
+          as="h1"
+          minWidth="0"
+          style={{ gap: '0.75rem' }}
+          width="100%"
+        >
+          <Box
+            asChild
+            flexShrink="0"
+            style={{ height: '1.5rem', width: '1.5rem' }}
+          >
+            <Icon icon={innerIcon} />
+          </Box>
+          {typeof innerTitle === 'string' ? (
+            <>
+              <Text truncate as="span" style={{ minWidth: 0 }}>
+                {t([
+                  `modals.${_.camelCase(innerTitle)}.title`,
+                  `modals.${_.camelCase(innerTitle)}`,
+                  `${_.camelCase(innerTitle)}.title`,
+                  `${_.camelCase(innerTitle)}`,
+                  `${innerTitle}.title`,
+                  `${innerTitle}`,
+                  `modals.${innerTitle}.title`,
+                  `modals.${innerTitle}`,
+                  innerTitle
+                ])}
+              </Text>
+              {appendTitle}
+              {hasAI && (
+                <Box
+                  asChild
+                  flexShrink="0"
+                  style={{
+                    color: '#eab308',
+                    height: '1.25rem',
+                    width: '1.25rem'
+                  }}
+                >
+                  <Icon icon="mage:stars-c" />
+                </Box>
+              )}
+            </>
+          ) : (
+            innerTitle
+          )}
+        </Flex>
+      </Text>
+      <Flex align="center" gap="sm">
         {actionButtonProps && (
           <Button
             {...actionButtonProps}
@@ -73,13 +101,13 @@ function ModalHeader({
           />
         )}
         <Button
-          className="p-3!"
           icon="tabler:x"
+          style={{ padding: '0.75rem' }}
           variant="plain"
           onClick={onClose}
         />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
 

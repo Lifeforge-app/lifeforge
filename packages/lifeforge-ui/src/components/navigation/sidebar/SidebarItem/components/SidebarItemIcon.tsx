@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
+
+import { Bordered, Text } from '@components/primitives'
 
 function SidebarItemIcon({
   icon,
@@ -22,14 +23,13 @@ function SidebarItemIcon({
     const htmlString = icon.replace('customHTML:', '')
 
     return (
-      <span
-        className={clsx(
-          'size-6 shrink-0',
-          active && 'text-custom-500',
-          className
-        )}
-        dangerouslySetInnerHTML={{ __html: htmlString }}
-      />
+      <Text asChild color={active ? 'custom-500' : undefined}>
+        <span
+          className={className}
+          dangerouslySetInnerHTML={{ __html: htmlString }}
+          style={{ flexShrink: 0, height: '1.5rem', width: '1.5rem' }}
+        />
+      </Text>
     )
   }
 
@@ -37,24 +37,33 @@ function SidebarItemIcon({
     const urlString = icon.replace('url:', '')
 
     return (
-      <img
-        className={clsx(
-          'size-6 shrink-0 rounded-sm',
-          active && clsx('ring-custom-500 ring-2', className)
-        )}
-        src={urlString}
-      />
+      <Bordered
+        borderColor="bg-500"
+        borderWidth={active ? '1px' : '0px'}
+        flexShrink="0"
+        overflow="hidden"
+        rounded="sm"
+      >
+        <img
+          className={className}
+          src={urlString}
+          style={{
+            height: '1.5rem',
+            width: '1.5rem'
+          }}
+        />
+      </Bordered>
     )
   }
 
   return (
-    <Icon
-      className={clsx(
-        'size-6 shrink-0',
-        active && clsx('text-custom-500', className)
-      )}
-      icon={icon}
-    />
+    <Text asChild color={active ? 'custom-500' : undefined}>
+      <Icon
+        className={className}
+        icon={icon}
+        style={{ flexShrink: 0, height: '1.5rem', width: '1.5rem' }}
+      />
+    </Text>
   )
 }
 

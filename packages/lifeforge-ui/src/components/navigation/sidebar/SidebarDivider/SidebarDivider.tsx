@@ -1,15 +1,18 @@
-import clsx from 'clsx'
+import { Box } from '@components/primitives'
 
 /**
  * A divider component used to separate sections within the sidebar.
  */
 function SidebarDivider({ noMargin = false }: { noMargin?: boolean }) {
   return (
-    <li
-      className={clsx(
-        'bg-bg-200 dark:bg-bg-700/50 h-px shrink-0',
-        !noMargin && 'my-4'
-      )}
+    <Box
+      bg={{
+        base: 'bg-200',
+        dark: 'bg-800'
+      }}
+      flexShrink="0"
+      height="1px"
+      my={!noMargin ? 'md' : 'none'}
     />
   )
 }

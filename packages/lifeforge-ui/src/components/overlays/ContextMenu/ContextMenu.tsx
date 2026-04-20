@@ -13,6 +13,12 @@ interface MenuProps {
     icon?: React.CSSProperties
     menu?: React.CSSProperties
   }
+  /** Optional CSS class names for styling different parts of the menu component. */
+  classNames?: {
+    wrapper?: string
+    button?: string
+    menu?: string
+  }
   /** The icon identifier from Iconify to replace the default hamburger menu icon. */
   customIcon?: string
   /** Callback function called when the menu open state changes. */
@@ -28,6 +34,7 @@ interface MenuProps {
 function ContextMenu({
   children,
   styles,
+  classNames,
   customIcon,
   buttonComponent,
   onOpenChange,
@@ -37,9 +44,14 @@ function ContextMenu({
   return (
     <DropdownMenuPrimitive.Root onOpenChange={onOpenChange}>
       <DropdownMenuPrimitive.Trigger asChild>
-        <Box role="menu" style={styles?.wrapper}>
+        <Box
+          className={classNames?.wrapper}
+          role="menu"
+          style={styles?.wrapper}
+        >
           {buttonComponent || (
             <Button
+              className={classNames?.button}
               icon={customIcon ?? 'tabler:dots-vertical'}
               iconStyle={styles?.icon}
               style={styles?.button}
@@ -66,6 +78,7 @@ function ContextMenu({
           <Bordered
             bg={{ base: 'bg-50', dark: 'bg-800' }}
             borderColor={{ base: 'bg-200', dark: 'bg-700' }}
+            className={classNames?.menu}
             minWidth="14rem"
             overflow="hidden"
             rounded="lg"
