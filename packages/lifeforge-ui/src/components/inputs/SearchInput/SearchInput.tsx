@@ -7,8 +7,11 @@ import { useTranslation } from 'react-i18next'
 import { useDivSize } from 'shared'
 
 import { Card } from '@components/layout'
+import { Box, Flex, Text } from '@components/primitives'
 
 import Button from '../Button'
+import Placeholder from '../shared/components/Placeholder'
+import * as styles from './SearchInput.css'
 
 interface SearchInputProps {
   /** The icon to display in the search input. Should be a valid icon name from Iconify. */
@@ -142,89 +145,123 @@ function SearchInput({
   }
 
   return (
-    <div
+    <Box
       ref={containerRef}
-      className="relative w-full"
       onBlur={handleBlur}
       onFocus={() => setIsFocused(true)}
+      position="relative"
+      width="100%"
     >
-      <search
-        className={clsx(
-          'shadow-custom border-bg-500/20 component-bg-with-hover relative flex min-h-14 w-full cursor-text items-center gap-3 rounded-lg p-4 transition-all in-[.bordered]:border-2',
-          className
-        )}
+      <Flex
+        shadow
+        align="center"
+        as="search"
+        bg={{
+          base: 'bg-50',
+          dark: 'bg-900',
+          hover: 'bg-100',
+          darkHover: 'bg-800'
+        }}
+        className={clsx(styles.searchWrapper, className)}
         onClick={e => {
           e.currentTarget.querySelector('input')?.focus()
         }}
+        p="md"
+        position="relative"
+        rounded="lg"
+        style={{ cursor: 'text', gap: '0.75rem', minHeight: '3.5rem' }}
+        width="100%"
       >
-        <Icon className="text-bg-500 size-5 shrink-0" icon={icon} />
-        <input
-          autoComplete="one-time-code"
-          autoCorrect="off"
-          className={clsx(
-            'caret-custom-500 placeholder:text-bg-500 w-full bg-transparent',
-            actionButtonProps ? 'pr-20' : 'pr-10'
-          )}
-          data-form-type="other"
-          data-lpignore="true"
-          placeholder={t([`search`, `Search ${searchTarget}`], {
-            item: t([
-              `${namespace}:items.${_.camelCase(searchTarget)}`,
-              `${namespace}:items.${searchTarget}`,
-              `${namespace}:${_.camelCase(searchTarget)}`,
-              `${namespace}:${searchTarget}`,
-              `common.misc:items.${_.camelCase(searchTarget)}`,
-              `common.misc:items.${searchTarget}`,
-              `common.misc:${_.camelCase(searchTarget)}`,
-              `common.misc:${searchTarget}`,
-              searchTarget
-            ])
-          })}
-          type="text"
-          value={displayValue}
-          onChange={e => {
-            handleChange(e.target.value)
-          }}
-          onKeyUp={onKeyUp}
-        />
-        <div className="absolute top-1/2 right-4 flex -translate-y-1/2 items-center gap-2">
+        <Text
+          asChild
+          color="bg-500"
+          style={{ flexShrink: 0, height: '1.25rem', width: '1.25rem' }}
+        >
+          <Icon icon={icon} />
+        </Text>
+        <Placeholder>
+          <input
+            autoComplete="one-time-code"
+            autoCorrect="off"
+            className={styles.searchInput}
+            data-form-type="other"
+            data-lpignore="true"
+            placeholder={t([`search`, `Search ${searchTarget}`], {
+              item: t([
+                `${namespace}:items.${_.camelCase(searchTarget)}`,
+                `${namespace}:items.${searchTarget}`,
+                `${namespace}:${_.camelCase(searchTarget)}`,
+                `${namespace}:${searchTarget}`,
+                `common.misc:items.${_.camelCase(searchTarget)}`,
+                `common.misc:items.${searchTarget}`,
+                `common.misc:${_.camelCase(searchTarget)}`,
+                `common.misc:${searchTarget}`,
+                searchTarget
+              ])
+            })}
+            style={{ paddingRight: actionButtonProps ? '5rem' : '2.5rem' }}
+            type="text"
+            value={displayValue}
+            onChange={e => {
+              handleChange(e.target.value)
+            }}
+            onKeyUp={onKeyUp}
+          />
+        </Placeholder>
+        <Flex
+          align="center"
+          gap="sm"
+          position="absolute"
+          style={{ right: '1rem', top: '50%', transform: 'translateY(-50%)' }}
+        >
           <Button
-            className={clsx(
-              'size-8 p-0',
-              displayValue ? 'visible opacity-100' : 'invisible opacity-0'
-            )}
             icon="tabler:x"
+            style={{
+              height: '2rem',
+              opacity: displayValue ? 1 : 0,
+              padding: 0,
+              visibility: displayValue ? 'visible' : 'hidden',
+              width: '2rem'
+            }}
             variant="plain"
             onClick={handleClear}
           />
           {actionButtonProps && (
             <Button
               {...actionButtonProps}
-              className={clsx('size-8 p-0', actionButtonProps.className)}
+              style={{
+                height: '2rem',
+                padding: 0,
+                width: '2rem',
+                ...actionButtonProps.style
+              }}
               variant={actionButtonProps.variant || 'plain'}
             />
           )}
-        </div>
-      </search>
+        </Flex>
+      </Flex>
       {children && (
         <Card
-          className={clsx(
-            'absolute top-2 w-full overflow-hidden p-0! transition-all',
-            shouldShowChildren
-              ? 'visible opacity-100'
-              : 'pointer-events-none invisible opacity-0'
-          )}
+          overflow="hidden"
           style={{
-            height: children && shouldShowChildren ? childrenHeight : 0
+            height: children && shouldShowChildren ? childrenHeight : 0,
+            opacity: shouldShowChildren ? 1 : 0,
+            padding: 0,
+            pointerEvents: shouldShowChildren ? undefined : 'none',
+            position: 'absolute',
+            top: '0.5rem',
+            transition: 'all 0.2s',
+            visibility: shouldShowChildren ? 'visible' : 'hidden'
           }}
+          width="100%"
           onMouseDown={e => e.preventDefault()}
         >
-          <div ref={childrenRef} className="p-4">
+          <Box ref={childrenRef} p="md">
             {children}
-          </div>
+          </Box>
         </Card>
       )}
-    </div>
+    </Box>
   )
 }
 

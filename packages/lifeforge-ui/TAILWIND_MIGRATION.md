@@ -62,20 +62,20 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 - [x] `ComboboxInput`
 - [x] `CurrencyInput`
 - [x] `DateInput`
-- [ ] `FAB`
+- [x] `FAB`
 - [x] `FileInput`
 - [x] `IconInput`
 - [ ] `Listbox`
 - [x] `ListboxInput`
 - [ ] `LocationInput`
 - [x] `NumberInput`
-- [ ] `QRCodeScanner`
+- [x] `QRCodeScanner`
 - [x] `RRuleInput`
-- [ ] `SearchInput`
-- [ ] `SliderInput`
+- [x] `SearchInput`
+- [x] `SliderInput`
 - [x] `Switch`
 - [ ] `TagsInput`
-- [ ] `TextAreaInput`
+- [x] `TextAreaInput`
 - [x] `TextInput`
 - [x] `TextInput/components/TextInputBox`
 
@@ -127,8 +127,8 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 | Auth           |        0 |     7 |     0% |
 | Data Display   |        8 |     8 |   100% |
 | Feedback       |        5 |     5 |   100% |
-| Inputs         |       13 |    22 |    59% |
+| Inputs         |       18 |    22 |    82% |
 | Layout         |        5 |     5 |   100% |
 | Navigation     |        3 |     9 |    33% |
 | Overlays       |        5 |     9 |    56% |
-| **Total**      |   **46** |**73** | **63%**|
+| **Total**      |   **51** |**73** | **70%**|

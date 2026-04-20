@@ -1,51 +1,35 @@
 import { style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
-import { bg, custom, withOpacity } from '@/system'
+import { bg, custom, vars, withOpacity } from '@/system'
 
 export const inputWrapperRecipe = recipe({
+  base: {
+    transition: 'all 0.2s',
+    backgroundColor: withOpacity(bg[200], 0.5),
+    selectors: {
+      '.dark &': { backgroundColor: withOpacity(bg[800], 0.7) },
+      '&:hover': { backgroundColor: bg[200] },
+      '.dark &:hover': { backgroundColor: bg[800] }
+    }
+  },
   variants: {
     variant: {
       classic: {
-        backgroundColor: withOpacity(bg[200], 0.5),
-        boxShadow: 'var(--custom-shadow)',
-        borderTopLeftRadius: 'var(--radius-lg)',
-        borderTopRightRadius: 'var(--radius-lg)',
+        borderTopLeftRadius: vars.radii.lg,
+        borderTopRightRadius: vars.radii.lg,
         borderBottomWidth: '2px',
         borderBottomStyle: 'solid',
-        paddingLeft: 'calc(var(--spacing) * 6)',
         selectors: {
-          '.dark &': {
-            backgroundColor: withOpacity(bg[800], 0.7)
-          },
-          '&:hover': {
-            backgroundColor: bg[200]
-          },
-          '.dark &:hover': {
-            backgroundColor: bg[800]
-          },
           '.bordered &': {
-            borderRadius: 'var(--radius-lg)',
+            borderRadius: vars.radii.lg,
             borderWidth: '2px',
             borderStyle: 'solid'
           }
         }
       },
       plain: {
-        backgroundColor: withOpacity(bg[200], 0.5),
-        borderRadius: 'var(--radius-lg)',
-        boxShadow: 'var(--custom-shadow)',
-        selectors: {
-          '.dark &': {
-            backgroundColor: withOpacity(bg[800], 0.7)
-          },
-          '&:hover': {
-            backgroundColor: bg[200]
-          },
-          '.dark &:hover': {
-            backgroundColor: bg[800]
-          }
-        }
+        borderRadius: vars.radii.lg
       }
     },
     size: {
@@ -87,17 +71,13 @@ export const inputWrapperRecipe = recipe({
     {
       variants: { variant: 'plain', size: 'default' },
       style: {
-        padding: 'calc(var(--spacing) * 4)',
-        paddingLeft: 'calc(var(--spacing) * 5)',
-        paddingRight: 'calc(var(--spacing) * 5)'
+        padding: vars.space.md
       }
     },
     {
       variants: { variant: 'plain', size: 'small' },
       style: {
-        padding: 'calc(var(--spacing) * 2)',
-        paddingLeft: 'calc(var(--spacing) * 3)',
-        paddingRight: 'calc(var(--spacing) * 3)'
+        padding: vars.space.sm
       }
     }
   ],
@@ -110,8 +90,5 @@ export const inputWrapperRecipe = recipe({
 })
 
 export const inputWrapperErrorTextStyle = style({
-  paddingLeft: 'calc(var(--spacing) * 6)',
-  paddingRight: 'calc(var(--spacing) * 6)',
-  fontSize: 'var(--text-sm)',
   color: 'var(--color-red-500)'
 })

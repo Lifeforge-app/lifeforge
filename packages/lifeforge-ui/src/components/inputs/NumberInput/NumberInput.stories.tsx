@@ -15,7 +15,7 @@ export const Default: Story = {
     value: 0,
     onChange: () => {},
 
-    label: 'Price',
-    icon: 'tabler:currency-dollar'
+    label: 'Age',
+    icon: 'tabler:calendar'
   }
 }

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { clsx } from 'clsx'
-import { type ComponentPropsWithoutRef } from 'react'
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
 import { Flex } from '@components/primitives'
 
@@ -12,6 +12,11 @@ interface InputActionButtonProps extends Omit<
 > {
   /** Iconify icon name to display inside the button. */
   icon: string
+  /** Visual style variant of the button. */
+  variant?: 'classic' | 'plain'
+  /** Whether to merge the button styles into a single child element instead of rendering a native button. */
+  asChild?: boolean
+  children?: ReactNode
 }
 
 /**
@@ -21,23 +26,37 @@ interface InputActionButtonProps extends Omit<
  */
 function InputActionButton({
   icon,
+  variant = 'classic',
   className,
+  style,
+  asChild = false,
+  children,
   ...rest
 }: InputActionButtonProps) {
   return (
     <Flex
-      asChild
       align="center"
+      asChild={asChild}
       bg={{ base: 'transparent', hover: 'bg-200', darkHover: 'bg-800' }}
       className={clsx(styles.root, className)}
       flexShrink="0"
       justify="center"
       p="sm"
+      position="absolute"
+      right="0"
       rounded="lg"
+      style={{
+        ...style,
+        marginRight: variant === 'classic' ? '1rem' : '0.75rem'
+      }}
     >
-      <button type="button" {...rest}>
-        <Icon icon={icon} style={{ width: '1.5rem', height: '1.5rem' }} />
-      </button>
+      {asChild ? (
+        children
+      ) : (
+        <button type="button" {...rest}>
+          <Icon icon={icon} style={{ width: '1.25em', height: '1.25em' }} />
+        </button>
+      )}
     </Flex>
   )
 }

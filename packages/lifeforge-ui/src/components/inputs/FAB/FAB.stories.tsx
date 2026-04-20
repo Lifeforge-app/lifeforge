@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { ContextMenu, ContextMenuItem } from '@components/overlays'
+import { Box, Flex, Text } from '@components/primitives'
 
 import Fab from './FAB'
 
@@ -21,9 +22,9 @@ export const Default: Story = {
     visibilityBreakpoint: false
   },
   render: props => (
-    <div className="h-48">
-      <Fab {...props} className="fixed right-6 bottom-6" />
-    </div>
+    <Box style={{ height: '12rem' }}>
+      <Fab {...props} />
+    </Box>
   )
 }
 
@@ -37,9 +38,9 @@ export const WithContextMenu: Story = {
   },
   render: props => {
     return (
-      <div className="h-48">
+      <Box style={{ height: '12rem' }}>
         <ContextMenu
-          buttonComponent={<Fab {...props} className="static!" />}
+          buttonComponent={<Fab {...props} style={{ position: 'static' }} />}
           side="top"
           styles={{
             wrapper: {
@@ -62,7 +63,7 @@ export const WithContextMenu: Story = {
             onClick={() => {}}
           />
         </ContextMenu>
-      </div>
+      </Box>
     )
   }
 }
@@ -73,12 +74,18 @@ export const WithVisibilityBreakpoint: Story = {
     visibilityBreakpoint: 'md'
   },
   render: props => (
-    <div className="flex-center relative h-full w-full">
-      <p className="text-bg-500 text-lg">
+    <Flex
+      align="center"
+      height="100%"
+      justify="center"
+      position="relative"
+      width="100%"
+    >
+      <Text as="p" color="bg-500" size="lg">
         Resize the viewport to see the FAB hide at the &apos;md&apos; breakpoint
         and below.
-      </p>
-      <Fab {...props} className="fixed right-6 bottom-6" />
-    </div>
+      </Text>
+      <Fab {...props} />
+    </Flex>
   )
 }

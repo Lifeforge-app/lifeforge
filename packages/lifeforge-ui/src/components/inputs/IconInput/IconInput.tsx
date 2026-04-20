@@ -88,7 +88,7 @@ function IconInput({
       {variant === 'classic' && (
         <InputIcon active={!!value} hasError={!!errorMsg} icon="tabler:icons" />
       )}
-      <Flex align="center" gap="sm" pr="md" width="100%">
+      <Flex align="center" gap="sm" position="relative" pr="md" width="100%">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!value}
@@ -100,13 +100,13 @@ function IconInput({
         <div
           className={clsx(
             'flex w-full items-center gap-2',
-            variant === 'classic' ? 'mt-6 pl-4' : ''
+            variant === 'classic' ? 'mt-4 p-4 pb-2 pl-0' : ''
           )}
         >
-          <span className="icon-input-icon size-5 shrink-0">
+          <span className="icon-input-icon size-4 shrink-0">
             <Icon
               className={clsx(
-                'size-5 shrink-0',
+                'size-4 shrink-0',
                 !value &&
                   'pointer-events-none opacity-0 group-focus-within:opacity-100'
               )}
@@ -118,9 +118,7 @@ function IconInput({
             autoComplete="off"
             className={clsx(
               'focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wide focus:outline-none',
-              variant === 'classic'
-                ? 'h-8 py-6 placeholder:text-transparent'
-                : 'h-7 p-0'
+              variant === 'classic' ? 'placeholder:text-transparent' : 'h-7 p-0'
             )}
             disabled={disabled}
             name={label}

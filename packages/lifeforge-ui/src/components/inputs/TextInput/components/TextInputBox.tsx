@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 
+import Placeholder from '@components/inputs/shared/components/Placeholder'
 import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
 
 import { textInputBoxRecipe } from './TextInputBox.css'
@@ -51,24 +52,29 @@ function TextInputBox({
       {isPassword && (
         <input hidden type="password" value="" onChange={() => {}} />
       )}
-      <input
-        ref={autoFocusableRef(autoFocus, inputRef)}
-        aria-label={placeholder}
-        autoComplete="off"
-        className={clsx(inputClassName, className)}
-        disabled={disabled}
-        inputMode={inputMode}
-        placeholder={placeholder}
-        style={
-          isPassword && showPassword !== true ? { fontFamily: 'Arial' } : {}
-        }
-        type={isPassword && showPassword !== true ? 'password' : 'text'}
-        value={value}
-        onChange={e => {
-          onChange(e.target.value)
-        }}
-        {...inputProps}
-      />
+      <Placeholder
+        color={variant === 'classic' ? 'transparent' : 'default'}
+        focusColor="default"
+      >
+        <input
+          ref={autoFocusableRef(autoFocus, inputRef)}
+          aria-label={placeholder}
+          autoComplete="off"
+          className={clsx(inputClassName, className)}
+          disabled={disabled}
+          inputMode={inputMode}
+          placeholder={placeholder}
+          style={
+            isPassword && showPassword !== true ? { fontFamily: 'Arial' } : {}
+          }
+          type={isPassword && showPassword !== true ? 'password' : 'text'}
+          value={value}
+          onChange={e => {
+            onChange(e.target.value)
+          }}
+          {...inputProps}
+        />
+      </Placeholder>
     </>
   )
 }

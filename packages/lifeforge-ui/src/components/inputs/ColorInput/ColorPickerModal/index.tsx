@@ -4,6 +4,7 @@ import tinycolor from 'tinycolor2'
 
 import { Button } from '@components/inputs'
 import { ModalHeader } from '@components/overlays'
+import { Box, Flex } from '@components/primitives'
 
 import PaletteButtons from './components/PaletteButtons'
 import { useColorPickerModalStore } from './stores/useColorPickerModalStore'
@@ -50,115 +51,112 @@ function ColorPickerModal({
   }, [value])
 
   return (
-    <div className="sm:min-w-[28rem]!">
+    <Box minWidth={{ sm: '28rem' }}>
       <ModalHeader
         icon="tabler:color-picker"
         title="colorPicker.title"
         onClose={onClose}
       />
-      <Colorful
-        disableAlpha
-        className="w-full!"
-        color={innerColor}
-        onChange={handleColorChange}
-      />
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `.w-color-editable-input.hex input {
-          background-color: ${innerColor} !important;
-          color: ${checkContrast(innerColor)} !important;
-        }`
+      <Colorful disableAlpha color={innerColor} onChange={handleColorChange} />
+      <Box
+        asChild
+        mt="md"
+        style={{
+          // @ts-expect-error - CSS variables
+          '--editable-input-bg': innerColor,
+          '--editable-input-color': checkContrast(innerColor)
         }}
-      />
-      <EditableInput
-        className="hex mt-4 border-0 text-2xl font-semibold"
-        label="Hex"
-        value={innerColor}
-        onChange={handleInputChange}
-      />
-      <div className="mt-4 flex w-full min-w-0 gap-4">
+      >
+        <EditableInput
+          className="hex"
+          label="Hex"
+          value={innerColor}
+          onChange={handleInputChange}
+        />
+      </Box>
+      <Flex gap="md" minWidth="0" mt="md" width="100%">
         {['R', 'G', 'B'].map(type => (
-          <EditableInput
-            key={type}
-            className="rgb w-full min-w-0 flex-1 border-0 text-2xl font-semibold"
-            label={type}
-            value={tinycolor(innerColor)
-              .toRgb()
-              [type.toLowerCase() as 'r' | 'g' | 'b'].toString()}
-            onChange={e => {
-              const oldColor = tinycolor(innerColor).toRgb()
+          <Box key={type} asChild flex="1" style={{ minWidth: 0 }} width="100%">
+            <EditableInput
+              className="rgb"
+              label={type}
+              value={tinycolor(innerColor)
+                .toRgb()
+                [type.toLowerCase() as 'r' | 'g' | 'b'].toString()}
+              onChange={e => {
+                const oldColor = tinycolor(innerColor).toRgb()
 
-              const newColor =
-                type === 'R'
-                  ? tinycolor({
-                      r: Number(e.target.value),
-                      g: oldColor.g,
-                      b: oldColor.b
-                    })
-                  : type === 'G'
+                const newColor =
+                  type === 'R'
                     ? tinycolor({
-                        r: oldColor.r,
-                        g: Number(e.target.value),
+                        r: Number(e.target.value),
+                        g: oldColor.g,
                         b: oldColor.b
                       })
-                    : tinycolor({
-                        r: oldColor.r,
-                        g: oldColor.g,
-                        b: Number(e.target.value)
-                      })
+                    : type === 'G'
+                      ? tinycolor({
+                          r: oldColor.r,
+                          g: Number(e.target.value),
+                          b: oldColor.b
+                        })
+                      : tinycolor({
+                          r: oldColor.r,
+                          g: oldColor.g,
+                          b: Number(e.target.value)
+                        })
 
-              setInnerColor(newColor.toHexString())
-            }}
-          />
+                setInnerColor(newColor.toHexString())
+              }}
+            />
+          </Box>
         ))}
-      </div>
-      <div className="mt-4 flex w-full min-w-0 gap-4">
+      </Flex>
+      <Flex gap="md" minWidth="0" mt="md" width="100%">
         {['H', 'S', 'V'].map(type => (
-          <EditableInput
-            key={type}
-            className="hsl w-full min-w-0 flex-1 border-0 text-2xl font-semibold"
-            label={type}
-            value={(
-              tinycolor(innerColor).toHsv()[
-                type.toLowerCase() as 'h' | 's' | 'v'
-              ] * (type === 'H' ? 1 : 100)
-            ).toFixed(type === 'H' ? 0 : 2)}
-            onChange={e => {
-              const oldColor = tinycolor(innerColor).toHsv()
+          <Box key={type} asChild flex="1" style={{ minWidth: 0 }} width="100%">
+            <EditableInput
+              className="hsl"
+              label={type}
+              value={(
+                tinycolor(innerColor).toHsv()[
+                  type.toLowerCase() as 'h' | 's' | 'v'
+                ] * (type === 'H' ? 1 : 100)
+              ).toFixed(type === 'H' ? 0 : 2)}
+              onChange={e => {
+                const oldColor = tinycolor(innerColor).toHsv()
 
-              const newColor =
-                type === 'H'
-                  ? tinycolor({
-                      h: Number(e.target.value),
-                      s: oldColor.s,
-                      v: oldColor.v
-                    })
-                  : type === 'S'
+                const newColor =
+                  type === 'H'
                     ? tinycolor({
-                        h: oldColor.h,
-                        s: Number(e.target.value) / 100,
+                        h: Number(e.target.value),
+                        s: oldColor.s,
                         v: oldColor.v
                       })
-                    : tinycolor({
-                        h: oldColor.h,
-                        s: oldColor.s,
-                        v: Number(e.target.value) / 100
-                      })
+                    : type === 'S'
+                      ? tinycolor({
+                          h: oldColor.h,
+                          s: Number(e.target.value) / 100,
+                          v: oldColor.v
+                        })
+                      : tinycolor({
+                          h: oldColor.h,
+                          s: oldColor.s,
+                          v: Number(e.target.value) / 100
+                        })
 
-              setInnerColor(newColor.toHexString())
-            }}
-          />
+                setInnerColor(newColor.toHexString())
+              }}
+            />
+          </Box>
         ))}
-      </div>
+      </Flex>
       <PaletteButtons />
-      <Button
-        className="mt-6 w-full"
-        icon="tabler:check"
-        onClick={confirmColor}
-      >
-        Select
-      </Button>
-    </div>
+      <Box asChild mt="lg" width="100%">
+        <Button icon="tabler:check" onClick={confirmColor}>
+          Select
+        </Button>
+      </Box>
+    </Box>
   )
 }
 

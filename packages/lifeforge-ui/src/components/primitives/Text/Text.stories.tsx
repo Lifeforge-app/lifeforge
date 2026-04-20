@@ -66,6 +66,14 @@ const meta = {
     overflowWrap: {
       control: { type: 'select' },
       options: ['normal', 'break-word', 'anywhere']
+    },
+    tracking: {
+      control: { type: 'select' },
+      options: ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest']
+    },
+    leading: {
+      control: { type: 'select' },
+      options: ['none', 'tight', 'snug', 'normal', 'relaxed', 'loose']
     }
   }
 } satisfies Meta<typeof Text>
@@ -517,5 +525,73 @@ export const Composition: Story = {
         ))}
       </Grid>
     </Flex>
+  )
+}
+
+/**
+ * `tracking` controls `letter-spacing` using a named scale from `'tighter'`
+ * (-0.05em) to `'widest'` (0.1em).
+ */
+export const Tracking: Story = {
+  args: {},
+  render: () => (
+    <ScrollableStory>
+      {(['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'] as const).map(
+        tracking => (
+          <Flex key={tracking} align="baseline" gap="md">
+            <Text
+              as="code"
+              color={{ base: 'bg-400', dark: 'bg-500' }}
+              size="sm"
+              style={{ width: '5rem', flexShrink: 0 }}
+            >
+              {tracking}
+            </Text>
+            <Text size="lg" tracking={tracking}>
+              The quick brown fox jumps over the lazy dog.
+            </Text>
+          </Flex>
+        )
+      )}
+    </ScrollableStory>
+  )
+}
+
+/**
+ * `leading` overrides `line-height` with a named scale from `'none'` (1)
+ * to `'loose'` (2), independent of the `size` prop.
+ */
+export const Leading: Story = {
+  args: {},
+  render: () => (
+    <ScrollableStory>
+      {(['none', 'tight', 'snug', 'normal', 'relaxed', 'loose'] as const).map(
+        leading => (
+          <Box
+            key={leading}
+            bg={{ base: 'bg-50', dark: 'bg-800' }}
+            p="md"
+            rounded="lg"
+            width="100%"
+          >
+            <Text
+              as="code"
+              color={{ base: 'bg-400', dark: 'bg-500' }}
+              display="block"
+              mb="xs"
+              size="sm"
+            >
+              leading=&quot;{leading}&quot;
+            </Text>
+            <Text as="p" leading={leading} size="base">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </Text>
+          </Box>
+        )
+      )}
+    </ScrollableStory>
   )
 }

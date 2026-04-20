@@ -1,7 +1,13 @@
-import { ComboboxInput as HeadlessComboboxInput } from '@headlessui/react'
-import clsx from 'clsx'
+import {
+  ComboboxButton,
+  ComboboxInput as HeadlessComboboxInput
+} from '@headlessui/react'
+import { Icon } from '@iconify/react'
 import { useCallback, useMemo } from 'react'
 
+import { Box, Flex, Text } from '@components/primitives'
+
+import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import useInputLabel from '../shared/hooks/useInputLabel'
@@ -102,40 +108,75 @@ function ComboboxInput<T>({
       className={className}
       disabled={disabled}
       setQuery={setQuery}
-      variant={variant}
       value={value}
+      variant={variant}
       onChange={handleChange}
       onClick={focusInput}
     >
-      <div className="group relative flex w-full items-center">
+      <Flex align="center" className="group" position="relative" width="100%">
         {variant === 'classic' && icon && (
-          <InputIcon
-            active={isActive}
-            className="absolute left-6"
-            icon={icon}
-          />
+          <Box position="absolute">
+            <InputIcon active={isActive} icon={icon} />
+          </Box>
         )}
         {variant === 'classic' && label && (
-          <InputLabel
-            isCombobox
-            isListboxOrCombobox
-            active={isActive}
-            label={inputLabel}
-            required={required === true}
-          />
+          <Box
+            asChild
+            style={{
+              marginLeft: 'calc(var(--spacing) * 14)'
+            }}
+          >
+            <InputLabel
+              isCombobox
+              isListboxOrCombobox
+              active={isActive}
+              label={inputLabel}
+              required={required === true}
+            />
+          </Box>
         )}
-        <HeadlessComboboxInput
-          ref={autoFocusableRef(autoFocus)}
-          className={clsx(
-            'relative flex w-full items-center gap-2 rounded-lg bg-transparent! text-left focus:outline-hidden',
-            variant === 'classic' ? 'mt-10 mb-3 pr-5 pl-17' : 'h-7 p-0'
-          )}
-          displayValue={displayValue}
-          onChange={e => {
-            setQuery(e.target.value)
-          }}
-        />
-      </div>
+        <Box
+          asChild
+          bg="transparent"
+          mt={variant === 'classic' ? 'md' : undefined}
+          overflow="hidden"
+          pb={variant === 'classic' ? 'sm' : undefined}
+          position="relative"
+          pr="3xl"
+          pt={variant === 'classic' ? 'md' : undefined}
+          rounded="lg"
+          style={
+            variant === 'classic'
+              ? { paddingLeft: '3.5rem' }
+              : {
+                  paddingTop: '1.25rem',
+                  paddingBottom: '1.25rem',
+                  paddingLeft: '1.25rem'
+                }
+          }
+          width="100%"
+        >
+          <Text asChild truncate align="left">
+            <HeadlessComboboxInput
+              ref={autoFocusableRef(autoFocus)}
+              displayValue={displayValue}
+              onChange={e => {
+                setQuery(e.target.value)
+              }}
+            />
+          </Text>
+        </Box>
+        <Box asChild mr={variant === 'plain' ? 'sm' : 'md'}>
+          <InputActionButton asChild icon="" variant={variant}>
+            <ComboboxButton>
+              <Icon
+                icon="heroicons:chevron-up-down-16-solid"
+                style={{ width: '1.25em', height: '1.25em' }}
+              />
+            </ComboboxButton>
+          </InputActionButton>
+        </Box>
+      </Flex>
       <ComboboxOptions>{children}</ComboboxOptions>
     </ComboboxInputWrapper>
   )

@@ -21,6 +21,21 @@ export const Default: Story = {
   render: args => {
     const [color, setColor] = useState<string>('')
 
-    return <Index {...args} onChange={setColor} value={color} />
+    return <Index {...args} value={color} onChange={setColor} />
+  }
+}
+
+export const PlainVariant: Story = {
+  args: {
+    label: 'Cube Color',
+    value: '',
+    namespace: 'namespace',
+    variant: 'plain'
+  },
+
+  render: args => {
+    const [color, setColor] = useState<string>('')
+
+    return <Index {...args} value={color} onChange={setColor} />
   }
 }

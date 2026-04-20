@@ -4,6 +4,10 @@ import { converter, formatHex, parse } from 'culori'
 import { memo, useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
+import { Box, Flex, Text } from '@components/primitives'
+
+import * as styles from './ColorItem.css'
+
 function ColorItem({
   name,
   value,
@@ -21,29 +25,37 @@ function ColorItem({
   )
 
   return (
-    <li key={value} className="w-full">
-      <button
-        className={clsx(
-          'flex-center shadow-custom aspect-square w-full cursor-pointer rounded-md',
-          selected === value &&
-            'ring-bg-900 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900 ring-2 ring-offset-2'
-        )}
-        style={{ backgroundColor: value }}
-        onClick={() => onSelect(colorHex)}
-      >
-        {selected === colorHex && (
-          <Icon
-            className={clsx(
-              tinycolor(colorHex).isLight() ? 'text-bg-800' : 'text-bg-50',
-              'size-8'
-            )}
-            icon="tabler:check"
-          />
-        )}
-      </button>
-      <p className="mt-2 text-xs font-medium">{name}</p>
-      <code className="text-bg-500 block text-xs font-medium">{colorHex}</code>
-    </li>
+    <Box as="li" width="100%">
+      <Flex asChild align="center" justify="center" rounded="md" width="100%">
+        <button
+          className={clsx(
+            styles.colorButton,
+            selected === value && styles.colorButtonSelected
+          )}
+          style={{ backgroundColor: value }}
+          onClick={() => onSelect(colorHex)}
+        >
+          {selected === colorHex && (
+            <Icon
+              icon="tabler:check"
+              style={{
+                width: '2rem',
+                height: '2rem',
+                color: tinycolor(colorHex).isLight()
+                  ? 'var(--color-bg-800)'
+                  : 'var(--color-bg-50)'
+              }}
+            />
+          )}
+        </button>
+      </Flex>
+      <Text as="p" mt="sm" size="sm" weight="medium">
+        {name}
+      </Text>
+      <Text as="code" color="bg-500" display="block" size="sm" weight="medium">
+        {colorHex}
+      </Text>
+    </Box>
   )
 }
 

@@ -1,5 +1,8 @@
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { memo } from 'react'
+import { type CSSProperties, memo } from 'react'
+
+import { Flex, Text } from '@components/primitives'
 
 import {
   inputLabelActiveStyle,
@@ -19,6 +22,8 @@ interface InputLabelProps {
   isListboxOrCombobox?: boolean
   required?: boolean
   hasError?: boolean
+  className?: string
+  style?: CSSProperties
 }
 
 function InputLabel({
@@ -26,10 +31,13 @@ function InputLabel({
   active,
   focused = false,
   required = false,
-  hasError = false
+  hasError = false,
+  className,
+  style
 }: InputLabelProps) {
   return (
-    <span
+    <Flex
+      align="center"
       className={clsx(
         inputLabelBaseStyle,
         active ? inputLabelActiveStyle : inputLabelInactiveStyle,
@@ -37,12 +45,29 @@ function InputLabel({
           ? inputLabelErrorStyle
           : focused
             ? inputLabelFocusedStyle
-            : inputLabelNormalStyle
+            : inputLabelNormalStyle,
+        className
       )}
+      gap="xs"
+      style={style}
     >
-      {label}
-      {required && <span className={inputLabelRequiredStyle}> *</span>}
-    </span>
+      <Text>{label}</Text>
+      {required && (
+        <Text
+          className={inputLabelRequiredStyle}
+          color="dangerous"
+          display="block"
+        >
+          <Icon
+            icon="tabler:asterisk"
+            style={{
+              width: '0.625em',
+              height: '0.625em'
+            }}
+          />
+        </Text>
+      )}
+    </Flex>
   )
 }
 

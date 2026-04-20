@@ -65,8 +65,8 @@ export const Default: Story = {
         }
         className="w-96"
         disabled={false}
-        onChange={onChange}
         value={value}
+        onChange={onChange}
       >
         {OPTIONS.map(({ color, icon, text, value }, index) => (
           <ListboxOption
@@ -131,8 +131,8 @@ export const MultipleSelection: Story = {
           </span>
         }
         disabled={false}
-        onChange={onChange}
         value={value}
+        onChange={onChange}
       >
         {OPTIONS.map(({ color, icon, text, value }, index) => (
           <ListboxOption

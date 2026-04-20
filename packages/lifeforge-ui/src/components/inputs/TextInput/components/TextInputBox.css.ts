@@ -1,6 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes'
 
-import { bg, custom } from '@/system'
+import { custom, vars } from '@/system'
 
 export const textInputBoxRecipe = recipe({
   base: {
@@ -9,25 +9,15 @@ export const textInputBoxRecipe = recipe({
     backgroundColor: 'transparent',
     letterSpacing: '0.05em',
     borderRadius: 'var(--radius-lg)',
-    outline: 'none',
-    selectors: {
-      '&:focus::placeholder': {
-        color: bg[500]
-      }
-    }
+    outline: 'none'
   },
   variants: {
     variant: {
       classic: {
-        marginTop: 'calc(var(--spacing) * 6)',
-        height: '3.25rem',
-        padding: 'calc(var(--spacing) * 6)',
-        paddingLeft: 'calc(var(--spacing) * 4)',
-        selectors: {
-          '&::placeholder': {
-            color: 'transparent'
-          }
-        }
+        marginTop: vars.space.md,
+        padding: vars.space.md,
+        paddingLeft: 0,
+        paddingBottom: vars.space.sm
       },
       plain: {
         padding: 0,

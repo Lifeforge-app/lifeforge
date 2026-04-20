@@ -83,7 +83,7 @@ function TextInput({
           icon={icon}
         />
       )}
-      <Flex align="center" gap="sm" pr="md" width="100%">
+      <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!value && String(value).length > 0}

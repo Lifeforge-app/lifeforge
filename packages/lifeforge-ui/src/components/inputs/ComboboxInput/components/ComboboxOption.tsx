@@ -1,6 +1,9 @@
 import { ComboboxOption as HeadlessComboboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
+
+import { Bordered, Box, Flex, Text } from '@components/primitives'
+
+import { option } from './ComboboxOption.css'
 
 function ComboboxOption({
   value,
@@ -18,57 +21,93 @@ function ComboboxOption({
   noCheckmark?: boolean
 }) {
   return (
-    <HeadlessComboboxOption
-      className="flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer gap-8 p-4 transition-all select-none"
-      value={value}
+    <Flex
+      asChild
+      align="center"
+      bg={{ hover: 'bg-200' }}
+      className={option}
+      gap="xl"
+      justify="between"
+      p="md"
+      position="relative"
     >
-      {({ selected }: { selected: boolean }) => (
-        <>
-          <div
-            className={clsx(
-              'flex w-full items-center',
-              color !== undefined ? 'gap-3' : 'gap-2',
-              selected && 'text-bg-800 dark:text-bg-100 font-semibold',
-              iconAtEnd && 'flex-between flex flex-row-reverse'
-            )}
-          >
-            {icon !== undefined ? (
-              <span
-                className={clsx('shrink-0 rounded-md', color ? 'p-2' : 'pr-2')}
-                style={
-                  color !== undefined
-                    ? {
-                        backgroundColor: color + '20',
-                        color
-                      }
-                    : {}
-                }
+      <HeadlessComboboxOption value={value}>
+        {({ selected }: { selected: boolean }) => (
+          <>
+            <Text
+              asChild
+              color={selected ? { base: 'bg-800', dark: 'bg-100' } : undefined}
+              weight={selected ? 'semibold' : undefined}
+            >
+              <Flex
+                align="center"
+                direction={iconAtEnd ? 'row-reverse' : undefined}
+                gap={color === undefined ? 'sm' : undefined}
+                justify={iconAtEnd ? 'between' : undefined}
+                style={color !== undefined ? { gap: '0.75rem' } : undefined}
+                width="100%"
               >
-                {typeof icon === 'string' ? (
-                  <Icon className="size-5 shrink-0" icon={icon} />
+                {icon !== undefined ? (
+                  <Box
+                    as="span"
+                    flexShrink="0"
+                    p={color !== undefined ? 'sm' : undefined}
+                    pr={color === undefined ? 'sm' : undefined}
+                    rounded="md"
+                    style={
+                      color !== undefined
+                        ? {
+                            backgroundColor: color + '20',
+                            color
+                          }
+                        : {}
+                    }
+                  >
+                    {typeof icon === 'string' ? (
+                      <Icon
+                        icon={icon}
+                        style={{
+                          width: '1.25rem',
+                          height: '1.25rem',
+                          flexShrink: 0
+                        }}
+                      />
+                    ) : (
+                      icon
+                    )}
+                  </Box>
                 ) : (
-                  icon
+                  color !== undefined && (
+                    <Bordered
+                      as="span"
+                      display="block"
+                      flexShrink="0"
+                      height="1rem"
+                      rounded="full"
+                      style={{ backgroundColor: color }}
+                      width="1rem"
+                    />
+                  )
                 )}
-              </span>
-            ) : (
-              color !== undefined && (
-                <span
-                  className="border-bg-200 dark:border-bg-700 block size-4 shrink-0 rounded-full border"
-                  style={{ backgroundColor: color }}
-                />
-              )
+                <Text truncate style={{ width: '100%', minWidth: 0 }}>
+                  {label}
+                </Text>
+              </Flex>
+            </Text>
+            {!noCheckmark && selected && (
+              <Text
+                asChild
+                color="custom-500"
+                size="lg"
+                style={{ display: 'block', flexShrink: 0 }}
+              >
+                <Icon icon="tabler:check" />
+              </Text>
             )}
-            <div className="w-full min-w-0 truncate">{label}</div>
-          </div>
-          {!noCheckmark && selected && (
-            <Icon
-              className="text-custom-500 block shrink-0 text-lg"
-              icon="tabler:check"
-            />
-          )}
-        </>
-      )}
-    </HeadlessComboboxOption>
+          </>
+        )}
+      </HeadlessComboboxOption>
+    </Flex>
   )
 }
 

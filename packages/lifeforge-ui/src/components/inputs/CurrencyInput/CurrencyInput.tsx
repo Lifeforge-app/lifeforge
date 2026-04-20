@@ -2,17 +2,14 @@
 import { useEffect, useRef, useState } from 'react'
 import CurrencyInput from 'react-currency-input-field'
 
-import { Flex, Text } from '@components/primitives'
+import { Box, Flex, Text } from '@components/primitives'
 
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
+import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
-import {
-  currencyInputContainerRecipe,
-  currencyInputFieldRecipe
-} from './CurrencyInput.css'
 
 export interface CurrencyInputProps {
   /** The currency symbol to display, or the currency code (e.g., "$", "€", "USD"). */
@@ -84,7 +81,7 @@ function CurrencyInputComponent({
       {variant === 'classic' && icon && (
         <InputIcon active={!!innerValue} hasError={!!errorMsg} icon={icon} />
       )}
-      <Flex width="100%" align="center" gap="sm">
+      <Flex width="100%" position="relative" align="center" gap="sm">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!innerValue}
@@ -96,7 +93,12 @@ function CurrencyInputComponent({
         <Flex
           align="center"
           gap="sm"
-          className={currencyInputContainerRecipe({ variant })}
+          width="100%"
+          pt={variant === 'classic' ? 'xl' : undefined}
+          pr={variant === 'classic' ? 'md' : undefined}
+          pb={variant === 'classic' ? 'sm' : undefined}
+          pl={variant === 'classic' ? 'none' : undefined}
+          p={variant === 'plain' ? 'xs' : undefined}
         >
           {currency && (focused || !!innerValue) && (
             <Text
@@ -108,31 +110,39 @@ function CurrencyInputComponent({
               {currency}
             </Text>
           )}
-          <CurrencyInput
-            ref={autoFocusableRef(autoFocus, inputRef)}
-            className={currencyInputFieldRecipe({ variant })}
-            decimalsLimit={2}
-            name={label}
-            placeholder={placeholder}
-            onFocus={() => setFocused(true)}
-            onBlur={() => {
-              setFocused(false)
+          <Placeholder
+            color={variant === 'classic' ? 'transparent' : 'default'}
+            focusColor="default"
+          >
+            <Box width="100%" asChild>
+              <Text asChild tracking="wider">
+                <CurrencyInput
+                  ref={autoFocusableRef(autoFocus, inputRef)}
+                  decimalsLimit={2}
+                  name={label}
+                  placeholder={placeholder}
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => {
+                    setFocused(false)
 
-              const numericValue = parseFloat(innerValue)
+                    const numericValue = parseFloat(innerValue)
 
-              if (!isNaN(numericValue)) {
-                onChange(numericValue)
-              } else {
-                onChange(0)
-              }
-            }}
-            value={innerValue}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onValueChange={(value: any) => {
-              setInnerValue(value)
-              onChange(Number(value))
-            }}
-          />
+                    if (!isNaN(numericValue)) {
+                      onChange(numericValue)
+                    } else {
+                      onChange(0)
+                    }
+                  }}
+                  value={innerValue}
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  onValueChange={(value: any) => {
+                    setInnerValue(value)
+                    onChange(Number(value))
+                  }}
+                />
+              </Text>
+            </Box>
+          </Placeholder>
         </Flex>
       </Flex>
     </InputWrapper>

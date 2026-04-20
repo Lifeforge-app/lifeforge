@@ -12,7 +12,8 @@ const textColorValues = {
   inherit: 'inherit',
   default: 'var(--color-bg-900)',
   muted: 'var(--color-bg-500)',
-  primary: 'var(--color-custom-500)'
+  primary: 'var(--color-custom-500)',
+  dangerous: 'var(--color-red-500)'
 } as const
 
 /** Theme-aware color/backgroundColor for Text — supports dark/hover/hasBgImage conditions. */
@@ -37,8 +38,25 @@ const textProperties = defineProperties({
   defaultCondition: 'base',
   properties: {
     fontSize: vars.fontSize,
-    lineHeight: vars.lineHeight,
+    lineHeight: {
+      ...vars.lineHeight,
+      // Named leading scale (overrides size-based lineHeight when 'leading' prop is used)
+      none: '1',
+      tight: '1.25',
+      snug: '1.375',
+      normal: '1.5',
+      relaxed: '1.625',
+      loose: '2'
+    },
     fontWeight: vars.fontWeight,
+    letterSpacing: {
+      tighter: '-0.05em',
+      tight: '-0.025em',
+      normal: '0em',
+      wide: '0.025em',
+      wider: '0.05em',
+      widest: '0.1em'
+    },
     textAlign: ['left', 'center', 'right'],
     textDecoration: ['underline', 'line-through', 'none'],
     textTransform: ['uppercase', 'lowercase', 'capitalize', 'none'],

@@ -1,8 +1,10 @@
 import { ListboxButton } from '@headlessui/react'
-import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useCallback, useMemo } from 'react'
 
+import { Box } from '@/index'
+
+import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import useInputLabel from '../shared/hooks/useInputLabel'
@@ -105,12 +107,7 @@ function ListboxInput<T>({
       onChange={onChange}
       onClick={focusInput}
     >
-      <ListboxButton
-        className={clsx(
-          'group flex w-full items-center sm:min-w-64',
-          variant === 'classic' ? 'pl-6' : ''
-        )}
-      >
+      <ListboxButton className="group flex w-full items-center sm:min-w-64">
         {icon && (
           <InputIcon
             active={isActive}
@@ -120,33 +117,32 @@ function ListboxInput<T>({
           />
         )}
         {variant === 'classic' && label && (
-          <InputLabel
-            isListboxOrCombobox
-            active={isActive}
-            hasError={!!errorMsg}
-            label={inputLabel}
-            required={required === true}
-          />
+          <Box
+            asChild
+            style={{
+              marginLeft: 'calc(var(--spacing) * 14)'
+            }}
+          >
+            <InputLabel
+              isListboxOrCombobox
+              active={isActive}
+              hasError={!!errorMsg}
+              label={inputLabel}
+              required={required === true}
+            />
+          </Box>
         )}
         <div
           className={clsx(
             'relative flex min-h-[1.2rem] w-full min-w-0 items-center gap-2 rounded-lg text-left focus:outline-hidden',
-            variant === 'classic' ? 'mt-10 mb-3 pr-10 pl-5' : 'h-7 pr-8'
+            variant === 'classic' ? 'mt-4 p-4 pb-2 pl-0' : 'h-7 pr-8'
           )}
         >
           {variant === 'classic' ? isActive && buttonContent : buttonContent}
         </div>
-        <span
-          className={clsx(
-            'pointer-events-none absolute inset-y-0 right-0 flex items-center',
-            variant === 'classic' ? 'mt-1 mr-2 pr-4' : 'pr-2'
-          )}
-        >
-          <Icon
-            className="text-bg-400 dark:text-bg-600 group-data-open:text-bg-800 dark:group-data-open:text-bg-100 size-6"
-            icon="heroicons:chevron-up-down-16-solid"
-          />
-        </span>
+        <Box asChild mr="sm" position="absolute" right="0">
+          <InputActionButton icon="heroicons:chevron-up-down-16-solid" />
+        </Box>
       </ListboxButton>
       <ListboxOptions portal={!(multiple && hasActionButton)}>
         {children}

@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
@@ -11,6 +10,7 @@ import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
+import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import * as styles from './DateInput.css'
@@ -87,7 +87,7 @@ function DateInput({
           isFocused={isCalendarOpen}
         />
       )}
-      <Flex align="center" gap="sm" width="100%">
+      <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!value}
@@ -97,61 +97,68 @@ function DateInput({
             required={required === true}
           />
         )}
-        <Box asChild rounded="lg" width="100%">
-          <DatePicker
-            ref={autoFocusableRef(autoFocus, ref, e => {
-              e.input?.focus()
-            })}
-            shouldCloseOnSelect
-            calendarClassName={
-              tinycolor(derivedThemeColor).isLight()
-                ? 'theme-light'
-                : 'theme-dark'
-            }
-            className={clsx(
-              variant === 'classic'
-                ? styles.datePickerInputClassic
-                : styles.datePickerInputPlain
-            )}
-            dateFormat={hasTime ? 'MMMM d, yyyy h:mm aa' : 'MMMM d, yyyy'}
-            formatWeekDay={(date: string) => {
-              return date.slice(0, 3)
-            }}
-            placeholderText={`August 7, ${dayjs().year()}${
-              hasTime ? ' 08:07 AM' : ''
-            }`}
-            popperClassName="-mx-13"
-            popperPlacement="bottom-start"
-            portalId="app"
-            renderCustomHeader={CalendarHeader}
-            selected={value || null}
-            showPopperArrow={false}
-            showTimeSelect={hasTime}
-            weekDayClassName={(date: Date) => {
-              const isWeekend = date.getDay() === 0
-
-              return isWeekend ? styles.weekDayRed : styles.weekDayMuted
-            }}
-            onCalendarClose={() => {
-              setCalendarOpen(false)
-            }}
-            onCalendarOpen={() => {
-              setCalendarOpen(true)
-            }}
-            onChange={(value: Date | null) => onChange(value)}
-          />
-        </Box>
-        {!!value && (
-          <Box asChild mr={variant === 'classic' ? 'md' : undefined}>
-            <InputActionButton
-              icon="tabler:x"
-              onClick={() => {
-                onChange(null)
+        <Placeholder
+          color={variant === 'classic' ? 'transparent' : 'default'}
+          focusColor="default"
+        >
+          <Box
+            asChild
+            pb={variant === 'classic' ? 'sm' : undefined}
+            pl={variant === 'classic' ? 'none' : undefined}
+            pr={variant === 'classic' ? 'md' : undefined}
+            pt={variant === 'classic' ? 'xl' : undefined}
+            rounded="lg"
+            width="100%"
+          >
+            <DatePicker
+              ref={autoFocusableRef(autoFocus, ref, e => {
+                e.input?.focus()
+              })}
+              shouldCloseOnSelect
+              calendarClassName={
+                tinycolor(derivedThemeColor).isLight()
+                  ? 'theme-light'
+                  : 'theme-dark'
+              }
+              dateFormat={hasTime ? 'MMMM d, yyyy h:mm aa' : 'MMMM d, yyyy'}
+              formatWeekDay={(date: string) => {
+                return date.slice(0, 3)
               }}
+              placeholderText={`August 7, ${dayjs().year()}${
+                hasTime ? ' 08:07 AM' : ''
+              }`}
+              popperClassName="-mx-13"
+              popperPlacement="bottom-start"
+              portalId="app"
+              renderCustomHeader={CalendarHeader}
+              selected={value || null}
+              showPopperArrow={false}
+              showTimeSelect={hasTime}
+              weekDayClassName={(date: Date) => {
+                const isWeekend = date.getDay() === 0
+
+                return isWeekend ? styles.weekDayRed : styles.weekDayMuted
+              }}
+              onCalendarClose={() => {
+                setCalendarOpen(false)
+              }}
+              onCalendarOpen={() => {
+                setCalendarOpen(true)
+              }}
+              onChange={(value: Date | null) => onChange(value)}
             />
           </Box>
-        )}
+        </Placeholder>
       </Flex>
+      {!!value && (
+        <InputActionButton
+          icon="tabler:x"
+          variant={variant}
+          onClick={() => {
+            onChange(null)
+          }}
+        />
+      )}
     </InputWrapper>
   )
 }

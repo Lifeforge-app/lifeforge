@@ -37,7 +37,9 @@ type TextSize =
   | '8xl'
   | '9xl'
 
-type TextColor = TextColorValues
+type TextTracking = 'tighter' | 'tight' | 'normal' | 'wide' | 'wider' | 'widest'
+
+type TextLeading = 'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose'
 
 type FontWeight = 'normal' | 'medium' | 'semibold' | 'bold'
 
@@ -69,8 +71,8 @@ interface TextOwnProps<T extends ElementType = 'span'>
   asChild?: boolean
   ref?: Ref<HTMLElement>
   size?: ResponsiveProp<TextSize>
-  color?: ThemeConditionProp<TextColor>
-  bg?: ThemeConditionProp<TextColor>
+  color?: ThemeConditionProp<TextColorValues>
+  bg?: ThemeConditionProp<TextColorValues>
   weight?: ResponsiveProp<FontWeight>
   align?: ResponsiveProp<TextAlign>
   decoration?: ResponsiveProp<TextDecoration>
@@ -91,6 +93,8 @@ interface TextOwnProps<T extends ElementType = 'span'>
   trim?: ResponsiveProp<TextTrim>
   truncate?: boolean
   lineClamp?: number
+  tracking?: ResponsiveProp<TextTracking>
+  leading?: ResponsiveProp<TextLeading>
   className?: string
   children?: ReactNode
 }
@@ -125,6 +129,8 @@ export function Text<T extends ElementType = 'span'>({
   trim,
   truncate,
   lineClamp,
+  tracking,
+  leading,
   // Margin props
   m,
   mx,
@@ -148,7 +154,9 @@ export function Text<T extends ElementType = 'span'>({
 }: TextProps<T> & { style?: CSSProperties }) {
   const sprinklesClassName = textSprinkles({
     fontSize: normalizeResponsiveProp(size) as TextSprinkles['fontSize'],
-    lineHeight: normalizeResponsiveProp(size) as TextSprinkles['lineHeight'],
+    lineHeight: normalizeResponsiveProp(
+      leading ?? size
+    ) as TextSprinkles['lineHeight'],
     color: color as TextSprinkles['color'],
     backgroundColor: bg as TextSprinkles['backgroundColor'],
     fontWeight: normalizeResponsiveProp(weight) as TextSprinkles['fontWeight'],
@@ -168,6 +176,9 @@ export function Text<T extends ElementType = 'span'>({
     overflowWrap: normalizeResponsiveProp(
       overflowWrap
     ) as TextSprinkles['overflowWrap'],
+    letterSpacing: normalizeResponsiveProp(
+      tracking
+    ) as TextSprinkles['letterSpacing'],
     margin: normalizeResponsiveProp(m) as TextSprinkles['margin'],
     marginTop: normalizeResponsiveProp(mt ?? my) as TextSprinkles['marginTop'],
     marginBottom: normalizeResponsiveProp(

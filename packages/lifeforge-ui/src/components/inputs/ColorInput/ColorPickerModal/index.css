@@ -1,16 +1,35 @@
 .w-color-editable-input {
-  @apply px-0!;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.w-color-colorful {
+  width: 100% !important;
 }
 
 .w-color-editable-input input {
   font-size: 1rem !important;
   font-weight: 500 !important;
   letter-spacing: 0.1rem !important;
-  @apply bg-bg-50! dark:bg-bg-800! shadow-custom! text-bg-800! dark:text-bg-100! mb-2 rounded-md! py-2! text-center focus:outline-hidden;
+  background-color: var(--color-bg-50) !important;
+  box-shadow: var(--custom-shadow) !important;
+  color: var(--color-bg-800) !important;
+  margin-bottom: 0.5rem !important;
+  border-radius: var(--radius-md) !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  text-align: center;
+  outline: none;
+}
 
-  &.hex {
-    color: rgb(244 244 245) !important;
-  }
+.dark .w-color-editable-input input {
+  background-color: var(--color-bg-800) !important;
+  color: var(--color-bg-100) !important;
+}
+
+.w-color-editable-input.hex input {
+  color: var(--editable-input-color) !important;
+  background-color: var(--editable-input-bg) !important;
 }
 
 .w-color-editable-input span {
