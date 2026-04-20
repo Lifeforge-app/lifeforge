@@ -1,7 +1,9 @@
 import colors from 'tailwindcss/colors'
 
 import { ModalHeader } from '@components/overlays'
+import { Box, Flex, Grid, Text } from '@components/primitives'
 
+import * as styles from './TailwindCSSColorsModal.css'
 import ColorItem from './components/ColorItem'
 
 function TailwindCSSColorsModal({
@@ -15,13 +17,13 @@ function TailwindCSSColorsModal({
   onClose: () => void
 }) {
   return (
-    <div className="min-w-[70vw]">
+    <Box style={{ minWidth: '70vw' }}>
       <ModalHeader
         icon="tabler:brand-tailwind"
         title="colorPicker.modals.morandiColorPalette"
         onClose={onClose}
       />
-      <div className="space-y-3">
+      <Flex direction="column" style={{ gap: '0.75rem' }}>
         {([...Object.keys(colors)] as Array<keyof typeof colors>)
           .filter(
             colorGroup =>
@@ -35,13 +37,21 @@ function TailwindCSSColorsModal({
               ].includes(colorGroup)
           )
           .map((colorGroup, index) => (
-            <div key={colorGroup} className="flex flex-col sm:flex-row">
-              <h2 className="my-4 w-28 text-left text-xl font-medium sm:mb-2 sm:text-base">
+            <Flex key={colorGroup} direction={{ base: 'column', sm: 'row' }}>
+              <Text
+                as="h2"
+                className={styles.colorGroupLabel}
+                size={{ base: 'xl', sm: 'base' }}
+                weight="medium"
+              >
                 {colorGroup[0].toUpperCase() + colorGroup.slice(1)}
-              </h2>
-              <ul
+              </Text>
+              <Grid
+                as="ul"
                 key={index}
-                className="grid w-full grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] flex-wrap gap-3 pt-0"
+                columns="repeat(auto-fit, minmax(4rem, 1fr))"
+                width="100%"
+                style={{ gap: '0.75rem' }}
               >
                 {Object.entries(
                   colors[colorGroup] as Record<string, string>
@@ -57,11 +67,11 @@ function TailwindCSSColorsModal({
                     }}
                   />
                 ))}
-              </ul>
-            </div>
+              </Grid>
+            </Flex>
           ))}
-      </div>
-    </div>
+      </Flex>
+    </Box>
   )
 }
 

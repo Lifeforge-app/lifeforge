@@ -9,8 +9,11 @@ export const root = style({
   color: bg[500],
   transition: 'all 0.2s',
   selectors: {
-    '&:hover:not(:disabled)': { color: bg[800] },
-    '.dark &:hover:not(:disabled)': { color: bg[200] },
+    '&:hover:not(:disabled)': { color: bg[800], backgroundColor: bg[300] },
+    '.dark &:hover:not(:disabled)': {
+      color: bg[200],
+      backgroundColor: bg[700]
+    },
     '&:disabled': { cursor: 'not-allowed', opacity: 0.5 }
   }
 })

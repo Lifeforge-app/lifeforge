@@ -4,7 +4,9 @@ import tinycolor from 'tinycolor2'
 
 import { Card } from '@components/layout'
 import { ModalHeader } from '@components/overlays'
+import { Box, Flex, Grid, Text } from '@components/primitives'
 
+import * as styles from './FlatUIColorsModal.css'
 import PALETTES from './constants/palettes.json'
 
 function FlatUIColorsModal({
@@ -18,51 +20,72 @@ function FlatUIColorsModal({
   }
 }) {
   return (
-    <div className="min-w-[60vw]">
+    <Box style={{ minWidth: '60vw' }}>
       <ModalHeader
         icon="tabler:palette"
         title="colorPicker.modals.flatUiColors"
         onClose={onClose}
       />
-      <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+      <Grid
+        columns={{
+          base: 'repeat(1, minmax(0, 1fr))',
+          sm: 'repeat(auto-fill, minmax(300px, 1fr))'
+        }}
+        style={{ gap: '0.75rem' }}
+      >
         {PALETTES.map(({ name, icon, colors }) => (
-          <Card key={name} className="dark:bg-bg-800/70 space-y-2">
-            <div className="mb-4 flex items-center space-x-3">
-              <Icon className="size-6" icon={icon || 'tabler:palette'} />
-              <span className="text-lg font-medium">{name}</span>
-            </div>
-            <div className="grid grid-cols-5 gap-2">
+          <Card key={name} className={styles.card}>
+            <Flex align="center" mb="md" style={{ gap: '0.75rem' }}>
+              <Icon
+                icon={icon || 'tabler:palette'}
+                style={{ width: '1.5rem', height: '1.5rem' }}
+              />
+              <Text as="span" size="lg" weight="medium">
+                {name}
+              </Text>
+            </Flex>
+            <Grid columns="repeat(5, minmax(0, 1fr))" style={{ gap: '0.5rem' }}>
               {colors.map((flatUiColor, index) => (
-                <button
+                <Flex
                   key={index}
-                  className={`flex-center shadow-custom aspect-square size-full cursor-pointer rounded-md ${
-                    color === flatUiColor &&
-                    'ring-bg-900 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900 ring-2 ring-offset-2'
-                  }`}
-                  style={{ backgroundColor: flatUiColor }}
-                  onClick={() => {
-                    setColor(flatUiColor)
-                    onClose()
-                  }}
+                  asChild
+                  align="center"
+                  height="100%"
+                  justify="center"
+                  rounded="md"
+                  width="100%"
                 >
-                  {color === flatUiColor && (
-                    <Icon
-                      className={clsx(
-                        'size-8',
-                        tinycolor(flatUiColor).isLight()
-                          ? 'text-bg-800'
-                          : 'text-bg-50'
-                      )}
-                      icon="tabler:check"
-                    />
-                  )}
-                </button>
+                  <button
+                    className={clsx(
+                      styles.colorButton,
+                      color === flatUiColor && styles.colorButtonSelected
+                    )}
+                    style={{ backgroundColor: flatUiColor }}
+                    onClick={() => {
+                      setColor(flatUiColor)
+                      onClose()
+                    }}
+                  >
+                    {color === flatUiColor && (
+                      <Icon
+                        icon="tabler:check"
+                        style={{
+                          width: '2rem',
+                          height: '2rem',
+                          color: tinycolor(flatUiColor).isLight()
+                            ? 'var(--color-bg-800)'
+                            : 'var(--color-bg-50)'
+                        }}
+                      />
+                    )}
+                  </button>
+                </Flex>
               ))}
-            </div>
+            </Grid>
           </Card>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   )
 }
 

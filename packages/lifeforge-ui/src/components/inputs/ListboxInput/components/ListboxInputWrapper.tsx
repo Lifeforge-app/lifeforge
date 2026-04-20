@@ -25,7 +25,7 @@ function ListboxInputWrapper<T>({
   size?: 'small' | 'default'
 }) {
   return (
-    <div className={clsx('flex-1 space-y-2', className)}>
+    <div className={clsx('space-y-2', className)}>
       <Listbox
         as="div"
         className={clsx(

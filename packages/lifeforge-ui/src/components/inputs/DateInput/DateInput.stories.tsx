@@ -67,7 +67,28 @@ export const Required: Story = {
     onChange: () => {},
     label: 'Date',
     icon: 'tabler:calendar',
-    required: true
+    required: true,
+    variant: 'classic'
+  },
+
+  render: args => {
+    const [date, setDate] = useState(args.value)
+
+    return (
+      <Box p="2xl">
+        <DateInput {...args} value={date} onChange={setDate} />
+      </Box>
+    )
+  }
+}
+
+export const PlaintVariant: Story = {
+  args: {
+    value: '2026-04-20T00:29:27.683Z',
+    label: 'Date',
+    icon: 'tabler:calendar',
+    required: true,
+    variant: 'plain'
   },
 
   render: args => {

@@ -1,7 +1,9 @@
 import { useCallback } from 'react'
 
 import { Button, useModalStore } from '../../../../..'
+import { Box, Flex } from '../../../../../components/primitives'
 import { useColorPickerModalStore } from '../stores/useColorPickerModalStore'
+import * as styles from './PaletteButtons.css'
 import FlatUIColorsModal from './modals/FlatUIColorsModal'
 import MorandiColorPaletteModal from './modals/ModandiColorPaletteModal'
 import TailwindCSSColorsModal from './modals/TailwindCSSColorsModal'
@@ -28,35 +30,38 @@ function PaletteButtons() {
   )
 
   return (
-    <div className="mt-6 w-full space-y-2">
-      <Button
-        className="w-full"
-        icon="tabler:palette"
-        namespace="common.modals"
-        variant="secondary"
-        onClick={handleColorPaletteModalOpen('flatUiColors')}
-      >
-        colorPicker.buttons.flatUiColors
-      </Button>
-      <Button
-        className="w-full"
-        icon="tabler:flower"
-        namespace="common.modals"
-        variant="secondary"
-        onClick={handleColorPaletteModalOpen('morandi')}
-      >
-        colorPicker.buttons.morandiColorPalette
-      </Button>
-      <Button
-        className="w-full bg-teal-500! hover:bg-teal-600!"
-        icon="tabler:brand-tailwind"
-        namespace="common.modals"
-        variant="primary"
-        onClick={handleColorPaletteModalOpen('tailwind')}
-      >
-        colorPicker.buttons.tailwindCssColorPalette
-      </Button>
-    </div>
+    <Flex direction="column" gap="sm" mt="lg" width="100%">
+      <Box asChild width="100%">
+        <Button
+          icon="tabler:palette"
+          namespace="common.modals"
+          variant="secondary"
+          onClick={handleColorPaletteModalOpen('flatUiColors')}
+        >
+          colorPicker.buttons.flatUiColors
+        </Button>
+      </Box>
+      <Box asChild width="100%">
+        <Button
+          icon="tabler:flower"
+          namespace="common.modals"
+          variant="secondary"
+          onClick={handleColorPaletteModalOpen('morandi')}
+        >
+          colorPicker.buttons.morandiColorPalette
+        </Button>
+      </Box>
+      <Box asChild className={styles.tailwindButton} width="100%">
+        <Button
+          icon="tabler:brand-tailwind"
+          namespace="common.modals"
+          variant="primary"
+          onClick={handleColorPaletteModalOpen('tailwind')}
+        >
+          colorPicker.buttons.tailwindCssColorPalette
+        </Button>
+      </Box>
+    </Flex>
   )
 }
 

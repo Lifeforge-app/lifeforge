@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useCallback } from 'react'
 
-import { Box, Flex } from '@components/primitives'
+import { Box, Flex, Text } from '@components/primitives'
 
 import {
   inputWrapperErrorTextStyle,
@@ -74,17 +74,14 @@ function InputWrapper({
   })
 
   return (
-    <Flex className={className} width="100%" direction="column" gap="sm">
+    <Flex className={className} direction="column" gap="sm" width="100%">
       <Flex
+        shadow
         align="center"
         className={clsx('group', wrapperClassName)}
         flexShrink="0"
-        gap="sm"
         position="relative"
         role="button"
-        style={{
-          transition: 'all 0.2s'
-        }}
         tabIndex={0}
         width="100%"
         onClick={focusInput}
@@ -103,7 +100,17 @@ function InputWrapper({
           </Box>
         )}
       </Flex>
-      {errorMsg && <div className={inputWrapperErrorTextStyle}>{errorMsg}</div>}
+      {errorMsg && (
+        <Text
+          className={inputWrapperErrorTextStyle}
+          color="dangerous"
+          display="block"
+          px="lg"
+          size="sm"
+        >
+          {errorMsg}
+        </Text>
+      )}
     </Flex>
   )
 }

@@ -4,7 +4,9 @@ import { sortFn } from 'color-sorter'
 import tinycolor from 'tinycolor2'
 
 import { ModalHeader } from '@components/overlays'
+import { Box, Flex, Grid } from '@components/primitives'
 
+import * as styles from './MorandiColorPaletteModal.css'
 import { MORANDI_COLORS } from './constants/morandi_colors'
 
 function MorandiColorPaletteModal({
@@ -18,42 +20,56 @@ function MorandiColorPaletteModal({
   onClose: () => void
 }) {
   return (
-    <div className="min-w-[60vw]">
+    <Box style={{ minWidth: '60vw' }}>
       <ModalHeader
         icon="tabler:flower"
         title="colorPicker.modals.morandiColorPalette"
         onClose={onClose}
       />
-      <div className="grid w-full grid-cols-[repeat(auto-fit,minmax(4rem,1fr))] gap-3 p-4 pt-0">
+      <Grid
+        columns="repeat(auto-fit, minmax(4rem, 1fr))"
+        pb="md"
+        px="md"
+        style={{ gap: '0.75rem' }}
+      >
         {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
-          <button
+          <Flex
             key={index}
-            className={clsx(
-              'flex-center shadow-custom aspect-square size-full cursor-pointer rounded-md',
-              color === morandiColor &&
-                'ring-bg-900 ring-offset-bg-100 dark:ring-bg-50 dark:ring-offset-bg-900 ring-2 ring-offset-2'
-            )}
-            style={{ backgroundColor: morandiColor }}
-            onClick={() => {
-              setColor(morandiColor)
-              onClose()
-            }}
+            asChild
+            align="center"
+            height="100%"
+            justify="center"
+            rounded="md"
+            width="100%"
           >
-            {color === morandiColor && (
-              <Icon
-                className={clsx(
-                  'size-8',
-                  tinycolor(morandiColor).isLight()
-                    ? 'text-bg-800'
-                    : 'text-bg-50'
-                )}
-                icon="tabler:check"
-              />
-            )}
-          </button>
+            <button
+              className={clsx(
+                styles.colorButton,
+                color === morandiColor && styles.colorButtonSelected
+              )}
+              style={{ backgroundColor: morandiColor }}
+              onClick={() => {
+                setColor(morandiColor)
+                onClose()
+              }}
+            >
+              {color === morandiColor && (
+                <Icon
+                  icon="tabler:check"
+                  style={{
+                    width: '2rem',
+                    height: '2rem',
+                    color: tinycolor(morandiColor).isLight()
+                      ? 'var(--color-bg-800)'
+                      : 'var(--color-bg-50)'
+                  }}
+                />
+              )}
+            </button>
+          </Flex>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   )
 }
 
