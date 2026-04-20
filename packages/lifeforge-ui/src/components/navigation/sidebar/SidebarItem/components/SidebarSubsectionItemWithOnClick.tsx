@@ -5,6 +5,10 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useModuleSidebarState } from 'shared'
 
+import { Flex, Text } from '@components/primitives'
+
+import * as styles from './SidebarSubsectionItemWithOnClick.css'
+
 function SidebarSubsectionItemWithOnClick({
   subsectionLabel,
   icon,
@@ -38,39 +42,64 @@ function SidebarSubsectionItemWithOnClick({
   }, [])
 
   return (
-    <button
-      key={subsectionLabel}
-      className={clsx(
-        'hover:bg-bg-200/30 dark:hover:bg-bg-800/30 mx-4 flex h-14 w-full items-center gap-3 rounded-lg! pl-12 text-left font-medium transition-all',
-        active
-          ? 'bg-bg-200/50 hover:bg-bg-200/50! shadow-custom dark:bg-bg-800 dark:hover:bg-bg-800!'
-          : 'text-bg-500'
-      )}
-      onClick={handleClick}
-    >
-      <div className="flex size-7 items-center justify-center">
-        {typeof icon === 'string' ? (
-          <Icon className="size-6" icon={icon} />
-        ) : (
-          icon
-        )}
-      </div>
-      <span className="w-full truncate pr-4">
-        {namespace !== false
-          ? t([
-              `apps.${_.camelCase(label.toString())}.subsections.${_.camelCase(
-                subsectionLabel
-              )}`,
-              subsectionLabel
-            ])
-          : subsectionLabel}
-      </span>
-      {amount !== undefined && (
-        <span className="mr-5 ml-auto flex items-center gap-1">
-          <span className="text-bg-500 text-sm font-medium">{amount}</span>
-        </span>
-      )}
-    </button>
+    <Text asChild color={active ? undefined : 'bg-500'} weight="medium">
+      <Flex
+        asChild
+        align="center"
+        ml="md"
+        mr="md"
+        rounded="lg"
+        style={{ gap: '0.75rem', height: '3.5rem', paddingLeft: '3rem' }}
+        width="100%"
+      >
+        <button
+          key={subsectionLabel}
+          className={clsx(styles.button, active && styles.buttonActive)}
+          onClick={handleClick}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '1.75rem',
+              width: '1.75rem'
+            }}
+          >
+            {typeof icon === 'string' ? (
+              <Icon icon={icon} style={{ height: '1.5rem', width: '1.5rem' }} />
+            ) : (
+              icon
+            )}
+          </div>
+          <Text truncate style={{ paddingRight: '1rem', width: '100%' }}>
+            {namespace !== false
+              ? t([
+                  `apps.${_.camelCase(label.toString())}.subsections.${_.camelCase(
+                    subsectionLabel
+                  )}`,
+                  subsectionLabel
+                ])
+              : subsectionLabel}
+          </Text>
+          {amount !== undefined && (
+            <span
+              style={{
+                marginRight: '1.25rem',
+                marginLeft: 'auto',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.25rem'
+              }}
+            >
+              <Text as="span" color="bg-500" size="sm" weight="medium">
+                {amount}
+              </Text>
+            </span>
+          )}
+        </button>
+      </Flex>
+    </Text>
   )
 }
 
