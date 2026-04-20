@@ -3,6 +3,7 @@ import type { StoryObj, Meta as _Meta } from '@storybook/react-vite'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { Box, Flex, Text } from '@components/primitives'
 import { WithQuery } from '@components/utilities'
 
 import SearchInput from './SearchInput'
@@ -25,9 +26,9 @@ export const Default: Story = {
     const [value, onChange] = useState('')
 
     return (
-      <div className="w-full px-32">
+      <Box style={{ paddingLeft: '8rem', paddingRight: '8rem' }} width="100%">
         <SearchInput {...args} value={value} onChange={onChange} />
-      </div>
+      </Box>
     )
   }
 }
@@ -44,9 +45,9 @@ export const CustomIcon: Story = {
   },
 
   render: args => (
-    <div className="w-full px-32">
+    <Box style={{ paddingLeft: '8rem', paddingRight: '8rem' }} width="100%">
       <SearchInput {...args} />
-    </div>
+    </Box>
   )
 }
 
@@ -68,9 +69,9 @@ export const WithActionButton: Story = {
     const [value, onChange] = useState('')
 
     return (
-      <div className="w-full px-32">
+      <Box style={{ paddingLeft: '8rem', paddingRight: '8rem' }} width="100%">
         <SearchInput {...args} value={value} onChange={onChange} />
-      </div>
+      </Box>
     )
   }
 }
@@ -123,40 +124,69 @@ export interface Review {
 
 const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
   return (
-    <div
-      key={product.id}
-      className="hover:bg-bg-100 dark:hover:bg-bg-800 flex cursor-pointer items-center gap-4 rounded-md px-4 py-3 transition-all"
+    <Flex
+      align="center"
+      bg={{ darkHover: 'bg-800', hover: 'bg-100' }}
+      gap="md"
+      px="md"
+      rounded="md"
+      style={{
+        cursor: 'pointer',
+        paddingBottom: '0.75rem',
+        paddingTop: '0.75rem',
+        transition: 'all 0.2s'
+      }}
       onClick={() => alert(`Selected product: ${product.title}`)}
     >
       <img
         alt={product.title}
-        className="size-12 shrink-0 rounded-md object-cover"
         src={product.thumbnail}
+        style={{
+          borderRadius: 'var(--radius-md)',
+          flexShrink: 0,
+          height: '3rem',
+          objectFit: 'cover',
+          width: '3rem'
+        }}
       />
-      <div className="flex min-w-0 flex-1 flex-col">
-        <span className="text-bg-500 text-sm">{product.category}</span>
-        <span className="truncate font-medium">{product.title}</span>
-      </div>
-      <div className="flex shrink-0 flex-col items-end gap-1">
-        <div className="flex items-center gap-1">
-          <span className="text-custom-500 font-semibold">
+      <Flex direction="column" flexGrow="1" minWidth="0">
+        <Text color="bg-500" size="sm">
+          {product.category}
+        </Text>
+        <Text truncate weight="medium">
+          {product.title}
+        </Text>
+      </Flex>
+      <Flex
+        align="end"
+        direction="column"
+        flexShrink="0"
+        style={{ gap: '0.25rem' }}
+      >
+        <Flex align="center" style={{ gap: '0.25rem' }}>
+          <Text color="primary" weight="semibold">
             $
             {(product.price * (1 - product.discountPercentage / 100)).toFixed(
               2
             )}
-          </span>
+          </Text>
           {product.discountPercentage > 0 && (
-            <span className="text-bg-500 text-sm line-through">
+            <Text color="bg-500" decoration="line-through" size="sm">
               ${product.price.toFixed(2)}
-            </span>
+            </Text>
           )}
-        </div>
-        <div className="text-bg-500 flex items-center gap-1 text-sm">
-          <Icon className="size-4" icon="tabler:star" />
-          {product.rating.toFixed(1)}
-        </div>
-      </div>
-    </div>
+        </Flex>
+        <Text asChild color="bg-500" size="sm">
+          <Flex align="center" style={{ gap: '0.25rem' }}>
+            <Icon
+              icon="tabler:star"
+              style={{ height: '1rem', width: '1rem' }}
+            />
+            {product.rating.toFixed(1)}
+          </Flex>
+        </Text>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -244,7 +274,10 @@ function SearchWithSuggestions() {
     })
 
     return (
-      <div className="h-128 w-full px-32">
+      <Box
+        style={{ height: '32rem', paddingLeft: '8rem', paddingRight: '8rem' }}
+        width="100%"
+      >
         <SearchInput
           {...args}
           debounceMs={300}
@@ -260,15 +293,21 @@ function SearchWithSuggestions() {
                     <ProductSuggestionItem key={product.id} product={product} />
                   ))
                 ) : (
-                  <div className="text-bg-500 px-4 py-3 text-center">
+                  <Text
+                    align="center"
+                    as="div"
+                    color="bg-500"
+                    px="md"
+                    style={{ paddingBottom: '0.75rem', paddingTop: '0.75rem' }}
+                  >
                     No suggestions found.
-                  </div>
+                  </Text>
                 )}
               </>
             )}
           </WithQuery>
         </SearchInput>
-      </div>
+      </Box>
     )
   }
 }

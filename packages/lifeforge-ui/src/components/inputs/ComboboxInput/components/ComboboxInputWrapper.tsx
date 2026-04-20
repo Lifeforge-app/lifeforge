@@ -1,6 +1,11 @@
 import { Combobox } from '@headlessui/react'
 import clsx from 'clsx'
 
+import { inputWrapperRecipe } from '@components/inputs/shared/components/InputWrapper/InputWrapper.css'
+import { Flex } from '@components/primitives'
+
+import * as styles from './ComboboxInputWrapper.css'
+
 function ComboboxInputWrapper<T>({
   value,
   onChange,
@@ -21,25 +26,31 @@ function ComboboxInputWrapper<T>({
   variant?: 'classic' | 'plain'
 }) {
   return (
-    <Combobox
-      as="div"
-      className={clsx(
-        'relative flex cursor-text items-center gap-1 transition-all',
-        variant === 'classic'
-          ? 'border-bg-500 in-[.bordered]:border-bg-500/20 component-bg-lighter-with-hover shadow-custom focus-within:border-custom-500! data-[open]:border-custom-500! rounded-t-lg border-b-2 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
-          : 'component-bg-lighter-with-hover rounded-lg p-4 px-5',
-        className,
-        disabled ? 'pointer-events-none! opacity-50' : ''
-      )}
-      value={value}
-      onChange={onChange}
-      onClick={onClick}
-      onClose={() => {
-        setQuery('')
-      }}
+    <Flex
+      asChild
+      align="center"
+      gap="xs"
+      position="relative"
+      shadow={variant === 'classic'}
+      width="100%"
     >
-      {children}
-    </Combobox>
+      <Combobox
+        as="div"
+        className={clsx(
+          inputWrapperRecipe({ variant, disabled: disabled ?? false }),
+          styles.dataOpen,
+          className
+        )}
+        value={value}
+        onChange={onChange}
+        onClick={onClick}
+        onClose={() => {
+          setQuery('')
+        }}
+      >
+        {children}
+      </Combobox>
+    </Flex>
   )
 }
 

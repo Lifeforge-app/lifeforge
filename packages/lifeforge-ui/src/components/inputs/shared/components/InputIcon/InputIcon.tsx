@@ -31,6 +31,7 @@ function InputIcon({
     <Box
       asChild
       flexShrink="0"
+      mx="md"
       style={{
         transition: 'all 0.2s',
         pointerEvents: 'none'

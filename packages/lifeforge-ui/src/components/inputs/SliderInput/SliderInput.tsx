@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
+import { Box, Flex, Text } from '@components/primitives'
+
 import useInputLabel from '../shared/hooks/useInputLabel'
 
 interface SliderInputProps {
@@ -47,52 +49,106 @@ function SliderInput({
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   return (
-    <div className={clsx('w-full', wrapperClassName)}>
+    <Box className={wrapperClassName} width="100%">
       {icon && label && (
-        <div className="flex-between mb-4 w-full min-w-0 gap-8">
-          <div className="text-bg-400 dark:text-bg-600 flex min-w-0 items-center gap-2 font-medium tracking-wide">
-            <Icon className="size-6 shrink-0" icon={icon} />
-            <div className="flex w-full min-w-0 items-center gap-2">
-              <div className="w-full min-w-0 truncate">{inputLabel}</div>
-              {required && <span className="text-red-500">*</span>}
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>{value}</span>
-            <span className="text-bg-500 text-xs">/{max}</span>
-          </div>
-        </div>
-      )}
-      <div className="w-full">
-        <input
-          className={clsx(
-            'range range-primary bg-bg-200 dark:bg-bg-800 w-full',
-            className
-          )}
-          disabled={disabled}
-          max={max}
-          min={min}
-          step={step}
-          type="range"
-          value={value}
-          onChange={e => {
-            onChange(parseFloat(e.target.value))
-          }}
-        />
-        <div className="mb-4 flex w-full justify-between px-2.5 text-xs">
-          {[min, ((min + max) / 2).toFixed(1), max].map((label, index) => (
-            <div
-              key={`title-${label}-${index}`}
-              className="bg-bg-300 dark:bg-bg-700 relative h-2 w-0.5 rounded-full"
+        <Flex
+          align="center"
+          gap="xl"
+          justify="between"
+          mb="md"
+          minWidth="0"
+          width="100%"
+        >
+          <Text
+            asChild
+            color={{ base: 'bg-400', dark: 'bg-600' }}
+            weight="medium"
+          >
+            <Flex
+              align="center"
+              gap="sm"
+              minWidth="0"
+              style={{ letterSpacing: '0.025em' }}
             >
-              <div className="text-bg-400 dark:text-bg-600 absolute -bottom-5 left-1/2 -translate-x-1/2 font-medium">
-                {label}
-              </div>
-            </div>
+              <Icon
+                icon={icon}
+                style={{ width: '1.5rem', height: '1.5rem', flexShrink: 0 }}
+              />
+              <Flex align="center" gap="sm" minWidth="0" width="100%">
+                <Text truncate as="div" style={{ width: '100%', minWidth: 0 }}>
+                  {inputLabel}
+                </Text>
+                {required && <span style={{ color: '#ef4444' }}>*</span>}
+              </Flex>
+            </Flex>
+          </Text>
+          <Flex align="center" gap="sm">
+            <span>{value}</span>
+            <Text color="bg-500" style={{ fontSize: '0.75rem' }}>
+              /{max}
+            </Text>
+          </Flex>
+        </Flex>
+      )}
+      <Box width="100%">
+        <Box
+          asChild
+          shadow
+          bg={{ base: 'bg-200', dark: 'bg-800' }}
+          width="100%"
+        >
+          <input
+            className={clsx('range range-primary', className)}
+            disabled={disabled}
+            max={max}
+            min={min}
+            step={step}
+            type="range"
+            value={value}
+            onChange={e => {
+              onChange(parseFloat(e.target.value))
+            }}
+          />
+        </Box>
+        <Flex
+          justify="between"
+          mb="md"
+          style={{
+            fontSize: '0.75rem',
+            paddingLeft: '0.625rem',
+            paddingRight: '0.625rem'
+          }}
+          width="100%"
+        >
+          {[min, ((min + max) / 2).toFixed(1), max].map((label, index) => (
+            <Box
+              key={`title-${label}-${index}`}
+              bg={{ base: 'bg-300', dark: 'bg-700' }}
+              position="relative"
+              rounded="full"
+              style={{ height: '0.5rem', width: '0.125rem' }}
+            >
+              <Text
+                asChild
+                color={{ base: 'bg-400', dark: 'bg-600' }}
+                weight="medium"
+              >
+                <Box
+                  position="absolute"
+                  style={{
+                    bottom: '-1.25rem',
+                    left: '50%',
+                    transform: 'translateX(-50%)'
+                  }}
+                >
+                  {label}
+                </Box>
+              </Text>
+            </Box>
           ))}
-        </div>
-      </div>
-    </div>
+        </Flex>
+      </Box>
+    </Box>
   )
 }
 

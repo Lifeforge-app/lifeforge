@@ -1,15 +1,16 @@
-import clsx from 'clsx'
 import { useRef } from 'react'
 
 import { useModalStore } from '@components/overlays'
-import { Flex } from '@components/primitives'
+import { Bordered, Box, Flex, Text } from '@components/primitives'
 
 import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
+import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
+import { colorDot } from './ColorInput.css'
 import ColorPickerModal from './ColorPickerModal'
 
 interface ColorInputProps {
@@ -68,7 +69,7 @@ function ColorInput({
           icon="tabler:palette"
         />
       )}
-      <Flex align="center" gap="sm" pr="md" width="100%">
+      <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!value}
@@ -77,48 +78,67 @@ function ColorInput({
             required={required}
           />
         )}
-        <div
-          className={clsx(
-            'flex w-full items-center gap-2',
-            variant === 'classic' ? 'mt-6 mr-4 pl-4' : ''
-          )}
+        <Flex
+          align="center"
+          gap="sm"
+          pb={variant === 'classic' ? 'sm' : undefined}
+          pl={variant === 'classic' ? 'none' : undefined}
+          pr={variant === 'classic' ? 'md' : undefined}
+          pt={variant === 'classic' ? 'xl' : undefined}
+          width="100%"
         >
-          <div
-            className={`group-focus-within:border-bg-400 dark:group-focus-within:border-bg-700 mt-0.5 size-3 shrink-0 rounded-full border border-transparent`}
-            style={{
-              backgroundColor: value?.match(/^#[0-9A-F]{6}$/i)
-                ? value
-                : undefined
-            }}
-          />
-          <input
-            ref={autoFocusableRef(autoFocus, ref)}
-            className={clsx(
-              'focus:placeholder:text-bg-500 w-full min-w-28 rounded-lg bg-transparent tracking-wide focus:outline-hidden',
-              variant === 'classic'
-                ? 'h-8 p-6 pl-0 placeholder:text-transparent'
-                : 'h-7 p-0'
-            )}
-            placeholder="#FFFFFF"
-            value={value}
-            onBlur={e => {
-              onChange(e.target.value.trim().toUpperCase())
-            }}
-            onChange={e => {
-              onChange(e.target.value)
-            }}
-          />
-        </div>
-        <InputActionButton
-          icon="tabler:color-picker"
-          onClick={() => {
-            open(ColorPickerModal, {
-              value,
-              onChange
-            })
-          }}
-        />
+          <Bordered
+            asChild
+            borderColor={variant === 'classic' ? 'transparent' : undefined}
+            borderStyle="solid"
+            borderWidth="1px"
+          >
+            <Box
+              className={colorDot}
+              flexShrink="0"
+              height="0.75em"
+              rounded="full"
+              style={{
+                marginTop: '0.125rem',
+                backgroundColor: value?.match(/^#[0-9A-F]{6}$/i)
+                  ? value
+                  : undefined
+              }}
+              width="0.75em"
+            />
+          </Bordered>
+          <Placeholder
+            color={variant === 'classic' ? 'transparent' : 'default'}
+            focusColor="default"
+          >
+            <Box asChild minWidth="7em" rounded="lg" width="100%">
+              <Text asChild tracking="wider">
+                <input
+                  ref={autoFocusableRef(autoFocus, ref)}
+                  placeholder="#FFFFFF"
+                  value={value}
+                  onBlur={e => {
+                    onChange(e.target.value.trim().toUpperCase())
+                  }}
+                  onChange={e => {
+                    onChange(e.target.value)
+                  }}
+                />
+              </Text>
+            </Box>
+          </Placeholder>
+        </Flex>
       </Flex>
+      <InputActionButton
+        icon="tabler:color-picker"
+        variant={variant}
+        onClick={() => {
+          open(ColorPickerModal, {
+            value,
+            onChange
+          })
+        }}
+      />
     </InputWrapper>
   )
 }

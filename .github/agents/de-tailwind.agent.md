@@ -8,10 +8,10 @@ You are a specialist at migrating lifeforge-ui components from Tailwind CSS to p
 
 Before touching ANY file, you MUST:
 
-1. Read the full de-tailwind instruction file at `.github/instructions/de-tailwind.instructions.md`.
-2. Read the **complete** source file you are about to modify — understand every conditional class, dark-mode variant, hover/focus state, and context selector.
-3. Read the primitive component prop types by searching for `Box`, `Flex`, `Grid`, `Text` exports in `packages/lifeforge-ui/src/components/primitives/`.
-4. Consult the space token table in the instructions to map every Tailwind spacing value before writing.
+1. Read the **complete** source file you are about to modify — understand every conditional class, dark-mode variant, hover/focus state, and context selector.
+2. Read the **primitive component prop types** (see §1 below) — know exactly which props are available so you don't reach for `style={}` when a prop exists.
+3. Consult the **space token table** (see §2 below) to map every Tailwind spacing value before writing.
+4. Understand the **system architecture** (see §0.5 below) before writing any `.css.ts` file.
 
 ## Constraints
 
@@ -22,121 +22,588 @@ Before touching ANY file, you MUST:
 - DO NOT add comments, docstrings, or explanations to code you did not change.
 - DO NOT refactor logic, rename variables, or make any change beyond the styling migration.
 - ONLY work on files under `packages/lifeforge-ui/src/`.
-- **Prefer `asChild` over `.css.ts`**: before writing a new `.css.ts` style, check whether wrapping the target element with a primitive using `asChild` achieves the same result. Using `asChild` eliminates wrapper DOM nodes AND removes the need for a CSS export entirely. Only fall back to `.css.ts` for properties that primitives cannot express (e.g. `transition`, complex selectors, context selectors like `.bordered &`).
+- **`asChild` MUST be tried first — ALWAYS, before writing any `.css.ts` export.** For every non-primitive element that needs color, spacing, or layout styling, ask: "can a primitive with `asChild` express this?" If yes, use `asChild`. Writing a `.css.ts` export when `asChild` would have worked is a mistake. Only reach for `.css.ts` when primitives are genuinely incapable of expressing the property: `transition`, `cursor`, `borderWidth/style`, complex `boxShadow`, and context selectors (`.bordered &`, `.has-bg-image &`).
 
-## Approach
+---
 
-1. **Audit the file** — catalogue every Tailwind class found; classify each as layout, theme-adaptive color, structural/interactive, or context-selector.
+## §0.5 — System Architecture
 
-2. **Plan primitive replacements** — map `flex`, `grid`, bare `div`/`span`/`p` wrappers to `<Flex>`, `<Grid>`, `<Box>`, `<Text>` with correct props using §3 of the instructions.
+### Source files
 
-3. **Prefer `asChild` over `.css.ts`** — for every element where you would write a new `.css.ts` export, first check whether the element is a 3rd-party or Headless UI component that accepts `className`. If it does, wrap it with a primitive using `asChild` instead:
-   ```tsx
-   // ✅ Preferred — no .css.ts export needed
-   <Box asChild p="md" rounded="lg" bg={{ base: 'bg-50', dark: 'bg-900' }}>
-     <HeadlessUIComponent />
-   </Box>
+| Path | Purpose |
+|------|---------|
+| `src/system/colors.ts` | `colors` map (sprinkle values), `bg[n]` / `custom[n]` objects (for `style()` calls), `ColorToken` type |
+| `src/system/vars.css.ts` | `vars` design tokens — `space`, `radii`, `fontSize`, `lineHeight`, `fontWeight` |
+| `src/system/sprinkles.css.ts` | `commonProperties` + `themeColorProperties` + `commonSprinkles` |
+| `src/system/types.ts` | `ThemeCondition`, `ThemeConditionProp<T>`, all prop interfaces |
+| `src/system/responsive.ts` | `responsiveConditions`, `normalizeResponsiveProp`, `ResponsiveProp<T>` |
+| `src/system/layout-utils.ts` | `getResponsiveLayoutStyles`, `resolveCommonSprinkleProps` |
+| `src/system/index.ts` | Barrel — everything above re-exported |
 
-   // ❌ Only if primitive props cannot express the property
-   <HeadlessUIComponent className={styles.wrapper} />
-   ```
-   Reserve `.css.ts` exports exclusively for properties primitives cannot express: `transition`, `cursor`, `border-width/style`, complex `box-shadow`, hover/focus interactive states, and context selectors (`.bordered &`, `.has-bg-image &`).
+All imports from the system use the `@/system` alias.
 
-4. **Apply the theme-color decision tree for every colored element:**
-   ```
-   Is it a container primitive (Box/Flex/Grid/Container/Section)?
-     └─ YES → use `bg` prop: bg={{ base: 'bg-50', dark: 'bg-900' }}
-              use `shadow` prop for box-shadow
-     └─ NO  → Is it a <Text>?
-                └─ YES → use `color`/`bg` props: color={{ base: 'bg-500', dark: 'bg-50' }}
-                └─ NO  → Can `asChild` on a primitive replace the wrapper?
-                           └─ YES → use `asChild`
-                           └─ NO  → write a .css.ts using themeColorProperties sprinkle (Pattern B)
-   ```
+### `ThemeConditionProp<T>`
 
-5. **For components (`.tsx`)** — create or update the sibling `ComponentName.css.ts`:
-   - **Pattern A — `style()`**: for `transition`, `cursor`, `borderWidth`, complex shadows, and `.bordered &` / `.has-bg-image &` context selectors that sprinkles cannot express.
-   - **Pattern B — `themeColorProperties` sprinkle**: for theme-adaptive `backgroundColor`, `color`, or `borderColor` on non-primitive child elements.
-     ```ts
-     import { createSprinkles } from '@vanilla-extract/sprinkles'
-     import { themeColorProperties } from '@/system'
-     const sprinkles = createSprinkles(themeColorProperties)
-     export const title = sprinkles({ color: { base: 'bg-500', dark: 'bg-50' } })
-     ```
+A union type that accepts either a plain value **or** a per-condition map:
 
-6. **For stories (`.stories.tsx`)** — use primitives only; no `.css.ts`.
+```ts
+type ThemeConditionProp<T> = T | Partial<Record<ThemeCondition, T>>
+// ThemeCondition = 'base' | 'dark' | 'hover' | 'darkHover' | 'hasBgImage' | 'darkHasBgImage'
+```
 
-7. **Apply edits** — replace layout `div`/`span` wrappers and `className` props with primitives; import `* as styles from './ComponentName.css'`; use `clsx()` for conditional class composition.
+The six conditions map to selectors:
 
-8. **Verify** — search the edited file for any remaining Tailwind class names and fix them. Run `get_errors` to confirm zero TypeScript errors.
-
-9. **Update `TAILWIND_MIGRATION.md`** — after `get_errors` passes, mark the migrated component(s) as `[x]` in `packages/lifeforge-ui/TAILWIND_MIGRATION.md` and update the progress summary table (Migrated count, Total, and % Done for the affected category row and the **Total** row).
-
-## Styling Categorisation Rules
-
-| Property type | Destination |
-|---|---|
-| `display`, `flex-direction`, `gap`, `padding`, `margin`, `width`, `height`, `overflow`, `position`, `inset` | Primitive prop |
-| `background-color` on a container primitive | **`bg` prop** — `bg={{ base: 'bg-50', dark: 'bg-900' }}` |
-| `background-color` on a non-primitive child element | **Pattern B** — `.css.ts` sprinkle |
-| `color` on `<Text>` | **`color` prop** — `color={{ base: 'bg-500', dark: 'bg-50' }}` |
-| `color` on a non-Text element | **Pattern B** — `.css.ts` sprinkle |
-| `border-color` | **Pattern B** — `.css.ts` sprinkle |
-| `border-radius` | **`rounded` prop** on container OR `borderRadius: vars.radii.*` in `.css.ts` |
-| `box-shadow` (`shadow-custom`) | **`shadow` prop** on container primitive |
-| `box-shadow` (complex/non-standard) | **Pattern A** — `.css.ts` `style()` |
-| `transition`, `cursor`, `hover`, `focus`, `active` | **Pattern A** — `.css.ts` `style()` |
-| Dark-mode variants | **`bg`/`color` prop** (preferred) OR **Pattern B** OR **Pattern A** selectors |
-| Context selectors (`.bordered &`, `.has-bg-image &`) | **Pattern A** — `.css.ts` `style()` selectors |
-| `font-weight`, `font-size` | `<Text weight= size=>` props |
-| Spacing not in token table | `style={{ ... }}` inline on the primitive |
-
-## `ThemeConditionProp` — condition keys
-
-All `bg`, `color`, and `borderColor` (sprinkle) props accept a per-condition map:
-
-| Key | Selector |
-|-----|----------|
-| `base` | (default) |
+| Condition | Selector |
+|-----------|----------|
+| `base` | (default — no selector) |
 | `dark` | `.dark &` |
 | `hover` | `&:hover` |
 | `darkHover` | `.dark &:hover` |
 | `hasBgImage` | `.has-bg-image &` |
 | `darkHasBgImage` | `.dark .has-bg-image &` |
 
+### `themeColorProperties` (from `@/system`)
+
+A sprinkle `defineProperties` block that applies the 6 conditions above to
+`backgroundColor`, `color`, and `borderColor` — all keyed by `ColorToken`
+(`'transparent' | 'bg-50'…'bg-950' | 'custom-50'…'custom-900'`).
+
+All container primitives compose this into their `createSprinkles(...)` call,
+which is what enables the `bg` prop. Component `.css.ts` files can also compose
+it when they need theme-adaptive per-element colors.
+
+### Color token helpers
+
+| Import | Use in |
+|--------|--------|
+| `colors` (from `@/system`) | Sprinkle property values in `defineProperties({ properties: { color: colors } })` |
+| `bg[n]` (from `@/system`) | `style()` calls — e.g. `backgroundColor: bg[50]` |
+| `custom[n]` (from `@/system`) | `style()` calls — e.g. `color: custom[500]` |
+| `withOpacity(token, 0.1)` (from `@/system`) | opacity-modified colors — `withOpacity(bg[500], 0.2)` |
+
+> **NO raw hex strings or hardcoded `var(--color-*)` in `.css.ts` files.**
+> Always use `bg[n]`, `custom[n]`, or `withOpacity(...)`.
+
+---
+
+## §1 — Primitive Components
+
+Import from `@components/primitives`.
+
+### Container primitives — shared props
+
+All five container primitives (`Box`, `Flex`, `Grid`, `Container`, `Section`)
+share these additional props beyond their own layout props:
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `bg` | `ThemeConditionProp<ColorToken>` | Theme-adaptive background color |
+| `rounded` | `ResponsiveProp<RadiusToken>` | Border radius token |
+| `shadow` | `boolean` | Adds `var(--custom-shadow)` box shadow |
+
+The `bg` prop accepts either a flat token or a per-condition map:
+
 ```tsx
-<Box bg={{ base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }} shadow />
-<Text color={{ base: 'bg-500', dark: 'bg-50', hover: 'bg-800' }} />
+// flat — same in all conditions
+<Box bg="bg-50" />
+
+// adaptive — different per theme condition
+<Box bg={{ base: 'bg-50', dark: 'bg-900' }} />
+<Flex bg={{ base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }} />
+<Grid bg={{ base: 'bg-100', hasBgImage: 'transparent', darkHasBgImage: 'transparent' }} />
 ```
 
-## Token helpers (`.css.ts` only)
+### `Box`
 
-| Need | Import from `@/system` |
-|------|------------------------|
-| Background by shade | `bg[50]` … `bg[950]` |
-| Accent by shade | `custom[50]` … `custom[900]` |
-| With opacity | `withOpacity(bg[500], 0.2)` |
+General-purpose block element. Accepts all [Layout Props] + [Margin Props].
+
+```tsx
+<Box
+  as="section"          // any HTML tag (default: div)
+  display="block"       // 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
+  bg={{ base: 'bg-50', dark: 'bg-900' }}  // ThemeConditionProp<ColorToken>
+  rounded="md"          // border-radius token: 'none'|'sm'|'md'|'lg'|'xl'|'2xl'|'3xl'|'full'
+  shadow                // adds var(--custom-shadow)
+  // Layout props (CSS strings, responsive):
+  width="100%"
+  minWidth="0"
+  maxWidth="48rem"
+  height="100%"
+  // Positioning:
+  position="relative"   // 'static'|'relative'|'absolute'|'fixed'|'sticky'
+  inset="0"
+  top="0" right="0" bottom="0" left="0"
+  overflow="hidden"     // 'visible'|'hidden'|'scroll'|'auto'
+  overflowX="auto"
+  overflowY="hidden"
+  // Grid-child props (CSS strings):
+  gridColumn="span 2 / span 2"
+  gridRow="span 2 / span 2"
+  flexBasis="0" flexGrow="1" flexShrink="0"
+  // Padding (SpaceToken):
+  p="md" px="lg" py="sm" pt="xs" pr="md" pb="sm" pl="xl"
+  // Margin (SpaceToken):
+  m="md" mx="auto" my="lg" mt="xs" mr="sm" mb="md" ml="xl"
+  className="extra-class"
+  style={{ /* arbitrary overrides */ }}
+/>
+```
+
+### `Flex`
+
+Flexbox container.
+
+```tsx
+<Flex
+  as="h2"
+  display="flex"           // 'flex' | 'inline-flex' | 'none'
+  direction="row"          // 'row'|'column'|'row-reverse'|'column-reverse'
+  align="center"           // 'stretch'|'center'|'start'|'end'|'baseline'
+  justify="between"        // 'start'|'center'|'between'|'around'|'evenly'|'end'
+  wrap="wrap"              // 'nowrap'|'wrap'|'wrap-reverse'
+  gap="md"                 // SpaceToken
+  gapX="sm" gapY="lg"
+  flexShrink="0"           // CSS string '0'|'1'
+  flexGrow="1"
+  bg={{ base: 'bg-50', dark: 'bg-900' }}
+  shadow
+  // + all Box layout/margin/padding props
+/>
+```
+
+### `Grid`
+
+CSS Grid container.
+
+```tsx
+<Grid
+  columns="repeat(3, minmax(0, 1fr))"   // CSS string → gridTemplateColumns
+  rows="repeat(3, minmax(0, 1fr))"      // CSS string → gridTemplateRows
+  gap="lg"
+  gapX="sm" gapY="md"
+  align="center"          // 'stretch'|'center'|'start'|'end'|'baseline'
+  justify="between"       // 'start'|'center'|'end'|'between'
+  flow="row"              // 'row'|'column'|'dense'|'row dense'|'column dense'
+  bg={{ base: 'bg-50', dark: 'bg-900' }}
+  shadow
+  // + all Box layout/margin/padding props
+/>
+```
+
+### `Text`
+
+Inline text/span. Renders as `<span>` by default.
+
+```tsx
+<Text
+  as="p"                  // any HTML tag
+  size="lg"               // 'sm'|'base'|'lg'|'xl'|'2xl'|...|'9xl'
+  // color accepts ThemeConditionProp — flat or per-condition:
+  color="bg-600"
+  color={{ base: 'bg-500', dark: 'bg-50' }}
+  // Named semantic colors: 'default'(bg-900) | 'muted'(bg-500) | 'primary'(custom-500) | 'inherit'
+  // Full palette: 'bg-50'…'bg-950' | 'custom-50'…'custom-900'
+  bg={{ base: 'bg-100', dark: 'bg-800' }}   // backgroundColor, same token set as color
+  weight="semibold"       // 'normal'|'medium'|'semibold'|'bold'
+  align="center"          // 'left'|'center'|'right'
+  decoration="underline"
+  transform="uppercase"
+  wrap="nowrap"
+  whiteSpace="pre-wrap"   // 'normal'|'nowrap'|'pre'|'pre-line'|'pre-wrap'|'break-spaces'
+  wordBreak="break-all"   // 'normal'|'break-all'|'keep-all'
+  overflowWrap="anywhere" // 'normal'|'break-word'|'anywhere'
+  truncate                // overflow:hidden + ellipsis (shorthand boolean — list BEFORE other props)
+  lineClamp={3}
+  // Margin + Padding props
+  m="sm" mx="auto" mt="xs"
+  p="sm" px="md"
+/>
+```
+
+> **`color` and `bg` on `Text` use `ThemeConditionProp`, not `ResponsiveProp`.**
+> They respond to dark mode / hover conditions, not breakpoints.
+
+### `asChild` pattern
+
+All primitives support `asChild`. When set, the primitive merges its sprinkle classes and inline style variables onto the single child element instead of rendering a wrapper DOM node:
+
+```tsx
+// ✅ Preferred — no extra DOM node, no .css.ts export needed
+<Box asChild p="md" rounded="lg" bg={{ base: 'bg-50', dark: 'bg-900' }}>
+  <HeadlessUIComponent />
+</Box>
+
+// ✅ Text asChild — applies color/weight to any element
+<Text asChild color={{ base: 'bg-400', dark: 'bg-600' }} weight="medium">
+  <Flex align="center" gap="sm">...</Flex>
+</Text>
+```
+
+> **Important:** when using `asChild`, the child must accept and forward both `className` AND `style`. CSS variables from sprinkles are injected via the inline `style` prop — if the child does not forward `style`, theme-adaptive colors will silently fail.
+
+> **`asChild` is not optional.** It is the default choice for any non-primitive element that needs primitive-expressible styling. `.css.ts` is the last resort — only when `asChild` cannot physically express the required CSS property.
+
+### Responsive props
+
+All `SpaceToken` and most layout/size props accept a responsive object:
+
+```tsx
+<Text size={{ base: 'lg', sm: 'xl' }} />
+<Flex p={{ base: 'sm', sm: 'md' }} />
+```
+
+Breakpoints: `base` | `sm` (640px) | `md` (768px) | `lg` (1024px) | `xl` (1280px) | `2xl` (1536px)
+
+---
+
+## §2 — Space Token Reference
+
+`--spacing` is Tailwind's default `0.25rem` per unit.
+
+| SpaceToken | Value | Tailwind equivalent |
+|------------|-------|---------------------|
+| `none` | `0` | `0` |
+| `xs` | `calc(var(--spacing) * 1)` = 0.25rem | `1` |
+| `sm` | `calc(var(--spacing) * 2)` = 0.5rem | `2` |
+| `md` | `calc(var(--spacing) * 4)` = 1rem | `4` |
+| `lg` | `calc(var(--spacing) * 6)` = 1.5rem | `6` |
+| `xl` | `calc(var(--spacing) * 8)` = 2rem | `8` |
+| `2xl` | `calc(var(--spacing) * 12)` = 3rem | `12` |
+| `3xl` | `calc(var(--spacing) * 16)` = 4rem | `16` |
+
+Spacing values **not** in this table (e.g. `gap-3` = 0.75rem, arbitrary `mt-[30%]`) must use an inline `style` prop:
+
+```tsx
+<Grid style={{ gap: '0.75rem', marginTop: '30%' }} />
+```
+
+---
+
+## §3 — Common Tailwind → Primitive Mapping
+
+| Tailwind class | Primitive equivalent |
+|---|---|
+| `flex` | `<Flex>` |
+| `flex flex-col` | `<Flex direction="column">` |
+| `flex items-center justify-center` | `<Flex align="center" justify="center">` |
+| `flex items-center justify-between` | `<Flex align="center" justify="between">` |
+| `flex-center` (utility) | `<Flex align="center" justify="center">` |
+| `grid grid-cols-3` | `<Grid columns="repeat(3, minmax(0, 1fr))">` |
+| `gap-6` | `gap="lg"` |
+| `p-16` | `p="3xl"` |
+| `px-16` | `px="3xl"` |
+| `w-full` | `width="100%"` |
+| `h-full` | `height="100%"` |
+| `min-w-0` | `minWidth="0"` |
+| `min-w-64` | `minWidth="16rem"` |
+| `size-full` | `width="100%" height="100%"` on `<Box>` or `<Flex>` |
+| `col-span-2` | `gridColumn="span 2 / span 2"` on a wrapping `<Box>` |
+| `row-span-2` | `gridRow="span 2 / span 2"` on a wrapping `<Box>` |
+| `shrink-0` | `flexShrink="0"` |
+| `text-bg-500` | `<Text color="bg-500">` |
+| `text-bg-500 dark:text-bg-50` | `<Text color={{ base: 'bg-500', dark: 'bg-50' }}>` |
+| `text-lg` | `<Text size="lg">` |
+| `font-semibold` | `<Text weight="semibold">` |
+| `truncate` | `<Text truncate>` — **shorthand must come first** |
+| `text-lg sm:text-xl` | `<Text size={{ base: 'lg', sm: 'xl' }}>` |
+| `overflow-hidden` | `overflow="hidden"` |
+| `position-relative` | `position="relative"` |
+| `mb-1` | `mb="xs"` |
+| `p-2 sm:p-4` | `p={{ base: 'sm', sm: 'md' }}` |
+| `bg-bg-50 dark:bg-bg-900` | `bg={{ base: 'bg-50', dark: 'bg-900' }}` on a container |
+| `hover:bg-bg-100 dark:hover:bg-bg-800` | `bg={{ base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }}` |
+| `shadow-custom` | `shadow` on any container primitive |
+
+---
+
+## §4 — Styling Categorisation
+
+| Property type | Destination |
+|---|---|
+| `display`, `flex-direction`, `gap`, `padding`, `margin`, `width`, `height`, `overflow`, `position`, `inset` | **Primitive prop** |
+| `backgroundColor` of a container primitive | **`bg` prop** — `bg={{ base: 'bg-50', dark: 'bg-900' }}` |
+| `backgroundColor` of a non-primitive child | **`asChild` on `<Box>`/`<Flex>`** (always first) — only use `.css.ts` sprinkle if `asChild` is impossible |
+| `color` of a `<Text>` | **`color` prop** — `color={{ base: 'bg-500', dark: 'bg-50' }}` |
+| `color` of a non-Text element | **`asChild` with `<Text>`** — `.css.ts` sprinkle only if the element cannot accept/forward `className` + `style` |
+| `borderColor` | **`.css.ts` sprinkle** (Pattern B) |
+| `borderRadius` | **`rounded` prop** on container OR `borderRadius: vars.radii.*` in `.css.ts` |
+| `box-shadow` (`shadow-custom`) | **`shadow` prop** on container primitive |
+| `box-shadow` (complex/non-standard) | **Pattern A** — `.css.ts` `style()` |
+| `transition`, `cursor`, `hover`, `focus`, `active` | **Pattern A** — `.css.ts` `style()` |
+| Dark-mode variants | **`bg`/`color` prop** (preferred) OR **Pattern B** OR **Pattern A** selectors |
+| Context selectors (`.bordered &`, `.has-bg-image &`) | **Pattern A** — `.css.ts` `style()` selectors |
+| `font-weight`, `font-size` | **`<Text weight= size=>`** props |
+| Spacing not in token table | **`style={{ ... }}`** inline on the primitive |
+
+### Theme-adaptive color decision tree
+
+**Follow this tree strictly, top to bottom. Do not skip ahead to `.css.ts`.**
+
+```
+Is the element a container primitive (Box/Flex/Grid/Container/Section)?
+  └─ YES → use `bg` prop: <Box bg={{ base: 'bg-50', dark: 'bg-900' }}>
+           use `shadow` prop for box-shadow
+  └─ NO  → Is it a <Text>?
+             └─ YES → use `color`/`bg` props: <Text color={{ base: 'bg-500', dark: 'bg-50' }}>
+             └─ NO  → MANDATORY: try `asChild` on a primitive first.
+                        Does the element accept and forward className + style?
+                        └─ YES → use `asChild`. STOP. Do not write a .css.ts export.
+                        └─ NO  → only now may you write a .css.ts sprinkle (Pattern B)
+```
+
+> **If you find yourself writing a `.css.ts` export for color or background, stop and ask: could `asChild` have handled this? If yes, revert and use `asChild`.**
+
+---
+
+## §5 — `.css.ts` Patterns
+
+### Pattern A: `style()` for structural/interactive-only styles
+
+Use for `boxShadow`, `transition`, `cursor`, `borderWidth`, and rules that depend on **parent context selectors** (`.bordered &`) where a sprinkle cannot be used.
+
+```ts
+import { style } from '@vanilla-extract/css'
+import { bg, custom, withOpacity, vars } from '@/system'
+
+export const wrapper = style({
+  borderRadius: vars.radii.lg,
+  transition: 'all 0.2s',
+  backgroundColor: bg[50],
+  selectors: {
+    '.dark &': { backgroundColor: bg[900] },
+    '.bordered &': { borderWidth: '2px', borderStyle: 'solid' }
+  }
+})
+```
+
+### Pattern B: `themeColorProperties` sprinkle for theme-adaptive colors on child elements
+
+When a **non-primitive element inside a component** needs adaptive `backgroundColor`, `color`, or `borderColor` across dark / hover / hasBgImage conditions:
+
+```ts
+import { createSprinkles } from '@vanilla-extract/sprinkles'
+import { style } from '@vanilla-extract/css'
+import { themeColorProperties, vars } from '@/system'
+
+const sprinkles = createSprinkles(themeColorProperties)
+
+export const iconWrapper = style([
+  { borderRadius: vars.radii.lg },
+  sprinkles({ backgroundColor: { base: 'bg-100', dark: 'bg-800' } })
+])
+
+export const titleText = sprinkles({
+  color: { base: 'bg-500', dark: 'bg-50' }
+})
+
+export const optionInactive = sprinkles({
+  color: { base: 'bg-500', hover: 'bg-800', darkHover: 'bg-50' }
+})
+```
+
+`themeColorProperties` supports:
+- `backgroundColor: ColorToken | Partial<Record<ThemeCondition, ColorToken>>`
+- `color: ColorToken | Partial<Record<ThemeCondition, ColorToken>>`
+- `borderColor: ColorToken | Partial<Record<ThemeCondition, ColorToken>>`
+
+### Token helpers (`.css.ts` only)
+
+| Need | Code |
+|------|------|
+| Background color | `bg[50]` … `bg[950]` |
+| Accent color | `custom[50]` … `custom[900]` |
+| Color with opacity | `withOpacity(bg[500], 0.1)` |
 | Border radius | `vars.radii.sm/md/lg/xl/2xl/3xl/full` |
 | Space value | `vars.space.xs/sm/md/lg/xl/2xl/3xl` |
-| Font size | `vars.fontSize.*` |
-| Font weight | `vars.fontWeight.*` |
+| Font size | `vars.fontSize.sm/base/lg/xl/.../9xl` |
+| Font weight | `vars.fontWeight.normal/medium/semibold/bold` |
+| Box shadow | `boxShadow: 'var(--custom-shadow)'` |
 
-## Space Token Quick Reference
+### Common Tailwind utility → `.css.ts` mapping
 
-| SpaceToken | Tailwind |
+| Tailwind utility | `.css.ts` equivalent |
 |---|---|
-| `none` | `0` |
-| `xs` | `1` (0.25rem) |
-| `sm` | `2` (0.5rem) |
-| `md` | `4` (1rem) |
-| `lg` | `6` (1.5rem) |
-| `xl` | `8` (2rem) |
-| `2xl` | `12` (3rem) |
-| `3xl` | `16` (4rem) |
+| `component-bg` | `bg={{ base: 'bg-50', dark: 'bg-900' }}` on primitive (preferred) OR `backgroundColor: bg[50]` + `.dark &` selector |
+| `component-bg-lighter` | `backgroundColor: bg[100]` + `.dark &` → `withOpacity(bg[800], 0.5)` |
+| `shadow-custom` | `shadow` prop on primitive OR `boxShadow: 'var(--custom-shadow)'` |
+| `border-bg-500/20` | `borderColor: withOpacity(bg[500], 0.2)` |
+| `bg-bg-500/10` | `backgroundColor: withOpacity(bg[500], 0.1)` |
+| `text-bg-500 dark:text-bg-50` | `<Text color={{ base: 'bg-500', dark: 'bg-50' }}>` OR `sprinkles({ color: { base: 'bg-500', dark: 'bg-50' } })` in css.ts |
+| `in-[.bordered]:border-2` | `selectors: { '.bordered &': { borderWidth: '2px', borderStyle: 'solid' } }` |
+| `hover:bg-bg-100` | `bg={{ ..., hover: 'bg-100' }}` on primitive OR `sprinkles({ backgroundColor: { hover: 'bg-100' } })` |
+| `transition-all` | `transition: 'all 0.2s'` |
+| `rounded-lg` | `rounded="lg"` prop on primitive, or `borderRadius: vars.radii.lg` in `.css.ts` |
+| `text-2xl sm:text-3xl` | `<Text size={{ base: '2xl', sm: '3xl' }}>` |
 
-Any Tailwind spacing value not in this table (e.g. `gap-3`, `mt-5`, `p-10`) must use an inline `style` prop with the raw `rem` value.
+---
 
-## Preservation Checklist
+## §6 — Workflow
+
+### Components (`.tsx` + `.css.ts`)
+
+1. **Audit the file** — catalogue every Tailwind class; classify as layout, theme-adaptive color, structural/interactive, or context-selector.
+2. **Plan primitive replacements** — map `flex`/`grid`/`div`/`span` wrappers to `<Flex>`/`<Grid>`/`<Box>`/`<Text>` with correct props using §3.
+3. **`asChild` is mandatory before `.css.ts`** — for every styled non-primitive element, you MUST evaluate `asChild` first. Only proceed to `.css.ts` if `asChild` is structurally impossible (element does not forward `className`/`style`, or the property is `transition`/`cursor`/context selector).
+4. **Create `ComponentName.css.ts`** only for what genuinely cannot be expressed via primitives — one export per logical role, named by purpose.
+5. **Import** with `import * as styles from './ComponentName.css'`; compose with `clsx()`.
+
+### Stories (`.stories.tsx`)
+
+- Use primitives only. No `.css.ts`.
+- Replace every `<div className="flex ...">` with `<Flex>`, every `<div>` wrapper with `<Box>`, every `<span>`/`<p>` with `<Text>`.
+- Move `col-span-*` / `row-span-*` from child `className` to a wrapping `<Box gridColumn="..." gridRow="...">`.
+- Remove unused imports; add `Box`, `Flex`, `Grid`, `Text` from `@components/primitives`.
+
+### Prop ordering lint rule
+
+JSX props must be **alphabetical**, except:
+- `ref` — always **first**
+- Boolean shorthand props (e.g. `truncate`, `shadow`) — always **before** other props
+
+---
+
+## §7 — Examples
+
+### Story: grid wrapper with spanning children
+
+```tsx
+// Before
+<div className="grid h-full w-full grid-cols-3 grid-rows-3 gap-6 p-16">
+  <Widget className="col-span-2 row-span-2" />
+</div>
+
+// After
+<Grid
+  columns="repeat(3, minmax(0, 1fr))"
+  gap="lg"
+  height="100%"
+  p="3xl"
+  rows="repeat(3, minmax(0, 1fr))"
+  width="100%"
+>
+  <Box gridColumn="span 2 / span 2" gridRow="span 2 / span 2">
+    <Widget />
+  </Box>
+</Grid>
+```
+
+### Component: themed wrapper — bg on primitive + shadow prop
+
+```tsx
+// Before
+<div className="shadow-custom component-bg border-bg-500/20 flex size-full flex-col gap-6 rounded-lg p-4 in-[.bordered]:border-2">
+
+// Widget.css.ts — only what primitives can't express
+import { style } from '@vanilla-extract/css'
+import { withOpacity, bg } from '@/system'
+
+export const wrapper = style({
+  borderColor: withOpacity(bg[500], 0.2),
+  selectors: {
+    '.bordered &': { borderWidth: '2px', borderStyle: 'solid' }
+  }
+})
+
+// After (Widget.tsx) — bg and shadow on primitive props
+<Flex
+  shadow
+  bg={{ base: 'bg-50', dark: 'bg-900' }}
+  className={styles.wrapper}
+  direction="column"
+  gap="lg"
+  height="100%"
+  p="md"
+  rounded="lg"
+  width="100%"
+>
+```
+
+### Component: child element theme colors — themeColorProperties sprinkle
+
+```tsx
+// Before
+<div className="flex rounded-lg p-2 sm:p-4 bg-bg-100 dark:bg-bg-800/50 mb-1">
+<h3 className="w-full min-w-0 truncate text-bg-500 dark:text-bg-50 text-lg">
+
+// Widget.css.ts
+import { createSprinkles } from '@vanilla-extract/sprinkles'
+import { style } from '@vanilla-extract/css'
+import { themeColorProperties, vars } from '@/system'
+
+const sprinkles = createSprinkles(themeColorProperties)
+
+export const iconWrapper = style([
+  { borderRadius: vars.radii.lg },
+  sprinkles({ backgroundColor: { base: 'bg-100', dark: 'bg-800' } })
+])
+
+export const titleText = sprinkles({
+  color: { base: 'bg-500', dark: 'bg-50' }
+})
+
+// After (Widget.tsx)
+<Flex
+  className={styles.iconWrapper}
+  mb="xs"
+  p={{ base: 'sm', sm: 'md' }}
+>
+<Text
+  truncate
+  as="h3"
+  className={styles.titleText}
+  size="lg"
+  style={{ width: '100%', minWidth: 0 }}
+>
+```
+
+### Text with theme-adaptive color via prop (no .css.ts needed)
+
+```tsx
+// Before
+<span className="text-bg-500 dark:text-bg-50 hover:text-bg-800">
+
+// After — ThemeConditionProp directly on Text
+<Text color={{ base: 'bg-500', dark: 'bg-50', hover: 'bg-800' }}>
+```
+
+### Interactive card — bg with hover/darkHover conditions
+
+```tsx
+// Before
+<div className="bg-bg-50 dark:bg-bg-900 hover:bg-bg-100 dark:hover:bg-bg-800 cursor-pointer transition-all">
+
+// Card.css.ts — only transition/cursor in style()
+import { style } from '@vanilla-extract/css'
+export const interactive = style({ cursor: 'pointer', transition: 'all 0.2s' })
+
+// After (Card.tsx)
+<Box
+  shadow
+  bg={{ base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }}
+  className={styles.interactive}
+  rounded="lg"
+>
+```
+
+### asChild: applying primitive props to a third-party component
+
+```tsx
+// Before
+<ComboboxButton className="text-bg-500 size-5">
+  <Icon icon="tabler:chevron-down" />
+</ComboboxButton>
+
+// After — no new .css.ts needed
+<Text asChild color="bg-500" style={{ height: '1.25rem', width: '1.25rem' }}>
+  <ComboboxButton>
+    <Icon icon="tabler:chevron-down" />
+  </ComboboxButton>
+</Text>
+```
+
+---
+
+## §8 — Preservation Checklist
 
 Before marking a file done, verify:
 
@@ -149,6 +616,15 @@ Before marking a file done, verify:
 - [ ] Zero Tailwind class names remain in the file
 - [ ] `get_errors` reports zero TypeScript errors
 
+---
+
+## §9 — Completion Steps
+
+After `get_errors` passes:
+
+1. Mark the migrated component(s) as `[x]` in `packages/lifeforge-ui/TAILWIND_MIGRATION.md`.
+2. Update the progress summary table — Migrated count, Total, and % Done for the affected category row and the **Total** row.
+
 ## Output Format
 
 After completing a file migration, report:
@@ -156,3 +632,4 @@ After completing a file migration, report:
 2. Which `.css.ts` file(s) were created or updated.
 3. A brief summary of any non-obvious mapping decisions (e.g. spacing values that needed `style={{}}`).
 4. Confirmation that `get_errors` passed with zero errors.
+

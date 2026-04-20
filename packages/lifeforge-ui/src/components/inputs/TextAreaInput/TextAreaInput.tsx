@@ -1,12 +1,15 @@
-import clsx from 'clsx'
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+
+import { Box, Flex, Text } from '@components/primitives'
+
+import { vars } from '@/system'
 
 import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
+import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
-import { textareaRecipe } from './TextAreaInput.css'
 
 export interface TextAreaInputProps {
   /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
@@ -75,7 +78,7 @@ function TextAreaInput({
           icon={icon}
         />
       )}
-      <div className="flex w-full items-center gap-2">
+      <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!value && String(value).length > 0}
@@ -84,36 +87,61 @@ function TextAreaInput({
             required={required === true}
           />
         )}
-        <textarea
-          ref={autoFocusableRef(autoFocus, ref)}
-          className={clsx(textareaRecipe({ variant }))}
-          placeholder={placeholder}
-          value={value}
-          onInput={e => {
-            onChange(e.currentTarget.value)
-          }}
-          onKeyDown={e => {
-            if (e.key === 'Enter') {
-              const cursorPosition = e.currentTarget.selectionStart
-
-              const text = e.currentTarget.value
-
-              const newText =
-                text.slice(0, cursorPosition) +
-                '\n' +
-                text.slice(cursorPosition)
-
-              onChange(newText)
-              e.currentTarget.value = newText
-              e.currentTarget.setSelectionRange(
-                cursorPosition + 1,
-                cursorPosition + 1
-              )
-              e.preventDefault()
+        <Placeholder
+          color={variant === 'classic' ? 'transparent' : 'default'}
+          focusColor="default"
+        >
+          <Box
+            asChild
+            bg="transparent"
+            maxHeight="32rem"
+            minHeight="4rem"
+            p={variant === 'classic' ? 'xl' : 'none'}
+            pl={variant === 'classic' ? 'none' : undefined}
+            rounded="lg"
+            style={
+              variant === 'classic'
+                ? { paddingBottom: vars.radii.md }
+                : undefined
             }
-          }}
-        />
-      </div>
+            width="100%"
+          >
+            <Text asChild tracking="wide">
+              <textarea
+                ref={autoFocusableRef(autoFocus, ref)}
+                placeholder={placeholder}
+                style={{
+                  resize: 'none'
+                }}
+                value={value}
+                onInput={e => {
+                  onChange(e.currentTarget.value)
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    const cursorPosition = e.currentTarget.selectionStart
+
+                    const text = e.currentTarget.value
+
+                    const newText =
+                      text.slice(0, cursorPosition) +
+                      '\n' +
+                      text.slice(cursorPosition)
+
+                    onChange(newText)
+                    e.currentTarget.value = newText
+                    e.currentTarget.setSelectionRange(
+                      cursorPosition + 1,
+                      cursorPosition + 1
+                    )
+                    e.preventDefault()
+                  }
+                }}
+              />
+            </Text>
+          </Box>
+        </Placeholder>
+      </Flex>
     </InputWrapper>
   )
 }
