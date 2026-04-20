@@ -1,3 +1,5 @@
+import { Box, Flex } from '@components/primitives'
+
 import ModalHeader from '../../core/components/ModalHeader'
 
 function ViewImageModal({
@@ -8,17 +10,17 @@ function ViewImageModal({
   onClose: () => void
 }) {
   return (
-    <div>
+    <Box>
       <ModalHeader
         icon="tabler:photo"
         namespace="common.modals"
         title="viewImage"
         onClose={onClose}
       />
-      <div className="flex w-full justify-center sm:min-w-96">
+      <Flex justify="center" style={{ minWidth: '24rem' }}>
         {src !== '' && <img key={src} alt="" src={src} />}
-      </div>
-    </div>
+      </Flex>
+    </Box>
   )
 }
 

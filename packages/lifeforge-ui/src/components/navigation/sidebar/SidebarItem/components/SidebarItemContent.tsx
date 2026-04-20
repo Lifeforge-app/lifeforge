@@ -1,11 +1,12 @@
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ContextMenu } from '@components/overlays'
+import { Box, Flex, Text } from '@components/primitives'
 
 import SidebarActionButton from './SidebarActionButton'
+import * as styles from './SidebarItemContent.css'
 
 function SidebarItemContent({
   label,
@@ -41,57 +42,79 @@ function SidebarItemContent({
 
   return (
     <>
-      <div className="flex-between flex w-full min-w-0 gap-3">
+      <Flex
+        align="center"
+        justify="between"
+        minWidth="0"
+        style={{ gap: '0.75rem' }}
+        width="100%"
+      >
         {(() => {
           if (!isMainSidebarItem) {
             return (
-              <div className="block w-full min-w-0 truncate">
-                {typeof label === 'string' && namespace !== false
-                  ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
-                  : label}{' '}
-                {number !== undefined && hasSubsection && (
-                  <span className="text-bg-400 dark:text-bg-600 text-sm!">
-                    ({number})
-                  </span>
-                )}
-              </div>
+              <Box asChild minWidth="0" width="100%">
+                <Text truncate as="div">
+                  {typeof label === 'string' && namespace !== false
+                    ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
+                    : label}{' '}
+                  {number !== undefined && hasSubsection && (
+                    <Text
+                      as="span"
+                      color={{ base: 'bg-400', dark: 'bg-600' }}
+                      size="sm"
+                    >
+                      ({number})
+                    </Text>
+                  )}
+                </Text>
+              </Box>
             )
           }
 
           return (
             sidebarExpanded && (
-              <span className="flex-between flex w-full gap-3 truncate">
-                <span className="w-full min-w-0 truncate">
-                  {typeof label === 'string'
-                    ? t(`common.sidebar:apps.${label}.title`)
-                    : label}
-                </span>
-              </span>
+              <Flex
+                align="center"
+                justify="between"
+                minWidth="0"
+                overflow="hidden"
+                style={{ gap: '0.75rem' }}
+                width="100%"
+              >
+                <Box asChild minWidth="0" width="100%">
+                  <Text truncate>
+                    {typeof label === 'string'
+                      ? t(`common.sidebar:apps.${label}.title`)
+                      : label}
+                  </Text>
+                </Box>
+              </Flex>
             )
           )
         })()}
         {number !== undefined && !hasSubsection && (
-          <span
-            className={clsx(
-              'pr-2 text-sm',
-              (() => {
-                if (
-                  isMenuOpen ||
-                  (onCancelButtonClick !== undefined && active)
-                ) {
-                  return 'hidden'
-                } else if (contextMenuItems !== undefined) {
-                  return 'group-hover:hidden'
-                } else {
-                  return 'block'
-                }
-              })()
-            )}
+          <Text
+            as="span"
+            className={
+              !isMenuOpen &&
+              !(onCancelButtonClick !== undefined && active) &&
+              contextMenuItems !== undefined
+                ? styles.numberBadgeGroupHoverHide
+                : undefined
+            }
+            size="sm"
+            style={{
+              display:
+                isMenuOpen || (onCancelButtonClick !== undefined && active)
+                  ? 'none'
+                  : undefined,
+              paddingRight: '0.5rem'
+            }}
           >
             {number.toLocaleString()}
-          </span>
+          </Text>
         )}
-      </div>
+      </Flex>
       {actionButtonProps && (
         <SidebarActionButton
           icon={actionButtonProps.icon}
@@ -100,6 +123,7 @@ function SidebarItemContent({
       )}
       {!active && contextMenuItems !== undefined && (
         <ContextMenu
+          classNames={{ button: styles.contextMenuGroupHoverShow }}
           styles={{
             wrapper: { position: 'relative', overscrollBehavior: 'contain' },
             button: { padding: '0.5em' }

@@ -14,8 +14,6 @@ interface InputActionButtonProps extends Omit<
   icon: string
   /** Visual style variant of the button. */
   variant?: 'classic' | 'plain'
-  /** Whether to merge the button styles into a single child element instead of rendering a native button. */
-  asChild?: boolean
   children?: ReactNode
 }
 
@@ -29,14 +27,13 @@ function InputActionButton({
   variant = 'classic',
   className,
   style,
-  asChild = false,
   children,
   ...rest
 }: InputActionButtonProps) {
   return (
     <Flex
+      asChild
       align="center"
-      asChild={asChild}
       bg={{ base: 'transparent', hover: 'bg-200', darkHover: 'bg-800' }}
       className={clsx(styles.root, className)}
       flexShrink="0"
@@ -50,9 +47,7 @@ function InputActionButton({
         marginRight: variant === 'classic' ? '1rem' : '0.75rem'
       }}
     >
-      {asChild ? (
-        children
-      ) : (
+      {children || (
         <button type="button" {...rest}>
           <Icon icon={icon} style={{ width: '1.25em', height: '1.25em' }} />
         </button>

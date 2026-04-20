@@ -1,7 +1,10 @@
 import clsx from 'clsx'
 import { useMainSidebarState } from 'shared'
 
-import SidebarSubsectionItem from './SidebarSubsectionItem'
+import { Flex, Transition } from '@components/primitives'
+
+import * as styles from './SidebarItemSubsection.css'
+import SidebarSubsectionItemLink from './SidebarSubsectionItemLink'
 import SidebarSubsectionItemWithOnClick from './SidebarSubsectionItemWithOnClick'
 
 function SidebarItemSubsection({
@@ -28,44 +31,59 @@ function SidebarItemSubsection({
   const { sidebarExpanded } = useMainSidebarState()
 
   return (
-    <li
-      className={clsx(
-        'flex h-auto shrink-0 flex-col gap-2 overflow-hidden px-4 transition-all',
-        subsectionExpanded ? 'max-h-[1000px] py-2' : 'max-h-0 py-0'
-      )}
-    >
-      <ul
+    <Transition>
+      <Flex
+        as="li"
         className={clsx(
-          'flex w-full flex-col items-center gap-0.5 rounded-lg',
-          !sidebarExpanded &&
-            typeof subsection[0].callback === 'string' &&
-            'bg-bg-100 dark:bg-bg-800/30'
+          subsectionExpanded
+            ? styles.subsectionExpanded
+            : styles.subsectionCollapsed
         )}
+        direction="column"
+        flexShrink="0"
+        gap="sm"
+        overflow="hidden"
+        px="md"
       >
-        {subsection.map(({ label: subsectionLabel, icon, callback, amount }) =>
-          typeof callback === 'string' ? (
-            <SidebarSubsectionItem
-              key={subsectionLabel}
-              icon={icon}
-              label={label}
-              path={callback}
-              subsectionLabel={subsectionLabel}
-            />
-          ) : (
-            <SidebarSubsectionItemWithOnClick
-              key={subsectionLabel}
-              active={callback.active}
-              amount={amount}
-              icon={icon}
-              label={label}
-              namespace={namespace}
-              subsectionLabel={subsectionLabel}
-              onClick={callback.onClick}
-            />
-          )
-        )}
-      </ul>
-    </li>
+        <Flex
+          align="center"
+          as="ul"
+          className={clsx(
+            !sidebarExpanded &&
+              typeof subsection[0].callback === 'string' &&
+              styles.subsectionListBg
+          )}
+          direction="column"
+          rounded="lg"
+          style={{ gap: '0.125rem' }}
+          width="100%"
+        >
+          {subsection.map(
+            ({ label: subsectionLabel, icon, callback, amount }) =>
+              typeof callback === 'string' ? (
+                <SidebarSubsectionItemLink
+                  key={subsectionLabel}
+                  icon={icon}
+                  label={label}
+                  path={callback}
+                  subsectionLabel={subsectionLabel}
+                />
+              ) : (
+                <SidebarSubsectionItemWithOnClick
+                  key={subsectionLabel}
+                  active={callback.active}
+                  amount={amount}
+                  icon={icon}
+                  label={label}
+                  namespace={namespace}
+                  subsectionLabel={subsectionLabel}
+                  onClick={callback.onClick}
+                />
+              )
+          )}
+        </Flex>
+      </Flex>
+    </Transition>
   )
 }
 

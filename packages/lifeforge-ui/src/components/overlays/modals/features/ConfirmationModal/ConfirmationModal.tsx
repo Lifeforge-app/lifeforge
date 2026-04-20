@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { usePromiseLoading } from 'shared'
 
 import { Button, TextInput } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 function ConfirmationModal({
   onClose,
@@ -45,9 +46,13 @@ function ConfirmationModal({
   const [isLoading, onClick] = usePromiseLoading(handleClick)
 
   return (
-    <div className="min-w-[40vw]">
-      <h1 className="flex items-center text-2xl font-semibold">{title}</h1>
-      <p className="text-bg-500 mt-2">{description}</p>
+    <Box style={{ minWidth: '40vw' }}>
+      <Text as="h1" size="2xl" weight="semibold">
+        {title}
+      </Text>
+      <Text as="p" color="bg-500" mt="sm">
+        {description}
+      </Text>
       {confirmationPrompt && (
         <TextInput
           className="mt-4"
@@ -65,10 +70,16 @@ function ConfirmationModal({
         />
       )}
       {renderChildren?.(onClose) || (
-        <div className="mt-6 flex w-full flex-col-reverse justify-around gap-2 sm:flex-row">
+        <Flex
+          justify="around"
+          mt="2xl"
+          style={{ flexDirection: 'column-reverse', gap: '0.5rem' }}
+          width="100%"
+          wrap="wrap"
+        >
           <Button
-            className="w-full"
             icon=""
+            style={{ width: '100%' }}
             variant="secondary"
             onClick={onClose}
           >
@@ -76,7 +87,6 @@ function ConfirmationModal({
           </Button>
           {typeof confirmationButton === 'string' ? (
             <Button
-              className="w-full"
               dangerous={confirmationButton === 'delete'}
               disabled={
                 !!confirmationPrompt &&
@@ -88,6 +98,7 @@ function ConfirmationModal({
                   : 'tabler:check'
               }
               loading={isLoading}
+              style={{ width: '100%' }}
               onClick={onClick}
             >
               {confirmationButton}
@@ -95,18 +106,19 @@ function ConfirmationModal({
           ) : (
             <Button
               {...confirmationButton}
-              className={clsx('w-full', confirmationButton.className)}
+              className={clsx(confirmationButton.className)}
               disabled={
                 !!confirmationPrompt &&
                 confirmationPrompt !== confirmationTextState
               }
               loading={isLoading}
+              style={{ width: '100%', ...confirmationButton.style }}
               onClick={onClick}
             />
           )}
-        </div>
+        </Flex>
       )}
-    </div>
+    </Box>
   )
 }
 

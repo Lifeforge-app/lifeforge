@@ -1,5 +1,9 @@
 import clsx from 'clsx'
 
+import { Flex, Text } from '@components/primitives'
+
+import * as styles from './SidebarItemWrapper.css'
+
 function SidebarItemWrapper({
   active,
   children,
@@ -12,34 +16,54 @@ function SidebarItemWrapper({
   onClick?: () => void
 }) {
   return (
-    <li
-      className={clsx(
-        'sidebar-item flex-center relative isolate px-4 transition-all',
-        active
-          ? "text-bg-800 after:bg-custom-500 dark:text-bg-50 font-semibold after:absolute after:top-1/2 after:right-0 after:h-8 after:w-1 after:-translate-y-1/2 after:rounded-full after:content-['']"
-          : 'text-bg-500 dark:text-bg-500',
-        className
-      )}
+    <Text
+      asChild
+      color={active ? { base: 'bg-800', dark: 'bg-50' } : 'bg-500'}
+      weight={active ? 'semibold' : undefined}
     >
-      <div
+      <Flex
+        align="center"
+        as="li"
         className={clsx(
-          'flex-between group relative flex h-14 w-full cursor-pointer gap-3 rounded-lg pr-3 pl-4 text-left whitespace-nowrap transition-all duration-100',
-          active
-            ? 'bg-bg-200/50 shadow-custom border-bg-500/20 dark:bg-bg-800 in-[.bordered]:border-2'
-            : 'hover:bg-bg-200/30 dark:hover:bg-bg-800/30'
+          'sidebar-item',
+          styles.listItemBase,
+          active && styles.listItemActiveIndicator,
+          className
         )}
-        role="button"
-        tabIndex={0}
-        onClick={onClick}
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
-            onClick?.()
-          }
-        }}
+        justify="center"
+        position="relative"
+        px="md"
       >
-        {children}
-      </div>
-    </li>
+        <Flex
+          asChild
+          align="center"
+          justify="between"
+          pl="md"
+          position="relative"
+          rounded="lg"
+          style={{ gap: '0.75rem', height: '3.5rem', paddingRight: '0.75rem' }}
+          width="100%"
+        >
+          <div
+            className={clsx(
+              'group',
+              styles.innerButtonInteractive,
+              active ? styles.innerButtonActive : styles.innerButtonInactive
+            )}
+            role="button"
+            tabIndex={0}
+            onClick={onClick}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                onClick?.()
+              }
+            }}
+          >
+            {children}
+          </div>
+        </Flex>
+      </Flex>
+    </Text>
   )
 }
 

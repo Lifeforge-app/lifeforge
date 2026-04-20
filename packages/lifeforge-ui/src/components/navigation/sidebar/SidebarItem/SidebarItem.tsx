@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react'
 import { useModuleSidebarState } from 'shared'
 
+import { Box } from '@components/primitives'
+
 import SidebarCancelButton from './components/SidebarCancelButton'
 import SidebarItemContent from './components/SidebarItemContent'
 import SidebarItemIcon from './components/SidebarItemIcon'
@@ -21,8 +23,8 @@ interface SidebarItemProps {
   icon?: string | React.ReactElement
   /** Whether the sidebar is currently selected/active. */
   active?: boolean
-  /** Callback function triggered when the sidebar item is clicked. */
-  onClick?: () => void
+  /** Callback function triggered when the sidebar item is clicked. Can be a function or "expand" to toggle subsection. */
+  onClick?: (() => void) | 'expand'
   /** Callback function triggered when the cancel button is clicked.
    * If provided, a cancel button is shown when the sidebar item is active.
    */
@@ -86,11 +88,13 @@ function SidebarItem({
   const [subsectionExpanded, setSubsectionExpanded] = useState(active ?? false)
 
   const handleNavigation = useCallback(() => {
-    if (subsection?.length) {
+    if (onClick === 'expand' && subsection?.length) {
       setSubsectionExpanded(!subsectionExpanded)
+
+      return
     }
 
-    if (onClick !== undefined) {
+    if (onClick !== undefined && onClick !== 'expand') {
       setIsSidebarOpen(false)
       onClick()
     }
@@ -110,11 +114,14 @@ function SidebarItem({
         onClick={handleNavigation}
       >
         {sideStripColor !== undefined && (
-          <span
-            className="block h-8 w-1 shrink-0 rounded-full"
-            style={{
-              backgroundColor: sideStripColor
-            }}
+          <Box
+            as="span"
+            display="block"
+            flexShrink="0"
+            height="2rem"
+            rounded="full"
+            style={{ backgroundColor: sideStripColor }}
+            width="0.25rem"
           />
         )}
         <SidebarItemIcon

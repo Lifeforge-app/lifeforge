@@ -1,6 +1,6 @@
 import { recipe } from '@vanilla-extract/recipes'
 
-import { vars } from '@/system'
+import { bg, custom, vars, withOpacity } from '@/system'
 
 export const buttonRecipe = recipe({
   base: {
@@ -27,32 +27,29 @@ export const buttonRecipe = recipe({
   variants: {
     variant: {
       primary: {
-        backgroundColor: 'var(--color-custom-500)',
+        backgroundColor: custom[500],
         boxShadow: 'var(--custom-shadow)',
-        color: 'var(--button-text-color, var(--color-bg-50))',
+        color: `var(--button-text-color, ${bg[50]})`,
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor: 'var(--color-custom-600)'
+            backgroundColor: custom[600]
           },
           '&:disabled': {
-            backgroundColor: 'var(--color-bg-200)',
-            borderColor:
-              'color-mix(in srgb, var(--color-bg-500) 20%, transparent)',
-            color: 'var(--color-bg-400)'
+            backgroundColor: bg[200],
+            borderColor: withOpacity(bg[500], 0.2),
+            color: bg[400]
           },
           '.dark &:disabled': {
-            backgroundColor:
-              'color-mix(in srgb, var(--color-bg-800) 50%, transparent)',
-            color: 'var(--color-bg-600)'
+            backgroundColor: withOpacity(bg[800], 0.5),
+            color: bg[600]
           },
           '.bordered &': {
             borderWidth: '2px',
             borderStyle: 'solid',
-            borderColor:
-              'color-mix(in srgb, var(--color-custom-900) 20%, transparent)'
+            borderColor: withOpacity(custom[900], 0.2)
           },
           '.dark.bordered &': {
-            borderColor: 'var(--color-custom-900)'
+            borderColor: custom[900]
           }
         }
       },
@@ -60,60 +57,56 @@ export const buttonRecipe = recipe({
         backgroundColor: 'transparent',
         borderWidth: '1.6px',
         borderStyle: 'solid',
-        borderColor: 'var(--color-custom-500)',
+        borderColor: custom[500],
         boxShadow: 'var(--custom-shadow)',
-        color: 'var(--color-custom-500)',
+        color: custom[500],
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor:
-              'color-mix(in srgb, var(--color-custom-500) 10%, transparent)'
+            backgroundColor: withOpacity(custom[500], 0.1)
           },
           '&:disabled': {
-            borderColor: 'var(--color-bg-300)',
-            color: 'var(--color-bg-300)'
+            borderColor: bg[300],
+            color: bg[300]
           },
           '.dark &:disabled': {
-            borderColor: 'var(--color-bg-700)',
-            color: 'var(--color-bg-700)'
+            borderColor: bg[700],
+            color: bg[700]
           }
         }
       },
       tertiary: {
         backgroundColor: 'transparent',
-        color: 'var(--color-custom-500)',
+        color: custom[500],
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor:
-              'color-mix(in srgb, var(--color-custom-500) 15%, transparent)',
+            backgroundColor: withOpacity(custom[500], 0.15),
             boxShadow: 'var(--custom-shadow)'
           },
           '&:disabled': {
-            color: 'var(--color-bg-300)'
+            color: bg[300]
           },
           '.dark &:disabled': {
-            color: 'var(--color-bg-700)'
+            color: bg[700]
           }
         }
       },
       plain: {
         backgroundColor: 'transparent',
-        color: 'var(--color-bg-500)',
+        color: bg[500],
         selectors: {
           '&:hover:not(:disabled)': {
-            backgroundColor:
-              'color-mix(in srgb, var(--color-bg-200) 50%, transparent)',
-            color: 'var(--color-bg-800)'
+            backgroundColor: withOpacity(bg[200], 0.5),
+            color: bg[800]
           },
           '.dark &:hover:not(:disabled)': {
-            backgroundColor:
-              'color-mix(in srgb, var(--color-bg-800) 50%, transparent)',
-            color: 'var(--color-bg-50)'
+            backgroundColor: withOpacity(bg[800], 0.5),
+            color: bg[50]
           },
           '&:disabled': {
-            color: 'var(--color-bg-300)'
+            color: bg[300]
           },
           '.dark &:disabled': {
-            color: 'var(--color-bg-700)'
+            color: bg[700]
           }
         }
       }
@@ -136,7 +129,7 @@ export const buttonRecipe = recipe({
       variants: { variant: 'primary', dangerous: true },
       style: {
         backgroundColor: 'var(--color-red-500)',
-        color: 'var(--button-text-color, var(--color-bg-50))',
+        color: `var(--button-text-color, ${bg[50]})`,
         selectors: {
           '&:hover:not(:disabled)': {
             backgroundColor: 'var(--color-red-600)'

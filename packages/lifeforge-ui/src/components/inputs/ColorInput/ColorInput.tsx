@@ -96,7 +96,7 @@ function ColorInput({
             <Box
               className={colorDot}
               flexShrink="0"
-              height="0.75em"
+              height="0.8em"
               rounded="full"
               style={{
                 marginTop: '0.125rem',
@@ -104,7 +104,7 @@ function ColorInput({
                   ? value
                   : undefined
               }}
-              width="0.75em"
+              width="0.8em"
             />
           </Bordered>
           <Placeholder

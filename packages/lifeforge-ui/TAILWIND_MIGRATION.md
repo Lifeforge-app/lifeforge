@@ -97,8 +97,8 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 - [x] `Pagination`
 - [ ] `sidebar/MainSidebarItem`
 - [ ] `sidebar/SidebarDivider`
-- [ ] `sidebar/SidebarItem`
-- [ ] `sidebar/SidebarItem/components/SidebarItemWrapper`
+- [x] `sidebar/SidebarItem`
+- [x] `sidebar/SidebarItem/components/SidebarItemWrapper`
 - [ ] `sidebar/SidebarTitle`
 - [ ] `sidebar/SidebarWrapper`
 - [x] `Tabs`
@@ -111,11 +111,11 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 - [x] `ContextMenu/components/ContextMenuItem`
 - [x] `ContextMenu/components/ContextMenuGroup`
 - [x] `modals/core/ModalManager`
-- [ ] `modals/core/components/ModalHeader`
-- [ ] `modals/core/components/ModalWrapper`
-- [ ] `modals/features/ConfirmationModal`
+- [x] `modals/core/components/ModalHeader`
+- [x] `modals/core/components/ModalWrapper`
+- [x] `modals/features/ConfirmationModal`
 - [x] `modals/features/FormModal`
-- [ ] `modals/features/ViewImageModal`
+- [x] `modals/features/ViewImageModal`
 
 ---
 
@@ -129,6 +129,6 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 | Feedback       |        5 |     5 |   100% |
 | Inputs         |       18 |    22 |    82% |
 | Layout         |        5 |     5 |   100% |
-| Navigation     |        3 |     9 |    33% |
-| Overlays       |        5 |     9 |    56% |
-| **Total**      |   **51** |**73** | **70%**|
+| Navigation     |        5 |     9 |    56% |
+| Overlays       |        9 |     9 |   100% |
+| **Total**      |   **57** |**73** | **78%**|
