@@ -6,10 +6,10 @@ import { Box, Flex, Text } from '@components/primitives'
 import { Slot } from './index'
 
 const meta = {
-  component: Slot,
   argTypes: {
     children: { control: false }
-  }
+  },
+  component: Slot
 } satisfies Meta<typeof Slot>
 
 export default meta
@@ -51,11 +51,11 @@ export const Default: Story = {
             <button
               style={{
                 all: 'unset',
-                display: 'block',
-                width: '100%',
-                padding: '0.75rem 1rem',
+                borderRadius: '0.5rem',
                 cursor: 'pointer',
-                borderRadius: '0.5rem'
+                display: 'block',
+                padding: '0.75rem 1rem',
+                width: '100%'
               }}
               type="button"
             >
@@ -166,10 +166,10 @@ export const ClassNameMerging: Story = {
         <span
           className="from-child"
           style={{
-            display: 'block',
-            padding: '0.75rem',
             background: 'oklch(0.95 0.02 220)',
-            borderRadius: '0.5rem'
+            borderRadius: '0.5rem',
+            display: 'block',
+            padding: '0.75rem'
           }}
         >
           className=&quot;from-slot from-child&quot;
@@ -202,8 +202,8 @@ export const StyleMerging: Story = {
       </Text>
       <Slot
         style={{
-          padding: '1.5rem',
-          outline: '2px dashed oklch(0.5 0.15 260)'
+          outline: '2px dashed oklch(0.5 0.15 260)',
+          padding: '1.5rem'
         }}
       >
         <div

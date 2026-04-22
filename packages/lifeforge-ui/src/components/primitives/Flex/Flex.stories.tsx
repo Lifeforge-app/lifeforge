@@ -8,39 +8,39 @@ import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { VariantContainer } from '@/storybook/VariantContainer'
 
 const meta = {
-  component: Flex,
   argTypes: {
-    children: { control: false },
-    bg: { control: false },
-    display: {
-      control: { type: 'select' },
-      options: ['flex', 'inline-flex', 'none']
-    },
-    direction: {
-      control: { type: 'select' },
-      options: ['row', 'column', 'row-reverse', 'column-reverse']
-    },
     align: {
       control: { type: 'select' },
       options: ['stretch', 'center', 'start', 'end', 'baseline']
     },
-    justify: {
+    bg: { control: false },
+    children: { control: false },
+    direction: {
       control: { type: 'select' },
-      options: ['start', 'center', 'between', 'around', 'evenly', 'end']
+      options: ['row', 'column', 'row-reverse', 'column-reverse']
     },
-    wrap: {
+    display: {
       control: { type: 'select' },
-      options: ['nowrap', 'wrap', 'wrap-reverse']
+      options: ['flex', 'inline-flex', 'none']
     },
     gap: {
       control: { type: 'select' },
       options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
     },
+    justify: {
+      control: { type: 'select' },
+      options: ['start', 'center', 'between', 'around', 'evenly', 'end']
+    },
     rounded: {
       control: { type: 'select' },
       options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
+    },
+    wrap: {
+      control: { type: 'select' },
+      options: ['nowrap', 'wrap', 'wrap-reverse']
     }
-  }
+  },
+  component: Flex
 } satisfies Meta<typeof Flex>
 
 export default meta
@@ -50,10 +50,10 @@ type Story = StoryObj<typeof meta>
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function Item({
-  label,
   accent = false,
-  noBg = false,
   children,
+  label,
+  noBg = false,
   ...props
 }: {
   label?: string
@@ -316,7 +316,7 @@ export const WithBackgroundAndShadow: Story = {
         <Box
           bg={{ base: 'custom-500' }}
           rounded="full"
-          style={{ width: '3rem', height: '3rem', flexShrink: 0 }}
+          style={{ flexShrink: 0, height: '3rem', width: '3rem' }}
         />
         <Box>
           <Text weight="semibold">Card title</Text>
@@ -342,7 +342,7 @@ export const ColumnLayout: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         direction="column"
         rounded="xl"
-        style={{ width: '20em', height: '20em' }}
+        style={{ height: '20em', width: '20em' }}
       >
         <Flex
           align="center"
@@ -356,12 +356,12 @@ export const ColumnLayout: Story = {
           <Button
             icon="tabler:pencil"
             iconStyle={{
-              width: '1em',
-              height: '1em'
+              height: '1em',
+              width: '1em'
             }}
             style={{
-              padding: '0.4em 0.5em',
-              borderRadius: '0.375em'
+              borderRadius: '0.375em',
+              padding: '0.4em 0.5em'
             }}
             variant="plain"
           >

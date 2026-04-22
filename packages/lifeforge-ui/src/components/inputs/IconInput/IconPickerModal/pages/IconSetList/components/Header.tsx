@@ -2,10 +2,9 @@
 import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { memo, useCallback, useMemo } from 'react'
-import { usePersonalization } from 'shared'
 
-import { TagChip } from '@components/data-display'
-import { Button, SearchInput } from '@components/inputs'
+import { Button, Listbox, ListboxOption, SearchInput } from '@components/inputs'
+import { Box, Flex } from '@components/primitives'
 
 const collections: Record<string, IconifyInfo> = importedCollections
 
@@ -31,8 +30,6 @@ function Header({
   iconFilterTerm: string
   setIconFilterTerm: React.Dispatch<React.SetStateAction<string>>
 }) {
-  const { derivedThemeColor } = usePersonalization()
-
   const categories = useMemo(
     () => [
       ...new Set(
@@ -57,18 +54,16 @@ function Header({
     if (searchQuery !== '') setCurrentIconSet({ search: searchQuery })
   }, [searchQuery, setCurrentIconSet])
 
-  const handleCategoryClick = useCallback(
-    (category: string) => {
-      setSelectedCategory(prev => (prev === category ? null : category))
-    },
-    [setSelectedCategory]
-  )
-
   return (
     <>
-      <div className="flex w-full flex-col gap-2 sm:flex-row">
+      <Flex direction={{ base: 'column', sm: 'row' }} gap="sm" width="100%">
         <SearchInput
-          className="component-bg-lighter-with-hover"
+          bg={{
+            base: 'bg-100',
+            hover: 'bg-200',
+            dark: 'bg-800',
+            darkHover: 'bg-700'
+          }}
           namespace="common.modals"
           searchTarget="iconPicker.items.icon"
           value={searchQuery}
@@ -82,23 +77,32 @@ function Header({
         >
           Search
         </Button>
-      </div>
-      <div className="flex w-full flex-col items-center gap-8 lg:flex-row">
-        <div className="mt-4 flex w-full flex-wrap gap-2">
+      </Flex>
+      <Flex direction={{ base: 'column', lg: 'row' }} gap="md" mt="md">
+        <Listbox
+          bg={{
+            base: 'bg-100',
+            hover: 'bg-200',
+            dark: 'bg-800',
+            darkHover: 'bg-700'
+          }}
+          renderContent={value => value || 'All Categories'}
+          value={selectedCategory}
+          onChange={value => setSelectedCategory(value)}
+        >
+          <ListboxOption label="All Categories" value={null} />
           {categories.map(category => (
-            <TagChip
-              key={category}
-              color={
-                selectedCategory === category ? derivedThemeColor : undefined
-              }
-              label={category}
-              onClick={() => handleCategoryClick(category)}
-            />
+            <ListboxOption key={category} label={category} value={category} />
           ))}
-        </div>
-        <div className="w-full lg:w-3/5 xl:w-1/3">
+        </Listbox>
+        <Box width={{ base: '100%', lg: '60%', xl: '33.333%' }}>
           <SearchInput
-            className="component-bg-lighter-with-hover"
+            bg={{
+              base: 'bg-100',
+              hover: 'bg-200',
+              dark: 'bg-800',
+              darkHover: 'bg-700'
+            }}
             debounceMs={300}
             icon="tabler:filter"
             namespace="common.modals"
@@ -106,8 +110,8 @@ function Header({
             value={iconFilterTerm}
             onChange={setIconFilterTerm}
           />
-        </div>
-      </div>
+        </Box>
+      </Flex>
     </>
   )
 }

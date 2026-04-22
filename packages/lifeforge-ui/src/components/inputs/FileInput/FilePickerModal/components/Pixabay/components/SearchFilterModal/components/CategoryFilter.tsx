@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 
 import { ListboxInput, ListboxOption } from '@components/inputs'
+import { Text } from '@components/primitives'
 
 import {
   type IPixabaySearchFilter,
@@ -19,12 +20,16 @@ function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
       buttonContent={
         <>
           <Icon
-            className="size-5"
             icon={CATEGORIES.find(l => l.id === category)?.icon ?? ''}
+            style={{ height: '1.25rem', width: '1.25rem' }}
           />
-          <span className="-mt-px block truncate">
+          <Text
+            as="span"
+            style={{ display: 'block', marginTop: '-1px' }}
+            truncate
+          >
             {CATEGORIES.find(l => l.id === category)?.name ?? 'None'}
-          </span>
+          </Text>
         </>
       }
       icon="tabler:category"

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { clsx } from 'clsx'
-import tinycolor from 'tinycolor2'
+import { usePersonalization } from 'shared'
 
 import { Card } from '@components/layout'
 import { ModalHeader } from '@components/overlays'
@@ -19,6 +19,8 @@ function FlatUIColorsModal({
     setColor: (color: string) => void
   }
 }) {
+  const { getMostReadableColor } = usePersonalization()
+
   return (
     <Box style={{ minWidth: '60vw' }}>
       <ModalHeader
@@ -72,9 +74,7 @@ function FlatUIColorsModal({
                         style={{
                           width: '2rem',
                           height: '2rem',
-                          color: tinycolor(flatUiColor).isLight()
-                            ? 'var(--color-bg-800)'
-                            : 'var(--color-bg-50)'
+                          color: getMostReadableColor(flatUiColor)
                         }}
                       />
                     )}

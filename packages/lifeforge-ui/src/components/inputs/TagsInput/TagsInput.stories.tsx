@@ -16,19 +16,18 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
-    label: 'Labels',
     icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
     placeholder: 'placeholder',
     value: [],
-    onChange: () => {}
+    variant: 'classic'
   },
   render: args => {
     const [value, onChange] = useState<string[]>([])
 
     return (
-      <div className="w-full px-32">
-        <TagsInput {...args} onChange={onChange} value={value} />
-      </div>
+      <TagsInput {...args} value={value} onChange={onChange} />
     )
   }
 }
@@ -38,22 +37,137 @@ export const Default: Story = {
  */
 export const WithActionButton: Story = {
   args: {
-    label: 'Labels',
-    icon: 'tabler:tags',
-    placeholder: 'placeholder',
-    value: [],
-    onChange: () => {},
     actionButtonProps: {
-      icon: 'mage:stars-c'
-    }
+      icon: 'mage:stars-c',
+      onClick: () => {
+        alert('Action button clicked!')
+      }
+    },
+    icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
+    placeholder: 'placeholder',
+    value: []
   },
   render: args => {
     const [value, onChange] = useState<string[]>([])
 
     return (
-      <div className="w-full px-32">
-        <TagsInput {...args} onChange={onChange} value={value} />
-      </div>
+      <TagsInput {...args} value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const Required: Story = {
+  args: {
+    icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
+    placeholder: 'placeholder',
+    required: true,
+    value: []
+  },
+  render: args => {
+    const [value, onChange] = useState<string[]>([])
+
+    return (
+      <TagsInput {...args} value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
+    placeholder: 'placeholder',
+    value: [],
+    variant: 'classic'
+  },
+  render: args => {
+    const [value, onChange] = useState<string[]>([])
+
+    return (
+      <TagsInput {...args} disabled value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const WithErrorMessage: Story = {
+  args: {
+    errorMsg: 'Too much tags provided',
+    icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
+    placeholder: 'placeholder',
+    value: []
+  },
+
+  render: args => {
+    const [value, onChange] = useState<string[]>([])
+
+    return (
+      <TagsInput {...args} value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const DisabledWithErrorMessage: Story = {
+  args: {
+    disabled: true,
+    errorMsg: 'Too much tags provided',
+    icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
+    placeholder: 'placeholder',
+    value: []
+  },
+
+  render: args => {
+    const [value, onChange] = useState<string[]>([])
+
+    return (
+      <TagsInput {...args} disabled value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const PlainVariant: Story = {
+  args: {
+    icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
+    placeholder: 'placeholder',
+    value: [],
+    variant: 'plain'
+  },
+
+  render: args => {
+    const [value, onChange] = useState<string[]>([])
+
+    return (
+      <TagsInput {...args} value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const PlainVariantWithErrorMessage: Story = {
+  args: {
+    errorMsg: 'Too much tags provided',
+    icon: 'tabler:tags',
+    label: 'Labels',
+    onChange: () => {},
+    placeholder: 'placeholder',
+    value: [],
+    variant: 'plain'
+  },
+
+  render: args => {
+    const [value, onChange] = useState<string[]>([])
+
+    return (
+      <TagsInput {...args} value={value} onChange={onChange} />
     )
   }
 }

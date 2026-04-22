@@ -1,7 +1,11 @@
-import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+
+import { Button } from '@components/inputs'
+import { Flex, Text } from '@components/primitives'
+
+import * as styles from './SidebarTitle.css'
 
 type SidebarTitleProps = {
   /** Label string or React element to display for the sidebar title. */
@@ -29,38 +33,54 @@ function SidebarTitle({
   const { t } = useTranslation([namespace, 'common.sidebar'])
 
   return (
-    <li
-      className={clsx(
-        'flex-between flex gap-3 pt-2 pr-5 pl-8 transition-all',
-        actionButton !== undefined ? 'pb-2' : 'pb-4'
-      )}
+    <Flex
+      align="center"
+      as="li"
+      className={styles.listItem}
+      justify="between"
+      pb={actionButton !== undefined ? 'sm' : 'md'}
+      pl="xl"
+      pt="sm"
+      style={{ gap: '0.75rem', paddingRight: '1.25rem' }}
     >
-      <h3
-        className={clsx(
-          'text-bg-400 dark:text-bg-600 text-sm font-semibold tracking-widest whitespace-nowrap uppercase',
-          className
-        )}
+      <Text
+        as="h3"
+        className={clsx(styles.title, className)}
+        color={{ base: 'bg-400', dark: 'bg-600' }}
+        size="sm"
+        transform="uppercase"
+        weight="semibold"
+        whiteSpace="nowrap"
       >
         {t([
           `sidebar.${_.camelCase(label)}`,
           `common.sidebar:categories.${_.camelCase(label)}`,
           label
         ])}
-      </h3>
+      </Text>
       {actionButton && 'icon' in actionButton ? (
-        <button
-          className={clsx(
-            'text-bg-400 dark:text-bg-600 flex items-center rounded-md p-2 transition-all',
-            'hover:bg-bg-100 dark:hover:bg-bg-800 dark:hover:text-bg-50'
-          )}
-          onClick={actionButton.onClick}
+        <Text
+          asChild
+          color={{
+            base: 'bg-400',
+            hover: 'bg-800',
+            dark: 'bg-500',
+            darkHover: 'bg-100'
+          }}
         >
-          <Icon className="size-5" icon={actionButton.icon} />
-        </button>
+          <Button
+            icon={actionButton.icon}
+            style={{
+              padding: '0.5em'
+            }}
+            variant="plain"
+            onClick={actionButton.onClick}
+          />
+        </Text>
       ) : (
         actionButton
       )}
-    </li>
+    </Flex>
   )
 }
 

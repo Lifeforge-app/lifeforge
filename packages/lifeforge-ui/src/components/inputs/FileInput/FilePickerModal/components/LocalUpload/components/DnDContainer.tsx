@@ -5,6 +5,9 @@ import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@components/inputs'
+import { Flex, Text } from '@components/primitives'
+
+import * as styles from './DnDContainer.css'
 
 function DnDContainer({
   getRootProps,
@@ -64,13 +67,19 @@ function DnDContainer({
   }
 
   return (
-    <div
+    <Flex
+      align="center"
       className={clsx(
-        'flex-center size-full min-h-96 flex-1 flex-col rounded-lg border-[3px] p-12 transition-all',
-        isDragActive
-          ? 'bg-custom-500/5 border-custom-500!'
-          : 'border-bg-500 border-dashed'
+        styles.dndWrapper,
+        isDragActive ? styles.dndWrapperActive : styles.dndWrapperInactive
       )}
+      direction="column"
+      height="100%"
+      justify="center"
+      p="2xl"
+      rounded="lg"
+      style={{ flex: 1, minHeight: '24rem' }}
+      width="100%"
       {...(getRootProps() as any)}
     >
       <input
@@ -79,28 +88,48 @@ function DnDContainer({
         multiple={false}
         type="file"
       />
-      <Icon className="text-bg-500 size-20 shrink-0" icon="tabler:drag-drop" />
-      <div className="text-bg-500 mt-4 text-center text-2xl font-medium">
+      <Text
+        asChild
+        color="bg-500"
+        style={{ height: '5rem', width: '5rem', flexShrink: 0 }}
+      >
+        <Icon icon="tabler:drag-drop" />
+      </Text>
+      <Text
+        align="center"
+        as="div"
+        color="bg-500"
+        mt="md"
+        size="2xl"
+        weight="medium"
+      >
         {isDragActive ? t('dnd.dropHere') : t('dnd.dragAndDropToUpload')}
-      </div>
-      <div className="text-bg-500 mt-4 text-center text-lg tracking-widest uppercase">
+      </Text>
+      <Text
+        align="center"
+        as="div"
+        color="bg-500"
+        mt="md"
+        size="lg"
+        style={{ letterSpacing: '0.1em', textTransform: 'uppercase' }}
+      >
         {t('dnd.or')}
-      </div>
+      </Text>
       <Button
-        className="mt-4 min-w-1/2 cursor-pointer"
         icon="tabler:clipboard"
         namespace="common.misc"
+        style={{ marginTop: '1rem', minWidth: '50%', cursor: 'pointer' }}
         variant="secondary"
         onClick={pasteFromClipboard}
       >
         dnd.buttons.pasteFromClipboard
       </Button>
-      <p className="text-bg-500 mt-6 text-center text-sm">
+      <Text align="center" as="p" color="bg-500" mt="lg" size="sm">
         {t('fileInputSupportedFormat', {
           format: acceptedMimeTypesFlattened || 'N/A'
         })}
-      </p>
-    </div>
+      </Text>
+    </Flex>
   )
 }
 

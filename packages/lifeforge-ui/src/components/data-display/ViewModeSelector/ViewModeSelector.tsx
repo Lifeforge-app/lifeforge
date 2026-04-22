@@ -41,44 +41,51 @@ function ViewModeSelector<
       rounded="lg"
     >
       {options.map(({ value, icon, text }) => (
-        <Flex
+        <Text
           key={value}
-          align="center"
-          as="button"
-          bg={
+          asChild
+          color={
             value === currentMode
               ? {
-                  base: 'bg-200',
-                  dark: 'bg-800'
+                  base: 'bg-800',
+                  dark: 'bg-100'
                 }
-              : {
-                  hover: 'bg-200',
-                  darkHover: 'bg-900'
-                }
+              : 'muted'
           }
-          className={clsx(value === currentMode && styles.optionActive)}
-          flex="1"
-          gap="sm"
-          px={size === 'small' ? 'sm' : 'md'}
-          py={size === 'small' ? 'xs' : 'sm'}
-          rounded="md"
-          style={{
-            transition: 'all 0.2s'
-          }}
-          onClick={() => {
-            onModeChange(value as TKey)
-          }}
+          size={size === 'small' ? 'sm' : 'base'}
+          weight={value === currentMode ? 'semibold' : 'normal'}
         >
-          {icon && <Icon height="1.5em" icon={icon} width="1.5em" />}
-          {text && (
-            <Text
-              size={size === 'small' ? 'sm' : 'base'}
-              weight={value === currentMode ? 'semibold' : 'normal'}
-            >
-              {text}
-            </Text>
-          )}
-        </Flex>
+          <Flex
+            align="center"
+            as="button"
+            bg={
+              value === currentMode
+                ? {
+                    base: 'bg-200',
+                    dark: 'bg-800'
+                  }
+                : {
+                    hover: 'bg-200',
+                    darkHover: 'bg-900'
+                  }
+            }
+            className={clsx(value === currentMode && styles.optionActive)}
+            flex="1"
+            gap="sm"
+            px={size === 'small' ? 'sm' : 'md'}
+            py={size === 'small' ? 'xs' : 'sm'}
+            rounded="md"
+            style={{
+              transition: 'all 0.2s'
+            }}
+            onClick={() => {
+              onModeChange(value as TKey)
+            }}
+          >
+            {icon && <Icon height="1.5em" icon={icon} width="1.5em" />}
+            {text}
+          </Flex>
+        </Text>
       ))}
     </Flex>
   )

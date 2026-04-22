@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 
-import { EmptyStateScreen } from '@components/feedback'
+import { EmptyStateScreen, LoadingScreen } from '@components/feedback'
 import { SearchInput } from '@components/inputs'
+import { Flex, Text } from '@components/primitives'
 
 import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'
@@ -69,13 +70,29 @@ function IconSet({
       .catch(console.error)
   }, [])
 
-  return iconData ? (
-    <div className="flex size-full min-h-0 flex-1 flex-col">
-      <h1 className="mb-6 flex flex-col items-center gap-1 text-center text-3xl font-semibold tracking-wide sm:inline">
+  if (!iconData) {
+    return <LoadingScreen />
+  }
+
+  return (
+    <>
+      <Text
+        align="center"
+        as="h1"
+        mb="lg"
+        size="3xl"
+        tracking="wide"
+        weight="semibold"
+      >
         {iconData.title}
-      </h1>
+      </Text>
       <SearchInput
-        className="component-bg-lighter-with-hover"
+        bg={{
+          base: 'bg-100',
+          hover: 'bg-200',
+          dark: 'bg-800',
+          darkHover: 'bg-700'
+        }}
         namespace="common.modals"
         searchTarget="iconPicker.icon"
         value={searchTerm}
@@ -86,9 +103,9 @@ function IconSet({
         value={currentTag}
         onChange={setCurrentTag}
       />
-      <div className="flex min-h-0 flex-1 flex-col">
-        {filteredIconList.length ? (
-          <AutoSizer className="mt-6">
+      {filteredIconList.length ? (
+        <Flex direction="column" flex="1" minHeight="0" mt="md">
+          <AutoSizer>
             {({ width, height }: { width: number; height: number }) => {
               const itemsPerRow = Math.floor(width / 160) || 1
 
@@ -112,11 +129,7 @@ function IconSet({
                     const toIndex = fromIndex + itemsPerRow
 
                     return (
-                      <div
-                        key={key}
-                        className="flex w-full gap-3"
-                        style={style}
-                      >
+                      <Flex key={key} gap="sm" style={style} width="100%">
                         {filteredIconList
                           .slice(fromIndex, toIndex)
                           .map(icon => (
@@ -127,7 +140,7 @@ function IconSet({
                               onIconSelected={onIconSelected}
                             />
                           ))}
-                      </div>
+                      </Flex>
                     )
                   }}
                   width={width}
@@ -135,24 +148,20 @@ function IconSet({
               )
             }}
           </AutoSizer>
-        ) : (
-          <div className="flex-center flex-1">
-            <EmptyStateScreen
-              icon="tabler:icons-off"
-              message={{
-                id: 'icon',
-                namespace: 'common.modals',
-                tKey: 'iconPicker'
-              }}
-            />
-          </div>
-        )}
-      </div>
-    </div>
-  ) : (
-    <div className="flex w-full justify-center pb-8">
-      <span className="loader"></span>
-    </div>
+        </Flex>
+      ) : (
+        <Flex align="center" flex="1" height="100%" justify="center">
+          <EmptyStateScreen
+            icon="tabler:icons-off"
+            message={{
+              id: 'icon',
+              namespace: 'common.modals',
+              tKey: 'iconPicker'
+            }}
+          />
+        </Flex>
+      )}
+    </>
   )
 }
 

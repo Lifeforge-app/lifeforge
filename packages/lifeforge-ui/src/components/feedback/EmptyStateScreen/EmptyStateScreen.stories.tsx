@@ -5,13 +5,20 @@ import { Box, Text } from '@components/primitives'
 import EmptyStateScreen from './EmptyStateScreen'
 
 const meta = {
-  component: EmptyStateScreen,
   argTypes: {
     CTAButtonProps: {
       control: false,
       table: {
         type: {
           summary: 'React.ComponentProps<typeof Button>'
+        }
+      }
+    },
+    icon: {
+      control: false,
+      table: {
+        type: {
+          summary: 'string | React.ReactElement'
         }
       }
     },
@@ -23,16 +30,9 @@ const meta = {
             '{ id: string; namespace?: string; tKey?: string } | { title: string; description?: string | React.ReactNode; tKey?: string }'
         }
       }
-    },
-    icon: {
-      control: false,
-      table: {
-        type: {
-          summary: 'string | React.ReactElement'
-        }
-      }
     }
-  }
+  },
+  component: EmptyStateScreen
 } satisfies Meta<typeof EmptyStateScreen>
 
 export default meta
@@ -44,11 +44,11 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
+    icon: 'tabler:clipboard-off',
     message: {
       id: 'tasks',
       namespace: 'apps.todoList'
-    },
-    icon: 'tabler:clipboard-off'
+    }
   },
   render: args => (
     <Box height="24rem" width="100%">
@@ -62,11 +62,11 @@ export const Default: Story = {
  */
 export const CustomContent: Story = {
   args: {
+    icon: 'tabler:search-off',
     message: {
-      title: 'Nothing to see here',
-      description: 'Try adjusting your filters or adding new items.'
-    },
-    icon: 'tabler:search-off'
+      description: 'Try adjusting your filters or adding new items.',
+      title: 'Nothing to see here'
+    }
   },
   render: args => (
     <Box height="24rem" width="100%">
@@ -80,10 +80,10 @@ export const CustomContent: Story = {
  */
 export const WithoutDescription: Story = {
   args: {
+    icon: 'tabler:database-off',
     message: {
       title: 'No Data Available'
-    },
-    icon: 'tabler:database-off'
+    }
   },
   render: args => (
     <Box height="24rem" width="100%">
@@ -97,15 +97,15 @@ export const WithoutDescription: Story = {
  */
 export const WithCTAButton: Story = {
   args: {
-    message: {
-      id: 'projects',
-      namespace: 'apps.projectManager'
-    },
-    icon: 'tabler:folder-off',
     CTAButtonProps: {
       children: 'Create Project',
       icon: 'tabler:plus',
       onClick: () => alert('Create project clicked')
+    },
+    icon: 'tabler:folder-off',
+    message: {
+      id: 'projects',
+      namespace: 'apps.projectManager'
     }
   },
   render: args => (
@@ -120,11 +120,11 @@ export const WithCTAButton: Story = {
  */
 export const Smaller: Story = {
   args: {
-    message: {
-      title: 'No Notifications',
-      description: 'You are all caught up!'
-    },
     icon: 'tabler:bell-off',
+    message: {
+      description: 'You are all caught up!',
+      title: 'No Notifications'
+    },
     smaller: true
   },
   render: args => (
@@ -139,11 +139,11 @@ export const Smaller: Story = {
  */
 export const CustomIcon: Story = {
   args: {
+    icon: <Text size="6xl">🎉</Text>,
     message: {
-      title: 'Congratulations!',
-      description: 'You have completed all your tasks for today.'
-    },
-    icon: <Text size="6xl">🎉</Text>
+      description: 'You have completed all your tasks for today.',
+      title: 'Congratulations!'
+    }
   },
   render: args => (
     <Box height="24rem" width="100%">

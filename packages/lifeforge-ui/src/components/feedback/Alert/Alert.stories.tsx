@@ -5,12 +5,12 @@ import { Box } from '@components/primitives'
 import Alert from './Alert'
 
 const meta = {
-  component: Alert,
   argTypes: {
     children: {
       control: false
     }
-  }
+  },
+  component: Alert
 } satisfies Meta<typeof Alert>
 
 export default meta
@@ -19,9 +19,9 @@ type Story = StoryObj<typeof meta>
 
 export const Note: Story = {
   args: {
-    type: 'note',
     children:
-      'Useful information that users should be aware of, even when skimming content.'
+      'Useful information that users should be aware of, even when skimming content.',
+    type: 'note'
   },
   render: args => (
     <Box p="xl" width="600px">
@@ -32,9 +32,9 @@ export const Note: Story = {
 
 export const Warning: Story = {
   args: {
-    type: 'warning',
     children:
-      'Urgent info that needs immediate user attention to avoid problems.'
+      'Urgent info that needs immediate user attention to avoid problems.',
+    type: 'warning'
   },
   render: args => (
     <Box p="xl" width="600px">
@@ -45,8 +45,8 @@ export const Warning: Story = {
 
 export const Tip: Story = {
   args: {
-    type: 'tip',
-    children: 'Helpful advices for doing things better or more easily.'
+    children: 'Helpful advices for doing things better or more easily.',
+    type: 'tip'
   },
   render: args => (
     <Box p="xl" width="600px">
@@ -57,8 +57,8 @@ export const Tip: Story = {
 
 export const Caution: Story = {
   args: {
-    type: 'caution',
-    children: 'Advise about risks or negative outcomes of certain actions.'
+    children: 'Advise about risks or negative outcomes of certain actions.',
+    type: 'caution'
   },
   render: args => (
     <Box p="xl" width="600px">
@@ -69,8 +69,8 @@ export const Caution: Story = {
 
 export const Important: Story = {
   args: {
-    type: 'important',
-    children: 'Key information that users need to know to achieve their goal.'
+    children: 'Key information that users need to know to achieve their goal.',
+    type: 'important'
   },
   render: args => (
     <Box p="xl" width="600px">

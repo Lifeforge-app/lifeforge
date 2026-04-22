@@ -134,8 +134,8 @@ export const Default: Story = {
           icon="tabler:modal"
           onClick={() =>
             open(SimpleModal, {
-              title: 'Hello from ModalManager',
-              body: 'This modal is managed by the ModalManager component sitting in the same render tree.'
+              body: 'This modal is managed by the ModalManager component sitting in the same render tree.',
+              title: 'Hello from ModalManager'
             })
           }
         >
@@ -162,8 +162,8 @@ export const MultipleInstances: Story = {
             icon="tabler:modal"
             onClick={() =>
               open(SimpleModal, {
-                title: 'First Modal',
-                body: 'This was opened first.'
+                body: 'This was opened first.',
+                title: 'First Modal'
               })
             }
           >
@@ -174,8 +174,8 @@ export const MultipleInstances: Story = {
             variant="secondary"
             onClick={() =>
               open(SimpleModal, {
-                title: 'Second Modal',
-                body: 'This was opened second — it sits on top of the first.'
+                body: 'This was opened second — it sits on top of the first.',
+                title: 'Second Modal'
               })
             }
           >

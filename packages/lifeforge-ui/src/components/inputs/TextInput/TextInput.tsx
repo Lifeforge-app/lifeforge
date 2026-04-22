@@ -8,11 +8,10 @@ import InputIcon from '../shared/components/InputIcon'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import TextInputBox from './components/TextInputBox'
 
 export type TextInputProps = {
-  variant?: 'classic' | 'plain'
-  size?: 'small' | 'default'
   label?: string
   icon?: string
   placeholder: string
@@ -35,7 +34,8 @@ export type TextInputProps = {
   className?: string
   namespace?: string
   errorMsg?: string
-} & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'>
+} & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> &
+  InputVariants<true>
 
 function TextInput({
   variant = 'classic',
@@ -129,7 +129,7 @@ function TextInput({
             {...actionButtonProps}
             loading={actionButtonLoading}
             variant="plain"
-            onClick={e => {
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
               e.preventDefault()
               e.stopPropagation()
 

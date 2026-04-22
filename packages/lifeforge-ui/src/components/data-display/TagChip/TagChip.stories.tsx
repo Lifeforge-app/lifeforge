@@ -6,18 +6,18 @@ import { Flex } from '@components/primitives'
 import TagChip from './TagChip'
 
 const meta = {
-  component: TagChip,
   argTypes: {
     actionButtonProps: {
       control: false
     },
     variant: {
       control: {
-        type: 'select',
-        options: ['outlined', 'filled']
+        options: ['outlined', 'filled'],
+        type: 'select'
       }
     }
-  }
+  },
+  component: TagChip
 } satisfies Meta<typeof TagChip>
 
 export default meta
@@ -32,8 +32,8 @@ export const Default: Story = {
     label: 'JavaScript'
   },
   render: args => (
-    <Flex align="center" gap="sm" height="full" justify="center" width="full">
-      <TagChip {...args} />
+    <Flex align="center" gap="sm" height="full" justify="center" width="100%">
+      <TagChip {...args} variant="outlined" />
       <TagChip {...args} variant="filled" />
     </Flex>
   )
@@ -44,11 +44,11 @@ export const Default: Story = {
  */
 export const WithIcon: Story = {
   args: {
-    label: 'React',
-    icon: 'tabler:brand-react'
+    icon: 'tabler:brand-react',
+    label: 'React'
   },
   render: args => (
-    <Flex align="center" gap="sm" height="full" justify="center" width="full">
+    <Flex align="center" gap="sm" height="full" justify="center" width="100%">
       <TagChip {...args} />
       <TagChip {...args} variant="filled" />
     </Flex>
@@ -60,12 +60,12 @@ export const WithIcon: Story = {
  */
 export const WithColor: Story = {
   args: {
-    label: 'TypeScript',
+    color: 'oklch(0.55 0.18 248)',
     icon: 'tabler:brand-typescript',
-    color: 'oklch(0.55 0.18 248)'
+    label: 'TypeScript'
   },
   render: args => (
-    <Flex align="center" gap="sm" height="full" justify="center" width="full">
+    <Flex align="center" gap="sm" height="full" justify="center" width="100%">
       <TagChip {...args} />
       <TagChip {...args} variant="filled" />
     </Flex>
@@ -77,16 +77,16 @@ export const WithColor: Story = {
  */
 export const WithActionButton: Story = {
   args: {
-    label: 'Vue.js',
-    icon: 'tabler:brand-vue',
-    color: 'oklch(0.65 0.16 150)',
     actionButtonProps: {
       icon: 'tabler:x',
       onClick: () => alert('Tag removed')
-    }
+    },
+    color: 'oklch(0.65 0.16 150)',
+    icon: 'tabler:brand-vue',
+    label: 'Vue.js'
   },
   render: args => (
-    <Flex align="center" gap="sm" height="full" justify="center" width="full">
+    <Flex align="center" gap="sm" height="full" justify="center" width="100%">
       <TagChip {...args} />
       <TagChip {...args} variant="filled" />
     </Flex>
@@ -107,7 +107,7 @@ export const MultipleTags: Story = {
       gap="sm"
       height="full"
       justify="center"
-      width="full"
+      width="100%"
     >
       <Flex align="center" gap="sm">
         <TagChip icon="tabler:brand-react" label="React" />
@@ -154,12 +154,12 @@ export const MultipleTags: Story = {
 
 export const ClickableTag: Story = {
   args: {
-    label: 'Clickable Tag',
+    color: 'oklch(0.6 0.2 220)',
     icon: 'tabler:tag',
-    color: 'oklch(0.6 0.2 220)'
+    label: 'Clickable Tag'
   },
   render: args => (
-    <Flex align="center" height="full" justify="center" width="full">
+    <Flex align="center" height="full" justify="center" width="100%">
       <TagChip
         {...args}
         onClick={() => {
@@ -193,7 +193,7 @@ export const SelectableTags: Story = {
     }
 
     return (
-      <Flex align="center" gap="sm" height="full" justify="center" width="full">
+      <Flex align="center" gap="sm" height="full" justify="center" width="100%">
         {tags.map(tag => (
           <TagChip
             key={tag}

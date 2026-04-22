@@ -6,16 +6,7 @@ import { Box, Flex, Grid, Text } from '@components/primitives'
 import Card from '../Card'
 
 const meta = {
-  component: Card,
   argTypes: {
-    children: {
-      control: false,
-      table: {
-        type: {
-          summary: 'React.ReactNode'
-        }
-      }
-    },
     as: {
       control: false,
       table: {
@@ -23,8 +14,17 @@ const meta = {
           summary: 'React.ElementType'
         }
       }
+    },
+    children: {
+      control: false,
+      table: {
+        type: {
+          summary: 'React.ReactNode'
+        }
+      }
     }
-  }
+  },
+  component: Card
 } satisfies Meta<typeof Card>
 
 export default meta
@@ -44,8 +44,8 @@ export const Default: Story = {
 
 export const Interactive: Story = {
   args: {
-    isInteractive: true,
-    children: <Box p="md">Click or hover me!</Box>
+    children: <Box p="md">Click or hover me!</Box>,
+    isInteractive: true
   },
   render: args => (
     <Box p="xl" width="24rem">
@@ -56,8 +56,8 @@ export const Interactive: Story = {
 
 export const AsButton: Story = {
   args: {
-    isInteractive: true,
     children: <Box p="md">I&apos;m a button card</Box>,
+    isInteractive: true,
     onClick: () => alert('Button clicked!')
   },
   render: args => (
@@ -73,7 +73,6 @@ export const AsButton: Story = {
 
 export const AsLink: Story = {
   args: {
-    isInteractive: true,
     children: (
       <a
         href="https://docs.lifeforge.dev"
@@ -83,6 +82,7 @@ export const AsLink: Story = {
         I&apos;m a link card
       </a>
     ),
+    isInteractive: true,
     rel: 'noopener noreferrer'
   },
   render: args => (
@@ -125,7 +125,7 @@ export const WithTitle: Story = {
           <Text as="h2" mb="sm" size="xl" weight="semibold">
             Card Title
           </Text>
-          <Text as="p" color="bg-500">
+          <Text as="p" color="muted">
             This is an example of an card styled as a card with shadow.
           </Text>
         </Box>
@@ -155,7 +155,7 @@ export const WithImage: Story = {
           <Text as="h2" mb="sm" size="xl" weight="semibold">
             Card with Image
           </Text>
-          <Text as="p" color="bg-500">
+          <Text as="p" color="muted">
             This card includes an image at the top to enhance visual appeal.
           </Text>
         </Box>
@@ -185,7 +185,7 @@ export const WithImageAndButton: Story = {
           <Text as="h2" mb="sm" size="xl" weight="semibold">
             Card with Image &amp; Button
           </Text>
-          <Text as="p" color="bg-500" mb="md">
+          <Text as="p" color="muted" mb="md">
             This card includes an image and a call-to-action button.
           </Text>
           <Button

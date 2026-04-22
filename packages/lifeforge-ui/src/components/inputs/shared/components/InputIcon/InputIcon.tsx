@@ -1,32 +1,21 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { memo } from 'react'
 
-import { Box } from '@components/primitives'
+import { Box, Text } from '@components/primitives'
 
-import {
-  inputIconErrorStyle,
-  inputIconFocusedStyle,
-  inputIconInactiveStyle,
-  inputIconPlainVariantStyle
-} from './InputIcon.css'
+import { useInputFocused } from '../../contexts/InputFocusContext'
 
 function InputIcon({
   icon,
   active,
-  isFocused = false,
-  className,
-  hasError = false,
-  variant = 'classic'
+  hasError = false
 }: {
   icon: string
   active: boolean
-  isFocused?: boolean
-  className?: string
-  isListbox?: boolean
   hasError?: boolean
-  variant?: 'classic' | 'plain'
 }) {
+  const focused = useInputFocused()
+
   return (
     <Box
       asChild
@@ -37,18 +26,20 @@ function InputIcon({
         pointerEvents: 'none'
       }}
     >
-      <Icon
-        className={clsx(
-          !active && inputIconInactiveStyle,
-          variant === 'plain' && inputIconPlainVariantStyle,
-          isFocused && !hasError && inputIconFocusedStyle,
-          hasError && inputIconErrorStyle,
-          className
-        )}
-        height="1.5em"
-        icon={icon}
-        width="1.5em"
-      />
+      <Text
+        asChild
+        color={
+          hasError
+            ? 'dangerous'
+            : focused
+              ? 'custom-500'
+              : !active
+                ? 'bg-500'
+                : undefined
+        }
+      >
+        <Icon height="1.5em" icon={icon} width="1.5em" />
+      </Text>
     </Box>
   )
 }

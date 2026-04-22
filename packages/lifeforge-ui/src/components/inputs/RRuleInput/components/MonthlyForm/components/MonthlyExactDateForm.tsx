@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
+import { Box } from '@components/primitives'
 import { NumberInput } from '@components/inputs'
 import type { FreqSpecificParams } from '@components/inputs/RRuleInput/RRuleInput'
 
@@ -13,16 +14,15 @@ function MonthlyExactDateForm({
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
 
   return (
-    <>
+    <Box flex="1">
       <NumberInput
         required
-        className="flex-1"
         icon="tabler:calendar"
         label={t('inputs.monthly.exactDate.inputs.date')}
         value={data.onDate}
         onChange={date => setData({ ...data, onDate: date })}
       />
-    </>
+    </Box>
   )
 }
 

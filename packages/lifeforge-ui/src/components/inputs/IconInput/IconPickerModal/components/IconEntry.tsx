@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
 import { memo, useCallback } from 'react'
 
+import { Flex, Text, Transition } from '@components/primitives'
+
 function IconEntry({
   icon,
   iconSet,
@@ -15,16 +17,32 @@ function IconEntry({
   }, [icon, iconSet, onIconSelected])
 
   return (
-    <button
-      className="hover:bg-bg-200/70 dark:hover:bg-bg-800 flex h-min w-full cursor-pointer flex-col items-center rounded-lg p-4 transition-all"
-      type="button"
-      onClick={handleIconSelected}
-    >
-      <Icon height="32" icon={`${iconSet}:${icon}`} width="32" />
-      <p className="mt-4 -mb-0.5 text-center text-xs font-medium tracking-wide break-all">
-        {icon.replace(/-/g, ' ')}
-      </p>
-    </button>
+    <Transition>
+      <Flex
+        align="center"
+        as="button"
+        bg={{ base: 'transparent', hover: 'bg-200', darkHover: 'bg-800' }}
+        direction="column"
+        p="md"
+        rounded="lg"
+        style={{ cursor: 'pointer' }}
+        width="100%"
+        onClick={handleIconSelected}
+      >
+        <Icon height="32" icon={`${iconSet}:${icon}`} width="32" />
+        <Text
+          align="center"
+          mt="md"
+          size="sm"
+          style={{ marginBottom: '-0.125rem' }}
+          tracking="wide"
+          weight="medium"
+          wordBreak="break-all"
+        >
+          {icon.replace(/-/g, ' ')}
+        </Text>
+      </Flex>
+    </Transition>
   )
 }
 

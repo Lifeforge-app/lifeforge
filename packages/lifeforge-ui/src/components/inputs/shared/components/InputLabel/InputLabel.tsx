@@ -2,24 +2,17 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { type CSSProperties, memo } from 'react'
 
-import { Flex, Text } from '@components/primitives'
+import { Flex, Text, Transition } from '@components/primitives'
 
+import { useInputFocused } from '../../contexts/InputFocusContext'
 import {
   inputLabelActiveStyle,
-  inputLabelBaseStyle,
-  inputLabelErrorStyle,
-  inputLabelFocusedStyle,
-  inputLabelInactiveStyle,
-  inputLabelNormalStyle,
-  inputLabelRequiredStyle
+  inputLabelInactiveStyle
 } from './InputLabel.css'
 
 interface InputLabelProps {
   label: string
   active: boolean
-  focused?: boolean
-  isCombobox?: boolean
-  isListboxOrCombobox?: boolean
   required?: boolean
   hasError?: boolean
   className?: string
@@ -29,45 +22,53 @@ interface InputLabelProps {
 function InputLabel({
   label,
   active,
-  focused = false,
   required = false,
   hasError = false,
   className,
   style
 }: InputLabelProps) {
+  const focused = useInputFocused()
+
   return (
-    <Flex
-      align="center"
-      className={clsx(
-        inputLabelBaseStyle,
-        active ? inputLabelActiveStyle : inputLabelInactiveStyle,
-        hasError
-          ? inputLabelErrorStyle
-          : focused
-            ? inputLabelFocusedStyle
-            : inputLabelNormalStyle,
-        className
-      )}
-      gap="xs"
-      style={style}
-    >
-      <Text>{label}</Text>
-      {required && (
+    <Transition duration="100ms">
+      <Flex
+        align="center"
+        className={clsx(
+          active || focused ? inputLabelActiveStyle : inputLabelInactiveStyle,
+          className
+        )}
+        gap="xs"
+        left="0"
+        minWidth="0"
+        position="absolute"
+        style={{
+          pointerEvents: 'none',
+          transform: 'translateY(-50%)',
+          ...style
+        }}
+        width="100%"
+      >
         <Text
-          className={inputLabelRequiredStyle}
-          color="dangerous"
-          display="block"
+          truncate
+          align="left"
+          color={hasError ? 'dangerous' : focused ? 'custom-500' : 'bg-500'}
+          weight="medium"
         >
-          <Icon
-            icon="tabler:asterisk"
-            style={{
-              width: '0.625em',
-              height: '0.625em'
-            }}
-          />
+          {label}
         </Text>
-      )}
-    </Flex>
+        {required && (
+          <Text color="dangerous" display="block">
+            <Icon
+              icon="uil:asterisk"
+              style={{
+                width: '0.75em',
+                height: '0.75em'
+              }}
+            />
+          </Text>
+        )}
+      </Flex>
+    </Transition>
   )
 }
 

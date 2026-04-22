@@ -9,12 +9,12 @@ import Index from './index'
 import ContextMenu from './index'
 
 const meta = {
-  component: Index,
   argTypes: {
     children: {
       control: false
     }
-  }
+  },
+  component: Index
 } satisfies Meta<typeof Index>
 
 export default meta
@@ -49,8 +49,8 @@ export const Default: Story = {
                 icon="tabler:cube"
                 style={{
                   color: 'var(--color-custom-500)',
-                  width: '1.5rem',
-                  height: '1.5rem'
+                  height: '1.5rem',
+                  width: '1.5rem'
                 }}
               />
             </Box>
@@ -72,7 +72,7 @@ export const Default: Story = {
             />
           </ContextMenu>
         </Flex>
-        <Text as="p" color="bg-500" mt="md">
+        <Text as="p" color="muted" mt="md">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </Text>
       </Box>
@@ -106,7 +106,6 @@ export const WithGroup: Story = {
 
 export const CustomAnchor: Story = {
   args: {
-    side: 'right',
     align: 'end',
     children: (
       <>
@@ -118,13 +117,13 @@ export const CustomAnchor: Story = {
           onClick={() => {}}
         />
       </>
-    )
+    ),
+    side: 'right'
   }
 }
 
 export const CustomIcon: Story = {
   args: {
-    customIcon: 'tabler:upload',
     children: (
       <>
         <ContextMenuItem
@@ -143,6 +142,7 @@ export const CustomIcon: Story = {
           onClick={() => {}}
         />
       </>
-    )
+    ),
+    customIcon: 'tabler:upload'
   }
 }

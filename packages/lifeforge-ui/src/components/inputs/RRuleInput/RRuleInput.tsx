@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { Box, Flex, Text } from '@components/primitives'
+
 import DateInput from '../DateInput'
 import ListboxInput from '../ListboxInput'
 import ListboxOption from '../ListboxInput/components/ListboxOption'
@@ -211,158 +213,174 @@ function RRuleInput<HasDuration extends boolean = boolean>({
   }, [start, rruleParams, duration])
 
   return (
-    <div className="space-y-3">
-      <DateInput
-        hasTime
-        required
-        className="mt-4"
-        icon="tabler:clock"
-        label="Start Time"
-        namespace="apps.calendar"
-        value={start}
-        onChange={setStart}
-      />
-      <ListboxInput
-        required
-        buttonContent={<>{t(`recurring.freqs.${rruleParams.freq}`)}</>}
-        className="mt-4"
-        icon="tabler:repeat"
-        label="frequency"
-        namespace="apps.calendar"
-        value={rruleParams.freq}
-        onChange={freq => {
-          setRRuleParams(createRRuleParams(freq, rruleParams.end))
-
-          if (freq === 'hourly') {
-            setDuration({
-              amount: 1,
-              unit: 'hour'
-            })
-          }
-        }}
-      >
-        {['hourly', 'daily', 'weekly', 'monthly', 'yearly'].map(freq => (
-          <ListboxOption
-            key={freq}
-            label={t(`recurring.freqs.${freq}`)}
-            value={freq}
-          />
-        ))}
-      </ListboxInput>
-      <div className="space-y-3">{forms[rruleParams.freq]}</div>
-      <div className="flex w-full flex-wrap items-center gap-2">
+    <Flex direction="column" gap="md" width="100%">
+      <Box mt="md">
+        <DateInput
+          hasTime
+          required
+          icon="tabler:clock"
+          label="Start Time"
+          namespace="apps.calendar"
+          value={start}
+          onChange={setStart}
+        />
+      </Box>
+      <Box mt="md">
         <ListboxInput
           required
-          buttonContent={<>{t(`recurring.endTypes.${rruleParams.end.type}`)}</>}
-          className="flex-1"
-          icon="tabler:calendar"
-          label="endType"
+          buttonContent={<>{t(`recurring.freqs.${rruleParams.freq}`)}</>}
+          icon="tabler:repeat"
+          label="frequency"
           namespace="apps.calendar"
-          value={rruleParams.end.type}
-          onChange={type => {
-            setRRuleParams({
-              ...rruleParams,
-              end: {
-                ...rruleParams.end,
-                type
-              }
-            })
+          value={rruleParams.freq}
+          onChange={freq => {
+            setRRuleParams(createRRuleParams(freq, rruleParams.end))
+
+            if (freq === 'hourly') {
+              setDuration({
+                amount: 1,
+                unit: 'hour'
+              })
+            }
           }}
         >
-          {['never', 'after', 'on'].map(type => (
+          {['hourly', 'daily', 'weekly', 'monthly', 'yearly'].map(freq => (
             <ListboxOption
-              key={type}
-              label={t(`recurring.endTypes.${type}`)}
-              value={type}
+              key={freq}
+              label={t(`recurring.freqs.${freq}`)}
+              value={freq}
             />
           ))}
         </ListboxInput>
+      </Box>
+      <Flex direction="column" gap="md" width="100%">
+        {forms[rruleParams.freq]}
+      </Flex>
+      <Flex align="center" gap="sm" width="100%" wrap="wrap">
+        <Box flex="1">
+          <ListboxInput
+            required
+            buttonContent={
+              <>{t(`recurring.endTypes.${rruleParams.end.type}`)}</>
+            }
+            icon="tabler:calendar"
+            label="endType"
+            namespace="apps.calendar"
+            value={rruleParams.end.type}
+            onChange={type => {
+              setRRuleParams({
+                ...rruleParams,
+                end: {
+                  ...rruleParams.end,
+                  type
+                }
+              })
+            }}
+          >
+            {['never', 'after', 'on'].map(type => (
+              <ListboxOption
+                key={type}
+                label={t(`recurring.endTypes.${type}`)}
+                value={type}
+              />
+            ))}
+          </ListboxInput>
+        </Box>
         {rruleParams.end.type !== 'never' && (
-          <div className="flex flex-1 items-center gap-3">
+          <Flex align="center" flex="1" gap="md">
             {rruleParams.end.type === 'after' && (
               <>
-                <NumberInput
+                <Box flex="1">
+                  <NumberInput
+                    required
+                    icon="tabler:repeat"
+                    label={t('recurring.inputs.after')}
+                    value={rruleParams.end.after}
+                    onChange={value => {
+                      setRRuleParams({
+                        ...rruleParams,
+                        end: {
+                          ...rruleParams.end,
+                          after: value
+                        }
+                      })
+                    }}
+                  />
+                </Box>
+                <Text color="muted">{t('recurring.inputs.executions')}</Text>
+              </>
+            )}
+            {rruleParams.end.type === 'on' && (
+              <Box flex="1">
+                <DateInput
                   required
-                  className="flex-1"
-                  icon="tabler:repeat"
-                  label={t('recurring.inputs.after')}
-                  value={rruleParams.end.after}
-                  onChange={value => {
+                  icon="tabler:calendar"
+                  label={t('recurring.inputs.on')}
+                  value={rruleParams.end.on}
+                  onChange={date => {
                     setRRuleParams({
                       ...rruleParams,
                       end: {
                         ...rruleParams.end,
-                        after: value
+                        on: date
                       }
                     })
                   }}
                 />
-                <p className="text-bg-500">
-                  {t('recurring.inputs.executions')}
-                </p>
-              </>
+              </Box>
             )}
-            {rruleParams.end.type === 'on' && (
-              <DateInput
-                required
-                className="flex-1"
-                icon="tabler:calendar"
-                label={t('recurring.inputs.on')}
-                value={rruleParams.end.on}
-                onChange={date => {
-                  setRRuleParams({
-                    ...rruleParams,
-                    end: {
-                      ...rruleParams.end,
-                      on: date
-                    }
-                  })
-                }}
-              />
-            )}
-          </div>
+          </Flex>
         )}
-      </div>
+      </Flex>
       {hasDuration && (
-        <div className="flex flex-col flex-wrap items-center gap-2 sm:flex-row">
-          <NumberInput
-            required
-            className="w-full min-w-48 flex-1"
-            icon="tabler:clock"
-            label={t('recurring.inputs.durationAmount')}
-            value={duration.amount}
-            onChange={amt => {
-              setDuration({
-                ...duration,
-                amount: amt
-              })
-            }}
-          />
-          <ListboxInput
-            required
-            buttonContent={<>{t(`recurring.durationUnits.${duration.unit}`)}</>}
-            className="w-full min-w-48 flex-1"
-            icon="tabler:clock"
-            label={t('recurring.inputs.durationUnit')}
-            value={duration.unit}
-            onChange={unit => {
-              setDuration({
-                ...duration,
-                unit
-              })
-            }}
-          >
-            {['minute', 'hour', 'day', 'week', 'month', 'year'].map(unit => (
-              <ListboxOption
-                key={unit}
-                label={t(`recurring.durationUnits.${unit}`)}
-                value={unit}
-              />
-            ))}
-          </ListboxInput>
-        </div>
+        <Flex
+          direction={{ base: 'column', sm: 'row' }}
+          gap="sm"
+          width="100%"
+          wrap="wrap"
+        >
+          <Box flex="1" minWidth="12rem">
+            <NumberInput
+              required
+              icon="tabler:clock"
+              label={t('recurring.inputs.durationAmount')}
+              value={duration.amount}
+              onChange={amt => {
+                setDuration({
+                  ...duration,
+                  amount: amt
+                })
+              }}
+            />
+          </Box>
+          <Box flex="1" minWidth="12rem">
+            <ListboxInput
+              required
+              buttonContent={
+                <>{t(`recurring.durationUnits.${duration.unit}`)}</>
+              }
+              icon="tabler:clock"
+              label={t('recurring.inputs.durationUnit')}
+              value={duration.unit}
+              onChange={unit => {
+                setDuration({
+                  ...duration,
+                  unit
+                })
+              }}
+            >
+              {['minute', 'hour', 'day', 'week', 'month', 'year'].map(unit => (
+                <ListboxOption
+                  key={unit}
+                  label={t(`recurring.durationUnits.${unit}`)}
+                  value={unit}
+                />
+              ))}
+            </ListboxInput>
+          </Box>
+        </Flex>
       )}
-    </div>
+    </Flex>
   )
 }
 

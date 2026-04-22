@@ -63,9 +63,9 @@ export const Default: Story = {
 
 export const WithDescription: Story = {
   args: {
+    description: 'Cool Widget Description',
     icon: 'tabler:cube',
-    title: 'Cool Widget',
-    description: 'Cool Widget Description'
+    title: 'Cool Widget'
   },
   render: args => (
     <Grid
@@ -140,11 +140,11 @@ export const WithIconColor: Story = {
 
 export const WithActionComponent: Story = {
   args: {
-    icon: 'tabler:cube',
-    title: 'A Cool Widget',
     actionComponent: (
       <Button className="p-2!" icon="tabler:plus" variant="plain" />
-    )
+    ),
+    icon: 'tabler:cube',
+    title: 'A Cool Widget'
   },
   render: args => (
     <Grid
@@ -181,8 +181,8 @@ export const WithActionComponent: Story = {
         <Widget
           actionComponent={
             <Listbox
-              buttonContent={<>Last 7 Days</>}
               className="component-bg-lighter max-w-56"
+              renderContent={() => <>Last 7 Days</>}
               value="last_7_days"
               onChange={() => {}}
             >

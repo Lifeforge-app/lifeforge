@@ -8,27 +8,27 @@ import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { Box as BoxComponent } from './index'
 
 const meta = {
-  component: BoxComponent,
   argTypes: {
-    children: { control: false },
     bg: { control: false },
+    children: { control: false },
     display: {
       control: { type: 'select' },
       options: ['block', 'inline', 'inline-block', 'none', 'contents']
     },
-    rounded: {
+    overflow: {
       control: { type: 'select' },
-      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
+      options: ['visible', 'hidden', 'scroll', 'auto']
     },
     position: {
       control: { type: 'select' },
       options: ['static', 'relative', 'absolute', 'fixed', 'sticky']
     },
-    overflow: {
+    rounded: {
       control: { type: 'select' },
-      options: ['visible', 'hidden', 'scroll', 'auto']
+      options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
     }
-  }
+  },
+  component: BoxComponent
 } satisfies Meta<typeof BoxComponent>
 
 export default meta
@@ -38,9 +38,9 @@ type Story = StoryObj<typeof meta>
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function PlaceholderContent({
-  label,
+  asCode,
   children,
-  asCode
+  label
 }: {
   label?: string
   children?: React.ReactNode
@@ -136,8 +136,8 @@ export const BackgroundColor: Story = {
         bg={{
           base: 'bg-50',
           dark: 'bg-800',
-          hover: 'bg-200',
-          darkHover: 'bg-700'
+          darkHover: 'bg-700',
+          hover: 'bg-200'
         }}
         p="md"
         rounded="lg"
@@ -265,7 +265,7 @@ export const Sizing: Story = {
         bg={{ base: 'bg-50', dark: 'bg-800' }}
         p="md"
         rounded="md"
-        width={{ base: '100%', sm: '75%', md: '50%' }}
+        width={{ base: '100%', md: '50%', sm: '75%' }}
       >
         <PlaceholderContent
           asCode
@@ -411,8 +411,8 @@ export const GridChildSpanning: Story = {
       p="3xl"
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
         gap: '1rem',
+        gridTemplateColumns: 'repeat(3, 1fr)',
         width: '100%'
       }}
     >

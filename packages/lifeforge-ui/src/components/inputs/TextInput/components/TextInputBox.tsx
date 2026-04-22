@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import Placeholder from '@components/inputs/shared/components/Placeholder'
 import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
 
+import type { InputSize, InputVariant } from '../../shared/types'
 import { textInputBoxRecipe } from './TextInputBox.css'
 
 function TextInputBox({
@@ -39,8 +40,8 @@ function TextInputBox({
   autoFocus?: boolean
   disabled?: boolean
   className?: string
-  variant?: 'classic' | 'plain'
-  size?: 'small' | 'default'
+  variant?: InputVariant
+  size?: InputSize
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>) {
   const inputClassName = textInputBoxRecipe({
     variant,

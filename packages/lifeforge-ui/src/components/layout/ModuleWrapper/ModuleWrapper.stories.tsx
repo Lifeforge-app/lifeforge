@@ -6,10 +6,10 @@ import { Box, Flex, Grid, Text } from '@components/primitives'
 import ModuleWrapper from './index'
 
 const meta = {
-  component: ModuleWrapper,
   argTypes: {
     children: { control: false }
-  }
+  },
+  component: ModuleWrapper
 } satisfies Meta<typeof ModuleWrapper>
 
 export default meta
@@ -31,7 +31,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
   )
 }
 
-function ContentCard({ title, body }: { title: string; body: string }) {
+function ContentCard({ body, title }: { title: string; body: string }) {
   return (
     <Box shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" rounded="lg">
       <Text as="h3" mb="xs" size="lg" weight="semibold">
@@ -55,9 +55,9 @@ export const Default: Story = {
   args: {
     children: <></>,
     config: {
-      title: 'Demo Module',
+      clearQueryOnUnmount: false,
       icon: 'tabler:cube',
-      clearQueryOnUnmount: false
+      title: 'Demo Module'
     }
   },
   render: args => (

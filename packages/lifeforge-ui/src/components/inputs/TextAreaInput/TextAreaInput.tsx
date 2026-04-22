@@ -9,11 +9,10 @@ import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 
-export interface TextAreaInputProps {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
+export type TextAreaInputProps = {
   /** The label text displayed above the textarea field. Required for 'classic' style. */
   label?: string
   /** The icon to display next to the label. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -36,7 +35,7 @@ export interface TextAreaInputProps {
   namespace?: string
   /** Error message to display when the input is invalid. */
   errorMsg?: string
-}
+} & InputVariants
 
 function TextAreaInput({
   variant = 'classic',

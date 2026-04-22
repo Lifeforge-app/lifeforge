@@ -5,6 +5,7 @@ import { usePromiseLoading } from 'shared'
 import { Button } from '@components/inputs'
 import { Tabs } from '@components/navigation'
 import { ModalHeader } from '@components/overlays'
+import { Box, Flex } from '@components/primitives'
 
 import AIImageGenerator from './components/AIImageGenerator'
 import ImageURL from './components/ImageURL'
@@ -54,7 +55,7 @@ function FilePickerModal({
   }, [])
 
   return (
-    <div className="min-w-[70vw]">
+    <Box minWidth="70vw">
       <ModalHeader
         icon="tabler:photo"
         title="imagePicker.title"
@@ -98,7 +99,13 @@ function FilePickerModal({
           }}
         />
       )}
-      <div className="my-6 flex h-full min-h-0 w-full flex-1 flex-col">
+      <Flex
+        direction="column"
+        height="100%"
+        my="lg"
+        style={{ minHeight: 0 }}
+        width="100%"
+      >
         {(() => {
           switch (mode) {
             case 'local':
@@ -138,17 +145,17 @@ function FilePickerModal({
               )
           }
         })()}
-      </div>
+      </Flex>
       <Button
-        className="mt-4 w-full"
         disabled={file === null}
         icon="tabler:check"
         loading={loading}
+        style={{ marginTop: '1rem', width: '100%' }}
         onClick={onClick}
       >
         select
       </Button>
-    </div>
+    </Box>
   )
 }
 

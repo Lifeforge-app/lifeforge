@@ -13,16 +13,16 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    acceptedMimeTypes: {
+      application: ['pdf'],
+      image: ['jpeg', 'png']
+    },
+    file: null,
     icon: 'tabler:file',
     label: 'Upload Image',
-    file: null,
-    preview: null,
-    setData: () => {},
     namespace: 'namespace',
-    acceptedMimeTypes: {
-      image: ['jpeg'],
-      application: ['pdf']
-    }
+    preview: null,
+    setData: () => {}
   },
   render: args => {
     const [image, setImage] = useState<string | File | null>(null)
@@ -30,18 +30,50 @@ export const Default: Story = {
     const [preview, setPreview] = useState<string | null>(null)
 
     return (
-      <div className="flex h-screen w-screen items-center justify-center px-32">
-        <Index
-          {...args}
-          enablePixabay
-          file={image}
-          preview={preview}
-          setData={({ file, preview }) => {
-            setImage(file)
-            setPreview(preview)
-          }}
-        />
-      </div>
+      <Index
+        {...args}
+        enablePixabay
+        file={image}
+        preview={preview}
+        setData={({ file, preview }) => {
+          setImage(file)
+          setPreview(preview)
+        }}
+      />
+    )
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    acceptedMimeTypes: {
+      application: ['pdf'],
+      image: ['jpeg', 'png']
+    },
+    file: null,
+    icon: 'tabler:file',
+    label: 'Upload Image',
+    namespace: 'namespace',
+    preview: null,
+    setData: () => {}
+  },
+  render: args => {
+    const [image, setImage] = useState<string | File | null>(null)
+
+    const [preview, setPreview] = useState<string | null>(null)
+
+    return (
+      <Index
+        {...args}
+        disabled
+        enablePixabay
+        file={image}
+        preview={preview}
+        setData={({ file, preview }) => {
+          setImage(file)
+          setPreview(preview)
+        }}
+      />
     )
   }
 }

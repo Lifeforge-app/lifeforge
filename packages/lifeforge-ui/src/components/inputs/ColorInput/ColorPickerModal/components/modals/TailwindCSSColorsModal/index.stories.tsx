@@ -14,8 +14,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    onClose: () => {},
-    data: { color: 'color', setColor: () => {} }
+    data: { color: 'color', setColor: () => {} },
+    onClose: () => {}
   },
   render: args => {
     return (
