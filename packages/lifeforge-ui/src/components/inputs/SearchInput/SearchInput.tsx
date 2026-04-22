@@ -3,17 +3,26 @@ import { useDebounce } from '@uidotdev/usehooks'
 import clsx from 'clsx'
 import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 import { useDivSize } from 'shared'
 
 import { Card } from '@components/layout'
-import { Box, Flex, Text } from '@components/primitives'
+import {
+  Box,
+  Flex,
+  type FlexProps,
+  Text,
+  Transition
+} from '@components/primitives'
 
 import Button from '../Button'
 import Placeholder from '../shared/components/Placeholder'
 import * as styles from './SearchInput.css'
 
-interface SearchInputProps {
+interface SearchInputProps extends Omit<FlexProps<'search'>, 'onChange'> {
+  /** Whether the search input is disabled and non-interactive. */
+  disabled?: boolean
   /** The icon to display in the search input. Should be a valid icon name from Iconify. */
   icon?: string
   /** The current search query value of the input field. */
@@ -63,7 +72,9 @@ function SearchInput({
   namespace,
   debounceMs,
   showChildrenPolicy = 'query-not-empty',
-  children
+  disabled = false,
+  children,
+  ...props
 }: SearchInputProps) {
   const { t } = useTranslation([
     'common.misc',
@@ -134,11 +145,37 @@ function SearchInput({
 
   const { height: childrenHeight } = useDivSize(childrenRef)
 
+  const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
+
+  useEffect(() => {
+    const updatePosition = () => {
+      if (!containerRef.current || !shouldShowChildren) return
+
+      const rect = containerRef.current.getBoundingClientRect()
+
+      setDropdownStyle({
+        left: rect.left,
+        top: rect.bottom + 8,
+        width: rect.width
+      })
+    }
+
+    updatePosition()
+
+    window.addEventListener('scroll', updatePosition, true)
+    window.addEventListener('resize', updatePosition)
+
+    return () => {
+      window.removeEventListener('scroll', updatePosition, true)
+      window.removeEventListener('resize', updatePosition)
+    }
+  }, [shouldShowChildren])
+
   const handleBlur = (e: React.FocusEvent) => {
-    // Check if the new focus target is still within our container
     if (
       containerRef.current &&
-      !containerRef.current.contains(e.relatedTarget as Node)
+      !containerRef.current.contains(e.relatedTarget as Node) &&
+      !childrenRef.current?.contains(e.relatedTarget as Node)
     ) {
       setIsFocused(false)
     }
@@ -147,10 +184,10 @@ function SearchInput({
   return (
     <Box
       ref={containerRef}
-      onBlur={handleBlur}
-      onFocus={() => setIsFocused(true)}
       position="relative"
       width="100%"
+      onBlur={handleBlur}
+      onFocus={() => setIsFocused(true)}
     >
       <Flex
         shadow
@@ -159,26 +196,35 @@ function SearchInput({
         bg={{
           base: 'bg-50',
           dark: 'bg-900',
-          hover: 'bg-100',
-          darkHover: 'bg-800'
+          hover: disabled ? undefined : 'bg-100',
+          darkHover: disabled ? undefined : 'bg-800'
         }}
         className={clsx(styles.searchWrapper, className)}
-        onClick={e => {
-          e.currentTarget.querySelector('input')?.focus()
-        }}
         p="md"
         position="relative"
         rounded="lg"
-        style={{ cursor: 'text', gap: '0.75rem', minHeight: '3.5rem' }}
+        style={
+          disabled
+            ? {
+                cursor: 'not-allowed',
+                gap: '0.75rem',
+                minHeight: '3.5rem',
+                opacity: 0.5
+              }
+            : { cursor: 'text', gap: '0.75rem', minHeight: '3.5rem' }
+        }
         width="100%"
+        onClick={e => {
+          if (disabled) return
+          e.currentTarget.querySelector('input')?.focus()
+        }}
+        {...props}
       >
-        <Text
-          asChild
-          color="bg-500"
-          style={{ flexShrink: 0, height: '1.25rem', width: '1.25rem' }}
-        >
-          <Icon icon={icon} />
-        </Text>
+        <Box asChild flexShrink="0" height="1.25rem" width="1.25rem">
+          <Text asChild color="muted">
+            <Icon icon={icon} />
+          </Text>
+        </Box>
         <Placeholder>
           <input
             autoComplete="one-time-code"
@@ -186,6 +232,7 @@ function SearchInput({
             className={styles.searchInput}
             data-form-type="other"
             data-lpignore="true"
+            disabled={disabled}
             placeholder={t([`search`, `Search ${searchTarget}`], {
               item: t([
                 `${namespace}:items.${_.camelCase(searchTarget)}`,
@@ -212,9 +259,12 @@ function SearchInput({
           align="center"
           gap="sm"
           position="absolute"
-          style={{ right: '1rem', top: '50%', transform: 'translateY(-50%)' }}
+          right="1rem"
+          style={{ transform: 'translateY(-50%)' }}
+          top="50%"
         >
           <Button
+            disabled={disabled}
             icon="tabler:x"
             style={{
               height: '2rem',
@@ -229,6 +279,7 @@ function SearchInput({
           {actionButtonProps && (
             <Button
               {...actionButtonProps}
+              disabled={disabled || actionButtonProps.disabled}
               style={{
                 height: '2rem',
                 padding: 0,
@@ -240,27 +291,34 @@ function SearchInput({
           )}
         </Flex>
       </Flex>
-      {children && (
-        <Card
-          overflow="hidden"
-          style={{
-            height: children && shouldShowChildren ? childrenHeight : 0,
-            opacity: shouldShowChildren ? 1 : 0,
-            padding: 0,
-            pointerEvents: shouldShowChildren ? undefined : 'none',
-            position: 'absolute',
-            top: '0.5rem',
-            transition: 'all 0.2s',
-            visibility: shouldShowChildren ? 'visible' : 'hidden'
-          }}
-          width="100%"
-          onMouseDown={e => e.preventDefault()}
-        >
-          <Box ref={childrenRef} p="md">
-            {children}
-          </Box>
-        </Card>
-      )}
+      {children &&
+        createPortal(
+          <Transition property="all">
+            <Card
+              height={shouldShowChildren ? `${childrenHeight}px` : '0'}
+              overflow="hidden"
+              p="none"
+              position="fixed"
+              style={{
+                opacity: shouldShowChildren ? 1 : 0,
+                pointerEvents: shouldShowChildren
+                  ? ('auto' as const)
+                  : ('none' as const),
+                visibility: shouldShowChildren
+                  ? ('visible' as const)
+                  : ('hidden' as const),
+                ...dropdownStyle
+              }}
+              zIndex="9999"
+              onMouseDown={e => e.preventDefault()}
+            >
+              <Box ref={childrenRef} p="md">
+                {children}
+              </Box>
+            </Card>
+          </Transition>,
+          document.body
+        )}
     </Box>
   )
 }

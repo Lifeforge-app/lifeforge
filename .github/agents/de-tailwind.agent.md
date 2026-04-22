@@ -22,7 +22,10 @@ Before touching ANY file, you MUST:
 - DO NOT add comments, docstrings, or explanations to code you did not change.
 - DO NOT refactor logic, rename variables, or make any change beyond the styling migration.
 - ONLY work on files under `packages/lifeforge-ui/src/`.
-- **`asChild` MUST be tried first — ALWAYS, before writing any `.css.ts` export.** For every non-primitive element that needs color, spacing, or layout styling, ask: "can a primitive with `asChild` express this?" If yes, use `asChild`. Writing a `.css.ts` export when `asChild` would have worked is a mistake. Only reach for `.css.ts` when primitives are genuinely incapable of expressing the property: `transition`, `cursor`, `borderWidth/style`, complex `boxShadow`, and context selectors (`.bordered &`, `.has-bg-image &`).
+- **`asChild` MUST be tried first — ALWAYS, before writing any `.css.ts` export.** For every non-primitive element that needs color, spacing, or layout styling, ask: "can a primitive with `asChild` express this?" If yes, use `asChild`. Writing a `.css.ts` export when `asChild` would have worked is a mistake. Only reach for `.css.ts` when primitives are genuinely incapable of expressing the property: `cursor`, complex `boxShadow`, and context selectors (`.bordered &`, `.has-bg-image &`).
+- **Use `<Bordered>` for any border styling** — never write `borderColor`/`borderWidth`/`borderStyle` in a `.css.ts` `style()` when `<Bordered>` can express it.
+- **Use `<Transition>` for any transition** — never write `transition: '...'` in a `.css.ts` file.
+- **Use `<WithDivide>` for dividers between sibling items** — never use `divide-*` Tailwind classes or manual `:not(:first-child)` selectors in `.css.ts`.
 
 ---
 
@@ -92,8 +95,7 @@ Import from `@components/primitives`.
 
 ### Container primitives — shared props
 
-All five container primitives (`Box`, `Flex`, `Grid`, `Container`, `Section`)
-share these additional props beyond their own layout props:
+All three container primitives (`Box`, `Flex`, `Grid`) share these additional props beyond their own layout props:
 
 | Prop | Type | Description |
 |------|------|-------------|
@@ -201,7 +203,7 @@ Inline text/span. Renders as `<span>` by default.
   // color accepts ThemeConditionProp — flat or per-condition:
   color="bg-600"
   color={{ base: 'bg-500', dark: 'bg-50' }}
-  // Named semantic colors: 'default'(bg-900) | 'muted'(bg-500) | 'primary'(custom-500) | 'inherit'
+  // Named semantic colors: 'default'(bg-900) | 'muted'(bg-500) | 'primary'(custom-500) | 'dangerous'(red-500) | 'inherit'
   // Full palette: 'bg-50'…'bg-950' | 'custom-50'…'custom-900'
   bg={{ base: 'bg-100', dark: 'bg-800' }}   // backgroundColor, same token set as color
   weight="semibold"       // 'normal'|'medium'|'semibold'|'bold'
@@ -222,6 +224,76 @@ Inline text/span. Renders as `<span>` by default.
 
 > **`color` and `bg` on `Text` use `ThemeConditionProp`, not `ResponsiveProp`.**
 > They respond to dark mode / hover conditions, not breakpoints.
+
+### `Bordered`
+
+Renders a container with configurable border. Supports all Box layout/margin props plus border-specific props.
+
+```tsx
+<Bordered
+  as="div"                        // any HTML tag (default: div)
+  asChild                         // slot mode — merges onto single child
+  borderColor="bg-200"            // ThemeConditionProp<ColorToken>; default { base: 'bg-200', dark: 'bg-700' }
+  borderColor={{ base: 'bg-200', dark: 'bg-700', hover: 'bg-300' }}
+  borderWidth="1px"               // CSS string (default: '1px')
+  borderStyle="solid"             // 'solid'|'dashed'|'dotted'|'double'|'none' (default: 'solid')
+  borderSide="all"                // 'all'|'top'|'right'|'bottom'|'left'|'x'|'y' (default: 'all')
+  bg={{ base: 'bg-50', dark: 'bg-900' }}
+  color={{ base: 'bg-900', dark: 'bg-50' }}
+  rounded="lg"
+  shadow
+  // + all Box layout/margin/padding props
+/>
+```
+
+Use `<Bordered>` whenever a border with theme-adaptive color is needed — it replaces both the `border-*` Tailwind classes and the manual `.css.ts` border pattern. Prefer it over writing `borderColor` in a `.css.ts` `style()`.
+
+### `Transition`
+
+Applies CSS `transition` to its single child via slot (no extra DOM node).
+
+```tsx
+<Transition
+  property="all"                  // property or array: 'all'|'opacity'|'transform'|'color'|'background-color'|'border-color'|'box-shadow'|'width'|'height'|...
+  property={['opacity', 'transform']}
+  property={[                     // per-property overrides
+    { property: 'opacity', duration: 150, easing: 'ease-out' },
+    { property: 'transform', duration: 300 }
+  ]}
+  duration={200}                  // ms or CSS time string e.g. '200ms' | '0.2s' (default: '200ms')
+  easing="ease-in-out"            // CSS transition-timing-function (default: 'ease-in-out')
+  delay={50}                      // ms or CSS time string
+>
+  <div>...</div>
+</Transition>
+```
+
+Use `<Transition>` to replace every `transition-*` Tailwind class. **Do not write `transition: '...'` in a `.css.ts` file when `<Transition>` can express it.**
+
+### `WithDivide`
+
+Merges a top-border divider style onto its single child via slot. Border appears on every child except the first sibling (`:not(:first-child)`).
+
+```tsx
+<WithDivide
+  color={bg[200]}                 // CSS color string — light mode border (default: bg[200])
+  darkColor={withOpacity(bg[700], 0.5)}  // CSS color string — dark mode border (default: withOpacity(bg[700], 0.5))
+>
+  <div>list item</div>
+</WithDivide>
+```
+
+Import `bg` and `withOpacity` from `@/system` to use token helpers as values:
+
+```tsx
+import { bg, withOpacity } from '@/system'
+
+{items.map(item => (
+  <WithDivide key={item.id} color={bg[300]} darkColor={withOpacity(bg[600], 0.4)}>
+    <div>{item.label}</div>
+  </WithDivide>
+))}
+```
 
 ### `asChild` pattern
 
@@ -325,11 +397,14 @@ Spacing values **not** in this table (e.g. `gap-3` = 0.75rem, arbitrary `mt-[30%
 | `backgroundColor` of a non-primitive child | **`asChild` on `<Box>`/`<Flex>`** (always first) — only use `.css.ts` sprinkle if `asChild` is impossible |
 | `color` of a `<Text>` | **`color` prop** — `color={{ base: 'bg-500', dark: 'bg-50' }}` |
 | `color` of a non-Text element | **`asChild` with `<Text>`** — `.css.ts` sprinkle only if the element cannot accept/forward `className` + `style` |
-| `borderColor` | **`.css.ts` sprinkle** (Pattern B) |
+| `border-*` (width + style + color) | **`<Bordered>`** primitive — replaces all three properties together |
+| `borderColor` only (no Bordered) | **`.css.ts` sprinkle** (Pattern B) |
 | `borderRadius` | **`rounded` prop** on container OR `borderRadius: vars.radii.*` in `.css.ts` |
 | `box-shadow` (`shadow-custom`) | **`shadow` prop** on container primitive |
 | `box-shadow` (complex/non-standard) | **Pattern A** — `.css.ts` `style()` |
-| `transition`, `cursor`, `hover`, `focus`, `active` | **Pattern A** — `.css.ts` `style()` |
+| `transition-*` | **`<Transition>`** primitive — never write `transition` in `.css.ts` |
+| `cursor`, `hover`, `focus`, `active` (non-color) | **Pattern A** — `.css.ts` `style()` |
+| Dividers between list items (`divide-*`) | **`<WithDivide>`** wrapping each item |
 | Dark-mode variants | **`bg`/`color` prop** (preferred) OR **Pattern B** OR **Pattern A** selectors |
 | Context selectors (`.bordered &`, `.has-bg-image &`) | **Pattern A** — `.css.ts` `style()` selectors |
 | `font-weight`, `font-size` | **`<Text weight= size=>`** props |
@@ -340,7 +415,16 @@ Spacing values **not** in this table (e.g. `gap-3` = 0.75rem, arbitrary `mt-[30%
 **Follow this tree strictly, top to bottom. Do not skip ahead to `.css.ts`.**
 
 ```
-Is the element a container primitive (Box/Flex/Grid/Container/Section)?
+Is it a transition (transition-* class)?
+  └─ YES → use <Transition property="..." duration={...}> wrapping the child. STOP.
+
+Is it a list divider (divide-* or border between siblings)?
+  └─ YES → wrap each item in <WithDivide color={...} darkColor={...}>. STOP.
+
+Is it a full border (border-width + border-style + border-color)?
+  └─ YES → use <Bordered borderColor={...} borderWidth="..." borderStyle="..." borderSide="...">. STOP.
+
+Is the element a container primitive (Box/Flex/Grid)?
   └─ YES → use `bg` prop: <Box bg={{ base: 'bg-50', dark: 'bg-900' }}>
            use `shadow` prop for box-shadow
   └─ NO  → Is it a <Text>?

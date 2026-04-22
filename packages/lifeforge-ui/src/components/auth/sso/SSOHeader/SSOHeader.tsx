@@ -38,15 +38,15 @@ function SSOHeader({
       <div className="flex items-center gap-6">
         {actionButtonProps && <Button {...actionButtonProps} />}
         <Button
-          asChild
+          as="a"
+          href={link}
           icon="uil:github"
           iconStyle={{ width: '1.5em', height: '1.5em' }}
           rel="noopener noreferrer"
+          target="_blank"
           variant="plain"
         >
-          <a href={link} rel="noopener noreferrer" target="_blank">
-            {t('github')}
-          </a>
+          {t('github')}
         </Button>
       </div>
     </header>

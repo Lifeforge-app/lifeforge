@@ -29,6 +29,7 @@ interface IPersonalizationData {
   derivedTheme: 'light' | 'dark'
   rawThemeColor: string
   derivedThemeColor: string
+  getMostReadableColor: (bg?: string) => string
   bgTemp: string
   bgTempPalette: Record<number, string>
   backdropFilters: IBackdropFilters

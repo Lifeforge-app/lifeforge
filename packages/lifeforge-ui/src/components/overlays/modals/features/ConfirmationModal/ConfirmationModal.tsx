@@ -46,11 +46,11 @@ function ConfirmationModal({
   const [isLoading, onClick] = usePromiseLoading(handleClick)
 
   return (
-    <Box style={{ minWidth: '40vw' }}>
+    <Box minWidth="40vw">
       <Text as="h1" size="2xl" weight="semibold">
         {title}
       </Text>
-      <Text as="p" color="bg-500" mt="sm">
+      <Text as="p" color="muted" mt="sm">
         {description}
       </Text>
       {confirmationPrompt && (

@@ -63,9 +63,9 @@ const generateLoremIpsum = (length: 'short' | 'medium' | 'long'): string => {
   ]
 
   const wordCounts = {
-    short: 5 + Math.floor(Math.random() * 5), // 5-9 words
+    long: 40 + Math.floor(Math.random() * 20), // 40-59 words
     medium: 15 + Math.floor(Math.random() * 10), // 15-24 words
-    long: 40 + Math.floor(Math.random() * 20) // 40-59 words
+    short: 5 + Math.floor(Math.random() * 5) // 5-9 words
   }
 
   const count = wordCounts[length]
@@ -101,12 +101,12 @@ const generateSampleItems = (count: number): SampleItem[] => {
   ]
 
   return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    title: `Item ${i + 1}`,
+    color: colors[i % colors.length],
     description: generateLoremIpsum(
       lengths[Math.floor(Math.random() * lengths.length)]
     ),
-    color: colors[i % colors.length]
+    id: i,
+    title: `Item ${i + 1}`
   }))
 }
 
@@ -136,13 +136,13 @@ function CardItem({ item }: { item: SampleItem }) {
  */
 export const Default: Story = {
   args: {
-    items: generateSampleItems(50),
-    // @ts-expect-error - The type cannot be inferred here
-    renderItem: (item: SampleItem) => <CardItem item={item} />,
+    gap: 12,
     // @ts-expect-error - The type cannot be inferred here
     getItemKey: (item: SampleItem) => item.id,
     itemMinWidth: 240,
-    gap: 12
+    items: generateSampleItems(50),
+    // @ts-expect-error - The type cannot be inferred here
+    renderItem: (item: SampleItem) => <CardItem item={item} />
   },
   render: args => (
     <div className="h-screen w-full p-6">
@@ -157,12 +157,12 @@ export const Default: Story = {
  */
 export const LargeDataset: Story = {
   args: {
-    items: generateSampleItems(1000),
-    // @ts-expect-error - The type cannot be inferred here
-    renderItem: (item: SampleItem) => <CardItem item={item} />,
     // @ts-expect-error - The type cannot be inferred here
     getItemKey: (item: SampleItem) => item.id,
-    itemMinWidth: 240
+    itemMinWidth: 240,
+    items: generateSampleItems(1000),
+    // @ts-expect-error - The type cannot be inferred here
+    renderItem: (item: SampleItem) => <CardItem item={item} />
   },
   render: args => (
     <div className="h-screen w-full p-6">
@@ -176,6 +176,10 @@ export const LargeDataset: Story = {
  */
 export const WiderItems: Story = {
   args: {
+    gap: 16,
+    // @ts-expect-error - The type cannot be inferred here
+    getItemKey: (item: SampleItem) => item.id,
+    itemMinWidth: 400,
     items: generateSampleItems(50),
     // @ts-expect-error - The type cannot be inferred here
     renderItem: (item: SampleItem) => (
@@ -184,11 +188,7 @@ export const WiderItems: Story = {
         <h3 className="mt-4 text-xl font-semibold">{item.title}</h3>
         <p className="text-bg-500">{item.description}</p>
       </Card>
-    ),
-    // @ts-expect-error - The type cannot be inferred here
-    getItemKey: (item: SampleItem) => item.id,
-    itemMinWidth: 400,
-    gap: 16
+    )
   },
   render: args => (
     <div className="h-screen w-full p-6">
@@ -202,6 +202,10 @@ export const WiderItems: Story = {
  */
 export const CompactItems: Story = {
   args: {
+    gap: 8,
+    // @ts-expect-error - The type cannot be inferred here
+    getItemKey: (item: SampleItem) => item.id,
+    itemMinWidth: 150,
     items: generateSampleItems(200),
     // @ts-expect-error - The type cannot be inferred here
     renderItem: (item: SampleItem) => (
@@ -211,11 +215,7 @@ export const CompactItems: Story = {
         </div>
         <h3 className="mt-4 text-sm font-semibold">{item.title}</h3>
       </Card>
-    ),
-    // @ts-expect-error - The type cannot be inferred here
-    getItemKey: (item: SampleItem) => item.id,
-    itemMinWidth: 150,
-    gap: 8
+    )
   },
   render: args => (
     <div className="h-screen w-full p-6">

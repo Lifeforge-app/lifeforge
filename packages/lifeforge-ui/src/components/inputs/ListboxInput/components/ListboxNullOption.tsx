@@ -1,6 +1,7 @@
-import { ListboxOption } from '@headlessui/react'
+import { ListboxOption as HeadlessListboxOption } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
+
+import { Box, Flex, Text, Transition, WithDivide } from '@components/primitives'
 
 function ListboxNullOption({
   icon,
@@ -14,41 +15,74 @@ function ListboxNullOption({
   text?: string
 }) {
   return (
-    <ListboxOption
-      key="none"
-      className="flex-between hover:bg-bg-200 dark:hover:bg-bg-700/50 relative flex cursor-pointer p-4 transition-all select-none"
-      value={value}
-    >
-      {({ selected }) => (
-        <>
-          <div
-            className={clsx(
-              'flex items-center font-medium',
-              hasBgColor ? 'gap-3' : 'gap-2',
-              selected && 'text-bg-800 dark:text-bg-100'
-            )}
+    <WithDivide>
+      <Transition>
+        <Text asChild align="left">
+          <Flex
+            asChild
+            align="center"
+            bg={{ hover: 'bg-200', darkHover: 'bg-700' }}
+            justify="between"
+            p="md"
+            position="relative"
+            width="100%"
           >
-            <span
-              className={clsx(
-                'rounded-md',
-                hasBgColor
-                  ? 'bg-bg-200 text-bg-500 dark:bg-bg-700/50 p-2'
-                  : 'pr-2'
+            <HeadlessListboxOption value={value}>
+              {({ selected }) => (
+                <>
+                  <Text
+                    asChild
+                    color={
+                      selected ? { base: 'bg-800', dark: 'bg-100' } : undefined
+                    }
+                    weight="medium"
+                  >
+                    <Flex
+                      align="center"
+                      gap={hasBgColor ? undefined : 'sm'}
+                      style={hasBgColor ? { gap: '0.75rem' } : undefined}
+                    >
+                      <Box
+                        as="span"
+                        flexShrink="0"
+                        p={hasBgColor ? 'sm' : undefined}
+                        pr={!hasBgColor ? 'sm' : undefined}
+                        rounded="md"
+                      >
+                        {hasBgColor ? (
+                          <Text asChild color="muted">
+                            <Icon
+                              icon={icon}
+                              style={{ width: '1.25rem', height: '1.25rem' }}
+                            />
+                          </Text>
+                        ) : (
+                          <Icon
+                            icon={icon}
+                            style={{ width: '1.25rem', height: '1.25rem' }}
+                          />
+                        )}
+                      </Box>
+                      <span>{text}</span>
+                    </Flex>
+                  </Text>
+                  {selected && (
+                    <Text
+                      asChild
+                      color="custom-500"
+                      size="lg"
+                      style={{ display: 'block', flexShrink: 0 }}
+                    >
+                      <Icon icon="tabler:check" />
+                    </Text>
+                  )}
+                </>
               )}
-            >
-              <Icon className="size-5" icon={icon} />
-            </span>
-            <span>{text}</span>
-          </div>
-          {selected && (
-            <Icon
-              className="text-custom-500 block text-lg"
-              icon="tabler:check"
-            />
-          )}
-        </>
-      )}
-    </ListboxOption>
+            </HeadlessListboxOption>
+          </Flex>
+        </Text>
+      </Transition>
+    </WithDivide>
   )
 }
 

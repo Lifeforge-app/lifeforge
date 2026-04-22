@@ -6,11 +6,26 @@ import { Box, Flex, Grid, Text } from '@components/primitives'
 import { ScrollableStory } from '@/storybook/ScrollableStory'
 
 const meta = {
-  component: Text,
   argTypes: {
+    align: {
+      control: { type: 'select' },
+      options: ['left', 'center', 'right']
+    },
+    bg: { control: false },
     children: { control: 'text' },
     color: { control: false },
-    bg: { control: false },
+    decoration: {
+      control: { type: 'select' },
+      options: ['underline', 'line-through', 'none']
+    },
+    leading: {
+      control: { type: 'select' },
+      options: ['none', 'tight', 'snug', 'normal', 'relaxed', 'loose']
+    },
+    overflowWrap: {
+      control: { type: 'select' },
+      options: ['normal', 'break-word', 'anywhere']
+    },
     size: {
       control: { type: 'select' },
       options: [
@@ -28,25 +43,17 @@ const meta = {
         '9xl'
       ]
     },
-    weight: {
+    tracking: {
       control: { type: 'select' },
-      options: ['normal', 'medium', 'semibold', 'bold']
-    },
-    align: {
-      control: { type: 'select' },
-      options: ['left', 'center', 'right']
-    },
-    decoration: {
-      control: { type: 'select' },
-      options: ['underline', 'line-through', 'none']
+      options: ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest']
     },
     transform: {
       control: { type: 'select' },
       options: ['uppercase', 'lowercase', 'capitalize', 'none']
     },
-    wrap: {
+    weight: {
       control: { type: 'select' },
-      options: ['wrap', 'nowrap', 'pretty', 'balance']
+      options: ['normal', 'medium', 'semibold', 'bold']
     },
     whiteSpace: {
       control: { type: 'select' },
@@ -63,19 +70,12 @@ const meta = {
       control: { type: 'select' },
       options: ['normal', 'break-all', 'keep-all']
     },
-    overflowWrap: {
+    wrap: {
       control: { type: 'select' },
-      options: ['normal', 'break-word', 'anywhere']
-    },
-    tracking: {
-      control: { type: 'select' },
-      options: ['tighter', 'tight', 'normal', 'wide', 'wider', 'widest']
-    },
-    leading: {
-      control: { type: 'select' },
-      options: ['none', 'tight', 'snug', 'normal', 'relaxed', 'loose']
+      options: ['wrap', 'nowrap', 'pretty', 'balance']
     }
-  }
+  },
+  component: Text
 } satisfies Meta<typeof Text>
 
 export default meta
@@ -128,7 +128,7 @@ export const FontSize: Story = {
             as="code"
             color={{ base: 'bg-400', dark: 'bg-500' }}
             size="sm"
-            style={{ width: '3rem', flexShrink: 0 }}
+            style={{ flexShrink: 0, width: '3rem' }}
           >
             {size}
           </Text>
@@ -152,7 +152,7 @@ export const FontWeight: Story = {
             as="code"
             color={{ base: 'bg-400', dark: 'bg-500' }}
             size="sm"
-            style={{ width: '6rem', flexShrink: 0 }}
+            style={{ flexShrink: 0, width: '6rem' }}
           >
             {weight}
           </Text>
@@ -196,8 +196,8 @@ export const Color: Story = {
         color={{
           base: 'bg-500',
           dark: 'bg-300',
-          hover: 'custom-500',
-          darkHover: 'custom-400'
+          darkHover: 'custom-400',
+          hover: 'custom-500'
         }}
         size="lg"
         style={{ cursor: 'pointer' }}
@@ -423,7 +423,7 @@ export const ResponsiveSize: Story = {
     <Flex align="center" height="100%" justify="center" p="3xl" width="100%">
       <Flex direction="column" gap="md">
         <Text
-          size={{ base: 'lg', sm: '2xl', md: '3xl', lg: '4xl' }}
+          size={{ base: 'lg', lg: '4xl', md: '3xl', sm: '2xl' }}
           weight={{ base: 'normal', md: 'bold' }}
         >
           Responsive heading
@@ -491,9 +491,9 @@ export const Composition: Story = {
     <Flex align="center" height="100%" justify="center" p="3xl" width="100%">
       <Grid columns="repeat(2, minmax(0, 1fr))" gap="lg" width="100%">
         {[
-          { title: 'Design System', tag: 'UI Kit', value: '128 components' },
-          { title: 'API Coverage', tag: 'Backend', value: '97%' }
-        ].map(({ title, tag, value }) => (
+          { tag: 'UI Kit', title: 'Design System', value: '128 components' },
+          { tag: 'Backend', title: 'API Coverage', value: '97%' }
+        ].map(({ tag, title, value }) => (
           <Box
             key={title}
             shadow
@@ -543,7 +543,7 @@ export const Tracking: Story = {
               as="code"
               color={{ base: 'bg-400', dark: 'bg-500' }}
               size="sm"
-              style={{ width: '5rem', flexShrink: 0 }}
+              style={{ flexShrink: 0, width: '5rem' }}
             >
               {tracking}
             </Text>

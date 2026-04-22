@@ -4,18 +4,18 @@ import { useState } from 'react'
 import Pagination from '.'
 
 const meta = {
-  component: Pagination,
   argTypes: {
+    onPageChange: {
+      control: false
+    },
     page: {
       control: false
     },
     totalPages: {
-      control: { type: 'number', min: 1, step: 1 }
-    },
-    onPageChange: {
-      control: false
+      control: { min: 1, step: 1, type: 'number' }
     }
-  }
+  },
+  component: Pagination
 } satisfies Meta<typeof Pagination>
 
 export default meta
@@ -27,9 +27,9 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
-    totalPages: 10,
+    onPageChange: () => {},
     page: 1,
-    onPageChange: () => {}
+    totalPages: 10
   },
   render: args => {
     const [currentPage, setCurrentPage] = useState(1)
@@ -51,9 +51,9 @@ export const Default: Story = {
  */
 export const FewPages: Story = {
   args: {
-    totalPages: 3,
+    onPageChange: () => {},
     page: 50,
-    onPageChange: () => {}
+    totalPages: 3
   },
 
   render: args => {
@@ -76,9 +76,9 @@ export const FewPages: Story = {
  */
 export const ManyPages: Story = {
   args: {
-    totalPages: 100,
+    onPageChange: () => {},
     page: 50,
-    onPageChange: () => {}
+    totalPages: 100
   },
   render: args => {
     const [currentPage, setCurrentPage] = useState(50)
@@ -100,9 +100,9 @@ export const ManyPages: Story = {
  */
 export const FirstPage: Story = {
   args: {
-    totalPages: 10,
+    onPageChange: () => {},
     page: 1,
-    onPageChange: () => {}
+    totalPages: 10
   },
   render: args => {
     const [currentPage, setCurrentPage] = useState(1)
@@ -124,9 +124,9 @@ export const FirstPage: Story = {
  */
 export const LastPage: Story = {
   args: {
-    totalPages: 10,
+    onPageChange: () => {},
     page: 10,
-    onPageChange: () => {}
+    totalPages: 10
   },
   render: args => {
     const [currentPage, setCurrentPage] = useState(10)

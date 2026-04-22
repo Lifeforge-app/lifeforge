@@ -1,6 +1,7 @@
 import type { ProxyTree } from '@shared/api/typescript/forge_proxy.types'
 import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
+import tinycolor from 'tinycolor2'
 
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
@@ -29,6 +30,7 @@ const DEFAULT_VALUE: IPersonalizationData = {
   derivedTheme: 'dark',
   rawThemeColor: 'theme-lime',
   derivedThemeColor: THEME_COLOR_HEX['lime'],
+  getMostReadableColor: () => '#000000',
   bgTemp: 'bg-neutral',
   bgTempPalette: BG_THEME['zinc'],
   bgImage: '',
@@ -136,10 +138,25 @@ export default function PersonalizationProvider({
       : getColorPalette(bgTemp, 'bg', derivedTheme)
   }, [bgTemp])
 
+  const getMostReadableColor = useMemo(
+    () =>
+      (bg?: string): string =>
+        tinycolor
+          .mostReadable(bg ?? themeColor, [
+            bgTempPalette[100],
+            bgTempPalette[800]
+          ])
+          .toHexString(),
+    [themeColor, bgTempPalette]
+  )
+
   useFontFamily(fontFamily, fontScale, forgeAPI)
   useThemeEffect(rootElement, derivedTheme, rawThemeColor, bgTemp)
-  useRawThemeColorEffect(rootElement, rawThemeColor, derivedTheme)
   useBgTempEffect(rootElement, bgTemp, derivedTheme)
+  useRawThemeColorEffect(rootElement, rawThemeColor, derivedTheme, [
+    bgTempPalette[100],
+    bgTempPalette[800]
+  ])
   useLanguageEffect(language)
   useMetaEffect(themeColor)
   useBorderRadiusEffect(borderRadiusMultiplier)
@@ -156,6 +173,7 @@ export default function PersonalizationProvider({
       derivedTheme,
       rawThemeColor,
       derivedThemeColor: themeColor,
+      getMostReadableColor,
       bgTemp,
       bgTempPalette,
       bgImage,
@@ -183,6 +201,7 @@ export default function PersonalizationProvider({
       theme,
       rawThemeColor,
       themeColor,
+      getMostReadableColor,
       bgTemp,
       bgTempPalette,
       bgImage,

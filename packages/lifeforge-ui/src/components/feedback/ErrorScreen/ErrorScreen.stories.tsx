@@ -5,7 +5,6 @@ import { Box } from '@components/primitives'
 import ErrorScreen from './ErrorScreen'
 
 const meta = {
-  component: ErrorScreen,
   argTypes: {
     message: {
       control: false,
@@ -18,7 +17,8 @@ const meta = {
     showRetryButton: {
       control: 'boolean'
     }
-  }
+  },
+  component: ErrorScreen
 } satisfies Meta<typeof ErrorScreen>
 
 export default meta

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Alert } from '@components/feedback'
 import { Flex } from '@components/primitives'
 
 import Button from './index'
@@ -17,11 +18,14 @@ type Story = StoryObj<typeof meta>
  */
 export const PrimaryVariant: Story = {
   args: {
-    icon: 'tabler:cube',
-    disabled: false,
     children: 'Button',
-    tProps: {},
+    disabled: false,
+    icon: 'tabler:cube',
     iconPosition: 'start',
+    onClick: () => {
+      alert('Button clicked!')
+    },
+    tProps: {},
     variant: 'primary'
   },
   render: props => <Button {...props} />
@@ -32,8 +36,8 @@ export const PrimaryVariant: Story = {
  */
 export const SecondaryVariant: Story = {
   args: {
-    icon: 'tabler:cube',
     children: 'Secondary',
+    icon: 'tabler:cube',
     tProps: {},
     variant: 'secondary'
   },
@@ -45,8 +49,8 @@ export const SecondaryVariant: Story = {
  */
 export const TertiaryVariant: Story = {
   args: {
-    icon: 'tabler:cube',
     children: 'Tertiary',
+    icon: 'tabler:cube',
     tProps: {},
     variant: 'tertiary'
   },
@@ -59,8 +63,8 @@ export const TertiaryVariant: Story = {
  */
 export const PlaintVariant: Story = {
   args: {
-    icon: 'tabler:cube',
     children: 'Plain Button',
+    icon: 'tabler:cube',
     tProps: {},
     variant: 'plain'
   },
@@ -72,11 +76,11 @@ export const PlaintVariant: Story = {
  */
 export const IconAtEnd: Story = {
   args: {
-    icon: 'tabler:arrow-right',
     children: 'Proceed',
-    tProps: {},
+    icon: 'tabler:arrow-right',
     iconPosition: 'end',
-    loading: false
+    loading: false,
+    tProps: {}
   },
   render: props => <Button {...props} />
 }
@@ -86,11 +90,11 @@ export const IconAtEnd: Story = {
  */
 export const Disabled: Story = {
   args: {
-    icon: 'tabler:arrow-right',
     children: 'Submit',
-    tProps: {},
+    disabled: true,
+    icon: 'tabler:arrow-right',
     loading: false,
-    disabled: true
+    tProps: {}
   },
   render: props => <Button {...props} />
 }
@@ -100,12 +104,12 @@ export const Disabled: Story = {
  */
 export const Loading: Story = {
   args: {
-    icon: 'tabler:arrow-right',
     children: 'Loading',
-    tProps: {},
+    disabled: false,
+    icon: 'tabler:arrow-right',
     iconPosition: 'start',
     loading: true,
-    disabled: false
+    tProps: {}
   },
   render: props => <Button {...props} />
 }
@@ -115,8 +119,8 @@ export const Loading: Story = {
  */
 export const IconsOnly: Story = {
   args: {
-    icon: 'tabler:arrows-exchange',
     children: '',
+    icon: 'tabler:arrows-exchange',
     tProps: {}
   },
   render: props => <Button {...props} />
@@ -127,8 +131,8 @@ export const IconsOnly: Story = {
  */
 export const IconsOnlyWithNoBg: Story = {
   args: {
-    icon: 'tabler:arrows-exchange',
     children: '',
+    icon: 'tabler:arrows-exchange',
     tProps: {},
     variant: 'plain'
   },
@@ -140,11 +144,11 @@ export const IconsOnlyWithNoBg: Story = {
  */
 export const RedButton: Story = {
   args: {
-    icon: 'tabler:trash',
     children: 'Delete',
+    dangerous: true,
+    icon: 'tabler:trash',
     tProps: {},
-    variant: 'primary',
-    dangerous: true
+    variant: 'primary'
   },
   render: props => <Button {...props} />
 }
@@ -154,9 +158,9 @@ export const RedButton: Story = {
  */
 export const WithLongText: Story = {
   args: {
-    icon: 'tabler:text-wrap',
     children:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    icon: 'tabler:text-wrap',
     tProps: {}
   },
   render: props => (
@@ -174,6 +178,35 @@ export const WithLongText: Story = {
       >
         <Button style={{ width: '100%' }} {...props} />
       </Flex>
+    </Flex>
+  )
+}
+
+export const AsDifferentComponent: Story = {
+  args: {
+    as: 'a',
+    children: 'Open Link',
+    href: 'https://docs.lifeforge.dev',
+    icon: 'tabler:external-link',
+    rel: 'noopener noreferrer',
+    target: '_blank',
+    tProps: {},
+    variant: 'plain'
+  },
+  render: props => (
+    <Flex
+      align="center"
+      direction="column"
+      gap="md"
+      justify="center"
+      width="100%"
+    >
+      <Alert type="note">
+        This button is rendered as an anchor tag that navigates to the LifeForge
+        documentation. Open the console and inspect the element to verify that
+        it is an anchor tag with the correct href, target, and rel attributes.
+      </Alert>
+      <Button {...props} />
     </Flex>
   )
 }

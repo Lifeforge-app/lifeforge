@@ -37,7 +37,7 @@ export interface TransitionEntry {
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
-interface TransitionProps {
+export interface TransitionProps {
   ref?: Ref<HTMLElement>
   /** Transition duration in ms, or a CSS time string e.g. `'200ms'` / `'0.2s'`. Defaults to `'200ms'`. */
   duration?: number | string
@@ -95,7 +95,7 @@ function buildEntry(
 
 /**
  * A component that applies CSS transitions to its children. You can specify the transition properties, duration, easing, and delay. This component generates the appropriate CSS `transition` property based on the provided props and applies it to a wrapper element around the children.
- * 
+ *
  * Defaults:
  * - `duration`: `'200ms'`
  * - `easing`: `'ease-in-out'`

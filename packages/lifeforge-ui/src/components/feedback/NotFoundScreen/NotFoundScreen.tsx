@@ -38,22 +38,23 @@ function NotFoundScreen({
       <Text align="center" as="h1" size="4xl" weight="semibold">
         {title ?? t('notFound.title')}
       </Text>
-      <Text align="center" as="p" color="bg-500" size="xl">
+      <Text align="center" as="p" color="muted" size="xl">
         {message ?? t('notFound.description')}
       </Text>
       <Flex align="center" justify="center" mt="lg" style={{ gap: '0.75rem' }}>
-        <Button asChild icon="tabler:arrow-left">
-          <a href="/">Go Back</a>
+        <Button as="a" href="/" icon="tabler:arrow-left">
+          Go Back
         </Button>
         <Button
-          asChild
+          as="a"
+          href={reportIssueLink}
           icon="tabler:bug"
           namespace="common.misc"
+          rel="noopener noreferrer"
+          target="_blank"
           variant="secondary"
         >
-          <a href={reportIssueLink} rel="noopener noreferrer" target="_blank">
-            Report Bug
-          </a>
+          Report Bug
         </Button>
       </Flex>
     </Flex>

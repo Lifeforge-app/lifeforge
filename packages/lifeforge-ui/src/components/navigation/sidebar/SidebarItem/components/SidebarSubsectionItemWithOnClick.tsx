@@ -46,10 +46,12 @@ function SidebarSubsectionItemWithOnClick({
       <Flex
         asChild
         align="center"
+        gap="md"
+        height="3.5rem"
         ml="md"
         mr="md"
         rounded="lg"
-        style={{ gap: '0.75rem', height: '3.5rem', paddingLeft: '3rem' }}
+        style={{ paddingLeft: '3rem' }}
         width="100%"
       >
         <button
@@ -57,21 +59,18 @@ function SidebarSubsectionItemWithOnClick({
           className={clsx(styles.button, active && styles.buttonActive)}
           onClick={handleClick}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '1.75rem',
-              width: '1.75rem'
-            }}
+          <Flex
+            align="center"
+            height="1.75rem"
+            justify="center"
+            width="1.75rem"
           >
             {typeof icon === 'string' ? (
               <Icon icon={icon} style={{ height: '1.5rem', width: '1.5rem' }} />
             ) : (
               icon
             )}
-          </div>
+          </Flex>
           <Text truncate style={{ paddingRight: '1rem', width: '100%' }}>
             {namespace !== false
               ? t([
@@ -83,19 +82,11 @@ function SidebarSubsectionItemWithOnClick({
               : subsectionLabel}
           </Text>
           {amount !== undefined && (
-            <span
-              style={{
-                marginRight: '1.25rem',
-                marginLeft: 'auto',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.25rem'
-              }}
-            >
-              <Text as="span" color="bg-500" size="sm" weight="medium">
+            <Flex align="center" gap="xs" mr="md">
+              <Text as="span" color="muted" size="sm" weight="medium">
                 {amount}
               </Text>
-            </span>
+            </Flex>
           )}
         </button>
       </Flex>

@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
 import { ListboxInput, ListboxOption } from '@components/inputs'
+import { Text } from '@components/primitives'
 
 import {
   type IPixabaySearchFilter,
@@ -22,14 +23,18 @@ function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
       buttonContent={
         <>
           <Icon
-            className="size-5"
             icon={IMAGE_TYPES.find(l => l.id === imageType)?.icon ?? ''}
+            style={{ height: '1.25rem', width: '1.25rem' }}
           />
-          <span className="-mt-px block truncate">
+          <Text
+            as="span"
+            style={{ display: 'block', marginTop: '-1px' }}
+            truncate
+          >
             {t(
               `imagePicker.imageType.${IMAGE_TYPES.find(l => l.id === imageType)?.id}`
             )}
-          </span>
+          </Text>
         </>
       }
       icon="tabler:list"

@@ -4,29 +4,34 @@
 }
 
 * {
-  scrollbar-color: transparent transparent;
-  scrollbar-width: thin;
-}
-
-.virtual-grid {
-  scrollbar-color: auto !important;
-  scrollbar-width: auto !important;
-}
-
-* {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
   interpolate-size: allow-keywords;
-  @apply selection:bg-custom-500 focus:outline-none disabled:cursor-not-allowed;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &::selection {
+    background-color: var(--color-custom-500);
+    color: var(--lf-selection-bg);
+  }
 }
 
 input,
 textarea {
-  @apply border-hidden;
+  border: none;
+  caret-color: var(--color-custom-500) !important;
 }
 
 button {
-  @apply cursor-pointer;
+  cursor: pointer;
 
   & > svg {
     @apply pointer-events-none;
@@ -35,30 +40,6 @@ button {
 
 code {
   font-family: 'Jetbrains Mono', monospace;
-}
-
-input:autofill {
-  background: transparent; /* or any other */
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: black;
-  transition: background-color 5000s ease-in-out 0s;
-  @apply caret-bg-800;
-}
-
-.dark input:-webkit-autofill,
-.dark input:-webkit-autofill:hover,
-.dark input:-webkit-autofill:focus,
-.dark input:-webkit-autofill:active {
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #ffffff;
-  transition: background-color 5000s ease-in-out 0s;
-  caret-color: #ffffff;
 }
 
 @page {

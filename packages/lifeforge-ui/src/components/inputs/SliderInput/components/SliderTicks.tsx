@@ -1,18 +1,10 @@
-import { Box, Flex, Text } from '@components/primitives';
 import React from 'react'
+
+import { Box, Flex, Text } from '@components/primitives'
 
 function SliderTicks({ min = 0, max = 100 }: { min?: number; max?: number }) {
   return (
-    <Flex
-      justify="between"
-      mb="md"
-      style={{
-        fontSize: '0.75rem',
-        paddingLeft: '0.625rem',
-        paddingRight: '0.625rem'
-      }}
-      width="100%"
-    >
+    <Flex justify="between" mb="md" px="sm">
       {[min, ((min + max) / 2).toFixed(1), max].map((label, index) => (
         <Box
           key={`title-${label}-${index}`}
@@ -24,6 +16,7 @@ function SliderTicks({ min = 0, max = 100 }: { min?: number; max?: number }) {
           <Text
             asChild
             color={{ base: 'bg-400', dark: 'bg-600' }}
+            size="sm"
             weight="medium"
           >
             <Box

@@ -1,29 +1,8 @@
 import { recipe } from '@vanilla-extract/recipes'
 
-import { bg, custom, vars, withOpacity } from '@/system'
+import { bg, custom, withOpacity } from '@/system'
 
 export const buttonRecipe = recipe({
-  base: {
-    display: 'flex',
-    cursor: 'pointer',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 'calc(var(--spacing) * 2)',
-    whiteSpace: 'nowrap',
-    borderRadius: 'var(--radius-lg)',
-    padding: vars.space.md,
-    fontWeight: 500,
-    letterSpacing: '0.025em',
-    transition: 'all 150ms ease-in-out',
-    border: 'none',
-    outline: 'none',
-    minWidth: 0,
-    selectors: {
-      '&:disabled': {
-        cursor: 'not-allowed'
-      }
-    }
-  },
   variants: {
     variant: {
       primary: {

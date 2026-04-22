@@ -1,4 +1,5 @@
 import { ListboxInput, ListboxOption } from '@components/inputs'
+import { Bordered, Text } from '@components/primitives'
 
 import {
   type IPixabaySearchFilter,
@@ -16,15 +17,25 @@ function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
     <ListboxInput
       buttonContent={
         <>
-          <div
-            className="border-bg-200 dark:border-bg-700 size-3 rounded-full border"
+          <Bordered
+            asChild
+            borderColor={{ base: 'bg-200', dark: 'bg-700' }}
+            rounded="full"
             style={{
-              backgroundColor: COLORS.find(l => l.id === colors)?.color
+              backgroundColor: COLORS.find(l => l.id === colors)?.color,
+              height: '0.75rem',
+              width: '0.75rem'
             }}
-          />
-          <span className="-mt-px block truncate">
+          >
+            <div />
+          </Bordered>
+          <Text
+            as="span"
+            style={{ display: 'block', marginTop: '-1px' }}
+            truncate
+          >
             {COLORS.find(l => l.id === colors)?.name ?? 'None'}
-          </span>
+          </Text>
         </>
       }
       icon="tabler:color-swatch"

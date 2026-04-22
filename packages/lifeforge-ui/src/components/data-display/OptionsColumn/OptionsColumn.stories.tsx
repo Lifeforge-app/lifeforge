@@ -8,7 +8,6 @@ import { Tooltip } from '@components/utilities'
 import OptionsColumn from './OptionsColumn'
 
 const meta = {
-  component: OptionsColumn,
   argTypes: {
     children: {
       control: false
@@ -16,7 +15,8 @@ const meta = {
     tooltip: {
       control: false
     }
-  }
+  },
+  component: OptionsColumn
 } satisfies Meta<typeof OptionsColumn>
 
 export default meta
@@ -28,10 +28,10 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
-    title: 'Enable Notifications',
+    children: <></>,
     description: 'Receive notifications for important updates',
     icon: 'tabler:bell',
-    children: <></>
+    title: 'Enable Notifications'
   },
   render: args => {
     const [enabled, setEnabled] = useState(false)
@@ -51,11 +51,11 @@ export const Default: Story = {
  */
 export const WithTooltip: Story = {
   args: {
-    title: 'Auto Save',
+    children: <></>,
     description: 'Automatically save changes as you work',
     icon: 'tabler:device-floppy',
-    tooltip: 'This feature will save your work every 5 minutes.',
-    children: <></>
+    title: 'Auto Save',
+    tooltip: 'This feature will save your work every 5 minutes.'
   },
   render: args => {
     const [enabled, setEnabled] = useState(true)
@@ -75,11 +75,11 @@ export const WithTooltip: Story = {
  */
 export const Vertical: Story = {
   args: {
-    title: 'Theme Settings',
+    children: <></>,
     description: 'Customize the appearance of your workspace',
     icon: 'tabler:palette',
     orientation: 'vertical',
-    children: <></>
+    title: 'Theme Settings'
   },
   render: args => {
     return (
@@ -103,10 +103,10 @@ export const Vertical: Story = {
  */
 export const MultipleColumns: Story = {
   args: {
-    title: '',
+    children: <></>,
     description: '',
     icon: '',
-    children: <></>
+    title: ''
   },
   render: () => {
     const [notifications, setNotifications] = useState(true)
@@ -148,10 +148,10 @@ export const MultipleColumns: Story = {
  */
 export const NAColumn: Story = {
   args: {
-    title: 'Data Sync',
+    children: <></>,
     description: 'Sync your data across all devices',
     icon: 'tabler:cloud-data-connection',
-    children: <></>
+    title: 'Data Sync'
   },
   render: args => {
     return (

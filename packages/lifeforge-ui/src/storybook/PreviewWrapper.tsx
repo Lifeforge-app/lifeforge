@@ -13,7 +13,7 @@ const queryClient = new QueryClient()
 
 function PreviewWrapper(Story: any, context: any) {
   return (
-    <APIEndpointProvider endpoint={'https://lifeforge-api-proxy.onrender.com'}>
+    <APIEndpointProvider endpoint={import.meta.env.VITE_API_HOST}>
       <QueryClientProvider client={queryClient}>
         <Flex
           align="center"

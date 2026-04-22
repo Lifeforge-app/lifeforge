@@ -1,21 +1,21 @@
-import { useRef } from 'react'
+import { Icon } from '@iconify/react'
+import { useRef, useState } from 'react'
 
 import { useModalStore } from '@components/overlays'
 import { Bordered, Box, Flex, Text } from '@components/primitives'
 
 import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
+import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
-import { colorDot } from './ColorInput.css'
 import ColorPickerModal from './ColorPickerModal'
 
 interface ColorInputProps {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
   /** The label text displayed above the color input field. Required for 'classic' style. */
   label?: string
   /** The current color value in hex format (e.g., "#FF0000"). */
@@ -47,12 +47,14 @@ function ColorInput({
   className,
   namespace,
   errorMsg
-}: ColorInputProps) {
+}: ColorInputProps & InputVariants) {
   const { open } = useModalStore()
 
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const ref = useRef<HTMLInputElement | null>(null)
+
+  const [focused, setFocused] = useState(false)
 
   return (
     <InputWrapper
@@ -78,25 +80,18 @@ function ColorInput({
             required={required}
           />
         )}
-        <Flex
-          align="center"
-          gap="sm"
-          pb={variant === 'classic' ? 'sm' : undefined}
-          pl={variant === 'classic' ? 'none' : undefined}
-          pr={variant === 'classic' ? 'md' : undefined}
-          pt={variant === 'classic' ? 'xl' : undefined}
-          width="100%"
+        <InputInnerWrapper
+          hasActionButton
+          gap={variant === 'classic' ? 'sm' : 'md'}
+          variant={variant}
         >
-          <Bordered
-            asChild
-            borderColor={variant === 'classic' ? 'transparent' : undefined}
-            borderStyle="solid"
-            borderWidth="1px"
-          >
-            <Box
-              className={colorDot}
+          {(focused || value !== '') && (
+            <Bordered
+              borderColor={{ base: 'bg-300', dark: 'bg-700' }}
+              borderStyle="solid"
+              borderWidth="1px"
               flexShrink="0"
-              height="0.8em"
+              height={variant === 'plain' ? '1.5em' : '1em'}
               rounded="full"
               style={{
                 marginTop: '0.125rem',
@@ -104,32 +99,45 @@ function ColorInput({
                   ? value
                   : undefined
               }}
-              width="0.8em"
+              width={variant === 'plain' ? '1.5em' : '1em'}
             />
-          </Bordered>
-          <Placeholder
-            color={variant === 'classic' ? 'transparent' : 'default'}
-            focusColor="default"
-          >
-            <Box asChild minWidth="7em" rounded="lg" width="100%">
-              <Text asChild tracking="wider">
-                <input
-                  ref={autoFocusableRef(autoFocus, ref)}
-                  placeholder="#FFFFFF"
-                  value={value}
-                  onBlur={e => {
-                    onChange(e.target.value.trim().toUpperCase())
-                  }}
-                  onChange={e => {
-                    onChange(e.target.value)
-                  }}
-                />
+          )}
+          <Flex align="center" gap="xs" position="relative" width="100%">
+            {(focused || value !== '') && (
+              <Text asChild color={{ base: 'bg-400', dark: 'bg-600' }}>
+                <Icon height="1.25em" icon="tabler:hash" width="1.25em" />
               </Text>
-            </Box>
-          </Placeholder>
-        </Flex>
+            )}
+            <Placeholder
+              color={variant === 'classic' ? 'transparent' : 'default'}
+              focusColor="default"
+            >
+              <Box asChild minWidth="7em" width="100%">
+                <Text asChild tracking="wider">
+                  <input
+                    ref={autoFocusableRef(autoFocus, ref)}
+                    placeholder="A9D066"
+                    value={value.replace(/^#/, '')}
+                    onBlur={() => setFocused(false)}
+                    onChange={e => {
+                      if (!e.target.value.trim()) {
+                        onChange('')
+
+                        return
+                      }
+
+                      onChange('#' + e.target.value.trim().toUpperCase())
+                    }}
+                    onFocus={() => setFocused(true)}
+                  />
+                </Text>
+              </Box>
+            </Placeholder>
+          </Flex>
+        </InputInnerWrapper>
       </Flex>
       <InputActionButton
+        hasError={!!errorMsg}
         icon="tabler:color-picker"
         variant={variant}
         onClick={() => {

@@ -5,17 +5,17 @@ import { Box } from '@components/primitives'
 import ModalHeader from './ModalHeader'
 
 const meta = {
-  component: ModalHeader,
   argTypes: {
-    title: { control: 'text' },
-    icon: { control: 'text' },
-    hasAI: { control: 'boolean' },
+    actionButtonProps: { control: false },
+    appendTitle: { control: false },
     className: { control: 'text' },
+    hasAI: { control: 'boolean' },
+    icon: { control: 'text' },
     namespace: { control: 'text' },
     onClose: { control: false },
-    appendTitle: { control: false },
-    actionButtonProps: { control: false }
-  }
+    title: { control: 'text' }
+  },
+  component: ModalHeader
 } satisfies Meta<typeof ModalHeader>
 
 export default meta
@@ -48,9 +48,9 @@ function Shell({ children }: { children: React.ReactNode }) {
  */
 export const Default: Story = {
   args: {
-    title: 'Create Item',
     icon: 'tabler:plus',
-    onClose: () => {}
+    onClose: () => {},
+    title: 'Create Item'
   },
   render: args => (
     <Shell>
@@ -66,9 +66,9 @@ export const Default: Story = {
  */
 export const UntranslatedTitle: Story = {
   args: {
-    title: 'untranslated_modal_key_xyz',
     icon: 'tabler:file-unknown',
-    onClose: () => {}
+    onClose: () => {},
+    title: 'untranslated_modal_key_xyz'
   },
   render: args => (
     <Shell>
@@ -83,10 +83,10 @@ export const UntranslatedTitle: Story = {
  */
 export const WithAIBadge: Story = {
   args: {
-    title: 'Smart Suggestions',
-    icon: 'tabler:brain',
     hasAI: true,
-    onClose: () => {}
+    icon: 'tabler:brain',
+    onClose: () => {},
+    title: 'Smart Suggestions'
   },
   render: args => (
     <Shell>
@@ -101,9 +101,6 @@ export const WithAIBadge: Story = {
  */
 export const WithAppendTitle: Story = {
   args: {
-    title: 'Manage Tags',
-    icon: 'tabler:tag',
-    onClose: () => {},
     appendTitle: (
       <span
         style={{
@@ -116,7 +113,10 @@ export const WithAppendTitle: Story = {
       >
         12
       </span>
-    )
+    ),
+    icon: 'tabler:tag',
+    onClose: () => {},
+    title: 'Manage Tags'
   },
   render: args => (
     <Shell>
@@ -132,13 +132,13 @@ export const WithAppendTitle: Story = {
  */
 export const WithActionButton: Story = {
   args: {
-    title: 'Export Data',
-    icon: 'tabler:file-export',
-    onClose: () => {},
     actionButtonProps: {
       icon: 'tabler:help',
       onClick: () => {}
-    }
+    },
+    icon: 'tabler:file-export',
+    onClose: () => {},
+    title: 'Export Data'
   },
   render: args => (
     <Shell>
@@ -154,15 +154,15 @@ export const WithActionButton: Story = {
  */
 export const WithActionButtonVariant: Story = {
   args: {
-    title: 'Publish Post',
+    actionButtonProps: {
+      children: 'Preview',
+      icon: 'tabler:eye',
+      onClick: () => {},
+      variant: 'secondary'
+    },
     icon: 'tabler:send',
     onClose: () => {},
-    actionButtonProps: {
-      icon: 'tabler:eye',
-      variant: 'secondary',
-      children: 'Preview',
-      onClick: () => {}
-    }
+    title: 'Publish Post'
   },
   render: args => (
     <Shell>
@@ -177,10 +177,10 @@ export const WithActionButtonVariant: Story = {
  */
 export const KitchenSink: Story = {
   args: {
-    title: 'AI Content Generator',
-    icon: 'tabler:sparkles',
-    hasAI: true,
-    onClose: () => {},
+    actionButtonProps: {
+      icon: 'tabler:settings',
+      onClick: () => {}
+    },
     appendTitle: (
       <span
         style={{
@@ -197,10 +197,10 @@ export const KitchenSink: Story = {
         Beta
       </span>
     ),
-    actionButtonProps: {
-      icon: 'tabler:settings',
-      onClick: () => {}
-    }
+    hasAI: true,
+    icon: 'tabler:sparkles',
+    onClose: () => {},
+    title: 'AI Content Generator'
   },
   render: args => (
     <Shell>
@@ -215,13 +215,13 @@ export const KitchenSink: Story = {
  */
 export const ReactNodeTitle: Story = {
   args: {
+    icon: 'tabler:edit',
+    onClose: () => {},
     title: (
-      <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      <span style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
         Edit <strong style={{ color: '#4caf50' }}>Project Alpha</strong>
       </span>
-    ),
-    icon: 'tabler:edit',
-    onClose: () => {}
+    )
   },
   render: args => (
     <Shell>
@@ -236,10 +236,10 @@ export const ReactNodeTitle: Story = {
  */
 export const LongTitle: Story = {
   args: {
-    title:
-      'This Is An Exceptionally Long Modal Title That Might Overflow If Not Truncated Properly',
     icon: 'tabler:text-size',
-    onClose: () => {}
+    onClose: () => {},
+    title:
+      'This Is An Exceptionally Long Modal Title That Might Overflow If Not Truncated Properly'
   },
   render: args => (
     <Shell>

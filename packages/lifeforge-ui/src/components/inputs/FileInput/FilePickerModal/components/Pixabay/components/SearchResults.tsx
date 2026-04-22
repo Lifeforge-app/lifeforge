@@ -1,11 +1,12 @@
 import clsx from 'clsx'
-import type { SetStateAction } from 'react'
+import type { CSSProperties, SetStateAction } from 'react'
 import PhotoAlbum from 'react-photo-album'
 
 import { Pagination } from '@components/navigation'
 import { Scrollbar } from '@components/utilities'
 
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
+import * as styles from './SearchResults.css'
 
 function SearchResults({
   results,
@@ -43,7 +44,7 @@ function SearchResults({
         totalPages={Math.ceil(results.total / 20)}
         onPageChange={handlePageChange}
       />
-      <div className="px-2">
+      <div className={styles.photoWrapper}>
         <PhotoAlbum
           layout="rows"
           photos={results.hits.map(image => ({
@@ -56,18 +57,20 @@ function SearchResults({
           renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
             <button
               className={clsx(
-                'bg-bg-200 dark:bg-bg-800/50 ring-offset-bg-100 dark:ring-offset-bg-900 relative isolate block overflow-hidden rounded-md ring-2 ring-offset-2 transition-all',
-                photo.fullResURL === file
-                  ? 'ring-custom-500'
-                  : 'hover:ring-bg-400 dark:hover:ring-bg-600 ring-transparent'
+                styles.photoButton,
+                photo.fullResURL === file && styles.photoButtonSelected
               )}
-              style={style as any}
+              style={style as CSSProperties}
               onClick={() => {
                 setFile(photo.fullResURL)
                 setPreview(photo.src)
               }}
             >
-              <img alt={alt} className="size-full object-cover" src={src} />
+              <img
+                alt={alt}
+                src={src}
+                style={{ height: '100%', objectFit: 'cover', width: '100%' }}
+              />
             </button>
           )}
           spacing={12}

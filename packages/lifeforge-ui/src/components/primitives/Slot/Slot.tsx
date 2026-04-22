@@ -28,8 +28,8 @@ export function Slot({ children, className, style, ref, ...rest }: SlotProps) {
 
   const mergedProps: Record<string, unknown> = {
     ...rest,
-    className: clsx(className, childProps.className as string),
-    style: { ...style, ...(childProps.style as CSSProperties) }
+    className: clsx(childProps.className as string, className),
+    style: { ...(childProps.style as CSSProperties), ...style }
   }
 
   if (ref) {

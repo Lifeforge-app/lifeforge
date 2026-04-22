@@ -1,5 +1,14 @@
 import { Listbox } from '@headlessui/react'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
+
+import { inputWrapperRecipe } from '@components/inputs/shared/components/InputWrapper/InputWrapper.css'
+import { InputFocusProvider } from '@components/inputs/shared/contexts/InputFocusContext'
+import { Box, Flex, Text } from '@components/primitives'
+
+import type { InputSize, InputVariant } from '../../shared/types'
+import useListboxBlurOnClose from '../hooks/useListboxBlurOnClose'
+import * as styles from './ListboxInputWrapper.css'
 
 function ListboxInputWrapper<T>({
   value,
@@ -21,36 +30,77 @@ function ListboxInputWrapper<T>({
   disabled?: boolean
   onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
   errorMsg?: string
-  variant?: 'classic' | 'plain'
-  size?: 'small' | 'default'
+  variant?: InputVariant
+  size?: InputSize
 }) {
+  const listboxRef = useListboxBlurOnClose()
+
   return (
-    <div className={clsx('space-y-2', className)}>
-      <Listbox
-        as="div"
-        className={clsx(
-          'relative flex w-full items-center gap-1 transition-all',
-          variant === 'classic'
-            ? 'shadow-custom component-bg-lighter-with-hover rounded-t-lg border-b-2 in-[.bordered]:rounded-lg in-[.bordered]:border-2'
-            : clsx(
-                'component-bg-lighter-with-hover rounded-lg',
-                size === 'small' ? 'p-2 px-3' : 'p-4 px-5'
-              ),
-          variant === 'classic' &&
-            (errorMsg
-              ? 'border-red-500'
-              : 'border-bg-500 in-[.bordered]:border-bg-500/20 focus-within:border-custom-500! data-open:border-custom-500!'),
-          disabled ? 'pointer-events-none! opacity-50' : ''
-        )}
-        multiple={multiple}
-        value={value}
-        onChange={onChange}
-        onClick={onClick}
+    <InputFocusProvider>
+      <Flex
+        className={className}
+        direction="column"
+        gap="sm"
+        style={disabled ? { opacity: 0.5 } : undefined}
+        width="100%"
       >
-        {children}
-      </Listbox>
-      {errorMsg && <div className="px-6 text-sm text-red-500">{errorMsg}</div>}
-    </div>
+        <Flex
+          asChild
+          align="center"
+          gap="xs"
+          position="relative"
+          shadow={variant === 'classic'}
+          style={
+            variant === 'plain' && errorMsg
+              ? { outline: '2px solid var(--color-red-500)' }
+              : {}
+          }
+          width="100%"
+        >
+          <Listbox
+            ref={listboxRef}
+            as="div"
+            className={clsx(
+              !errorMsg && styles.dataOpen,
+              inputWrapperRecipe({
+                variant,
+                size: size ?? 'default',
+                hasError: !!errorMsg,
+                disabled: disabled ?? false
+              })
+            )}
+            multiple={multiple}
+            style={{
+              padding: 0
+            }}
+            value={value}
+            onChange={onChange}
+            onClick={onClick}
+          >
+            {children}
+            {errorMsg && (
+              <Box
+                asChild
+                flexShrink="0"
+                mr={variant === 'classic' ? 'lg' : 'md'}
+              >
+                <Icon
+                  color="var(--color-red-500)"
+                  height="1.5em"
+                  icon="tabler:alert-circle"
+                  width="1.5em"
+                />
+              </Box>
+            )}
+          </Listbox>
+        </Flex>
+        {errorMsg && (
+          <Text color="dangerous" px="md" size="sm">
+            {errorMsg}
+          </Text>
+        )}
+      </Flex>
+    </InputFocusProvider>
   )
 }
 

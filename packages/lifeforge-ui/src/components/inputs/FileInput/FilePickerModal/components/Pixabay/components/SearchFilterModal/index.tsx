@@ -1,5 +1,6 @@
 import { Button } from '@components/inputs'
 import { ModalHeader, ModalWrapper } from '@components/overlays'
+import { Flex } from '@components/primitives'
 
 import {
   type IPixabaySearchFilter,
@@ -30,7 +31,7 @@ function SearchFilterModal({
         title="Search Filters"
         onClose={onClose}
       />
-      <div className="space-y-3">
+      <Flex direction="column" style={{ gap: '0.75rem' }}>
         <ImageTypeFilter
           imageType={filters.imageType}
           updateFilters={updateFilters}
@@ -44,8 +45,12 @@ function SearchFilterModal({
           isEditorsChoice={filters.isEditorsChoice}
           updateFilters={updateFilters}
         />
-      </div>
-      <Button className="mt-6 w-full" icon="tabler:check" onClick={onClose}>
+      </Flex>
+      <Button
+        icon="tabler:check"
+        style={{ marginTop: '1.5rem', width: '100%' }}
+        onClick={onClose}
+      >
         Apply Filters
       </Button>
     </ModalWrapper>

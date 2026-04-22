@@ -70,6 +70,7 @@ function ModalWrapper({
             }}
             minWidth="0"
             overflowY="auto"
+            p="lg"
             position="absolute"
             rounded="xl"
             style={{
@@ -83,9 +84,9 @@ function ModalWrapper({
               base: '100%'
             }}
           >
-            <Box minWidth="0" p="lg">
+            <Flex direction="column" gap="md" minHeight="0" minWidth="0">
               {children}
-            </Box>
+            </Flex>
           </Flex>
         </Transition>
       </Box>

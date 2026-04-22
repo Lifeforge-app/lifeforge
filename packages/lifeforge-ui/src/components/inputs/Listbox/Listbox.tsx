@@ -1,8 +1,31 @@
 import { Listbox as HeadlessListbox, ListboxButton } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { clsx } from 'clsx'
+
+import { Flex, type FlexProps, Text, Transition } from '@components/primitives'
 
 import ListboxOptions from '../ListboxInput/components/ListboxOptions'
+
+type ListboxWithMultiple<T> = {
+  value: T[]
+  onChange: (value: T[]) => void
+  renderContent?: (value: T[]) => React.ReactNode
+  children: React.ReactNode
+  multiple: true
+}
+
+type ListboxWithoutMultiple<T> = {
+  value: T
+  onChange: (value: T) => void
+  renderContent?: (value: T) => React.ReactNode
+  children: React.ReactNode
+  multiple?: never
+}
+
+type ListboxProps<T> = { disabled?: boolean } & (
+  | ListboxWithMultiple<T>
+  | ListboxWithoutMultiple<T>
+) &
+  Omit<FlexProps, 'onChange' | 'value'>
 
 /**
  * A listbox component for selecting from a list of options. Similar to ListboxInput but without the input box styling.
@@ -10,30 +33,59 @@ import ListboxOptions from '../ListboxInput/components/ListboxOptions'
 function Listbox<T>({
   value,
   onChange,
-  buttonContent,
+  renderContent,
   children,
-  className
-}: {
-  value: T
-  onChange: (value: T) => void
-  buttonContent: React.ReactNode
-  children: React.ReactNode
-  className?: string
-}) {
+  multiple,
+  disabled = false,
+  ...rest
+}: ListboxProps<T>) {
   return (
-    <HeadlessListbox value={value} onChange={onChange}>
-      <ListboxButton
-        className={clsx(
-          'shadow-custom component-bg-with-hover border-bg-500/20 flex-between w-full min-w-0 gap-6 rounded-lg p-4 text-left outline-hidden transition-all focus:outline-hidden in-[.bordered]:border-2',
-          className
-        )}
-      >
-        <div className="w-full min-w-0 truncate">{buttonContent}</div>
-        <Icon
-          className="text-bg-500 size-5 shrink-0"
-          icon="tabler:chevron-down"
-        />
-      </ListboxButton>
+    <HeadlessListbox
+      disabled={disabled}
+      multiple={multiple}
+      value={value as never}
+      onChange={onChange as never}
+    >
+      <Transition property="all">
+        <Flex
+          asChild
+          shadow
+          align="center"
+          bg={{
+            base: 'bg-50',
+            dark: 'bg-900',
+            hover: disabled ? undefined : 'bg-100',
+            darkHover: disabled ? undefined : 'bg-800'
+          }}
+          gap="lg"
+          justify="between"
+          minWidth="0"
+          p="md"
+          rounded="lg"
+          style={disabled ? { opacity: 0.5 } : undefined}
+          width="100%"
+          {...rest}
+        >
+          <ListboxButton
+            style={disabled ? { cursor: 'not-allowed' } : undefined}
+          >
+            {renderContent ? (
+              renderContent(value as never)
+            ) : (
+              <Text truncate align="left" whiteSpace="nowrap">
+                {value as unknown as string}
+              </Text>
+            )}
+            <Text asChild color="bg-500" style={{ flexShrink: 0 }}>
+              <Icon
+                height="1.25rem"
+                icon="tabler:chevron-down"
+                width="1.25rem"
+              />
+            </Text>
+          </ListboxButton>
+        </Flex>
+      </Transition>
       <ListboxOptions>{children}</ListboxOptions>
     </HeadlessListbox>
   )

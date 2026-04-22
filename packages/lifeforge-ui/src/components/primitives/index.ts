@@ -17,6 +17,8 @@ export { Slot } from './Slot'
 
 export { Transition, type TransitionProps } from './Transition'
 
+export { WithDivide, type WithDivideProps } from './WithDivide'
+
 // Layout props types for extending components
 export type {
   LayoutProps,

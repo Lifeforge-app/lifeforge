@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { useState } from 'react'
 
 import Checkbox from './Checkbox'
 
@@ -13,9 +14,20 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     checked: true,
-    onCheckedChange: () => {},
     disabled: false,
-    label: ''
+    label: '',
+    onCheckedChange: () => {}
+  },
+  render: props => {
+    const [checked, setChecked] = useState(props.checked)
+
+    return (
+      <Checkbox
+        {...props}
+        checked={checked}
+        onCheckedChange={setChecked}
+      />
+    )
   }
 }
 
@@ -32,5 +44,13 @@ export const Unchecked: Story = {
     checked: false,
     disabled: false,
     label: 'Accept terms and conditions'
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    checked: true,
+    disabled: true,
+    label: ''
   }
 }

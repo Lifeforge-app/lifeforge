@@ -7,7 +7,6 @@ import { Flex, Text } from '@components/primitives'
 import TextInput from '.'
 
 const meta = {
-  component: TextInput,
   argTypes: {
     actionButtonProps: {
       table: {
@@ -16,7 +15,8 @@ const meta = {
         }
       }
     }
-  }
+  },
+  component: TextInput
 } satisfies Meta<typeof TextInput>
 
 export default meta
@@ -27,19 +27,17 @@ export const Default: Story = {
   args: {
     icon: 'tabler:user',
     label: 'Username',
-    placeholder: 'John Doe',
-    onChange: () => {},
-    value: '',
     namespace: '',
-    required: false
+    onChange: () => {},
+    placeholder: 'John Doe',
+    required: false,
+    value: ''
   },
   render: args => {
     const [value, onChange] = useState('')
 
     return (
-      <div>
-        <TextInput {...args} value={value} onChange={onChange} />
-      </div>
+      <TextInput {...args} value={value} onChange={onChange} />
     )
   }
 }
@@ -47,44 +45,40 @@ export const Default: Story = {
 export const PasswordInput: Story = {
   args: {
     icon: 'tabler:key',
-    label: 'Password',
-    placeholder: 'Type your password here',
-    value: '',
     isPassword: true,
-    onChange: () => {}
+    label: 'Password',
+    onChange: () => {},
+    placeholder: 'Type your password here',
+    value: ''
   },
 
   render: args => {
     const [value, onChange] = useState('')
 
     return (
-      <div>
-        <TextInput {...args} value={value} onChange={onChange} />
-      </div>
+      <TextInput {...args} value={value} onChange={onChange} />
     )
   }
 }
 
 export const WithActionButton: Story = {
   args: {
-    icon: 'tabler:barcode',
-    label: 'Barcode',
-    placeholder: '0123456789',
-    value: '',
     actionButtonProps: {
       icon: 'tabler:scan',
       onClick: () => {}
     },
-    onChange: () => {}
+    icon: 'tabler:barcode',
+    label: 'Barcode',
+    onChange: () => {},
+    placeholder: '0123456789',
+    value: ''
   },
 
   render: args => {
     const [value, onChange] = useState('')
 
     return (
-      <div>
-        <TextInput {...args} value={value} onChange={onChange} />
-      </div>
+      <TextInput {...args} value={value} onChange={onChange} />
     )
   }
 }
@@ -93,20 +87,104 @@ export const Required: Story = {
   args: {
     icon: 'tabler:user',
     label: 'Username',
-    placeholder: 'John Doe',
-    value: '',
-    onChange: () => {},
     namespace: '',
-    required: true
+    onChange: () => {},
+    placeholder: 'John Doe',
+    required: true,
+    value: ''
   },
 
   render: args => {
     const [value, onChange] = useState('')
 
     return (
-      <div>
+      <TextInput {...args} value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    icon: 'tabler:user',
+    label: 'Username',
+    namespace: '',
+    onChange: () => {},
+    placeholder: 'John Doe',
+    value: 'Existing value'
+  },
+  render: args => {
+    const [value, onChange] = useState('Existing value')
+
+    return (
+      <TextInput {...args} disabled value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const WithErrorMessage: Story = {
+  args: {
+    errorMsg: 'Invalid username',
+    icon: 'tabler:user',
+    label: 'Username',
+    namespace: '',
+    onChange: () => {},
+    placeholder: 'John Doe',
+    value: ''
+  },
+  render: args => {
+    const [value, onChange] = useState('')
+
+    return (
+      <TextInput {...args} value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const DisabledWithErrorMessage: Story = {
+  args: {
+    disabled: true,
+    errorMsg: 'Invalid username',
+    icon: 'tabler:user',
+    label: 'Username',
+    namespace: '',
+    onChange: () => {},
+    placeholder: 'John Doe',
+    value: 'Existing value'
+  },
+  render: args => {
+    const [value, onChange] = useState('Existing value')
+
+    return (
+      <TextInput {...args} disabled value={value} onChange={onChange} />
+    )
+  }
+}
+
+export const PlainVariantWithErrorMessage: Story = {
+  args: {
+    errorMsg: 'Invalid username',
+    icon: 'tabler:user',
+    label: 'Username',
+    namespace: '',
+    onChange: () => {},
+    placeholder: 'John Doe',
+    required: false,
+    value: '',
+    variant: 'plain'
+  },
+  render: args => {
+    const [value, onChange] = useState('')
+
+    return (
+      <Flex direction="column" gap="sm">
+        <Text asChild color="muted">
+          <Flex align="center" gap="sm">
+            <Icon height="16" icon="tabler:user" width="16" />
+            <Text weight="medium">Username</Text>
+          </Flex>
+        </Text>
         <TextInput {...args} value={value} onChange={onChange} />
-      </div>
+      </Flex>
     )
   }
 }
@@ -115,12 +193,12 @@ export const PlainVariant: Story = {
   args: {
     icon: 'tabler:user',
     label: 'Username',
-    placeholder: 'John Doe',
-    value: '',
     namespace: '',
+    onChange: () => {},
+    placeholder: 'John Doe',
     required: false,
-    variant: 'plain',
-    onChange: () => {}
+    value: '',
+    variant: 'plain'
   },
 
   render: args => {

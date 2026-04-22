@@ -1,8 +1,9 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 import { usePersonalization } from 'shared'
-import tinycolor from 'tinycolor2'
 
 import { Box, Flex, Transition } from '@components/primitives'
+
+import { bg } from '@/system'
 
 interface SwitchProps {
   /** Whether the switch is currently checked (on) or unchecked (off). */
@@ -17,13 +18,7 @@ interface SwitchProps {
  * A switch component for toggling between two states.
  */
 function Switch({ value, onChange, disabled }: SwitchProps) {
-  const { derivedThemeColor, derivedTheme } = usePersonalization()
-
-  const colorMode = !value
-    ? 'light'
-    : tinycolor(derivedThemeColor).isLight() && derivedTheme === 'dark'
-      ? 'dark'
-      : 'light'
+  const { derivedTheme, getMostReadableColor } = usePersonalization()
 
   return (
     <Transition duration={200} property="background-color">
@@ -43,7 +38,7 @@ function Switch({ value, onChange, disabled }: SwitchProps) {
               : {
                   base: 'bg-300',
                   hover: 'bg-400',
-                  dark: 'bg-600',
+                  dark: 'bg-700',
                   darkHover: 'bg-500'
                 }
         }
@@ -63,16 +58,17 @@ function Switch({ value, onChange, disabled }: SwitchProps) {
           <Transition duration={100} easing="ease-in-out" property="transform">
             <Box
               as="span"
-              bg={{
-                base: colorMode === 'light' ? 'bg-100' : 'bg-900'
-              }}
               display="inline-block"
               height="1em"
               rounded="full"
               style={{
                 transform: value
                   ? 'translateX(calc(100% - var(--spacing)))'
-                  : 'translateX(calc(-100% + var(--spacing)))'
+                  : 'translateX(calc(-100% + var(--spacing)))',
+                backgroundColor:
+                  derivedTheme === 'dark' && value
+                    ? getMostReadableColor()
+                    : bg[100]
               }}
               width="1em"
             />

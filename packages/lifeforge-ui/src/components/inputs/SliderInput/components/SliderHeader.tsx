@@ -52,7 +52,7 @@ function SliderHeader({
       </Text>
       <Flex align="center" gap="sm">
         <span>{value}</span>
-        <Text color="bg-500" style={{ fontSize: '0.75rem' }}>
+        <Text color="muted" style={{ fontSize: '0.75rem' }}>
           /{max}
         </Text>
       </Flex>

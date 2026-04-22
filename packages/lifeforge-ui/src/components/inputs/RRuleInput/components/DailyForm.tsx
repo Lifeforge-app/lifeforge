@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { NumberInput } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 import type { FreqSpecificParams } from '../RRuleInput'
 
@@ -14,19 +15,18 @@ function DailyForm({
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
 
   return (
-    <>
-      <div className="flex w-full items-center gap-3">
+    <Flex align="center" gap="md" width="100%">
+      <Box flex="1">
         <NumberInput
           required
-          className="flex-1"
           icon="tabler:repeat"
           label={t('inputs.daily.inputs.every')}
           value={data.every}
           onChange={every => setData({ ...data, every })}
         />
-        <p className="text-bg-500">{t('inputs.daily.inputs.days')}</p>
-      </div>
-    </>
+      </Box>
+      <Text color="muted">{t('inputs.daily.inputs.days')}</Text>
+    </Flex>
   )
 }
 

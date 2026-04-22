@@ -1,5 +1,7 @@
 import { memo } from 'react'
 
+import { Bordered, Box, Grid, Text } from '@components/primitives'
+
 import type { IIconSet } from '../../../typescript/icon_selector_interfaces'
 import IconSetEntry from './IconSetEntry'
 
@@ -18,11 +20,32 @@ function CategoryEntry({
   >
 }) {
   return (
-    <div className="mb-6 w-full overflow-hidden">
-      <div className="after:border-b-custom-500 relative mb-8 rounded-lg text-center text-2xl font-semibold after:absolute after:-bottom-2 after:left-1/2 after:w-8 after:-translate-x-1/2 after:border-b-2">
-        {category}
-      </div>
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] flex-wrap gap-3">
+    <Box as="section" mb="lg" width="100%">
+      <Box as="header" mb="xl" position="relative" rounded="lg">
+        <Text align="center" as="h2" size="3xl" weight="semibold">
+          {category}
+          <Bordered
+            borderColor="custom-500"
+            borderSide="bottom"
+            borderWidth="4px"
+            bottom="-0.5rem"
+            left="50%"
+            position="absolute"
+            style={{
+              left: '50%',
+              transform: 'translateX(-50%)'
+            }}
+            width="2rem"
+          />
+        </Text>
+      </Box>
+      <Grid
+        columns={{
+          base: '1',
+          sm: 'repeat(auto-fill, minmax(320px, 1fr))'
+        }}
+        gap="sm"
+      >
         {iconSets.map(iconSet => (
           <IconSetEntry
             key={iconSet.prefix}
@@ -30,8 +53,8 @@ function CategoryEntry({
             setCurrentIconSet={setCurrentIconSet}
           />
         ))}
-      </div>
-    </div>
+      </Grid>
+    </Box>
   )
 }
 

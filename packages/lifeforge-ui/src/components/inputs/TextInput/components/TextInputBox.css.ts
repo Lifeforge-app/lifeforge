@@ -1,10 +1,9 @@
 import { recipe } from '@vanilla-extract/recipes'
 
-import { custom, vars } from '@/system'
+import { vars } from '@/system'
 
 export const textInputBoxRecipe = recipe({
   base: {
-    caretColor: custom[500],
     width: '100%',
     backgroundColor: 'transparent',
     letterSpacing: '0.05em',

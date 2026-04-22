@@ -3,10 +3,19 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import colors from 'tailwindcss/colors'
 
+import { Box, Flex, Text } from '@components/primitives'
+
+import ListboxNullOption from './components/ListboxNullOption'
 import ListboxOption from './components/ListboxOption'
 import Index from './index'
 
 const meta = {
+  argTypes: {
+    buttonContent: { control: false },
+    children: { control: false },
+    onChange: { control: false },
+    value: { control: false }
+  },
   component: Index
 } satisfies Meta<typeof Index>
 
@@ -35,15 +44,33 @@ const OPTIONS = [
   }
 ]
 
+function OptionButtonContent({ value }: { value: string }) {
+  const option = OPTIONS.find(o => o.value === value)
+
+  return (
+    <Flex align="center" gap="sm">
+      <Icon
+        color={option?.color ?? colors.gray[500]}
+        icon={option?.icon ?? 'tabler:cube'}
+        style={{ flexShrink: 0, height: '1.25rem', width: '1.25rem' }}
+      />
+      <Text truncate>{value || 'Select an option'}</Text>
+    </Flex>
+  )
+}
+
+/**
+ * The default ListboxInput with a label, icon, and a list of options.
+ */
 export const Default: Story = {
   args: {
-    label: 'Category',
-    icon: 'tabler:category',
-    value: '',
-    onChange: () => {},
-    namespace: 'namespace',
     buttonContent: <></>,
-    children: <></>
+    children: <></>,
+    icon: 'tabler:category',
+    label: 'Category',
+    namespace: 'namespace',
+    onChange: () => {},
+    value: ''
   },
   render: args => {
     const [value, onChange] = useState('Option 1')
@@ -51,26 +78,13 @@ export const Default: Story = {
     return (
       <Index
         {...args}
-        buttonContent={
-          <span className="flex items-center gap-2">
-            <Icon
-              className="size-5"
-              color={
-                OPTIONS.find(o => o.value === value)?.color || colors.gray[500]
-              }
-              icon={OPTIONS.find(o => o.value === value)?.icon || 'tabler:cube'}
-            />
-            {value || 'Select an option'}
-          </span>
-        }
-        className="w-96"
-        disabled={false}
+        buttonContent={<OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >
-        {OPTIONS.map(({ color, icon, text, value }, index) => (
+        {OPTIONS.map(({ color, icon, text, value }) => (
           <ListboxOption
-            key={index}
+            key={value}
             color={color}
             icon={icon}
             label={text}
@@ -82,18 +96,243 @@ export const Default: Story = {
   }
 }
 
-export const MultipleSelection: Story = {
+/**
+ * A required ListboxInput for form validation. Renders an asterisk next to the label.
+ */
+export const Required: Story = {
   args: {
-    label: 'Category',
-    icon: 'tabler:category',
-    value: '',
-    namespace: 'namespace',
     buttonContent: <></>,
     children: <></>,
-    multiple: true,
-    onChange: () => {}
+    icon: 'tabler:category',
+    label: 'Category',
+    namespace: 'namespace',
+    onChange: () => {},
+    required: true,
+    value: ''
   },
+  render: args => {
+    const [value, onChange] = useState('')
 
+    return (
+      <Index
+        {...args}
+        buttonContent={<OptionButtonContent value={value} />}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, text, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={text}
+            value={value}
+          />
+        ))}
+      </Index>
+    )
+  }
+}
+
+/**
+ * A disabled ListboxInput — non-interactive and visually dimmed.
+ */
+export const Disabled: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    disabled: true,
+    icon: 'tabler:category',
+    label: 'Category',
+    namespace: 'namespace',
+    onChange: () => {},
+    value: 'Option 1'
+  },
+  render: args => {
+    const [value, onChange] = useState('Option 1')
+
+    return (
+      <Index
+        {...args}
+        buttonContent={<OptionButtonContent value={value} />}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, text, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={text}
+            value={value}
+          />
+        ))}
+      </Index>
+    )
+  }
+}
+
+/**
+ * A ListboxInput showing an error message, e.g. after failed form validation.
+ */
+export const WithErrorMessage: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    errorMsg: 'Please select a category',
+    icon: 'tabler:category',
+    label: 'Category',
+    namespace: 'namespace',
+    onChange: () => {},
+    value: ''
+  },
+  render: args => {
+    const [value, onChange] = useState('')
+
+    return (
+      <Index
+        {...args}
+        buttonContent={<OptionButtonContent value={value} />}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, text, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={text}
+            value={value}
+          />
+        ))}
+      </Index>
+    )
+  }
+}
+
+export const DisabledWithErrorMessage: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    disabled: true,
+    errorMsg: 'Please select a category',
+    icon: 'tabler:category',
+    label: 'Category',
+    namespace: 'namespace',
+    onChange: () => {},
+    value: ''
+  },
+  render: args => {
+    const [value, onChange] = useState('')
+
+    return (
+      <Index
+        {...args}
+        buttonContent={<OptionButtonContent value={value} />}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, text, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={text}
+            value={value}
+          />
+        ))}
+      </Index>
+    )
+  }
+}
+
+/**
+ * The plain variant renders as a compact rounded box without an underline or floating label.
+ */
+export const PlainVariant: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    onChange: () => {},
+    value: '',
+    variant: 'plain'
+  },
+  render: args => {
+    const [value, onChange] = useState('Option 1')
+
+    return (
+      <Index
+        {...args}
+        buttonContent={<OptionButtonContent value={value} />}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, text, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={text}
+            value={value}
+          />
+        ))}
+      </Index>
+    )
+  }
+}
+
+/**
+ * The small-size plain variant, useful for compact UIs like table rows or toolbars.
+ */
+export const PlainVariantSmall: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    onChange: () => {},
+    size: 'small',
+    value: '',
+    variant: 'plain'
+  },
+  render: args => {
+    const [value, onChange] = useState('Option 1')
+
+    return (
+      <Box width="16rem">
+        <Index
+          {...args}
+          buttonContent={<OptionButtonContent value={value} />}
+          value={value}
+          onChange={onChange}
+        >
+          {OPTIONS.map(({ color, icon, text, value }) => (
+            <ListboxOption
+              key={value}
+              color={color}
+              icon={icon}
+              label={text}
+              value={value}
+            />
+          ))}
+        </Index>
+      </Box>
+    )
+  }
+}
+
+/**
+ * Allows selecting multiple options at once. Shows selected count in the button.
+ */
+export const MultipleSelection: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    icon: 'tabler:category',
+    label: 'Category',
+    multiple: true,
+    namespace: 'namespace',
+    onChange: () => {},
+    value: []
+  },
   render: args => {
     const [value, onChange] = useState(['Option 1', 'Option 2'])
 
@@ -101,42 +340,127 @@ export const MultipleSelection: Story = {
       <Index
         {...args}
         buttonContent={
-          <span className="flex flex-wrap items-center gap-2">
-            {value.length > 0
-              ? value.map((v, index) => (
-                  <>
-                    <span key={index} className="flex items-center gap-2">
-                      <Icon
-                        className="size-5 shrink-0"
-                        color={
-                          OPTIONS.find(o => o.value === v)?.color ||
-                          colors.gray[500]
-                        }
-                        icon={
-                          OPTIONS.find(o => o.value === v)?.icon ||
-                          'tabler:cube'
-                        }
-                      />
-                      <span className="whitespace-nowrap">{v}</span>
-                    </span>
-                    {index !== value.length - 1 && (
-                      <Icon
-                        className="text-bg-400 dark:text-bg-600 size-1.5"
-                        icon="tabler:circle-filled"
-                      />
-                    )}
-                  </>
-                ))
-              : 'Select options'}
-          </span>
+          <Flex align="center" gap="sm" wrap="wrap">
+            {value.length > 0 ? (
+              value.map((v, index) => (
+                <>
+                  <Flex key={index} align="center" gap="sm">
+                    <Icon
+                      color={
+                        OPTIONS.find(o => o.value === v)?.color ??
+                        colors.gray[500]
+                      }
+                      icon={
+                        OPTIONS.find(o => o.value === v)?.icon ?? 'tabler:cube'
+                      }
+                      style={{
+                        flexShrink: 0,
+                        height: '1.25rem',
+                        width: '1.25rem'
+                      }}
+                    />
+                    <Text whiteSpace="nowrap">{v}</Text>
+                  </Flex>
+                  {index !== value.length - 1 && (
+                    <Text
+                      asChild
+                      color={{ base: 'bg-400', dark: 'bg-600' }}
+                      style={{ height: '0.375rem', width: '0.375rem' }}
+                    >
+                      <Icon icon="tabler:circle-filled" />
+                    </Text>
+                  )}
+                </>
+              ))
+            ) : (
+              <Text color="muted">Select options</Text>
+            )}
+          </Flex>
         }
-        disabled={false}
         value={value}
         onChange={onChange}
       >
-        {OPTIONS.map(({ color, icon, text, value }, index) => (
+        {OPTIONS.map(({ color, icon, text, value }) => (
           <ListboxOption
-            key={index}
+            key={value}
+            color={color}
+            icon={icon}
+            label={text}
+            value={value}
+          />
+        ))}
+      </Index>
+    )
+  }
+}
+
+/**
+ * ListboxInput with a null option at the top for clearing the selection.
+ */
+export const WithNullOption: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    icon: 'tabler:category',
+    label: 'Category',
+    namespace: 'namespace',
+    onChange: () => {},
+    value: ''
+  },
+  render: args => {
+    const [value, onChange] = useState('')
+
+    return (
+      <Index
+        {...args}
+        buttonContent={
+          value ? (
+            <OptionButtonContent value={value} />
+          ) : (
+            <Text color="muted">None</Text>
+          )
+        }
+        value={value}
+        onChange={onChange}
+      >
+        <ListboxNullOption icon="tabler:x" text="None" value="" />
+        {OPTIONS.map(({ color, icon, text, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={text}
+            value={value}
+          />
+        ))}
+      </Index>
+    )
+  }
+}
+
+export const PlainVariantWithErrorMessage: Story = {
+  args: {
+    buttonContent: <></>,
+    children: <></>,
+    errorMsg: 'Invalid options selected',
+    onChange: () => {},
+    value: '',
+    variant: 'plain'
+  },
+
+render: args => {
+    const [value, onChange] = useState('Option 1')
+
+    return (
+      <Index
+        {...args}
+        buttonContent={<OptionButtonContent value={value} />}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, text, value }) => (
+          <ListboxOption
+            key={value}
             color={color}
             icon={icon}
             label={text}

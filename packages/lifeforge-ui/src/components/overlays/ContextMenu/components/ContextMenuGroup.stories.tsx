@@ -5,12 +5,12 @@ import ContextMenuGroup from './ContextMenuGroup'
 import ContextMenuItem from './ContextMenuItem'
 
 const meta = {
-  component: ContextMenuGroup,
   argTypes: {
     children: {
       control: false
     }
-  }
+  },
+  component: ContextMenuGroup
 } satisfies Meta<typeof ContextMenuGroup>
 
 export default meta
@@ -19,8 +19,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    icon: 'tabler:cube',
-    label: 'Categories',
     children: (
       <>
         <ContextMenuItem
@@ -39,7 +37,9 @@ export const Default: Story = {
           onClick={() => {}}
         />
       </>
-    )
+    ),
+    icon: 'tabler:cube',
+    label: 'Categories'
   },
   render: props => (
     <ContextMenu>
@@ -50,8 +50,6 @@ export const Default: Story = {
 
 export const Togglable: Story = {
   args: {
-    icon: 'tabler:cube',
-    label: 'Categories',
     children: (
       <>
         <ContextMenuItem
@@ -71,7 +69,9 @@ export const Togglable: Story = {
           onClick={() => {}}
         />
       </>
-    )
+    ),
+    icon: 'tabler:cube',
+    label: 'Categories'
   },
   render: props => (
     <ContextMenu>

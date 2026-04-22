@@ -1,40 +1,52 @@
-import clsx from 'clsx'
 import { useModuleSidebarState } from 'shared'
 
+import { Box, Flex } from '@components/primitives'
 import { Scrollbar } from '@components/utilities'
 
 import GoBackButton from '../../GoBackButton'
 
-function SidebarWrapper({
-  customHeight,
-  children
-}: {
-  customHeight?: string
-  children: React.ReactNode
-}) {
+function SidebarWrapper({ children }: { children: React.ReactNode }) {
   const { isSidebarOpen, setIsSidebarOpen } = useModuleSidebarState()
 
   return (
-    <aside
-      className={clsx(
-        'bg-bg-50 shadow-custom border-bg-500/20 xl:component-bg dark:bg-bg-900 absolute top-0 size-full shrink-0 rounded-lg py-4 backdrop-blur-xs in-[.bordered]:border-2 xl:static xl:w-1/4 xl:min-w-96 xl:backdrop-blur-xs',
-        isSidebarOpen
-          ? 'sidebar-opening left-0 z-[9990]'
-          : 'sidebar-closing left-full z-0',
-        customHeight ?? 'xl:h-[calc(100%-2rem)]'
-      )}
+    <Box
+      shadow
+      as="aside"
+      bg={{ base: 'bg-50', dark: 'bg-900' }}
+      className={isSidebarOpen ? 'sidebar-opening' : 'sidebar-closing'}
+      flexShrink="0"
+      height={{ base: '100%', xl: 'calc(100% - 2rem)' }}
+      left={isSidebarOpen ? '0' : '100%'}
+      minWidth={{ base: '0', xl: '24rem' }}
+      position={{ base: 'absolute', xl: 'static' }}
+      py="md"
+      rounded="lg"
+      top="0"
+      width={{ base: '100%', xl: '25%' }}
+      zIndex={isSidebarOpen ? '9990' : '0'}
     >
       <Scrollbar usePaddingRight={false}>
-        <div className="flex-between flex px-8 py-4 xl:hidden">
-          <GoBackButton
-            onClick={() => {
-              setIsSidebarOpen(false)
-            }}
-          />
-        </div>
-        <ul className="flex size-full min-w-0 flex-col gap-0.5">{children}</ul>
+        <Flex
+          align="center"
+          display={{ base: 'flex', xl: 'none' }}
+          justify="between"
+          px="2xl"
+          py="md"
+        >
+          <GoBackButton onClick={() => setIsSidebarOpen(false)} />
+        </Flex>
+        <Flex
+          as="ul"
+          direction="column"
+          height="100%"
+          minWidth="0"
+          style={{ gap: '0.125rem' }}
+          width="100%"
+        >
+          {children}
+        </Flex>
       </Scrollbar>
-    </aside>
+    </Box>
   )
 }
 

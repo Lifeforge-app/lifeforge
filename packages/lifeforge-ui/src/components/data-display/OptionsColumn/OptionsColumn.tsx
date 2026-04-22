@@ -59,54 +59,52 @@ function OptionsColumn({
   }
 
   return (
-    <Card>
-      <Flex direction={getDirection()} gap="xl" justify="between">
-        <Flex align="center" flexShrink="1" gap="md">
-          <Icon
-            icon={icon}
-            style={{
-              color: 'var(--color-bg-500)',
-              flexShrink: 0,
-              width: '24px',
-              height: '24px',
-              margin: '0 0.5rem'
-            }}
-          />
-          <Flex direction="column">
-            <Flex
-              align="center"
-              as="h3"
-              gap="sm"
-              width={{ base: 'full', md: 'auto' }}
-            >
-              <Text size="xl" weight="medium">
-                {title}
-              </Text>
-              {tooltip !== undefined && (
-                <Tooltip icon="tabler:info-circle" id={title?.toString() || ''}>
-                  {tooltip}
-                </Tooltip>
-              )}
-            </Flex>
-            {typeof description === 'string' ? (
-              <Text as="p" color="bg-500">
-                {description}
-              </Text>
-            ) : (
-              description
+    <Card direction={getDirection()} gap="xl" justify="between">
+      <Flex align="center" flexShrink="1" gap="md">
+        <Icon
+          icon={icon}
+          style={{
+            color: 'var(--color-bg-500)',
+            flexShrink: 0,
+            width: '24px',
+            height: '24px',
+            margin: '0 0.5rem'
+          }}
+        />
+        <Flex direction="column">
+          <Flex
+            align="center"
+            as="h3"
+            gap="sm"
+            width={{ base: 'full', md: 'auto' }}
+          >
+            <Text size="xl" weight="medium">
+              {title}
+            </Text>
+            {tooltip !== undefined && (
+              <Tooltip icon="tabler:info-circle" id={title?.toString() || ''}>
+                {tooltip}
+              </Tooltip>
             )}
           </Flex>
+          {typeof description === 'string' ? (
+            <Text as="p" color="muted">
+              {description}
+            </Text>
+          ) : (
+            description
+          )}
         </Flex>
-        <Flex
-          align="center"
-          flexShrink="0"
-          gap="sm"
-          minWidth="0"
-          mr={getChildrenMarginRight()}
-          width={getChildrenWidth()}
-        >
-          {children}
-        </Flex>
+      </Flex>
+      <Flex
+        align="center"
+        flexShrink="0"
+        gap="sm"
+        minWidth="0"
+        mr={getChildrenMarginRight()}
+        width={getChildrenWidth()}
+      >
+        {children}
       </Flex>
     </Card>
   )

@@ -2,7 +2,8 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { converter, formatHex, parse } from 'culori'
 import { memo, useMemo } from 'react'
-import tinycolor from 'tinycolor2'
+
+import { usePersonalization } from 'shared/dist/providers/PersonalizationProvider'
 
 import { Box, Flex, Text } from '@components/primitives'
 
@@ -19,6 +20,8 @@ function ColorItem({
   selected: string
   onSelect: (color: string) => void
 }) {
+  const { getMostReadableColor } = usePersonalization()
+
   const colorHex = useMemo(
     () => formatHex(converter('rgb')(parse(value))) || '',
     [value]
@@ -41,9 +44,7 @@ function ColorItem({
               style={{
                 width: '2rem',
                 height: '2rem',
-                color: tinycolor(colorHex).isLight()
-                  ? 'var(--color-bg-800)'
-                  : 'var(--color-bg-50)'
+                color: getMostReadableColor(colorHex)
               }}
             />
           )}
@@ -52,7 +53,7 @@ function ColorItem({
       <Text as="p" mt="sm" size="sm" weight="medium">
         {name}
       </Text>
-      <Text as="code" color="bg-500" display="block" size="sm" weight="medium">
+      <Text as="code" color="muted" display="block" size="sm" weight="medium">
         {colorHex}
       </Text>
     </Box>

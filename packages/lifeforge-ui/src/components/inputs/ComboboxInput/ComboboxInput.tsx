@@ -9,15 +9,15 @@ import { Box, Flex, Text } from '@components/primitives'
 
 import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
+import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import InputLabel from '../shared/components/InputLabel'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import ComboboxInputWrapper from './components/ComboboxInputWrapper'
 import ComboboxOptions from './components/ComboboxOptions'
 
 interface ComboboxInputProps<T> {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
   /** The label text displayed above the combobox field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the combobox. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -44,6 +44,8 @@ interface ComboboxInputProps<T> {
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
+  /** Error message to display when the input is invalid. */
+  errorMsg?: string
 }
 
 function ComboboxInput<T>({
@@ -60,8 +62,9 @@ function ComboboxInput<T>({
   children,
   forcedActiveWhen: customActive,
   className,
-  namespace
-}: ComboboxInputProps<T>) {
+  namespace,
+  errorMsg
+}: ComboboxInputProps<T> & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const isActive = useMemo(() => {
@@ -107,6 +110,7 @@ function ComboboxInput<T>({
     <ComboboxInputWrapper
       className={className}
       disabled={disabled}
+      errorMsg={errorMsg}
       setQuery={setQuery}
       value={value}
       variant={variant}
@@ -116,7 +120,7 @@ function ComboboxInput<T>({
       <Flex align="center" className="group" position="relative" width="100%">
         {variant === 'classic' && icon && (
           <Box position="absolute">
-            <InputIcon active={isActive} icon={icon} />
+            <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
           </Box>
         )}
         {variant === 'classic' && label && (
@@ -127,56 +131,48 @@ function ComboboxInput<T>({
             }}
           >
             <InputLabel
-              isCombobox
-              isListboxOrCombobox
               active={isActive}
+              hasError={!!errorMsg}
               label={inputLabel}
               required={required === true}
             />
           </Box>
         )}
-        <Box
-          asChild
-          bg="transparent"
-          mt={variant === 'classic' ? 'md' : undefined}
-          overflow="hidden"
-          pb={variant === 'classic' ? 'sm' : undefined}
-          position="relative"
-          pr="3xl"
-          pt={variant === 'classic' ? 'md' : undefined}
-          rounded="lg"
-          style={
-            variant === 'classic'
-              ? { paddingLeft: '3.5rem' }
-              : {
-                  paddingTop: '1.25rem',
-                  paddingBottom: '1.25rem',
-                  paddingLeft: '1.25rem'
-                }
-          }
-          width="100%"
+        <InputInnerWrapper
+          hasActionButton
+          mr="none"
+          pr="none"
+          variant={variant}
         >
           <Text asChild truncate align="left">
-            <HeadlessComboboxInput
-              ref={autoFocusableRef(autoFocus)}
-              displayValue={displayValue}
-              onChange={e => {
-                setQuery(e.target.value)
-              }}
-            />
-          </Text>
-        </Box>
-        <Box asChild mr={variant === 'plain' ? 'sm' : 'md'}>
-          <InputActionButton asChild icon="" variant={variant}>
-            <ComboboxButton>
-              <Icon
-                icon="heroicons:chevron-up-down-16-solid"
-                style={{ width: '1.25em', height: '1.25em' }}
+            <Box
+              asChild
+              p={variant === 'plain' ? 'md' : undefined}
+              pr="3xl"
+              style={
+                variant === 'classic' ? { paddingLeft: '3.5rem' } : undefined
+              }
+              width="100%"
+            >
+              <HeadlessComboboxInput
+                ref={autoFocusableRef(autoFocus)}
+                displayValue={displayValue}
+                onChange={e => {
+                  setQuery(e.target.value)
+                }}
               />
-            </ComboboxButton>
-          </InputActionButton>
-        </Box>
+            </Box>
+          </Text>
+        </InputInnerWrapper>
       </Flex>
+      <InputActionButton hasError={!!errorMsg} icon="" variant={variant}>
+        <ComboboxButton>
+          <Icon
+            icon="heroicons:chevron-up-down-16-solid"
+            style={{ width: '1.25em', height: '1.25em' }}
+          />
+        </ComboboxButton>
+      </InputActionButton>
       <ComboboxOptions>{children}</ComboboxOptions>
     </ComboboxInputWrapper>
   )

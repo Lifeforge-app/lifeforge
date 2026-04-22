@@ -4,6 +4,7 @@ import { useAPIEndpoint, usePromiseLoading } from 'shared'
 
 import { EmptyStateScreen } from '@components/feedback'
 import { Button } from '@components/inputs'
+import { Box, Flex } from '@components/primitives'
 import { WithQueryData } from '@components/utilities'
 
 import forgeAPI from '@/utils/forgeAPI'
@@ -72,27 +73,38 @@ function AIImageGenerator({
                 onChange={setPrompt}
               />
               <Button
-                className="mt-6 w-full"
                 disabled={prompt === ''}
                 icon="mage:stars-c"
                 loading={loading}
+                style={{ marginTop: '1.5rem', width: '100%' }}
                 onClick={onSubmit}
               >
                 Generate
               </Button>
             </>
           ) : (
-            <div>
-              <div className="bg-bg-200 shadow-custom dark:bg-bg-800/50 flex h-96 w-full items-center justify-center rounded-lg p-8">
-                <img
-                  alt=""
-                  className="h-full rounded-lg object-contain"
-                  src={file as string}
-                />
-              </div>
+            <Box>
+              <Flex
+                shadow
+                align="center"
+                bg={{ base: 'bg-200', dark: 'bg-800' }}
+                justify="center"
+                p="xl"
+                rounded="lg"
+                style={{ height: '24rem' }}
+                width="100%"
+              >
+                <Box
+                  asChild
+                  rounded="lg"
+                  style={{ height: '100%', objectFit: 'contain' }}
+                >
+                  <img alt="" src={file as string} />
+                </Box>
+              </Flex>
               <Button
-                className="mt-6 w-full"
                 icon="tabler:refresh"
+                style={{ marginTop: '1.5rem', width: '100%' }}
                 variant="secondary"
                 onClick={() => {
                   setFile(null)
@@ -101,7 +113,7 @@ function AIImageGenerator({
               >
                 Regenerate
               </Button>
-            </div>
+            </Box>
           )
         ) : (
           <EmptyStateScreen

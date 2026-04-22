@@ -3,6 +3,7 @@ import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useMemo, useState } from 'react'
 
+import { Box, Flex } from '@components/primitives'
 import { Scrollbar } from '@components/utilities'
 
 import type { IIconSet } from '../../typescript/icon_selector_interfaces'
@@ -62,7 +63,7 @@ export default function IconSetList({
   }, [iconFilterTerm, selectedCategory])
 
   return (
-    <div className="flex h-full min-h-0 flex-1 flex-col">
+    <>
       <Header
         iconFilterTerm={iconFilterTerm}
         searchQuery={searchQuery}
@@ -72,9 +73,9 @@ export default function IconSetList({
         setSearchQuery={setSearchQuery}
         setSelectedCategory={setSelectedCategory}
       />
-      <Scrollbar autoHeight autoHeightMax="60vh">
-        <div className="mt-4 flex min-h-0 w-full flex-col items-center overflow-scroll">
-          <div className="flex w-full flex-col">
+      <Box asChild mt="lg">
+        <Scrollbar autoHeight autoHeightMax="60vh">
+          <Flex direction="column" gapY="xl" width="100%">
             {filteredCollections.map(({ category, iconSets }) => (
               <CategoryEntry
                 key={category}
@@ -83,9 +84,9 @@ export default function IconSetList({
                 setCurrentIconSet={setCurrentIconSet}
               />
             ))}
-          </div>
-        </div>
-      </Scrollbar>
-    </div>
+          </Flex>
+        </Scrollbar>
+      </Box>
+    </>
   )
 }

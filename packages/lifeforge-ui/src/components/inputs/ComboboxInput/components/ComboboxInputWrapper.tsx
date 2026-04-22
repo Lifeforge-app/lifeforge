@@ -1,10 +1,13 @@
 import { Combobox } from '@headlessui/react'
+import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
 import { inputWrapperRecipe } from '@components/inputs/shared/components/InputWrapper/InputWrapper.css'
-import { Flex } from '@components/primitives'
+import { InputFocusProvider } from '@components/inputs/shared/contexts/InputFocusContext'
+import { Box, Flex, Text } from '@components/primitives'
 
 import * as styles from './ComboboxInputWrapper.css'
+import type { InputVariant } from '@components/inputs/shared/types'
 
 function ComboboxInputWrapper<T>({
   value,
@@ -14,6 +17,7 @@ function ComboboxInputWrapper<T>({
   className,
   disabled,
   onClick,
+  errorMsg,
   variant = 'classic'
 }: {
   value: T
@@ -23,34 +27,73 @@ function ComboboxInputWrapper<T>({
   className?: string
   disabled?: boolean
   onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
-  variant?: 'classic' | 'plain'
+  errorMsg?: string
+  variant?: InputVariant
 }) {
   return (
+    <InputFocusProvider>
     <Flex
-      asChild
-      align="center"
-      gap="xs"
-      position="relative"
-      shadow={variant === 'classic'}
+      direction="column"
+      gap="sm"
+      style={disabled ? { opacity: 0.5 } : undefined}
       width="100%"
     >
-      <Combobox
-        as="div"
-        className={clsx(
-          inputWrapperRecipe({ variant, disabled: disabled ?? false }),
-          styles.dataOpen,
-          className
-        )}
-        value={value}
-        onChange={onChange}
-        onClick={onClick}
-        onClose={() => {
-          setQuery('')
-        }}
+      <Flex
+        asChild
+        align="center"
+        gap="xs"
+        position="relative"
+        shadow={variant === 'classic'}
+        style={
+          variant === 'plain' && errorMsg
+            ? { outline: '2px solid var(--color-red-500)' }
+            : {}
+        }
+        width="100%"
       >
-        {children}
-      </Combobox>
+        <Combobox
+          as="div"
+          className={clsx(
+            inputWrapperRecipe({
+              variant,
+              hasError: !!errorMsg,
+              disabled: disabled ?? false
+            }),
+            styles.dataOpen,
+            className
+          )}
+          style={{ padding: 0 }}
+          value={value}
+          onChange={onChange}
+          onClick={onClick}
+          onClose={() => {
+            setQuery('')
+          }}
+        >
+          {children}
+          {errorMsg && (
+            <Box
+              asChild
+              flexShrink="0"
+              mr={variant === 'classic' ? 'lg' : 'md'}
+            >
+              <Icon
+                color="var(--color-red-500)"
+                height="1.5em"
+                icon="tabler:alert-circle"
+                width="1.5em"
+              />
+            </Box>
+          )}
+        </Combobox>
+      </Flex>
+      {errorMsg && (
+        <Text color="dangerous" px="md" size="sm">
+          {errorMsg}
+        </Text>
+      )}
     </Flex>
+    </InputFocusProvider>
   )
 }
 

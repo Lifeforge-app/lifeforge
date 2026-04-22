@@ -1,20 +1,18 @@
 import { ListboxButton } from '@headlessui/react'
-import clsx from 'clsx'
 import { useCallback, useMemo } from 'react'
 
-import { Box } from '@/index'
+import { Box, Flex } from '@components/primitives'
 
 import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
+import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import InputLabel from '../shared/components/InputLabel'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import ListboxInputWrapper from './components/ListboxInputWrapper'
 import ListboxOptions from './components/ListboxOptions'
 
 interface ListboxInputProps<T> {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
-  size?: 'small' | 'default'
   /** The label text displayed above the listbox field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the listbox button. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -45,6 +43,9 @@ interface ListboxInputProps<T> {
   errorMsg?: string
 }
 
+type ListboxInputPropsWithVariants<T> = ListboxInputProps<T> &
+  InputVariants<true>
+
 function ListboxInput<T>({
   variant = 'classic',
   size = 'default',
@@ -59,10 +60,9 @@ function ListboxInput<T>({
   children,
   customActive,
   buttonContent,
-  hasActionButton,
   namespace,
   errorMsg
-}: ListboxInputProps<T>) {
+}: ListboxInputPropsWithVariants<T>) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const isActive = useMemo(() => {
@@ -107,46 +107,73 @@ function ListboxInput<T>({
       onChange={onChange}
       onClick={focusInput}
     >
-      <ListboxButton className="group flex w-full items-center sm:min-w-64">
-        {icon && (
-          <InputIcon
-            active={isActive}
-            hasError={!!errorMsg}
-            icon={icon}
-            variant={variant}
-          />
-        )}
-        {variant === 'classic' && label && (
-          <Box
-            asChild
-            style={{
-              marginLeft: 'calc(var(--spacing) * 14)'
-            }}
+      <Flex
+        asChild
+        align="center"
+        className="group"
+        minWidth="0"
+        position="relative"
+        width="100%"
+      >
+        <ListboxButton>
+          <Flex
+            align="center"
+            className="group"
+            minWidth="0"
+            p={
+              variant === 'plain' ? (size === 'small' ? 'xs' : 'md') : undefined
+            }
+            position="relative"
+            width="100%"
           >
-            <InputLabel
-              isListboxOrCombobox
-              active={isActive}
+            {icon && (
+              <InputIcon
+                active={isActive}
+                hasError={!!errorMsg}
+                icon={icon}
+              />
+            )}
+            {variant === 'classic' && label && (
+              <Box
+                asChild
+                style={{
+                  marginLeft: 'calc(var(--spacing) * 14)'
+                }}
+              >
+                <InputLabel
+                  active={isActive}
+                  hasError={!!errorMsg}
+                  label={inputLabel}
+                  required={required === true}
+                />
+              </Box>
+            )}
+            <InputInnerWrapper hasActionButton variant={variant}>
+              <Box minHeight="1.5em">
+                {variant === 'classic'
+                  ? isActive && buttonContent
+                  : buttonContent}
+              </Box>
+            </InputInnerWrapper>
+          </Flex>
+          <Box asChild mr="sm" position="absolute" right="0">
+            <InputActionButton
               hasError={!!errorMsg}
-              label={inputLabel}
-              required={required === true}
+              icon="heroicons:chevron-up-down-16-solid"
+              style={{
+                marginRight:
+                  variant === 'classic'
+                    ? '1em'
+                    : size === 'small'
+                      ? '0.25em'
+                      : '0.75em'
+              }}
+              variant={variant}
             />
           </Box>
-        )}
-        <div
-          className={clsx(
-            'relative flex min-h-[1.2rem] w-full min-w-0 items-center gap-2 rounded-lg text-left focus:outline-hidden',
-            variant === 'classic' ? 'mt-4 p-4 pb-2 pl-0' : 'h-7 pr-8'
-          )}
-        >
-          {variant === 'classic' ? isActive && buttonContent : buttonContent}
-        </div>
-        <Box asChild mr="sm" position="absolute" right="0">
-          <InputActionButton icon="heroicons:chevron-up-down-16-solid" />
-        </Box>
-      </ListboxButton>
-      <ListboxOptions portal={!(multiple && hasActionButton)}>
-        {children}
-      </ListboxOptions>
+        </ListboxButton>
+      </Flex>
+      <ListboxOptions portal={!multiple}>{children}</ListboxOptions>
     </ListboxInputWrapper>
   )
 }

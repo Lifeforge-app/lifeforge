@@ -9,12 +9,11 @@ import SidebarWrapper from '../SidebarWrapper'
 import Index from './index'
 
 const meta = {
-  component: Index,
   argTypes: {
-    label: {
-      control: 'text',
+    contextMenuItems: {
+      control: false,
       table: {
-        type: { summary: 'string | React.ReactElement' }
+        type: { summary: 'React.ReactElement' }
       }
     },
     icon: {
@@ -23,13 +22,14 @@ const meta = {
         type: { summary: 'string | React.ReactElement' }
       }
     },
-    contextMenuItems: {
-      control: false,
+    label: {
+      control: 'text',
       table: {
-        type: { summary: 'React.ReactElement' }
+        type: { summary: 'string | React.ReactElement' }
       }
     }
-  }
+  },
+  component: Index
 } satisfies Meta<typeof Index>
 
 export default meta
@@ -41,8 +41,8 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
-    label: 'Dashboard',
-    icon: 'tabler:home'
+    icon: 'tabler:home',
+    label: 'Dashboard'
   },
   render: args => (
     <BrowserRouter>
@@ -58,8 +58,8 @@ export const Default: Story = {
 /** A sidebar item with a colored strip on the side. */
 export const WithSideColorStrip: Story = {
   args: {
-    label: 'Dashboard',
     icon: 'tabler:category',
+    label: 'Dashboard',
     sideStripColor: '#4F46E5'
   },
   render: () => (
@@ -87,12 +87,12 @@ export const WithSideColorStrip: Story = {
 /** A sidebar item with an action button. */
 export const WithActionButton: Story = {
   args: {
-    label: 'Dashboard',
-    icon: 'tabler:home',
     actionButtonProps: {
       icon: 'tabler:plus',
       onClick: () => alert('Action button clicked!')
-    }
+    },
+    icon: 'tabler:home',
+    label: 'Dashboard'
   },
   render: args => (
     <BrowserRouter>
@@ -108,8 +108,6 @@ export const WithActionButton: Story = {
 /** A sidebar item with a context menu. */
 export const WithContextMenu: Story = {
   args: {
-    label: 'An Item',
-    icon: 'tabler:cube',
     contextMenuItems: (
       <>
         <ContextMenuItem
@@ -124,7 +122,9 @@ export const WithContextMenu: Story = {
           onClick={() => alert('Delete clicked!')}
         />
       </>
-    )
+    ),
+    icon: 'tabler:cube',
+    label: 'An Item'
   },
   render: args => (
     <BrowserRouter>
@@ -140,8 +140,6 @@ export const WithContextMenu: Story = {
 /** A sidebar item with both an action button and a context menu. */
 export const WithContextMenuAndActionButton: Story = {
   args: {
-    label: 'An Item',
-    icon: 'tabler:cube',
     actionButtonProps: {
       icon: 'tabler:plus',
       onClick: () => alert('Action button clicked!')
@@ -160,7 +158,9 @@ export const WithContextMenuAndActionButton: Story = {
           onClick={() => alert('Delete clicked!')}
         />
       </>
-    )
+    ),
+    icon: 'tabler:cube',
+    label: 'An Item'
   },
   render: args => (
     <BrowserRouter>
@@ -176,8 +176,8 @@ export const WithContextMenuAndActionButton: Story = {
 /** A sidebar item with a number badge. */
 export const WithNumberBadge: Story = {
   args: {
-    label: 'Notifications',
     icon: 'tabler:bell',
+    label: 'Notifications',
     number: 42
   },
   render: args => (
@@ -194,9 +194,6 @@ export const WithNumberBadge: Story = {
 /** A sidebar item with a number badge and a context menu, demonstrating the badge hiding on hover when a context menu is present. */
 export const WithNumberBadgeAndContextMenu: Story = {
   args: {
-    label: 'Messages',
-    icon: 'tabler:message',
-    number: 5,
     contextMenuItems: (
       <>
         <ContextMenuItem
@@ -211,7 +208,10 @@ export const WithNumberBadgeAndContextMenu: Story = {
           onClick={() => alert('Delete clicked!')}
         />
       </>
-    )
+    ),
+    icon: 'tabler:message',
+    label: 'Messages',
+    number: 5
   },
   render: args => (
     <BrowserRouter>
@@ -227,9 +227,9 @@ export const WithNumberBadgeAndContextMenu: Story = {
 /** A list of sidebar items demonstrating active state and cancel button functionality. */
 export const WithActiveState: Story = {
   args: {
-    label: 'Category',
-    icon: 'tabler:category',
     active: true,
+    icon: 'tabler:category',
+    label: 'Category',
     onCancelButtonClick: () => alert('Cancel button clicked!')
   },
   render: () => {
@@ -259,8 +259,8 @@ export const WithActiveState: Story = {
 /** A sidebar item with a custom SVG icon. */
 export const WithCustomSVGIcon: Story = {
   args: {
-    label: 'Custom Icon',
-    icon: "customHTML:<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' class='feather feather-star'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/></svg>"
+    icon: "customHTML:<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round' class='feather feather-star'><polygon points='12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2'/></svg>",
+    label: 'Custom Icon'
   },
   render: args => (
     <BrowserRouter>
@@ -276,8 +276,8 @@ export const WithCustomSVGIcon: Story = {
 /** A sidebar item with a custom image icon. */
 export const WithCustomImageIcon: Story = {
   args: {
-    label: 'Custom Image',
-    icon: 'url:https://img.liaobagua.com/uploads/article/20230706/1688654584154696.jpg'
+    icon: 'url:https://img.liaobagua.com/uploads/article/20230706/1688654584154696.jpg',
+    label: 'Custom Image'
   },
   render: args => {
     const [active, setActive] = useState(false)
@@ -300,8 +300,8 @@ export const WithCustomImageIcon: Story = {
 
 export const AVeryLongName: Story = {
   args: {
-    label: 'Lorem Ipsum Dolor Sit Amet Consectectur Adisiplin Elit',
-    icon: 'tabler:home'
+    icon: 'tabler:home',
+    label: 'Lorem Ipsum Dolor Sit Amet Consectectur Adisiplin Elit'
   },
 
   render: args => (
@@ -318,8 +318,8 @@ export const AVeryLongName: Story = {
 /** A sidebar item with a React element as the label. */
 export const WithReactElementLabel: Story = {
   args: {
-    label: 'Custom Label',
-    icon: 'tabler:star'
+    icon: 'tabler:star',
+    label: 'Custom Label'
   },
   render: args => (
     <BrowserRouter>
@@ -353,9 +353,9 @@ export const WithReactElementLabel: Story = {
 /** A sidebar item that is active but has no cancel button. */
 export const WithActiveStateNoCancel: Story = {
   args: {
-    label: 'Dashboard',
+    active: true,
     icon: 'tabler:home',
-    active: true
+    label: 'Dashboard'
   },
   render: args => (
     <BrowserRouter>
@@ -371,10 +371,10 @@ export const WithActiveStateNoCancel: Story = {
 /** A sidebar item with a number badge while active (badge is hidden in favour of the cancel button). */
 export const WithNumberBadgeAndActiveState: Story = {
   args: {
-    label: 'Notifications',
-    icon: 'tabler:bell',
-    number: 12,
     active: true,
+    icon: 'tabler:bell',
+    label: 'Notifications',
+    number: 12,
     onCancelButtonClick: () => alert('Cancel clicked!')
   },
   render: args => {
@@ -400,8 +400,8 @@ export const WithNumberBadgeAndActiveState: Story = {
 /** A sidebar item with an expandable subsection. Click to toggle. */
 export const WithSubsection: Story = {
   args: {
-    label: 'Projects',
     icon: 'tabler:folder',
+    label: 'Projects',
     onClick: 'expand'
   },
   render: args => {
@@ -416,23 +416,23 @@ export const WithSubsection: Story = {
               namespace={false}
               subsection={[
                 {
-                  label: 'Website Redesign',
-                  icon: 'tabler:device-desktop',
                   active: activeItem === 'website',
+                  icon: 'tabler:device-desktop',
+                  label: 'Website Redesign',
                   namespace: false,
                   onClick: () => setActiveItem('website')
                 },
                 {
-                  label: 'Mobile App',
-                  icon: 'tabler:device-mobile',
                   active: activeItem === 'mobile',
+                  icon: 'tabler:device-mobile',
+                  label: 'Mobile App',
                   namespace: false,
                   onClick: () => setActiveItem('mobile')
                 },
                 {
-                  label: 'Backend API',
-                  icon: 'tabler:server',
                   active: activeItem === 'api',
+                  icon: 'tabler:server',
+                  label: 'Backend API',
                   namespace: false,
                   onClick: () => setActiveItem('api')
                 }
@@ -448,9 +448,9 @@ export const WithSubsection: Story = {
 /** A sidebar item with a subsection where items have amount badges. */
 export const WithSubsectionAndAmounts: Story = {
   args: {
-    number: 17,
+    icon: 'tabler:inbox',
     label: 'Inbox',
-    icon: 'tabler:inbox'
+    number: 17
   },
   render: args => {
     const [activeItem, setActiveItem] = useState<string | null>(null)
@@ -464,25 +464,25 @@ export const WithSubsectionAndAmounts: Story = {
               namespace={false}
               subsection={[
                 {
-                  label: 'Unread',
-                  icon: 'tabler:mail',
                   active: activeItem === 'unread',
-                  namespace: false,
                   amount: 14,
+                  icon: 'tabler:mail',
+                  label: 'Unread',
+                  namespace: false,
                   onClick: () => setActiveItem('unread')
                 },
                 {
-                  label: 'Starred',
-                  icon: 'tabler:star',
                   active: activeItem === 'starred',
-                  namespace: false,
                   amount: 3,
+                  icon: 'tabler:star',
+                  label: 'Starred',
+                  namespace: false,
                   onClick: () => setActiveItem('starred')
                 },
                 {
-                  label: 'Sent',
-                  icon: 'tabler:send',
                   active: activeItem === 'sent',
+                  icon: 'tabler:send',
+                  label: 'Sent',
                   namespace: false,
                   onClick: () => setActiveItem('sent')
                 }
@@ -498,30 +498,10 @@ export const WithSubsectionAndAmounts: Story = {
 /** A sidebar item combining side strip, number badge, action button, and context menu. */
 export const WithAllFeatures: Story = {
   args: {
-    label: 'Workspace Alpha',
-    icon: 'tabler:building',
-    sideStripColor: '#7C3AED',
-    number: 8,
     actionButtonProps: {
       icon: 'tabler:plus',
       onClick: () => alert('Action button clicked!')
     },
-    subsection: [
-      {
-        label: 'General',
-        icon: 'tabler:hash',
-        active: false,
-        namespace: false,
-        onClick: () => alert('General clicked!')
-      },
-      {
-        label: 'Random',
-        icon: 'tabler:hash',
-        active: false,
-        namespace: false,
-        onClick: () => alert('Random clicked!')
-      }
-    ],
     contextMenuItems: (
       <>
         <ContextMenuItem
@@ -541,7 +521,27 @@ export const WithAllFeatures: Story = {
           onClick={() => alert('Delete clicked!')}
         />
       </>
-    )
+    ),
+    icon: 'tabler:building',
+    label: 'Workspace Alpha',
+    number: 8,
+    sideStripColor: '#7C3AED',
+    subsection: [
+      {
+        active: false,
+        icon: 'tabler:hash',
+        label: 'General',
+        namespace: false,
+        onClick: () => alert('General clicked!')
+      },
+      {
+        active: false,
+        icon: 'tabler:hash',
+        label: 'Random',
+        namespace: false,
+        onClick: () => alert('Random clicked!')
+      }
+    ]
   },
   render: args => {
     const [active, setActive] = useState(true)
@@ -566,8 +566,8 @@ export const WithAllFeatures: Story = {
 /** Side-by-side comparison of all visual states: default, active, active with cancel. */
 export const AllStatesComparison: Story = {
   args: {
-    label: 'State Comparison',
-    icon: 'tabler:layout-dashboard'
+    icon: 'tabler:layout-dashboard',
+    label: 'State Comparison'
   },
   render: () => {
     const [active, setActive] = useState<string | null>('b')

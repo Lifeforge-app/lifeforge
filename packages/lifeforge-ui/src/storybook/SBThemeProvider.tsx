@@ -20,14 +20,16 @@ export function SBThemeProvider({
   context: any
 }) {
   const derivedContext = useMemo(() => {
+    const existingGlobals = context?.globals || {}
+
     return {
       ...context,
       globals: {
-        ...context.globals,
-        themeColor: deriveFinalValue(context.globals.themeColor, '#a9d066'),
-        theme: deriveFinalValue(context.globals.theme, 'light'),
-        fontScale: deriveFinalValue(context.globals.fontScale, 1),
-        bgTemp: deriveFinalValue(context.globals.bgTemp, 'bg-zinc')
+        ...existingGlobals,
+        rawThemeColor: deriveFinalValue(existingGlobals.themeColor, '#a9d066'),
+        theme: deriveFinalValue(existingGlobals.theme, 'light'),
+        fontScale: deriveFinalValue(existingGlobals.fontScale, 1),
+        bgTemp: deriveFinalValue(existingGlobals.bgTemp, 'bg-zinc')
       }
     }
   }, [context])

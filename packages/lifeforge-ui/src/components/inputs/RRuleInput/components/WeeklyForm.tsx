@@ -1,8 +1,11 @@
 import { useTranslation } from 'react-i18next'
 
 import { ListboxInput, ListboxOption, NumberInput } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 import type { FreqSpecificParams } from '../RRuleInput'
+
+const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
 
 function WeeklyForm({
   data,
@@ -14,66 +17,44 @@ function WeeklyForm({
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
 
   return (
-    <>
-      <div className="flex w-full items-center gap-3">
-        <NumberInput
-          required
-          className="flex-1"
-          icon="tabler:repeat"
-          label={t('inputs.weekly.inputs.every')}
-          value={data.every}
-          onChange={every => setData({ ...data, every })}
-        />
-        <p className="text-bg-500">{t('inputs.weekly.inputs.weeks')}</p>
-      </div>
+    <Flex direction="column" gap="md" width="100%">
+      <Flex align="center" gap="md" width="100%">
+        <Box flex="1">
+          <NumberInput
+            required
+            icon="tabler:repeat"
+            label={t('inputs.weekly.inputs.every')}
+            value={data.every}
+            onChange={every => setData({ ...data, every })}
+          />
+        </Box>
+        <Text color="muted">{t('inputs.weekly.inputs.weeks')}</Text>
+      </Flex>
       <ListboxInput
         multiple
         required
         buttonContent={
           <>
             {data.onDays
-              .map(day =>
-                t(
-                  `common.misc:dates.days.${[
-                    'mon',
-                    'tue',
-                    'wed',
-                    'thu',
-                    'fri',
-                    'sat',
-                    'sun'
-                  ].indexOf(day)}`
-                )
-              )
+              .map(day => t(`common.misc:dates.days.${DAYS.indexOf(day)}`))
               .join(', ')}
           </>
         }
-        className="flex-1"
         customActive={data.onDays.length > 0}
         icon="tabler:calendar"
         label={t('inputs.weekly.inputs.onDays')}
         value={data.onDays}
         onChange={onDays => setData({ ...data, onDays: onDays })}
       >
-        {['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'].map(day => (
+        {DAYS.map(day => (
           <ListboxOption
             key={day}
-            label={t(
-              `common.misc:dates.days.${[
-                'mon',
-                'tue',
-                'wed',
-                'thu',
-                'fri',
-                'sat',
-                'sun'
-              ].indexOf(day)}`
-            )}
+            label={t(`common.misc:dates.days.${DAYS.indexOf(day)}`)}
             value={day}
           />
         ))}
       </ListboxInput>
-    </>
+    </Flex>
   )
 }
 

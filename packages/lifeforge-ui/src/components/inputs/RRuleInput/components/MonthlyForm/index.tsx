@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next'
 
 import { NumberInput } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
+import type { FreqSpecificParams } from '../../RRuleInput'
 import SelectableFormWrapper from '../SelectableFormWrapper'
 import MonthlyExactDateForm from './components/MonthlyExactDateForm'
 import MonthlyRelativeDayForm from './components/MonthlyRelativeDayForm'
-import type { FreqSpecificParams } from '../../RRuleInput'
 
 function MonthlyForm({
   data,
@@ -30,17 +31,18 @@ function MonthlyForm({
   ] as const
 
   return (
-    <>
-      <div className="flex w-full items-center gap-3">
-        <NumberInput
-          className="flex-1"
-          icon="tabler:repeat"
-          label={t('inputs.monthly.inputs.every')}
-          value={data.every}
-          onChange={every => setData({ ...data, every })}
-        />
-        <p className="text-bg-500">{t('inputs.monthly.inputs.months')}</p>
-      </div>
+    <Flex direction="column" gap="md" width="100%">
+      <Flex align="center" gap="md" width="100%">
+        <Box flex="1">
+          <NumberInput
+            icon="tabler:repeat"
+            label={t('inputs.monthly.inputs.every')}
+            value={data.every}
+            onChange={every => setData({ ...data, every })}
+          />
+        </Box>
+        <Text color="muted">{t('inputs.monthly.inputs.months')}</Text>
+      </Flex>
       {forms.map(form => (
         <SelectableFormWrapper
           key={form.id}
@@ -53,7 +55,7 @@ function MonthlyForm({
           {form.component}
         </SelectableFormWrapper>
       ))}
-    </>
+    </Flex>
   )
 }
 

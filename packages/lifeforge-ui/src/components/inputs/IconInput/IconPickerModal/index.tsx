@@ -3,10 +3,11 @@ import { useCallback, useState } from 'react'
 
 import { GoBackButton } from '@components/navigation'
 import { ModalHeader } from '@components/overlays'
+import { Box, Flex, Text, Transition } from '@components/primitives'
 
 import IconSet from './pages/IconSet'
 import IconSetList from './pages/IconSetList/index'
-import Search from './pages/Search'
+import SearchResult from './pages/SearchResult'
 
 function IconPickerModal({
   data: { setSelectedIcon },
@@ -34,7 +35,7 @@ function IconPickerModal({
 
     if (currentIconSet.search !== undefined) {
       return (
-        <Search
+        <SearchResult
           searchTerm={currentIconSet.search}
           setCurrentIconSetProp={setCurrentIconSet}
           onIconSelected={handleIconSelected}
@@ -51,35 +52,62 @@ function IconPickerModal({
   }
 
   return (
-    <div className="flex min-h-[80vh] flex-col sm:min-w-[80vw]">
+    <Flex
+      direction="column"
+      flexShrink="1"
+      minHeight="80vh"
+      minWidth={{ base: 'none', sm: '70vw' }}
+    >
       {currentIconSet !== null ? (
-        <div className="flex-between mb-8 flex w-full">
+        <Flex align="center" justify="between" mb="xl" width="100%">
           <GoBackButton onClick={() => setCurrentIconSet(null)} />
-          <button
-            className="text-bg-500 hover:bg-bg-100 hover:text-bg-800 dark:hover:bg-bg-800 dark:hover:text-bg-50 rounded-md p-2 transition-all"
-            onClick={() => {
-              setCurrentIconSet(null)
-              setSelectedIcon('')
-              onClose()
-            }}
-          >
-            <Icon className="size-6" icon="tabler:x" />
-          </button>
-        </div>
+          <Transition>
+            <Box
+              asChild
+              bg={{ base: 'transparent', hover: 'bg-100', darkHover: 'bg-800' }}
+              p="sm"
+              rounded="md"
+            >
+              <Text
+                asChild
+                color={{ base: 'bg-500', hover: 'bg-800', darkHover: 'bg-50' }}
+              >
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCurrentIconSet(null)
+                    setSelectedIcon('')
+                    onClose()
+                  }}
+                >
+                  <Icon
+                    icon="tabler:x"
+                    style={{ height: '1.5rem', width: '1.5rem' }}
+                  />
+                </button>
+              </Text>
+            </Box>
+          </Transition>
+        </Flex>
       ) : (
         <ModalHeader
           appendTitle={
-            <p className="text-bg-500 shrink-0 text-right text-sm sm:text-base">
+            <Text
+              align="right"
+              color="bg-500"
+              size={{ base: 'sm', sm: 'base' }}
+            >
               powered by&nbsp;
-              <a
-                className="underline"
-                href="https://iconify.design"
-                rel="noreferrer"
-                target="_blank"
-              >
-                Iconify
-              </a>
-            </p>
+              <Text asChild decoration="underline">
+                <a
+                  href="https://iconify.design"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  Iconify
+                </a>
+              </Text>
+            </Text>
           }
           icon="tabler:icons"
           title="iconPicker.title"
@@ -87,7 +115,7 @@ function IconPickerModal({
         />
       )}
       {renderContent()}
-    </div>
+    </Flex>
   )
 }
 

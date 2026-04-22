@@ -23,9 +23,9 @@ export const Default: Story = {
 
 export const CustomContent: Story = {
   args: {
-    title: 'Ooh no! Resource Not Found',
     message:
-      'The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.'
+      'The resource you are looking for might have been removed, had its name changed, or is temporarily unavailable.',
+    title: 'Ooh no! Resource Not Found'
   },
   render: args => (
     <Box minHeight="32rem" width="100%">

@@ -26,9 +26,9 @@ export const Default: Story = {
 
 export const Dangerous: Story = {
   args: {
+    dangerous: true,
     icon: 'tabler:trash',
     label: 'Delete',
-    dangerous: true,
     onClick: () => {}
   },
   render: props => (
@@ -54,9 +54,9 @@ export const Loading: Story = {
 
 export const Disabled: Story = {
   args: {
+    disabled: true,
     icon: 'tabler:mood-angry',
     label: 'DO NOT CLICK ME',
-    disabled: true,
     onClick: () => {}
   },
   render: props => (
@@ -98,8 +98,8 @@ export const RemainsOpenOnClick: Story = {
   args: {
     icon: 'tabler:pointer',
     label: 'Do Something',
-    shouldCloseMenuOnClick: false,
-    onClick: () => {}
+    onClick: () => {},
+    shouldCloseMenuOnClick: false
   },
   render: props => (
     <ContextMenu>

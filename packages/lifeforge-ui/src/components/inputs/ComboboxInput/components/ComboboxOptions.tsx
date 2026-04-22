@@ -12,7 +12,7 @@ function ComboboxOptions({
   customWidth?: string
 }) {
   return (
-    <Text asChild color="bg-500" size="base">
+    <Text asChild color="muted" size="base">
       <Bordered
         asChild
         shadow

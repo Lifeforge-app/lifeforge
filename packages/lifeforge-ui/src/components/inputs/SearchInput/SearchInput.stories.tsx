@@ -18,18 +18,27 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    value: '',
     onChange: () => {},
-    searchTarget: 'something'
+    searchTarget: 'something',
+    value: ''
   },
   render: args => {
     const [value, onChange] = useState('')
 
-    return (
-      <Box style={{ paddingLeft: '8rem', paddingRight: '8rem' }} width="100%">
-        <SearchInput {...args} value={value} onChange={onChange} />
-      </Box>
-    )
+    return <SearchInput {...args} value={value} onChange={onChange} />
+  }
+}
+
+export const Disabled: Story = {
+  args: {
+    onChange: () => {},
+    searchTarget: 'something',
+    value: ''
+  },
+  render: args => {
+    const [value, onChange] = useState('')
+
+    return <SearchInput {...args} disabled value={value} onChange={onChange} />
   }
 }
 
@@ -38,17 +47,13 @@ export const Default: Story = {
  */
 export const CustomIcon: Story = {
   args: {
-    value: '',
+    icon: 'tabler:cube',
     onChange: () => {},
     searchTarget: 'something',
-    icon: 'tabler:cube'
+    value: ''
   },
 
-  render: args => (
-    <Box style={{ paddingLeft: '8rem', paddingRight: '8rem' }} width="100%">
-      <SearchInput {...args} />
-    </Box>
-  )
+  render: args => <SearchInput {...args} />
 }
 
 /**
@@ -56,23 +61,19 @@ export const CustomIcon: Story = {
  */
 export const WithActionButton: Story = {
   args: {
-    value: '',
+    actionButtonProps: {
+      icon: 'tabler:filter',
+      onClick: () => {},
+      variant: 'plain'
+    },
     onChange: () => {},
     searchTarget: 'something',
-    actionButtonProps: {
-      variant: 'plain',
-      onClick: () => {},
-      icon: 'tabler:filter'
-    }
+    value: ''
   },
   render: args => {
     const [value, onChange] = useState('')
 
-    return (
-      <Box style={{ paddingLeft: '8rem', paddingRight: '8rem' }} width="100%">
-        <SearchInput {...args} value={value} onChange={onChange} />
-      </Box>
-    )
+    return <SearchInput {...args} value={value} onChange={onChange} />
   }
 }
 
@@ -150,7 +151,7 @@ const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
         }}
       />
       <Flex direction="column" flexGrow="1" minWidth="0">
-        <Text color="bg-500" size="sm">
+        <Text color="muted" size="sm">
           {product.category}
         </Text>
         <Text truncate weight="medium">
@@ -171,12 +172,12 @@ const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
             )}
           </Text>
           {product.discountPercentage > 0 && (
-            <Text color="bg-500" decoration="line-through" size="sm">
+            <Text color="muted" decoration="line-through" size="sm">
               ${product.price.toFixed(2)}
             </Text>
           )}
         </Flex>
-        <Text asChild color="bg-500" size="sm">
+        <Text asChild color="muted" size="sm">
           <Flex align="center" style={{ gap: '0.25rem' }}>
             <Icon
               icon="tabler:star"
@@ -192,9 +193,9 @@ const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
 
 export const WithSearchSuggestions: Story = {
   args: {
-    value: '',
     onChange: () => {},
-    searchTarget: 'something'
+    searchTarget: 'something',
+    value: ''
   },
   parameters: {
     docs: {
@@ -260,7 +261,7 @@ function SearchWithSuggestions() {
 
     // Replace with actual API call for search suggestions
     const productQuery = useQuery({
-      queryKey: ['search-suggestions', value],
+      enabled: value.length > 0,
       queryFn: async () => {
         const res = await fetch(
           'https://dummyjson.com/products/search?q=' + value
@@ -270,14 +271,11 @@ function SearchWithSuggestions() {
 
         return data.products.slice(0, 5) as ProductElement[]
       },
-      enabled: value.length > 0
+      queryKey: ['search-suggestions', value]
     })
 
     return (
-      <Box
-        style={{ height: '32rem', paddingLeft: '8rem', paddingRight: '8rem' }}
-        width="100%"
-      >
+      <Box style={{ height: '32rem' }} width="100%">
         <SearchInput
           {...args}
           debounceMs={300}
@@ -296,7 +294,7 @@ function SearchWithSuggestions() {
                   <Text
                     align="center"
                     as="div"
-                    color="bg-500"
+                    color="muted"
                     px="md"
                     style={{ paddingBottom: '0.75rem', paddingTop: '0.75rem' }}
                   >

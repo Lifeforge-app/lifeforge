@@ -1,9 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { BrowserRouter } from 'react-router'
 
-import SidebarDivider from './SidebarDivider'
+import { Flex } from '@components/primitives'
+
 import SidebarItem from '../SidebarItem'
 import SidebarWrapper from '../SidebarWrapper'
+import SidebarDivider from './SidebarDivider'
 
 const meta = {
   component: SidebarDivider
@@ -20,7 +22,7 @@ export const Default: Story = {
   args: {},
   render: props => (
     <BrowserRouter>
-      <div className="flex-center h-96 w-full">
+      <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem icon="tabler:cube" label="Item 1" />
           <SidebarItem icon="tabler:cube" label="Item 2" />
@@ -28,7 +30,7 @@ export const Default: Story = {
           <SidebarItem icon="tabler:cube" label="Item 3" />
           <SidebarItem icon="tabler:cube" label="Item 4" />
         </SidebarWrapper>
-      </div>
+      </Flex>
     </BrowserRouter>
   )
 }
@@ -42,7 +44,7 @@ export const WithoutMargins: Story = {
   },
   render: props => (
     <BrowserRouter>
-      <div className="flex-center h-96 w-full">
+      <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem icon="tabler:cube" label="Item 1" />
           <SidebarItem icon="tabler:cube" label="Item 2" />
@@ -50,7 +52,7 @@ export const WithoutMargins: Story = {
           <SidebarItem icon="tabler:cube" label="Item 3" />
           <SidebarItem icon="tabler:cube" label="Item 4" />
         </SidebarWrapper>
-      </div>
+      </Flex>
     </BrowserRouter>
   )
 }

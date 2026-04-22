@@ -8,18 +8,9 @@ import { Box, Flex, Text } from '@components/primitives'
 import TagsFilter from './TagsFilter'
 
 const meta = {
-  component: TagsFilter,
   argTypes: {
     availableFilters: {
       control: false
-    },
-    values: {
-      control: false,
-      table: {
-        type: {
-          summary: 'Record<string, string | string[] | null>'
-        }
-      }
     },
     onChange: {
       control: false,
@@ -28,8 +19,17 @@ const meta = {
           summary: 'Record<string, (value: string | string[] | null) => void>'
         }
       }
+    },
+    values: {
+      control: false,
+      table: {
+        type: {
+          summary: 'Record<string, string | string[] | null>'
+        }
+      }
     }
-  }
+  },
+  component: TagsFilter
 } satisfies Meta<typeof TagsFilter>
 
 export default meta
@@ -38,43 +38,43 @@ type Story = StoryObj<typeof meta>
 
 const CATEGORIES = [
   {
-    id: 'work',
-    label: 'Work',
+    color: colors.blue[500],
     icon: 'tabler:briefcase',
-    color: colors.blue[500]
+    id: 'work',
+    label: 'Work'
   },
   {
-    id: 'personal',
-    label: 'Personal',
+    color: colors.green[500],
     icon: 'tabler:user',
-    color: colors.green[500]
+    id: 'personal',
+    label: 'Personal'
   },
   {
-    id: 'urgent',
-    label: 'Urgent',
+    color: colors.red[500],
     icon: 'tabler:alert-circle',
-    color: colors.red[500]
+    id: 'urgent',
+    label: 'Urgent'
   }
 ]
 
 const STATUSES = [
   {
-    id: 'active',
-    label: 'Active',
+    color: colors.green[500],
     icon: 'tabler:check',
-    color: colors.green[500]
+    id: 'active',
+    label: 'Active'
   },
   {
-    id: 'pending',
-    label: 'Pending',
+    color: colors.yellow[500],
     icon: 'tabler:clock',
-    color: colors.yellow[500]
+    id: 'pending',
+    label: 'Pending'
   },
   {
-    id: 'completed',
-    label: 'Completed',
+    color: colors.blue[500],
     icon: 'tabler:circle-check',
-    color: colors.blue[500]
+    id: 'completed',
+    label: 'Completed'
   }
 ]
 
@@ -86,10 +86,10 @@ export const SingleFilter: Story = {
     availableFilters: {
       category: { data: CATEGORIES, isColored: true }
     },
-    values: { category: 'work' },
     onChange: {
       category: () => {}
-    }
+    },
+    values: { category: 'work' }
   },
   render: args => {
     const [category, setCategory] = useState<string | null>('work')
@@ -141,11 +141,11 @@ export const MultipleFilters: Story = {
       category: { data: CATEGORIES, isColored: true },
       status: { data: STATUSES, isColored: true }
     },
-    values: { category: 'work', status: 'active' },
     onChange: {
       category: () => {},
       status: () => {}
-    }
+    },
+    values: { category: 'work', status: 'active' }
   },
   render: args => {
     const [category, setCategory] = useState<string | null>('work')
@@ -190,10 +190,10 @@ export const ArrayFilters: Story = {
     availableFilters: {
       categories: { data: CATEGORIES, isColored: true }
     },
-    values: { categories: ['work', 'personal'] },
     onChange: {
       categories: () => {}
-    }
+    },
+    values: { categories: ['work', 'personal'] }
   },
   render: args => {
     const [categories, setCategories] = useState<string[] | null>([
@@ -239,10 +239,10 @@ export const Uncolored: Story = {
     availableFilters: {
       categories: { data: CATEGORIES, isColored: false }
     },
-    values: { categories: 'work' },
     onChange: {
       categories: () => {}
-    }
+    },
+    values: { categories: 'work' }
   },
   render: args => {
     const [categories, setCategories] = useState<string | null>('work')

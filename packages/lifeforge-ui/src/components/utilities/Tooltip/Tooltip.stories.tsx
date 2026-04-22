@@ -4,12 +4,12 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import Tooltip from './Tooltip'
 
 const meta = {
-  component: Tooltip,
   argTypes: {
     children: {
       control: false
     }
-  }
+  },
+  component: Tooltip
 } satisfies Meta<typeof Tooltip>
 
 export default meta
@@ -21,9 +21,9 @@ type Story = StoryObj<typeof meta>
  */
 export const Default: Story = {
   args: {
-    id: 'info-tooltip',
+    children: 'This is helpful information for the user.',
     icon: 'tabler:info-circle',
-    children: 'This is helpful information for the user.'
+    id: 'info-tooltip'
   },
   render: args => (
     <div className="flex-center h-full w-full">
@@ -40,8 +40,6 @@ export const Default: Story = {
  */
 export const ClickableTooltip: Story = {
   args: {
-    id: 'help-tooltip',
-    icon: 'tabler:question-circle',
     children: (
       <>
         Visit{' '}
@@ -55,7 +53,9 @@ export const ClickableTooltip: Story = {
         </a>{' '}
         to learn more about this project.
       </>
-    )
+    ),
+    icon: 'tabler:question-circle',
+    id: 'help-tooltip'
   },
   render: args => (
     <div className="flex-center h-full w-full">
@@ -72,8 +72,6 @@ export const ClickableTooltip: Story = {
  */
 export const DetailedTooltip: Story = {
   args: {
-    id: 'detailed-tooltip',
-    icon: 'tabler:info-circle',
     children: (
       <div className="max-w-xs">
         <h1 className="text-bg-800 dark:text-bg-100 mb-4 flex items-center gap-2 text-lg font-semibold">
@@ -83,7 +81,9 @@ export const DetailedTooltip: Story = {
         <p>This is a detailed tooltip with multiple lines of information.</p>
         <p className="mt-2">It can contain longer explanations and guides.</p>
       </div>
-    )
+    ),
+    icon: 'tabler:info-circle',
+    id: 'detailed-tooltip'
   },
   render: args => (
     <div className="flex-center h-full w-full">
@@ -97,9 +97,9 @@ export const DetailedTooltip: Story = {
 
 export const OpenOnClick: Story = {
   args: {
-    id: 'click-tooltip',
+    children: 'This tooltip opens on click instead of hover.',
     icon: 'tabler:info-circle',
-    children: 'This tooltip opens on click instead of hover.'
+    id: 'click-tooltip'
   },
   render: args => (
     <div className="flex-center h-full w-full">
@@ -113,9 +113,6 @@ export const OpenOnClick: Story = {
 
 export const ErrorTooltip: Story = {
   args: {
-    id: 'error-tooltip',
-    icon: 'tabler:alert-circle',
-    iconClassName: 'text-red-500',
     children: (
       <>
         <h1 className="mb-2 flex items-center gap-2 text-lg font-semibold text-red-500">
@@ -127,7 +124,10 @@ export const ErrorTooltip: Story = {
           Please try again later or contact support if the issue persists.
         </p>
       </>
-    )
+    ),
+    icon: 'tabler:alert-circle',
+    iconClassName: 'text-red-500',
+    id: 'error-tooltip'
   },
   render: args => (
     <div className="flex-center h-48 w-full">

@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 
 import { TextInput } from '@components/inputs'
+import { Box, Text } from '@components/primitives'
 
 function ImageURL({
   file,
@@ -25,13 +26,33 @@ function ImageURL({
         }}
       />
 
-      <div className="bg-bg-200 dark:bg-bg-800/50 relative isolate mt-4 flex min-h-0 flex-1 flex-col overflow-hidden rounded-md">
-        <img alt="" className="h-full object-contain" src={file as string} />
-        <Icon
-          className="text-bg-300 dark:text-bg-700 absolute top-1/2 left-1/2 z-[-1] size-32 -translate-x-1/2 -translate-y-1/2"
-          icon="tabler:photo"
-        />
-      </div>
+      <Box
+        bg={{ base: 'bg-200', dark: 'bg-800' }}
+        mt="md"
+        overflow="hidden"
+        position="relative"
+        rounded="md"
+        style={{ flex: 1, isolation: 'isolate', minHeight: 0 }}
+      >
+        <Box asChild style={{ height: '100%', objectFit: 'contain' }}>
+          <img alt="" src={file as string} />
+        </Box>
+        <Text
+          asChild
+          color={{ base: 'bg-300', dark: 'bg-700' }}
+          style={{
+            height: '8rem',
+            left: '50%',
+            position: 'absolute',
+            top: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '8rem',
+            zIndex: -1
+          }}
+        >
+          <Icon icon="tabler:photo" />
+        </Text>
+      </Box>
     </>
   )
 }

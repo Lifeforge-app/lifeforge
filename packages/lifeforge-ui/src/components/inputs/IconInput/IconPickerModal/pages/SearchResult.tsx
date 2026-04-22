@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { AutoSizer, List } from 'react-virtualized'
 
-import { EmptyStateScreen } from '@components/feedback'
+import { EmptyStateScreen, LoadingScreen } from '@components/feedback'
 import { Button, SearchInput } from '@components/inputs'
+import { Flex } from '@components/primitives'
 
 import ChipSelector from '../components/ChipSelector'
 import IconEntry from '../components/IconEntry'
@@ -68,7 +69,7 @@ async function getIconSet(
   }
 }
 
-function Search({
+function SearchResult({
   searchTerm,
   setCurrentIconSetProp,
   onIconSelected
@@ -113,11 +114,20 @@ function Search({
       })
   }, [searchTerm])
 
-  return iconData !== null ? (
-    <div className="flex min-h-0 w-full flex-1 flex-col">
-      <div className="flex w-full gap-2">
+  if (!iconData) {
+    return <LoadingScreen />
+  }
+
+  return (
+    <>
+      <Flex gap="sm" width="100%">
         <SearchInput
-          className="component-bg-lighter-with-hover"
+          bg={{
+            base: 'bg-100',
+            hover: 'bg-200',
+            dark: 'bg-800',
+            darkHover: 'bg-700'
+          }}
           namespace="common.modals"
           searchTarget="iconPicker.icon"
           value={searchQuery}
@@ -139,15 +149,15 @@ function Search({
         >
           Search
         </Button>
-      </div>
+      </Flex>
       <ChipSelector
         options={Object.keys(iconData.iconSets)}
         value={currentIconSet}
         onChange={setCurrentIconSet}
       />
-      <div className="flex min-h-0 flex-1 flex-col">
+      <Flex direction="column" flex="1" minHeight="0" mt="md">
         {filteredIconList.length > 0 ? (
-          <AutoSizer className="mt-6">
+          <AutoSizer>
             {({ width, height }: { width: number; height: number }) => {
               const itemsPerRow = Math.floor(width / 160) || 1
 
@@ -171,11 +181,7 @@ function Search({
                     const toIndex = fromIndex + itemsPerRow
 
                     return (
-                      <div
-                        key={key}
-                        className="flex w-full gap-3"
-                        style={style}
-                      >
+                      <Flex key={key} gap="sm" style={style} width="100%">
                         {filteredIconList
                           .slice(fromIndex, toIndex)
                           .map(icon => (
@@ -186,7 +192,7 @@ function Search({
                               onIconSelected={onIconSelected}
                             />
                           ))}
-                      </div>
+                      </Flex>
                     )
                   }}
                   width={width}
@@ -195,7 +201,7 @@ function Search({
             }}
           </AutoSizer>
         ) : (
-          <div className="flex-center h-full flex-1">
+          <Flex align="center" flex="1" height="100%" justify="center">
             <EmptyStateScreen
               icon="tabler:icons-off"
               message={{
@@ -204,15 +210,11 @@ function Search({
                 tKey: 'iconPicker'
               }}
             />
-          </div>
+          </Flex>
         )}
-      </div>
-    </div>
-  ) : (
-    <div className="flex w-full justify-center pb-8">
-      <span className="loader"></span>
-    </div>
+      </Flex>
+    </>
   )
 }
 
-export default Search
+export default SearchResult

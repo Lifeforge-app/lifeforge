@@ -7,15 +7,15 @@ import { Box } from '@components/primitives'
 import Tabs from '../Tabs'
 
 const meta = {
-  component: Tabs,
   argTypes: {
-    onTabChange: {
-      control: false
-    },
     items: {
       control: false
+    },
+    onTabChange: {
+      control: false
     }
-  }
+  },
+  component: Tabs
 } satisfies Meta<typeof Tabs>
 
 export default meta
@@ -23,9 +23,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const BASIC_TABS = [
-  { id: 'overview', name: 'Overview', icon: 'tabler:home' },
-  { id: 'settings', name: 'Settings', icon: 'tabler:settings' },
-  { id: 'profile', name: 'Profile', icon: 'tabler:user' }
+  { icon: 'tabler:home', id: 'overview', name: 'Overview' },
+  { icon: 'tabler:settings', id: 'settings', name: 'Settings' },
+  { icon: 'tabler:user', id: 'profile', name: 'Profile' }
 ] as const
 
 /**
@@ -33,9 +33,9 @@ const BASIC_TABS = [
  */
 export const Default: Story = {
   args: {
-    items: BASIC_TABS,
-    enabled: ['overview', 'settings', 'profile'],
     currentTab: 'overview',
+    enabled: ['overview', 'settings', 'profile'],
+    items: BASIC_TABS,
     onTabChange: () => {}
   },
   render: () => {
@@ -57,15 +57,15 @@ export const Default: Story = {
 }
 
 const TABS_WITH_AMOUNTS = [
-  { id: 'all', name: 'All', icon: 'tabler:list', amount: 187 },
-  { id: 'active', name: 'Active', icon: 'tabler:check', amount: 69 },
+  { amount: 187, icon: 'tabler:list', id: 'all', name: 'All' },
+  { amount: 69, icon: 'tabler:check', id: 'active', name: 'Active' },
   {
-    id: 'completed',
-    name: 'Completed',
+    amount: 33,
     icon: 'tabler:circle-check',
-    amount: 33
+    id: 'completed',
+    name: 'Completed'
   },
-  { id: 'archived', name: 'Archived', icon: 'tabler:archive', amount: 85 }
+  { amount: 85, icon: 'tabler:archive', id: 'archived', name: 'Archived' }
 ] as const
 
 /**
@@ -73,9 +73,9 @@ const TABS_WITH_AMOUNTS = [
  */
 export const WithAmounts: Story = {
   args: {
-    items: TABS_WITH_AMOUNTS,
-    enabled: ['all', 'active', 'completed', 'archived'],
     currentTab: 'all',
+    enabled: ['all', 'active', 'completed', 'archived'],
+    items: TABS_WITH_AMOUNTS,
     onTabChange: () => {}
   },
   render: () => {
@@ -97,14 +97,14 @@ export const WithAmounts: Story = {
 }
 
 const COLORED_TABS = [
-  { id: 'red', name: 'Red', icon: 'tabler:palette', color: colors.red[500] },
+  { color: colors.red[500], icon: 'tabler:palette', id: 'red', name: 'Red' },
   {
-    id: 'green',
-    name: 'Green',
+    color: colors.green[500],
     icon: 'tabler:palette',
-    color: colors.green[500]
+    id: 'green',
+    name: 'Green'
   },
-  { id: 'blue', name: 'Blue', icon: 'tabler:palette', color: colors.blue[500] }
+  { color: colors.blue[500], icon: 'tabler:palette', id: 'blue', name: 'Blue' }
 ] as const
 
 /**
@@ -112,9 +112,9 @@ const COLORED_TABS = [
  */
 export const WithColors: Story = {
   args: {
-    items: COLORED_TABS,
-    enabled: ['red', 'green', 'blue'],
     currentTab: 'red',
+    enabled: ['red', 'green', 'blue'],
+    items: COLORED_TABS,
     onTabChange: () => {}
   },
   render: () => {
@@ -138,9 +138,9 @@ export const WithColors: Story = {
  */
 export const PartiallyEnabled: Story = {
   args: {
-    items: BASIC_TABS,
-    enabled: ['overview', 'profile'],
     currentTab: 'overview',
+    enabled: ['overview', 'profile'],
+    items: BASIC_TABS,
     onTabChange: () => {}
   },
   render: () => {
@@ -166,9 +166,9 @@ export const PartiallyEnabled: Story = {
  */
 export const ALotOfTabs: Story = {
   args: {
-    items: [],
-    enabled: [],
     currentTab: 'tab1',
+    enabled: [],
+    items: [],
     onTabChange: () => {}
   },
   render: () => {
@@ -180,9 +180,9 @@ export const ALotOfTabs: Story = {
           currentTab={active}
           enabled={Array.from({ length: 20 }, (_, i) => `tab${i + 1}`)}
           items={Array.from({ length: 20 }, (_, i) => ({
+            icon: 'tabler:star',
             id: `tab${i + 1}`,
-            name: `Tab ${i + 1}`,
-            icon: 'tabler:star'
+            name: `Tab ${i + 1}`
           }))}
           onTabChange={setActive}
         />

@@ -15,9 +15,12 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    onClose: () => {},
     data: {
-      title: 'Eliminate LifeForge from the Universe?',
+      confirmationButton: {
+        children: 'Eliminate It',
+        dangerous: true,
+        icon: 'tabler:hammer-off'
+      },
       description:
         "Are you sure you want to revert to the time where LifeForge didn't exist? This will trigger a serious chaos in the universe and the consequences will be dire.",
       onConfirm: async () => {
@@ -26,12 +29,9 @@ export const Default: Story = {
           "Omg I can't believe you have the audacity to click this button lol"
         )
       },
-      confirmationButton: {
-        icon: 'tabler:hammer-off',
-        dangerous: true,
-        children: 'Eliminate It'
-      }
-    }
+      title: 'Eliminate LifeForge from the Universe?'
+    },
+    onClose: () => {}
   },
   render: args => {
     const { open } = useModalStore()
@@ -50,9 +50,13 @@ export const Default: Story = {
 
 export const WithConfirmationPrompt: Story = {
   args: {
-    onClose: () => {},
     data: {
-      title: 'Eliminate LifeForge from the Universe?',
+      confirmationButton: {
+        children: 'Eliminate It',
+        dangerous: true,
+        icon: 'tabler:hammer-off'
+      },
+      confirmationPrompt: 'Eliminate LifeForge',
       description:
         "Are you sure you want to revert to the time where LifeForge didn't exist? This will trigger a serious chaos in the universe and the consequences will be dire.",
       onConfirm: async () => {
@@ -61,13 +65,9 @@ export const WithConfirmationPrompt: Story = {
           "Omg I can't believe you have the audacity to click this button lol"
         )
       },
-      confirmationPrompt: 'Eliminate LifeForge',
-      confirmationButton: {
-        icon: 'tabler:hammer-off',
-        dangerous: true,
-        children: 'Eliminate It'
-      }
-    }
+      title: 'Eliminate LifeForge from the Universe?'
+    },
+    onClose: () => {}
   },
   render: args => {
     const { open } = useModalStore()
@@ -91,9 +91,7 @@ export const WithConfirmationPrompt: Story = {
  */
 export const WithCustomConfirmationButtons: Story = {
   args: {
-    onClose: () => {},
     data: {
-      title: 'Are you sure?',
       description:
         'Are you sure you want to perform this cool action? This is an absolutely cool action that you probably want to do.',
       renderChildren: onClose => (
@@ -132,8 +130,10 @@ export const WithCustomConfirmationButtons: Story = {
             Yes, launch the rocket
           </Button>
         </div>
-      )
-    }
+      ),
+      title: 'Are you sure?'
+    },
+    onClose: () => {}
   },
   render: args => {
     const { open } = useModalStore()

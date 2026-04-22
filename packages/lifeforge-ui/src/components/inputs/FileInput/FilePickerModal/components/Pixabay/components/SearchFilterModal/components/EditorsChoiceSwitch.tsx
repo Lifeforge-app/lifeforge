@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
 import { Switch } from '@components/inputs'
+import { Flex, Text } from '@components/primitives'
 
 import { type PixabaySearchFilterAction } from '../../../typescript/pixabay_interfaces'
 
@@ -17,11 +18,16 @@ function EditorsChoiceSwitch({
   const { t } = useTranslation('common.modals')
 
   return (
-    <div className="flex items-center justify-between py-2">
-      <div className="flex items-center gap-2">
-        <Icon className="size-6" icon="tabler:user-star" />
-        <span className="text-lg">{t('imagePicker.inputs.editorsChoice')}</span>
-      </div>
+    <Flex align="center" justify="between" py="sm">
+      <Flex align="center" style={{ gap: '0.5rem' }}>
+        <Icon
+          icon="tabler:user-star"
+          style={{ height: '1.5rem', width: '1.5rem' }}
+        />
+        <Text as="span" size="lg">
+          {t('imagePicker.inputs.editorsChoice')}
+        </Text>
+      </Flex>
       <Switch
         value={isEditorsChoice}
         onChange={() => {
@@ -31,7 +37,7 @@ function EditorsChoiceSwitch({
           })
         }}
       />
-    </div>
+    </Flex>
   )
 }
 

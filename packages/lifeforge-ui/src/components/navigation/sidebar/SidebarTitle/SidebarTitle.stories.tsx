@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { BrowserRouter } from 'react-router'
 
+import { Flex } from '@components/primitives'
+
 import SidebarDivider from '../SidebarDivider'
 import SidebarItem from '../SidebarItem'
 import SidebarWrapper from '../SidebarWrapper'
@@ -20,7 +22,12 @@ export const Default: Story = {
   },
   render: props => (
     <BrowserRouter>
-      <div className="flex-center h-128 w-full">
+      <Flex
+        align="center"
+        justify="center"
+        style={{ height: '32rem' }}
+        width="100%"
+      >
         <SidebarWrapper>
           <SidebarTitle {...props} />
           <SidebarItem icon="tabler:category" label="Category 1" />
@@ -31,31 +38,36 @@ export const Default: Story = {
           <SidebarItem icon="tabler:cube" label="Item 1" />
           <SidebarItem icon="tabler:cube" label="Item 2" />
         </SidebarWrapper>
-      </div>
+      </Flex>
     </BrowserRouter>
   )
 }
 
 export const WithActionButton: Story = {
   args: {
-    label: 'Categories',
     actionButton: {
       icon: 'tabler:plus',
       onClick: () => {
         alert('Action button clicked!')
       }
-    }
+    },
+    label: 'Categories'
   },
   render: props => (
     <BrowserRouter>
-      <div className="flex-center h-128 w-full">
+      <Flex
+        align="center"
+        justify="center"
+        style={{ height: '32rem' }}
+        width="100%"
+      >
         <SidebarWrapper>
           <SidebarTitle {...props} />
           <SidebarItem icon="tabler:category" label="Category 1" />
           <SidebarItem icon="tabler:category" label="Category 2" />
           <SidebarItem icon="tabler:category" label="Category 3" />
         </SidebarWrapper>
-      </div>
+      </Flex>
     </BrowserRouter>
   )
 }

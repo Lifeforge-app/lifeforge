@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useCallback, useMemo, useState } from 'react'
 import { usePersonalization } from 'shared'
 
 import { TagChip } from '@components/data-display'
+import { Flex, Text, Transition } from '@components/primitives'
 
 function ChipSelector({
   options,
@@ -37,35 +37,58 @@ function ChipSelector({
   )
 
   return options.length > 0 ? (
-    <div className="mt-4 flex items-center gap-2">
-      <div
-        className={clsx(
-          'flex gap-2 pb-1 transition-all',
-          expanded ? 'flex-wrap' : 'overflow-x-auto'
-        )}
+    <Flex align="center" gap="sm" mt="md">
+      <Flex
+        gap="sm"
+        overflow={expanded ? undefined : 'hidden'}
+        overflowX={expanded ? undefined : 'auto'}
+        pb="xs"
+        width="100%"
+        wrap={expanded ? 'wrap' : undefined}
       >
         {sortedOptions.map(option => (
           <TagChip
             key={option}
             color={value === option ? derivedThemeColor : undefined}
+            flexShrink="0"
             label={option}
             onClick={() => handleChipClick(option)}
           />
         ))}
-      </div>
-      <button
-        className="flex-center text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 h-8 grow gap-2 rounded-full px-2 text-sm whitespace-nowrap transition-all duration-100 md:grow-0"
-        type="button"
-        onClick={() => {
-          setExpanded(!expanded)
-        }}
+      </Flex>
+      <Flex
+        align="center"
+        bg={{ base: 'transparent', hover: 'bg-100', darkHover: 'bg-800' }}
+        flexGrow="1"
+        flexShrink="0"
+        height="2rem"
+        justify="center"
+        px="sm"
+        rounded="full"
       >
-        <Icon
-          className={clsx('size-6 transition-all', expanded && 'rotate-180')}
-          icon="uil:angle-up"
-        />
-      </button>
-    </div>
+        <Text
+          asChild
+          as="button"
+          color={{ base: 'bg-500', hover: 'bg-800', darkHover: 'bg-100' }}
+          size="sm"
+          wrap="nowrap"
+          onClick={() => {
+            setExpanded(!expanded)
+          }}
+        >
+          <Transition property="transform">
+            <Icon
+              icon="uil:angle-up"
+              style={{
+                height: '1.5rem',
+                width: '1.5rem',
+                transform: expanded ? 'rotate(180deg)' : undefined
+              }}
+            />
+          </Transition>
+        </Text>
+      </Flex>
+    </Flex>
   ) : (
     <></>
   )

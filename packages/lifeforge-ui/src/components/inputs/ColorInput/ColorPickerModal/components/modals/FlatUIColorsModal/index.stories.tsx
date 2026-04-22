@@ -15,13 +15,13 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    onClose: () => {},
     data: {
       color: '#ff0000',
       setColor: (color: string) => {
         alert(color)
       }
-    }
+    },
+    onClose: () => {}
   },
   render: args => {
     const { open } = useModalStore()

@@ -41,7 +41,7 @@ function TitleAndDesc({
       {description && (
         <Text
           as="p"
-          color="bg-500"
+          color="muted"
           size={variant === 'large-icon' ? 'base' : 'sm'}
           style={{ width: '100%', minWidth: 0 }}
         >

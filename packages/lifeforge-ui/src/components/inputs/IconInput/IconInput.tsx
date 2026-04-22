@@ -1,36 +1,28 @@
-import { Icon, loadIcon } from '@iconify/react'
-import clsx from 'clsx'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 
 import { useModalStore } from '@components/overlays'
-import { Flex } from '@components/primitives'
+import { Box, Flex } from '@components/primitives'
 
 import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
+import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
+import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import IconPickerModal from './IconPickerModal'
+import IconPreview from './components/IconPreview'
 
 interface IconInputProps {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
-  /** The label text displayed above the icon input field. Required for 'classic' style. */
   label?: string
-  /** The current icon value of the input. Should be a valid icon name from Iconify. */
   value: string
-  /** Callback function called when the icon value changes. */
   onChange: (value: string) => void
-  /** Whether the field is required for form validation. */
   required?: boolean
-  /** Whether the input is disabled and non-interactive. */
   disabled?: boolean
-  /** Whether the input should automatically focus when rendered. */
   autoFocus?: boolean
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
-  /** Error message to display when the input is invalid. */
   errorMsg?: string
 }
 
@@ -44,39 +36,16 @@ function IconInput({
   autoFocus = false,
   namespace,
   errorMsg
-}: IconInputProps) {
+}: IconInputProps & InputVariants) {
   const { open } = useModalStore()
 
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
-  const [iconExists, setIconExists] = useState(false)
 
   const ref = useRef<HTMLInputElement>(null)
 
   const handleIconSelectorOpen = useCallback(() => {
     open(IconPickerModal, { setSelectedIcon: onChange })
   }, [open, onChange])
-
-  useEffect(() => {
-    let active = true
-
-    if (!value) {
-      setIconExists(false)
-
-      return
-    }
-    loadIcon(value)
-      .then(() => {
-        if (active) setIconExists(true)
-      })
-      .catch(() => {
-        if (active) setIconExists(false)
-      })
-
-    return () => {
-      active = false
-    }
-  }, [value])
 
   return (
     <InputWrapper
@@ -88,7 +57,7 @@ function IconInput({
       {variant === 'classic' && (
         <InputIcon active={!!value} hasError={!!errorMsg} icon="tabler:icons" />
       )}
-      <Flex align="center" gap="sm" position="relative" pr="md" width="100%">
+      <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!value}
@@ -97,45 +66,39 @@ function IconInput({
             required={required}
           />
         )}
-        <div
-          className={clsx(
-            'flex w-full items-center gap-2',
-            variant === 'classic' ? 'mt-4 p-4 pb-2 pl-0' : ''
-          )}
+        <InputInnerWrapper
+          hasActionButton
+          gap={variant === 'classic' ? 'sm' : 'md'}
+          variant={variant}
         >
-          <span className="icon-input-icon size-4 shrink-0">
-            <Icon
-              className={clsx(
-                'size-4 shrink-0',
-                !value &&
-                  'pointer-events-none opacity-0 group-focus-within:opacity-100'
-              )}
-              icon={value && iconExists ? value : 'tabler:question-mark'}
-            />
-          </span>
-          <input
-            ref={autoFocusableRef(autoFocus, ref)}
-            autoComplete="off"
-            className={clsx(
-              'focus:placeholder:text-bg-500 w-full rounded-lg bg-transparent tracking-wide focus:outline-none',
-              variant === 'classic' ? 'placeholder:text-transparent' : 'h-7 p-0'
-            )}
-            disabled={disabled}
-            name={label}
-            placeholder="tabler:cube"
-            value={value}
-            onBlur={e => {
-              onChange(e.target.value.trim())
-            }}
-            onChange={e => onChange(e.target.value)}
-          />
-        </div>
-        <InputActionButton
-          disabled={disabled}
-          icon="heroicons:chevron-up-down-16-solid"
-          onClick={handleIconSelectorOpen}
-        />
+          <IconPreview value={value} variant={variant} />
+          <Placeholder
+            color={variant === 'classic' ? 'transparent' : 'default'}
+            focusColor="default"
+          >
+            <Box asChild width="100%">
+              <input
+                ref={autoFocusableRef(autoFocus, ref)}
+                autoComplete="off"
+                disabled={disabled}
+                name={label}
+                placeholder="tabler:cube"
+                value={value}
+                onBlur={e => {
+                  onChange(e.target.value.trim())
+                }}
+                onChange={e => onChange(e.target.value)}
+              />
+            </Box>
+          </Placeholder>
+        </InputInnerWrapper>
       </Flex>
+      <InputActionButton
+        hasError={!!errorMsg}
+        icon="heroicons:chevron-up-down-16-solid"
+        variant={variant}
+        onClick={handleIconSelectorOpen}
+      />
     </InputWrapper>
   )
 }

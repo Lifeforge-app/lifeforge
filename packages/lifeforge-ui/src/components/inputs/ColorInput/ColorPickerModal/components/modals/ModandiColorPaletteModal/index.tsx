@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { sortFn } from 'color-sorter'
-import tinycolor from 'tinycolor2'
+
+import { usePersonalization } from 'shared/dist/providers/PersonalizationProvider'
 
 import { ModalHeader } from '@components/overlays'
 import { Box, Flex, Grid } from '@components/primitives'
@@ -19,6 +20,8 @@ function MorandiColorPaletteModal({
   }
   onClose: () => void
 }) {
+  const { getMostReadableColor } = usePersonalization()
+
   return (
     <Box style={{ minWidth: '60vw' }}>
       <ModalHeader
@@ -59,9 +62,7 @@ function MorandiColorPaletteModal({
                   style={{
                     width: '2rem',
                     height: '2rem',
-                    color: tinycolor(morandiColor).isLight()
-                      ? 'var(--color-bg-800)'
-                      : 'var(--color-bg-50)'
+                    color: getMostReadableColor(morandiColor)
                   }}
                 />
               )}

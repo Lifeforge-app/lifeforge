@@ -2,11 +2,9 @@ import { useEffect, useState } from 'react'
 
 import Button from '../Button'
 import TextInput from '../TextInput'
+import type { InputVariants } from '../shared/types'
 
 interface NumberInputProps {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
-  size?: 'small' | 'default'
   /** The label text displayed above the number input field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -54,7 +52,7 @@ function NumberInput({
   max,
   placeholder = '123',
   actionButtonProps
-}: NumberInputProps) {
+}: NumberInputProps & InputVariants<true>) {
   const [currentStringValue, setCurrentStringValue] = useState<string>(
     value.toString() === '0' ? '' : value.toString()
   )
@@ -76,9 +74,9 @@ function NumberInput({
       namespace={namespace}
       placeholder={placeholder}
       required={required}
-      size={size}
+      size={size as never}
       value={currentStringValue}
-      variant={variant}
+      variant={variant as never}
       onBlur={() => {
         if (currentStringValue.trim() === '') {
           onChange(0)
