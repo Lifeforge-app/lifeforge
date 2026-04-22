@@ -5,17 +5,17 @@ import CurrencyInput from 'react-currency-input-field'
 import { Box, Flex, Text } from '@components/primitives'
 
 import InputIcon from '../shared/components/InputIcon'
+import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 
-export interface CurrencyInputProps {
+export type CurrencyInputProps = {
   /** The currency symbol to display, or the currency code (e.g., "$", "€", "USD"). */
   prefix?: string
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
   /** The label text displayed above the currency input field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -38,7 +38,7 @@ export interface CurrencyInputProps {
   namespace?: string
   /** Error message to display when the input is invalid. */
   errorMsg?: string
-}
+} & InputVariants
 
 /** CurrencyInputComponent for entering currency values with two decimal places and comma-separated thousands. */
 function CurrencyInputComponent({
@@ -90,15 +90,9 @@ function CurrencyInputComponent({
             required={required === true}
           />
         )}
-        <Flex
-          align="center"
-          gap="sm"
-          width="100%"
-          pt={variant === 'classic' ? 'xl' : undefined}
-          pr={variant === 'classic' ? 'md' : undefined}
-          pb={variant === 'classic' ? 'sm' : undefined}
-          pl={variant === 'classic' ? 'none' : undefined}
-          p={variant === 'plain' ? 'xs' : undefined}
+        <InputInnerWrapper
+          variant={variant}
+          gap={variant === 'classic' ? 'sm' : 'md'}
         >
           {currency && (focused || !!innerValue) && (
             <Text
@@ -143,7 +137,7 @@ function CurrencyInputComponent({
               </Text>
             </Box>
           </Placeholder>
-        </Flex>
+        </InputInnerWrapper>
       </Flex>
     </InputWrapper>
   )

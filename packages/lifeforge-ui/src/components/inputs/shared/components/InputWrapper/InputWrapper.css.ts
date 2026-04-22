@@ -39,6 +39,7 @@ export const inputWrapperRecipe = recipe({
     hasError: {
       true: {
         borderColor: 'var(--color-red-500)',
+        outlineColor: 'var(--color-red-500)',
         selectors: {
           '&:focus-within': {
             borderColor: 'var(--color-red-500)'

@@ -13,8 +13,8 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    value: true,
-    onChange: () => {}
+    onChange: () => {},
+    value: true
   },
   render: props => {
     const [checked, setChecked] = useState(props.value)
@@ -34,15 +34,15 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
-    value: false,
+    disabled: true,
     onChange: () => {},
-    disabled: true
+    value: false
   }
 }
 
 export const Unchecked: Story = {
   args: {
-    value: false,
-    onChange: () => {}
+    onChange: () => {},
+    value: false
   }
 }

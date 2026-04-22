@@ -4,14 +4,16 @@ import DatePicker from 'react-datepicker'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
-import { Box, Flex } from '@components/primitives'
+import { Flex } from '@components/primitives'
 
 import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
+import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import Placeholder from '../shared/components/Placeholder'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import * as styles from './DateInput.css'
 import CalendarHeader from './components/CalendarHeader'
@@ -20,8 +22,6 @@ import CalendarHeader from './components/CalendarHeader'
  * Props for the DateInput component.
  */
 interface DateInputProps {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
   /** The label text displayed above the date input field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the date input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -62,7 +62,7 @@ function DateInput({
   hasTime = false,
   namespace,
   errorMsg
-}: DateInputProps) {
+}: DateInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const { derivedThemeColor } = usePersonalization()
@@ -84,31 +84,22 @@ function DateInput({
           active={!!value}
           hasError={!!errorMsg}
           icon={icon}
-          isFocused={isCalendarOpen}
         />
       )}
       <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
           <InputLabel
             active={!!value}
-            focused={isCalendarOpen}
             hasError={!!errorMsg}
             label={inputLabel}
             required={required === true}
           />
         )}
-        <Placeholder
-          color={variant === 'classic' ? 'transparent' : 'default'}
-          focusColor="default"
-        >
-          <Box
-            asChild
-            pb={variant === 'classic' ? 'sm' : undefined}
-            pl={variant === 'classic' ? 'none' : undefined}
-            pr={variant === 'classic' ? 'md' : undefined}
-            pt={variant === 'classic' ? 'xl' : undefined}
-            rounded="lg"
-            width="100%"
+
+        <InputInnerWrapper hasActionButton={!!value} variant={variant}>
+          <Placeholder
+            color={variant === 'classic' ? 'transparent' : 'default'}
+            focusColor="default"
           >
             <DatePicker
               ref={autoFocusableRef(autoFocus, ref, e => {
@@ -147,11 +138,12 @@ function DateInput({
               }}
               onChange={(value: Date | null) => onChange(value)}
             />
-          </Box>
-        </Placeholder>
+          </Placeholder>
+        </InputInnerWrapper>
       </Flex>
       {!!value && (
         <InputActionButton
+          hasError={!!errorMsg}
           icon="tabler:x"
           variant={variant}
           onClick={() => {

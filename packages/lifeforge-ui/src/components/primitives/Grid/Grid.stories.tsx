@@ -7,21 +7,16 @@ import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { VariantContainer } from '@/storybook/VariantContainer'
 
 const meta = {
-  component: Grid,
   argTypes: {
-    children: { control: false },
-    bg: { control: false },
-    display: {
-      control: { type: 'select' },
-      options: ['grid', 'inline-grid', 'none']
-    },
     align: {
       control: { type: 'select' },
       options: ['stretch', 'center', 'start', 'end', 'baseline']
     },
-    justify: {
+    bg: { control: false },
+    children: { control: false },
+    display: {
       control: { type: 'select' },
-      options: ['start', 'center', 'end', 'between']
+      options: ['grid', 'inline-grid', 'none']
     },
     flow: {
       control: { type: 'select' },
@@ -31,11 +26,16 @@ const meta = {
       control: { type: 'select' },
       options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl', '3xl']
     },
+    justify: {
+      control: { type: 'select' },
+      options: ['start', 'center', 'end', 'between']
+    },
     rounded: {
       control: { type: 'select' },
       options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
     }
-  }
+  },
+  component: Grid
 } satisfies Meta<typeof Grid>
 
 export default meta
@@ -45,10 +45,10 @@ type Story = StoryObj<typeof meta>
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function Cell({
-  label,
   accent = false,
-  noBg = false,
   children,
+  label,
+  noBg = false,
   ...props
 }: {
   label?: string
@@ -408,8 +408,8 @@ export const ResponsiveColumns: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         columns={{
           base: 'repeat(1, minmax(0, 1fr))',
-          sm: 'repeat(2, minmax(0, 1fr))',
-          lg: 'repeat(3, minmax(0, 1fr))'
+          lg: 'repeat(3, minmax(0, 1fr))',
+          sm: 'repeat(2, minmax(0, 1fr))'
         }}
         gap="md"
         p="lg"

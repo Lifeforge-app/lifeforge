@@ -1,7 +1,10 @@
 import { useTranslation } from 'react-i18next'
 
+import { Box } from '@components/primitives'
 import { ListboxInput, ListboxOption } from '@components/inputs'
 import type { FreqSpecificParams } from '@components/inputs/RRuleInput/RRuleInput'
+
+const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
 
 function MonthlyRelativeDayForm({
   data,
@@ -14,79 +17,59 @@ function MonthlyRelativeDayForm({
 
   return (
     <>
-      <ListboxInput
-        required
-        buttonContent={<>{t(`recurring.onThe.${data.onThe}`)}</>}
-        className="flex-1"
-        icon="tabler:calendar"
-        label={t('inputs.monthly.relativeDay.inputs.onThe')}
-        value={data.onThe}
-        onChange={onThe => setData({ ...data, onThe })}
-      >
-        {['first', 'second', 'third', 'fourth', 'last'].map(day => (
-          <ListboxOption
-            key={day}
-            label={t(`recurring.onThe.${day}`)}
-            value={day}
-          />
-        ))}
-      </ListboxInput>
-      <ListboxInput
-        required
-        buttonContent={
-          <>
-            {t(
-              data.onTheDay.length === 3 && data.onTheDay !== 'day'
-                ? `common.misc:dates.days.${[
-                    'mon',
-                    'tue',
-                    'wed',
-                    'thu',
-                    'fri',
-                    'sat',
-                    'sun'
-                  ].indexOf(data.onTheDay)}`
-                : `recurring.onTheDay.${data.onTheDay}`
-            )}
-          </>
-        }
-        className="flex-1"
-        icon="tabler:calendar"
-        label={t('inputs.monthly.relativeDay.inputs.onTheDay')}
-        value={data.onTheDay}
-        onChange={onTheDay => setData({ ...data, onTheDay })}
-      >
-        {[
-          'mon',
-          'tue',
-          'wed',
-          'thu',
-          'fri',
-          'sat',
-          'sun',
-          'day',
-          'weekday',
-          'weekendDay'
-        ].map((day, idx) => (
-          <ListboxOption
-            key={day}
-            label={t(
-              idx < 7
-                ? `common.misc:dates.days.${[
-                    'mon',
-                    'tue',
-                    'wed',
-                    'thu',
-                    'fri',
-                    'sat',
-                    'sun'
-                  ].indexOf(day)}`
-                : `recurring.onTheDay.${day}`
-            )}
-            value={day}
-          />
-        ))}
-      </ListboxInput>
+      <Box flex="1">
+        <ListboxInput
+          required
+          buttonContent={<>{t(`recurring.onThe.${data.onThe}`)}</>}
+          icon="tabler:calendar"
+          label={t('inputs.monthly.relativeDay.inputs.onThe')}
+          value={data.onThe}
+          onChange={onThe => setData({ ...data, onThe })}
+        >
+          {['first', 'second', 'third', 'fourth', 'last'].map(day => (
+            <ListboxOption
+              key={day}
+              label={t(`recurring.onThe.${day}`)}
+              value={day}
+            />
+          ))}
+        </ListboxInput>
+      </Box>
+      <Box flex="1">
+        <ListboxInput
+          required
+          buttonContent={
+            <>
+              {t(
+                data.onTheDay.length === 3 && data.onTheDay !== 'day'
+                  ? `common.misc:dates.days.${DAYS.indexOf(data.onTheDay as typeof DAYS[number])}`
+                  : `recurring.onTheDay.${data.onTheDay}`
+              )}
+            </>
+          }
+          icon="tabler:calendar"
+          label={t('inputs.monthly.relativeDay.inputs.onTheDay')}
+          value={data.onTheDay}
+          onChange={onTheDay => setData({ ...data, onTheDay })}
+        >
+          {[
+            ...DAYS,
+            'day',
+            'weekday',
+            'weekendDay'
+          ].map((day, idx) => (
+            <ListboxOption
+              key={day}
+              label={t(
+                idx < 7
+                  ? `common.misc:dates.days.${DAYS.indexOf(day as typeof DAYS[number])}`
+                  : `recurring.onTheDay.${day}`
+              )}
+              value={day}
+            />
+          ))}
+        </ListboxInput>
+      </Box>
     </>
   )
 }

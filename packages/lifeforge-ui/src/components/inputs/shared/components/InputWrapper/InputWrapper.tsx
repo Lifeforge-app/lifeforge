@@ -5,6 +5,8 @@ import { useCallback } from 'react'
 
 import { Box, Flex, Text } from '@components/primitives'
 
+import { InputFocusProvider } from '../../contexts/InputFocusContext'
+import type { InputSize, InputVariant } from '../../types'
 import {
   inputWrapperErrorTextStyle,
   inputWrapperRecipe
@@ -20,8 +22,8 @@ function InputWrapper({
   children,
   errorMsg
 }: {
-  variant?: 'classic' | 'plain'
-  size?: 'small' | 'default'
+  variant?: InputVariant
+  size?: InputSize
   className?: string
   disabled?: boolean
   inputRef?: React.RefObject<any | null>
@@ -74,44 +76,63 @@ function InputWrapper({
   })
 
   return (
-    <Flex className={className} direction="column" gap="sm" width="100%">
+    <InputFocusProvider>
+      <Flex
+        className={className}
+        direction="column"
+        gap="sm"
+        minWidth="0"
+        style={disabled ? { opacity: 0.5 } : undefined}
+        width="100%"
+      >
       <Flex
         shadow
         align="center"
         className={clsx('group', wrapperClassName)}
         flexShrink="0"
+        minWidth="0"
         position="relative"
         role="button"
+        style={
+          variant === 'plain' && errorMsg
+            ? { outline: '2px solid var(--color-red-500)' }
+            : {}
+        }
         tabIndex={0}
         width="100%"
         onClick={focusInput}
         onFocus={focusInput}
         onKeyDown={handleKeyDown}
       >
-        {children}
+          {children}
+          {errorMsg && (
+            <Box
+              asChild
+              flexShrink="0"
+              mr={variant === 'classic' ? 'lg' : undefined}
+            >
+              <Icon
+                color="var(--color-red-500)"
+                height="1.5em"
+                icon="tabler:alert-circle"
+                width="1.5em"
+              />
+            </Box>
+          )}
+        </Flex>
         {errorMsg && (
-          <Box asChild mr="lg">
-            <Icon
-              color="var(--color-red-500)"
-              height="1.5em"
-              icon="tabler:alert-circle"
-              width="1.5em"
-            />
-          </Box>
+          <Text
+            className={inputWrapperErrorTextStyle}
+            color="dangerous"
+            display="block"
+            px={variant === 'classic' ? 'md' : undefined}
+            size="sm"
+          >
+            {errorMsg}
+          </Text>
         )}
       </Flex>
-      {errorMsg && (
-        <Text
-          className={inputWrapperErrorTextStyle}
-          color="dangerous"
-          display="block"
-          px="lg"
-          size="sm"
-        >
-          {errorMsg}
-        </Text>
-      )}
-    </Flex>
+    </InputFocusProvider>
   )
 }
 

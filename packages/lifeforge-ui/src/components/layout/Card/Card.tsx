@@ -1,27 +1,18 @@
-import clsx from 'clsx'
 import React from 'react'
 
-import { Box, type BoxProps } from '../../primitives'
-import * as styles from './Card.css'
+import { Flex, type FlexProps } from '../../primitives'
 
-export interface CardProps extends Omit<
-  BoxProps,
-  'bg' | 'display' | 'p' | 'position' | 'rounded'
-> {
-  children: React.ReactNode
-  className?: string
+export type CardProps<T extends React.ElementType = 'div'> = FlexProps<T> & {
   isInteractive?: boolean
 }
 
-function Card({
-  children,
-  className,
+function Card<T extends React.ElementType = 'div'>({
   isInteractive,
   style,
   ...props
-}: CardProps) {
+}: CardProps<T>) {
   return (
-    <Box
+    <Flex
       shadow
       bg={
         isInteractive
@@ -33,8 +24,7 @@ function Card({
             }
           : { base: 'bg-50', dark: 'bg-900' }
       }
-      className={clsx(styles.base, className)}
-      display="block"
+      direction="column"
       p="md"
       position="relative"
       rounded="lg"
@@ -42,10 +32,8 @@ function Card({
         ...(isInteractive ? { cursor: 'pointer', transition: 'all 0.2s' } : {}),
         ...style
       }}
-      {...props}
-    >
-      {children}
-    </Box>
+      {...(props as FlexProps<T>)}
+    />
   )
 }
 

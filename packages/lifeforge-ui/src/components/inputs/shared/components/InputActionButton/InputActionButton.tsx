@@ -1,10 +1,9 @@
 import { Icon } from '@iconify/react'
-import { clsx } from 'clsx'
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 
-import { Flex } from '@components/primitives'
+import { Flex, Text, Transition } from '@components/primitives'
 
-import * as styles from './InputActionButton.css'
+import type { InputVariant } from '../../types'
 
 interface InputActionButtonProps extends Omit<
   ComponentPropsWithoutRef<'button'>,
@@ -13,7 +12,8 @@ interface InputActionButtonProps extends Omit<
   /** Iconify icon name to display inside the button. */
   icon: string
   /** Visual style variant of the button. */
-  variant?: 'classic' | 'plain'
+  variant?: InputVariant
+  hasError?: boolean
   children?: ReactNode
 }
 
@@ -28,31 +28,41 @@ function InputActionButton({
   className,
   style,
   children,
+  hasError = false,
   ...rest
 }: InputActionButtonProps) {
   return (
-    <Flex
-      asChild
-      align="center"
-      bg={{ base: 'transparent', hover: 'bg-200', darkHover: 'bg-800' }}
-      className={clsx(styles.root, className)}
-      flexShrink="0"
-      justify="center"
-      p="sm"
-      position="absolute"
-      right="0"
-      rounded="lg"
-      style={{
-        ...style,
-        marginRight: variant === 'classic' ? '1rem' : '0.75rem'
-      }}
-    >
-      {children || (
-        <button type="button" {...rest}>
-          <Icon icon={icon} style={{ width: '1.25em', height: '1.25em' }} />
-        </button>
-      )}
-    </Flex>
+    <Transition>
+      <Flex
+        asChild
+        align="center"
+        bg={{ base: 'transparent', hover: 'bg-300', darkHover: 'bg-700' }}
+        className={className}
+        flexShrink="0"
+        justify="center"
+        p="sm"
+        position="absolute"
+        right={hasError ? (variant === 'classic' ? '3em' : '2.5em') : '0'}
+        rounded="lg"
+        style={{
+          // the `mr` props cannot be used since the 0.75rem value is required to be exact for the plain variant
+          marginRight: variant === 'classic' ? '1em' : '0.75em',
+          ...style
+        }}
+      >
+        <Text asChild color="muted">
+          {children || (
+            <button
+              type="button"
+              onMouseDown={e => e.preventDefault()}
+              {...rest}
+            >
+              <Icon icon={icon} style={{ width: '1.25em', height: '1.25em' }} />
+            </button>
+          )}
+        </Text>
+      </Flex>
+    </Transition>
   )
 }
 

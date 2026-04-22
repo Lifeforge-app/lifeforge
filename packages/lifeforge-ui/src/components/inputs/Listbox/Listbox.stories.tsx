@@ -3,25 +3,27 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import colors from 'tailwindcss/colors'
 
+import { Box, Flex, Text } from '@components/primitives'
+
 import ListboxOption from '../ListboxInput/components/ListboxOption'
 import Listbox from './Listbox'
 
 const meta = {
-  component: Listbox,
   argTypes: {
-    value: {
+    children: {
       control: false
     },
     onChange: {
       control: false
     },
-    buttonContent: {
+    renderContent: {
       control: false
     },
-    children: {
+    value: {
       control: false
     }
-  }
+  },
+  component: Listbox
 } satisfies Meta<typeof Listbox>
 
 export default meta
@@ -30,22 +32,22 @@ type Story = StoryObj<typeof meta>
 
 const OPTIONS = [
   {
-    value: 'low',
+    color: colors.green[500],
+    icon: 'tabler:flag',
     label: 'Low Priority',
-    icon: 'tabler:flag',
-    color: colors.green[500]
+    value: 'low'
   },
   {
-    value: 'medium',
+    color: colors.yellow[500],
+    icon: 'tabler:flag',
     label: 'Medium Priority',
-    icon: 'tabler:flag',
-    color: colors.yellow[500]
+    value: 'medium'
   },
   {
-    value: 'high',
-    label: 'High Priority',
+    color: colors.red[500],
     icon: 'tabler:flag',
-    color: colors.red[500]
+    label: 'High Priority',
+    value: 'high'
   }
 ]
 
@@ -54,44 +56,94 @@ const OPTIONS = [
  */
 export const Default: Story = {
   args: {
-    value: '',
+    children: <></>,
     onChange: () => {},
-    buttonContent: <></>,
-    children: <></>
+    renderContent: undefined,
+    value: ''
   },
-  render: args => {
+  render: _args => {
     const [value, onChange] = useState('low')
 
     const selectedOption = OPTIONS.find(o => o.value === value)
 
     return (
-      <div className="w-96">
-        <Listbox
-          {...args}
-          buttonContent={
-            <span className="flex items-center gap-2">
+      <Listbox
+        renderContent={() => (
+          <Flex align="center" gap="sm">
+            <Box asChild flexShrink="0">
               <Icon
-                className="size-5"
                 color={selectedOption?.color || colors.gray[500]}
                 icon={selectedOption?.icon || 'tabler:cube'}
+                style={{ height: '1.25rem', width: '1.25rem' }}
               />
+            </Box>
+            <Text truncate>
               {selectedOption?.label || 'Select an option'}
-            </span>
-          }
-          value={value}
-          onChange={onChange}
-        >
-          {OPTIONS.map(({ value, label, icon, color }) => (
-            <ListboxOption
-              key={value}
-              color={color}
-              icon={icon}
-              label={label}
-              value={value}
-            />
-          ))}
-        </Listbox>
-      </div>
+            </Text>
+          </Flex>
+        )}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, label, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={label}
+            value={value}
+          />
+        ))}
+      </Listbox>
+    )
+  }
+}
+
+/**
+ * A disabled listbox — non-interactive.
+ */
+export const Disabled: Story = {
+  args: {
+    children: <></>,
+    onChange: () => {},
+    renderContent: undefined,
+    value: 'low'
+  },
+  render: _args => {
+    const [value, onChange] = useState('low')
+
+    const selectedOption = OPTIONS.find(o => o.value === value)
+
+    return (
+      <Listbox
+        disabled
+        renderContent={() => (
+          <Flex align="center" gap="sm">
+            <Box asChild flexShrink="0">
+              <Icon
+                color={selectedOption?.color || colors.gray[500]}
+                icon={selectedOption?.icon || 'tabler:cube'}
+                style={{ height: '1.25rem', width: '1.25rem' }}
+              />
+            </Box>
+            <Text truncate>
+              {selectedOption?.label || 'Select an option'}
+            </Text>
+          </Flex>
+        )}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, label, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={label}
+            value={value}
+          />
+        ))}
+      </Listbox>
     )
   }
 }
@@ -101,62 +153,65 @@ export const Default: Story = {
  */
 export const MultipleOptions: Story = {
   args: {
-    value: [],
+    children: <></>,
     onChange: () => {},
-    buttonContent: <></>,
-    children: <></>
+    renderContent: undefined,
+    value: []
   },
-  render: args => {
+  render: _args => {
     const [value, onChange] = useState([OPTIONS[2].value]) // Initialize with an array of values
 
     return (
-      <div className="w-96">
-        <Listbox
-          {...args}
-          buttonContent={
-            <span className="flex flex-wrap items-center gap-2">
-              {(value as string[]).length > 0
-                ? (value as string[]).map((v, index) => {
-                    const option = OPTIONS.find(o => o.value === v)
+      <Listbox
+        multiple
+        renderContent={() => (
+          <Flex align="center" gap="sm" wrap="wrap">
+            {(value as string[]).length > 0
+              ? (value as string[]).map((v, index) => {
+                  const option = OPTIONS.find(o => o.value === v)
 
-                    return (
-                      <>
-                        <span key={index} className="flex items-center gap-2">
-                          <Icon
-                            className="size-5 shrink-0"
-                            color={option?.color || colors.gray[500]}
-                            icon={option?.icon || 'tabler:cube'}
-                          />
-                          <span className="whitespace-nowrap">
-                            {option?.label}
-                          </span>
-                        </span>
-                        {index !== (value as string[]).length - 1 && (
-                          <Icon
-                            className="text-bg-400 dark:text-bg-600 size-1.5"
-                            icon="tabler:circle-filled"
-                          />
-                        )}
-                      </>
-                    )
-                  })
-                : 'Select options'}
-            </span>
-          }
-          value={value}
-          onChange={onChange}
-        >
-          {OPTIONS.map(({ value, label, icon, color }) => (
-            <ListboxOption
-              key={value}
-              color={color}
-              icon={icon}
-              label={label}
-              value={value}
-            />
-          ))}
-        </Listbox>
-      </div>
+                  return (
+                    <>
+                      <Flex key={index} align="center" gap="sm">
+                        <Icon
+                          color={option?.color || colors.gray[500]}
+                          icon={option?.icon || 'tabler:cube'}
+                          style={{
+                            flexShrink: 0,
+                            height: '1.25rem',
+                            width: '1.25rem'
+                          }}
+                        />
+                        <Text whiteSpace="nowrap">{option?.label}</Text>
+                      </Flex>
+                      {index !== (value as string[]).length - 1 && (
+                        <Text
+                          asChild
+                          color={{ base: 'bg-400', dark: 'bg-600' }}
+                          style={{ height: '0.375rem', width: '0.375rem' }}
+                        >
+                          <Icon icon="tabler:circle-filled" />
+                        </Text>
+                      )}
+                    </>
+                  )
+                })
+              : 'Select options'}
+          </Flex>
+        )}
+        value={value}
+        onChange={onChange}
+      >
+        {OPTIONS.map(({ color, icon, label, value }) => (
+          <ListboxOption
+            key={value}
+            color={color}
+            icon={icon}
+            label={label}
+            value={value}
+          />
+        ))}
+      </Listbox>
     )
   }
 }

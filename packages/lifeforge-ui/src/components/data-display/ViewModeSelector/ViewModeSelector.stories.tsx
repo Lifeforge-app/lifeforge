@@ -8,7 +8,6 @@ import Widget from '../Widget'
 import ViewModeSelector from './ViewModeSelector'
 
 const meta = {
-  component: ViewModeSelector,
   argTypes: {
     onModeChange: {
       control: false
@@ -16,7 +15,8 @@ const meta = {
     options: {
       control: false
     }
-  }
+  },
+  component: ViewModeSelector
 } satisfies Meta<typeof ViewModeSelector>
 
 export default meta
@@ -24,9 +24,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const VIEW_OPTIONS = [
-  { value: 'list', icon: 'tabler:list', text: 'List' },
-  { value: 'grid', icon: 'tabler:grid-dots', text: 'Grid' },
-  { value: 'gallery', icon: 'tabler:layout-grid', text: 'Gallery' }
+  { icon: 'tabler:list', text: 'List', value: 'list' },
+  { icon: 'tabler:grid-dots', text: 'Grid', value: 'grid' },
+  { icon: 'tabler:layout-grid', text: 'Gallery', value: 'gallery' }
 ] as const
 
 /**
@@ -36,9 +36,9 @@ export const Default: Story = {
   args: {
     currentMode: 'list',
     onModeChange: () => {},
-    options: VIEW_OPTIONS.map(({ value, icon }) => ({
-      value,
-      icon
+    options: VIEW_OPTIONS.map(({ icon, value }) => ({
+      icon,
+      value
     }))
   },
   render: args => {
@@ -47,7 +47,7 @@ export const Default: Story = {
     )
 
     return (
-      <Flex align="center" height="full" justify="center" width="full">
+      <Flex align="center" height="full" justify="center" width="100%">
         <ViewModeSelector
           {...args}
           currentMode={viewMode}
@@ -70,7 +70,7 @@ export const WithText: Story = {
     )
 
     return (
-      <Flex align="center" height="full" justify="center" width="full">
+      <Flex align="center" height="full" justify="center" width="100%">
         <ViewModeSelector
           {...args}
           currentMode={viewMode}
@@ -85,9 +85,9 @@ export const TextOnly: Story = {
   args: {
     currentMode: 'list',
     onModeChange: () => {},
-    options: VIEW_OPTIONS.map(({ value, text }) => ({
-      value,
-      text
+    options: VIEW_OPTIONS.map(({ text, value }) => ({
+      text,
+      value
     }))
   },
   render: args => {
@@ -96,7 +96,7 @@ export const TextOnly: Story = {
     )
 
     return (
-      <Flex align="center" height="full" justify="center" width="full">
+      <Flex align="center" height="full" justify="center" width="100%">
         <ViewModeSelector
           {...args}
           currentMode={viewMode}
@@ -124,7 +124,7 @@ export const BesideSearchBar: Story = {
     const [searchValue, setSearchValue] = useState('')
 
     return (
-      <Flex align="center" gap="md" width="full">
+      <Flex align="center" gap="md" width="100%">
         <SearchInput
           searchTarget="stuff"
           value={searchValue}
@@ -152,8 +152,8 @@ export const InsideWidget: Story = {
     currentMode: '1M',
     onModeChange: () => {},
     options: ['1W', '1M', '3M', 'YTD', '1Y', 'ALL'].map(item => ({
-      value: item,
-      text: item
+      text: item,
+      value: item
     }))
   },
   render: args => {
@@ -162,18 +162,20 @@ export const InsideWidget: Story = {
     >('1M')
 
     return (
-      <Widget
-        actionComponent={
-          <ViewModeSelector
-            size="small"
-            {...args}
-            currentMode={viewMode}
-            onModeChange={setViewMode}
-          />
-        }
-        icon="tabler:chart-dots"
-        title="A Chart Or Something"
-      ></Widget>
+      <Box height="50vh">
+        <Widget
+          actionComponent={
+            <ViewModeSelector
+              size="small"
+              {...args}
+              currentMode={viewMode}
+              onModeChange={setViewMode}
+            />
+          }
+          icon="tabler:chart-dots"
+          title="A Chart Or Something"
+        />
+      </Box>
     )
   }
 }

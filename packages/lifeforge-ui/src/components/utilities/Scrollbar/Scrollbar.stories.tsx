@@ -5,12 +5,12 @@ import { Card } from '@components/layout'
 import Scrollbar from './Scrollbar'
 
 const meta = {
-  component: Scrollbar,
   argTypes: {
     children: {
       control: false
     }
-  }
+  },
+  component: Scrollbar
 } satisfies Meta<typeof Scrollbar>
 
 export default meta
@@ -42,8 +42,8 @@ export const Default: Story = {
  */
 export const NoPaddingRight: Story = {
   args: {
-    usePaddingRight: false,
-    children: <></>
+    children: <></>,
+    usePaddingRight: false
   },
   render: args => (
     <div className="h-96 w-96">

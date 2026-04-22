@@ -107,35 +107,37 @@ function ModuleHeader({
                   title?.toString() ?? ''
                 ])}
               </Text>
-              <Text
-                color="bg-500"
-                size={{ base: 'sm', sm: 'base' }}
-                style={{ minWidth: 0 }}
-                weight="medium"
-              >
-                {totalItems !== undefined
-                  ? `(${totalItems.toLocaleString()})`
-                  : ''}
-              </Text>
+              <Box asChild minWidth="0">
+                <Text
+                  color="muted"
+                  size={{ base: 'sm', sm: 'base' }}
+                  weight="medium"
+                >
+                  {totalItems !== undefined
+                    ? `(${totalItems.toLocaleString()})`
+                    : ''}
+                </Text>
+              </Box>
             </Flex>
           </Text>
-          <Text
-            truncate
-            color="bg-500"
-            size={{ base: 'sm', sm: 'base' }}
-            style={{ minWidth: 0, width: '100%' }}
-            whiteSpace="nowrap"
-          >
-            {t([
-              `${namespace}:${tKey}.${title}.description`,
-              `${namespace}:${title}.description`,
-              `apps.${title}:description`,
-              `common.${title}:description`,
-              'common.misc:description',
-              'description',
-              `Description for ${title?.toString() ?? ''}`
-            ])}
-          </Text>
+          <Box asChild minWidth="0" width="100%">
+            <Text
+              truncate
+              color="muted"
+              size={{ base: 'sm', sm: 'base' }}
+              whiteSpace="nowrap"
+            >
+              {t([
+                `${namespace}:${tKey}.${title}.description`,
+                `${namespace}:${title}.description`,
+                `apps.${title}:description`,
+                `common.${title}:description`,
+                'common.misc:description',
+                'description',
+                `Description for ${title?.toString() ?? ''}`
+              ])}
+            </Text>
+          </Box>
         </Flex>
       </Flex>
       <Flex align="center" gap="sm">

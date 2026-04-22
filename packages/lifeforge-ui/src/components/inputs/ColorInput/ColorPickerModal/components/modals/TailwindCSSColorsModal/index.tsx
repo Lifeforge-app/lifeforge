@@ -47,11 +47,11 @@ function TailwindCSSColorsModal({
                 {colorGroup[0].toUpperCase() + colorGroup.slice(1)}
               </Text>
               <Grid
-                as="ul"
                 key={index}
+                as="ul"
                 columns="repeat(auto-fit, minmax(4rem, 1fr))"
-                width="100%"
                 style={{ gap: '0.75rem' }}
+                width="100%"
               >
                 {Object.entries(
                   colors[colorGroup] as Record<string, string>

@@ -8,16 +8,16 @@ import { Box, Flex, Text } from '@components/primitives'
 import ModuleHeader from './index'
 
 const meta = {
-  component: ModuleHeader,
   argTypes: {
-    icon: { control: 'text' },
-    title: { control: 'text' },
-    totalItems: { control: 'number' },
     actionButton: { control: false },
+    contextMenuProps: { control: false },
     customElement: { control: false },
+    icon: { control: 'text' },
     tips: { control: false },
-    contextMenuProps: { control: false }
-  }
+    title: { control: 'text' },
+    totalItems: { control: 'number' }
+  },
+  component: ModuleHeader
 } satisfies Meta<typeof ModuleHeader>
 
 export default meta
@@ -99,12 +99,12 @@ export const WithTotalItems: Story = {
  */
 export const WithActionButton: Story = {
   args: {
-    totalItems: 24,
     actionButton: (
       <Button icon="tabler:plus" onClick={() => {}}>
         New Item
       </Button>
-    )
+    ),
+    totalItems: 24
   },
   render: args => (
     <StoryShell>
@@ -155,7 +155,6 @@ export const WithTipsString: Story = {
 export const WithTipsObject: Story = {
   args: {
     tips: {
-      title: 'Getting started',
       content: (
         <Flex direction="column" gap="sm">
           <Text as="p">
@@ -173,7 +172,8 @@ export const WithTipsObject: Story = {
             Drag rows to reorder, or use the context menu for bulk actions.
           </Text>
         </Flex>
-      )
+      ),
+      title: 'Getting started'
     }
   },
   render: args => (
@@ -225,27 +225,11 @@ export const WithContextMenu: Story = {
  */
 export const FullyLoaded: Story = {
   args: {
-    totalItems: 842,
     actionButton: (
       <Button icon="tabler:plus" onClick={() => {}}>
         New Item
       </Button>
     ),
-    customElement: (
-      <Flex gap="xs">
-        <Button icon="tabler:layout-grid" variant="plain" onClick={() => {}} />
-        <Button icon="tabler:layout-list" variant="plain" onClick={() => {}} />
-      </Flex>
-    ),
-    tips: {
-      title: 'Getting started',
-      content: (
-        <Text as="p">
-          Use the action button to create new entries. Switch views with the
-          grid and list toggles.
-        </Text>
-      )
-    },
     contextMenuProps: {
       children: (
         <>
@@ -262,7 +246,23 @@ export const FullyLoaded: Story = {
           />
         </>
       )
-    }
+    },
+    customElement: (
+      <Flex gap="xs">
+        <Button icon="tabler:layout-grid" variant="plain" onClick={() => {}} />
+        <Button icon="tabler:layout-list" variant="plain" onClick={() => {}} />
+      </Flex>
+    ),
+    tips: {
+      content: (
+        <Text as="p">
+          Use the action button to create new entries. Switch views with the
+          grid and list toggles.
+        </Text>
+      ),
+      title: 'Getting started'
+    },
+    totalItems: 842
   },
   render: args => (
     <StoryShell>

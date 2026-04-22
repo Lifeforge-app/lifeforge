@@ -8,12 +8,9 @@ import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { Bordered } from './index'
 
 const meta = {
-  component: Bordered,
   argTypes: {
-    children: { control: false },
-    borderColor: { control: false },
     bg: { control: false },
-    color: { control: false },
+    borderColor: { control: false },
     borderSide: {
       control: { type: 'select' },
       options: ['all', 'top', 'right', 'bottom', 'left', 'x', 'y']
@@ -22,11 +19,14 @@ const meta = {
       control: { type: 'select' },
       options: ['solid', 'dashed', 'dotted', 'double', 'none']
     },
+    children: { control: false },
+    color: { control: false },
     rounded: {
       control: { type: 'select' },
       options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
     }
-  }
+  },
+  component: Bordered
 } satisfies Meta<typeof Bordered>
 
 export default meta
@@ -96,9 +96,9 @@ export const BorderColor: Story = {
       <Bordered
         borderColor={{
           base: 'bg-400',
-          hover: 'custom-500',
           dark: 'bg-600',
-          darkHover: 'custom-400'
+          darkHover: 'custom-400',
+          hover: 'custom-500'
         }}
         p="md"
         rounded="lg"

@@ -1,19 +1,21 @@
-import clsx from 'clsx'
 import { useRef, useState } from 'react'
 
-import Button from '../Button'
+import { TagChip } from '@components/data-display'
+import { Flex } from '@components/primitives'
+
 import TextInputBox from '../TextInput/components/TextInputBox'
+import InputActionButton from '../shared/components/InputActionButton'
 import InputIcon from '../shared/components/InputIcon'
+import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import InputLabel from '../shared/components/InputLabel'
 import InputWrapper from '../shared/components/InputWrapper'
 import useInputLabel from '../shared/hooks/useInputLabel'
+import type { InputVariants } from '../shared/types'
 
 /**
  * Props for the TagsInput component.
  */
 interface TagsInputProps {
-  /** The style type of the input field. 'classic' shows label and icon with underline, 'plain' is a simple rounded box. */
-  variant?: 'classic' | 'plain'
   /** The label text displayed above the tags input field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
@@ -41,7 +43,12 @@ interface TagsInputProps {
   /** Additional CSS class names to apply to the input container. */
   className?: string
   /** Properties for constructing the action button component at the right hand side. */
-  actionButtonProps?: React.ComponentProps<typeof Button>
+  actionButtonProps?: {
+    /** The icon to display in the action button. Should be a valid icon name from Iconify. */
+    icon: string
+    /** Callback function called when the action button is clicked. */
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  }
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
   /** Error message to display when the input is invalid. */
@@ -67,7 +74,7 @@ function TagsInput({
   actionButtonProps,
   namespace,
   errorMsg
-}: TagsInputProps) {
+}: TagsInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const [currentTag, setCurrentTag] = useState<string>('')
@@ -76,7 +83,10 @@ function TagsInput({
 
   const addTag = (): void => {
     if (currentTag.trim() !== '' && value.length < maxTags) {
-      onChange([...value, currentTag.trim()])
+      if (!value.includes(currentTag.trim())) {
+        onChange([...value, currentTag.trim()])
+      }
+
       setCurrentTag('')
     }
   }
@@ -111,7 +121,13 @@ function TagsInput({
           icon={icon}
         />
       )}
-      <div className="flex w-full items-center gap-2">
+      <Flex
+        align="center"
+        gap="sm"
+        minWidth="0"
+        position="relative"
+        width="100%"
+      >
         {variant === 'classic' && label && (
           <InputLabel
             active={String(value).length > 0}
@@ -120,66 +136,58 @@ function TagsInput({
             required={required === true}
           />
         )}
-        <div
-          className={clsx(
-            'flex w-full flex-wrap items-center gap-2',
-            variant === 'classic' ? 'mt-10 mb-4 ml-3.5' : ''
-          )}
+        <InputInnerWrapper
+          hasActionButton={!!actionButtonProps}
+          minWidth="0"
+          mt={variant === 'classic' ? 'sm' : undefined}
+          variant={variant}
+          wrap="wrap"
         >
           {value.map((tag, index) =>
             renderTags ? (
               renderTags(tag, index, () => removeTag(index))
             ) : (
-              <div
+              <TagChip
                 key={index}
-                className="component-bg shadow-custom flex items-center rounded-full py-1 pr-2 pl-3"
-              >
-                <span className="mr-2 text-sm">{tag}</span>
-                {!disabled && (
-                  <Button
-                    className="m-0! h-4! w-4! p-0!"
-                    icon="tabler:x"
-                    iconStyle={{
-                      width: '0.75em',
-                      height: '0.75em'
-                    }}
-                    variant="plain"
-                    onClick={() => {
-                      removeTag(index)
-                    }}
-                  />
-                )}
-              </div>
+                actionButtonProps={{
+                  icon: 'tabler:x',
+                  onClick: () => removeTag(index)
+                }}
+                bg={{
+                  base: 'bg-300',
+                  dark: 'bg-700'
+                }}
+                label={tag}
+                variant="filled"
+              />
             )
           )}
-          {!disabled && (
-            <TextInputBox
-              autoFocus={autoFocus}
-              className="my-0! h-auto w-min! py-0 pl-0!"
-              inputRef={inputRef}
-              placeholder={placeholder}
-              value={currentTag}
-              variant={variant}
-              onBlur={addTag}
-              onChange={setCurrentTag}
-              onKeyDown={handleKeyDown}
-            />
-          )}
-        </div>
-        {actionButtonProps && (
-          <Button
-            className="mr-4 p-2!"
-            variant="plain"
-            onClick={e => {
-              e.preventDefault()
-              e.stopPropagation()
-
-              actionButtonProps.onClick?.(e)
+          <TextInputBox
+            autoFocus={autoFocus}
+            disabled={disabled}
+            inputRef={inputRef}
+            placeholder={placeholder}
+            style={{
+              padding: 0,
+              margin: 0,
+              display: 'inline-block',
+              width: 'min-content'
             }}
-            {...actionButtonProps}
+            value={currentTag}
+            variant={variant}
+            onBlur={addTag}
+            onChange={disabled ? () => {} : setCurrentTag}
+            onKeyDown={disabled ? () => {} : handleKeyDown}
           />
-        )}
-      </div>
+        </InputInnerWrapper>
+      </Flex>
+      {actionButtonProps?.icon && (
+        <InputActionButton
+          hasError={!!errorMsg}
+          variant={variant}
+          {...actionButtonProps}
+        />
+      )}
     </InputWrapper>
   )
 }

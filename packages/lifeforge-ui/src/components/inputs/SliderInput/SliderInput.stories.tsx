@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import { Box } from '@components/primitives'
-
 import SliderInput from './SliderInput'
 
 const meta = {
@@ -17,9 +15,7 @@ function SliderStory(args: React.ComponentProps<typeof SliderInput>) {
   const [value, onChange] = useState(args.value)
 
   return (
-    <Box width={{ base: '12rem', sm: '24rem' }}>
-      <SliderInput {...args} value={value} onChange={onChange} />
-    </Box>
+    <SliderInput {...args} value={value} onChange={onChange} />
   )
 }
 
@@ -27,16 +23,16 @@ export const Default: Story = {
   args: {
     icon: 'tabler:rotate',
     label: 'Rotation',
-    value: 45,
-    onChange: () => {}
+    onChange: () => {},
+    value: 45
   },
   render: args => <SliderStory {...args} />
 }
 
 export const WithoutLabel: Story = {
   args: {
-    value: 50,
-    onChange: () => {}
+    onChange: () => {},
+    value: 50
   },
   render: args => <SliderStory {...args} />
 }
@@ -45,20 +41,20 @@ export const Required: Story = {
   args: {
     icon: 'tabler:star',
     label: 'Rating',
-    value: 0,
+    onChange: () => {},
     required: true,
-    onChange: () => {}
+    value: 0
   },
   render: args => <SliderStory {...args} />
 }
 
 export const Disabled: Story = {
   args: {
+    disabled: true,
     icon: 'tabler:volume',
     label: 'Volume',
-    value: 30,
-    disabled: true,
-    onChange: () => {}
+    onChange: () => {},
+    value: 30
   },
   render: args => <SliderStory {...args} />
 }
@@ -67,11 +63,11 @@ export const CustomRange: Story = {
   args: {
     icon: 'tabler:temperature',
     label: 'Temperature',
-    value: 20,
-    min: -20,
     max: 50,
+    min: -20,
+    onChange: () => {},
     step: 0.5,
-    onChange: () => {}
+    value: 20
   },
   render: args => <SliderStory {...args} />
 }
@@ -80,11 +76,11 @@ export const Percentage: Story = {
   args: {
     icon: 'tabler:percent',
     label: 'Opacity',
-    value: 80,
-    min: 0,
     max: 100,
+    min: 0,
+    onChange: () => {},
     step: 5,
-    onChange: () => {}
+    value: 80
   },
   render: args => <SliderStory {...args} />
 }
@@ -93,11 +89,11 @@ export const StepLarge: Story = {
   args: {
     icon: 'tabler:clock',
     label: 'Duration (minutes)',
-    value: 30,
-    min: 0,
     max: 120,
+    min: 0,
+    onChange: () => {},
     step: 15,
-    onChange: () => {}
+    value: 30
   },
   render: args => <SliderStory {...args} />
 }

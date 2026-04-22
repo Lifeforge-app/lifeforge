@@ -14,27 +14,25 @@ export default function LoadingScreen({
   loaderSize
 }: LoadingScreenProps) {
   return (
-    <Flex
-      align="center"
-      direction="column"
-      flexGrow="1"
-      gap="md"
-      height="100%"
-      justify="center"
-      width="100%"
-    >
-      <Icon
-        icon="svg-spinners:ring-resize"
-        style={{
-          fontSize: loaderSize || '2rem',
-          color: 'var(--color-bg-500)'
-        }}
-      />
-      {message && (
-        <Text color="bg-500" weight="medium">
-          {message}
-        </Text>
-      )}
-    </Flex>
+    <Text asChild color="muted" weight="medium">
+      <Flex
+        align="center"
+        direction="column"
+        flexGrow="1"
+        gap="md"
+        height="100%"
+        justify="center"
+        width="100%"
+      >
+        <Icon
+          icon="svg-spinners:ring-resize"
+          style={{
+            fontSize: loaderSize || '2rem',
+            color: 'var(--color-bg-500)'
+          }}
+        />
+        {message}
+      </Flex>
+    </Text>
   )
 }

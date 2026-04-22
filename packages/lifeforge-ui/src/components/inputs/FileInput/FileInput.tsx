@@ -6,8 +6,10 @@ import Zoom from 'react-medium-image-zoom'
 
 import { Button } from '@components/inputs'
 import { useModalStore } from '@components/overlays'
+import { Box, Flex, Text } from '@components/primitives'
 
 import useInputLabel from '../shared/hooks/useInputLabel'
+import * as styles from './FileInput.css'
 import FilePickerModal from './FilePickerModal'
 import FILE_ICONS from './FilePickerModal/constants/file_icons'
 
@@ -72,30 +74,44 @@ function FileInput({
   }, [enablePixabay, enableUrl, enableAI, defaultAIPrompt, acceptedMimeTypes])
 
   return (
-    <div
-      className={clsx(
-        'bg-bg-200/50 __file-input shadow-custom component-bg-lighter flex w-full flex-col rounded-md p-6',
-        disabled ? 'pointer-events-none! opacity-50' : 'cursor-pointer'
-      )}
+    <Flex
+      shadow
+      className={clsx('__file-input', styles.wrapper)}
+      direction="column"
+      p="lg"
+      rounded="md"
+      style={{
+        opacity: disabled ? 0.5 : 1,
+        pointerEvents: disabled ? 'none' : 'auto'
+      }}
+      width="100%"
     >
-      <div className="text-bg-500 flex w-full items-center gap-3">
-        <Icon className="size-6" icon={icon} />
-        <span className="font-medium">
-          {inputLabel}{' '}
-          {required === true && <span className="text-red-500">*</span>}
-        </span>
-      </div>
+      <Text asChild color="bg-500">
+        <Flex align="center" gap="sm">
+          <Icon icon={icon} style={{ height: '1.5rem', width: '1.5rem' }} />
+          <Text as="span" color="inherit" weight="medium">
+            {inputLabel}{' '}
+            {required === true && (
+              <Text as="span" color="dangerous">
+                *
+              </Text>
+            )}
+          </Text>
+        </Flex>
+      </Text>
       {!file || file === 'removed' ? (
-        <div className="mt-6 flex w-full flex-col items-center gap-3">
-          <Button
-            className="w-full"
-            icon="tabler:file-plus"
-            variant="secondary"
-            onClick={handleFilePickerOpen}
-          >
-            Select
-          </Button>
-          <p className="text-bg-500 text-center text-sm">
+        <>
+          <Box asChild my="md">
+            <Button
+              icon="tabler:file-plus"
+              style={{ width: '100%' }}
+              variant="secondary"
+              onClick={handleFilePickerOpen}
+            >
+              Select
+            </Button>
+          </Box>
+          <Text align="center" as="p" color="bg-500" size="sm">
             {reminderText ||
               t('fileInputSupportedFormat', {
                 format: acceptedMimeTypes
@@ -106,35 +122,24 @@ function FileInput({
                       .join(', ') || 'N/A'
                   : 'N/A'
               })}
-          </p>
-        </div>
+          </Text>
+        </>
       ) : (
         <>
-          {preview ? (
-            <div className="mt-6">
-              {preview.startsWith('http') ||
-              preview.startsWith('blob:') ||
-              preview.startsWith('data:') ? (
-                <Zoom zoomMargin={100}>
-                  <img alt="" className="max-h-96 rounded-md" src={preview} />
-                </Zoom>
-              ) : (
-                <div className="flex w-full items-center gap-3">
-                  <Icon
-                    className="text-bg-500 size-6"
-                    icon={
-                      FILE_ICONS[
-                        preview.split('.').pop() as keyof typeof FILE_ICONS
-                      ] || 'tabler:file'
-                    }
-                  />
-                  <p className="w-full truncate">{preview}</p>
-                </div>
-              )}
+          {preview &&
+          (preview.startsWith('http') ||
+            preview.startsWith('blob:') ||
+            preview.startsWith('data:')) ? (
+            <Box mt="lg">
+              <Zoom zoomMargin={100}>
+                <Box asChild maxHeight="24rem" rounded="md">
+                  <img alt="" src={preview} />
+                </Box>
+              </Zoom>
               <Button
                 dangerous
-                className="mt-6 w-full"
                 icon="tabler:x"
+                style={{ marginTop: '1.5rem', width: '100%' }}
                 onClick={() => {
                   setData({ file: null, preview: null })
                   onImageRemoved?.()
@@ -142,38 +147,42 @@ function FileInput({
               >
                 Remove
               </Button>
-            </div>
+            </Box>
           ) : (
-            <div className="mt-4 flex items-center justify-between gap-8">
-              <div className="flex w-full items-center gap-3">
-                <Icon
-                  className="text-bg-500 size-6"
-                  icon={
-                    FILE_ICONS[
-                      (file instanceof File
-                        ? file.name.split('.').pop()
-                        : '') as keyof typeof FILE_ICONS
-                    ] || 'tabler:file'
-                  }
-                />
-                <p className="w-full truncate">
+            <Flex align="center" gap="xl" justify="between" mt="md">
+              <Flex align="center" gap="sm" minWidth="0">
+                <Box asChild flexShrink="0">
+                  <Text asChild color="bg-500">
+                    <Icon
+                      icon={
+                        FILE_ICONS[
+                          (file instanceof File
+                            ? file.name.split('.').pop()
+                            : '') as keyof typeof FILE_ICONS
+                        ] || 'tabler:file'
+                      }
+                      style={{ height: '1.5rem', width: '1.5rem' }}
+                    />
+                  </Text>
+                </Box>
+                <Text truncate as="p">
                   {file instanceof File ? file.name : file}
-                </p>
-              </div>
+                </Text>
+              </Flex>
               <Button
-                className="p-2!"
                 icon="tabler:x"
+                p="sm"
                 variant="plain"
                 onClick={() => {
                   setData({ file: null, preview: null })
                   onImageRemoved?.()
                 }}
               />
-            </div>
+            </Flex>
           )}
         </>
       )}
-    </div>
+    </Flex>
   )
 }
 

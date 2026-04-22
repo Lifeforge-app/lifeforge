@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import tinycolor from 'tinycolor2'
 
 import {
   clearCustomColorProperties,
@@ -8,7 +9,8 @@ import {
 function useRawThemeColorEffect(
   rootElement: HTMLElement,
   rawThemeColor: string,
-  theme: 'light' | 'dark'
+  theme: 'light' | 'dark',
+  bgTemp: [light: string, dark: string]
 ) {
   useEffect(() => {
     if (rawThemeColor) {
@@ -40,6 +42,11 @@ function useRawThemeColorEffect(
 
       rootElement.classList.add(
         rawThemeColor.startsWith('#') ? 'theme-custom' : rawThemeColor
+      )
+
+      rootElement.style.setProperty(
+        '--lf-selection-bg',
+        tinycolor.mostReadable(rawThemeColor, bgTemp).toHexString()
       )
 
       if (rawThemeColor.startsWith('#')) {

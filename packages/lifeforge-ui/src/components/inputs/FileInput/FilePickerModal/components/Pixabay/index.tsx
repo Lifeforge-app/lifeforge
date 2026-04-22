@@ -1,4 +1,3 @@
-import forgeAPI from '@/utils/forgeAPI'
 import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
 import { useAPIEndpoint, usePromiseLoading } from 'shared'
@@ -9,7 +8,10 @@ import {
   LoadingScreen
 } from '@components/feedback'
 import { Button, SearchInput } from '@components/inputs'
+import { Flex } from '@components/primitives'
 import { WithQueryData } from '@components/utilities'
+
+import forgeAPI from '@/utils/forgeAPI'
 
 import SearchFilterModal from './components/SearchFilterModal'
 import SearchResults from './components/SearchResults'
@@ -110,7 +112,13 @@ function Pixabay({
       {exists =>
         exists ? (
           <>
-            <div className="flex w-full min-w-0 flex-col items-center gap-2 sm:flex-row">
+            <Flex
+              align="center"
+              direction="column"
+              minWidth="0"
+              style={{ gap: '0.5rem' }}
+              width="100%"
+            >
               <SearchInput
                 actionButtonProps={{
                   icon: 'tabler:filter',
@@ -124,7 +132,12 @@ function Pixabay({
                     filters.isEditorsChoice
                   ].filter(e => e).length
                 }}
-                className="component-bg-lighter-with-hover"
+                bg={{
+                  base: 'bg-100',
+                  dark: 'bg-800',
+                  hover: 'bg-200',
+                  darkHover: 'bg-700'
+                }}
                 namespace="common.modals"
                 searchTarget="imagePicker.items.pixabay"
                 value={query}
@@ -137,10 +150,10 @@ function Pixabay({
                 }}
               />
               <Button
-                className="w-full sm:w-auto"
                 icon="tabler:arrow-right"
                 iconPosition="end"
                 loading={loading}
+                style={{ width: '100%' }}
                 onClick={() => {
                   setPage(1)
                   onSearch(1).catch(console.error)
@@ -148,23 +161,39 @@ function Pixabay({
               >
                 Search
               </Button>
-            </div>
-            <div className="mt-6 flex h-full flex-1 flex-col">
+            </Flex>
+            <Flex direction="column" height="100%" mt="lg" style={{ flex: 1 }}>
               {(() => {
                 switch (results) {
                   case 'error':
                     return (
-                      <div className="flex-center size-full flex-1">
+                      <Flex
+                        align="center"
+                        height="100%"
+                        justify="center"
+                        style={{ flex: 1 }}
+                      >
                         <ErrorScreen message="Failed to fetch data" />
-                      </div>
+                      </Flex>
                     )
                   case null:
                     return loading ? (
-                      <div className="flex-center size-full flex-1">
+                      <Flex
+                        align="center"
+                        height="100%"
+                        justify="center"
+                        style={{ flex: 1 }}
+                      >
                         <LoadingScreen />
-                      </div>
+                      </Flex>
                     ) : (
-                      <div className="flex-center my-6 size-full flex-1">
+                      <Flex
+                        align="center"
+                        height="100%"
+                        justify="center"
+                        my="lg"
+                        style={{ flex: 1 }}
+                      >
                         <EmptyStateScreen
                           icon="simple-icons:pixabay"
                           message={{
@@ -173,7 +202,7 @@ function Pixabay({
                             tKey: 'imagePicker'
                           }}
                         />
-                      </div>
+                      </Flex>
                     )
                   default:
                     return results.total === 0 ? (
@@ -198,7 +227,7 @@ function Pixabay({
                     )
                 }
               })()}
-            </div>
+            </Flex>
             <SearchFilterModal
               filters={filters}
               isOpen={isSearchFilterModalOpen}

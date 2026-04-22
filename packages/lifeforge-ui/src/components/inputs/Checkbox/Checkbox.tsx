@@ -2,13 +2,10 @@ import { Icon } from '@iconify/react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import clsx from 'clsx'
 import { usePersonalization } from 'shared'
-import tinycolor from 'tinycolor2'
 
-import {
-  checkboxIndicatorStyle,
-  checkboxRootRecipe,
-  checkboxWrapperStyle
-} from './Checkbox.css'
+import { Bordered, Flex, Text, Transition } from '@components/primitives'
+
+import { checkboxRootRecipe } from './Checkbox.css'
 
 /**
  * A checkbox component with optional label support.
@@ -29,30 +26,54 @@ function Checkbox({
   /** Additional CSS class names to apply to the checkbox root element. */
   className?: string
   /** Optional text label to display next to the checkbox. */
-  label?: string
+  label?: React.ReactNode
 }) {
-  const { derivedThemeColor } = usePersonalization()
+  const { getMostReadableColor } = usePersonalization()
 
   return (
-    <div className={checkboxWrapperStyle}>
+    <Flex align="center" gap="sm" style={{ opacity: disabled ? 0.5 : 1 }}>
       <CheckboxPrimitive.Root
+        asChild
         checked={checked}
         className={clsx(checkboxRootRecipe(), className)}
         disabled={disabled}
         onCheckedChange={onCheckedChange}
       >
-        <CheckboxPrimitive.Indicator asChild>
-          <Icon
-            className={clsx(
-              checkboxIndicatorStyle,
-              tinycolor(derivedThemeColor).isDark() ? 'dark' : 'light'
-            )}
-            icon="uil:check"
-          />
-        </CheckboxPrimitive.Indicator>
+        <Transition>
+          <Bordered asChild borderWidth="2px">
+            <Flex
+              align="center"
+              as="button"
+              flexShrink="0"
+              height="1.5em"
+              justify="center"
+              rounded="md"
+              width="1.5em"
+            >
+              <CheckboxPrimitive.Indicator asChild>
+                <Transition>
+                  <Text
+                    asChild
+                    style={{
+                      color: getMostReadableColor()
+                    }}
+                  >
+                    <Icon
+                      icon="uil:check"
+                      style={{
+                        width: '100%',
+                        height: '100%'
+                      }}
+                    />
+                  </Text>
+                </Transition>
+              </CheckboxPrimitive.Indicator>
+            </Flex>
+          </Bordered>
+        </Transition>
       </CheckboxPrimitive.Root>
-      <label>{label}</label>
-    </div>
+      {label && <label>{label}</label>}
+    </Flex>
   )
 }
 

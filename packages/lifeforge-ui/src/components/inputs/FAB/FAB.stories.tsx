@@ -44,10 +44,10 @@ export const WithContextMenu: Story = {
           side="top"
           styles={{
             wrapper: {
-              width: 'min-content',
+              bottom: '1.5em',
               position: 'fixed',
               right: '1.5em',
-              bottom: '1.5em'
+              width: 'min-content'
             }
           }}
         >
@@ -81,7 +81,7 @@ export const WithVisibilityBreakpoint: Story = {
       position="relative"
       width="100%"
     >
-      <Text as="p" color="bg-500" size="lg">
+      <Text as="p" color="muted" size="lg">
         Resize the viewport to see the FAB hide at the &apos;md&apos; breakpoint
         and below.
       </Text>
