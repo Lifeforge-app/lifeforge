@@ -1,3 +1,6 @@
+> [!NOTE]
+> Don't worry, LifeForge is still alive and kicking. Progress are being made [here](https://github.com/Lifeforge-app/lifeforge/tree/features/forge-ui-overhaul).
+
 > [!CAUTION]
 >
 > ## ⚠️ Development Paused – Critical CSS Architecture Issue
