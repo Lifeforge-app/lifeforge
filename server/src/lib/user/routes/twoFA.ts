@@ -8,28 +8,37 @@ import z from 'zod'
 import { decrypt2, encrypt, encrypt2 } from '@functions/auth/encryption'
 import { default as _validateOTP } from '@functions/auth/validateOTP'
 
-import { currentSession } from '..'
+import { currentSession, twoFAStates } from '..'
+import forge from '../forge'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 import { verifyAppOTP, verifyEmailOTP } from '../utils/otp'
-import forge from '../forge'
 
-let canDisable2FA = false
-let challenge = v4()
-
-setTimeout(
-  () => {
-    challenge = v4()
-  },
-  1000 * 60 * 5
-)
-
-let tempCode = ''
+// Generate a unique challenge per request with 5-minute expiration
+function generateChallenge(): string {
+  return v4()
+}
 
 export const getChallenge = forge
   .query()
   .description('Retrieve 2FA challenge token')
   .input({})
-  .callback(async () => challenge)
+  .callback(async ({ pb }) => {
+    const userId = pb.instance.authStore.record?.id
+
+    const challenge = generateChallenge()
+
+    // Store per-user challenge so subsequent calls (like generateAuthenticatorLink)
+    // can reuse the same challenge value for encryption/decryption.
+    if (userId) {
+      twoFAStates.set(userId, {
+        ...twoFAStates.get(userId),
+        challenge,
+        challengeExpiresAt: dayjs().add(5, 'minutes').toISOString()
+      })
+    }
+
+    return challenge
+  })
 
 export const requestOTP = forge
   .query()
@@ -43,12 +52,13 @@ export const requestOTP = forge
   .callback(async ({ pb, query: { email } }) => {
     const otp = await pb.instance
       .collection('users')
-      .requestOTP(email as string)
-      .catch(() => null)
-
-    if (!otp) {
-      throw new Error('Failed to request OTP')
-    }
+      .requestOTP(email)
+      .catch(error => {
+        throw new ClientError(
+          `Failed to request OTP: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          400
+        )
+      })
 
     currentSession.tokenId = v4()
     currentSession.otpId = otp.otpId
@@ -68,14 +78,16 @@ export const validateOTP = forge
     })
   })
   .callback(async ({ pb, body }) => {
+    const challenge = generateChallenge()
     if (await _validateOTP(pb, body, challenge)) {
-      canDisable2FA = true
-      setTimeout(
-        () => {
-          canDisable2FA = false
-        },
-        1000 * 60 * 5
-      )
+      // Store per-user state instead of global state
+      const userId = pb.instance.authStore.record?.id
+      if (userId) {
+        twoFAStates.set(userId, {
+          canDisable: true,
+          expiresAt: dayjs().add(5, 'minutes').toISOString()
+        })
+      }
 
       return true
     }
@@ -94,20 +106,50 @@ export const generateAuthenticatorLink = forge
         headers: { authorization }
       }
     }) => {
-      const { email } = pb.instance.authStore.record!
+      const userId = pb.instance.authStore.record?.id
+      const email = pb.instance.authStore.record?.email
 
-      tempCode = speakeasy.generateSecret({
+      if (!userId || !email) {
+        throw new ClientError('User not authenticated', 401)
+      }
+
+      if (!authorization) {
+        throw new ClientError('Authorization header required', 401)
+      }
+
+      const tempCode = speakeasy.generateSecret({
         name: email,
         length: 32,
         issuer: 'LifeForge.'
       }).base32
+
+      // Store per-user temp code instead of global
+      twoFAStates.set(userId, {
+        ...twoFAStates.get(userId),
+        tempCode,
+        tempCodeExpiresAt: dayjs().add(5, 'minutes').toISOString()
+      })
+
+      // Prefer an existing per-user challenge created via `getChallenge()`
+      const existing = twoFAStates.get(userId)
+
+      const challenge = existing?.challenge || generateChallenge()
+
+      // If we generated a new challenge here, store it so the client can retrieve it
+      if (!existing) {
+        twoFAStates.set(userId, {
+          ...twoFAStates.get(userId),
+          challenge,
+          challengeExpiresAt: dayjs().add(5, 'minutes').toISOString()
+        })
+      }
 
       return encrypt2(
         encrypt2(
           `otpauth://totp/${email}?secret=${tempCode}&issuer=LifeForge.`,
           challenge
         ),
-        authorization!.replace('Bearer ', '')
+        authorization.replace('Bearer ', '')
       )
     }
   )
@@ -128,13 +170,40 @@ export const verifyAndEnable = forge
         headers: { authorization }
       }
     }) => {
+      const userId = pb.instance.authStore.record?.id
+
+      if (!userId) {
+        throw new ClientError('User not authenticated', 401)
+      }
+
+      if (!authorization) {
+        throw new ClientError('Authorization header required', 401)
+      }
+
+      const userState = twoFAStates.get(userId)
+      if (!userState?.tempCode || !userState.tempCodeExpiresAt) {
+        throw new ClientError(
+          'Authenticator setup expired. Please start over.',
+          400
+        )
+      }
+
+      if (dayjs().isAfter(dayjs(userState.tempCodeExpiresAt))) {
+        twoFAStates.delete(userId)
+        throw new ClientError(
+          'Authenticator setup expired. Please start over.',
+          400
+        )
+      }
+
+      const challenge = generateChallenge()
       const decryptedOTP = decrypt2(
-        decrypt2(otp, authorization!.replace('Bearer ', '')),
+        decrypt2(otp, authorization.replace('Bearer ', '')),
         challenge
       )
 
       const verified = speakeasy.totp.verify({
-        secret: tempCode,
+        secret: userState.tempCode,
         encoding: 'base32',
         token: decryptedOTP
       })
@@ -143,16 +212,24 @@ export const verifyAndEnable = forge
         throw new ClientError('Invalid OTP', 401)
       }
 
+      const masterKey = process.env.MASTER_KEY
+      if (!masterKey) {
+        throw new ClientError('Server configuration error', 500)
+      }
+
       await pb.update
         .collection('users')
-        .id(pb.instance.authStore.record!.id)
+        .id(userId)
         .data({
           twoFASecret: encrypt(
-            Buffer.from(tempCode),
-            process.env.MASTER_KEY!
+            Buffer.from(userState.tempCode),
+            masterKey
           ).toString('base64')
         })
         .execute()
+
+      // Clean up state after successful enable
+      twoFAStates.delete(userId)
     }
   )
 
@@ -161,22 +238,38 @@ export const disable = forge
   .description('Disable two-factor authentication')
   .input({})
   .callback(async ({ pb }) => {
-    if (!canDisable2FA) {
+    const userId = pb.instance.authStore.record?.id
+
+    if (!userId) {
+      throw new ClientError('User not authenticated', 401)
+    }
+
+    const userState = twoFAStates.get(userId)
+
+    if (!userState?.canDisable) {
       throw new ClientError(
-        'You cannot disable 2FA right now. Please try again later.',
+        'You cannot disable 2FA right now. Please validate your OTP first.',
+        403
+      )
+    }
+
+    if (dayjs().isAfter(dayjs(userState.expiresAt))) {
+      twoFAStates.delete(userId)
+      throw new ClientError(
+        '2FA disable window has expired. Please validate your OTP again.',
         403
       )
     }
 
     await pb.update
       .collection('users')
-      .id(pb.instance.authStore.record!.id)
+      .id(userId)
       .data({
         twoFASecret: ''
       })
       .execute()
 
-    canDisable2FA = false
+    twoFAStates.delete(userId)
   })
 
 export const verify = forge
@@ -191,7 +284,12 @@ export const verify = forge
     })
   })
   .callback(async ({ body: { otp, tid, type } }) => {
-    const pb = new PocketBase(process.env.PB_HOST)
+    const pbHost = process.env.PB_HOST
+    if (!pbHost) {
+      throw new ClientError('Server configuration error', 500)
+    }
+
+    const pb = new PocketBase(pbHost)
 
     if (tid !== currentSession.tokenId) {
       throw new ClientError('Invalid token ID', 401)
@@ -211,7 +309,12 @@ export const verify = forge
     await pb
       .collection('users')
       .authRefresh()
-      .catch(() => {})
+      .catch(error => {
+        throw new ClientError(
+          `Session validation failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+          401
+        )
+      })
 
     if (!pb.authStore.isValid || !pb.authStore.record) {
       throw new ClientError('Invalid session', 401)

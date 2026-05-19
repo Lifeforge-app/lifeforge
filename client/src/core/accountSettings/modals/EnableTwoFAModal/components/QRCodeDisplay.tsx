@@ -16,13 +16,20 @@ function QRCodeDisplay() {
     try {
       const challenge = await forgeAPI.untyped('user/2fa/getChallenge').query()
 
-      const link = await forgeAPI
+      const rawLink = await forgeAPI
         .untyped('user/2fa/generateAuthenticatorLink')
         .query()
 
-      const decrypted1 = decrypt(link, localStorage.getItem('session')!)
+      const sessionToken = localStorage.getItem('session')
 
-      const decrypted2 = decrypt(decrypted1, challenge)
+      if (!sessionToken) {
+        throw new Error('No session token found for decrypting authenticator link')
+      }
+
+      // Decrypt outer layer with session token, then inner with challenge
+      const decrypted1 = decrypt(String(rawLink), sessionToken)
+
+      const decrypted2 = decrypt(decrypted1, String(challenge))
 
       setLink(decrypted2)
     } catch {

@@ -8,6 +8,7 @@ import { loadModuleRoutes } from '@functions/modules/loadModuleRoutes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 
+import { CORS_ALLOWED_ORIGINS } from './constants/corsAllowedOrigins'
 import coreRoutes from './core.routes'
 import forge from './forge'
 
@@ -37,7 +38,10 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
   const moduleName = req.params.moduleName
 
   const filePath =
-    (req.params[0 as any as keyof typeof req.params] as string) || ''
+    (req.params[0 as unknown as keyof typeof req.params] as string) || ''
+
+  // Sanitize filePath to prevent path traversal
+  const sanitizedPath = path.normalize(filePath).replace(/^(\.\.[\/\\])+/, '')
 
   // Use dist-docker in Docker mode, dist otherwise
   const distDir = process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'
@@ -50,9 +54,18 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
     distDir
   )
 
-  const resolvedPath = path.join(moduleDistPath, filePath)
+  const resolvedPath = path.join(moduleDistPath, sanitizedPath)
 
-  res.setHeader('Access-Control-Allow-Origin', '*')
+  // Security: Prevent path traversal - ensure resolved path stays within module directory
+  if (!resolvedPath.startsWith(moduleDistPath)) {
+    return res.status(403).send('Access denied')
+  }
+
+  // Security: Use configured CORS origins instead of wildcard
+  const origin = req.headers.origin
+  if (origin && CORS_ALLOWED_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin)
+  }
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
   res.sendFile(resolvedPath, err => {

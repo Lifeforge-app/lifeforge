@@ -2,18 +2,41 @@
 import { ClientError } from '@lifeforge/server-utils'
 import { Request } from 'express'
 
-import { PBService, checkExistence } from '@functions/database'
+import { PBService, checkExistence, checkExistenceBatch } from '@functions/database'
 
-async function check(
+interface ExistenceCheckConfig {
+  [key: string]: string
+}
+
+interface ExistenceCheckOptions {
+  body?: ExistenceCheckConfig
+  query?: ExistenceCheckConfig
+}
+
+async function checkSingle(
   pb: PBService<any>,
   collection: string,
-  val: any
+  val: string
 ): Promise<boolean> {
   return await checkExistence(
     pb,
     collection.replace(/\^?\[(.*)\]$/, '$1') as never,
     val
   )
+}
+
+async function checkBatch(
+  pb: PBService<any>,
+  collection: string,
+  values: string[]
+): Promise<boolean> {
+  const cleanCollection = collection.replace(/\^?\[(.*)\]$/, '$1')
+  const existingIds = await checkExistenceBatch(
+    pb,
+    cleanCollection as never,
+    values
+  )
+  return values.every(id => existingIds.has(id))
 }
 
 export default async function checkRecordExistence({
@@ -24,15 +47,14 @@ export default async function checkRecordExistence({
 }: {
   type: 'body' | 'query'
   req: Request
-  existenceCheck: any
+  existenceCheck: ExistenceCheckOptions
   module: { id: string }
 }): Promise<void> {
   if (!existenceCheck?.[type]) return
 
-  for (const [key, collection] of Object.entries(existenceCheck[type]) as [
-    string,
-    string
-  ][]) {
+  const checks = Object.entries(existenceCheck[type]!) as [string, string][]
+
+  for (const [key, collection] of checks) {
     const optional = collection.match(/\^?\[(.*)\]$/)
 
     const value = req[type][key]
@@ -41,15 +63,14 @@ export default async function checkRecordExistence({
 
     let isValid = true
 
-    if (Array.isArray(value)) {
-      for (const val of value) {
-        if (!(await check(req.pb(module), collection, val))) {
-          isValid = false
-          break
-        }
-      }
-    } else {
-      isValid = await check(req.pb(module), collection, value!)
+    if (Array.isArray(value) && value.length > 0) {
+      // Use batch check for arrays (N+1 optimization)
+      isValid = await checkBatch(req.pb(module), collection, value)
+    } else if (typeof value === 'string') {
+      isValid = await checkSingle(req.pb(module), collection, value)
+    } else if (value !== undefined && value !== null) {
+      // Handle other types - convert to string
+      isValid = await checkSingle(req.pb(module), collection, String(value))
     }
 
     if (!isValid) {
