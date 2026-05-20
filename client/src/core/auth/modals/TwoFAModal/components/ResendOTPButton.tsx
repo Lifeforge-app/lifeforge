@@ -1,24 +1,20 @@
-import clsx from 'clsx'
+import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-
-import { Button } from '@components/inputs'
 
 function ResendOTPButton({
   otpCooldown,
   sendOtpLoading,
-  onClick: requestOTP,
-  buttonFullWidth
+  onClick: requestOTP
 }: {
   otpCooldown: number
   sendOtpLoading: boolean
   onClick: () => void
-  buttonFullWidth?: boolean
 }) {
   const { t } = useTranslation('common.vault')
 
   return (
     <Button
-      className={clsx('w-full', !buttonFullWidth && 'md:w-3/4 xl:w-1/2')}
+      className="w-full"
       disabled={otpCooldown > 0}
       icon="tabler:refresh"
       loading={sendOtpLoading}
