@@ -1,64 +1,87 @@
-import clsx from 'clsx'
 import { memo } from 'react'
 import OtpInput from 'react-otp-input'
 
 import { Button } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 function OTPInputBox({
   otp,
   setOtp,
   verifyOTP,
   verifyOtpLoading,
-  buttonFullWidth,
   lighter
 }: {
   otp: string
   setOtp: (otp: string) => void
   verifyOTP: (otp: string) => Promise<void>
   verifyOtpLoading: boolean
-  buttonFullWidth?: boolean
   lighter?: boolean
 }) {
   return (
-    <>
+    <Flex direction="column" gap="md">
       <OtpInput
         shouldAutoFocus
         numInputs={6}
         renderInput={props => (
-          <input
-            {...(props as any)}
-            className={clsx(
-              'border-bg-200 text-bg-800 shadow-custom dark:border-bg-700 dark:text-bg-200 mx-2 size-12! rounded-md !border-[1.5px] border-solid! text-lg md:size-16! md:text-2xl',
-              lighter ? 'component-bg-lighter' : 'component-bg'
-            )}
-            inputMode="numeric"
-            onKeyDown={e => {
-              if (e.key === 'Enter') {
-                verifyOTP(otp).catch(err => {
-                  console.error(err)
-                })
-              }
+          <Box
+            asChild
+            shadow
+            bg={
+              lighter
+                ? { base: 'bg-100', dark: 'bg-800' }
+                : { base: 'bg-50', dark: 'bg-900' }
+            }
+            height="100%"
+            maxHeight={{ base: '3rem', md: '4rem' }}
+            maxWidth={{ base: '3rem', md: '4rem' }}
+            mx="xs"
+            rounded="md"
+            style={{
+              aspectRatio: '1/1'
             }}
-          />
+            width="100%"
+          >
+            <Text
+              asChild
+              align="center"
+              size={{ base: 'lg', md: '2xl' }}
+              weight="medium"
+            >
+              <input
+                {...props}
+                inputMode="numeric"
+                style={undefined}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') {
+                    verifyOTP(otp).catch(err => {
+                      console.error(err)
+                    })
+                  }
+                }}
+              />
+            </Text>
+          </Box>
         )}
         value={otp}
         onChange={setOtp}
       />
-      <Button
-        className={clsx('mt-6 w-full', !buttonFullWidth && 'md:w-3/4 xl:w-1/2')}
-        icon="tabler:arrow-right"
-        iconPosition="end"
-        loading={verifyOtpLoading}
-        namespace="common.vault"
-        onClick={() => {
-          verifyOTP(otp).catch(err => {
-            console.error(err)
-          })
-        }}
-      >
-        otp.buttons.verify
-      </Button>
-    </>
+      <Box width="100%">
+        <Button
+          icon="tabler:arrow-right"
+          iconPosition="end"
+          loading={verifyOtpLoading}
+          namespace="common.vault"
+          width="100%"
+          onClick={() => {
+            verifyOTP(otp).catch(err => {
+              console.error(err)
+            })
+          }}
+        >
+          otp.buttons.verify
+        </Button>
+      </Box>
+    </Flex>
   )
 }
 

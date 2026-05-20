@@ -7,6 +7,7 @@ import { ForgeEndpoint, encrypt } from 'shared'
 
 import { Button, TextInput } from '@components/inputs'
 import { ConfirmationModal, useModalStore } from '@components/overlays'
+import { Box, Flex, Text } from '@components/primitives'
 
 function CreatePasswordScreen({
   controller,
@@ -83,15 +84,24 @@ function CreatePasswordScreen({
   }
 
   return (
-    <>
-      <div className="flex-center size-full flex-1 flex-col gap-3">
-        <Icon className="size-28" icon="tabler:lock-plus" />
-        <h2 className="text-4xl font-semibold">
-          {t('vault.createPassword.title')}
-        </h2>
-        <p className="text-bg-500 mb-8 w-1/2 text-center text-lg">
-          {t('vault.createPassword.desc')}
-        </p>
+    <Flex
+      align="center"
+      direction="column"
+      gap="md"
+      height="100%"
+      justify="center"
+      width="100%"
+    >
+      <Text asChild>
+        <Icon height="7rem" icon="tabler:lock-plus" width="7rem" />
+      </Text>
+      <Text size="4xl" weight="semibold">
+        {t('vault.createPassword.title')}
+      </Text>
+      <Text align="center" color="muted" mb="3xl" size="lg">
+        {t('vault.createPassword.desc')}
+      </Text>
+      <Box width={{ base: '100%', md: '50%' }}>
         <TextInput
           key="newPassword"
           isPassword
@@ -99,7 +109,6 @@ function CreatePasswordScreen({
             icon: 'tabler:dice',
             onClick: generateRandomPassword
           }}
-          className="w-1/2 flex-0!"
           icon="tabler:lock"
           label="vault.inputs.newPassword"
           namespace="common.vault"
@@ -107,10 +116,11 @@ function CreatePasswordScreen({
           value={newPassword}
           onChange={setNewPassword}
         />
+      </Box>
+      <Box width={{ base: '100%', md: '50%' }}>
         <TextInput
           key="confirmPassword"
           isPassword
-          className="w-1/2 flex-0!"
           icon="tabler:lock-check"
           label="vault.inputs.confirmPassword"
           namespace="common.vault"
@@ -123,15 +133,13 @@ function CreatePasswordScreen({
             }
           }}
         />
-        <Button
-          className="mt-6 w-1/2"
-          icon="tabler:check"
-          onClick={confirmAction}
-        >
+      </Box>
+      <Box mt="lg" width={{ base: '100%', md: '50%' }}>
+        <Button icon="tabler:check" width="100%" onClick={confirmAction}>
           Submit
         </Button>
-      </div>
-    </>
+      </Box>
+    </Flex>
   )
 }
 

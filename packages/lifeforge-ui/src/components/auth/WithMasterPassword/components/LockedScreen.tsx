@@ -6,6 +6,7 @@ import { ForgeEndpoint, usePromiseLoading } from 'shared'
 import { encrypt } from 'shared'
 
 import { Button, TextInput } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 function LockedScreen({
   challengeController,
@@ -62,39 +63,53 @@ function LockedScreen({
   const [loading, onSubmit] = usePromiseLoading(handleSubmit)
 
   return (
-    <div className="flex-center size-full flex-1 flex-col gap-3">
-      <Icon className="size-28" icon="tabler:lock-access" />
-      <h2 className="text-4xl font-semibold">{t(`vault.lockedMessage`)}</h2>
-      <p className="text-bg-500 mb-8 text-center text-lg">
-        {t(`vault.passwordRequired`)}
-      </p>
-      <TextInput
-        isPassword
-        className="w-full flex-0! md:w-3/4 xl:w-1/2"
-        icon="tabler:lock"
-        label="vault.inputs.masterPassword"
-        namespace="common.vault"
-        placeholder={'••••••••••••••••'}
-        value={masterPassWordInputContent}
-        onChange={setMasterPassWordInputContent}
-        onKeyDown={e => {
-          if (e.key === 'Enter') {
+    <Flex
+      align="center"
+      direction="column"
+      gap="md"
+      height="100%"
+      justify="center"
+      width="100%"
+    >
+      <Text asChild>
+        <Icon height="7rem" icon="tabler:lock-access" width="7rem" />
+      </Text>
+      <Text align="center" size="4xl" weight="semibold">
+        {t('vault.lockedMessage')}
+      </Text>
+      <Text align="center" color="muted" mb="3xl" size="lg">
+        {t('vault.passwordRequired')}
+      </Text>
+      <Box width={{ base: '100%', md: '75%', xl: '50%' }}>
+        <TextInput
+          isPassword
+          icon="tabler:lock"
+          label="vault.inputs.masterPassword"
+          namespace="common.vault"
+          placeholder="••••••••••••••••"
+          value={masterPassWordInputContent}
+          onChange={setMasterPassWordInputContent}
+          onKeyDown={e => {
+            if (e.key === 'Enter') {
+              onSubmit().catch(console.error)
+            }
+          }}
+        />
+      </Box>
+      <Box mt="lg" width={{ base: '100%', md: '75%', xl: '50%' }}>
+        <Button
+          icon="tabler:lock"
+          loading={loading}
+          namespace="common.vault"
+          width="100%"
+          onClick={() => {
             onSubmit().catch(console.error)
-          }
-        }}
-      />
-      <Button
-        className="mt-6 w-full md:w-3/4 xl:w-1/2"
-        icon="tabler:lock"
-        loading={loading}
-        namespace="common.vault"
-        onClick={() => {
-          onSubmit().catch(console.error)
-        }}
-      >
-        vault.buttons.unlock
-      </Button>
-    </div>
+          }}
+        >
+          vault.buttons.unlock
+        </Button>
+      </Box>
+    </Flex>
   )
 }
 
