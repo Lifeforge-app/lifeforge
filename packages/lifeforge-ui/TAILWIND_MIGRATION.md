@@ -2,7 +2,7 @@
 
 Components are considered **migrated** when they contain zero Tailwind utility classes in `className` props and use vanilla-extract (`.css.ts` / `style()` / `recipe()` / sprinkles) and/or primitive component props (`<Box>`, `<Flex>`, `<Grid>`, etc.) instead.
 
-> Last updated: 2026-04-19
+> Last updated: 2026-05-20
 
 ---
 
@@ -20,13 +20,12 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 
 ## Auth
 
-- [ ] `OTPInputBox`
-- [ ] `ResendOTPButton`
+- [x] `OTPInputBox`
+- [x] `WithMasterPassword/components/CreatePasswordScreen`
+- [x] `WithMasterPassword/components/LockedScreen`
 - [ ] `sso/SSOHeader`
 - [ ] `sso/SSOAppMainView`
 - [ ] `sso/UnauthorizedScreen`
-- [ ] `WithMasterPassword/components/CreatePasswordScreen`
-- [ ] `WithMasterPassword/components/LockedScreen`
 
 ---
 
@@ -124,11 +123,11 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 | Category       | Migrated | Total | % Done |
 | -------------- | -------: | ----: | -----: |
 | Primitives     |        7 |     7 |   100% |
-| Auth           |        0 |     7 |     0% |
+| Auth           |        3 |     6 |    50% |
 | Data Display   |        8 |     8 |   100% |
 | Feedback       |        5 |     5 |   100% |
 | Inputs         |       22 |    22 |   100% |
 | Layout         |        5 |     5 |   100% |
 | Navigation     |        9 |     9 |   100% |
 | Overlays       |        9 |     9 |   100% |
-| **Total**      |   **65** |**73** | **89%**|
+| **Total**      |   **68** |**72** | **94%**|
