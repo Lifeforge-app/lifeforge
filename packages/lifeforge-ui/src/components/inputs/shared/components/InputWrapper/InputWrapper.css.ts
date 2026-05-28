@@ -38,11 +38,11 @@ export const inputWrapperRecipe = recipe({
     },
     hasError: {
       true: {
-        borderColor: 'var(--color-red-500)',
-        outlineColor: 'var(--color-red-500)',
+        borderColor: 'var(--color-dangerous)',
+        outlineColor: 'var(--color-dangerous)',
         selectors: {
           '&:focus-within': {
-            borderColor: 'var(--color-red-500)'
+            borderColor: 'var(--color-dangerous)'
           }
         }
       },
@@ -91,5 +91,5 @@ export const inputWrapperRecipe = recipe({
 })
 
 export const inputWrapperErrorTextStyle = style({
-  color: 'var(--color-red-500)'
+  color: 'var(--color-dangerous)'
 })

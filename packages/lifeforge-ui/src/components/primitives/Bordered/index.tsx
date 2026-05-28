@@ -19,6 +19,7 @@ import {
   resolveCommonSprinkleProps,
   shadowClass
 } from '@/system'
+import { normalizeGridSpan } from '@/system/grid-utils'
 
 import { Slot } from '../Slot'
 import {
@@ -150,12 +151,8 @@ export function Bordered<T extends ElementType = 'div'>({
   flexGrow,
   flexShrink,
   gridArea,
-  gridColumn,
-  gridColumnEnd,
-  gridColumnStart,
-  gridRow,
-  gridRowEnd,
-  gridRowStart,
+  gridColumnSpan,
+  gridRowSpan,
   height,
   inset,
   left,
@@ -229,12 +226,8 @@ export function Bordered<T extends ElementType = 'div'>({
     flexGrow,
     flexShrink,
     gridArea,
-    gridColumn,
-    gridColumnEnd,
-    gridColumnStart,
-    gridRow,
-    gridRowEnd,
-    gridRowStart,
+    gridColumnSpan: normalizeResponsiveProp(gridColumnSpan, normalizeGridSpan) as ResponsiveProp<string> | undefined,
+    gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan) as ResponsiveProp<string> | undefined,
     height,
     inset,
     left,

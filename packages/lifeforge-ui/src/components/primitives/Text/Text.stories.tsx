@@ -489,7 +489,7 @@ export const Composition: Story = {
   args: {},
   render: () => (
     <Flex align="center" height="100%" justify="center" p="3xl" width="100%">
-      <Grid columns="repeat(2, minmax(0, 1fr))" gap="lg" width="100%">
+      <Grid columns={2} gap="lg" width="100%">
         {[
           { tag: 'UI Kit', title: 'Design System', value: '128 components' },
           { tag: 'Backend', title: 'API Coverage', value: '97%' }

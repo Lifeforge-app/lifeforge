@@ -12,4 +12,6 @@ export * from './Slot'
 
 export * from './Transition'
 
+export * from './Prose'
+
 export * from './WithDivide'

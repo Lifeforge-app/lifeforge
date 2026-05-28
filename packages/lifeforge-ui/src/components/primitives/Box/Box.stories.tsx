@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Alert } from '@components/feedback'
-import { Box, Flex, Text } from '@components/primitives'
+import { Box, Flex, Grid, Text } from '@components/primitives'
 
 import { ScrollableStory } from '@/storybook/ScrollableStory'
 
@@ -407,18 +407,10 @@ export const Display: Story = {
 export const GridChildSpanning: Story = {
   args: {},
   render: () => (
-    <Box
-      p="3xl"
-      style={{
-        display: 'grid',
-        gap: '1rem',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        width: '100%'
-      }}
-    >
+    <Grid columns={3} gap="md" p="3xl">
       <Box
         bg={{ base: 'custom-100', dark: 'custom-900' }}
-        gridColumn="span 2 / span 2"
+        gridColumnSpan={2}
         p="md"
         rounded="md"
       >
@@ -435,13 +427,13 @@ export const GridChildSpanning: Story = {
 
       <Box
         bg={{ base: 'custom-100', dark: 'custom-900' }}
-        gridColumn="span 2 / span 2"
+        gridColumnSpan={2}
         p="md"
         rounded="md"
       >
         <PlaceholderContent asCode label="gridColumn='span 2 / span 2'" />
       </Box>
-    </Box>
+    </Grid>
   )
 }
 

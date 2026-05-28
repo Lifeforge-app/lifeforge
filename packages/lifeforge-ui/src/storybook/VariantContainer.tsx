@@ -8,7 +8,7 @@ export function VariantContainer({
   children: React.ReactNode
 }) {
   return (
-    <Box>
+    <Box mb="md">
       <Text as="code" color={{ base: 'bg-500', dark: 'bg-400' }} size="sm">
         {title}
       </Text>

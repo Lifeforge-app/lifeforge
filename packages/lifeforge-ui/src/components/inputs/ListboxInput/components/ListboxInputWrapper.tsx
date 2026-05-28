@@ -52,7 +52,7 @@ export function ListboxInputWrapper<T>({
           shadow={variant === 'classic'}
           style={
             variant === 'plain' && errorMsg
-              ? { outline: '2px solid var(--color-red-500)' }
+              ? { outline: '2px solid var(--color-dangerous)' }
               : {}
           }
           width="100%"
@@ -85,7 +85,7 @@ export function ListboxInputWrapper<T>({
                 mr={variant === 'classic' ? 'lg' : 'md'}
               >
                 <Icon
-                  color="var(--color-red-500)"
+                  color="var(--color-dangerous)"
                   height="1.5em"
                   icon="tabler:alert-circle"
                   width="1.5em"

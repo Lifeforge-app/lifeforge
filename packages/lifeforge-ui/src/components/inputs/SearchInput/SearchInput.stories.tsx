@@ -242,9 +242,15 @@ function SearchWithSuggestions() {
                 <ProductSuggestionItem key={product.id} product={product} />
               ))
             ) : (
-              <div className="text-bg-500 px-4 py-3 text-center">
+              <Text
+                align="center"
+                as="div"
+                color="muted"
+                px="md"
+                style={{ paddingBottom: '0.75rem', paddingTop: '0.75rem' }}
+              >
                 No suggestions found.
-              </div>
+              </Text>
             )}
           </>
         )}

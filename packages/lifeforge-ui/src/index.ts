@@ -25,4 +25,4 @@ export * from './components/overlays'
 export * from './components/utilities'
 
 // Theme tokens - typed CSS variable references
-export { bg, custom, withOpacity } from './system'
+export { bg, custom, withOpacity, TAILWIND_PALETTE } from './system'

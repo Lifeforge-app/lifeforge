@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { Button } from '@components/inputs'
-import { useModalStore } from 'shared'
+import { ModalWrapper } from '@components/overlays'
 
 import { FlatUIColorsModal } from './index'
 
@@ -15,21 +14,14 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    data: {
-      color: '#ff0000',
-      setColor: (color: string) => {
-        alert(color)
-      }
-    },
+    data: { color: '#ff0000', setColor: () => {} },
     onClose: () => {}
   },
   render: args => {
-    const { open } = useModalStore()
-
     return (
-      <Button icon="tabler:palette" onClick={() => open(FlatUIColorsModal, args.data)}>
-        Open Palette Modal
-      </Button>
+      <ModalWrapper isOpen={true}>
+        <FlatUIColorsModal {...args} />
+      </ModalWrapper>
     )
   }
 }

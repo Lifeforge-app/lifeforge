@@ -50,11 +50,11 @@ export function ModalWrapper({
         position="fixed"
         style={{
           overscrollBehavior: 'contain',
-          zIndex: isOpen ? zIndex : -1,
           opacity: Number(isOpen)
         }}
         top="0"
         width="100%"
+        zIndex={isOpen ? zIndex.toString() : '-1'}
         onTransitionEnd={onExited}
       >
         <Transition easing="ease-out" property="transform">
@@ -84,9 +84,7 @@ export function ModalWrapper({
               base: '100%'
             }}
           >
-            <Flex direction="column" gap="md" minHeight="0" minWidth="0">
-              {children}
-            </Flex>
+            {children}
           </Flex>
         </Transition>
       </Box>
@@ -94,4 +92,3 @@ export function ModalWrapper({
     document.getElementById('app') || document.body
   )
 }
-

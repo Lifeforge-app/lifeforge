@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+import { Box, Flex, Text } from '@components/primitives'
+
 import { Tooltip } from './index'
 
 const meta = {
@@ -26,12 +28,12 @@ export const Default: Story = {
     id: 'info-tooltip'
   },
   render: args => (
-    <div className="flex-center h-full w-full">
-      <div className="flex items-center gap-2">
-        <span>Hover over the icon</span>
+    <Flex align="center" height="100%" justify="center" width="100%">
+      <Flex align="center" gap="sm">
+        <Text>Hover over the icon</Text>
         <Tooltip {...args} />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -43,27 +45,30 @@ export const ClickableTooltip: Story = {
     children: (
       <>
         Visit{' '}
-        <a
-          className="text-custom-500 hover:text-custom-600 underline transition-all"
+        <Text
+          as="a"
+          color="custom-500"
+          decoration="underline"
           href="https://docs.lifeforge.dev"
           rel="noreferrer"
           target="_blank"
         >
           LifeForge Docs
-        </a>{' '}
+        </Text>{' '}
         to learn more about this project.
       </>
     ),
+    clickable: true,
     icon: 'tabler:question-circle',
     id: 'help-tooltip'
   },
   render: args => (
-    <div className="flex-center h-full w-full">
-      <div className="flex items-center gap-2">
-        <span>Need help?</span>
-        <Tooltip {...args} clickable />
-      </div>
-    </div>
+    <Flex align="center" height="100%" justify="center" width="100%">
+      <Flex align="center" gap="sm">
+        <Text>Need help?</Text>
+        <Tooltip {...args} />
+      </Flex>
+    </Flex>
   )
 }
 
@@ -73,25 +78,34 @@ export const ClickableTooltip: Story = {
 export const DetailedTooltip: Story = {
   args: {
     children: (
-      <div className="max-w-xs">
-        <h1 className="text-bg-800 dark:text-bg-100 mb-4 flex items-center gap-2 text-lg font-semibold">
-          <Icon className="size-5" icon="tabler:info-circle" />
-          Detailed Information
-        </h1>
-        <p>This is a detailed tooltip with multiple lines of information.</p>
-        <p className="mt-2">It can contain longer explanations and guides.</p>
-      </div>
+      <Box maxWidth="20rem">
+        <Text
+          asChild
+          color={{ base: 'bg-800', dark: 'bg-100' }}
+          size="lg"
+          weight="semibold"
+        >
+          <Flex align="center" gap="sm" mb="sm">
+            <Icon icon="tabler:info-circle" />
+            Detailed Information
+          </Flex>
+        </Text>
+        <Text>
+          This is a detailed tooltip with multiple lines of information.
+        </Text>
+        <Text mt="sm">It can contain longer explanations and guides.</Text>
+      </Box>
     ),
     icon: 'tabler:info-circle',
     id: 'detailed-tooltip'
   },
   render: args => (
-    <div className="flex-center h-full w-full">
-      <div className="flex items-center gap-2">
-        <span>Hover for details</span>
+    <Flex align="center" height="100%" justify="center" width="100%">
+      <Flex align="center" gap="sm">
+        <Text>Hover for details</Text>
         <Tooltip {...args} />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -102,12 +116,12 @@ export const OpenOnClick: Story = {
     id: 'click-tooltip'
   },
   render: args => (
-    <div className="flex-center h-full w-full">
-      <div className="flex items-center gap-2">
-        <span>Click the icon</span>
+    <Flex align="center" height="100%" justify="center" width="100%">
+      <Flex align="center" gap="sm">
+        <Text>Click the icon</Text>
         <Tooltip {...args} openOnClick />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -115,14 +129,17 @@ export const ErrorTooltip: Story = {
   args: {
     children: (
       <>
-        <h1 className="mb-2 flex items-center gap-2 text-lg font-semibold text-red-500">
-          <Icon className="size-5" icon="tabler:alert-circle" />
-          Error Details
-        </h1>
-        <p>An unexpected error has occurred while processing your request.</p>
-        <p className="mt-2">
+        <Flex align="center" gap="sm" mb="sm">
+          <Text color="dangerous" size="lg" weight="semibold">
+            Error Details
+          </Text>
+        </Flex>
+        <Text>
+          An unexpected error has occurred while processing your request.
+        </Text>
+        <Text mt="sm">
           Please try again later or contact support if the issue persists.
-        </p>
+        </Text>
       </>
     ),
     icon: 'tabler:alert-circle',
@@ -130,11 +147,11 @@ export const ErrorTooltip: Story = {
     id: 'error-tooltip'
   },
   render: args => (
-    <div className="flex-center h-48 w-full">
-      <div className="flex items-center gap-2">
-        <span>Error info</span>
+    <Flex align="center" height="100%" justify="center" width="100%">
+      <Flex align="center" gap="sm">
+        <Text>Error info</Text>
         <Tooltip {...args} />
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }

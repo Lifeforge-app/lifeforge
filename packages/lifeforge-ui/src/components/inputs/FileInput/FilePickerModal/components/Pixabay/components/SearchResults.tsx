@@ -3,6 +3,7 @@ import type { CSSProperties, SetStateAction } from 'react'
 import PhotoAlbum from 'react-photo-album'
 
 import { Pagination } from '@components/navigation'
+import { Box } from '@components/primitives'
 import { Scrollbar } from '@components/utilities'
 
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
@@ -37,52 +38,55 @@ export function SearchResults({
   }
 
   return (
-    <Scrollbar className="size-full min-h-[50vh] flex-1">
-      <Pagination
-        className="mb-4"
-        page={page}
-        totalPages={Math.ceil(results.total / 20)}
-        onPageChange={handlePageChange}
-      />
-      <div className={styles.photoWrapper}>
-        <PhotoAlbum
-          layout="rows"
-          photos={results.hits.map(image => ({
-            src: image.thumbnail.url,
-            width: image.thumbnail.width,
-            height: image.thumbnail.height,
-            key: image.id,
-            fullResURL: image.imageURL
-          }))}
-          renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
-            <button
-              className={clsx(
-                styles.photoButton,
-                photo.fullResURL === file && styles.photoButtonSelected
-              )}
-              style={style as CSSProperties}
-              onClick={() => {
-                setFile(photo.fullResURL)
-                setPreview(photo.src)
-              }}
-            >
-              <img
-                alt={alt}
-                src={src}
-                style={{ height: '100%', objectFit: 'cover', width: '100%' }}
-              />
-            </button>
-          )}
-          spacing={12}
-        />
-      </div>
-      <Pagination
-        className="mt-4"
-        page={page}
-        totalPages={Math.ceil(results.total / 20)}
-        onPageChange={handlePageChange}
-      />
-    </Scrollbar>
+    <Box asChild flex="1" height="100%" minHeight="50vh" width="100%">
+      <Scrollbar>
+        <Box asChild mb="md">
+          <Pagination
+            page={page}
+            totalPages={Math.ceil(results.total / 20)}
+            onPageChange={handlePageChange}
+          />
+        </Box>
+        <div className={styles.photoWrapper}>
+          <PhotoAlbum
+            layout="rows"
+            photos={results.hits.map(image => ({
+              src: image.thumbnail.url,
+              width: image.thumbnail.width,
+              height: image.thumbnail.height,
+              key: image.id,
+              fullResURL: image.imageURL
+            }))}
+            renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
+              <button
+                className={clsx(
+                  styles.photoButton,
+                  photo.fullResURL === file && styles.photoButtonSelected
+                )}
+                style={style as CSSProperties}
+                onClick={() => {
+                  setFile(photo.fullResURL)
+                  setPreview(photo.src)
+                }}
+              >
+                <img
+                  alt={alt}
+                  src={src}
+                  style={{ height: '100%', objectFit: 'cover', width: '100%' }}
+                />
+              </button>
+            )}
+            spacing={12}
+          />
+        </div>
+        <Box asChild mt="md">
+          <Pagination
+            page={page}
+            totalPages={Math.ceil(results.total / 20)}
+            onPageChange={handlePageChange}
+          />
+        </Box>
+      </Scrollbar>
+    </Box>
   )
 }
-

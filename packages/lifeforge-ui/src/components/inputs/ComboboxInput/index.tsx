@@ -117,7 +117,7 @@ export function ComboboxInput<T>({
       onChange={handleChange}
       onClick={focusInput}
     >
-      <Flex align="center" className="group" position="relative" width="100%">
+      <Flex align="center" position="relative" width="100%">
         {variant === 'classic' && icon && (
           <Box position="absolute">
             <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />

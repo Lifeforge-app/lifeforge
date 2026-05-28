@@ -3,8 +3,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useRef } from 'react'
 
 import { Card } from '@components/layout'
+import { Box, Flex, Text } from '@components/primitives'
 
 import { VirtualGrid } from './index'
+import { TAILWIND_PALETTE } from '@/system'
 
 const meta = {
   component: VirtualGrid,
@@ -21,7 +23,6 @@ interface SampleItem {
   id: number
   title: string
   description: string
-  color: string
 }
 
 const generateLoremIpsum = (length: 'short' | 'medium' | 'long'): string => {
@@ -63,9 +64,9 @@ const generateLoremIpsum = (length: 'short' | 'medium' | 'long'): string => {
   ]
 
   const wordCounts = {
-    long: 40 + Math.floor(Math.random() * 20), // 40-59 words
-    medium: 15 + Math.floor(Math.random() * 10), // 15-24 words
-    short: 5 + Math.floor(Math.random() * 5) // 5-9 words
+    long: 40 + Math.floor(Math.random() * 20),
+    medium: 15 + Math.floor(Math.random() * 10),
+    short: 5 + Math.floor(Math.random() * 5)
   }
 
   const count = wordCounts[length]
@@ -76,24 +77,12 @@ const generateLoremIpsum = (length: 'short' | 'medium' | 'long'): string => {
     result.push(words[Math.floor(Math.random() * words.length)])
   }
 
-  // Capitalize first word and add period at the end
   result[0] = result[0].charAt(0).toUpperCase() + result[0].slice(1)
 
   return result.join(' ') + '.'
 }
 
 const generateSampleItems = (count: number): SampleItem[] => {
-  const colors = [
-    'bg-red-500 text-red-700',
-    'bg-blue-500 text-blue-700',
-    'bg-green-500 text-green-700',
-    'bg-yellow-500 text-yellow-700',
-    'bg-purple-500 text-purple-700',
-    'bg-pink-500 text-pink-700',
-    'bg-indigo-500 text-indigo-700',
-    'bg-orange-500 text-orange-700'
-  ]
-
   const lengths: Array<'short' | 'medium' | 'long'> = [
     'short',
     'medium',
@@ -101,7 +90,6 @@ const generateSampleItems = (count: number): SampleItem[] => {
   ]
 
   return Array.from({ length: count }, (_, i) => ({
-    color: colors[i % colors.length],
     description: generateLoremIpsum(
       lengths[Math.floor(Math.random() * lengths.length)]
     ),
@@ -110,116 +98,149 @@ const generateSampleItems = (count: number): SampleItem[] => {
   }))
 }
 
+const COLORS = [
+  TAILWIND_PALETTE.red[500],
+  TAILWIND_PALETTE.blue[500],
+  TAILWIND_PALETTE.green[500],
+  TAILWIND_PALETTE.yellow[500],
+  TAILWIND_PALETTE.purple[500],
+  TAILWIND_PALETTE.pink[500],
+  TAILWIND_PALETTE.indigo[500],
+  TAILWIND_PALETTE.orange[500]
+]
+
 function CardItem({ item }: { item: SampleItem }) {
   const cardRef = useRef<HTMLDivElement>(null)
 
   return (
-    <Card ref={cardRef} className="h-full">
-      <div
-        className={`flex-center aspect-video w-full rounded-lg ${item.color} text-2xl font-semibold`}
+    <Card ref={cardRef} height="100%">
+      <Flex
+        align="center"
+        justify="center"
+        rounded="lg"
+        style={{
+          aspectRatio: '16 / 9',
+          backgroundColor: COLORS[item.id % COLORS.length]
+        }}
+        width="100%"
       >
         {cardRef.current?.offsetHeight ? (
-          `${cardRef.current?.offsetHeight}px`
+          <Text size="2xl" style={{ color: '#fff' }} weight="semibold">
+            {cardRef.current?.offsetHeight}px
+          </Text>
         ) : (
-          <Icon className="size-6" icon="svg-spinners:ring-resize" />
+          <Icon
+            height="1.5rem"
+            icon="svg-spinners:ring-resize"
+            style={{ color: '#fff' }}
+            width="1.5rem"
+          />
         )}
-      </div>
-      <h3 className="mt-4 text-lg font-semibold">{item.title}</h3>
-      <p className="text-bg-500 text-sm">{item.description}</p>
+      </Flex>
+      <Text mt="md" size="lg" weight="semibold">
+        {item.title}
+      </Text>
+      <Text color="muted" size="sm">
+        {item.description}
+      </Text>
     </Card>
   )
 }
 
-/**
- * Basic usage of VirtualGrid with a moderate number of items.
- * Each item has varying description lengths to demonstrate dynamic row heights.
- */
 export const Default: Story = {
   args: {
-    gap: 12,
-    // @ts-expect-error - The type cannot be inferred here
-    getItemKey: (item: SampleItem) => item.id,
+    getItemKey: () => '',
     itemMinWidth: 240,
-    items: generateSampleItems(50),
-    // @ts-expect-error - The type cannot be inferred here
-    renderItem: (item: SampleItem) => <CardItem item={item} />
+    items: [],
+    renderItem: () => <></>
   },
-  render: args => (
-    <div className="h-screen w-full p-6">
-      <VirtualGrid {...args} />
-    </div>
+  render: () => (
+    <Box height="100vh" py="2xl" width="100%">
+      <VirtualGrid
+        getItemKey={(item: SampleItem) => item.id}
+        itemMinWidth={240}
+        items={generateSampleItems(50)}
+        renderItem={(item: SampleItem) => <CardItem item={item} />}
+      />
+    </Box>
   )
 }
 
-/**
- * VirtualGrid with a large dataset (1000+ items) to demonstrate
- * performance benefits of virtualization.
- */
 export const LargeDataset: Story = {
   args: {
-    // @ts-expect-error - The type cannot be inferred here
-    getItemKey: (item: SampleItem) => item.id,
+    getItemKey: () => '',
     itemMinWidth: 240,
-    items: generateSampleItems(1000),
-    // @ts-expect-error - The type cannot be inferred here
-    renderItem: (item: SampleItem) => <CardItem item={item} />
+    items: [],
+    renderItem: () => <></>
   },
-  render: args => (
-    <div className="h-screen w-full p-6">
-      <VirtualGrid {...args} />
-    </div>
+  render: props => (
+    <Box height="100vh" py="2xl" width="100%">
+      <VirtualGrid
+        {...props}
+        getItemKey={(item: SampleItem) => item.id}
+        itemMinWidth={240}
+        items={generateSampleItems(1000)}
+        renderItem={(item: SampleItem) => <CardItem item={item} />}
+      />
+    </Box>
   )
 }
 
-/**
- * VirtualGrid with wider items showing fewer items per row.
- */
 export const WiderItems: Story = {
   args: {
-    gap: 16,
-    // @ts-expect-error - The type cannot be inferred here
-    getItemKey: (item: SampleItem) => item.id,
+    getItemKey: () => '',
     itemMinWidth: 400,
-    items: generateSampleItems(50),
-    // @ts-expect-error - The type cannot be inferred here
-    renderItem: (item: SampleItem) => (
-      <Card className="h-full">
-        <div className={`aspect-video w-full rounded-lg ${item.color}`} />
-        <h3 className="mt-4 text-xl font-semibold">{item.title}</h3>
-        <p className="text-bg-500">{item.description}</p>
-      </Card>
-    )
+    items: [],
+    renderItem: () => <></>
   },
-  render: args => (
-    <div className="h-screen w-full p-6">
-      <VirtualGrid {...args} />
-    </div>
+  render: props => (
+    <Box
+      height="100vh"
+      minHeight="30rem"
+      p="3xl"
+      position="fixed"
+      width="100vw"
+    >
+      <VirtualGrid
+        {...props}
+        getItemKey={(item: SampleItem) => item.id}
+        items={generateSampleItems(50)}
+        renderItem={(item: SampleItem) => <CardItem item={item} />}
+      />
+    </Box>
   )
 }
 
-/**
- * VirtualGrid with compact items showing more items per row.
- */
 export const CompactItems: Story = {
   args: {
-    gap: 8,
-    // @ts-expect-error - The type cannot be inferred here
-    getItemKey: (item: SampleItem) => item.id,
+    getItemKey: () => '',
     itemMinWidth: 150,
-    items: generateSampleItems(200),
-    // @ts-expect-error - The type cannot be inferred here
-    renderItem: (item: SampleItem) => (
-      <Card className="h-full">
-        <div className={`aspect-square w-full rounded-lg ${item.color}`}>
-          {}
-        </div>
-        <h3 className="mt-4 text-sm font-semibold">{item.title}</h3>
-      </Card>
-    )
+    items: [],
+    renderItem: () => <></>
   },
-  render: args => (
-    <div className="h-screen w-full p-6">
-      <VirtualGrid {...args} />
-    </div>
+  render: props => (
+    <Box height="100vh" p="lg" width="100%">
+      <VirtualGrid
+        {...props}
+        getItemKey={(item: SampleItem) => item.id}
+        itemMinWidth={150}
+        items={generateSampleItems(200)}
+        renderItem={(item: SampleItem) => (
+          <Card height="100%">
+            <Flex
+              rounded="lg"
+              style={{
+                aspectRatio: '1 / 1',
+                backgroundColor: COLORS[item.id % COLORS.length]
+              }}
+              width="100%"
+            />
+            <Text mt="md" size="sm" weight="semibold">
+              {item.title}
+            </Text>
+          </Card>
+        )}
+      />
+    </Box>
   )
 }

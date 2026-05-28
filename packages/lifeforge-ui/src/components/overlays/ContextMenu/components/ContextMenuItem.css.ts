@@ -39,7 +39,7 @@ export const itemActiveSafe = style([
 
 export const itemActiveDangerous = style({
   fontWeight: vars.fontWeight.medium,
-  color: 'var(--color-red-600)',
+  color: 'var(--color-dangerous)',
   selectors: {
     '&:hover': { color: bg[800] },
     '.dark &:hover': { color: bg[50] }
@@ -51,11 +51,11 @@ export const itemInactiveSafe = sprinkles({
 })
 
 export const itemInactiveDangerous = style({
-  color: 'var(--color-red-500)'
+  color: 'var(--color-dangerous)'
 })
 
 export const checkIconSafe = sprinkles({
   color: { base: 'bg-800', dark: 'bg-50' }
 })
 
-export const checkIconDangerous = style({ color: 'var(--color-red-600)' })
+export const checkIconDangerous = style({ color: 'var(--color-dangerous)' })

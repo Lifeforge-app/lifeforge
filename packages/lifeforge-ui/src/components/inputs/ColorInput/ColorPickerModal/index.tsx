@@ -1,3 +1,4 @@
+/* eslint-disable no-unexpected-multiline */
 import { type ColorResult, Colorful, EditableInput } from '@uiw/react-color'
 import { useEffect } from 'react'
 import tinycolor from 'tinycolor2'

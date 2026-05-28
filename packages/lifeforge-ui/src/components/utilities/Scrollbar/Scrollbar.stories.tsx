@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Card } from '@components/layout'
+import { Box, Flex } from '@components/primitives'
 
 import { Scrollbar } from './index'
 
@@ -25,36 +26,15 @@ export const Default: Story = {
     children: <></>
   },
   render: args => (
-    <div className="h-96 w-96">
+    <Box height="100%" my="3xl" width="100%">
       <Scrollbar {...args}>
-        <div className="space-y-4">
+        <Flex direction="column" gap="md">
           {Array.from({ length: 50 }, (_, i) => (
             <Card key={i}>Item {i + 1}</Card>
           ))}
-        </div>
+        </Flex>
       </Scrollbar>
-    </div>
-  )
-}
-
-/**
- * A scrollbar without padding on the right.
- */
-export const NoPaddingRight: Story = {
-  args: {
-    children: <></>,
-    usePaddingRight: false
-  },
-  render: args => (
-    <div className="h-96 w-96">
-      <Scrollbar {...args}>
-        <div className="space-y-4">
-          {Array.from({ length: 30 }, (_, i) => (
-            <Card key={i}>Item {i + 1}</Card>
-          ))}
-        </div>
-      </Scrollbar>
-    </div>
+    </Box>
   )
 }
 
@@ -66,15 +46,15 @@ export const MinimalContent: Story = {
     children: <></>
   },
   render: args => (
-    <div className="h-96 w-96">
+    <Box height="100%" my="3xl" width="100%">
       <Scrollbar {...args}>
-        <div className="space-y-4">
+        <Flex direction="column" gap="md">
           {Array.from({ length: 3 }, (_, i) => (
             <Card key={i}>Item {i + 1}</Card>
           ))}
-        </div>
+        </Flex>
       </Scrollbar>
-    </div>
+    </Box>
   )
 }
 
@@ -84,14 +64,14 @@ export const WithoutAutoHide: Story = {
     children: <></>
   },
   render: args => (
-    <div className="h-96 w-96">
+    <Box height="100%" my="3xl" width="100%">
       <Scrollbar {...args}>
-        <div className="space-y-4">
+        <Flex direction="column" gap="md">
           {Array.from({ length: 50 }, (_, i) => (
             <Card key={i}>Item {i + 1}</Card>
           ))}
-        </div>
+        </Flex>
       </Scrollbar>
-    </div>
+    </Box>
   )
 }

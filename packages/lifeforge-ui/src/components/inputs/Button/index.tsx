@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import _ from 'lodash'
 import React, { type CSSProperties, type ElementType } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
 
 import {
   Box,
@@ -15,6 +14,7 @@ import {
 
 import { buttonRecipe } from './Button.css'
 import { ButtonIcon } from './components/ButtonIcon'
+import { useButtonStyleProps } from './hooks/useButtonStyleProps'
 
 type ButtonOwnProps = {
   /** The content to display inside the button. Can be text or any valid React node. */
@@ -72,22 +72,16 @@ export function Button<T extends ElementType = 'button'>({
   style,
   ...props
 }: ButtonProps<T>) {
-  const { derivedThemeColor, getMostReadableColor } = usePersonalization()
-
-  const hasIconWithChildren = icon && children ? iconPosition : false
-
   const recipeClassName = buttonRecipe({
     variant,
-    dangerous,
-    hasIconWithChildren
+    dangerous
   })
 
-  const buttonStyle: CSSProperties = {
-    ...(variant === 'primary' && {
-      '--button-text-color': getMostReadableColor(derivedThemeColor)
-    }),
-    ...style
-  } as CSSProperties
+  const { buttonStyle, restProps } = useButtonStyleProps({
+    variant,
+    style,
+    props: props as any
+  })
 
   const { t } = useTranslation(namespace)
 
@@ -115,7 +109,7 @@ export function Button<T extends ElementType = 'button'>({
           style={buttonStyle}
           type="button"
           onClick={onClick}
-          {...(props as any)}
+          {...(restProps as any)}
         >
           {icon && iconPosition === 'start' && (
             <ButtonIcon

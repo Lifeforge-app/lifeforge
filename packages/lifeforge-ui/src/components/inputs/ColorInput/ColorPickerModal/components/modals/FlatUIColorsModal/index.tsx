@@ -1,12 +1,10 @@
 import { Icon } from '@iconify/react'
-import { clsx } from 'clsx'
 import { usePersonalization } from 'shared'
 
 import { Card } from '@components/layout'
 import { ModalHeader } from '@components/overlays'
 import { Box, Flex, Grid, Text } from '@components/primitives'
 
-import * as styles from './FlatUIColorsModal.css'
 import PALETTES from './constants/palettes.json'
 
 function FlatUIColorsModal({
@@ -30,13 +28,13 @@ function FlatUIColorsModal({
       />
       <Grid
         columns={{
-          base: 'repeat(1, minmax(0, 1fr))',
+          base: 1,
           sm: 'repeat(auto-fill, minmax(300px, 1fr))'
         }}
         style={{ gap: '0.75rem' }}
       >
         {PALETTES.map(({ name, icon, colors }) => (
-          <Card key={name} className={styles.card}>
+          <Card key={name} bg={{ base: 'bg-100', dark: 'bg-800' }}>
             <Flex align="center" mb="md" style={{ gap: '0.75rem' }}>
               <Icon
                 icon={icon || 'tabler:palette'}
@@ -46,7 +44,7 @@ function FlatUIColorsModal({
                 {name}
               </Text>
             </Flex>
-            <Grid columns="repeat(5, minmax(0, 1fr))" style={{ gap: '0.5rem' }}>
+            <Grid columns={5} style={{ gap: '0.5rem' }}>
               {colors.map((flatUiColor, index) => (
                 <Flex
                   key={index}
@@ -57,12 +55,10 @@ function FlatUIColorsModal({
                   rounded="md"
                   width="100%"
                 >
-                  <button
-                    className={clsx(
-                      styles.colorButton,
-                      color === flatUiColor && styles.colorButtonSelected
-                    )}
-                    style={{ backgroundColor: flatUiColor }}
+                  <Box
+                    shadow
+                    as="button"
+                    style={{ backgroundColor: flatUiColor, aspectRatio: 1 }}
                     onClick={() => {
                       setColor(flatUiColor)
                       onClose()
@@ -78,7 +74,7 @@ function FlatUIColorsModal({
                         }}
                       />
                     )}
-                  </button>
+                  </Box>
                 </Flex>
               ))}
             </Grid>

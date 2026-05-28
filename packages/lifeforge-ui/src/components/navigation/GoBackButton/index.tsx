@@ -13,7 +13,9 @@ export function GoBackButton({
 }) {
   return (
     <Button
+      bg={{ base: 'transparent', hover: 'transparent' }}
       icon="tabler:chevron-left"
+      p="sm"
       style={{
         padding: '0.5em 0.9em 0.5em 0.5em !important',
         width: 'fit-content'
@@ -25,4 +27,3 @@ export function GoBackButton({
     </Button>
   )
 }
-

@@ -6,7 +6,7 @@
   width: 36px;
   height: 36px;
   border: 4px solid;
-  @apply border-bg-500;
+  border-color: var(--color-bg-500);
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
@@ -25,22 +25,27 @@
 
 [data-rmiz],
 [data-rmiz-content] {
-  @apply h-full w-full;
+  height: 100%;
+  width: 100%;
 }
 
 .__file-input {
   & [data-rmiz],
   & [data-rmiz-content] {
-    @apply max-h-96 w-full;
+    max-height: 24rem;
+    width: 100%;
   }
 
   & [data-rmiz-content] {
-    @apply flex-center w-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 }
 
 div[data-rmiz-modal-overlay] {
-  @apply bg-black/80;
+  background-color: rgb(0 0 0 / 0.8);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -56,11 +61,13 @@ div[data-rmiz-modal-overlay] {
 }
 
 .tabler-icon {
-  @apply size-6 shrink-0;
+  height: 1.5rem;
+  width: 1.5rem;
+  flex-shrink: 0;
 }
 
 aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
-  @apply text-custom-500!;
+  color: var(--color-custom-500) !important;
 }
 
 ::global {
@@ -78,7 +85,32 @@ aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
 }
 
 .Toastify__toast-container {
-  @apply w-full! p-4 sm:max-w-lg md:max-w-lg lg:max-w-xl xl:max-w-2xl;
+  width: 100% !important;
+  padding: 1rem;
+}
+
+@media (min-width: 640px) {
+  .Toastify__toast-container {
+    max-width: 32rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .Toastify__toast-container {
+    max-width: 32rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .Toastify__toast-container {
+    max-width: 36rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .Toastify__toast-container {
+    max-width: 42rem;
+  }
 }
 
 .Toastify__toast-container * {
@@ -86,7 +118,14 @@ aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
 }
 
 .Toastify__toast {
-  @apply bg-bg-50 text-bg-800 dark:bg-bg-800 dark:text-bg-50 w-full!;
+  background-color: var(--color-bg-50);
+  color: var(--color-bg-800);
+  width: 100% !important;
+}
+
+.dark .Toastify__toast {
+  background-color: var(--color-bg-800);
+  color: var(--color-bg-50);
 }
 
 .sidebar-opening {

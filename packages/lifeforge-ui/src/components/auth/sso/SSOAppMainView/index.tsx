@@ -46,7 +46,7 @@ export function SSOAppMainView({
                 id="app"
                 minHeight="100dvh"
                 style={{ color: 'var(--color-bg-800)' }}
-                width="full"
+                width="100%"
               >
                 <SSOAuthProvider forgeAPI={forgeAPI}>
                   {isAuthed =>

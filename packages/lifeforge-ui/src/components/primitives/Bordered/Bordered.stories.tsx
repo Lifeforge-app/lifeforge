@@ -76,7 +76,7 @@ export const Default: Story = {
 export const BorderColor: Story = {
   args: {},
   render: () => (
-    <Grid columns="repeat(3, minmax(0, 1fr))" gap="lg" p="3xl" width="100%">
+    <Grid columns={3} gap="lg" p="3xl" width="100%">
       <Bordered p="md" rounded="lg">
         <DemoBox label="Default (bg-200 / bg-700)" />
       </Bordered>
@@ -166,7 +166,7 @@ export const BorderStyle: Story = {
 export const BorderSide: Story = {
   args: {},
   render: () => (
-    <Grid columns="repeat(4, minmax(0, 1fr))" gap="lg" p="3xl" width="100%">
+    <Grid columns={4} gap="lg" p="3xl" width="100%">
       {(['all', 'top', 'right', 'bottom', 'left', 'x', 'y'] as const).map(
         side => (
           <Bordered
@@ -192,7 +192,7 @@ export const BorderSide: Story = {
 export const BorderRadius: Story = {
   args: {},
   render: () => (
-    <Grid columns="repeat(4, minmax(0, 1fr))" gap="lg" p="3xl" width="100%">
+    <Grid columns={4} gap="lg" p="3xl" width="100%">
       {(['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'] as const).map(
         r => (
           <Bordered key={r} p="md" rounded={r}>
@@ -211,7 +211,7 @@ export const BorderRadius: Story = {
 export const WithBackground: Story = {
   args: {},
   render: () => (
-    <Grid columns="repeat(2, minmax(0, 1fr))" gap="lg" p="3xl" width="100%">
+    <Grid columns={2} gap="lg" p="3xl" width="100%">
       <Bordered
         shadow
         bg={{ base: 'bg-50', dark: 'bg-900' }}

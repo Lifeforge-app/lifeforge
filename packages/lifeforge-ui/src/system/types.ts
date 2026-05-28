@@ -83,12 +83,8 @@ export interface FlexChildProps {
 
 export interface GridChildProps {
   gridArea?: ResponsiveProp<string>
-  gridColumn?: ResponsiveProp<string>
-  gridColumnStart?: ResponsiveProp<string>
-  gridColumnEnd?: ResponsiveProp<string>
-  gridRow?: ResponsiveProp<string>
-  gridRowStart?: ResponsiveProp<string>
-  gridRowEnd?: ResponsiveProp<string>
+  gridColumnSpan?: ResponsiveProp<number>
+  gridRowSpan?: ResponsiveProp<number>
 }
 
 // ============================================================================

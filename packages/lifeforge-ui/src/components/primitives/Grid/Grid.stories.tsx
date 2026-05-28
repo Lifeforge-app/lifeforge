@@ -100,7 +100,7 @@ export const Default: Story = {
         {...args}
         shadow
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        columns="repeat(3, minmax(0, 1fr))"
+        columns={3}
         rounded="lg"
         width="100%"
       >
@@ -124,9 +124,9 @@ export const Columns: Story = {
   render: () => (
     <ScrollableStory>
       {[
-        { columns: 'repeat(2, minmax(0, 1fr))', label: '2 equal columns' },
-        { columns: 'repeat(3, minmax(0, 1fr))', label: '3 equal columns' },
-        { columns: 'repeat(4, minmax(0, 1fr))', label: '4 equal columns' },
+        { columns: 2, label: '2 equal columns' },
+        { columns: 3, label: '3 equal columns' },
+        { columns: 4, label: '4 equal columns' },
         { columns: '200px 1fr 2fr', label: '200px · 1fr · 2fr' },
         {
           columns: 'repeat(auto-fill, minmax(8rem, 1fr))',
@@ -161,7 +161,7 @@ export const Rows: Story = {
     <Flex align="center" height="100%" justify="center" p="3xl" width="100%">
       <Grid
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        columns="repeat(3, minmax(0, 1fr))"
+        columns={3}
         gap="md"
         p="lg"
         rounded="lg"
@@ -195,7 +195,7 @@ export const Gap: Story = {
           <VariantContainer key={gap} title={`gap="${gap}"`}>
             <Grid
               bg={{ base: 'bg-50', dark: 'bg-900' }}
-              columns="repeat(4, minmax(0, 1fr))"
+              columns={4}
               gap={gap}
               p="md"
               rounded="lg"
@@ -221,7 +221,7 @@ export const IndependentGap: Story = {
     <Flex align="center" height="100%" justify="center" p="3xl" width="100%">
       <Grid
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        columns="repeat(3, minmax(0, 1fr))"
+        columns={3}
         gapX="xl"
         gapY="sm"
         p="lg"
@@ -250,7 +250,7 @@ export const Align: Story = {
             <Grid
               align={align}
               bg={{ base: 'bg-50', dark: 'bg-900' }}
-              columns="repeat(3, minmax(0, 1fr))"
+              columns={3}
               gap="sm"
               p="md"
               rounded="lg"
@@ -290,7 +290,7 @@ export const Flow: Story = {
         <VariantContainer key={flow} title={label}>
           <Grid
             bg={{ base: 'bg-50', dark: 'bg-900' }}
-            columns="repeat(4, minmax(0, 1fr))"
+            columns={4}
             flow={flow}
             gap="sm"
             p="md"
@@ -298,7 +298,7 @@ export const Flow: Story = {
           >
             <Box
               bg={{ base: 'custom-100', dark: 'custom-900' }}
-              gridColumn="span 2 / span 2"
+              gridColumnSpan={2}
               p="md"
               rounded="md"
             >
@@ -331,7 +331,7 @@ export const SpanningCells: Story = {
     <Flex align="center" height="100%" justify="center" p="3xl" width="100%">
       <Grid
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        columns="repeat(3, minmax(0, 1fr))"
+        columns={3}
         gap="md"
         p="lg"
         rounded="lg"
@@ -340,8 +340,8 @@ export const SpanningCells: Story = {
       >
         <Cell
           accent
-          gridColumn="span 2 / span 2"
-          gridRow="span 2 / span 2"
+          gridColumnSpan={2}
+          gridRowSpan={2}
           label="col-span-2 row-span-2"
         />
         <Cell label="1" />
@@ -365,7 +365,7 @@ export const WithBackgroundAndShadow: Story = {
       <Grid
         shadow
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        columns="repeat(3, minmax(0, 1fr))"
+        columns={3}
         gap="md"
         p="lg"
         rounded="xl"
@@ -397,6 +397,37 @@ export const WithBackgroundAndShadow: Story = {
 }
 
 /**
+ * `columns` and `rows` also accept a plain number, which is automatically
+ * expanded to `repeat(N, 1fr)`.
+ */
+export const NumericColumns: Story = {
+  args: {},
+  render: () => (
+    <ScrollableStory>
+      {[
+        { columns: 2, label: 'columns={2}' },
+        { columns: 3, label: 'columns={3}' },
+        { columns: 4, label: 'columns={4}' }
+      ].map(({ columns, label }) => (
+        <VariantContainer key={label} title={label}>
+          <Grid
+            bg={{ base: 'bg-50', dark: 'bg-900' }}
+            columns={columns}
+            gap="sm"
+            p="md"
+            rounded="lg"
+          >
+            {['A', 'B', 'C', 'D', 'E', 'F'].map(c => (
+              <Cell key={c} label={c} />
+            ))}
+          </Grid>
+        </VariantContainer>
+      ))}
+    </ScrollableStory>
+  )
+}
+
+/**
  * Responsive `columns` accepts a breakpoint map, enabling common responsive
  * grid patterns (1 col → 2 col → 3 col) with a single prop.
  */
@@ -407,9 +438,9 @@ export const ResponsiveColumns: Story = {
       <Grid
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         columns={{
-          base: 'repeat(1, minmax(0, 1fr))',
-          lg: 'repeat(3, minmax(0, 1fr))',
-          sm: 'repeat(2, minmax(0, 1fr))'
+          base: 1,
+          lg: 3,
+          sm: 2
         }}
         gap="md"
         p="lg"
@@ -440,7 +471,7 @@ export const AsChild: Story = {
         <Grid
           asChild
           bg={{ base: 'bg-50', dark: 'bg-900' }}
-          columns="repeat(3, minmax(0, 1fr))"
+          columns={3}
           gap="md"
           p="lg"
           rounded="xl"

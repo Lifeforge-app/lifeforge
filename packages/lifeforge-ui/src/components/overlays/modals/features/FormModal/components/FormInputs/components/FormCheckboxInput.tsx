@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
 import { Switch } from '@components/inputs'
+import { Flex, Text } from '@components/primitives'
 
 import type {
   BaseFieldProps,
@@ -23,19 +24,19 @@ export function FormCheckboxInput({
   const { t } = useTranslation(namespace)
 
   return (
-    <div className="w-full space-y-2">
-      <div className="flex items-center justify-between py-2">
-        <div className="flex items-center gap-2">
-          <Icon className="size-6" icon={field.icon} />
-          <span className="text-lg">
+    <Flex direction="column" gap="sm" width="100%">
+      <Flex align="center" justify="between" py="sm">
+        <Flex align="center" gap="sm">
+          <Icon height="1.5em" icon={field.icon} width="1.5em" />
+          <Text size="lg">
             {t([
               ['inputs', _.camelCase(field.label), 'label']
                 .filter(e => e)
                 .join('.'),
               ['inputs', _.camelCase(field.label)].filter(e => e).join('.')
             ])}
-          </span>
-        </div>
+          </Text>
+        </Flex>
         <Switch
           disabled={field.disabled}
           value={value}
@@ -43,11 +44,12 @@ export function FormCheckboxInput({
             handleChange(!value)
           }}
         />
-      </div>
+      </Flex>
       {field.errorMsg && (
-        <div className="text-sm text-red-500">{field.errorMsg}</div>
+        <Text color="dangerous" size="sm">
+          {field.errorMsg}
+        </Text>
       )}
-    </div>
+    </Flex>
   )
 }
-

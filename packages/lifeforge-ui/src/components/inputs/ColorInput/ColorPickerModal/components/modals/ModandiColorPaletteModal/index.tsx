@@ -40,10 +40,8 @@ function MorandiColorPaletteModal({
             key={index}
             asChild
             align="center"
-            height="100%"
             justify="center"
             rounded="md"
-            width="100%"
           >
             <button
               className={clsx(

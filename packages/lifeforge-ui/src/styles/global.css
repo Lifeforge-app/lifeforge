@@ -14,7 +14,8 @@
     cursor: not-allowed;
   }
 
-  &:focus {
+  &:focus,
+  &:focus-visible {
     outline: none;
   }
 
@@ -22,6 +23,10 @@
     background-color: var(--color-custom-500);
     color: var(--lf-selection-bg);
   }
+}
+
+*:focus-visible {
+  outline: none !important;
 }
 
 input,
@@ -34,7 +39,7 @@ button {
   cursor: pointer;
 
   & > svg {
-    @apply pointer-events-none;
+    pointer-events: none;
   }
 }
 
@@ -61,6 +66,6 @@ code {
 }
 
 #app {
-  @apply text-base;
+  font-size: var(--text-base);
   vertical-align: bottom;
 }

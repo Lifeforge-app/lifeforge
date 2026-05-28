@@ -110,7 +110,6 @@ export function ListboxInput<T>({
       <Flex
         asChild
         align="center"
-        className="group"
         minWidth="0"
         position="relative"
         width="100%"
@@ -118,7 +117,6 @@ export function ListboxInput<T>({
         <ListboxButton>
           <Flex
             align="center"
-            className="group"
             minWidth="0"
             p={
               variant === 'plain' ? (size === 'small' ? 'xs' : 'md') : undefined

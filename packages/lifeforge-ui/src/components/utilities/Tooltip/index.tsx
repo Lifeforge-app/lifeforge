@@ -4,6 +4,8 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 import { usePersonalization } from 'shared'
 import tinycolor from 'tinycolor2'
 
+import { Box, Text } from '@components/primitives'
+
 /**
  * A tooltip component that displays informational content when hovering over an icon.
  * For all available props, refer to the ReactTooltip documentation: https://react-tooltip.com/docs/getting-started
@@ -31,28 +33,42 @@ export function Tooltip({
     <>
       <span data-tooltip-id={`tooltip-${_.kebabCase(id)}`}>
         <Icon
-          className={`text-bg-500 size-5 ${iconClassName ?? ''}`}
+          className={iconClassName ?? ''}
+          height="1.25rem"
           icon={icon}
+          style={{ color: 'var(--color-bg-500)' }}
+          width="1.25rem"
         />
       </span>
-      <ReactTooltip
-        border={`1px solid ${
-          derivedTheme === 'light'
-            ? bgTempPalette[200]
-            : tinycolor(bgTempPalette[700]).setAlpha(0.5).toRgbString()
-        }`}
-        className="shadow-custom bg-bg-50! dark:bg-bg-800! z-9999 rounded-md! p-0! text-base!"
-        classNameArrow="size-6! bg-bg-50! dark:bg-bg-800!"
-        id={`tooltip-${_.kebabCase(id)}`}
-        opacity={1}
-        place="top-start"
-        positionStrategy="fixed"
-        {...tooltipProps}
+      <Box
+        asChild
+        rounded="md"
+        style={{
+          background:
+            derivedTheme === 'light'
+              ? 'var(--color-bg-50)'
+              : 'var(--color-bg-800)',
+          boxShadow: 'var(--custom-shadow)',
+          zIndex: 9999
+        }}
       >
-        <div className="bg-bg-50~ dark:bg-bg-800! text-bg-600 dark:text-bg-400 h-full w-full rounded-md p-4">
-          {children}
-        </div>
-      </ReactTooltip>
+        <ReactTooltip
+          border={`1px solid ${
+            derivedTheme === 'light'
+              ? bgTempPalette[200]
+              : tinycolor(bgTempPalette[700]).setAlpha(0.5).toRgbString()
+          }`}
+          id={`tooltip-${_.kebabCase(id)}`}
+          opacity={1}
+          place="top-start"
+          positionStrategy="fixed"
+          {...tooltipProps}
+        >
+          <Text as="div" color={{ base: 'bg-600', dark: 'bg-400' }} py="sm">
+            {children}
+          </Text>
+        </ReactTooltip>
+      </Box>
     </>
   )
 }

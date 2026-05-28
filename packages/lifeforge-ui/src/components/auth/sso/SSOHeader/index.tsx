@@ -1,8 +1,8 @@
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Flex, Text } from '@components/primitives'
 import { Button } from '@components/inputs'
+import { Box, Flex, Text } from '@components/primitives'
 
 export function SSOHeader({
   icon,
@@ -26,7 +26,7 @@ export function SSOHeader({
       className={className}
       justify="between"
       p="3xl"
-      width="full"
+      width="100%"
     >
       <Flex align="center" gap="sm">
         <Icon

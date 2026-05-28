@@ -97,7 +97,7 @@ export const MultipleItems: Story = {
     children: <></>
   },
   render: () => (
-    <Grid columns="repeat(2, minmax(0, 1fr))" gap="md" p="xl">
+    <Grid columns={2} gap="md" p="xl">
       <Card>
         <Box p="md">Item 1</Box>
       </Card>

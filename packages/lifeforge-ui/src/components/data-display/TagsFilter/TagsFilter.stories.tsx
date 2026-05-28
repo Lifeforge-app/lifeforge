@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import colors from 'tailwindcss/colors'
 
 import { Button } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
 import { TagsFilter } from './index'
+import { TAILWIND_PALETTE } from '@/system'
 
 const meta = {
   argTypes: {
@@ -38,19 +38,19 @@ type Story = StoryObj<typeof meta>
 
 const CATEGORIES = [
   {
-    color: colors.blue[500],
+    color: TAILWIND_PALETTE.blue[500],
     icon: 'tabler:briefcase',
     id: 'work',
     label: 'Work'
   },
   {
-    color: colors.green[500],
+    color: TAILWIND_PALETTE.green[500],
     icon: 'tabler:user',
     id: 'personal',
     label: 'Personal'
   },
   {
-    color: colors.red[500],
+    color: TAILWIND_PALETTE.red[500],
     icon: 'tabler:alert-circle',
     id: 'urgent',
     label: 'Urgent'
@@ -59,19 +59,19 @@ const CATEGORIES = [
 
 const STATUSES = [
   {
-    color: colors.green[500],
+    color: TAILWIND_PALETTE.green[500],
     icon: 'tabler:check',
     id: 'active',
     label: 'Active'
   },
   {
-    color: colors.yellow[500],
+    color: TAILWIND_PALETTE.yellow[500],
     icon: 'tabler:clock',
     id: 'pending',
     label: 'Pending'
   },
   {
-    color: colors.blue[500],
+    color: TAILWIND_PALETTE.blue[500],
     icon: 'tabler:circle-check',
     id: 'completed',
     label: 'Completed'

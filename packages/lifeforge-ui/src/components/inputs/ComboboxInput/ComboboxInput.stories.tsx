@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import colors from 'tailwindcss/colors'
 
 import { ComboboxOption } from './components/ComboboxOption'
 import { ComboboxInput } from './index'
+import { TAILWIND_PALETTE } from '@/system'
 
 const meta = {
   argTypes: {
@@ -80,7 +80,7 @@ export const Default: Story = {
         {filteredCountries.map(country => (
           <ComboboxOption
             key={country.value}
-            color={colors.blue[500]}
+            color={TAILWIND_PALETTE.blue[500]}
             icon={country.icon}
             label={country.name}
             value={country}
@@ -130,7 +130,7 @@ export const Required: Story = {
         {filteredCountries.map(country => (
           <ComboboxOption
             key={country.value}
-            color={colors.blue[500]}
+            color={TAILWIND_PALETTE.blue[500]}
             icon={country.icon}
             label={country.name}
             value={country}
@@ -142,10 +142,10 @@ export const Required: Story = {
 }
 
 const PRIORITY_LEVELS = [
-  { color: colors.green[500], label: 'Low', value: 'low' },
-  { color: colors.yellow[500], label: 'Medium', value: 'medium' },
-  { color: colors.orange[500], label: 'High', value: 'high' },
-  { color: colors.red[500], label: 'Critical', value: 'critical' }
+  { color: TAILWIND_PALETTE.green[500], label: 'Low', value: 'low' },
+  { color: TAILWIND_PALETTE.yellow[500], label: 'Medium', value: 'medium' },
+  { color: TAILWIND_PALETTE.orange[500], label: 'High', value: 'high' },
+  { color: TAILWIND_PALETTE.red[500], label: 'Critical', value: 'critical' }
 ]
 
 /**
@@ -271,7 +271,7 @@ export const Disabled: Story = {
         {COUNTRIES.map(country => (
           <ComboboxOption
             key={country.value}
-            color={colors.blue[500]}
+            color={TAILWIND_PALETTE.blue[500]}
             icon={country.icon}
             label={country.name}
             value={country}
@@ -319,7 +319,7 @@ export const WithErrorMessage: Story = {
         {filteredCountries.map(country => (
           <ComboboxOption
             key={country.value}
-            color={colors.blue[500]}
+            color={TAILWIND_PALETTE.blue[500]}
             icon={country.icon}
             label={country.name}
             value={country}
@@ -367,7 +367,7 @@ export const DisabledWithErrorMessage: Story = {
         {filteredCountries.map(country => (
           <ComboboxOption
             key={country.value}
-            color={colors.blue[500]}
+            color={TAILWIND_PALETTE.blue[500]}
             icon={country.icon}
             label={country.name}
             value={country}
@@ -415,7 +415,7 @@ export const PlainVariant: Story = {
         {filteredCountries.map(country => (
           <ComboboxOption
             key={country.value}
-            color={colors.blue[500]}
+            color={TAILWIND_PALETTE.blue[500]}
             icon={country.icon}
             label={country.name}
             value={country}
@@ -464,7 +464,7 @@ export const PlainVariantWithErrorMessage: Story = {
         {filteredCountries.map(country => (
           <ComboboxOption
             key={country.value}
-            color={colors.blue[500]}
+            color={TAILWIND_PALETTE.blue[500]}
             icon={country.icon}
             label={country.name}
             value={country}
