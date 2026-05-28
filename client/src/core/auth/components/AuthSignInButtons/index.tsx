@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Button, Flex, Text, useModalStore } from '@lifeforge/ui'
+import { Box, Button, Flex, Grid, Text, useModalStore } from '@lifeforge/ui'
 
 import QRLoginModal from '@/core/auth/modals/QRLoginModal'
 
@@ -30,13 +30,11 @@ function AuthSignInButton({
           height="1.5px"
           width="100%"
         />
-        <Text
-          color={{ base: 'bg-400', dark: 'bg-700' }}
-          flexShrink="0"
-          weight="medium"
-        >
-          {t('orAuthenticateWith')}
-        </Text>
+        <Box asChild flexShrink="0">
+          <Text color={{ base: 'bg-400', dark: 'bg-700' }} weight="medium">
+            {t('orAuthenticateWith')}
+          </Text>
+        </Box>
         <Box
           bg={{ base: 'bg-400', dark: 'bg-700' }}
           height="1.5px"
@@ -44,7 +42,11 @@ function AuthSignInButton({
         />
       </Flex>
       {providers.length > 0 && (
-        <div className="grid w-full grid-cols-2 gap-3">
+        <Grid
+          gap="md"
+          mb="md"
+          templateCols="repeat(auto-fit, minmax(150px, 1fr))"
+        >
           {providers.map(provider => (
             <SigninWithProviderButton
               key={provider}
@@ -52,7 +54,7 @@ function AuthSignInButton({
               provider={provider}
             />
           ))}
-        </div>
+        </Grid>
       )}
       <Button
         icon="tabler:qrcode"
