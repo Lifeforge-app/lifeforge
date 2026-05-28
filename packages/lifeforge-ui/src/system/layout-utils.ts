@@ -103,34 +103,14 @@ export const layoutPropDefs = {
     customProperties: ['--lf-ga'],
     responsive: true
   },
-  gridColumn: {
-    className: 'lf-gc',
-    customProperties: ['--lf-gc'],
+  gridColumnSpan: {
+    className: 'lf-gcsp',
+    customProperties: ['--lf-gcsp'],
     responsive: true
   },
-  gridColumnStart: {
-    className: 'lf-gcs',
-    customProperties: ['--lf-gcs'],
-    responsive: true
-  },
-  gridColumnEnd: {
-    className: 'lf-gce',
-    customProperties: ['--lf-gce'],
-    responsive: true
-  },
-  gridRow: {
-    className: 'lf-gr',
-    customProperties: ['--lf-gr'],
-    responsive: true
-  },
-  gridRowStart: {
-    className: 'lf-grs',
-    customProperties: ['--lf-grs'],
-    responsive: true
-  },
-  gridRowEnd: {
-    className: 'lf-gre',
-    customProperties: ['--lf-gre'],
+  gridRowSpan: {
+    className: 'lf-grsp',
+    customProperties: ['--lf-grsp'],
     responsive: true
   },
   // Grid container props

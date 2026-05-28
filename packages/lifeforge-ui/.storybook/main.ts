@@ -32,7 +32,6 @@ const config: StorybookConfig = {
   },
   viteFinal: async config => {
     config.plugins = [...(config.plugins ?? []), tsconfigPaths()]
-    config.plugins.push((await import('@tailwindcss/vite')).default())
     return {
       ...config
     }

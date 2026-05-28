@@ -35,13 +35,7 @@ export const Default: Story = {
     const [currentPage, setCurrentPage] = useState(1)
 
     return (
-      <div className="flex-center h-full w-full">
-        <Pagination
-          {...args}
-          page={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      <Pagination {...args} page={currentPage} onPageChange={setCurrentPage} />
     )
   }
 }
@@ -60,13 +54,7 @@ export const FewPages: Story = {
     const [currentPage, setCurrentPage] = useState(2)
 
     return (
-      <div className="flex-center h-full w-full">
-        <Pagination
-          {...args}
-          page={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      <Pagination {...args} page={currentPage} onPageChange={setCurrentPage} />
     )
   }
 }
@@ -84,13 +72,7 @@ export const ManyPages: Story = {
     const [currentPage, setCurrentPage] = useState(50)
 
     return (
-      <div className="flex-center h-full w-full">
-        <Pagination
-          {...args}
-          page={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      <Pagination {...args} page={currentPage} onPageChange={setCurrentPage} />
     )
   }
 }
@@ -108,13 +90,7 @@ export const FirstPage: Story = {
     const [currentPage, setCurrentPage] = useState(1)
 
     return (
-      <div className="flex-center h-full w-full">
-        <Pagination
-          {...args}
-          page={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      <Pagination {...args} page={currentPage} onPageChange={setCurrentPage} />
     )
   }
 }
@@ -132,13 +108,7 @@ export const LastPage: Story = {
     const [currentPage, setCurrentPage] = useState(10)
 
     return (
-      <div className="flex-center h-full w-full">
-        <Pagination
-          {...args}
-          page={currentPage}
-          onPageChange={setCurrentPage}
-        />
-      </div>
+      <Pagination {...args} page={currentPage} onPageChange={setCurrentPage} />
     )
   }
 }

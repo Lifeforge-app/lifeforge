@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useModalStore } from 'shared'
 
 import { Button } from '@components/inputs'
+import { Grid } from '@components/primitives'
 
 import { ConfirmationModal } from './index'
 
@@ -95,11 +96,19 @@ export const WithCustomConfirmationButtons: Story = {
       description:
         'Are you sure you want to perform this cool action? This is an absolutely cool action that you probably want to do.',
       renderChildren: onClose => (
-        <div className="mt-6 grid w-full gap-2 sm:grid-cols-2">
+        <Grid
+          columns={{
+            base: 1,
+            sm: 2
+          }}
+          gap="sm"
+          mt="lg"
+          width="100%"
+        >
           <Button
-            className="w-full"
             icon="tabler:question-mark"
             variant="secondary"
+            width="100%"
             onClick={() => {
               alert('Let me think again...')
             }}
@@ -107,29 +116,29 @@ export const WithCustomConfirmationButtons: Story = {
             Uhmmmmm...
           </Button>
           <Button
-            className="w-full"
             icon="tabler:bubble"
             variant="secondary"
+            width="100%"
             onClick={() => alert('Hmmmmmmm.....')}
           >
             Let me think again
           </Button>
           <Button
-            className="w-full"
             icon="tabler:arrow-left"
             variant="secondary"
+            width="100%"
             onClick={onClose}
           >
             No, go back
           </Button>
           <Button
-            className="w-full"
             icon="tabler:rocket"
+            width="100%"
             onClick={() => alert('Rocket launched!')}
           >
             Yes, launch the rocket
           </Button>
-        </div>
+        </Grid>
       ),
       title: 'Are you sure?'
     },

@@ -7,7 +7,6 @@ export function ContentWrapperWithSidebar({
 }) {
   return (
     <Flex
-      className="z-0"
       direction="column"
       flex="1"
       height="100%"
@@ -19,4 +18,3 @@ export function ContentWrapperWithSidebar({
     </Flex>
   )
 }
-

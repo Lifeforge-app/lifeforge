@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import colors from 'tailwindcss/colors'
 
 import { Box } from '@components/primitives'
 
 import { Tabs } from '../Tabs'
+import { TAILWIND_PALETTE } from '@/system'
 
 const meta = {
   argTypes: {
@@ -97,14 +97,14 @@ export const WithAmounts: Story = {
 }
 
 const COLORED_TABS = [
-  { color: colors.red[500], icon: 'tabler:palette', id: 'red', name: 'Red' },
+  { color: TAILWIND_PALETTE.red[500], icon: 'tabler:palette', id: 'red', name: 'Red' },
   {
-    color: colors.green[500],
+    color: TAILWIND_PALETTE.green[500],
     icon: 'tabler:palette',
     id: 'green',
     name: 'Green'
   },
-  { color: colors.blue[500], icon: 'tabler:palette', id: 'blue', name: 'Blue' }
+  { color: TAILWIND_PALETTE.blue[500], icon: 'tabler:palette', id: 'blue', name: 'Blue' }
 ] as const
 
 /**

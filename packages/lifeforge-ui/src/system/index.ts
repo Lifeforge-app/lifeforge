@@ -58,3 +58,5 @@ export {
   type CommonSprinkles,
   shadowClass
 } from './sprinkles.css'
+
+export { TAILWIND_PALETTE } from './tailwind-palette'

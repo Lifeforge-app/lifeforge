@@ -24,7 +24,7 @@ export function ErrorScreen({ message, showRetryButton }: ErrorScreenProps) {
       width="100%"
     >
       <Icon
-        color="var(--color-red-500)"
+        color="var(--color-dangerous)"
         icon="tabler:alert-triangle"
         style={{ width: '4rem', height: '4rem' }}
       />
@@ -33,7 +33,7 @@ export function ErrorScreen({ message, showRetryButton }: ErrorScreenProps) {
         as="p"
         size="lg"
         style={{
-          color: 'var(--color-red-500)'
+          color: 'var(--color-dangerous)'
         }}
         weight="medium"
       >

@@ -1,3 +1,5 @@
+import { Box, Flex } from '@components/primitives'
+
 import { Scrollbars, type ScrollbarsProps } from '../Scrollbars'
 
 /**
@@ -7,7 +9,7 @@ import { Scrollbars, type ScrollbarsProps } from '../Scrollbars'
 export function Scrollbar({
   children,
   ...props
-}: { children: React.ReactNode } & ScrollbarsProps) {
+}: { children: React.ReactNode; usePaddingRight?: boolean } & ScrollbarsProps) {
   return (
     <Scrollbars
       {...props}
@@ -15,23 +17,30 @@ export function Scrollbar({
       autoHide={props.autoHide !== undefined ? props.autoHide : true}
       autoHideTimeout={1000}
       renderThumbVertical={props => (
-        <div
+        <Box
           {...props}
-          className="bg-bg-400 dark:bg-bg-700 rounded-lg"
-          style={{ ...props.style, minHeight: 30 }}
+          bg={{ base: 'bg-400', dark: 'bg-600' }}
+          minHeight="30px"
+          rounded="lg"
+          style={{ ...props.style }}
         />
       )}
       renderTrackVertical={props => (
-        <div
+        <Box
           {...props}
-          className="bg-bg-200 dark:bg-bg-800/50"
+          bg={{ base: 'bg-200', dark: 'bg-800' }}
           style={{ ...props.style, display: 'block' }}
         />
       )}
-      renderView={props => (
-        <div
-          {...props}
-          className="flex min-h-0 w-full min-w-0 flex-1 flex-col"
+      renderView={p => (
+        <Flex
+          {...p}
+          direction="column"
+          flex="1"
+          minHeight="0"
+          minWidth="0"
+          style={{ ...p.style }}
+          width="100%"
         />
       )}
     >

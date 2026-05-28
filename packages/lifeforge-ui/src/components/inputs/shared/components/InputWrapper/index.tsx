@@ -95,7 +95,7 @@ export function InputWrapper({
         role="button"
         style={
           variant === 'plain' && errorMsg
-            ? { outline: '2px solid var(--color-red-500)' }
+            ? { outline: '2px solid var(--color-dangerous)' }
             : {}
         }
         tabIndex={0}
@@ -112,7 +112,7 @@ export function InputWrapper({
               mr={variant === 'classic' ? 'lg' : undefined}
             >
               <Icon
-                color="var(--color-red-500)"
+                color="var(--color-dangerous)"
                 height="1.5em"
                 icon="tabler:alert-circle"
                 width="1.5em"

@@ -7,6 +7,7 @@ import { Flex, Text } from '@components/primitives'
 
 import { SidebarWrapper } from '../SidebarWrapper'
 import { SidebarItem } from './index'
+import { TAILWIND_PALETTE } from '@/system'
 
 const meta = {
   argTypes: {
@@ -60,16 +61,16 @@ export const WithSideColorStrip: Story = {
   args: {
     icon: 'tabler:category',
     label: 'Dashboard',
-    sideStripColor: '#4F46E5'
+    sideStripColor: TAILWIND_PALETTE.indigo[600]
   },
   render: () => (
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
           {[
-            ['Category 1', '#4F46E5'],
-            ['Category 2', '#16A34A'],
-            ['Category 3', '#DC2626']
+            ['Category 1', TAILWIND_PALETTE.indigo[600]],
+            ['Category 2', TAILWIND_PALETTE.green[600]],
+            ['Category 3', TAILWIND_PALETTE.red[600]]
           ].map(([label, color]) => (
             <SidebarItem
               key={label}
@@ -525,7 +526,7 @@ export const WithAllFeatures: Story = {
     icon: 'tabler:building',
     label: 'Workspace Alpha',
     number: 8,
-    sideStripColor: '#7C3AED',
+    sideStripColor: TAILWIND_PALETTE.violet[600],
     subsection: [
       {
         active: false,

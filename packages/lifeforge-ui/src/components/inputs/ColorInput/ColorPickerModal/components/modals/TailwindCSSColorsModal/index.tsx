@@ -1,7 +1,7 @@
-import colors from 'tailwindcss/colors'
-
 import { ModalHeader } from '@components/overlays'
 import { Box, Flex, Grid, Text } from '@components/primitives'
+
+import { TAILWIND_PALETTE } from '@/system'
 
 import * as styles from './TailwindCSSColorsModal.css'
 import { ColorItem } from './components/ColorItem'
@@ -24,10 +24,14 @@ function TailwindCSSColorsModal({
         onClose={onClose}
       />
       <Flex direction="column" style={{ gap: '0.75rem' }}>
-        {([...Object.keys(colors)] as Array<keyof typeof colors>)
+        {(
+          [...Object.keys(TAILWIND_PALETTE)] as Array<
+            keyof typeof TAILWIND_PALETTE
+          >
+        )
           .filter(
             colorGroup =>
-              typeof colors[colorGroup] === 'object' &&
+              typeof TAILWIND_PALETTE[colorGroup] === 'object' &&
               ![
                 'warmGray',
                 'coolGray',
@@ -54,7 +58,7 @@ function TailwindCSSColorsModal({
                 width="100%"
               >
                 {Object.entries(
-                  colors[colorGroup] as Record<string, string>
+                  TAILWIND_PALETTE[colorGroup] as Record<string, string>
                 ).map(([colorName, colorValue]) => (
                   <ColorItem
                     key={colorName}

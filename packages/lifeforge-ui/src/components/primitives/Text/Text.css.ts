@@ -13,7 +13,7 @@ const textColorValues = {
   default: 'var(--color-bg-900)',
   muted: 'var(--color-bg-500)',
   primary: 'var(--color-custom-500)',
-  dangerous: 'var(--color-red-500)'
+  dangerous: colors.dangerous
 } as const
 
 /** Theme-aware color/backgroundColor for Text — supports dark/hover/hasBgImage conditions. */

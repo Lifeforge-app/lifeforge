@@ -14,9 +14,10 @@ export function SubmitButton({
   if (typeof submitButton === 'string') {
     return (
       <Button
-        className="mt-6 w-full"
         icon={submitButton === 'create' ? 'tabler:plus' : 'tabler:pencil'}
         loading={submitLoading}
+        mt="lg"
+        width="100%"
         onClick={onSubmitButtonClick}
       >
         {_.upperFirst(submitButton)}
@@ -27,7 +28,8 @@ export function SubmitButton({
   if (submitButton) {
     return (
       <Button
-        className="mt-6 w-full"
+        mt="lg"
+        width="100%"
         {...submitButton}
         loading={submitLoading}
         onClick={onSubmitButtonClick}
@@ -37,4 +39,3 @@ export function SubmitButton({
 
   return <></>
 }
-
