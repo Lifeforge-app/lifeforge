@@ -59,7 +59,7 @@
         "globals": "^16.5.0",
         "prettier": "^3.8.0",
         "prettier-plugin-tailwindcss": "^0.7.1",
-        "tailwindcss": "^4.1.18",
+        "tailwindcss": "^4.3.0",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.31.1",
         "vite": "^7.1.9"

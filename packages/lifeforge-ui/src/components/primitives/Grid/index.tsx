@@ -20,6 +20,7 @@ import {
   resolveCommonSprinkleProps,
   shadowClass
 } from '@/system'
+import { normalizeGridSpan, normalizeGridTrack } from '@/system/grid-utils'
 
 import { Slot } from '../Slot'
 import { type GridSprinkles, gridBase, gridSprinkles } from './Grid.css'
@@ -38,8 +39,10 @@ interface GridOwnProps<T extends ElementType = 'div'>
   asChild?: boolean
   ref?: Ref<HTMLElement>
   display?: ResponsiveProp<GridDisplayValue>
-  columns?: ResponsiveProp<string>
-  rows?: ResponsiveProp<string>
+  columns?: ResponsiveProp<string | number>
+  rows?: ResponsiveProp<string | number>
+  gridColumnSpan?: ResponsiveProp<number>
+  gridRowSpan?: ResponsiveProp<number>
   flow?: ResponsiveProp<FlowValue>
   align?: ResponsiveProp<AlignValue>
   justify?: ResponsiveProp<JustifyValue>
@@ -102,12 +105,9 @@ export function Grid<T extends ElementType = 'div'>({
   flexGrow,
   flexShrink,
   gridArea,
-  gridColumn,
-  gridColumnStart,
-  gridColumnEnd,
-  gridRow,
-  gridRowStart,
-  gridRowEnd,
+
+  gridColumnSpan,
+  gridRowSpan,
   // Padding
   p,
   px,
@@ -187,14 +187,19 @@ export function Grid<T extends ElementType = 'div'>({
     flexGrow,
     flexShrink,
     gridArea,
-    gridColumn,
-    gridColumnStart,
-    gridColumnEnd,
-    gridRow,
-    gridRowStart,
-    gridRowEnd,
-    columns,
-    rows
+    gridColumnSpan: normalizeResponsiveProp(
+      gridColumnSpan,
+      normalizeGridSpan
+    ) as ResponsiveProp<string> | undefined,
+    gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan) as
+      | ResponsiveProp<string>
+      | undefined,
+    columns: normalizeResponsiveProp(columns, normalizeGridTrack) as
+      | ResponsiveProp<string>
+      | undefined,
+    rows: normalizeResponsiveProp(rows, normalizeGridTrack) as
+      | ResponsiveProp<string>
+      | undefined
   })
 
   const mergedStyle = { ...responsiveStyles.style, ...style }

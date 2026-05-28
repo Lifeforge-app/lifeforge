@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { Fragment } from 'react/jsx-runtime'
 
+import { Flex, Text } from '@components/primitives'
 import { ListboxInput, ListboxOption } from '@components/inputs'
 
 import type {
@@ -47,18 +48,21 @@ function OptionColorAndIcon({
   icon?: string
 }) {
   if (color && icon) {
-    return <Icon className="size-5" icon={icon} style={{ color }} />
+    return <Icon height="1.25rem" icon={icon} style={{ color }} width="1.25rem" />
   }
 
   if (!color) {
-    return <Icon className="size-5" icon={icon ?? ''} />
+    return <Icon height="1.25rem" icon={icon ?? ''} width="1.25rem" />
   }
 
   return (
     <span
-      className="size-2 rounded-full"
       style={{
-        backgroundColor: color
+        backgroundColor: color,
+        borderRadius: '9999px',
+        display: 'inline-block',
+        height: '0.5rem',
+        width: '0.5rem'
       }}
     />
   )
@@ -80,43 +84,44 @@ function ListboxButtonContent({
 }) {
   if (field.multiple === true && Array.isArray(value)) {
     return (
-      <div className="flex flex-wrap items-center gap-3">
+      <Flex align="center" gap="md" wrap="wrap">
         {value.length > 0 &&
           value.map((item: string, i: number) => (
             <Fragment key={item}>
-              <div className="flex items-center gap-1">
+              <Flex align="center" gap="xs">
                 <Icon
-                  className="size-5"
+                  height="1.25rem"
                   icon={options.find(l => l.value === item)?.icon ?? ''}
                   style={{
                     color: options.find(l => l.value === item)?.color
                   }}
+                  width="1.25rem"
                 />
-                <span className="-mt-px block truncate">
+                <Text truncate>
                   {options.find(l => l.value === item)?.text ?? 'None'}
-                </span>
-              </div>
+                </Text>
+              </Flex>
               {i !== value.length - 1 && (
-                <Icon className="size-1" icon="tabler:circle-filled" />
+                <Icon height="0.25rem" icon="tabler:circle-filled" width="0.25rem" />
               )}
             </Fragment>
           ))}
-      </div>
+      </Flex>
     )
   }
 
   const targetOption = options.find(l => l.value === value)
 
   if (!targetOption) {
-    return <span>None</span>
+    return <Text>None</Text>
   }
 
   return (
     <>
       <OptionColorAndIcon color={targetOption.color} icon={targetOption.icon} />
-      <span className="-mt-px block truncate">
+      <Text truncate>
         {options.find(l => l.value === value)?.text ?? 'None'}
-      </span>
+      </Text>
     </>
   )
 }
@@ -180,4 +185,3 @@ export function FormListboxInput({
     </ListboxInput>
   )
 }
-

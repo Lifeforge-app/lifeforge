@@ -30,7 +30,8 @@ export const colors = {
   'custom-600': 'var(--color-custom-600)',
   'custom-700': 'var(--color-custom-700)',
   'custom-800': 'var(--color-custom-800)',
-  'custom-900': 'var(--color-custom-900)'
+  'custom-900': 'var(--color-custom-900)',
+  dangerous: 'var(--color-dangerous)'
 } as const
 
 // ── Grouped token objects for use in vanilla-extract style() calls ────────────

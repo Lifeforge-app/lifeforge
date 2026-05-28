@@ -9,7 +9,7 @@ import { globalStyle } from '@vanilla-extract/css'
 // Pattern:
 //   Component sets:  style="--lf-w: 100px; --lf-w-md: 200px"
 //   Component adds:  className="lf-w md:lf-w"
-//   CSS here wires:  .lf-w { width: var(--lf-w) }
+//   CSS generates:   .lf-w { width: var(--lf-w) }
 //                    @media (min-width: 768px) { .md\:lf-w { width: var(--lf-w-md) } }
 //
 // This file has no exports — it is imported for its side effects only.
@@ -31,12 +31,8 @@ export const responsiveProps = [
   { className: 'lf-fg', property: 'flexGrow', customProp: '--lf-fg' },
   { className: 'lf-fs', property: 'flexShrink', customProp: '--lf-fs' },
   { className: 'lf-ga', property: 'gridArea', customProp: '--lf-ga' },
-  { className: 'lf-gc', property: 'gridColumn', customProp: '--lf-gc' },
-  { className: 'lf-gcs', property: 'gridColumnStart', customProp: '--lf-gcs' },
-  { className: 'lf-gce', property: 'gridColumnEnd', customProp: '--lf-gce' },
-  { className: 'lf-gr', property: 'gridRow', customProp: '--lf-gr' },
-  { className: 'lf-grs', property: 'gridRowStart', customProp: '--lf-grs' },
-  { className: 'lf-gre', property: 'gridRowEnd', customProp: '--lf-gre' },
+  { className: 'lf-gcsp', property: 'gridColumn', customProp: '--lf-gcsp' },
+  { className: 'lf-grsp', property: 'gridRow', customProp: '--lf-grsp' },
   {
     className: 'lf-gtc',
     property: 'gridTemplateColumns',

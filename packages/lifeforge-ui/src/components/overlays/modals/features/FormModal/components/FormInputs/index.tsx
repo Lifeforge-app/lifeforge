@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { memo, useMemo } from 'react'
 
+import { Flex } from '@components/primitives'
 import { Tooltip } from '@components/utilities'
 
 import {
@@ -73,7 +74,7 @@ export const MemoizedFormField = memo(
     const FormComponent = COMPONENT_MAP[fieldType] || (() => <></>)
 
     return (
-      <div className="flex flex-1 items-center gap-4">
+      <Flex align="center" flex="1" gap="md">
         <FormComponent
           key={id}
           autoFocus={autoFocus}
@@ -91,7 +92,7 @@ export const MemoizedFormField = memo(
             {field.disabledReason}
           </Tooltip>
         )}
-      </div>
+      </Flex>
     )
   },
   (prevProps, nextProps) => {
@@ -142,7 +143,7 @@ export function FormInputs<T extends FormState>({
   }, [fields])
 
   return (
-    <div className="space-y-4">
+    <Flex direction="column" gap="md">
       {Object.entries(fields as Record<string, FormFieldPropsUnion>).map(
         ([id, field]) => {
           // Render corresponding form field component based on field type
@@ -196,6 +197,6 @@ export function FormInputs<T extends FormState>({
           )
         }
       )}
-    </div>
+    </Flex>
   )
 }

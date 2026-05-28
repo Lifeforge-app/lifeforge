@@ -54,25 +54,29 @@ export function ConfirmationModal({
         {description}
       </Text>
       {confirmationPrompt && (
-        <TextInput
-          className="mt-4"
-          icon="tabler:alert-triangle"
-          label="deleteConfirmation.inputs.confirmation.label"
-          namespace="common.modals"
-          placeholder={t(
-            'common.modals:deleteConfirmation.inputs.confirmation.placeholder',
-            {
-              text: confirmationPrompt
-            }
-          )}
-          value={confirmationTextState}
-          onChange={setConfirmationTextState}
-        />
+        <Box asChild mt="md">
+          <TextInput
+            icon="tabler:alert-triangle"
+            label="deleteConfirmation.inputs.confirmation.label"
+            namespace="common.modals"
+            placeholder={t(
+              [
+                'common.modals:deleteConfirmation.inputs.confirmation.placeholder',
+                'Type your confirmation text here'
+              ],
+              {
+                text: confirmationPrompt
+              }
+            )}
+            value={confirmationTextState}
+            onChange={setConfirmationTextState}
+          />
+        </Box>
       )}
       {renderChildren?.(onClose) || (
         <Flex
           justify="around"
-          mt="2xl"
+          mt="xl"
           style={{ flexDirection: 'column-reverse', gap: '0.5rem' }}
           width="100%"
           wrap="wrap"
@@ -121,4 +125,3 @@ export function ConfirmationModal({
     </Box>
   )
 }
-

@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import COLORS from 'tailwindcss/colors'
 
 import { Button, Listbox, ListboxOption } from '@components/inputs'
 import { Box, Grid, Text } from '@components/primitives'
 
+import { ScrollableStory } from '@/storybook/ScrollableStory'
+
 import { Widget } from './index'
+import { TAILWIND_PALETTE } from '@/system'
 
 const meta = {
   component: Widget
@@ -23,34 +25,27 @@ export const Default: Story = {
     title: 'Cool Widget'
   },
   render: args => (
-    <Grid
-      columns="repeat(3, minmax(0, 1fr))"
-      gap="lg"
-      height="100%"
-      p="3xl"
-      rows="repeat(3, minmax(0, 1fr))"
-      width="100%"
-    >
+    <Grid columns={3} gap="lg" rows={3}>
       <Widget {...args}>
         <Text as="p" color="bg-600">
           This is a dashboard item.
         </Text>
       </Widget>
-      <Box gridColumn="span 2 / span 2" gridRow="span 2 / span 2">
+      <Box gridColumnSpan={2} gridRowSpan={2}>
         <Widget {...args}>
           <Text as="p" color="bg-600">
             This is a larger dashboard item.
           </Text>
         </Widget>
       </Box>
-      <Box gridRow="span 2 / span 2">
+      <Box gridRowSpan={2}>
         <Widget {...args}>
           <Text as="p" color="bg-600">
             This is a tall dashboard item.
           </Text>
         </Widget>
       </Box>
-      <Box gridColumn="span 2 / span 2">
+      <Box gridColumnSpan={2}>
         <Widget {...args}>
           <Text as="p" color="bg-600">
             This is a wide dashboard item.
@@ -68,34 +63,27 @@ export const WithDescription: Story = {
     title: 'Cool Widget'
   },
   render: args => (
-    <Grid
-      columns="repeat(3, minmax(0, 1fr))"
-      gap="lg"
-      height="100%"
-      p="3xl"
-      rows="repeat(3, minmax(0, 1fr))"
-      width="100%"
-    >
+    <Grid columns={3} gap="lg" rows={3}>
       <Widget {...args}>
         <Text as="p" color="bg-600">
           This is a dashboard item.
         </Text>
       </Widget>
-      <Box gridColumn="span 2 / span 2" gridRow="span 2 / span 2">
+      <Box gridColumnSpan={2} gridRowSpan={2}>
         <Widget {...args}>
           <Text as="p" color="bg-600">
             This is a larger dashboard item.
           </Text>
         </Widget>
       </Box>
-      <Box gridRow="span 2 / span 2">
+      <Box gridRowSpan={2}>
         <Widget {...args}>
           <Text as="p" color="bg-600">
             This is a tall dashboard item.
           </Text>
         </Widget>
       </Box>
-      <Box gridColumn="span 2 / span 2">
+      <Box gridColumnSpan={2}>
         <Widget {...args}>
           <Text as="p" color="bg-600">
             This is a wide dashboard item.
@@ -112,49 +100,34 @@ export const WithIconColor: Story = {
     title: 'A Cool Widget'
   },
   render: args => (
-    <Grid
-      columns="repeat(2, minmax(0, 1fr))"
-      height="100%"
-      mb="3xl"
-      px="3xl"
-      rows="repeat(2, minmax(0, 1fr))"
-      style={{ gap: '0.75rem', marginTop: '30%' }}
-      width="100%"
-    >
-      {Object.keys(COLORS)
-        .filter(color => COLORS[color as keyof typeof COLORS][500])
-        .map(color => (
-          <Widget
-            key={color}
-            {...args}
-            iconColor={COLORS[color as keyof typeof COLORS][500]}
-          >
-            <Text as="p" color="bg-600">
-              This is a widget with an icon color.
-            </Text>
-          </Widget>
-        ))}
-    </Grid>
+    <ScrollableStory>
+      <Grid columns={3} gap="md">
+        {[TAILWIND_PALETTE.red[500], TAILWIND_PALETTE.blue[500], TAILWIND_PALETTE.green[500], TAILWIND_PALETTE.yellow[500], TAILWIND_PALETTE.purple[500], TAILWIND_PALETTE.pink[500], TAILWIND_PALETTE.indigo[500], TAILWIND_PALETTE.orange[500]].map(
+          (color, i) => (
+            <Widget
+              key={i}
+              {...args}
+              iconColor={color}
+            >
+              <Text as="p" color="bg-600">
+                This is a widget with an icon color.
+              </Text>
+            </Widget>
+          )
+        )}
+      </Grid>
+    </ScrollableStory>
   )
 }
 
 export const WithActionComponent: Story = {
   args: {
-    actionComponent: (
-      <Button className="p-2!" icon="tabler:plus" variant="plain" />
-    ),
+    actionComponent: <Button icon="tabler:plus" p="sm" variant="plain" />,
     icon: 'tabler:cube',
     title: 'A Cool Widget'
   },
   render: args => (
-    <Grid
-      columns="repeat(2, minmax(0, 1fr))"
-      gap="lg"
-      height="100%"
-      p="3xl"
-      rows="repeat(2, minmax(0, 1fr))"
-      width="100%"
-    >
+    <Grid columns={2} gap="lg" rows={3}>
       <Widget {...args}>
         <Text as="p" color="bg-600">
           This widget has a plus button beside the title. When clicked, maybe a
@@ -163,11 +136,7 @@ export const WithActionComponent: Story = {
       </Widget>
       <Widget
         actionComponent={
-          <Button
-            className="p-2!"
-            icon="tabler:chevron-right"
-            variant="plain"
-          />
+          <Button icon="tabler:chevron-right" p="sm" variant="plain" />
         }
         icon="tabler:cube"
         title="Another Cool Widget"
@@ -177,11 +146,12 @@ export const WithActionComponent: Story = {
           view more details.
         </Text>
       </Widget>
-      <Box gridColumn="span 2 / span 2">
+      <Box gridColumnSpan={2} gridRowSpan={2}>
         <Widget
           actionComponent={
             <Listbox
-              className="component-bg-lighter max-w-56"
+              bg={{ base: 'bg-100', dark: 'bg-800' }}
+              maxWidth="14em"
               renderContent={() => <>Last 7 Days</>}
               value="last_7_days"
               onChange={() => {}}
@@ -230,28 +200,22 @@ export const LargeIconWithIconColor: Story = {
     variant: 'large-icon'
   },
   render: args => (
-    <Grid
-      columns="repeat(2, minmax(0, 1fr))"
-      height="100%"
-      mb="3xl"
-      px="3xl"
-      rows="repeat(2, minmax(0, 1fr))"
-      style={{ gap: '0.75rem', marginTop: '75%' }}
-      width="100%"
-    >
-      {Object.keys(COLORS)
-        .filter(color => COLORS[color as keyof typeof COLORS][500])
-        .map(color => (
-          <Widget
-            key={color}
-            {...args}
-            iconColor={COLORS[color as keyof typeof COLORS][500]}
-          >
-            <Text as="p" color="bg-600">
-              This is a large icon variant widget.
-            </Text>
-          </Widget>
-        ))}
-    </Grid>
+    <ScrollableStory>
+      <Grid columns={2} gap="md">
+        {[TAILWIND_PALETTE.red[500], TAILWIND_PALETTE.blue[500], TAILWIND_PALETTE.green[500], TAILWIND_PALETTE.yellow[500], TAILWIND_PALETTE.purple[500], TAILWIND_PALETTE.pink[500]].map(
+          (color, i) => (
+            <Widget
+              key={i}
+              {...args}
+              iconColor={color}
+            >
+              <Text as="p" color="bg-600">
+                This is a large icon variant widget.
+              </Text>
+            </Widget>
+          )
+        )}
+      </Grid>
+    </ScrollableStory>
   )
 }

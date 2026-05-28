@@ -21,6 +21,7 @@ import {
   resolveCommonSprinkleProps,
   shadowClass
 } from '@/system'
+import { normalizeGridSpan } from '@/system/grid-utils'
 
 import { Slot } from '../Slot'
 import { type FlexSprinkles, flexBase, flexSprinkles } from './Flex.css'
@@ -111,12 +112,8 @@ export function Flex<T extends ElementType = 'div'>({
   flexGrow,
   flexShrink,
   gridArea,
-  gridColumn,
-  gridColumnStart,
-  gridColumnEnd,
-  gridRow,
-  gridRowStart,
-  gridRowEnd,
+  gridColumnSpan,
+  gridRowSpan,
   // Padding
   p,
   px,
@@ -200,12 +197,8 @@ export function Flex<T extends ElementType = 'div'>({
     flexGrow,
     flexShrink,
     gridArea,
-    gridColumn,
-    gridColumnStart,
-    gridColumnEnd,
-    gridRow,
-    gridRowStart,
-    gridRowEnd
+    gridColumnSpan: normalizeResponsiveProp(gridColumnSpan, normalizeGridSpan) as ResponsiveProp<string> | undefined,
+    gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan) as ResponsiveProp<string> | undefined
   })
 
   const mergedStyle =

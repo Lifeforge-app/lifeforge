@@ -1,12 +1,12 @@
 import { Icon } from '@iconify/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import colors from 'tailwindcss/colors'
 
 import { Box, Flex, Text } from '@components/primitives'
 
 import { ListboxOption } from '../ListboxInput/components/ListboxOption'
 import { Listbox } from './index'
+import { TAILWIND_PALETTE } from '@/system'
 
 const meta = {
   argTypes: {
@@ -32,19 +32,19 @@ type Story = StoryObj<typeof meta>
 
 const OPTIONS = [
   {
-    color: colors.green[500],
+    color: TAILWIND_PALETTE.green[500],
     icon: 'tabler:flag',
     label: 'Low Priority',
     value: 'low'
   },
   {
-    color: colors.yellow[500],
+    color: TAILWIND_PALETTE.yellow[500],
     icon: 'tabler:flag',
     label: 'Medium Priority',
     value: 'medium'
   },
   {
-    color: colors.red[500],
+    color: TAILWIND_PALETTE.red[500],
     icon: 'tabler:flag',
     label: 'High Priority',
     value: 'high'
@@ -72,7 +72,7 @@ export const Default: Story = {
           <Flex align="center" gap="sm">
             <Box asChild flexShrink="0">
               <Icon
-                color={selectedOption?.color || colors.gray[500]}
+                color={selectedOption?.color || TAILWIND_PALETTE.gray[500]}
                 icon={selectedOption?.icon || 'tabler:cube'}
                 style={{ height: '1.25rem', width: '1.25rem' }}
               />
@@ -121,7 +121,7 @@ export const Disabled: Story = {
           <Flex align="center" gap="sm">
             <Box asChild flexShrink="0">
               <Icon
-                color={selectedOption?.color || colors.gray[500]}
+                color={selectedOption?.color || TAILWIND_PALETTE.gray[500]}
                 icon={selectedOption?.icon || 'tabler:cube'}
                 style={{ height: '1.25rem', width: '1.25rem' }}
               />
@@ -174,7 +174,7 @@ export const MultipleOptions: Story = {
                     <>
                       <Flex key={index} align="center" gap="sm">
                         <Icon
-                          color={option?.color || colors.gray[500]}
+                          color={option?.color || TAILWIND_PALETTE.gray[500]}
                           icon={option?.icon || 'tabler:cube'}
                           style={{
                             flexShrink: 0,

@@ -6,7 +6,7 @@ import {
   List
 } from 'react-virtualized'
 
-import { Box } from '@components/primitives'
+import { Box, Grid } from '@components/primitives'
 
 interface VirtualGridProps<T> {
   /** The array of items to render in the grid */
@@ -19,8 +19,6 @@ interface VirtualGridProps<T> {
   itemMinWidth?: number
   /** Default estimated height for rows before measurement. Defaults to 320px */
   defaultRowHeight?: number
-  /** Gap between items in pixels. Defaults to 12px (equivalent to gap-3 in Tailwind) */
-  gap?: number
 }
 
 /**
@@ -33,8 +31,7 @@ export function VirtualGrid<T>({
   renderItem,
   getItemKey,
   itemMinWidth = 240,
-  defaultRowHeight = 320,
-  gap = 12
+  defaultRowHeight = 320
 }: VirtualGridProps<T>) {
   const listRef = useRef<List>(null)
 
@@ -80,16 +77,13 @@ export function VirtualGrid<T>({
                   parent={parent}
                   rowIndex={index}
                 >
-                  <Box
+                  <Grid
                     as="div"
-                    style={{
-                      ...style,
-                      display: 'grid',
-                      gridTemplateColumns: `repeat(${itemsPerRow}, 1fr)`,
-                      width: '100%',
-                      gap: `${gap}px`,
-                      paddingBottom: `${gap}px`
-                    }}
+                    columns={`repeat(${itemsPerRow}, 1fr)`}
+                    gap="md"
+                    pb="md"
+                    style={style}
+                    width="100%"
                   >
                     {items.slice(fromIndex, toIndex).map(item => (
                       <Box
@@ -101,7 +95,7 @@ export function VirtualGrid<T>({
                         {renderItem(item)}
                       </Box>
                     ))}
-                  </Box>
+                  </Grid>
                 </CellMeasurer>
               )
             }}

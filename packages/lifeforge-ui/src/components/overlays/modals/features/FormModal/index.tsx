@@ -10,6 +10,7 @@ import type { ZodType } from 'zod'
 import type { StoreApi, UseBoundStore } from 'zustand'
 
 import { LoadingScreen } from '@components/feedback'
+import { Flex } from '@components/primitives'
 
 import { type Button } from '../../../../inputs/Button'
 import { ModalHeader } from '../../core/components/ModalHeader'
@@ -280,7 +281,7 @@ export function FormModal({
   }, [data, onChange])
 
   return (
-    <div className="flex min-w-[50vw] flex-col">
+    <Flex direction="column" minWidth="50vw">
       <ModalHeader
         actionButtonProps={
           actionButton && {
@@ -312,10 +313,16 @@ export function FormModal({
           />
         </>
       ) : (
-        <div className="flex-center min-h-96 flex-1 flex-col">
+        <Flex
+          align="center"
+          direction="column"
+          flex="1"
+          justify="center"
+          minHeight="24em"
+        >
           <LoadingScreen />
-        </div>
+        </Flex>
       )}
-    </div>
+    </Flex>
   )
 }
