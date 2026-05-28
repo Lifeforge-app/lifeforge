@@ -50,7 +50,6 @@ function SigninWithProviderButton({
   return (
     <Button
       key={provider}
-      width="100%"
       icon={`tabler:brand-${provider}`}
       loading={
         loading ||
@@ -59,6 +58,7 @@ function SigninWithProviderButton({
           searchParams.get('state') !== null)
       }
       variant="secondary"
+      width="100%"
       onClick={signInWithProvider}
     >
       {_.capitalize(provider)}

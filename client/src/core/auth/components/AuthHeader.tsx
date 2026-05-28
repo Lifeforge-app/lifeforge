@@ -1,7 +1,6 @@
-import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Flex, Text } from '@lifeforge/ui'
+import { Box, Flex, Icon, Text } from '@lifeforge/ui'
 
 function AuthHeader() {
   const { t } = useTranslation('common.auth')
@@ -10,16 +9,10 @@ function AuthHeader() {
     <>
       <Flex asChild align="center" gap="sm" mb="lg">
         <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
-          <Text asChild color="custom-500" size="5xl">
-            <Icon className="text-custom-500 text-5xl" icon="tabler:hammer" />
-          </Text>
+          <Icon color="custom-500" icon="tabler:hammer" size="5xl" />
           <Box>
             LifeForge
-            <Text
-              className="text-custom-500 text-4xl"
-              color="custom-500"
-              size="4xl"
-            >
+            <Text color="custom-500" size="4xl">
               .
             </Text>
           </Box>

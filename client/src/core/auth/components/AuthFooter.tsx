@@ -1,36 +1,53 @@
-import { Icon } from '@iconify/react'
+import { Flex, Icon, Text } from '@lifeforge/ui'
 
 function AuthFooter() {
   return (
-    <footer className="mt-8 flex flex-col items-center justify-center gap-2">
-      <div className="text-bg-500 flex items-center gap-2">
-        <Icon className="size-6" icon="tabler:creative-commons" />
-        <Icon className="size-6" icon="tabler:creative-commons-by" />
-        <Icon className="size-6" icon="tabler:creative-commons-nc" />
-        <Icon className="size-6" icon="tabler:creative-commons-sa" />
-      </div>
-      <p className="text-bg-500 text-center text-sm">
+    <Flex centered as="footer" direction="column" gap="sm" mt="xl">
+      <Flex centered gap="sm">
+        {[
+          'creative-commons',
+          'creative-commons-by',
+          'creative-commons-nc',
+          'creative-commons-sa'
+        ].map(icon => (
+          <Icon
+            key={icon}
+            color="bg-500"
+            icon={`tabler:${icon}`}
+            size="1.5em"
+          />
+        ))}
+      </Flex>
+      <Text align="center" color="bg-500" size="sm">
         A project by{' '}
-        <a
-          className="text-custom-500 underline"
+        <Text
+          as="a"
+          color="custom-500"
           href="https://melvinchia.dev"
           rel="noreferrer"
+          style={{
+            textDecoration: 'underline'
+          }}
           target="_blank"
         >
           Melvin Chia
-        </a>{' '}
+        </Text>{' '}
         licensed under{' '}
-        <a
-          className="text-custom-500 underline"
+        <Text
+          as="a"
+          color="custom-500"
           href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
           rel="noreferrer"
+          style={{
+            textDecoration: 'underline'
+          }}
           target="_blank"
         >
           CC BY-NC-SA 4.0
-        </a>
+        </Text>
         .
-      </p>
-    </footer>
+      </Text>
+    </Flex>
   )
 }
 
