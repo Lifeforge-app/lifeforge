@@ -33,10 +33,10 @@
 - [🖥 Tangkapan Skrin](#-screenshots)
 - [⌨️ Pemasangan](#️-setup)
 - [Sumbangan](#contributing)
-	- [Sumbangan kepada Teras](#contributing-to-core)
-	- [Mencipta Modul](#creating-modules)
-	- [Permintaan Ciri & Laporan Bug](#feature-requests--bug-reports)
-	- [Terjemahan](#translation)
+  - [Sumbangan kepada Teras](#contributing-to-core)
+  - [Mencipta Modul](#creating-modules)
+  - [Permintaan Ciri & Laporan Bug](#feature-requests--bug-reports)
+  - [Terjemahan](#translation)
 - [💡 Kredit](#-credits)
 - [📄 Lesen](#-license)
 
@@ -46,7 +46,6 @@
 	<img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217">
 </a>
 
-
 ## 🤔 Masalah
 
 Orang kini menggunakan banyak aplikasi untuk meningkatkan produktiviti, tetapi penggunaan terlalu banyak aplikasi boleh mengalih perhatian dan mengurangkan fokus (rujuk: https://theunfilteredreport.com/why-productivity-apps-are-making-people-less-productive/).
@@ -55,11 +54,11 @@ Kebanyakan perkhidmatan SaaS memerlukan langganan bulanan (atau tahunan), yang b
 
 ## ✅ Penyelesaian
 
-LifeForge ialah sistem pengurusan peribadi yang dihoskan sendiri untuk membantu anda mengatur kehidupan. Sama ada menjejak tugas, mengatur projek, menetapkan matlamat peribadi, atau mengurus kewangan — LifeForge membantu.
+LifeForge ialah sistem pengurusan peribadi yang dihoskan sendiri untuk membantu anda mengatur kehidupan. Sama ada menjejak tugas, mengatur projek, menetapkan matlamat peribadi, atau mengurus kewangan - LifeForge membantu.
 
 Dengan seni bina modular, anda boleh menyesuaikan LifeForge mengikut keperluan. Hidupkan hanya modul yang anda perlukan untuk mengelakkan kekacauan ciri dan mencipta pengalaman yang ringkas dan diperibadikan.
 
-Dibina dengan fokus privasi, data anda disimpan secara tempatan pada peranti anda (kami tidak akan menyediakan hosting), jadi anda mengekalkan kawalan penuh terhadap data sendiri. Tiada telemetri, tiada perlombongan data — privasi didahulukan.
+Dibina dengan fokus privasi, data anda disimpan secara tempatan pada peranti anda (kami tidak akan menyediakan hosting), jadi anda mengekalkan kawalan penuh terhadap data sendiri. Tiada telemetri, tiada perlombongan data - privasi didahulukan.
 
 ## 🧱 Modul
 
@@ -67,7 +66,7 @@ Sistem modul LifeForge menyediakan pelbagai modul yang tertumpu kepada aspek keh
 
 Sorotan utama modul termasuk:
 
-- Alat Produktiviti: Senarai Tugasan, Projek, Idea Box, Pemasa Pomodoro — alat untuk mengurus tugas, berfikir idea dan kekal fokus.
+- Alat Produktiviti: Senarai Tugasan, Projek, Idea Box, Pemasa Pomodoro - alat untuk mengurus tugas, berfikir idea dan kekal fokus.
 - Pengurusan Kewangan: Dompet, Wishlist, modul Belanjawan untuk mengesan perbelanjaan, penjimatan dan perancangan.
 - Peningkatan Gaya Hidup: Jurnal, Pencapaian dan penjejakan Senaman untuk refleksi dan tabiat sihat.
 - Bantuan Pembelajaran: Flashcards, Nota dan Algoritma CFOP untuk pelajar dan pembelajaran sepanjang hayat.
@@ -102,8 +101,6 @@ Tangkapan skrin menunjukkan sekilas LifeForge. Terdapat lebih banyak yang boleh 
 	<img width="49%" src="https://github.com/user-attachments/assets/16b23910-37bf-4f56-892d-c971d70b19ae">
 </div>
 
-
-
 ## ⌨️ Pemasangan
 
 **LifeForge kini menyokong Docker untuk penyebaran mudah! 🐳 Anda boleh memulakan dengan beberapa arahan. Bagi yang memilih pemasangan manual, pilihan itu masih tersedia.**
@@ -115,7 +112,6 @@ Lihat dokumentasi untuk arahan pemasangan dan konfigurasi:
 ## Sumbangan
 
 Kami mengalu-alukan sumbangan. Sila rujuk [Contributing Guidelines](https://docs.lifeforge.dev/developer-guide/contributing).
-
 
 ### Sumbangan kepada Teras
 

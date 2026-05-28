@@ -1,4 +1,4 @@
-import { Alert } from "lifeforge-ui"
+import { Alert } from "@lifeforge/ui"
 
 ###### Using API
 
@@ -99,7 +99,7 @@ Then create the forgeAPI client in your module's `client/utils/` directory:
 ```typescript
 // apps/<your-module>/client/src/utils/forgeAPI.ts
 import { type APIRoutes } from '@server/routes.types'
-import { createForgeProxy } from 'shared'
+import { createForgeProxy } from '@lifeforge/shared'
 
 if (!import.meta.env.VITE_API_HOST) {
   throw new Error('VITE_API_HOST is not defined')
@@ -211,7 +211,7 @@ LifeForge provides two wrapper components from `lifeforge-ui` that handle loadin
 
 ```tsx
 import forgeAPI from '@/utils/forgeAPI'
-import { WithQueryData } from 'lifeforge-ui'
+import { WithQueryData } from '@lifeforge/ui'
 
 function ItemList() {
   return (
@@ -280,7 +280,7 @@ Use `WithQuery` when you need to:
 ```tsx
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
-import { WithQuery } from 'lifeforge-ui'
+import { WithQuery } from '@lifeforge/ui'
 
 function ItemListWithRefresh() {
   const query = useQuery(forgeAPI.items.list.queryOptions())
@@ -433,7 +433,7 @@ A common pattern is having a single modal component that handles both creating a
 ```typescript
 import forgeAPI from '@/utils/forgeAPI'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { InferInput } from 'shared'
+import type { InferInput } from '@lifeforge/shared'
 
 function ModifyItemModal({
   type,  // 'create' | 'update'
@@ -478,7 +478,7 @@ The `forgeAPI` system provides powerful type inference. Use `InferInput` and `In
 
 ```typescript
 import forgeAPI from '@/utils/forgeAPI'
-import type { InferOutput } from 'shared'
+import type { InferOutput } from '@lifeforge/shared'
 
 // Infer the type of a single item from a list endpoint
 type Item = InferOutput<typeof forgeAPI.items.list>[number]
@@ -492,7 +492,7 @@ function ItemCard({ item }: { item: Item }) {
 ### Inferring Request Body Types
 
 ```typescript
-import type { InferInput } from 'shared'
+import type { InferInput } from '@lifeforge/shared'
 
 // Infer the body type for create/update endpoints
 type CreateItemBody = InferInput<typeof forgeAPI.items.create>['body']
@@ -723,7 +723,7 @@ For modules with shared data, create a provider that fetches data once and share
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext } from 'react'
-import type { InferOutput } from 'shared'
+import type { InferOutput } from '@lifeforge/shared'
 
 type Item = InferOutput<typeof forgeAPI.items.list>[number]
 
@@ -776,7 +776,7 @@ Encapsulate your data fetching logic in custom hooks:
 // hooks/useItems.ts
 import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
-import type { InferOutput } from 'shared'
+import type { InferOutput } from '@lifeforge/shared'
 
 export type Item = InferOutput<typeof forgeAPI.items.list>[number]
 

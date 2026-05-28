@@ -1,8 +1,10 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { Button, ModalHeader } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { Button, ModalHeader } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 import AdjustmentColumn from './components/AdjustmentColumn'
 import ResultShowcase from './components/ResultShowcase'

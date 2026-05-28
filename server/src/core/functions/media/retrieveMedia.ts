@@ -1,5 +1,6 @@
-import { RetrieveMediaFunc } from '@lifeforge/server-utils'
 import fs from 'fs'
+
+import { RetrieveMediaFunc } from '@lifeforge/server-utils'
 
 const retrieveMedia: RetrieveMediaFunc = async (fieldName, media) => {
   if (media === 'keep') {

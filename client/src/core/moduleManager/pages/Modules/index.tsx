@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { EmptyStateScreen, ModuleHeader, WithQuery } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { toast } from 'react-toastify'
-import { useFederation, usePersonalization } from 'shared'
+
+import { useFederation, usePersonalization } from '@lifeforge/shared'
+import { EmptyStateScreen, ModuleHeader, WithQuery } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

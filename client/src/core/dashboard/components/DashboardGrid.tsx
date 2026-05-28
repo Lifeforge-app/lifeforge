@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { EmptyStateScreen, LoadingScreen } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
-import { useDivSize, usePersonalization } from 'shared'
+
+import { useDivSize, usePersonalization } from '@lifeforge/shared'
+import { EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 

@@ -1,6 +1,7 @@
-import { ClientError } from '@lifeforge/server-utils'
 import { Request } from 'express'
 import z from 'zod'
+
+import { ClientError } from '@lifeforge/server-utils'
 
 export default function parseQuery(
   req: Request,

@@ -1,3 +1,6 @@
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+
 import {
   AllPossibleFieldsForFilter,
   CleanedSchemas,
@@ -9,8 +12,6 @@ import {
   IGetListFactory,
   IGetListReturnType
 } from '@lifeforge/server-utils'
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
 
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 

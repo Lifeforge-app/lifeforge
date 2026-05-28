@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Outlet } from 'shared'
+
+import { Outlet } from '@lifeforge/shared'
 
 import Boilerplate from './Boilerplate'
 import Header from './Header'

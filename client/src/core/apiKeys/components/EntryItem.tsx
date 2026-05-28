@@ -3,6 +3,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime.js'
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import COLORS from 'tailwindcss/colors'
+
+import { useFederation } from '@lifeforge/shared'
 import {
   Box,
   Button,
@@ -12,14 +18,9 @@ import {
   Flex,
   OptionsColumn,
   TagChip,
-  Text
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { useFederation } from 'shared'
-import COLORS from 'tailwindcss/colors'
+  Text,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

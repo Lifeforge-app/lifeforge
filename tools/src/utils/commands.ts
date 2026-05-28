@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import { type IOType, spawnSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
@@ -6,7 +7,6 @@ import { ROOT_DIR } from '@/constants/constants'
 
 import logger from './logger'
 import { addDependency, removeDependency } from './packageJson'
-import chalk from 'chalk'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
@@ -40,7 +40,9 @@ export default function executeCommand(
   }
 
   try {
-    logger.debug(`Executing command ${chalk.blue(cmd)} with arguments: ${chalk.blue(_arguments.length ? _arguments.join(' ') : `${chalk.red('none')}`)}`)
+    logger.debug(
+      `Executing command ${chalk.blue(cmd)} with arguments: ${chalk.blue(_arguments.length ? _arguments.join(' ') : `${chalk.red('none')}`)}`
+    )
 
     const [toBeExecuted, ...args] = cmd.split(' ')
 
@@ -68,7 +70,9 @@ export default function executeCommand(
     }
 
     if (!options.stdio || options.stdio === 'pipe') {
-      logger.debug(`Command Completed: ${chalk.blue(cmd)}, exit code: ${chalk.blue(String(result.status))}`)
+      logger.debug(
+        `Command Completed: ${chalk.blue(cmd)}, exit code: ${chalk.blue(String(result.status))}`
+      )
     }
 
     return result.stdout?.toString().trim() || ''
@@ -121,7 +125,9 @@ export function installPackage(
   const installedPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
   if (!fs.existsSync(installedPath)) {
-    logger.error(`Failed to find installed package at ${chalk.blue(installedPath)}`)
+    logger.error(
+      `Failed to find installed package at ${chalk.blue(installedPath)}`
+    )
     process.exit(1)
   }
 

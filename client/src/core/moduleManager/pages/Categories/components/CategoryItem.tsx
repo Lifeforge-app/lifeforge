@@ -1,5 +1,8 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { toast } from 'react-toastify'
+
+import { useFederation } from '@lifeforge/shared'
 import {
   Button,
   Card,
@@ -7,9 +10,7 @@ import {
   ContextMenu,
   ContextMenuItem,
   useModalStore
-} from 'lifeforge-ui'
-import { toast } from 'react-toastify'
-import { useFederation } from 'shared'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

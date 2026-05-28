@@ -1,4 +1,4 @@
-import { ModuleHeader } from 'lifeforge-ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 function {{pascal moduleName.en}}() {
   return (

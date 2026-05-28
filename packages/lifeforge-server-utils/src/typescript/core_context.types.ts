@@ -1,7 +1,8 @@
-import type { Logger } from '@lifeforge/log'
 import { Server } from 'socket.io'
 import { CleanedSchemas } from 'utils/schemaUtils'
 import z from 'zod'
+
+import type { Logger } from '@lifeforge/log'
 
 import IPBService from './PBService.interface'
 import { CollectionKey } from './pb_service.types'

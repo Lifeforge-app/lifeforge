@@ -1,7 +1,7 @@
-import { ErrorScreen } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
-import { ModalStoreProvider } from 'shared'
+
+import { ErrorScreen, Flex, ModalProvider, Text } from '@lifeforge/ui'
 
 import './i18n'
 import './index.css'
@@ -23,14 +23,29 @@ function App() {
     <ErrorBoundary
       fallback={<ErrorScreen message="An unexpected error occurred." />}
     >
-      <main
-        className="bg-bg-200/50 dark:bg-bg-900/50 text-bg-800 dark:text-bg-50 flex h-dvh w-full overflow-hidden"
-        id="app"
+      <Text
+        asChild
+        color={{
+          base: 'bg-800',
+          dark: 'bg-100'
+        }}
       >
-        <ModalStoreProvider>
-          <Providers />
-        </ModalStoreProvider>
-      </main>
+        <Flex
+          as="main"
+          bg={{
+            base: 'bg-100'
+          }}
+          className="bg-bg-200/50 dark:bg-bg-900/50"
+          height="100dvh"
+          id="app"
+          overflow="hidden"
+          width="100%"
+        >
+          <ModalProvider>
+            <Providers />
+          </ModalProvider>
+        </Flex>
+      </Text>
     </ErrorBoundary>
   )
 }

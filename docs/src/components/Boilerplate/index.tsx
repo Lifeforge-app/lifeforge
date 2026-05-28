@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
 import { useEffect } from 'react'
 import Scrollbars from 'react-custom-scrollbars'
-import { useLocation } from 'shared'
+
+import { useLocation } from '@lifeforge/shared'
 
 import { BLACKLISTED_PAGES } from '../Rightbar'
 import NavigationBar from './components/NavigationBar'

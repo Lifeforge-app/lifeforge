@@ -29,7 +29,7 @@
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.18",
     "i18next": "^25.6.0",
-    "lifeforge-ui": "workspace:*",
+    "@lifeforge/ui": "workspace:*",
     "lodash": "^4.17.21",
     "mermaid": "^11.12.2",
     "postcss": "^8.5.6",
@@ -41,7 +41,7 @@
     "react-router": "^7.9.4",
     "react-syntax-highlighter": "^15.6.1",
     "remark-gfm": "^4.0.1",
-    "shared": "workspace:*",
+    "@lifeforge/shared": "workspace:*",
     "tailwindcss": "^4.1.11",
     "vite-plugin-mdx": "^3.6.1"
   },

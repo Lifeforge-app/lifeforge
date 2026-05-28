@@ -1,5 +1,6 @@
-import { ModalHeader } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+
+import { ModalHeader } from '@lifeforge/ui'
 
 import QRContent from './components/QRContent'
 

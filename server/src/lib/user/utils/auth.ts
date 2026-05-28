@@ -1,7 +1,8 @@
-import { SchemaWithPB } from '@lifeforge/server-utils'
 import _ from 'lodash'
 import Pocketbase from 'pocketbase'
 import z from 'zod'
+
+import { SchemaWithPB } from '@lifeforge/server-utils'
 
 import schema from '../schema'
 

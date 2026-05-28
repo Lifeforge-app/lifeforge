@@ -1,8 +1,9 @@
-import { Button, ModalHeader } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { Button, ModalHeader } from '@lifeforge/ui'
 
 import UsingAuthApp from './components/UsingAuthApp'
 import UsingEmail from './components/UsingEmail'

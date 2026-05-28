@@ -1,4 +1,4 @@
-import { useFederation } from 'shared'
+import { useFederation } from '@lifeforge/shared'
 
 function ExternalModuleProviders({ children }: { children: React.ReactNode }) {
   const { globalProviders } = useFederation()

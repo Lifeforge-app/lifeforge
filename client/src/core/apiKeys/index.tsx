@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+
 import {
   Button,
   EmptyStateScreen,
@@ -6,8 +8,7 @@ import {
   ModuleHeader,
   WithQuery,
   useModalStore
-} from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

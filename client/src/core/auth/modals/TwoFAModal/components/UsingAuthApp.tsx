@@ -1,7 +1,8 @@
-import { OTPInputBox } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePromiseLoading } from 'shared'
+
+import { usePromiseLoading } from '@lifeforge/shared'
+import { OTPInputBox } from '@lifeforge/ui'
 
 function UsingAuthApp({
   callback
@@ -19,7 +20,6 @@ function UsingAuthApp({
       <p className="mb-6">{t('modals.twoFA.description')}</p>
       <div className="flex-center w-full flex-col">
         <OTPInputBox
-          buttonFullWidth
           lighter
           otp={otp}
           setOtp={setOTP}

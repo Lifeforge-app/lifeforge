@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 
 import CustomLink from '../../components/CustomLink'
-import { Alert } from "lifeforge-ui"
+import { Alert } from "@lifeforge/ui"
 
 ###### Modules
 
@@ -199,8 +199,8 @@ cd apps/myusername--my-module
   },
   "peerDependencies": {
     "@lifeforge/server-utils": "workspace:*",
-    "lifeforge-ui": "workspace:*",
-    "shared": "workspace:*"
+    "@lifeforge/ui": "workspace:*",
+    "@lifeforge/shared": "workspace:*"
   }
 }
 ```
@@ -278,8 +278,8 @@ The `package.json` file is crucial for your module's configuration.
   },
   "peerDependencies": {
     "@lifeforge/server-utils": "workspace:*",
-    "lifeforge-ui": "workspace:*",
-    "shared": "workspace:*"
+    "@lifeforge/ui": "workspace:*",
+    "@lifeforge/shared": "workspace:*"
   }
 }
 ```
@@ -312,8 +312,8 @@ All modules **must** declare these peer dependencies:
 {
   "peerDependencies": {
     "@lifeforge/server-utils": "workspace:*",
-    "lifeforge-ui": "workspace:*",
-    "shared": "workspace:*"
+    "@lifeforge/ui": "workspace:*",
+    "@lifeforge/shared": "workspace:*"
   }
 }
 ```
@@ -337,7 +337,7 @@ The `client/manifest.ts` file defines the client-side configuration for your mod
 
 ```typescript
 import { lazy } from 'react'
-import type { ModuleConfig } from 'shared'
+import type { ModuleConfig } from '@lifeforge/shared'
 
 export default {
   // Route definitions (REQUIRED)
@@ -469,7 +469,7 @@ Each widget exports a component and a configuration object:
 
 ```typescript
 // client/src/widgets/AssetsBalance/index.tsx
-import type { WidgetConfig } from 'shared'
+import type { WidgetConfig } from '@lifeforge/shared'
 
 function AssetsBalanceWidget() {
   // Widget implementation
@@ -651,7 +651,7 @@ export default defineConfig({
         react: { generate: false },
         'react-dom': { generate: false },
         shared: { generate: false },
-        'lifeforge-ui': { generate: false },
+        '@lifeforge/ui': { generate: false },
         'react-i18next': { generate: false },
         i18next: { generate: false },
         '@tanstack/react-query': { generate: false }
@@ -1044,8 +1044,8 @@ Modules must declare these as peer dependencies (from workspace):
 {
   "peerDependencies": {
     "@lifeforge/server-utils": "workspace:*",
-    "lifeforge-ui": "workspace:*",
-    "shared": "workspace:*"
+    "@lifeforge/ui": "workspace:*",
+    "@lifeforge/shared": "workspace:*"
   }
 }
 ```

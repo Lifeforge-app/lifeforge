@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { TagChip } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+
+import { TagChip } from '@lifeforge/ui'
 
 function GithubStarCount() {
   const [stars, setStars] = useState<number | null>(null)

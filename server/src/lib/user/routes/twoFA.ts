@@ -1,17 +1,18 @@
-import { ClientError } from '@lifeforge/server-utils'
 import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
 import z from 'zod'
 
+import { ClientError } from '@lifeforge/server-utils'
+
 import { decrypt2, encrypt, encrypt2 } from '@functions/auth/encryption'
 import { default as _validateOTP } from '@functions/auth/validateOTP'
 
 import { currentSession } from '..'
+import forge from '../forge'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 import { verifyAppOTP, verifyEmailOTP } from '../utils/otp'
-import forge from '../forge'
 
 let canDisable2FA = false
 let challenge = v4()

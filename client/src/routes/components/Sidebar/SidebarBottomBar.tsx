@@ -1,11 +1,10 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { Card, ContextMenu, ContextMenuItem } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'shared'
-import { useMainSidebarState } from 'shared'
-import { useAuth } from 'shared'
+
+import { useAuth, useMainSidebarState, useNavigate } from '@lifeforge/shared'
+import { Card, ContextMenu, ContextMenuItem } from '@lifeforge/ui'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()

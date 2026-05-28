@@ -1,7 +1,8 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
-import { type WidgetConfig } from 'shared'
+
+import { type WidgetConfig } from '@lifeforge/shared'
 
 function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   const [time, setTime] = useState(dayjs().format('HH:mm'))

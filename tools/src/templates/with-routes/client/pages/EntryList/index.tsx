@@ -1,5 +1,5 @@
-import { Card, ModuleHeader } from 'lifeforge-ui'
-import { Link } from 'shared'
+import { Link } from '@lifeforge/shared'
+import { Card, ModuleHeader } from '@lifeforge/ui'
 
 function EntryList() {
   return (

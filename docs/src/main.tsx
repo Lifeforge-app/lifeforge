@@ -1,11 +1,11 @@
 import ReactDOM from 'react-dom/client'
+import ModalProvider from 'shared/dist/providers/ModalStoreProvider'
+
 import {
   APIEndpointProvider,
   PersonalizationProvider,
   createForgeProxy
-} from 'shared'
-
-import ModalProvider from 'shared/dist/providers/ModalStoreProvider'
+} from '@lifeforge/shared'
 
 import App from './App'
 import './index.css'

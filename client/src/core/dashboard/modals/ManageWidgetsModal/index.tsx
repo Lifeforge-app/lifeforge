@@ -1,4 +1,4 @@
-import { ModalHeader } from 'lifeforge-ui'
+import { ModalHeader } from '@lifeforge/ui'
 
 import type { WidgetEntry } from '../../providers/WidgetProvider'
 import ComponentListItem from './components/ComponentItem'

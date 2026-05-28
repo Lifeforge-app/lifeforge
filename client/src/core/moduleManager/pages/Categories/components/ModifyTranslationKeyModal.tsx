@@ -1,5 +1,6 @@
-import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
+
+import { FormModal, defineForm } from '@lifeforge/ui'
 
 function ModifyTranslationKeyModal({
   onClose,

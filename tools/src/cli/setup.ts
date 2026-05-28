@@ -1,8 +1,9 @@
-import { LOG_LEVELS } from '@lifeforge/log'
 import chalk from 'chalk'
 import { Command, program } from 'commander'
 import fs from 'fs'
 import path from 'path'
+
+import { LOG_LEVELS } from '@lifeforge/log'
 
 import logger, { setLogLevel } from '@/utils/logger'
 

@@ -1,8 +1,10 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import clsx from 'clsx'
-import { Listbox, ListboxOption } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+
+import { Listbox, ListboxOption } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 const COLORS = [
   'red',

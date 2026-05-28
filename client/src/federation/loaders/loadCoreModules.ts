@@ -1,4 +1,4 @@
-import type { ModuleCategory } from 'shared'
+import type { ModuleCategory } from '@lifeforge/shared'
 
 import accountSettings from '@/core/accountSettings/manifest'
 import apiKeys from '@/core/apiKeys/manifest'

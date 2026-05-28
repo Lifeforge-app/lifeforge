@@ -1,9 +1,11 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { Button, ModalHeader, Tabs } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { Button, ModalHeader, Tabs } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 import CustomFontSelector from './tabs/CustomFontSelector'
 import GoogleFontSelector from './tabs/GoogleFontSelector'

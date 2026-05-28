@@ -1,9 +1,9 @@
 import type { Entry } from '@'
 import forgeAPI from '@/utils/forgeAPI'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FormModal, defineForm } from 'lifeforge-ui'
+import { FormModal, defineForm } from '@lifeforge/ui'
 import { toast } from 'react-toastify'
-import { type InferInput } from 'shared'
+import { type InferInput } from '@lifeforge/shared'
 
 function ModifyEntryModal({
   onClose,

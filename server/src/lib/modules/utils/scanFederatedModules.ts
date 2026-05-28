@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import { packageJSONSchema } from 'shared'
+
+import { packageJSONSchema } from '@lifeforge/shared'
 
 /**
  * Module manifest entry for federated modules

@@ -47,7 +47,7 @@ export default async function getConcurrentServices(
       if (port) {
         args.push('--port', port)
       }
-	  
+
       if (args.length > 0) {
         finalCommand = `${command} ${args.join(' ')}`
       }

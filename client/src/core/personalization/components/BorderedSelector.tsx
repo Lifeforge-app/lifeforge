@@ -1,7 +1,9 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { OptionsColumn, Switch } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { OptionsColumn, Switch } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 function BorderedSelector() {
   const { bordered } = usePersonalization()

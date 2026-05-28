@@ -1,0 +1,102 @@
+import { Meta, Canvas } from '@storybook/addon-docs/blocks'
+import { APIEndpointProvider } from "@lifeforge/shared"
+import { QCProvider } from "../../storybook/QCProvider"
+import { ModalProvider } from "../../providers"
+
+import * as TextInputStories from './TextInput/TextInput.stories'
+import * as TextAreaInputStories from './TextAreaInput/TextAreaInput.stories'
+import * as NumberInputStories from './NumberInput/NumberInput.stories'
+import * as CurrencyInputStories from './CurrencyInput/CurrencyInput.stories'
+import * as DateInputStories from './DateInput/DateInput.stories'
+import * as ColorInputStories from './ColorInput/ColorInput.stories'
+import * as IconInputStories from './IconInput/IconInput.stories'
+import * as TagsInputStories from './TagsInput/TagsInput.stories'
+import * as ComboboxInputStories from './ComboboxInput/ComboboxInput.stories'
+import * as ListboxInputStories from './ListboxInput/ListboxInput.stories'
+import * as LocationInputStories from './LocationInput/LocationInput.stories'
+import * as SliderInputStories from './SliderInput/SliderInput.stories'
+import * as SearchInputStories from './SearchInput/SearchInput.stories'
+import * as FileInputStories from './FileInput/FileInput.stories'
+import * as SwitchStories from './Switch/Switch.stories'
+import * as CheckboxStories from './Checkbox/Checkbox.stories'
+import * as FABStories from './FAB/FAB.stories'
+import { Box } from "../primitives"
+
+<Meta title="Inputs/All Inputs" />
+
+# Input Components
+
+<QCProvider>
+  <APIEndpointProvider>
+    <ModalProvider>
+      <Box height="3rem" />
+      ## TextInput
+      <Canvas of={TextInputStories.Default} />
+
+      ## TextAreaInput
+
+      <Canvas of={TextAreaInputStories.Default} />
+
+      ## NumberInput
+
+      <Canvas of={NumberInputStories.Default} />
+
+      ## CurrencyInput
+
+      <Canvas of={CurrencyInputStories.Default} />
+
+      ## DateInput
+
+      <Canvas of={DateInputStories.Default} />
+
+      ## ColorInput
+
+      <Canvas of={ColorInputStories.Default} />
+
+      ## IconInput
+
+      <Canvas of={IconInputStories.Default} />
+
+      ## TagsInput
+
+      <Canvas of={TagsInputStories.Default} />
+
+      ## ComboboxInput
+
+      <Canvas of={ComboboxInputStories.Default} />
+
+      ## ListboxInput
+
+      <Canvas of={ListboxInputStories.Default} />
+
+      ## LocationInput
+
+      <Canvas of={LocationInputStories.Default} />
+
+      ## SliderInput
+
+      <Canvas of={SliderInputStories.Default} />
+
+      ## SearchInput
+
+      <Canvas of={SearchInputStories.Default} />
+
+      ## FileInput
+
+      <Canvas of={FileInputStories.Default} />
+
+      ## Switch
+
+      <Canvas of={SwitchStories.Default} />
+
+      ## Checkbox
+
+      <Canvas of={CheckboxStories.Default} />
+
+      ## FAB
+
+      <Canvas of={FABStories.Default} />
+
+    </ModalProvider>
+  </APIEndpointProvider>
+</QCProvider>

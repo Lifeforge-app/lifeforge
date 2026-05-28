@@ -15,8 +15,7 @@ layer(base);
 @import 'react-grid-layout/css/styles.css';
 
 /* Core styles */
-@import 'lifeforge-ui/dist/index.css';
-@source '../../packages/lifeforge-ui/dist';
+@import '@lifeforge/ui/dist/index.css';
 
 /* App styles */
 @source '../../apps/*/client/src';
@@ -24,3 +23,13 @@ layer(base);
 @source '../../apps/*/client/dist-docker';
 @source '../../apps/**/*';
 @import '@core/dashboard/index.css';
+
+main#app {
+  background-color: color-mix(in srgb, var(--color-bg-200) 50%, transparent);
+  color: var(--color-bg-800);
+
+  .dark & {
+    background-color: color-mix(in srgb, var(--color-bg-900) 50%, transparent);
+    color: var(--color-bg-50);
+  }
+}

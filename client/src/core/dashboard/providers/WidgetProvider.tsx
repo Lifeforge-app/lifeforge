@@ -1,4 +1,3 @@
-import { LoadingScreen } from 'lifeforge-ui'
 import {
   createContext,
   lazy,
@@ -7,7 +6,9 @@ import {
   useMemo,
   useState
 } from 'react'
-import { type WidgetConfig, useFederation } from 'shared'
+
+import { type WidgetConfig, useFederation } from '@lifeforge/shared'
+import { LoadingScreen } from '@lifeforge/ui'
 
 import ClockWidget, { config as clockConfig } from '../widgets/Clock'
 import DateWidget, { config as dateConfig } from '../widgets/Date'

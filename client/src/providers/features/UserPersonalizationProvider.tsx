@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { type IBackdropFilters, type IDashboardLayout } from 'shared'
-import { usePersonalization } from 'shared'
-import { useAuth } from 'shared'
+
+import { type IBackdropFilters, type IDashboardLayout } from '@lifeforge/shared'
+import { useAuth, usePersonalization } from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
 

@@ -1,9 +1,10 @@
+import { v4 } from 'uuid'
+
 import {
   AddToTaskPoolFunc,
   GlobalTaskPool,
   UpdateTaskInPoolFunc
 } from '@lifeforge/server-utils'
-import { v4 } from 'uuid'
 
 export const globalTaskPool: GlobalTaskPool = {}
 

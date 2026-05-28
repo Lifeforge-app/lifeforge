@@ -1,4 +1,4 @@
-import { WithQueryData } from 'lifeforge-ui'
+import { WithQueryData } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

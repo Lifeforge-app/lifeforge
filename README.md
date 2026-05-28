@@ -73,7 +73,6 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217">
 </a>
 
-
 ## 🤔 The Problem
 
 People nowadays having tons of different apps to increase their productivity, but [using too much apps distracts your focus](https://theunfilteredreport.com/why-productivity-apps-are-making-people-less-productive/).
@@ -128,9 +127,6 @@ explore and discover within the project.
   <img width="49%" src="https://github.com/user-attachments/assets/16b23910-37bf-4f56-892d-c971d70b19ae">
 </div>
 
-
-
-
 ## ⌨️ Setup
 
 **LifeForge now supports Docker for easy deployment! 🐳 You can get up and running with just a few commands. For those who prefer manual installation, that option is still available.**
@@ -140,7 +136,6 @@ Visit the [Documentation](https://docs.lifeforge.dev) to see how to install and 
 ## Contributing
 
 We welcome contributions from the community! If you're interested in contributing to LifeForge, please check out our [Contributing Guidelines](https://docs.lifeforge.dev/developer-guide/contributing).
-
 
 ### Contributing to Core
 

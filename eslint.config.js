@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
 import perfectionist from 'eslint-plugin-perfectionist'
 import pluginReact from 'eslint-plugin-react'
@@ -71,6 +72,16 @@ export default [
     ...sonarjs.configs.recommended,
     rules: {
       'sonarjs/prefer-read-only-props': 'off'
+    }
+  },
+
+  // Import Plugin
+  {
+    plugins: {
+      import: importPlugin
+    },
+    rules: {
+      'import/no-duplicates': 'error'
     }
   },
 

@@ -1,6 +1,7 @@
-import { Button } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { Button } from '@lifeforge/ui'
 
 import OTPConfirmScreen from './OTPConfirmScreen'
 import QRCodeDisplay from './QRCodeDisplay'

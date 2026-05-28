@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ClientError } from '@lifeforge/server-utils'
 import { Request } from 'express'
+
+import { ClientError } from '@lifeforge/server-utils'
 
 import { PBService, checkExistence } from '@functions/database'
 

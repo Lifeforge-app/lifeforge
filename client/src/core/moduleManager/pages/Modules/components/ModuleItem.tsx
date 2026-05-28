@@ -1,5 +1,10 @@
 import { Icon } from '@iconify/react'
 import { useMutation } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+import COLORS from 'tailwindcss/colors'
+
+import { useAPIOnlineStatus, useFederation } from '@lifeforge/shared'
 import {
   Card,
   ConfirmationModal,
@@ -7,11 +12,7 @@ import {
   ContextMenuItem,
   TagChip,
   useModalStore
-} from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { useAPIOnlineStatus, useFederation } from 'shared'
-import COLORS from 'tailwindcss/colors'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

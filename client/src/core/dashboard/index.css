@@ -1,7 +1,5 @@
 @import 'tailwindcss' source ('.');
 
-@reference '../../../../packages/lifeforge-ui/dist';
-
 .react-grid-layout {
   @apply isolate;
 }
@@ -15,7 +13,7 @@
 }
 
 .react-grid-item.react-grid-placeholder {
-  @apply bg-custom-500!;
+  background-color: var(--color-custom-500);
 }
 
 .agent-response {

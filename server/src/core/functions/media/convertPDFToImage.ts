@@ -1,5 +1,6 @@
-import { ConvertPDFToImageFunc } from '@lifeforge/server-utils'
 import { fromPath } from 'pdf2pic'
+
+import { ConvertPDFToImageFunc } from '@lifeforge/server-utils'
 
 const convertPDFToImage: ConvertPDFToImageFunc = path => {
   return new Promise((resolve, reject) => {

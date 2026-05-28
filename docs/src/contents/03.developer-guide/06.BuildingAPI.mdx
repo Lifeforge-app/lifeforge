@@ -1,4 +1,4 @@
-import { Alert } from "lifeforge-ui"
+import { Alert } from "@lifeforge/ui"
 
 ###### Building API
 
@@ -101,7 +101,7 @@ export type APIRoutes = typeof routes
 
 // client/src/utils/forgeAPI.ts
 import { type APIRoutes } from '@server/routes.types'
-import { createForgeProxy } from 'shared'
+import { createForgeProxy } from '@lifeforge/shared'
 
 const forgeAPI = createForgeProxy<APIRoutes>(
   import.meta.env.VITE_API_HOST,

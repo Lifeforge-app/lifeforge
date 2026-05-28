@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
-import { Button, OptionsColumn, WithQuery, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { Button, OptionsColumn, WithQuery, useModalStore } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

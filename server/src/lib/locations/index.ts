@@ -1,5 +1,6 @@
-import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 import z from 'zod'
+
+import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 
 import searchLocations from '@functions/external/location'
 

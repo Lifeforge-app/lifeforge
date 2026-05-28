@@ -1,12 +1,13 @@
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
 import {
   Button,
   OptionsColumn,
   QRCodeScanner,
   useModalStore
-} from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+} from '@lifeforge/ui'
 
 import QRLoginApprovalModal from '../modals/QRLoginScannerModal'
 
@@ -45,10 +46,10 @@ function QRLoginColumn() {
       title={t('qrLogin.scanQRCode')}
     >
       <Button
-        className="w-full"
         icon="tabler:scan"
         namespace="common.auth"
         variant="secondary"
+        width="100%"
         onClick={handleOpenScanner}
       >
         qrLogin.title

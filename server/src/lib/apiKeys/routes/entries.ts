@@ -1,5 +1,6 @@
-import { ClientError, forgeRouter } from '@lifeforge/server-utils'
 import z from 'zod'
+
+import { ClientError, forgeRouter } from '@lifeforge/server-utils'
 
 import { decrypt2, encrypt2 } from '@functions/auth/encryption'
 

@@ -1,9 +1,9 @@
-import { LoadingScreen } from 'lifeforge-ui'
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { usePersonalization } from 'shared'
-import { decrypt } from 'shared'
+
+import { decrypt, usePersonalization } from '@lifeforge/shared'
+import { LoadingScreen } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

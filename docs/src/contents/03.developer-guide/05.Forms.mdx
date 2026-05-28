@@ -1,4 +1,4 @@
-import { Alert } from 'lifeforge-ui'
+import { Alert } from '@lifeforge/ui'
 
 ###### Forms
 
@@ -151,7 +151,7 @@ The documentation includes this telling comment:
 
 > "Avoid hasty abstractions. Render props are great!"
 
-While this approach works for applications with minimal form requirements, **projects like LifeForge—which are fundamentally built around forms—find this pattern verbose, repetitive, and difficult to maintain at scale.**
+While this approach works for applications with minimal form requirements, **projects like LifeForge-which are fundamentally built around forms-find this pattern verbose, repetitive, and difficult to maintain at scale.**
 
 The solution: create a declarative system that eliminates repetition while enabling form field reusability across different contexts.
 
@@ -285,7 +285,7 @@ In the LifeForge ecosystem, all forms are presented in the UI as modals, and are
 Import the `defineForm` function and the `FormModal` component from the LifeForge UI library. Then, create a component and call the `defineForm` function while passing the form data type as a generic parameter. chain it with a `.build()` call to get the final form props, then pass those props to the `FormModal` component being returned.
 
 ```tsx
-import { defineForm, FormModal } from 'lifeforge-ui'
+import { defineForm, FormModal } from '@lifeforge/ui'
 
 function MyForm({
   onClose

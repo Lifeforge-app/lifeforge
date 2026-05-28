@@ -1,8 +1,9 @@
-import { OTPInputBox } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { encrypt } from 'shared'
+
+import { encrypt } from '@lifeforge/shared'
+import { OTPInputBox } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -43,7 +44,6 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
         {t('modals.enable2FA.confirmationDescription')}
       </p>
       <OTPInputBox
-        buttonFullWidth
         lighter
         otp={otp}
         setOtp={setOtp}

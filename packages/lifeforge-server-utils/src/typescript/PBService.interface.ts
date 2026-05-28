@@ -1,5 +1,6 @@
-import { CleanedSchemas } from '@lifeforge/server-utils'
 import PocketBase from 'pocketbase'
+
+import { CleanedSchemas } from '@lifeforge/server-utils'
 
 import {
   AllPossibleFieldsForFilter,

@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { FormModal, defineForm } from 'lifeforge-ui'
 import _ from 'lodash'
 import { toast } from 'react-toastify'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { FormModal, defineForm } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

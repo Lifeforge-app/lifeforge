@@ -1,5 +1,6 @@
 import { lazy } from 'react'
-import type { ModuleConfig } from 'shared'
+
+import type { ModuleConfig } from '@lifeforge/shared'
 
 export default {
   name: '{{moduleName.en}}',

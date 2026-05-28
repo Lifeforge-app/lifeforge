@@ -2,9 +2,10 @@ import clsx from 'clsx'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { useRef } from 'react'
-import { useDivSize, usePersonalization } from 'shared'
-import type { WidgetConfig } from 'shared'
 import tinycolor from 'tinycolor2'
+
+import { useDivSize, usePersonalization } from '@lifeforge/shared'
+import type { WidgetConfig } from '@lifeforge/shared'
 
 import { arabicToChinese } from '../utils/arabicToChineseNumber'
 

@@ -1,0 +1,29 @@
+import { Button } from '@/components/inputs'
+
+/**
+ * Nothing too fancy either, just a button saying 'Go Back'
+ */
+export function GoBackButton({
+  onClick
+}: {
+  /**
+   * Callback function to handle the button click event.
+   */
+  onClick: () => void
+}) {
+  return (
+    <Button
+      bg={{ base: 'transparent', hover: 'transparent' }}
+      icon="tabler:chevron-left"
+      p="sm"
+      style={{
+        padding: '0.5em 0.9em 0.5em 0.5em !important',
+        width: 'fit-content'
+      }}
+      variant="plain"
+      onClick={onClick}
+    >
+      Go Back
+    </Button>
+  )
+}

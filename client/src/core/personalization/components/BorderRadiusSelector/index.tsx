@@ -1,7 +1,9 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { Listbox, ListboxOption, OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { Listbox, ListboxOption, OptionsColumn } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 import BorderRadiusIcon from './components/BorderRadiusIcon'
 

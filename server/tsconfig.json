@@ -20,23 +20,11 @@
     "emitDeclarationOnly": true,
     "rootDir": "../",
     "paths": {
-      "@constants": [
-        "./src/core/constants"
-      ],
-      "@functions/*": [
-        "./src/core/functions/*"
-      ],
-      "@schema": [
-        "./src/core/schema"
-      ],
-      "@lib/*": [
-        "./src/lib/*",
-        "../apps/*"
-      ]
+      "@constants": ["./src/core/constants"],
+      "@functions/*": ["./src/core/functions/*"],
+      "@schema": ["./src/core/schema"],
+      "@lib/*": ["./src/lib/*", "../apps/*"]
     }
   },
-  "include": [
-    "./src/**/*",
-    "../apps/**/server/**/*"
-  ]
+  "include": ["./src/**/*", "../apps/**/server/**/*"]
 }

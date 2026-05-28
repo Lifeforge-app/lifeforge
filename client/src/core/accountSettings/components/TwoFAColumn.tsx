@@ -1,8 +1,8 @@
-import { OptionsColumn, Switch } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { OptionsColumn, Switch, useModalStore } from '@lifeforge/ui'
 
 import DisableTwoFAModal from '../modals/DisableTwoFAModal'
 import EnableTwoFAModal from '../modals/EnableTwoFAModal'

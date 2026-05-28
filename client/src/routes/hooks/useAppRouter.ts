@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { DataRouter } from 'shared'
-import { createBrowserRouter, useAuth, useFederation } from 'shared'
+
+import type { DataRouter } from '@lifeforge/shared'
+import { createBrowserRouter, useAuth, useFederation } from '@lifeforge/shared'
 
 import {
   createAuthLoadingConfig,

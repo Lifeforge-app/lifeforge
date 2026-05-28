@@ -1,5 +1,6 @@
-import { LoadingScreen } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
+
+import { LoadingScreen } from '@lifeforge/ui'
 
 import Code from '@/components/Code'
 

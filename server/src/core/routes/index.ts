@@ -1,7 +1,8 @@
 import { ROOT_DIR } from '@constants'
-import { forgeRouter } from '@lifeforge/server-utils'
 import express from 'express'
 import path from 'path'
+
+import { forgeRouter } from '@lifeforge/server-utils'
 
 import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { loadModuleRoutes } from '@functions/modules/loadModuleRoutes'
