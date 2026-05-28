@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react'
  * The blur is deferred to a `requestAnimationFrame` callback to ensure React
  * has committed any state changes before checking focus.
  */
-function useListboxBlurOnClose() {
+export function useListboxBlurOnClose() {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -37,4 +37,3 @@ function useListboxBlurOnClose() {
   return containerRef
 }
 
-export default useListboxBlurOnClose

@@ -10,7 +10,7 @@ import {
   WithDivide
 } from '@components/primitives'
 
-function ComboboxOption({
+export function ComboboxOption({
   value,
   label,
   icon,
@@ -124,4 +124,3 @@ function ComboboxOption({
   )
 }
 
-export default ComboboxOption

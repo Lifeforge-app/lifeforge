@@ -5,7 +5,7 @@ import { ModuleWrapper } from '@components/layout'
 import { ContextMenuItem } from '@components/overlays'
 import { Box, Flex, Text } from '@components/primitives'
 
-import ModuleHeader from './index'
+import { ModuleHeader } from './index'
 
 const meta = {
   argTypes: {

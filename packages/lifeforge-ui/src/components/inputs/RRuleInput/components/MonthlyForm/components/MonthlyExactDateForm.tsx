@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 
 import { Box } from '@components/primitives'
 import { NumberInput } from '@components/inputs'
-import type { FreqSpecificParams } from '@components/inputs/RRuleInput/RRuleInput'
+import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 
-function MonthlyExactDateForm({
+export function MonthlyExactDateForm({
   data,
   setData
 }: {
@@ -26,4 +26,3 @@ function MonthlyExactDateForm({
   )
 }
 
-export default MonthlyExactDateForm

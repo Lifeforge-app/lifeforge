@@ -11,7 +11,7 @@ export type DateFieldProps = BaseFieldProps<Date | null, string, true> & {
   hasTime?: boolean
 }
 
-function FormDateInput({
+export function FormDateInput({
   field,
   value,
   autoFocus,
@@ -33,4 +33,3 @@ function FormDateInput({
   )
 }
 
-export default FormDateInput

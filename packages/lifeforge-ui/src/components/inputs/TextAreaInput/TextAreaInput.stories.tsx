@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import TextAreaInput from './TextAreaInput'
+import { TextAreaInput } from './index'
 
 const meta = {
   component: TextAreaInput

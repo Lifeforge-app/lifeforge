@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { Box, Flex, Text } from '@components/primitives'
 import { WithQuery } from '@components/utilities'
 
-import SearchInput from './SearchInput'
+import { SearchInput } from './index'
 
 const meta = {
   component: SearchInput
@@ -77,7 +77,7 @@ export const WithActionButton: Story = {
   }
 }
 
-export interface ProductElement {
+interface ProductElement {
   id: number
   title: string
   description: string
@@ -102,20 +102,20 @@ export interface ProductElement {
   thumbnail: string
 }
 
-export interface Dimensions {
+interface Dimensions {
   width: number
   height: number
   depth: number
 }
 
-export interface Meta {
+interface Meta {
   createdAt: Date
   updatedAt: Date
   barcode: string
   qrCode: string
 }
 
-export interface Review {
+interface Review {
   rating: number
   comment: string
   date: Date
@@ -204,7 +204,7 @@ export const WithSearchSuggestions: Story = {
 // This is just an example. Replace the fetch URL and the search result component design as needed.
 
 import { useQuery } from '@tanstack/react-query'
-import SearchInput from './SearchInput'
+import { SearchInput } from './index'
 
 function ProductSuggestionItem({ product }) {
   // ... define the ProductSuggestionItem component here

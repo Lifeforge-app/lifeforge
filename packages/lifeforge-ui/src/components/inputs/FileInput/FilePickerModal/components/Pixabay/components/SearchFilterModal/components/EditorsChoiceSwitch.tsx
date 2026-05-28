@@ -11,7 +11,7 @@ interface EditorsChoiceSwitchProps {
   updateFilters: React.ActionDispatch<[action: PixabaySearchFilterAction]>
 }
 
-function EditorsChoiceSwitch({
+export function EditorsChoiceSwitch({
   isEditorsChoice,
   updateFilters
 }: EditorsChoiceSwitchProps) {
@@ -41,4 +41,3 @@ function EditorsChoiceSwitch({
   )
 }
 
-export default EditorsChoiceSwitch

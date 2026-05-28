@@ -11,7 +11,7 @@ export type TextAreaFieldProps = BaseFieldProps<string, string, true> & {
   placeholder: string
 }
 
-function FormTextAreaInput({
+export function FormTextAreaInput({
   field,
   value,
   autoFocus,
@@ -34,4 +34,3 @@ function FormTextAreaInput({
   )
 }
 
-export default FormTextAreaInput

@@ -5,11 +5,11 @@ import { GoBackButton } from '@components/navigation'
 import { ModalHeader } from '@components/overlays'
 import { Box, Flex, Text, Transition } from '@components/primitives'
 
-import IconSet from './pages/IconSet'
-import IconSetList from './pages/IconSetList/index'
-import SearchResult from './pages/SearchResult'
+import { IconSet } from './pages/IconSet'
+import { IconSetList } from './pages/IconSetList/index'
+import { SearchResult } from './pages/SearchResult'
 
-function IconPickerModal({
+export function IconPickerModal({
   data: { setSelectedIcon },
   onClose
 }: {
@@ -118,5 +118,3 @@ function IconPickerModal({
     </Flex>
   )
 }
-
-export default IconPickerModal

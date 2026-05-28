@@ -5,7 +5,7 @@ import { Transition } from '@components/primitives/Transition'
 
 import * as styles from './ModalWrapper.css'
 
-function ModalWrapper({
+export function ModalWrapper({
   isOpen,
   isTopmost = true,
   children,
@@ -95,4 +95,3 @@ function ModalWrapper({
   )
 }
 
-export default ModalWrapper

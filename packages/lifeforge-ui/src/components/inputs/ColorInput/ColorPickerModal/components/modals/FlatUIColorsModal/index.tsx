@@ -89,4 +89,4 @@ function FlatUIColorsModal({
   )
 }
 
-export default FlatUIColorsModal
+export { FlatUIColorsModal }

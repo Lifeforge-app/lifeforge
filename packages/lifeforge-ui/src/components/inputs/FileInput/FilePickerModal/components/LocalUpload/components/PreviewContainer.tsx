@@ -4,9 +4,9 @@ import { useMemo } from 'react'
 import { Button } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-import FILE_ICONS from '../../../constants/file_icons'
+import { FILE_ICONS } from '../../../constants/file_icons'
 
-function PreviewContainer({
+export function PreviewContainer({
   preview,
   setPreview,
   file,
@@ -141,4 +141,3 @@ function PreviewContainer({
   )
 }
 
-export default PreviewContainer

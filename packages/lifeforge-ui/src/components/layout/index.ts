@@ -1,10 +1,9 @@
-// Layout & structure components
-export { default as Card } from './Card'
+export * from './Card'
 
-export { default as ContentWrapperWithSidebar } from './ContentWrapperWithSidebar'
+export * from './ContentWrapperWithSidebar'
 
-export { default as LayoutWithSidebar } from './LayoutWithSidebar'
+export * from './LayoutWithSidebar'
 
-export { default as ModuleHeader } from './ModuleHeader'
+export * from './ModuleHeader'
 
-export { default as ModuleWrapper } from './ModuleWrapper'
+export * from './ModuleWrapper'

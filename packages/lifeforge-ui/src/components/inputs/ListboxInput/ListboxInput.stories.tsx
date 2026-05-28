@@ -5,19 +5,13 @@ import colors from 'tailwindcss/colors'
 
 import { Box, Flex, Text } from '@components/primitives'
 
-import ListboxNullOption from './components/ListboxNullOption'
-import ListboxOption from './components/ListboxOption'
-import Index from './index'
+import { ListboxNullOption } from './components/ListboxNullOption'
+import { ListboxOption } from './components/ListboxOption'
+import { ListboxInput } from './index'
 
 const meta = {
-  argTypes: {
-    buttonContent: { control: false },
-    children: { control: false },
-    onChange: { control: false },
-    value: { control: false }
-  },
-  component: Index
-} satisfies Meta<typeof Index>
+  component: ListboxInput
+} satisfies Meta<typeof ListboxInput>
 
 export default meta
 
@@ -76,7 +70,7 @@ export const Default: Story = {
     const [value, onChange] = useState('Option 1')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={<OptionButtonContent value={value} />}
         value={value}
@@ -91,7 +85,7 @@ export const Default: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -114,7 +108,7 @@ export const Required: Story = {
     const [value, onChange] = useState('')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={<OptionButtonContent value={value} />}
         value={value}
@@ -129,7 +123,7 @@ export const Required: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -152,7 +146,7 @@ export const Disabled: Story = {
     const [value, onChange] = useState('Option 1')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={<OptionButtonContent value={value} />}
         value={value}
@@ -167,7 +161,7 @@ export const Disabled: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -190,7 +184,7 @@ export const WithErrorMessage: Story = {
     const [value, onChange] = useState('')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={<OptionButtonContent value={value} />}
         value={value}
@@ -205,7 +199,7 @@ export const WithErrorMessage: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -226,7 +220,7 @@ export const DisabledWithErrorMessage: Story = {
     const [value, onChange] = useState('')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={<OptionButtonContent value={value} />}
         value={value}
@@ -241,7 +235,7 @@ export const DisabledWithErrorMessage: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -261,7 +255,7 @@ export const PlainVariant: Story = {
     const [value, onChange] = useState('Option 1')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={<OptionButtonContent value={value} />}
         value={value}
@@ -276,7 +270,7 @@ export const PlainVariant: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -298,7 +292,7 @@ export const PlainVariantSmall: Story = {
 
     return (
       <Box width="16rem">
-        <Index
+        <ListboxInput
           {...args}
           buttonContent={<OptionButtonContent value={value} />}
           value={value}
@@ -313,7 +307,7 @@ export const PlainVariantSmall: Story = {
               value={value}
             />
           ))}
-        </Index>
+        </ListboxInput>
       </Box>
     )
   }
@@ -337,7 +331,7 @@ export const MultipleSelection: Story = {
     const [value, onChange] = useState(['Option 1', 'Option 2'])
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={
           <Flex align="center" gap="sm" wrap="wrap">
@@ -389,7 +383,7 @@ export const MultipleSelection: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -411,7 +405,7 @@ export const WithNullOption: Story = {
     const [value, onChange] = useState('')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={
           value ? (
@@ -433,7 +427,7 @@ export const WithNullOption: Story = {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }
@@ -452,7 +446,7 @@ render: args => {
     const [value, onChange] = useState('Option 1')
 
     return (
-      <Index
+      <ListboxInput
         {...args}
         buttonContent={<OptionButtonContent value={value} />}
         value={value}
@@ -467,7 +461,7 @@ render: args => {
             value={value}
           />
         ))}
-      </Index>
+      </ListboxInput>
     )
   }
 }

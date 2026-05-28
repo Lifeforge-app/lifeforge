@@ -3,7 +3,7 @@ import { createSprinkles } from '@vanilla-extract/sprinkles'
 
 import { bg, themeColorProperties, vars, withOpacity } from '@/system'
 
-const sprinkles = createSprinkles(themeColorProperties)
+export const sprinkles = createSprinkles(themeColorProperties)
 
 export const item = style({
   cursor: 'default',

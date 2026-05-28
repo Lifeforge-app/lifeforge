@@ -3,9 +3,9 @@ import { memo } from 'react'
 import { Bordered, Box, Grid, Text } from '@components/primitives'
 
 import type { IIconSet } from '../../../typescript/icon_selector_interfaces'
-import IconSetEntry from './IconSetEntry'
+import { IconSetEntry } from './IconSetEntry'
 
-function CategoryEntry({
+function _CategoryEntry({
   category,
   iconSets,
   setCurrentIconSet
@@ -58,4 +58,4 @@ function CategoryEntry({
   )
 }
 
-export default memo(CategoryEntry)
+export const CategoryEntry = memo(_CategoryEntry)

@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import { Flex, Text } from '@components/primitives'
 
-import TextInput from '.'
+import { TextInput } from './index'
 
 const meta = {
   argTypes: {

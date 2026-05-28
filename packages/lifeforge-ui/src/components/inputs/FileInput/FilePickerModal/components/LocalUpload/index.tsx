@@ -3,10 +3,10 @@ import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { toast } from 'react-toastify'
 
-import DnDContainer from './components/DnDContainer'
-import PreviewContainer from './components/PreviewContainer'
+import { DnDContainer } from './components/DnDContainer'
+import { PreviewContainer } from './components/PreviewContainer'
 
-function LocalUpload({
+export function LocalUpload({
   acceptedMimeTypes,
   setFile,
   file,
@@ -75,5 +75,3 @@ function LocalUpload({
     />
   )
 }
-
-export default LocalUpload

@@ -7,10 +7,10 @@ import { InputFocusProvider } from '@components/inputs/shared/contexts/InputFocu
 import { Box, Flex, Text } from '@components/primitives'
 
 import type { InputSize, InputVariant } from '../../shared/types'
-import useListboxBlurOnClose from '../hooks/useListboxBlurOnClose'
+import { useListboxBlurOnClose } from '../hooks/useListboxBlurOnClose'
 import * as styles from './ListboxInputWrapper.css'
 
-function ListboxInputWrapper<T>({
+export function ListboxInputWrapper<T>({
   value,
   onChange,
   multiple = false,
@@ -104,4 +104,3 @@ function ListboxInputWrapper<T>({
   )
 }
 
-export default ListboxInputWrapper

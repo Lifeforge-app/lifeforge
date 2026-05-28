@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next'
 import { NumberInput } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-import type { FreqSpecificParams } from '../../RRuleInput'
-import SelectableFormWrapper from '../SelectableFormWrapper'
-import MonthlyExactDateForm from './components/MonthlyExactDateForm'
-import MonthlyRelativeDayForm from './components/MonthlyRelativeDayForm'
+import type { FreqSpecificParams } from '../..'
+import { SelectableFormWrapper } from '../SelectableFormWrapper'
+import { MonthlyExactDateForm } from './components/MonthlyExactDateForm'
+import { MonthlyRelativeDayForm } from './components/MonthlyRelativeDayForm'
 
-function MonthlyForm({
+export function MonthlyForm({
   data,
   setData
 }: {
@@ -58,5 +58,3 @@ function MonthlyForm({
     </Flex>
   )
 }
-
-export default MonthlyForm

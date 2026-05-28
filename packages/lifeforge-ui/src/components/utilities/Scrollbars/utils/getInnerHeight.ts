@@ -1,4 +1,4 @@
-export default function getInnerHeight(el: HTMLElement): number {
+export function getInnerHeight(el: HTMLElement): number {
   const { clientHeight } = el
 
   const { paddingTop, paddingBottom } = getComputedStyle(el)

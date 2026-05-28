@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Checkbox } from '@components/inputs'
 import { Bordered, Box, Flex, Text } from '@components/primitives'
 
-function SelectableFormWrapper({
+export function SelectableFormWrapper({
   selected,
   formId,
   onSelect,
@@ -61,4 +61,3 @@ function SelectableFormWrapper({
   )
 }
 
-export default SelectableFormWrapper

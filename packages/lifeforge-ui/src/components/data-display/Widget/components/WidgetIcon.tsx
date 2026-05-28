@@ -13,7 +13,7 @@ interface WidgetIconProps {
   variant?: 'default' | 'large-icon'
 }
 
-export default function WidgetIcon({
+export function WidgetIcon({
   icon,
   iconColor,
   description,

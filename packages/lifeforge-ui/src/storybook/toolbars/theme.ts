@@ -1,4 +1,4 @@
-const THEME_TOOLBAR_CONFIG = {
+export const THEME_TOOLBAR_CONFIG = {
   name: 'Theme',
   description: 'Light / Dark mode',
   defaultValue: 'light',
@@ -21,4 +21,3 @@ const THEME_TOOLBAR_CONFIG = {
   }
 }
 
-export default THEME_TOOLBAR_CONFIG

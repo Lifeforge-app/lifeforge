@@ -4,10 +4,10 @@ import { useMainSidebarState } from 'shared'
 import { Flex, Transition } from '@components/primitives'
 
 import * as styles from './SidebarItemSubsection.css'
-import SidebarSubsectionItemLink from './SidebarSubsectionItemLink'
-import SidebarSubsectionItemWithOnClick from './SidebarSubsectionItemWithOnClick'
+import { SidebarSubsectionItemLink } from './SidebarSubsectionItemLink'
+import { SidebarSubsectionItemWithOnClick } from './SidebarSubsectionItemWithOnClick'
 
-function SidebarItemSubsection({
+export function SidebarItemSubsection({
   subsection,
   label,
   subsectionExpanded,
@@ -87,4 +87,3 @@ function SidebarItemSubsection({
   )
 }
 
-export default SidebarItemSubsection

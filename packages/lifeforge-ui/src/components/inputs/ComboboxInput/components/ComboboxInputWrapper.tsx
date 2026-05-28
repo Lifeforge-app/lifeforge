@@ -9,7 +9,7 @@ import { Box, Flex, Text } from '@components/primitives'
 import * as styles from './ComboboxInputWrapper.css'
 import type { InputVariant } from '@components/inputs/shared/types'
 
-function ComboboxInputWrapper<T>({
+export function ComboboxInputWrapper<T>({
   value,
   onChange,
   setQuery,
@@ -97,4 +97,3 @@ function ComboboxInputWrapper<T>({
   )
 }
 
-export default ComboboxInputWrapper

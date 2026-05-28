@@ -14,7 +14,7 @@ export type CheckboxFieldProps = BaseFieldProps<boolean, boolean> & {
   icon: string
 }
 
-function FormCheckboxInput({
+export function FormCheckboxInput({
   field,
   value,
   namespace,
@@ -51,4 +51,3 @@ function FormCheckboxInput({
   )
 }
 
-export default FormCheckboxInput

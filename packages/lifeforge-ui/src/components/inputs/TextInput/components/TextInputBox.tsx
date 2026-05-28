@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 
-import Placeholder from '@components/inputs/shared/components/Placeholder'
+import { Placeholder } from '@components/inputs/shared/components/Placeholder'
 import { autoFocusableRef } from '@components/inputs/shared/utils/autoFocusableRef'
 
 import type { InputSize, InputVariant } from '../../shared/types'
 import { textInputBoxRecipe } from './TextInputBox.css'
 
-function TextInputBox({
+export function TextInputBox({
   value,
   onChange,
   isPassword = false,
@@ -80,4 +80,3 @@ function TextInputBox({
   )
 }
 
-export default TextInputBox

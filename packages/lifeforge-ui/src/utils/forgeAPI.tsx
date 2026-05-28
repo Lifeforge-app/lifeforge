@@ -1,5 +1,4 @@
 import { createForgeProxy } from 'shared'
 
-const forgeAPI = createForgeProxy()
+export const forgeAPI = createForgeProxy()
 
-export default forgeAPI

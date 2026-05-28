@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { TextInput } from '@components/inputs'
 import { Box, Text } from '@components/primitives'
 
-function ImageURL({
+export function ImageURL({
   file,
   setFile,
   setPreview
@@ -57,4 +57,3 @@ function ImageURL({
   )
 }
 
-export default ImageURL

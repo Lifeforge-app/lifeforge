@@ -6,7 +6,7 @@ import type { InputVariant } from '@components/inputs/shared/types'
 
 import * as styles from '../IconInput.css'
 
-function IconPreview({
+export function IconPreview({
   value,
   variant
 }: {
@@ -62,4 +62,3 @@ function IconPreview({
   )
 }
 
-export default IconPreview

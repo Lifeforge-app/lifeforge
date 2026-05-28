@@ -9,11 +9,11 @@ import {
 import type { Preview } from '@storybook/react-vite'
 import { themes } from 'storybook/theming'
 
-import PreviewWrapper from '@/storybook/PreviewWrapper'
-import BG_TEMP_TOOLBAR_CONFIG from '@/storybook/toolbars/bgTemp'
-import FONT_SCALE_TOOLBAR_CONFIG from '@/storybook/toolbars/fontScale'
-import THEME_TOOLBAR_CONFIG from '@/storybook/toolbars/theme'
-import THEME_COLOR_TOOLBAR_CONFIG from '@/storybook/toolbars/themeColor'
+import { PreviewWrapper } from '@/storybook/PreviewWrapper'
+import { BG_TEMP_TOOLBAR_CONFIG } from '@/storybook/toolbars/bgTemp'
+import { FONT_SCALE_TOOLBAR_CONFIG } from '@/storybook/toolbars/fontScale'
+import { THEME_TOOLBAR_CONFIG } from '@/storybook/toolbars/theme'
+import { THEME_COLOR_TOOLBAR_CONFIG } from '@/storybook/toolbars/themeColor'
 
 import './i18n'
 import './index.css'

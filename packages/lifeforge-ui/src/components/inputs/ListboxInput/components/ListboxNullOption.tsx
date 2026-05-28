@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 
 import { Box, Flex, Text, Transition, WithDivide } from '@components/primitives'
 
-function ListboxNullOption({
+export function ListboxNullOption({
   icon,
   value = '',
   hasBgColor = false,
@@ -86,4 +86,3 @@ function ListboxNullOption({
   )
 }
 
-export default ListboxNullOption

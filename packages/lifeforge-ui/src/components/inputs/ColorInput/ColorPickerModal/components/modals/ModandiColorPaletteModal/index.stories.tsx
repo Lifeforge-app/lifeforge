@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { ModalWrapper } from '@components/overlays'
 
-import MorandiColorPaletteModal from '.'
+import { MorandiColorPaletteModal } from '.'
 
 const meta = {
   component: MorandiColorPaletteModal

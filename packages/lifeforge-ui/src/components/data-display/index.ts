@@ -1,12 +1,11 @@
-// Data display components
-export { default as Widget } from './Widget/Widget'
+export * from './Widget'
 
-export { default as OptionsColumn } from './OptionsColumn'
+export * from './OptionsColumn'
 
-export { default as TagChip } from './TagChip'
+export * from './TagChip'
 
-export { default as TagsFilter } from './TagsFilter'
+export * from './TagsFilter'
 
-export { default as ViewModeSelector } from './ViewModeSelector'
+export * from './ViewModeSelector'
 
-export { default as VirtualGrid } from './VirtualGrid'
+export * from './VirtualGrid'

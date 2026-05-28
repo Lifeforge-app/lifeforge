@@ -8,7 +8,7 @@ import { Scrollbar } from '@components/utilities'
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
 import * as styles from './SearchResults.css'
 
-function SearchResults({
+export function SearchResults({
   results,
   page,
   setPage,
@@ -86,4 +86,3 @@ function SearchResults({
   )
 }
 
-export default SearchResults

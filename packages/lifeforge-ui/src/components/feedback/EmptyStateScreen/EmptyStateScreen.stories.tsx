@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Box, Text } from '@components/primitives'
 
-import EmptyStateScreen from './EmptyStateScreen'
+import { EmptyStateScreen } from './index'
 
 const meta = {
   argTypes: {

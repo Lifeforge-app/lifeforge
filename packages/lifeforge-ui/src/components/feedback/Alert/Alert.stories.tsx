@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Box } from '@components/primitives'
 
-import Alert from './Alert'
+import { Alert } from './index'
 
 const meta = {
   argTypes: {

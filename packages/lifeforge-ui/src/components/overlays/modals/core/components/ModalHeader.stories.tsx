@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Box } from '@components/primitives'
 
-import ModalHeader from './ModalHeader'
+import { ModalHeader } from './ModalHeader'
 
 const meta = {
   argTypes: {

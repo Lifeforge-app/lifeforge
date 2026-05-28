@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import CurrencyInput from '../CurrencyInput'
+import { CurrencyInput } from './index'
 
 const meta = {
   component: CurrencyInput

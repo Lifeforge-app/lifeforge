@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { Bordered, Flex } from '@components/primitives'
 
-import OTPInputBox from './index'
+import { OTPInputBox } from './index'
 
 const meta = {
   component: OTPInputBox

@@ -14,7 +14,7 @@ interface CategoryFilterProps {
   updateFilters: React.ActionDispatch<[action: PixabaySearchFilterAction]>
 }
 
-function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
+export function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
   return (
     <ListboxInput
       buttonContent={
@@ -47,4 +47,3 @@ function CategoryFilter({ category, updateFilters }: CategoryFilterProps) {
   )
 }
 
-export default CategoryFilter

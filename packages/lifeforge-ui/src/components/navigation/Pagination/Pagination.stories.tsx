@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import Pagination from '.'
+import { Pagination } from './index'
 
 const meta = {
   argTypes: {

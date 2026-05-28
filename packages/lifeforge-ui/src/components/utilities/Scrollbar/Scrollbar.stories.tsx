@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Card } from '@components/layout'
 
-import Scrollbar from './Scrollbar'
+import { Scrollbar } from './index'
 
 const meta = {
   argTypes: {

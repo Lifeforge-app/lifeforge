@@ -2,9 +2,9 @@ import { useTranslation } from 'react-i18next'
 
 import { Box } from '@components/primitives'
 import { ListboxInput, ListboxOption, NumberInput } from '@components/inputs'
-import type { FreqSpecificParams } from '@components/inputs/RRuleInput/RRuleInput'
+import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 
-function YearlyExactDateForm({
+export function YearlyExactDateForm({
   data,
   setData
 }: {
@@ -48,4 +48,3 @@ function YearlyExactDateForm({
   )
 }
 
-export default YearlyExactDateForm

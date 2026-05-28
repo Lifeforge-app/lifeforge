@@ -1,14 +1,15 @@
 import { useCallback } from 'react'
 
-import { Button, useModalStore } from '../../../../..'
+import { Button } from '../../../../..'
+import { useModalStore } from 'shared'
 import { Box, Flex } from '../../../../../components/primitives'
 import { useColorPickerModalStore } from '../stores/useColorPickerModalStore'
 import * as styles from './PaletteButtons.css'
-import FlatUIColorsModal from './modals/FlatUIColorsModal'
-import MorandiColorPaletteModal from './modals/ModandiColorPaletteModal'
-import TailwindCSSColorsModal from './modals/TailwindCSSColorsModal'
+import { FlatUIColorsModal } from './modals/FlatUIColorsModal'
+import { MorandiColorPaletteModal } from './modals/ModandiColorPaletteModal'
+import { TailwindCSSColorsModal } from './modals/TailwindCSSColorsModal'
 
-function PaletteButtons() {
+export function PaletteButtons() {
   const { open } = useModalStore()
 
   const { innerColor, setInnerColor } = useColorPickerModalStore()
@@ -65,4 +66,3 @@ function PaletteButtons() {
   )
 }
 
-export default PaletteButtons

@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 import { Flex } from '@components/primitives'
 
-import TagChip from './TagChip'
+import { TagChip } from './index'
 
 const meta = {
   argTypes: {

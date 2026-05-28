@@ -3,7 +3,7 @@ import { createSprinkles } from '@vanilla-extract/sprinkles'
 
 import { bg, custom, themeColorProperties, vars, withOpacity } from '@/system'
 
-const sprinkles = createSprinkles(themeColorProperties)
+export const sprinkles = createSprinkles(themeColorProperties)
 
 export const iconWrapper = style({
   flexShrink: 0,

@@ -7,12 +7,12 @@ import { Tabs } from '@components/navigation'
 import { ModalHeader } from '@components/overlays'
 import { Box, Flex } from '@components/primitives'
 
-import AIImageGenerator from './components/AIImageGenerator'
-import ImageURL from './components/ImageURL'
-import LocalUpload from './components/LocalUpload'
-import Pixabay from './components/Pixabay'
+import { AIImageGenerator } from './components/AIImageGenerator'
+import { ImageURL } from './components/ImageURL'
+import { LocalUpload } from './components/LocalUpload'
+import { Pixabay } from './components/Pixabay'
 
-function FilePickerModal({
+export function FilePickerModal({
   data: {
     enablePixabay = false,
     enableUrl = false,
@@ -158,5 +158,3 @@ function FilePickerModal({
     </Box>
   )
 }
-
-export default FilePickerModal

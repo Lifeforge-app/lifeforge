@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import Index from './index'
+import { FileInput } from './index'
 
 const meta = {
-  component: Index
-} satisfies Meta<typeof Index>
+  component: FileInput
+} satisfies Meta<typeof FileInput>
 
 export default meta
 
@@ -30,7 +30,7 @@ export const Default: Story = {
     const [preview, setPreview] = useState<string | null>(null)
 
     return (
-      <Index
+      <FileInput
         {...args}
         enablePixabay
         file={image}
@@ -63,7 +63,7 @@ export const Disabled: Story = {
     const [preview, setPreview] = useState<string | null>(null)
 
     return (
-      <Index
+      <FileInput
         {...args}
         disabled
         enablePixabay

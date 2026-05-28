@@ -3,7 +3,7 @@ import React from 'react'
 
 import { Text } from '@components/primitives'
 
-function EllipsisIcon() {
+export function EllipsisIcon() {
   return (
     <Text
       asChild
@@ -19,4 +19,3 @@ function EllipsisIcon() {
   )
 }
 
-export default EllipsisIcon

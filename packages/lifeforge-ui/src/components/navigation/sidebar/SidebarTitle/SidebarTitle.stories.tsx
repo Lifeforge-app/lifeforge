@@ -3,10 +3,10 @@ import { BrowserRouter } from 'react-router'
 
 import { Flex } from '@components/primitives'
 
-import SidebarDivider from '../SidebarDivider'
-import SidebarItem from '../SidebarItem'
-import SidebarWrapper from '../SidebarWrapper'
-import SidebarTitle from './SidebarTitle'
+import { SidebarDivider } from '../SidebarDivider'
+import { SidebarItem } from '../SidebarItem'
+import { SidebarWrapper } from '../SidebarWrapper'
+import { SidebarTitle } from './index'
 
 const meta = {
   component: SidebarTitle

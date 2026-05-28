@@ -1,4 +1,4 @@
-const THEME_COLOR_TOOLBAR_CONFIG = {
+export const THEME_COLOR_TOOLBAR_CONFIG = {
   name: 'Theme Color',
   description: 'Primary theme color',
   defaultValue: '#4caf50',
@@ -30,4 +30,3 @@ const THEME_COLOR_TOOLBAR_CONFIG = {
   }
 }
 
-export default THEME_COLOR_TOOLBAR_CONFIG

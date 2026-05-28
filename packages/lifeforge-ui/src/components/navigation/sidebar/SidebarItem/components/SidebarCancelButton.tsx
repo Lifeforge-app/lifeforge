@@ -3,7 +3,7 @@ import { useModuleSidebarState } from 'shared'
 
 import { Box, Text } from '@components/primitives'
 
-function SidebarCancelButton({ onClick }: { onClick: () => void }) {
+export function SidebarCancelButton({ onClick }: { onClick: () => void }) {
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   return (
@@ -34,4 +34,3 @@ function SidebarCancelButton({ onClick }: { onClick: () => void }) {
   )
 }
 
-export default SidebarCancelButton

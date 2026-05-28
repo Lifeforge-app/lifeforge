@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next'
 
 import { Box, Flex, Text } from '@components/primitives'
 
-import Button from '../../../../inputs/Button'
+import { Button } from '../../../../inputs/Button'
 
-function ModalHeader({
+function _ModalHeader({
   title,
   icon,
   onClose,
@@ -111,4 +111,4 @@ function ModalHeader({
   )
 }
 
-export default memo(ModalHeader)
+export const ModalHeader = memo(_ModalHeader)

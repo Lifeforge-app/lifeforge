@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Box, Flex, Text } from '@components/primitives'
 
-function SliderTicks({ min = 0, max = 100 }: { min?: number; max?: number }) {
+export function SliderTicks({ min = 0, max = 100 }: { min?: number; max?: number }) {
   return (
     <Flex justify="between" mb="md" px="sm">
       {[min, ((min + max) / 2).toFixed(1), max].map((label, index) => (
@@ -36,4 +36,3 @@ function SliderTicks({ min = 0, max = 100 }: { min?: number; max?: number }) {
   )
 }
 
-export default SliderTicks

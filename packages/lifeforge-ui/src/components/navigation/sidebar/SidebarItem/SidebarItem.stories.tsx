@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router'
 import { ContextMenuItem } from '@components/overlays'
 import { Flex, Text } from '@components/primitives'
 
-import SidebarWrapper from '../SidebarWrapper'
-import Index from './index'
+import { SidebarWrapper } from '../SidebarWrapper'
+import { SidebarItem } from './index'
 
 const meta = {
   argTypes: {
@@ -29,8 +29,8 @@ const meta = {
       }
     }
   },
-  component: Index
-} satisfies Meta<typeof Index>
+  component: SidebarItem
+} satisfies Meta<typeof SidebarItem>
 
 export default meta
 
@@ -48,7 +48,7 @@ export const Default: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -71,7 +71,7 @@ export const WithSideColorStrip: Story = {
             ['Category 2', '#16A34A'],
             ['Category 3', '#DC2626']
           ].map(([label, color]) => (
-            <Index
+            <SidebarItem
               key={label}
               icon="tabler:category"
               label={label}
@@ -98,7 +98,7 @@ export const WithActionButton: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -130,7 +130,7 @@ export const WithContextMenu: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -166,7 +166,7 @@ export const WithContextMenuAndActionButton: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -184,7 +184,7 @@ export const WithNumberBadge: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -217,7 +217,7 @@ export const WithNumberBadgeAndContextMenu: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -240,7 +240,7 @@ export const WithActiveState: Story = {
         <Flex align="center" height="24rem" justify="center" width="100%">
           <SidebarWrapper>
             {['a', 'b', 'c'].map(cat => (
-              <Index
+              <SidebarItem
                 key={cat}
                 active={activeCategory === cat}
                 icon="tabler:category"
@@ -266,7 +266,7 @@ export const WithCustomSVGIcon: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -286,7 +286,7 @@ export const WithCustomImageIcon: Story = {
       <BrowserRouter>
         <Flex align="center" height="24rem" justify="center" width="100%">
           <SidebarWrapper>
-            <Index
+            <SidebarItem
               {...args}
               active={active}
               onClick={() => setActive(!active)}
@@ -308,7 +308,7 @@ export const AVeryLongName: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -325,7 +325,7 @@ export const WithReactElementLabel: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index
+          <SidebarItem
             {...args}
             label={
               <Flex align="center" style={{ gap: '0.5rem' }}>
@@ -361,7 +361,7 @@ export const WithActiveStateNoCancel: Story = {
     <BrowserRouter>
       <Flex align="center" height="24rem" justify="center" width="100%">
         <SidebarWrapper>
-          <Index {...args} />
+          <SidebarItem {...args} />
         </SidebarWrapper>
       </Flex>
     </BrowserRouter>
@@ -384,7 +384,7 @@ export const WithNumberBadgeAndActiveState: Story = {
       <BrowserRouter>
         <Flex align="center" height="24rem" justify="center" width="100%">
           <SidebarWrapper>
-            <Index
+            <SidebarItem
               {...args}
               active={active}
               onCancelButtonClick={() => setActive(false)}
@@ -411,7 +411,7 @@ export const WithSubsection: Story = {
       <BrowserRouter>
         <Flex align="center" height="24rem" justify="center" width="100%">
           <SidebarWrapper>
-            <Index
+            <SidebarItem
               {...args}
               namespace={false}
               subsection={[
@@ -459,7 +459,7 @@ export const WithSubsectionAndAmounts: Story = {
       <BrowserRouter>
         <Flex align="center" height="24rem" justify="center" width="100%">
           <SidebarWrapper>
-            <Index
+            <SidebarItem
               {...args}
               namespace={false}
               subsection={[
@@ -550,7 +550,7 @@ export const WithAllFeatures: Story = {
       <BrowserRouter>
         <Flex align="center" height="24rem" justify="center" width="100%">
           <SidebarWrapper>
-            <Index
+            <SidebarItem
               {...args}
               active={active}
               onCancelButtonClick={() => setActive(false)}
@@ -576,20 +576,20 @@ export const AllStatesComparison: Story = {
       <BrowserRouter>
         <Flex align="center" height="24rem" justify="center" width="100%">
           <SidebarWrapper>
-            <Index
+            <SidebarItem
               icon="tabler:circle"
               label="Default (inactive)"
               namespace={false}
               onClick={() => setActive('a')}
             />
-            <Index
+            <SidebarItem
               active={active === 'b'}
               icon="tabler:circle-filled"
               label="Active (no cancel)"
               namespace={false}
               onClick={() => setActive('b')}
             />
-            <Index
+            <SidebarItem
               active={active === 'c'}
               icon="tabler:circle-check"
               label="Active with cancel"
@@ -597,7 +597,7 @@ export const AllStatesComparison: Story = {
               onCancelButtonClick={() => setActive(null)}
               onClick={() => setActive('c')}
             />
-            <Index
+            <SidebarItem
               active={active === 'd'}
               icon="tabler:circle-dashed"
               label="With number badge"

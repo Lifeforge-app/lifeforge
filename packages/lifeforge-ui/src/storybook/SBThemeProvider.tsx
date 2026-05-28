@@ -2,7 +2,7 @@
 import { type ReactNode, useMemo } from 'react'
 import { PersonalizationProvider } from 'shared'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/utils/forgeAPI'
 
 import { useSBTheme } from './useSBTheme'
 

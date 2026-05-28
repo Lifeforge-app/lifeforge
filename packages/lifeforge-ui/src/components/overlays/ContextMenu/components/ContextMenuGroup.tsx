@@ -19,7 +19,7 @@ interface ContextMenuGroupProps {
 /**
  * A grouped section within a context menu containing a labeled header.
  */
-function ContextMenuGroup({
+export function ContextMenuGroup({
   icon,
   label,
   children,
@@ -50,4 +50,3 @@ function ContextMenuGroup({
   )
 }
 
-export default ContextMenuGroup

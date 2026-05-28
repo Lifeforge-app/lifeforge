@@ -2,7 +2,7 @@ import css from 'dom-css'
 
 let scrollbarWidth: number | false = false
 
-export default function getScrollbarWidth(): number {
+export function getScrollbarWidth(): number {
   if (scrollbarWidth !== false) return scrollbarWidth
 
   /* istanbul ignore else */

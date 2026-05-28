@@ -8,7 +8,7 @@ import { encrypt } from 'shared'
 import { Button, TextInput } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-function LockedScreen({
+export function LockedScreen({
   challengeController,
   verifyController,
   setMasterPassword
@@ -113,4 +113,3 @@ function LockedScreen({
   )
 }
 
-export default LockedScreen

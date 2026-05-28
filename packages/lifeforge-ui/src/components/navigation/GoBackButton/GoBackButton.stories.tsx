@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import GoBackButton from './GoBackButton'
+import { GoBackButton } from './index'
 
 const meta = {
   component: GoBackButton

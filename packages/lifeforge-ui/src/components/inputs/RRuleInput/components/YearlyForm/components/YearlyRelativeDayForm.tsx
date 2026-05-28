@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
 
 import { ListboxInput, ListboxOption } from '@components/inputs'
-import type { FreqSpecificParams } from '@components/inputs/RRuleInput/RRuleInput'
+import type { FreqSpecificParams } from '@components/inputs/RRuleInput'
 import { Box } from '@components/primitives'
 
-const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
+export const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
 
-function YearlyRelativeDayForm({
+export function YearlyRelativeDayForm({
   data,
   setData
 }: {
@@ -91,4 +91,3 @@ function YearlyRelativeDayForm({
   )
 }
 
-export default YearlyRelativeDayForm

@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { memo, useMemo } from 'react'
 
-function ButtonIcon({
+function _ButtonIcon({
   icon,
   disabled,
   loading,
@@ -39,4 +39,4 @@ function ButtonIcon({
   )
 }
 
-export default memo(ButtonIcon)
+export const ButtonIcon = memo(_ButtonIcon)

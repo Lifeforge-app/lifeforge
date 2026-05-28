@@ -11,10 +11,10 @@ import { Button, SearchInput } from '@components/inputs'
 import { Flex } from '@components/primitives'
 import { WithQueryData } from '@components/utilities'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/utils/forgeAPI'
 
-import SearchFilterModal from './components/SearchFilterModal'
-import SearchResults from './components/SearchResults'
+import { SearchFilterModal } from './components/SearchFilterModal'
+import { SearchResults } from './components/SearchResults'
 import {
   type IPixabaySearchFilter,
   type IPixabaySearchResult,
@@ -28,7 +28,7 @@ const initialFilter: IPixabaySearchFilter = {
   isEditorsChoice: false
 }
 
-function reducer(
+export function reducer(
   state: IPixabaySearchFilter,
   action: PixabaySearchFilterAction
 ): typeof initialFilter {
@@ -46,7 +46,7 @@ function reducer(
   }
 }
 
-function Pixabay({
+export function Pixabay({
   file,
   setFile,
   setPreview
@@ -251,5 +251,3 @@ function Pixabay({
     </WithQueryData>
   )
 }
-
-export default Pixabay

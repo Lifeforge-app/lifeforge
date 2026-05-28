@@ -2,11 +2,11 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { ModalWrapper } from '@components/overlays'
 
-import Index from './index'
+import { TailwindCSSColorsModal } from './index'
 
 const meta = {
-  component: Index
-} satisfies Meta<typeof Index>
+  component: TailwindCSSColorsModal
+} satisfies Meta<typeof TailwindCSSColorsModal>
 
 export default meta
 
@@ -20,7 +20,7 @@ export const Default: Story = {
   render: args => {
     return (
       <ModalWrapper isOpen={true}>
-        <Index {...args} />
+        <TailwindCSSColorsModal {...args} />
       </ModalWrapper>
     )
   }

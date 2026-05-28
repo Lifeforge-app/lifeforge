@@ -6,10 +6,11 @@ import { toast } from 'react-toastify'
 import { ForgeEndpoint, encrypt } from 'shared'
 
 import { Button, TextInput } from '@components/inputs'
-import { ConfirmationModal, useModalStore } from '@components/overlays'
+import { ConfirmationModal } from '@components/overlays'
+import { useModalStore } from 'shared'
 import { Box, Flex, Text } from '@components/primitives'
 
-function CreatePasswordScreen({
+export function CreatePasswordScreen({
   controller,
   challengeController
 }: {
@@ -143,4 +144,3 @@ function CreatePasswordScreen({
   )
 }
 
-export default CreatePasswordScreen

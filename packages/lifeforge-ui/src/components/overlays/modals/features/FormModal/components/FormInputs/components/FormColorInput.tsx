@@ -9,7 +9,7 @@ export type ColorFieldProps = BaseFieldProps<string, string, true> & {
   type: 'color'
 }
 
-function FormColorInput({
+export function FormColorInput({
   field,
   value,
   autoFocus,
@@ -30,4 +30,3 @@ function FormColorInput({
   )
 }
 
-export default FormColorInput

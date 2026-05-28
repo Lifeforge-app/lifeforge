@@ -1,4 +1,4 @@
-const BG_TEMP_TOOLBAR_CONFIG = {
+export const BG_TEMP_TOOLBAR_CONFIG = {
   name: 'BG Temp',
   description: 'Background color temperature',
   defaultValue: 'bg-zinc',
@@ -16,4 +16,3 @@ const BG_TEMP_TOOLBAR_CONFIG = {
   }
 }
 
-export default BG_TEMP_TOOLBAR_CONFIG

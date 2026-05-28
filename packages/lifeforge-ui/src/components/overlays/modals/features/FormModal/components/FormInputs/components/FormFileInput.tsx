@@ -20,7 +20,7 @@ export type FileFieldProps<TOptional extends boolean = false> = BaseFieldProps<
   acceptedMimeTypes?: Record<string, string[]>
 }
 
-function FormFileInput({
+export function FormFileInput({
   field,
   value,
   namespace,
@@ -51,4 +51,3 @@ function FormFileInput({
   )
 }
 
-export default FormFileInput

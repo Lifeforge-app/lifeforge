@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Button } from '@components/inputs'
-import { useModalStore } from '@components/overlays'
+import { useModalStore } from 'shared'
 
-import Index from './index'
+import { IconPickerModal } from './index'
 
 const meta = {
-  component: Index
-} satisfies Meta<typeof Index>
+  component: IconPickerModal
+} satisfies Meta<typeof IconPickerModal>
 
 export default meta
 
@@ -22,7 +22,7 @@ export const Default: Story = {
     const { open } = useModalStore()
 
     return (
-      <Button icon="tabler:icons" onClick={() => open(Index, args.data)}>
+      <Button icon="tabler:icons" onClick={() => open(IconPickerModal, args.data)}>
         Open Icon Picker
       </Button>
     )

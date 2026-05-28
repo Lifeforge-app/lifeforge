@@ -5,11 +5,11 @@ import { Text } from '@components/primitives'
 
 import { ScrollableStory } from '@/storybook/ScrollableStory'
 
-import Index from './index'
+import { RRuleInput } from './index'
 
 const meta = {
-  component: Index
-} satisfies Meta<typeof Index>
+  component: RRuleInput
+} satisfies Meta<typeof RRuleInput>
 
 export default meta
 
@@ -29,7 +29,7 @@ export const Default: Story = {
         <Text as="div" mb="md">
           Current RRule: {value}
         </Text>
-        <Index {...args} hasDuration value={value} onChange={onChange} />
+        <RRuleInput {...args} hasDuration value={value} onChange={onChange} />
       </ScrollableStory>
     )
   }

@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import colors from 'tailwindcss/colors'
 
-import ComboboxOption from './components/ComboboxOption'
-import ComboboxInput from './index'
+import { ComboboxOption } from './components/ComboboxOption'
+import { ComboboxInput } from './index'
 
 const meta = {
   argTypes: {

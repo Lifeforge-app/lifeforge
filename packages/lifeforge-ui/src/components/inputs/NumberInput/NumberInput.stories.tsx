@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import NumberInput from './NumberInput'
+import { NumberInput } from './index'
 
 const meta = {
   component: NumberInput

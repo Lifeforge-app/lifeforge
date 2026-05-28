@@ -9,9 +9,9 @@ import { Flex } from '@components/primitives'
 
 import { SBThemeProvider } from './SBThemeProvider'
 
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
-function PreviewWrapper(Story: any, context: any) {
+export function PreviewWrapper(Story: any, context: any) {
   return (
     <APIEndpointProvider endpoint={import.meta.env.VITE_API_HOST}>
       <QueryClientProvider client={queryClient}>
@@ -53,4 +53,3 @@ function PreviewWrapper(Story: any, context: any) {
   )
 }
 
-export default PreviewWrapper

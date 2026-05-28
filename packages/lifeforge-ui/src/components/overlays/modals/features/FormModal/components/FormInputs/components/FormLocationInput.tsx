@@ -13,7 +13,7 @@ export type LocationFieldProps = BaseFieldProps<
   type: 'location'
 }
 
-function FormLocationInput({
+export function FormLocationInput({
   field,
   value,
   autoFocus,
@@ -33,4 +33,3 @@ function FormLocationInput({
   )
 }
 
-export default FormLocationInput

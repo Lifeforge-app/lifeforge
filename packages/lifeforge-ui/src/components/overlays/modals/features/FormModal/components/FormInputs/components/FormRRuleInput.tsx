@@ -10,7 +10,7 @@ export type RRuleFieldProps = BaseFieldProps<string, string> & {
   hasDuration?: boolean
 }
 
-function FormRRuleInput({
+export function FormRRuleInput({
   field,
   value,
   handleChange
@@ -24,4 +24,3 @@ function FormRRuleInput({
   )
 }
 
-export default FormRRuleInput

@@ -4,7 +4,7 @@ import COLORS from 'tailwindcss/colors'
 import { Button, Listbox, ListboxOption } from '@components/inputs'
 import { Box, Grid, Text } from '@components/primitives'
 
-import Widget from './Widget'
+import { Widget } from './index'
 
 const meta = {
   component: Widget

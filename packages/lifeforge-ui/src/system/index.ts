@@ -48,9 +48,7 @@ export {
   getResponsiveStyles,
   getResponsiveLayoutStyles,
   resolveCommonSprinkleProps,
-  type PropDef,
-  type LayoutPropDefsKey,
-  type CommonSprinkleInput
+  type LayoutPropDefsKey
 } from './layout-utils'
 
 export {
@@ -58,5 +56,5 @@ export {
   themeColorProperties,
   commonSprinkles,
   type CommonSprinkles,
-    shadowClass
+  shadowClass
 } from './sprinkles.css'

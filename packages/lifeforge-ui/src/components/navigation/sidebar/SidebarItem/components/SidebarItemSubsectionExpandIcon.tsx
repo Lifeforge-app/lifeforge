@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 
 import { Box, Text, Transition } from '@components/primitives'
 
-function SidebarItemSubsectionExpandIcon({
+export function SidebarItemSubsectionExpandIcon({
   toggleSubsection,
   subsectionExpanded
 }: {
@@ -46,4 +46,3 @@ function SidebarItemSubsectionExpandIcon({
   )
 }
 
-export default SidebarItemSubsectionExpandIcon

@@ -11,7 +11,7 @@ import {
   WithDivide
 } from '@components/primitives'
 
-function ListboxOption({
+export function ListboxOption({
   value,
   label,
   icon,
@@ -168,4 +168,3 @@ function ListboxOption({
   )
 }
 
-export default ListboxOption

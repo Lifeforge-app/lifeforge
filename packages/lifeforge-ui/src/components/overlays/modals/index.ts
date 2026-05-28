@@ -1,17 +1,13 @@
-export { default as FormModal } from './features/FormModal'
+export * from './features/FormModal'
 
-export { default as ConfirmationModal } from './features/ConfirmationModal'
+export * from './features/ConfirmationModal'
 
-export { default as ViewImageModal } from './features/ViewImageModal'
+export * from './features/ViewImageModal'
 
-export { default as ModalHeader } from './core/components/ModalHeader'
+export * from './core/components/ModalHeader'
 
-export { default as ModalWrapper } from './core/components/ModalWrapper'
+export * from './core/components/ModalWrapper'
 
-export { default as ModalManager } from './core/ModalManager'
+export * from './core/ModalManager'
 
-export { useModalStore } from 'shared'
-
-export type { ModalComponent } from 'shared'
-
-export { default as defineForm } from './features/FormModal/formBuilder'
+export * from './features/FormModal/formBuilder'

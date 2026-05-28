@@ -2,7 +2,7 @@ import _ from 'lodash'
 
 import { Button } from '@components/inputs'
 
-function SubmitButton({
+export function SubmitButton({
   submitButton,
   submitLoading,
   onSubmitButtonClick
@@ -38,4 +38,3 @@ function SubmitButton({
   return <></>
 }
 
-export default SubmitButton

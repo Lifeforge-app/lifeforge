@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Alert } from '@components/feedback'
 import { Flex } from '@components/primitives'
 
-import Button from './index'
+import { Button } from './index'
 
 const meta = {
   component: Button

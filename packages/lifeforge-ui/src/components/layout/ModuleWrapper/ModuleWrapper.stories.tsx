@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ModuleHeader } from '@components/layout'
 import { Box, Flex, Grid, Text } from '@components/primitives'
 
-import ModuleWrapper from './index'
+import { ModuleWrapper } from './index'
 
 const meta = {
   argTypes: {

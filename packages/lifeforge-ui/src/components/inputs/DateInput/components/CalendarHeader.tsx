@@ -9,7 +9,7 @@ import { Box, Flex } from '@components/primitives'
 
 import * as styles from './CalendarHeader.css'
 
-function CalendarHeader({
+export function CalendarHeader({
   date,
   changeYear,
   changeMonth,
@@ -140,4 +140,3 @@ function CalendarHeader({
   )
 }
 
-export default CalendarHeader

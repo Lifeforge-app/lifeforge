@@ -6,7 +6,7 @@ import { Bordered, Box, Flex, Text } from '@components/primitives'
 
 import type { IIconSet } from '../../../typescript/icon_selector_interfaces'
 
-function IconSetEntry({
+function _IconSetEntry({
   iconSet,
   setCurrentIconSet
 }: {
@@ -91,4 +91,4 @@ function IconSetEntry({
   )
 }
 
-export default memo(IconSetEntry)
+export const IconSetEntry = memo(_IconSetEntry)

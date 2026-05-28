@@ -7,8 +7,8 @@ import {
   type Options as RRuleOptions,
   datetime
 } from 'rrule'
-import type { FreqSpecificParams, RRuleParams } from '../RRuleInput'
 
+import type { FreqSpecificParams, RRuleParams } from '..'
 
 dayjs.extend(utc)
 
@@ -48,7 +48,7 @@ const getWeekdayOptions = (day: string): ByWeekday[] => {
   }
 }
 
-const configureYearlyOptions = (
+export const configureYearlyOptions = (
   options: Partial<RRuleOptions>,
   data: FreqSpecificParams['yearly']
 ) => {
@@ -70,7 +70,7 @@ const configureYearlyOptions = (
   }
 }
 
-const configureMonthlyOptions = (
+export const configureMonthlyOptions = (
   options: Partial<RRuleOptions>,
   data: FreqSpecificParams['monthly']
 ) => {
@@ -91,7 +91,7 @@ const configureMonthlyOptions = (
   }
 }
 
-const configureWeeklyOptions = (
+export const configureWeeklyOptions = (
   options: Partial<RRuleOptions>,
   data: FreqSpecificParams['weekly']
 ) => {
@@ -103,7 +103,7 @@ const configureWeeklyOptions = (
   )
 }
 
-const configureDailyOptions = (
+export const configureDailyOptions = (
   options: Partial<RRuleOptions>,
   data: FreqSpecificParams['daily']
 ) => {
@@ -111,7 +111,7 @@ const configureDailyOptions = (
   options.interval = data.every
 }
 
-const configureHourlyOptions = (
+export const configureHourlyOptions = (
   options: Partial<RRuleOptions>,
   data: FreqSpecificParams['hourly']
 ) => {
@@ -119,7 +119,7 @@ const configureHourlyOptions = (
   options.interval = data.every
 }
 
-const configureEndOptions = (
+export const configureEndOptions = (
   options: Partial<RRuleOptions>,
   data: RRuleParams['end']
 ) => {
@@ -132,7 +132,7 @@ const configureEndOptions = (
   }
 }
 
-export default function getRRULEString({
+export function getRRULEString({
   start,
   params
 }: {

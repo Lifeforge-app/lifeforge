@@ -13,7 +13,7 @@ import {
   ImageTypeFilter
 } from './components'
 
-function SearchFilterModal({
+export function SearchFilterModal({
   isOpen,
   onClose,
   filters,
@@ -56,5 +56,3 @@ function SearchFilterModal({
     </ModalWrapper>
   )
 }
-
-export default SearchFilterModal

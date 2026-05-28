@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { TextInput } from '@components/inputs'
-import { useModalStore } from '@components/overlays'
+import { useModalStore } from 'shared'
 
-import QrCodeScanner from './QRCodeScanner'
+import { QRCodeScanner as QrCodeScanner } from './index'
 
 const meta = {
   component: QrCodeScanner
