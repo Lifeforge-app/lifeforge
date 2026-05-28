@@ -3,10 +3,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Box, Flex, Text } from '@components/primitives'
 
-import ContextMenuGroup from './components/ContextMenuGroup'
-import ContextMenuItem from './components/ContextMenuItem'
-import Index from './index'
-import ContextMenu from './index'
+import { ContextMenu } from './index'
+import { ContextMenuGroup } from './components/ContextMenuGroup'
+import { ContextMenuItem } from './components/ContextMenuItem'
 
 const meta = {
   argTypes: {
@@ -14,8 +13,8 @@ const meta = {
       control: false
     }
   },
-  component: Index
-} satisfies Meta<typeof Index>
+  component: ContextMenu
+} satisfies Meta<typeof ContextMenu>
 
 export default meta
 

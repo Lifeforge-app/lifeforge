@@ -10,7 +10,7 @@ import { Flex, Text } from '@components/primitives'
 
 import * as styles from './SidebarSubsectionItemLink.css'
 
-function SidebarSubsectionItemLink({
+export function SidebarSubsectionItemLink({
   subsectionLabel,
   icon,
   label,
@@ -86,4 +86,3 @@ function SidebarSubsectionItemLink({
   )
 }
 
-export default SidebarSubsectionItemLink

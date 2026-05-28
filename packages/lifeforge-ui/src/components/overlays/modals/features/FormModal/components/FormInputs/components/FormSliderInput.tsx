@@ -13,7 +13,7 @@ export type SliderFieldProps = BaseFieldProps<number, number, true> & {
   step?: number
 }
 
-function FormSliderInput({
+export function FormSliderInput({
   field,
   value,
   namespace,
@@ -35,4 +35,3 @@ function FormSliderInput({
   )
 }
 
-export default FormSliderInput

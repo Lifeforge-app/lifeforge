@@ -1,12 +1,11 @@
-// Utility components & HOCs
-export { default as APIOnlineStatusWrapper } from './APIOnlineStatusWrapper'
+export * from './APIOnlineStatusWrapper'
 
-export { default as EncryptionWrapper } from './EncryptionWrapper'
+export * from './EncryptionWrapper'
 
-export { default as Scrollbar } from './Scrollbar'
+export * from './Scrollbar'
 
-export { default as Tooltip } from './Tooltip'
+export * from './Tooltip'
 
-export { default as WithQuery } from './WithQuery'
+export * from './WithQuery'
 
-export { default as WithQueryData } from './WithQueryData'
+export * from './WithQueryData'

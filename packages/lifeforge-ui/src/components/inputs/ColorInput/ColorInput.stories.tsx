@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import Index from './index'
+import { ColorInput } from './index'
 
 const meta = {
-  component: Index
-} satisfies Meta<typeof Index>
+  component: ColorInput
+} satisfies Meta<typeof ColorInput>
 
 export default meta
 
@@ -22,7 +22,7 @@ export const Default: Story = {
     const [color, setColor] = useState<string>('')
 
     return (
-      <Index {...args} value={color} onChange={setColor} />
+      <ColorInput {...args} value={color} onChange={setColor} />
     )
   }
 }
@@ -40,7 +40,7 @@ export const Required: Story = {
     const [color, setColor] = useState<string>('')
 
     return (
-      <Index {...args} value={color} onChange={setColor} />
+      <ColorInput {...args} value={color} onChange={setColor} />
     )
   }
 }
@@ -58,7 +58,7 @@ export const Disabled: Story = {
     const [color, setColor] = useState<string>('')
 
     return (
-      <Index {...args} value={color} onChange={setColor} />
+      <ColorInput {...args} value={color} onChange={setColor} />
     )
   }
 }
@@ -76,7 +76,7 @@ export const WithErrorMessage: Story = {
     const [color, setColor] = useState<string>('')
 
     return (
-      <Index {...args} value={color} onChange={setColor} />
+      <ColorInput {...args} value={color} onChange={setColor} />
     )
   }
 }
@@ -95,7 +95,7 @@ export const DisabledWithErrorMessage: Story = {
     const [color, setColor] = useState<string>('')
 
     return (
-      <Index {...args} value={color} onChange={setColor} />
+      <ColorInput {...args} value={color} onChange={setColor} />
     )
   }
 }
@@ -113,7 +113,7 @@ export const PlainVariant: Story = {
     const [color, setColor] = useState<string>('')
 
     return (
-      <Index {...args} value={color} onChange={setColor} />
+      <ColorInput {...args} value={color} onChange={setColor} />
     )
   }
 }
@@ -132,7 +132,7 @@ export const PlainVariantWithErrorMessage: Story = {
     const [color, setColor] = useState<string>('')
 
     return (
-      <Index {...args} value={color} onChange={setColor} />
+      <ColorInput {...args} value={color} onChange={setColor} />
     )
   }
 }

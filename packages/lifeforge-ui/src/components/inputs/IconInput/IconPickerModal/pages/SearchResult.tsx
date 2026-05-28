@@ -5,15 +5,15 @@ import { EmptyStateScreen, LoadingScreen } from '@components/feedback'
 import { Button, SearchInput } from '@components/inputs'
 import { Flex } from '@components/primitives'
 
-import ChipSelector from '../components/ChipSelector'
-import IconEntry from '../components/IconEntry'
+import { ChipSelector } from '../components/ChipSelector'
+import { IconEntry } from '../components/IconEntry'
 
-export interface IIconSearchResult {
+interface IIconSearchResult {
   iconList: string[]
   iconSets: Record<string, IIconSetEntry>
 }
 
-export interface IIconSetEntry {
+interface IIconSetEntry {
   name: string
   total: number
   author: {
@@ -31,11 +31,6 @@ export interface IIconSetEntry {
   category: string
   palette: boolean
   version?: string
-}
-
-export interface Author {
-  name: string
-  url: string
 }
 
 async function getIconSet(
@@ -69,7 +64,7 @@ async function getIconSet(
   }
 }
 
-function SearchResult({
+export function SearchResult({
   searchTerm,
   setCurrentIconSetProp,
   onIconSelected
@@ -216,5 +211,3 @@ function SearchResult({
     </>
   )
 }
-
-export default SearchResult

@@ -7,11 +7,11 @@ import { Button } from '@components/inputs'
 import { Box, Flex } from '@components/primitives'
 import { WithQueryData } from '@components/utilities'
 
-import forgeAPI from '@/utils/forgeAPI'
+import { forgeAPI } from '@/utils/forgeAPI'
 
-import TextAreaInput from '../../../TextAreaInput'
+import { TextAreaInput } from '../../../TextAreaInput'
 
-function AIImageGenerator({
+export function AIImageGenerator({
   file,
   setFile,
   setPreview,
@@ -130,4 +130,3 @@ function AIImageGenerator({
   )
 }
 
-export default AIImageGenerator

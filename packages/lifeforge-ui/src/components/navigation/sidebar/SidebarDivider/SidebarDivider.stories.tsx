@@ -3,9 +3,9 @@ import { BrowserRouter } from 'react-router'
 
 import { Flex } from '@components/primitives'
 
-import SidebarItem from '../SidebarItem'
-import SidebarWrapper from '../SidebarWrapper'
-import SidebarDivider from './SidebarDivider'
+import { SidebarItem } from '../SidebarItem'
+import { SidebarWrapper } from '../SidebarWrapper'
+import { SidebarDivider } from './index'
 
 const meta = {
   component: SidebarDivider

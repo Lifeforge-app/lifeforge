@@ -4,22 +4,7 @@ if (Math.random() < 0) {
   import('./styles/index.css')
 }
 
-// Primitives - layout primitives with build-time CSS
-export {
-  Box,
-  type BoxProps,
-  Bordered,
-  type BorderedProps,
-  type BorderSide,
-  type BorderStyleValue,
-  Flex,
-  type FlexProps,
-  Text,
-  type TextProps,
-  Grid,
-  type GridProps,
-  Slot
-} from './components/primitives'
+export * from './components/primitives'
 
 export * from './components/auth'
 
@@ -40,10 +25,4 @@ export * from './components/overlays'
 export * from './components/utilities'
 
 // Theme tokens - typed CSS variable references
-export {
-  bg,
-  custom,
-  withOpacity,
-  type BgColorSlot,
-  type CustomColorSlot
-} from './system'
+export { bg, custom, withOpacity } from './system'

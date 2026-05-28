@@ -8,7 +8,7 @@ import { Box, Flex } from '@components/primitives'
 
 const collections: Record<string, IconifyInfo> = importedCollections
 
-function Header({
+function _Header({
   searchQuery,
   setSearchQuery,
   setCurrentIconSet,
@@ -116,4 +116,4 @@ function Header({
   )
 }
 
-export default memo(Header)
+export const Header = memo(_Header)

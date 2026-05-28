@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import Index from './index'
+import { IconInput } from './index'
 
 const meta = {
-  component: Index
-} satisfies Meta<typeof Index>
+  component: IconInput
+} satisfies Meta<typeof IconInput>
 
 export default meta
 
@@ -22,7 +22,7 @@ export const Default: Story = {
     const [icon, setIcon] = useState('')
 
     return (
-      <Index {...args} value={icon} onChange={setIcon} />
+      <IconInput {...args} value={icon} onChange={setIcon} />
     )
   }
 }
@@ -40,7 +40,7 @@ export const Required: Story = {
     const [icon, setIcon] = useState(args.value)
 
     return (
-      <Index {...args} value={icon} onChange={setIcon} />
+      <IconInput {...args} value={icon} onChange={setIcon} />
     )
   }
 }
@@ -58,7 +58,7 @@ export const Disabled: Story = {
     const [icon, setIcon] = useState('')
 
     return (
-      <Index {...args} value={icon} onChange={setIcon} />
+      <IconInput {...args} value={icon} onChange={setIcon} />
     )
   }
 }
@@ -77,7 +77,7 @@ export const WithErrorMessage: Story = {
     const [icon, setIcon] = useState('')
 
     return (
-      <Index {...args} value={icon} onChange={setIcon} />
+      <IconInput {...args} value={icon} onChange={setIcon} />
     )
   }
 }
@@ -97,7 +97,7 @@ export const DisabledWithErrorMessage: Story = {
     const [icon, setIcon] = useState('')
 
     return (
-      <Index {...args} value={icon} onChange={setIcon} />
+      <IconInput {...args} value={icon} onChange={setIcon} />
     )
   }
 }
@@ -115,7 +115,7 @@ export const PlainVariant: Story = {
     const [icon, setIcon] = useState('')
 
     return (
-      <Index {...args} value={icon} onChange={setIcon} />
+      <IconInput {...args} value={icon} onChange={setIcon} />
     )
   }
 }
@@ -135,7 +135,7 @@ export const PlainVariantWithErrorMessage: Story = {
     const [icon, setIcon] = useState('')
 
     return (
-      <Index {...args} value={icon} onChange={setIcon} />
+      <IconInput {...args} value={icon} onChange={setIcon} />
     )
   }
 }

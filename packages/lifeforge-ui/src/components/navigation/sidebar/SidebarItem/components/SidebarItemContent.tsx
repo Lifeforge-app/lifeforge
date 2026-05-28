@@ -5,10 +5,10 @@ import { useTranslation } from 'react-i18next'
 import { ContextMenu } from '@components/overlays'
 import { Box, Flex, Text } from '@components/primitives'
 
-import SidebarActionButton from './SidebarActionButton'
+import { SidebarActionButton } from './SidebarActionButton'
 import * as styles from './SidebarItemContent.css'
 
-function SidebarItemContent({
+export function SidebarItemContent({
   label,
   sidebarExpanded,
   isMainSidebarItem,
@@ -137,4 +137,3 @@ function SidebarItemContent({
   )
 }
 
-export default SidebarItemContent

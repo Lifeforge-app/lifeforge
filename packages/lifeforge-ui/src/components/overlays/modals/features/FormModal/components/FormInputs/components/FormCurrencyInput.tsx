@@ -10,7 +10,7 @@ export type CurrencyFieldProps = BaseFieldProps<number, number, true> & {
   icon: string
 }
 
-function FormCurrencyInput({
+export function FormCurrencyInput({
   field,
   value,
   autoFocus,
@@ -33,4 +33,3 @@ function FormCurrencyInput({
   )
 }
 
-export default FormCurrencyInput

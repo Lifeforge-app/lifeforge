@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import SliderInput from './SliderInput'
+import { SliderInput } from './index'
 
 const meta = {
   component: SliderInput

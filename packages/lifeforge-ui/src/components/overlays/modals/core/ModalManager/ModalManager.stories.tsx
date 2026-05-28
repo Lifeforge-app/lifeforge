@@ -4,7 +4,7 @@ import { useModalStore } from 'shared'
 import { Button } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-import ModalManager from './ModalManager'
+import { ModalManager } from './index'
 
 const meta = {
   component: ModalManager

@@ -202,5 +202,3 @@ export const buttonRecipe = recipe({
     hasIconWithChildren: false
   }
 })
-
-export type ButtonVariants = Parameters<typeof buttonRecipe>[0]

@@ -35,7 +35,7 @@ interface ContextMenuItemProps {
   onClick: () => void
 }
 
-function getStateClassName(
+export function getStateClassName(
   disabled: boolean,
   active: boolean,
   dangerous: boolean
@@ -47,7 +47,7 @@ function getStateClassName(
   return dangerous ? styles.itemInactiveDangerous : styles.itemInactiveSafe
 }
 
-function ContextMenuItem({
+export function ContextMenuItem({
   label,
   icon,
   dangerous = false,
@@ -140,4 +140,3 @@ function ContextMenuItem({
   )
 }
 
-export default ContextMenuItem

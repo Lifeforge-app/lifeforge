@@ -4,7 +4,7 @@ import colors from 'tailwindcss/colors'
 
 import { Box } from '@components/primitives'
 
-import Tabs from '../Tabs'
+import { Tabs } from '../Tabs'
 
 const meta = {
   argTypes: {

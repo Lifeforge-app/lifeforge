@@ -1,8 +1,5 @@
-// Authentication & security components
+export * from './OTPInputBox'
 
-export { default as OTPInputBox } from './OTPInputBox'
+export * from './WithMasterPassword'
 
-export { default as WithMasterPassword } from './WithMasterPassword'
-
-// SSO components
 export * from './sso'

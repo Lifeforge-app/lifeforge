@@ -1,0 +1,173 @@
+import { useCallback, useState } from 'react'
+import { useModuleSidebarState } from 'shared'
+
+import { Box } from '@components/primitives'
+
+import { SidebarCancelButton } from './components/SidebarCancelButton'
+import { SidebarItemContent } from './components/SidebarItemContent'
+import { SidebarItemIcon } from './components/SidebarItemIcon'
+import { SidebarItemSubsection } from './components/SidebarItemSubsection'
+import { SidebarItemSubsectionExpandIcon } from './components/SidebarItemSubsectionExpandIcon'
+import { SidebarItemWrapper } from './components/SidebarItemWrapper'
+
+interface SidebarItemProps {
+  /** Label string or React element to display for the sidebar item. */
+  label: string | React.ReactElement
+  /**
+   * Icon string or React element to display alongside the label.
+   *
+   * - Default to icon identifier for Iconify icons (<icon-prefix>:<icon-name>).
+   * - Prefix "customHTML:" can be used to render custom SVG/HTML icons.
+   * - Prefix "url:" can be used to render image icons from a URL.
+   */
+  icon?: string | React.ReactElement
+  /** Whether the sidebar is currently selected/active. */
+  active?: boolean
+  /** Callback function triggered when the sidebar item is clicked. Can be a function or "expand" to toggle subsection. */
+  onClick?: (() => void) | 'expand'
+  /** Callback function triggered when the cancel button is clicked.
+   * If provided, a cancel button is shown when the sidebar item is active.
+   */
+  onCancelButtonClick?: () => void
+  /** Color for the side strip indicator. If not provided, no side strip is shown. */
+  sideStripColor?: string
+  /** Optional number badge to display on the right side of the sidebar item. */
+  number?: number
+  /** Props for the action button displayed on the sidebar item. */
+  actionButtonProps?: {
+    icon: string
+    onClick: () => void
+  }
+  /** React element containing context menu items.
+   * If provided, a hamburger menu is shown when user hovers over the sidebar item.
+   */
+  contextMenuItems?: React.ReactElement
+  /** Styling for the sidebar item. */
+  classNames?: {
+    wrapper?: string
+    icon?: string
+  }
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  namespace?: string | false
+  /** Optional subsection items to display when expanded. */
+  subsection?: {
+    label: string
+    icon: string | React.ReactElement
+    onClick: () => void
+    active: boolean
+    namespace?: string | false
+    amount?: number
+  }[]
+}
+
+/**
+ * A clickable navigation item for use in sidebar menus.
+ *
+ * Displays a label with an optional icon, supports active states, and can include
+ * visual indicators like colored side strips and number badges. Provides advanced
+ * features such as context menus, action buttons, and cancel buttons for enhanced
+ * user interaction.
+ * ```
+ */
+export function SidebarItem({
+  label,
+  icon,
+  active = false,
+  onClick,
+  onCancelButtonClick,
+  sideStripColor,
+  number,
+  actionButtonProps,
+  contextMenuItems,
+  classNames,
+  namespace,
+  subsection
+}: SidebarItemProps) {
+  const { setIsSidebarOpen } = useModuleSidebarState()
+
+  const [subsectionExpanded, setSubsectionExpanded] = useState(active ?? false)
+
+  const handleNavigation = useCallback(() => {
+    if (onClick === 'expand' && subsection?.length) {
+      setSubsectionExpanded(!subsectionExpanded)
+
+      return
+    }
+
+    if (onClick !== undefined && onClick !== 'expand') {
+      setIsSidebarOpen(false)
+      onClick()
+    }
+  }, [onClick, setIsSidebarOpen, subsection, subsectionExpanded])
+
+  const handleToggleSubsection = useCallback(() => {
+    if (subsection !== undefined) {
+      setSubsectionExpanded(!subsectionExpanded)
+    }
+  }, [subsection, subsectionExpanded])
+
+  return (
+    <>
+      <SidebarItemWrapper
+        active={active}
+        className={classNames?.wrapper}
+        onClick={handleNavigation}
+      >
+        {sideStripColor !== undefined && (
+          <Box
+            as="span"
+            display="block"
+            flexShrink="0"
+            height="2rem"
+            rounded="full"
+            style={{ backgroundColor: sideStripColor }}
+            width="0.25rem"
+          />
+        )}
+        <SidebarItemIcon
+          active={active}
+          className={classNames?.icon}
+          icon={icon}
+        />
+        <SidebarItemContent
+          actionButtonProps={actionButtonProps}
+          active={active}
+          contextMenuItems={contextMenuItems}
+          hasSubsection={subsection !== undefined}
+          isMainSidebarItem={false}
+          label={label}
+          namespace={namespace}
+          number={number}
+          sidebarExpanded={false}
+          onCancelButtonClick={onCancelButtonClick}
+        />
+        {active && onCancelButtonClick !== undefined && (
+          <SidebarCancelButton onClick={onCancelButtonClick} />
+        )}
+        {subsection !== undefined && (
+          <SidebarItemSubsectionExpandIcon
+            subsectionExpanded={subsectionExpanded}
+            toggleSubsection={handleToggleSubsection}
+          />
+        )}
+      </SidebarItemWrapper>
+      {subsection !== undefined && (
+        <SidebarItemSubsection
+          label={label}
+          namespace={namespace}
+          subsection={subsection.map(item => ({
+            ...item,
+            onClick: undefined,
+            callback: {
+              onClick: item.onClick,
+              active: item.active
+            },
+            amount: item.amount
+          }))}
+          subsectionExpanded={subsectionExpanded}
+        />
+      )}
+    </>
+  )
+}
+

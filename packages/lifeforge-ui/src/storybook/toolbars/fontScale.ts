@@ -1,4 +1,4 @@
-const FONT_SCALE_TOOLBAR_CONFIG = {
+export const FONT_SCALE_TOOLBAR_CONFIG = {
   name: 'Font Scale',
   description: 'Font scale',
   defaultValue: 1,
@@ -15,4 +15,3 @@ const FONT_SCALE_TOOLBAR_CONFIG = {
   }
 }
 
-export default FONT_SCALE_TOOLBAR_CONFIG

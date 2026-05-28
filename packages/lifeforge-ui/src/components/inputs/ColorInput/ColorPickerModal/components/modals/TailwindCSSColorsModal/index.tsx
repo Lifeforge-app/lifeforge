@@ -4,7 +4,7 @@ import { ModalHeader } from '@components/overlays'
 import { Box, Flex, Grid, Text } from '@components/primitives'
 
 import * as styles from './TailwindCSSColorsModal.css'
-import ColorItem from './components/ColorItem'
+import { ColorItem } from './components/ColorItem'
 
 function TailwindCSSColorsModal({
   data: { color, setColor },
@@ -75,4 +75,4 @@ function TailwindCSSColorsModal({
   )
 }
 
-export default TailwindCSSColorsModal
+export { TailwindCSSColorsModal }

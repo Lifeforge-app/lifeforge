@@ -1,4 +1,4 @@
-const FILE_ICONS = {
+export const FILE_ICONS = {
   pptx: 'tabler:presentation-analytics',
   ppt: 'tabler:presentation-analytics',
   docx: 'tabler:file-type-docx',
@@ -168,4 +168,3 @@ const FILE_ICONS = {
   tar: 'tabler:file-code'
 }
 
-export default FILE_ICONS

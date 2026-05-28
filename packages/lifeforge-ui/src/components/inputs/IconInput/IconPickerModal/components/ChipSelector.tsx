@@ -5,7 +5,7 @@ import { usePersonalization } from 'shared'
 import { TagChip } from '@components/data-display'
 import { Flex, Text, Transition } from '@components/primitives'
 
-function ChipSelector({
+export function ChipSelector({
   options,
   value,
   onChange
@@ -94,4 +94,3 @@ function ChipSelector({
   )
 }
 
-export default ChipSelector

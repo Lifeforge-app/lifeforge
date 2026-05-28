@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import LocationInput, { type Location } from './LocationInput'
+import { LocationInput, type Location } from './index'
 
 const meta = {
   argTypes: {

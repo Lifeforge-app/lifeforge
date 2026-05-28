@@ -6,7 +6,7 @@ import { Button } from '@components/inputs'
 import { ModalHeader } from '@components/overlays'
 import { Box, Flex } from '@components/primitives'
 
-import PaletteButtons from './components/PaletteButtons'
+import { PaletteButtons } from './components/PaletteButtons'
 import { useColorPickerModalStore } from './stores/useColorPickerModalStore'
 
 function checkContrast(hexColor: string): string {
@@ -160,4 +160,4 @@ function ColorPickerModal({
   )
 }
 
-export default ColorPickerModal
+export { ColorPickerModal }

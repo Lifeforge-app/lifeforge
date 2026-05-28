@@ -2,11 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import z from 'zod'
 
 import { Button } from '@components/inputs'
-import { useModalStore } from '@components/overlays'
+import { useModalStore } from 'shared'
 
-import defineForm from './formBuilder'
-import Index from './index'
-import FormModal from './index'
+import { defineForm } from './formBuilder'
+import { FormModal } from './index'
 
 type CuteForm = {
   name: string
@@ -87,11 +86,11 @@ const meta = {
       }
     }
   } as never,
-  component: Index,
+  component: FormModal,
   parameters: {
     deepControls: { enabled: true }
   }
-} satisfies Meta<typeof Index>
+} satisfies Meta<typeof FormModal>
 
 export default meta
 

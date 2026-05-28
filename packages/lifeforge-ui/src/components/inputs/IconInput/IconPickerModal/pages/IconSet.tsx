@@ -5,10 +5,10 @@ import { EmptyStateScreen, LoadingScreen } from '@components/feedback'
 import { SearchInput } from '@components/inputs'
 import { Flex, Text } from '@components/primitives'
 
-import ChipSelector from '../components/ChipSelector'
-import IconEntry from '../components/IconEntry'
+import { ChipSelector } from '../components/ChipSelector'
+import { IconEntry } from '../components/IconEntry'
 
-export interface IIconSetData {
+interface IIconSetData {
   title: string
   total: number
   prefix: string
@@ -30,7 +30,7 @@ async function getIconSet(prefix: string): Promise<IIconSetData | null> {
   }
 }
 
-function IconSet({
+export function IconSet({
   iconSet,
   onIconSelected
 }: {
@@ -164,5 +164,3 @@ function IconSet({
     </>
   )
 }
-
-export default IconSet

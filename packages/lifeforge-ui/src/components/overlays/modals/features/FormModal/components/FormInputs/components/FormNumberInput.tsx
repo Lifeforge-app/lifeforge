@@ -10,7 +10,7 @@ export type NumberFieldProps = BaseFieldProps<number, number, true> & {
   icon: string
 }
 
-function FormNumberInput({
+export function FormNumberInput({
   field,
   value,
   autoFocus,
@@ -32,4 +32,3 @@ function FormNumberInput({
   )
 }
 
-export default FormNumberInput

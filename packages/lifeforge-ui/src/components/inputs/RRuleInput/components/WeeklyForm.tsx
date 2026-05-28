@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next'
 import { ListboxInput, ListboxOption, NumberInput } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-import type { FreqSpecificParams } from '../RRuleInput'
+import type { FreqSpecificParams } from '..'
 
-const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
+export const DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'] as const
 
-function WeeklyForm({
+export function WeeklyForm({
   data,
   setData
 }: {
@@ -57,5 +57,3 @@ function WeeklyForm({
     </Flex>
   )
 }
-
-export default WeeklyForm

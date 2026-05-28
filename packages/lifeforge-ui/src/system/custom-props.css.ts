@@ -14,7 +14,7 @@ import { globalStyle } from '@vanilla-extract/css'
 //
 // This file has no exports — it is imported for its side effects only.
 
-const responsiveProps = [
+export const responsiveProps = [
   { className: 'lf-w', property: 'width', customProp: '--lf-w' },
   { className: 'lf-min-w', property: 'minWidth', customProp: '--lf-min-w' },
   { className: 'lf-max-w', property: 'maxWidth', customProp: '--lf-max-w' },

@@ -7,12 +7,12 @@ import { Box, Flex } from '@components/primitives'
 import { Scrollbar } from '@components/utilities'
 
 import type { IIconSet } from '../../typescript/icon_selector_interfaces'
-import CategoryEntry from './components/CategoryEntry'
-import Header from './components/Header'
+import { CategoryEntry } from './components/CategoryEntry'
+import { Header } from './components/Header'
 
 const collections: Record<string, IconifyInfo> = importedCollections
 
-const COLLECTIONS = Object.entries(collections).reduce<
+export const COLLECTIONS = Object.entries(collections).reduce<
   Record<string, IIconSet[]>
 >((acc, [key, value]) => {
   const cat = value.category ?? 'Uncategorized'
@@ -25,7 +25,7 @@ const COLLECTIONS = Object.entries(collections).reduce<
   return acc
 }, {})
 
-export default function IconSetList({
+export function IconSetList({
   setCurrentIconSet
 }: {
   setCurrentIconSet: React.Dispatch<

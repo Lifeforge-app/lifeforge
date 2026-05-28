@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import Tooltip from './Tooltip'
+import { Tooltip } from './index'
 
 const meta = {
   argTypes: {

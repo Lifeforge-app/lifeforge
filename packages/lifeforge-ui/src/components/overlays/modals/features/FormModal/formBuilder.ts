@@ -2,7 +2,7 @@
 import { useMemo } from 'react'
 import { type StoreApi, type UseBoundStore, create } from 'zustand'
 
-import FormModal from '.'
+import type { FormModal } from '.'
 import type {
   FieldsConfig,
   FormState,
@@ -68,7 +68,7 @@ type FlattenUnion<T> = {
  *   .build()
  * ```
  */
-class FormBuilder<
+export class FormBuilder<
   TFormState extends FormState,
   TFieldType extends {
     [K in keyof TFormState]: MatchFieldByFormDataType<TFormState[K]>['type']
@@ -440,7 +440,7 @@ class FormBuilder<
   }
 }
 
-class FormBuilderWithoutTypesMap<TFormState extends FormState> {
+export class FormBuilderWithoutTypesMap<TFormState extends FormState> {
   constructor(private uiConfig: React.ComponentProps<typeof FormModal>['ui']) {}
 
   typesMap<
@@ -532,7 +532,7 @@ class FormBuilderWithoutTypesMap<TFormState extends FormState> {
  * }
  * ```
  */
-export default function defineForm<T extends FormState>(
+export function defineForm<T extends FormState>(
   uiConfig: React.ComponentProps<typeof FormModal>['ui']
 ) {
   return new FormBuilderWithoutTypesMap<FlattenUnion<T>>(uiConfig)

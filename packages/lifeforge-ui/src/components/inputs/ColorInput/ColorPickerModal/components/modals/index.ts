@@ -1,7 +1,7 @@
-import type { ModalComponent } from '@components/overlays'
+import type { ModalComponent } from 'shared'
 
-import MorandiColorPaletteModal from './ModandiColorPaletteModal'
-import TailwindCSSColorsModal from './TailwindCSSColorsModal'
+import { MorandiColorPaletteModal } from './ModandiColorPaletteModal'
+import { TailwindCSSColorsModal } from './TailwindCSSColorsModal'
 
 export const ColorPickerModals: Record<string, ModalComponent> = {
   'colorPicker.tailwind': TailwindCSSColorsModal,

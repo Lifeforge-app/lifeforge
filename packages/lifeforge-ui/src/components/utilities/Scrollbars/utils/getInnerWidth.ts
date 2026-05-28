@@ -1,4 +1,4 @@
-export default function getInnerWidth(el: HTMLElement): number {
+export function getInnerWidth(el: HTMLElement): number {
   const { clientWidth } = el
 
   const { paddingLeft, paddingRight } = getComputedStyle(el)

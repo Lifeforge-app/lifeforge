@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import TagsInput from './TagsInput'
+import { TagsInput } from './index'
 
 const meta = {
   component: TagsInput

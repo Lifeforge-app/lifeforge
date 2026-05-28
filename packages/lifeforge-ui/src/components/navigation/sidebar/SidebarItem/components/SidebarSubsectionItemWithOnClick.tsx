@@ -9,7 +9,7 @@ import { Flex, Text } from '@components/primitives'
 
 import * as styles from './SidebarSubsectionItemWithOnClick.css'
 
-function SidebarSubsectionItemWithOnClick({
+export function SidebarSubsectionItemWithOnClick({
   subsectionLabel,
   icon,
   label,
@@ -94,4 +94,3 @@ function SidebarSubsectionItemWithOnClick({
   )
 }
 
-export default SidebarSubsectionItemWithOnClick

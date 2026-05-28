@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ContextMenu, ContextMenuItem } from '@components/overlays'
 import { Box, Flex, Text } from '@components/primitives'
 
-import Fab from './FAB'
+import { FAB as Fab } from './index'
 
 const meta = {
   component: Fab

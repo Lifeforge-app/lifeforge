@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Box } from '@components/primitives'
 
-import LoadingScreen from './LoadingScreen'
+import { LoadingScreen } from './index'
 
 const meta = {
   component: LoadingScreen

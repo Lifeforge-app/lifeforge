@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-export default function useInputLabel({
+export function useInputLabel({
   namespace,
   label
 }: {

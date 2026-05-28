@@ -4,7 +4,7 @@ import { useRef } from 'react'
 
 import { Card } from '@components/layout'
 
-import VirtualGrid from './VirtualGrid'
+import { VirtualGrid } from './index'
 
 const meta = {
   component: VirtualGrid,

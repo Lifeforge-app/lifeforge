@@ -1,9 +1,9 @@
-export { default as Alert } from './Alert'
+export * from './Alert'
 
-export { default as EmptyStateScreen } from './EmptyStateScreen'
+export * from './EmptyStateScreen'
 
-export { default as ErrorScreen } from './ErrorScreen'
+export * from './ErrorScreen'
 
-export { default as LoadingScreen } from './LoadingScreen'
+export * from './LoadingScreen'
 
-export { default as NotFoundScreen } from './NotFoundScreen'
+export * from './NotFoundScreen'
