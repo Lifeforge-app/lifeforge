@@ -11,7 +11,7 @@
       "@server/*": ["./server/src/*"],
       "@client/*": ["./client/src/*"],
       "@shared/*": ["./shared/src/*"],
-      "@ui/*": ["./packages/lifeforge-ui/src/*"]
+      "@ui/*": ["./packages/ui/src/*"]
     },
     // Module resolution
     "moduleResolution": "bundler",

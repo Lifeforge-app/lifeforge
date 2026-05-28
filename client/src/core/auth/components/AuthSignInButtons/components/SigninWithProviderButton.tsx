@@ -1,9 +1,9 @@
-import { Button } from 'lifeforge-ui'
 import _ from 'lodash'
 import { memo, useCallback } from 'react'
 import { toast } from 'react-toastify'
-import { useSearchParams } from 'shared'
-import { useAuth } from 'shared'
+
+import { useAuth, useSearchParams } from '@lifeforge/shared'
+import { Button } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -50,7 +50,7 @@ function SigninWithProviderButton({
   return (
     <Button
       key={provider}
-      className="w-full"
+      width="100%"
       icon={`tabler:brand-${provider}`}
       loading={
         loading ||

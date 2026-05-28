@@ -1,7 +1,6 @@
-import { LoadingScreen, NotFoundScreen } from 'lifeforge-ui'
-import type { RouteObject } from 'shared'
-import { Navigate } from 'shared'
-import type { ModuleCategory } from 'shared'
+import { Navigate } from '@lifeforge/shared'
+import type { ModuleCategory, RouteObject } from '@lifeforge/shared'
+import { LoadingScreen, NotFoundScreen } from '@lifeforge/ui'
 
 import Auth from '@/core/auth'
 

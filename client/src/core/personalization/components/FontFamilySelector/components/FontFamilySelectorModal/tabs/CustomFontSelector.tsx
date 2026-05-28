@@ -1,5 +1,9 @@
 import { Icon } from '@iconify/react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { usePersonalization } from '@lifeforge/shared'
 import {
   Button,
   Card,
@@ -10,10 +14,7 @@ import {
   Scrollbar,
   WithQuery,
   useModalStore
-} from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { usePersonalization } from 'shared'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

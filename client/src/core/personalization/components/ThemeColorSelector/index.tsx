@@ -1,8 +1,10 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { Button, ColorInput, OptionsColumn } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { Button, ColorInput, OptionsColumn } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 import DefaultThemeColorSelector from './components/DefaultThemeColorSelector'
 

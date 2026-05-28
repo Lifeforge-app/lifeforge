@@ -27,23 +27,56 @@
         align-items: center;
         justify-content: center;
         background-color: black;
-        color: white;
         font-family: 'Inter', sans-serif;
+        z-index: 9999;
+      }
+
+      .loader {
+        width: 36px;
+        height: 36px;
+        border: 4px solid white;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      .forging-text {
+        font-size: 1.125rem;
+        font-weight: 500;
+        color: white;
+      }
+
+      .dark .preloader {
+        background-color: var(--color-bg-950);
+      }
+
+      #root {
+        height: 100vh;
+        width: 100%;
+        background-color: white;
+        color: black;
+      }
+
+      .dark #root {
+        background-color: var(--color-bg-950);
+        color: var(--color-bg-50);
       }
     </style>
   </head>
 
-  <body class="h-[100vh] w-full">
-    <div
-      class="preloader flex-center absolute top-0 left-0 h-[100vh] w-full flex-col gap-[1rem] bg-black! text-black!"
-    >
-      <span class="loader text-white!"></span>
-      <p class="text-lg font-medium text-white">Forging things together...</p>
+  <body>
+    <div class="preloader">
+      <span class="loader"></span>
+      <p class="forging-text">Forging things together...</p>
     </div>
-    <div
-      class="dark:bg-bg-950 h-[100vh] w-full bg-white text-black"
-      id="root"
-    ></div>
+    <div id="root"></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

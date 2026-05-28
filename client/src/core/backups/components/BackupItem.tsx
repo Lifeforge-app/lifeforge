@@ -1,6 +1,10 @@
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import prettyBytes from 'pretty-bytes'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
+
 import {
   Button,
   Card,
@@ -8,10 +12,7 @@ import {
   ContextMenu,
   ContextMenuItem,
   useModalStore
-} from 'lifeforge-ui'
-import prettyBytes from 'pretty-bytes'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

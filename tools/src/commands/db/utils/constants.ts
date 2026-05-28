@@ -2,9 +2,6 @@
  * Constants for database command operations
  */
 
-
-
-
 /**
  * Prettier formatting options for generated files
  */

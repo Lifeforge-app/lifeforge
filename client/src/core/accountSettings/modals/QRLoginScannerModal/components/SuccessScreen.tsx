@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
-import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+
+import { Button } from '@lifeforge/ui'
 
 function SuccessScreen({
   onClose,

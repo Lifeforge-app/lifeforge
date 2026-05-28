@@ -9,7 +9,7 @@ import {
   ContextMenuItem,
   Card,
   useModalStore
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { toast } from 'react-toastify'
 
 import ModifyEntryModal from './ModifyEntryModal'

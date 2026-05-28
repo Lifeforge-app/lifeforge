@@ -1,6 +1,7 @@
-import { ErrorScreen } from 'lifeforge-ui'
 import { ErrorBoundary } from 'react-error-boundary'
-import { Outlet } from 'shared'
+
+import { Outlet } from '@lifeforge/shared'
+import { ErrorScreen } from '@lifeforge/ui'
 
 import useTitleEffect from '../hooks/useTitleEffect'
 import Sidebar from './Sidebar/Sidebar'

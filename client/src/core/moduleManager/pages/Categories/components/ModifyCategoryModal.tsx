@@ -1,5 +1,9 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
 import {
   Button,
   ModalHeader,
@@ -7,10 +11,7 @@ import {
   WithQuery,
   WithQueryData,
   useModalStore
-} from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -203,10 +204,10 @@ function ModifyCategoryModal({
                     </div>
                   ))}
                   <Button
-                    className="w-full"
                     icon="tabler:plus"
                     namespace="common.moduleManager"
                     variant="plain"
+                    width="100%"
                     onClick={() => {
                       open(ModifyTranslationKeyModal, {
                         openType: 'create',

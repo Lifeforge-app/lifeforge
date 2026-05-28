@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import { Link } from 'shared'
+
+import { Link } from '@lifeforge/shared'
 
 function CustomLink({ text, to }: { text: string; to: string }) {
   return (

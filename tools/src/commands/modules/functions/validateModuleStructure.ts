@@ -36,7 +36,7 @@ const MODULE_STRUCTURE: Array<{
     validate: async (content: string) => {
       const json = JSON.parse(content)
 
-      const { packageJSONSchema } = await import('shared')
+      const { packageJSONSchema } = await import('@lifeforge/shared')
 
       const result = z.safeParse(packageJSONSchema, json)
 

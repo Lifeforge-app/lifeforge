@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
 
 import { BG_BLURS } from '../constants/bg_blurs'
 

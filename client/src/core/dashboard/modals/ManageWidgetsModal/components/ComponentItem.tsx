@@ -1,9 +1,10 @@
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { Switch } from 'lifeforge-ui'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { type IDashboardLayout, usePersonalization } from 'shared'
+
+import { type IDashboardLayout, usePersonalization } from '@lifeforge/shared'
+import { Switch } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -106,7 +107,10 @@ function ComponentListItem({
   }
 
   return (
-    <li className="flex-between bg-bg-50 shadow-custom dark:bg-bg-800/50 flex gap-8 rounded-lg p-4" onClick={toggleComponent}>
+    <li
+      className="flex-between bg-bg-50 shadow-custom dark:bg-bg-800/50 flex gap-8 rounded-lg p-4"
+      onClick={toggleComponent}
+    >
       <div className="flex items-center gap-3">
         <div
           className={clsx(

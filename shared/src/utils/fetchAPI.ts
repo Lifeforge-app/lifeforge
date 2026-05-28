@@ -59,7 +59,7 @@ async function handleAxiosResponse<T>(
     return response.data as T
   }
 
-  const contentType = response.headers['content-type'] || ''
+  const contentType = String(response.headers['content-type'] || '')
 
   if (contentType.includes('application/json')) {
     const data = response.data as ApiResponse<T>

@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
-import { Card } from 'lifeforge-ui'
 import { useState } from 'react'
+
+import { Card } from '@lifeforge/ui'
 
 dayjs.extend(weekOfYear)
 

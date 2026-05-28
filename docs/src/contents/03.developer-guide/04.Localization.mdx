@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 
 import CustomLink from '../../components/CustomLink'
-import { Alert } from "lifeforge-ui"
+import { Alert } from "@lifeforge/ui"
 
 ###### Localization
 
@@ -238,7 +238,7 @@ A few components in lifeforge-ui have a `tProps` prop that allows you to pass tr
 
 </section>
 
-<section id="lifeforge-ui-integration">
+<section id="@lifeforge/ui-integration">
 ## lifeforge-ui Integration
 
 Many components in `lifeforge-ui` have built-in translation support via the `namespace` prop. This allows for cleaner code by automating translation lookups. However, different components may have different translation props, so refer to the Storybook documentation for [lifeforge-ui](https://ui.lifeforge.dev/) for more information.
@@ -335,12 +335,12 @@ Want to contribute a new language to LifeForge? The localization system is built
 
 ### 1. Creation Workflow
 
-1.  **Preparation** — Decide on your language and region code (e.g., `es-ES` for Spanish (Spain)).
-2.  **Naming Convention** — Packages must follow the format `@lifeforge/<owner>--lang-<code>`:
+1.  **Preparation** - Decide on your language and region code (e.g., `es-ES` for Spanish (Spain)).
+2.  **Naming Convention** - Packages must follow the format `@lifeforge/<owner>--lang-<code>`:
     *   `<owner>`: Your GitHub username or organization name (e.g., `melvinchia3636`)
     *   `<code>`: The language code (e.g., `ms`, `zh-CN`)
     *   Example: `@lifeforge/melvinchia3636--lang-ms`
-3.  **Directory Structure** — Create a directory in `locales/` matching your package name sans scope:
+3.  **Directory Structure** - Create a directory in `locales/` matching your package name sans scope:
     *   Directory: `locales/melvinchia3636--lang-ms`
 
 ### 2. Package Structure

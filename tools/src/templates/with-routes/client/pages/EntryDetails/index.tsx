@@ -1,5 +1,5 @@
-import { GoBackButton } from 'lifeforge-ui'
-import { useNavigate, useParams } from 'shared'
+import { useNavigate, useParams } from '@lifeforge/shared'
+import { GoBackButton } from '@lifeforge/ui'
 
 function EntryDetails() {
   const navigate = useNavigate()

@@ -1,7 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { EncryptionWrapper, useModalStore } from 'lifeforge-ui'
-import { APIOnlineStatusWrapper } from 'lifeforge-ui'
 import { useMemo } from 'react'
+
 import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
@@ -14,7 +13,12 @@ import {
   PersonalizationProvider,
   SocketProvider,
   ToastProvider
-} from 'shared'
+} from '@lifeforge/shared'
+import {
+  APIOnlineStatusWrapper,
+  EncryptionWrapper,
+  useModalStore
+} from '@lifeforge/ui'
 
 import TwoFAModal from '@/core/auth/modals/TwoFAModal'
 import CoreFederationProvider from '@/federation/providers/CoreFederationProvider'
@@ -51,7 +55,7 @@ function Providers() {
         [PersonalizationProvider, { forgeAPI }],
 
         // Provider that checks if the API is online or not
-        // A wrapper exported from lifeforge-ui is used to avoid circular dependencies
+        // A wrapper exported from @lifeforge/ui is used to avoid circular dependencies
         [
           APIOnlineStatusProvider,
           {

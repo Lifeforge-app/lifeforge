@@ -1,6 +1,6 @@
 export const PROJECTS = {
   shared: 'shared',
-  ui: 'packages/lifeforge-ui',
+  ui: 'packages/ui',
   client: 'client',
   server: 'server',
   docs: 'docs',

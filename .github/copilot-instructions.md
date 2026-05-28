@@ -28,7 +28,7 @@ This monorepo uses Bun workspaces with a type-safe API pattern shared between se
 
 ### Server conventions (Express + PocketBase)
 
-- Define endpoints with `forge` in app routers. Always specify Zod schemas via `.input({ body, query })`—handlers receive fully typed `body`, `query`, `pb`, `io`, and `media` (if used).
+- Define endpoints with `forge` in app routers. Always specify Zod schemas via `.input({ body, query })`-handlers receive fully typed `body`, `query`, `pb`, `io`, and `media` (if used).
 - Use `.existenceCheck('body'|'query', { field: 'collection' | '[collection]' })` to assert PocketBase IDs exist before running logic. Brackets mark optional fields; arrays are supported.
 - For uploads, declare `.media({ field: { optional?: boolean } })`. Upload middlewares are auto-attached; `.callback` receives `media` with files.
 - Set `.isDownloadable()` for file responses (adds headers) and `.noDefaultResponse()` when manually writing responses; otherwise responses are wrapped by `successWithBaseResponse` with `statusCode()`.
@@ -52,9 +52,9 @@ This monorepo uses Bun workspaces with a type-safe API pattern shared between se
 ### Shared package patterns
 
 - `shared/src/api/core/forgeAPIClient.ts` is the single source for creating typed clients from the server’s route type. Don’t hand-roll fetchers.
-- Providers and hooks (e.g., API endpoint/online status, personalization, sidebar, toast) live in `shared/src/providers/*`—reuse them in `client` and `lifeforge-ui`.
+- Providers and hooks (e.g., API endpoint/online status, personalization, sidebar, toast) live in `shared/src/providers/*`-reuse them in `client` and `lifeforge-ui`.
 
-### Adding features — concrete examples
+### Adding features - concrete examples
 
 - New server endpoint: create under `server/src/apps/<feature>/routes/*.ts` using `forge`. Register it in that feature’s `index.ts` via `forgeRouter({ ... })`; it will be mounted automatically in the main `routes.ts`.
 - New client call: use `forgeAPI.<feature>.<endpoint>...` with `.input()` and `.query()`/`.mutate()`; don’t hardcode URLs.
@@ -62,6 +62,6 @@ This monorepo uses Bun workspaces with a type-safe API pattern shared between se
 
 ### External dependencies and integration points
 
-- PocketBase (primary DB/storage), Socket.IO (server push), Zod (validation), React Query (data fetching), Tailwind v4, Day.js, lodash. The server also includes media tooling (Sharp/FFmpeg/PDF utilities) and various 3rd-party integrations—follow existing patterns in `server/src/core/lib/*`.
+- PocketBase (primary DB/storage), Socket.IO (server push), Zod (validation), React Query (data fetching), Tailwind v4, Day.js, lodash. The server also includes media tooling (Sharp/FFmpeg/PDF utilities) and various 3rd-party integrations-follow existing patterns in `server/src/core/lib/*`.
 
 Questions or gaps? If an endpoint or config is unclear, point to the exact file and propose the smallest diff aligned with the patterns above, and ask for environment values when required.

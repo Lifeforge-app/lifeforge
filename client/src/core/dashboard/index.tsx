@@ -1,6 +1,11 @@
-import { ContextMenuItem, ModuleHeader, Button } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
+
+import {
+  Button,
+  ContextMenuItem,
+  ModuleHeader,
+  useModalStore
+} from '@lifeforge/ui'
 
 import DashboardGrid from './components/DashboardGrid'
 import './index.css'
@@ -27,7 +32,7 @@ function DashboardContent() {
           children: (
             <>
               <ContextMenuItem
-                icon='tabler:pencil'
+                icon="tabler:pencil"
                 label={'Edit Layout'}
                 namespace="common.dashboard"
                 onClick={() => {
@@ -49,15 +54,22 @@ function DashboardContent() {
         wrapperRef={wrapperRef}
       />
 
-	  {/* Save Button Popup */}
+      {/* Save Button Popup */}
       {canLayoutChange && (
         <div className="fixed right-6 bottom-6 z-50">
-          <div className="bg-bg-100 dark:bg-bg-800 rounded-md shadow-lg p-4 flex items-center gap-4">
+          <div className="bg-bg-100 dark:bg-bg-800 flex items-center gap-4 rounded-md p-4 shadow-lg">
             <div className="min-w-0">
-              <div className="text-sm font-medium">You are Editing Dashboard Layout</div>
+              <div className="text-sm font-medium">
+                You are Editing Dashboard Layout
+              </div>
             </div>
             <div className="flex items-center gap-2">
-              <Button icon='tabler:device-floppy' onClick={() => setCanLayoutChange(false)}>Save</Button>
+              <Button
+                icon="tabler:device-floppy"
+                onClick={() => setCanLayoutChange(false)}
+              >
+                Save
+              </Button>
             </div>
           </div>
         </div>
