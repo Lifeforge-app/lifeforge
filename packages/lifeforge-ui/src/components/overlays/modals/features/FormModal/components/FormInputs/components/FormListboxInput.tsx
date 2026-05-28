@@ -121,7 +121,7 @@ function ListboxButtonContent({
   )
 }
 
-function FormListboxInput({
+export function FormListboxInput({
   field,
   value,
   namespace,
@@ -181,4 +181,3 @@ function FormListboxInput({
   )
 }
 
-export default FormListboxInput

@@ -1,7 +1,7 @@
-export { default as ImageTypeFilter } from './ImageTypeFilter'
+export { ImageTypeFilter } from './ImageTypeFilter'
 
-export { default as CategoryFilter } from './CategoryFilter'
+export { CategoryFilter } from './CategoryFilter'
 
-export { default as ColorFilter } from './ColorFilter'
+export { ColorFilter } from './ColorFilter'
 
-export { default as EditorsChoiceSwitch } from './EditorsChoiceSwitch'
+export { EditorsChoiceSwitch } from './EditorsChoiceSwitch'

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 
 import { Bordered, Text } from '@components/primitives'
 
-function SidebarItemIcon({
+export function SidebarItemIcon({
   icon,
   active,
   className
@@ -67,4 +67,3 @@ function SidebarItemIcon({
   )
 }
 
-export default SidebarItemIcon

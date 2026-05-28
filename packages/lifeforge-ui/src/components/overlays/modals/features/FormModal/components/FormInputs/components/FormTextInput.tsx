@@ -1,5 +1,5 @@
 import { QRCodeScanner, TextInput } from '@components/inputs'
-import { useModalStore } from '@components/overlays'
+import { useModalStore } from 'shared'
 
 import type {
   BaseFieldProps,
@@ -17,7 +17,7 @@ export type TextFieldProps = BaseFieldProps<string, string, true> & {
   >['actionButtonProps']
 }
 
-function FormTextInput({
+export function FormTextInput({
   field,
   value,
   autoFocus,
@@ -63,4 +63,3 @@ function FormTextInput({
   )
 }
 
-export default FormTextInput

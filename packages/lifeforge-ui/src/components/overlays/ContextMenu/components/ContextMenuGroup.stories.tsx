@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import ContextMenu from '..'
-import ContextMenuGroup from './ContextMenuGroup'
-import ContextMenuItem from './ContextMenuItem'
+import { ContextMenu } from '..'
+import { ContextMenuGroup } from './ContextMenuGroup'
+import { ContextMenuItem } from './ContextMenuItem'
 
 const meta = {
   argTypes: {

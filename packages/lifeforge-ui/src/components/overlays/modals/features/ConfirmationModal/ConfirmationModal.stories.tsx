@@ -3,7 +3,7 @@ import { useModalStore } from 'shared'
 
 import { Button } from '@components/inputs'
 
-import ConfirmationModal from './ConfirmationModal'
+import { ConfirmationModal } from './index'
 
 const meta = {
   component: ConfirmationModal

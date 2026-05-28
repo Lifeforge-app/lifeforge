@@ -1,7 +1,7 @@
 import { Button } from '@components/inputs'
 import { Box, Text } from '@components/primitives'
 
-function PageNumButton({
+export function PageNumButton({
   number,
   onClick,
   active
@@ -38,4 +38,3 @@ function PageNumButton({
   )
 }
 
-export default PageNumButton

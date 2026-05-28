@@ -12,7 +12,7 @@ interface ColorFilterProps {
   updateFilters: React.ActionDispatch<[action: PixabaySearchFilterAction]>
 }
 
-function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
+export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
   return (
     <ListboxInput
       buttonContent={
@@ -53,4 +53,3 @@ function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
   )
 }
 
-export default ColorFilter

@@ -5,7 +5,7 @@ import { SliderInput, Switch } from '@components/inputs'
 import { Flex, Text } from '@components/primitives'
 import { Tooltip } from '@components/utilities'
 
-import OptionsColumn from './OptionsColumn'
+import { OptionsColumn } from './index'
 
 const meta = {
   argTypes: {

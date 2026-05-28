@@ -5,7 +5,7 @@ import { Box, Transition } from '@components/primitives'
 
 import * as styles from './SidebarActionButton.css'
 
-function SidebarActionButton({
+export function SidebarActionButton({
   icon,
   onClick
 }: {
@@ -32,4 +32,3 @@ function SidebarActionButton({
   )
 }
 
-export default SidebarActionButton

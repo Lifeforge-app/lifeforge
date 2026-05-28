@@ -4,7 +4,7 @@ import { Flex, Text } from '@components/primitives'
 
 import * as styles from './SidebarItemWrapper.css'
 
-function SidebarItemWrapper({
+export function SidebarItemWrapper({
   active,
   children,
   className,
@@ -67,4 +67,3 @@ function SidebarItemWrapper({
   )
 }
 
-export default SidebarItemWrapper

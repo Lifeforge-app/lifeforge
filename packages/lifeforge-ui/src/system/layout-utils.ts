@@ -12,7 +12,7 @@ import type {
 // Prop Definition Types
 // ============================================================================
 
-export interface PropDef {
+interface PropDef {
   className: string
   customProperties: `--${string}`[]
   responsive: boolean
@@ -251,8 +251,7 @@ export function getResponsiveLayoutStyles(
 // Common Sprinkle Props Resolver
 // ============================================================================
 
-export interface CommonSprinkleInput
-  extends PaddingProps, MarginProps, OverflowProps {
+interface CommonSprinkleInput extends PaddingProps, MarginProps, OverflowProps {
   position?: ResponsiveProp<PositionValue>
 }
 

@@ -1,9 +1,9 @@
-import type { FreqSpecificParams } from '../../RRuleInput'
-import SelectableFormWrapper from '../SelectableFormWrapper'
-import YearlyExactDateForm from './components/YearlyExactDateForm'
-import YearlyRelativeDayForm from './components/YearlyRelativeDayForm'
+import type { FreqSpecificParams } from '../..'
+import { SelectableFormWrapper } from '../SelectableFormWrapper'
+import { YearlyExactDateForm } from './components/YearlyExactDateForm'
+import { YearlyRelativeDayForm } from './components/YearlyRelativeDayForm'
 
-function YearlyForm({
+export function YearlyForm({
   data,
   setData
 }: {
@@ -43,5 +43,3 @@ function YearlyForm({
     </>
   )
 }
-
-export default YearlyForm

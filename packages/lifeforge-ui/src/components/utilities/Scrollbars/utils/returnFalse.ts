@@ -1,3 +1,3 @@
-export default function returnFalse(): false {
+export function returnFalse(): false {
   return false
 }

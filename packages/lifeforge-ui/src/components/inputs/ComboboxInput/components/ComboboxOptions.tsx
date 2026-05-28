@@ -4,7 +4,7 @@ import { Bordered, Text } from '@components/primitives'
 
 import * as styles from './ComboboxOptions.css'
 
-function ComboboxOptions({
+export function ComboboxOptions({
   children,
   customWidth
 }: {
@@ -35,4 +35,3 @@ function ComboboxOptions({
   )
 }
 
-export default ComboboxOptions

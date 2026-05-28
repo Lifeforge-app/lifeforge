@@ -8,19 +8,19 @@ import {
   type FormInputProps,
   type FormState
 } from '../../typescript/form.types'
-import FormCheckboxInput from './components/FormCheckboxInput'
-import FormColorInput from './components/FormColorInput'
-import FormCurrencyInput from './components/FormCurrencyInput'
-import FormDateInput from './components/FormDateInput'
-import FormFileInput from './components/FormFileInput'
-import FormIconInput from './components/FormIconInput'
-import FormListboxInput from './components/FormListboxInput'
-import FormLocationInput from './components/FormLocationInput'
-import FormNumberInput from './components/FormNumberInput'
-import FormRRuleInput from './components/FormRRuleInput'
-import FormSliderInput from './components/FormSliderInput'
-import FormTextAreaInput from './components/FormTextAreaInput'
-import FormTextInput from './components/FormTextInput'
+import { FormCheckboxInput } from './components/FormCheckboxInput'
+import { FormColorInput } from './components/FormColorInput'
+import { FormCurrencyInput } from './components/FormCurrencyInput'
+import { FormDateInput } from './components/FormDateInput'
+import { FormFileInput } from './components/FormFileInput'
+import { FormIconInput } from './components/FormIconInput'
+import { FormListboxInput } from './components/FormListboxInput'
+import { FormLocationInput } from './components/FormLocationInput'
+import { FormNumberInput } from './components/FormNumberInput'
+import { FormRRuleInput } from './components/FormRRuleInput'
+import { FormSliderInput } from './components/FormSliderInput'
+import { FormTextAreaInput } from './components/FormTextAreaInput'
+import { FormTextInput } from './components/FormTextInput'
 
 // Map of form field types to their corresponding components
 const COMPONENT_MAP: Record<
@@ -43,7 +43,7 @@ const COMPONENT_MAP: Record<
 }
 
 // Memoized individual form field component to prevent unnecessary rerenders
-const MemoizedFormField = memo(
+export const MemoizedFormField = memo(
   ({
     id,
     field,
@@ -107,7 +107,7 @@ const MemoizedFormField = memo(
 
 MemoizedFormField.displayName = 'MemoizedFormField'
 
-function FormInputs<T extends FormState>({
+export function FormInputs<T extends FormState>({
   fields,
   autoFocusableFieldId,
   conditionalFields,
@@ -199,5 +199,3 @@ function FormInputs<T extends FormState>({
     </div>
   )
 }
-
-export default FormInputs

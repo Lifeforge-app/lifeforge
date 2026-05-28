@@ -9,7 +9,7 @@ import { Box, Flex, Text } from '@components/primitives'
 
 import * as styles from './ColorItem.css'
 
-function ColorItem({
+function _ColorItem({
   name,
   value,
   selected,
@@ -60,7 +60,7 @@ function ColorItem({
   )
 }
 
-export default memo(ColorItem, (prevProps, nextProps) => {
+export const ColorItem = memo(_ColorItem, (prevProps, nextProps) => {
   return (
     prevProps.selected === nextProps.selected &&
     prevProps.value === nextProps.value

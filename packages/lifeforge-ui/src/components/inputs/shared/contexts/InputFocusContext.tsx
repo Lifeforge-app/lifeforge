@@ -10,7 +10,7 @@ type FocusableElement = HTMLElement & {
   contains?(node: Node | null): boolean
 }
 
-const InputFocusContext = createContext(false)
+export const InputFocusContext = createContext(false)
 
 export function useInputFocused() {
   return useContext(InputFocusContext)
@@ -56,4 +56,3 @@ export function InputFocusProvider({
   )
 }
 
-export default InputFocusContext

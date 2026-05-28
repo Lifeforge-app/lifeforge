@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { Box, Text } from '@components/primitives'
 
-function TitleAndDesc({
+export function TitleAndDesc({
   title,
   description,
   namespace = 'common.dashboard',
@@ -58,4 +58,3 @@ function TitleAndDesc({
   )
 }
 
-export default TitleAndDesc

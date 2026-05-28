@@ -3,7 +3,7 @@ import { memo, useCallback } from 'react'
 
 import { Flex, Text, Transition } from '@components/primitives'
 
-function IconEntry({
+function _IconEntry({
   icon,
   iconSet,
   onIconSelected
@@ -46,4 +46,4 @@ function IconEntry({
   )
 }
 
-export default memo(IconEntry)
+export const IconEntry = memo(_IconEntry)

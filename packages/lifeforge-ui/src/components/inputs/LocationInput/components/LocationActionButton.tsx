@@ -5,7 +5,7 @@ import { Box, Text } from '@components/primitives'
 
 import { Tooltip } from '../../../utilities'
 
-function LocationActionButton({
+export function LocationActionButton({
   enabled
 }: {
   enabled: boolean | 'loading'
@@ -57,4 +57,3 @@ function LocationActionButton({
   )
 }
 
-export default LocationActionButton

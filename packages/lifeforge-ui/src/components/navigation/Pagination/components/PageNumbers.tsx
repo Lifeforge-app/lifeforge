@@ -2,10 +2,10 @@ import React from 'react'
 
 import { Flex } from '@components/primitives'
 
-import EllipsisIcon from './EllipsisIcon'
-import PageNumButton from './PageNumButton'
+import { EllipsisIcon } from './EllipsisIcon'
+import { PageNumButton } from './PageNumButton'
 
-function PageNumbers({
+export function PageNumbers({
   page,
   totalPages,
   onPageChange
@@ -76,4 +76,3 @@ function PageNumbers({
   )
 }
 
-export default PageNumbers

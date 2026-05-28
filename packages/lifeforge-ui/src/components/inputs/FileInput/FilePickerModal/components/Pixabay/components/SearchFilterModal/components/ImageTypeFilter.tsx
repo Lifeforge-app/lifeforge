@@ -15,7 +15,7 @@ interface ImageTypeFilterProps {
   updateFilters: React.ActionDispatch<[action: PixabaySearchFilterAction]>
 }
 
-function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
+export function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
   const { t } = useTranslation('common.modals')
 
   return (
@@ -57,4 +57,3 @@ function ImageTypeFilter({ imageType, updateFilters }: ImageTypeFilterProps) {
   )
 }
 
-export default ImageTypeFilter

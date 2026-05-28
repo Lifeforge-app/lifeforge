@@ -5,8 +5,8 @@ import colors from 'tailwindcss/colors'
 
 import { Box, Flex, Text } from '@components/primitives'
 
-import ListboxOption from '../ListboxInput/components/ListboxOption'
-import Listbox from './Listbox'
+import { ListboxOption } from '../ListboxInput/components/ListboxOption'
+import { Listbox } from './index'
 
 const meta = {
   argTypes: {

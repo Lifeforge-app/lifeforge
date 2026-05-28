@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { NumberInput } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-import type { FreqSpecificParams } from '../RRuleInput'
+import type { FreqSpecificParams } from '..'
 
-function DailyForm({
+export function DailyForm({
   data,
   setData
 }: {
@@ -29,5 +29,3 @@ function DailyForm({
     </Flex>
   )
 }
-
-export default DailyForm

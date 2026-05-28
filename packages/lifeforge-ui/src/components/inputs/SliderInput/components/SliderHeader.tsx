@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 
-import useInputLabel from '@components/inputs/shared/hooks/useInputLabel'
+import { useInputLabel } from '@components/inputs/shared/hooks/useInputLabel'
 import { Flex, Text } from '@components/primitives'
 
-function SliderHeader({
+export function SliderHeader({
   icon,
   label,
   namespace,
@@ -60,4 +60,3 @@ function SliderHeader({
   )
 }
 
-export default SliderHeader

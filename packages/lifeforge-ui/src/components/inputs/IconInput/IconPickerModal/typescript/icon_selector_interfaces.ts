@@ -1,4 +1,4 @@
-interface IIconSet {
+export interface IIconSet {
   name: string
   total?: number
   author: Author
@@ -20,5 +20,3 @@ interface License {
   spdx?: string
   url?: string
 }
-
-export type { IIconSet }

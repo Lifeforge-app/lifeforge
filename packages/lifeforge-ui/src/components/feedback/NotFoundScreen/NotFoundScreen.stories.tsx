@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Box } from '@components/primitives'
 
-import NotFoundScreen from './NotFoundScreen'
+import { NotFoundScreen } from './index'
 
 const meta = {
   component: NotFoundScreen

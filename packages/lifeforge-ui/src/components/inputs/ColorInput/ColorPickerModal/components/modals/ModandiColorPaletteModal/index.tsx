@@ -74,4 +74,4 @@ function MorandiColorPaletteModal({
   )
 }
 
-export default MorandiColorPaletteModal
+export { MorandiColorPaletteModal }

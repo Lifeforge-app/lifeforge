@@ -4,7 +4,7 @@ import { Bordered, Text } from '@components/primitives'
 
 import * as styles from './ListboxOptions.css'
 
-function ListboxOptions({
+export function ListboxOptions({
   children,
   customWidth,
   lighter = false,
@@ -48,4 +48,3 @@ function ListboxOptions({
   )
 }
 
-export default ListboxOptions

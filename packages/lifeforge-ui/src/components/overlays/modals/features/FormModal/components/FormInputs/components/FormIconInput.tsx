@@ -9,7 +9,7 @@ export type IconFieldProps = BaseFieldProps<string, string, true> & {
   type: 'icon'
 }
 
-function FormIconInput({
+export function FormIconInput({
   field,
   value,
   autoFocus,
@@ -30,4 +30,3 @@ function FormIconInput({
   )
 }
 
-export default FormIconInput

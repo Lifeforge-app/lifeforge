@@ -23,9 +23,9 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 - [x] `OTPInputBox`
 - [x] `WithMasterPassword/components/CreatePasswordScreen`
 - [x] `WithMasterPassword/components/LockedScreen`
-- [ ] `sso/SSOHeader`
-- [ ] `sso/SSOAppMainView`
-- [ ] `sso/UnauthorizedScreen`
+- [x] `sso/SSOHeader`
+- [x] `sso/SSOAppMainView`
+- [x] `sso/UnauthorizedScreen`
 
 ---
 
@@ -123,11 +123,11 @@ Components are considered **migrated** when they contain zero Tailwind utility c
 | Category       | Migrated | Total | % Done |
 | -------------- | -------: | ----: | -----: |
 | Primitives     |        7 |     7 |   100% |
-| Auth           |        3 |     6 |    50% |
+| Auth           |        6 |     6 |   100% |
 | Data Display   |        8 |     8 |   100% |
 | Feedback       |        5 |     5 |   100% |
 | Inputs         |       22 |    22 |   100% |
 | Layout         |        5 |     5 |   100% |
 | Navigation     |        9 |     9 |   100% |
 | Overlays       |        9 |     9 |   100% |
-| **Total**      |   **68** |**72** | **94%**|
+| **Total**      |   **72** |**72** | **100%**|

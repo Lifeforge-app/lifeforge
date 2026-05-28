@@ -5,7 +5,7 @@ import colors from 'tailwindcss/colors'
 import { Button } from '@components/inputs'
 import { Box, Flex, Text } from '@components/primitives'
 
-import TagsFilter from './TagsFilter'
+import { TagsFilter } from './index'
 
 const meta = {
   argTypes: {

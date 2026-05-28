@@ -9,7 +9,7 @@ import { Flex, Text } from '@components/primitives'
 
 import * as styles from './DnDContainer.css'
 
-function DnDContainer({
+export function DnDContainer({
   getRootProps,
   getInputProps,
   isDragActive,
@@ -133,4 +133,3 @@ function DnDContainer({
   )
 }
 
-export default DnDContainer
