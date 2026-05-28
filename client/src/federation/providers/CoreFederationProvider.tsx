@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { useFederation } from 'shared'
+
+import { useFederation } from '@lifeforge/shared'
 
 import loadModules from '../loaders/loadModules'
 

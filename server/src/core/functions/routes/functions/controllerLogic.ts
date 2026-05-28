@@ -13,6 +13,8 @@
  * The main export is:
  * - `registerController`: Function to register a ForgeControllerBuilder with an Express router
  */
+import type { Request, Response, Router } from 'express'
+
 import {
   BaseResponse,
   CleanedSchemas,
@@ -21,7 +23,6 @@ import {
   Forge,
   MediaConfig
 } from '@lifeforge/server-utils'
-import type { Request, Response, Router } from 'express'
 
 import { encryptResponse } from '@functions/encryption'
 import { coreLogger } from '@functions/logging'

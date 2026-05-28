@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
-import { Button, Card, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { Link, type ModuleCategory } from 'shared'
+
+import { Link, type ModuleCategory } from '@lifeforge/shared'
+import { Button, Card, EmptyStateScreen, WithQuery } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -19,7 +20,8 @@ function APIKeyStatusProvider({
     .map(([key]) => key)
 
   const hasRequiredAPIKeysQuery = useQuery(
-    forgeAPI.checkAPIKeys({
+    forgeAPI
+      .checkAPIKeys({
         keys: requiredAPIKeys.join(',')
       })
       .queryOptions({
@@ -45,7 +47,7 @@ function APIKeyStatusProvider({
                         {t('missing.description')}
                       </p>
                       {requiredAPIKeys.map((key, index) => (
-                        <Card key={index} className="w-full">
+                        <Card key={index} width="100%">
                           <code className="text-xl">{key}</code>
                           <p className="text-bg-500 mt-1">
                             {
@@ -57,7 +59,7 @@ function APIKeyStatusProvider({
                       ))}
                       <Button
                         as={Link}
-                        className="w-full"
+                        width="100%"
                         icon="tabler:arrow-right"
                         iconPosition="end"
                         namespace="common.apiKeys"

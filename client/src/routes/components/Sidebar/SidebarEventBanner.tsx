@@ -2,10 +2,13 @@ import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-import { useMainSidebarState } from 'shared'
-import { usePersonalization } from 'shared'
-import { useAuth } from 'shared'
 import tinycolor from 'tinycolor2'
+
+import {
+  useAuth,
+  useMainSidebarState,
+  usePersonalization
+} from '@lifeforge/shared'
 
 function addNumberSuffix(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']

@@ -1,3 +1,6 @@
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+
 import {
   CleanedSchemas,
   CollectionKey,
@@ -6,8 +9,6 @@ import {
   IGetOne,
   IGetOneFactory
 } from '@lifeforge/server-utils'
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
 
 import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 

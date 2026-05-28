@@ -84,7 +84,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
         executeCommand('bun forge build shared')
       }
 
-      if (!fs.existsSync('packages/lifeforge-ui/dist')) {
+      if (!fs.existsSync('packages/ui/dist')) {
         executeCommand('bun forge build ui')
       }
 
@@ -93,12 +93,10 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   },
   ui: {
     command: () => {
-      killExistingProcess(
-        'lifeforge/packages/lifeforge-ui/node_modules/.bin/storybook'
-      )
+      killExistingProcess('lifeforge/packages/ui/node_modules/.bin/storybook')
 
       return 'bun run dev'
     },
-    cwd: 'packages/lifeforge-ui'
+    cwd: 'packages/ui'
   }
 }

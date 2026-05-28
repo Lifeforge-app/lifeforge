@@ -1,4 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+import _ from 'lodash'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { AutoSizer } from 'react-virtualized'
+
+import { usePersonalization } from '@lifeforge/shared'
 import {
   EmptyStateScreen,
   Listbox,
@@ -7,11 +12,7 @@ import {
   Scrollbar,
   SearchInput,
   WithQuery
-} from 'lifeforge-ui'
-import _ from 'lodash'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { AutoSizer } from 'react-virtualized'
-import { usePersonalization } from 'shared'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

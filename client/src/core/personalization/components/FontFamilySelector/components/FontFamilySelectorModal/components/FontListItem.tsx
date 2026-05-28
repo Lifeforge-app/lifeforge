@@ -1,10 +1,11 @@
 import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { Button } from 'lifeforge-ui'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { usePromiseLoading } from 'shared'
+
+import { usePromiseLoading } from '@lifeforge/shared'
+import { Button } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

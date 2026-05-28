@@ -1,10 +1,11 @@
-import type { ModuleCategory, ModuleConfig } from 'shared'
 import {
   __federation_method_getRemote as getRemote,
   __federation_method_setRemote as setRemote,
   __federation_method_unwrapDefault as unwrapModule
   // @ts-expect-error - Virtual federation methods
 } from 'virtual:__federation__'
+
+import type { ModuleCategory, ModuleConfig } from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
 

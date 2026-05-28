@@ -1,4 +1,4 @@
-import { type ModuleCategory, SYSTEM_CATEGORIES } from 'shared'
+import { type ModuleCategory, SYSTEM_CATEGORIES } from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
 

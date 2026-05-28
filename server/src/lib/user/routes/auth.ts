@@ -1,8 +1,9 @@
-import { ClientError } from '@lifeforge/server-utils'
 import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
 import z from 'zod'
+
+import { ClientError } from '@lifeforge/server-utils'
 
 import { default as _validateOTP } from '@functions/auth/validateOTP'
 import {
@@ -11,8 +12,8 @@ import {
 } from '@functions/database/dbUtils'
 
 import { currentSession } from '..'
-import { removeSensitiveData, updateNullData } from '../utils/auth'
 import forge from '../forge'
+import { removeSensitiveData, updateNullData } from '../utils/auth'
 
 export const validateOTP = forge
   .mutation()

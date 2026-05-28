@@ -1,5 +1,6 @@
-import { Forge, ForgeRouter, RouterInput } from '@lifeforge/server-utils'
 import { Router } from 'express'
+
+import { Forge, ForgeRouter, RouterInput } from '@lifeforge/server-utils'
 
 import { registerController } from './controllerLogic'
 

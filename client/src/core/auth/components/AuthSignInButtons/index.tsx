@@ -1,6 +1,7 @@
-import { Button, useModalStore } from 'lifeforge-ui'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { Box, Button, Flex, Text, useModalStore } from '@lifeforge/ui'
 
 import QRLoginModal from '@/core/auth/modals/QRLoginModal'
 
@@ -21,15 +22,27 @@ function AuthSignInButton({
   const { open } = useModalStore()
 
   return (
-    <div className="mt-6 space-y-3">
+    <Box mt="lg">
       <SignInButton loading={loading} signIn={signIn} />
-      <div className="my-6! flex items-center gap-3">
-        <div className="bg-bg-400 dark:bg-bg-700 h-[1.5px] w-full"></div>
-        <div className="text-bg-400 dark:text-bg-700 shrink-0 font-medium">
+      <Flex centered gap="md" my="lg">
+        <Box
+          bg={{ base: 'bg-400', dark: 'bg-700' }}
+          height="1.5px"
+          width="100%"
+        />
+        <Text
+          color={{ base: 'bg-400', dark: 'bg-700' }}
+          flexShrink="0"
+          weight="medium"
+        >
           {t('orAuthenticateWith')}
-        </div>
-        <div className="bg-bg-400 dark:bg-bg-700 h-[1.5px] w-full"></div>
-      </div>
+        </Text>
+        <Box
+          bg={{ base: 'bg-400', dark: 'bg-700' }}
+          height="1.5px"
+          width="100%"
+        />
+      </Flex>
       {providers.length > 0 && (
         <div className="grid w-full grid-cols-2 gap-3">
           {providers.map(provider => (
@@ -42,15 +55,15 @@ function AuthSignInButton({
         </div>
       )}
       <Button
-        className="w-full"
         icon="tabler:qrcode"
         namespace="common.auth"
         variant="secondary"
+        width="100%"
         onClick={() => open(QRLoginModal, {})}
       >
         qrLogin.title
       </Button>
-    </div>
+    </Box>
   )
 }
 

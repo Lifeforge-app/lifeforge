@@ -1,10 +1,13 @@
-import { Button, OTPInputBox, ResendOTPButton, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { Button, OTPInputBox, TextInput } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
+
+import ResendOTPButton from './ResendOTPButton'
 
 function UsingEmail({
   callback
@@ -99,7 +102,6 @@ function UsingEmail({
         {otpSent ? (
           <div className="space-y-3">
             <OTPInputBox
-              buttonFullWidth
               lighter
               otp={otp}
               setOtp={setOTP}
@@ -112,7 +114,6 @@ function UsingEmail({
               verifyOtpLoading={verifyOtpLoading}
             />
             <ResendOTPButton
-              buttonFullWidth
               otpCooldown={otpCooldown}
               sendOtpLoading={sendOtpLoading}
               onClick={() => {
@@ -137,10 +138,10 @@ function UsingEmail({
               onChange={setEmail}
             />
             <Button
-              className="w-full"
               icon="tabler:mail"
               loading={sendOtpLoading}
               namespace="common.vault"
+              width="100%"
               onClick={requestOTP}
             >
               otp.buttons.request

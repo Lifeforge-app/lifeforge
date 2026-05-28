@@ -1,4 +1,4 @@
-import { RouterProvider } from 'shared'
+import { RouterProvider } from '@lifeforge/shared'
 
 import { useAppRouter } from '../hooks/useAppRouter'
 

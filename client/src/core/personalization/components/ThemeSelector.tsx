@@ -1,9 +1,11 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
-import { OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { OptionsColumn } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 function ThemeSelector() {
   const { theme } = usePersonalization()

@@ -1,4 +1,4 @@
-import type { ModuleCategory } from 'shared'
+import type { ModuleCategory } from '@lifeforge/shared'
 
 import {
   type CategoryOrder,

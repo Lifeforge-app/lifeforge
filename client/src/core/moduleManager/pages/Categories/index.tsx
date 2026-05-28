@@ -13,17 +13,18 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { SYSTEM_CATEGORIES, useFederation } from '@lifeforge/shared'
 import {
   Alert,
   Button,
   EmptyStateScreen,
   ModuleHeader,
   useModalStore
-} from 'lifeforge-ui'
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { SYSTEM_CATEGORIES, useFederation } from 'shared'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import type { RouteObject } from 'shared'
+
+import type { RouteObject } from '@lifeforge/shared'
 
 import { components as COMPONENTS } from './components/MdxComponents'
 

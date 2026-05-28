@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import { Button } from 'lifeforge-ui'
+
+import { Button } from '@lifeforge/ui'
 
 function ErrorScreen({
   onClose,

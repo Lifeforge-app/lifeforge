@@ -107,7 +107,7 @@ export default function createForgeProxy<T>(
 
     apply: () => {
       throw new Error(
-        `Invalid function call on path: ${path.join('.')}. — maybe you meant to use .input(), .queryOptions(), or .getMutationOptions()?`
+        `Invalid function call on path: ${path.join('.')}. - maybe you meant to use .input(), .queryOptions(), or .getMutationOptions()?`
       )
     }
   }) as any

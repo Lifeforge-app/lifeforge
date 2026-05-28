@@ -1,18 +1,19 @@
+import _ from 'lodash'
+import { Fragment, useEffect, useMemo, useState } from 'react'
+
+import {
+  normalizeSubnamespace,
+  useAuth,
+  useFederation,
+  useLocation,
+  useMainSidebarState
+} from '@lifeforge/shared'
 import {
   EmptyStateScreen,
   MainSidebarItem,
   Scrollbar,
   SidebarDivider
-} from 'lifeforge-ui'
-import _ from 'lodash'
-import { Fragment, useEffect, useMemo, useState } from 'react'
-import {
-  normalizeSubnamespace,
-  useFederation,
-  useLocation,
-  useMainSidebarState
-} from 'shared'
-import { useAuth } from 'shared'
+} from '@lifeforge/ui'
 
 import MainSidebarTitle from './MainSidebarTitle'
 

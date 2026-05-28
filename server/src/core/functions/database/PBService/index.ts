@@ -1,5 +1,6 @@
-import { CleanedSchemas, IPBService } from '@lifeforge/server-utils'
 import PocketBase from 'pocketbase'
+
+import { CleanedSchemas, IPBService } from '@lifeforge/server-utils'
 
 import { createServiceLogger } from '@functions/logging'
 

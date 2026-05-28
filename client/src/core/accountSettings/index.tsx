@@ -1,4 +1,4 @@
-import { ModuleHeader } from 'lifeforge-ui'
+import { ModuleHeader } from '@lifeforge/ui'
 
 import AvatarColumn from './components/AvatarColumn'
 import OrdinaryColumn from './components/OrdinaryColumn'

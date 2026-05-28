@@ -117,10 +117,10 @@ export default defineConfig({
         'react-dom',
         {
           shared: {
-            packagePath: './node_modules/shared'
+            packagePath: './node_modules/@lifeforge/shared'
           },
-          'lifeforge-ui': {
-            packagePath: './node_modules/lifeforge-ui'
+          '@lifeforge/ui': {
+            packagePath: './node_modules/@lifeforge/ui'
           }
         },
         '@tanstack/react-query',

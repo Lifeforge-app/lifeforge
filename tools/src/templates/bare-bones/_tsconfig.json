@@ -1,18 +1,12 @@
 {
-    "extends": "./client/tsconfig.json",
-    "compilerOptions": {
-        "baseUrl": ".",
-        "composite": false,
-        "paths": {
-            "@": [
-                "./client/index"
-            ],
-            "@/*": [
-                "./client/*"
-            ]
-        }
-    },
-    "include": [
-        "./manifest.ts"
-    ]
+  "extends": "./client/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "composite": false,
+    "paths": {
+      "@": ["./client/index"],
+      "@/*": ["./client/*"]
+    }
+  },
+  "include": ["./manifest.ts"]
 }

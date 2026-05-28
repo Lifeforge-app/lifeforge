@@ -1,5 +1,6 @@
-import { MediaConfig } from '@lifeforge/server-utils'
 import chalk from 'chalk'
+
+import { MediaConfig } from '@lifeforge/server-utils'
 
 import { coreLogger } from '@functions/logging'
 

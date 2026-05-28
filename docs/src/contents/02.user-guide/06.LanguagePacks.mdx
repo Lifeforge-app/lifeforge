@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 
-import { Alert } from "lifeforge-ui"
+import { Alert } from "@lifeforge/ui"
 import GithubUser from '@/components/GithubUser'
 
 ###### Language Packs
@@ -16,8 +16,8 @@ LifeForge supports dynamic language pack installation, allowing you to add or re
 
 Language packs in LifeForge are stored in the `locales/` directory at the root of the project. Each language pack is a separate git repository containing:
 
-- `manifest.json` — Language metadata (name, icon, display name)
-- Multiple JSON files — Core translations for the system
+- `manifest.json` - Language metadata (name, icon, display name)
+- Multiple JSON files - Core translations for the system
 
 The `ForgeCLI` provides commands to manage language packs:
 
@@ -72,9 +72,9 @@ Language packs are fetched from the official LifeForge registry. The package nam
 
 ### What Happens During Installation
 
-1. **Package Installation** — The language pack is downloaded into `locales/<package-name>`
-2. **Structure Validation** — The CLI verifies that `package.json` is valid
-3. **Database Update** — If this is the first language being installed, all users' language preferences are automatically set to this language
+1. **Package Installation** - The language pack is downloaded into `locales/<package-name>`
+2. **Structure Validation** - The CLI verifies that `package.json` is valid
+3. **Database Update** - If this is the first language being installed, all users' language preferences are automatically set to this language
 
 <Alert className="mt-6" type="important">
 After installing a language pack, restart the server for the changes to take effect.
@@ -99,8 +99,8 @@ bun forge locales remove melvinchia3636--lang-zh-CN
 
 ### What Happens During Removal
 
-1. **User Migration** — Any users with the removed language as their preference are automatically switched to the first remaining language
-2. **Directory Removal** — The language pack directory is deleted
+1. **User Migration** - Any users with the removed language as their preference are automatically switched to the first remaining language
+2. **Directory Removal** - The language pack directory is deleted
 
 <Alert className="mt-6" type="caution">
 You cannot remove the last remaining language pack. At least one language must always be installed.

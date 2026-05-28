@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
 
 function LightAndDarkMode() {
   const { derivedTheme, setTheme } = usePersonalization()

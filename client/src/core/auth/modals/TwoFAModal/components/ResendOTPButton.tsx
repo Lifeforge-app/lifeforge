@@ -1,5 +1,6 @@
-import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+
+import { Button } from '@lifeforge/ui'
 
 function ResendOTPButton({
   otpCooldown,
@@ -14,7 +15,7 @@ function ResendOTPButton({
 
   return (
     <Button
-      className="w-full"
+      width="100%"
       disabled={otpCooldown > 0}
       icon="tabler:refresh"
       loading={sendOtpLoading}

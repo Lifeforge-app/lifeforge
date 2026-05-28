@@ -1,6 +1,7 @@
-import { OptionsColumn, SliderInput } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+
+import { OptionsColumn, SliderInput } from '@lifeforge/ui'
 
 function AdjustmentColumn({
   icon,

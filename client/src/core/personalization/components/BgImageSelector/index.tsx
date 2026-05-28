@@ -1,15 +1,16 @@
 import { useMutation } from '@tanstack/react-query'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { usePersonalization } from '@lifeforge/shared'
 import {
   Button,
   ConfirmationModal,
   FilePickerModal,
-  OptionsColumn
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { usePersonalization } from 'shared'
+  OptionsColumn,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
