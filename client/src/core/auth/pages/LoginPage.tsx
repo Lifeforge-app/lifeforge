@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
 import { useAuth } from '@lifeforge/shared'
-import { Flex, ModalManager, WithQueryData } from '@lifeforge/ui'
+import { ModalManager, Stack, WithQueryData } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -31,24 +31,23 @@ function LoginPage() {
   }, [searchParams])
 
   return (
-    <WithQueryData controller={forgeAPI.untyped('user/oauth/listProviders')}>
+    <WithQueryData controller={forgeAPI.user.oauth.listProviders}>
       {providers => (
         <>
-          <Flex
+          <Stack
             as="section"
-            direction="column"
             overflowY="auto"
             pb="lg"
             pt="2xl"
             px={{ base: 'xl', sm: '2xl' }}
             width={{ base: '100%', lg: '50%' }}
           >
-            <Flex centered direction="column" height="100%">
+            <Stack centered height="100%">
               <AuthHeader />
               <AuthForm providers={providers} />
-            </Flex>
+            </Stack>
             <AuthFooter />
-          </Flex>
+          </Stack>
           <AuthSideImage />
           <ModalManager />
         </>

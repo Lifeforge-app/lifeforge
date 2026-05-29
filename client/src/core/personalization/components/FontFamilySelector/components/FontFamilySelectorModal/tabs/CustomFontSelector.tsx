@@ -45,11 +45,11 @@ function CustomFontSelector({
   const queryClient = useQueryClient()
 
   const customFontsQuery = useQuery(
-    forgeAPI.untyped<CustomFont[]>('user/customFonts/list').queryOptions()
+    forgeAPI.user.customFonts.list.queryOptions()
   )
 
   const deleteMutation = useMutation(
-    forgeAPI.untyped('user/customFonts/remove').mutationOptions({
+    forgeAPI.user.customFonts.remove.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ['user', 'customFonts', 'list']

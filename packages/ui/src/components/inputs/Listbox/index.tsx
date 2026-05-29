@@ -61,7 +61,7 @@ export function Listbox<T>({
           justify="between"
           minWidth="0"
           p="md"
-          rounded="lg"
+          r="lg"
           style={disabled ? { opacity: 0.5 } : undefined}
           width="100%"
           {...rest}
@@ -76,7 +76,7 @@ export function Listbox<T>({
                 {value as unknown as string}
               </Text>
             )}
-            <Text asChild color="bg-500" style={{ flexShrink: 0 }}>
+            <Text asChild color="muted" style={{ flexShrink: 0 }}>
               <Icon icon="tabler:chevron-down" />
             </Text>
           </ListboxButton>

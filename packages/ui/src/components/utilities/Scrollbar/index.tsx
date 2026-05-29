@@ -21,7 +21,7 @@ export function Scrollbar({
           {...props}
           bg={{ base: 'bg-400', dark: 'bg-600' }}
           minHeight="30px"
-          rounded="lg"
+          r="lg"
           style={{ ...props.style }}
         />
       )}

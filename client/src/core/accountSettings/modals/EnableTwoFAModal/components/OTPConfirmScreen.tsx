@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { encrypt } from '@lifeforge/shared'
-import { OTPInputBox } from '@lifeforge/ui'
+import { Flex, OTPInputBox, Text } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -24,9 +24,9 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
     setVerifyOtpLoading(true)
 
     try {
-      const challenge = await forgeAPI.untyped('user/2fa/getChallenge').query()
+      const challenge = await forgeAPI.user['2fa'].getChallenge.query()
 
-      await forgeAPI.untyped('user/2fa/verifyAndEnable').mutate({
+      await forgeAPI.user['2fa'].verifyAndEnable.mutate({
         otp: encrypt(encrypt(otp, challenge), localStorage.getItem('session')!)
       })
 
@@ -39,10 +39,10 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   }
 
   return (
-    <div className="flex-center flex-col">
-      <p className="text-bg-500 mb-6">
+    <Flex centered direction="column">
+      <Text color="muted" mb="lg">
         {t('modals.enable2FA.confirmationDescription')}
-      </p>
+      </Text>
       <OTPInputBox
         lighter
         otp={otp}
@@ -50,7 +50,7 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
         verifyOTP={verifyOTP}
         verifyOtpLoading={verifyOtpLoading}
       />
-    </div>
+    </Flex>
   )
 }
 

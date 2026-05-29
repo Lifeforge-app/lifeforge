@@ -4,6 +4,7 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 import {
   RESPONSIVE_CONDITIONS,
   tokenizedLayoutProperties,
+  tokenizedRoundedProperties,
   tokenizedSpacingProperties,
   tokenizedThemeColorProperties,
   vars
@@ -32,16 +33,16 @@ const gridProperties = defineProperties({
     gap: vars.space,
     rowGap: vars.space,
     columnGap: vars.space,
-    gridAutoFlow: ['row', 'column', 'dense', 'row dense', 'column dense'],
-    borderRadius: vars.radii
+    gridAutoFlow: ['row', 'column', 'dense', 'row dense', 'column dense']
   }
 })
 
 export const gridSprinkles = createSprinkles(
   gridProperties,
+  tokenizedThemeColorProperties,
   tokenizedLayoutProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties
+  tokenizedRoundedProperties
 )
 
 export type GridSprinkles = Parameters<typeof gridSprinkles>[0]

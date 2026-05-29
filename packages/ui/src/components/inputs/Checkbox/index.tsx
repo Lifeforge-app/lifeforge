@@ -48,7 +48,7 @@ export function Checkbox({
               flexShrink="0"
               height="1.5em"
               justify="center"
-              rounded="md"
+              r="md"
               width="1.5em"
             >
               <CheckboxPrimitive.Indicator asChild>

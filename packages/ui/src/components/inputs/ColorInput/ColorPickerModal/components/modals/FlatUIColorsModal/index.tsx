@@ -52,7 +52,7 @@ function FlatUIColorsModal({
                   align="center"
                   height="100%"
                   justify="center"
-                  rounded="md"
+                  r="md"
                   width="100%"
                 >
                   <Box

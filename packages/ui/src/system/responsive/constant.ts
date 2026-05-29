@@ -94,6 +94,14 @@ export const LAYOUT_PROP_DEFS = {
   zIndex: {
     className: 'lf-zi',
     customProperties: ['--lf-zi']
+  },
+  ringWidth: {
+    className: 'lf-rw',
+    customProperties: ['--lf-rw']
+  },
+  ringOffsetWidth: {
+    className: 'lf-row',
+    customProperties: ['--lf-row']
   }
 } as const satisfies Record<string, PropDef>
 

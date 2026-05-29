@@ -61,7 +61,7 @@ export const Opacity: Story = {
             <Box
               bg={{ base: 'custom-500' }}
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{ opacity: on ? 1 : 0 }}
             >
               <Text color="bg-50" weight="semibold">
@@ -78,7 +78,7 @@ export const Opacity: Story = {
               shadow
               bg={{ base: 'bg-50', dark: 'bg-800' }}
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 transform: on ? 'scale(1)' : 'scale(0.8)',
                 transformOrigin: 'top left'
@@ -100,7 +100,7 @@ export const Opacity: Story = {
           >
             <Box
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 backgroundColor: on
                   ? COLORS['custom-500']
@@ -123,7 +123,7 @@ export const Opacity: Story = {
             <Box
               bg={{ base: 'bg-50', dark: 'bg-800' }}
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 boxShadow: on
                   ? '0 8px 24px rgba(0,0,0,0.25)'
@@ -158,7 +158,7 @@ export const MultiProperty: Story = {
             <Box
               bg={{ base: 'custom-500' }}
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 opacity: on ? 1 : 0,
                 transform: on ? 'translateX(0)' : 'translateX(1.5rem)'
@@ -183,7 +183,7 @@ export const MultiProperty: Story = {
               shadow
               bg={{ base: 'bg-50', dark: 'bg-800' }}
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 height: on ? '8rem' : '3rem',
                 overflow: 'hidden',
@@ -225,7 +225,7 @@ export const PerPropertyOverrides: Story = {
             <Box
               bg={{ base: 'custom-500' }}
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 opacity: on ? 1 : 0,
                 transform: on ? 'rotate(0deg)' : 'rotate(8deg)'
@@ -253,7 +253,7 @@ export const PerPropertyOverrides: Story = {
           >
             <Box
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 backgroundColor: on
                   ? 'var(--color-bg-800)'
@@ -290,7 +290,7 @@ export const HoverTriggered: Story = {
               hover: 'custom-500'
             }}
             p="md"
-            rounded="md"
+            r="md"
             width="100%"
           >
             <Text weight="semibold">
@@ -324,7 +324,7 @@ export const SingleEntryObject: Story = {
             <Box
               bg={{ base: 'bg-50', dark: 'bg-800' }}
               p="lg"
-              rounded="lg"
+              r="lg"
               style={{
                 border: '3px solid',
                 borderColor: on ? COLORS['custom-500'] : 'var(--color-bg-300)'

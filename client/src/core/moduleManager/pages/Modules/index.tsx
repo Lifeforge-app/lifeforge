@@ -3,7 +3,15 @@ import { useMemo } from 'react'
 import { toast } from 'react-toastify'
 
 import { useFederation, usePersonalization } from '@lifeforge/shared'
-import { EmptyStateScreen, ModuleHeader, WithQuery } from '@lifeforge/ui'
+import {
+  Box,
+  EmptyStateScreen,
+  Grid,
+  ModuleHeader,
+  Stack,
+  Text,
+  WithQuery
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -30,13 +38,11 @@ function Modules() {
 
   const queryClient = useQueryClient()
 
-  const modulesQuery = useQuery(
-    forgeAPI.untyped<InstalledModule[]>('modules/list').queryOptions()
-  )
+  const modulesQuery = useQuery(forgeAPI.modules.list.queryOptions())
 
   const uninstallMutation = useMutation({
     mutationFn: (moduleName: string) =>
-      forgeAPI.untyped('modules/uninstall').mutate({ moduleName }),
+      forgeAPI.modules.uninstall.mutate({ moduleName }),
     onSuccess: (data, moduleName) => {
       if (data.success) {
         toast.success(`Uninstalled ${moduleName}`)
@@ -91,16 +97,16 @@ function Modules() {
       <WithQuery query={modulesQuery}>
         {modules =>
           modules.length > 0 ? (
-            <div className="mb-12 space-y-12">
+            <Box mb="2xl">
               {Object.entries(groupedModules).map(([category, mods]) => (
-                <section key={category}>
-                  <h2 className="text-bg-500 mb-4 text-2xl font-medium">
+                <Stack key={category} as="section">
+                  <Text as="h2" size="2xl" weight="medium">
                     {getCategoryName(category)}
-                    <span className="text-bg-400 dark:text-bg-600 ml-2 text-sm font-normal">
+                    <Text color="muted" ml="sm" size="sm">
                       ({mods.length})
-                    </span>
-                  </h2>
-                  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    </Text>
+                  </Text>
+                  <Grid gap="md" templateCols={{ base: 1, md: 2, lg: 3 }}>
                     {mods.map(mod => (
                       <ModuleItem
                         key={mod.name}
@@ -115,10 +121,10 @@ function Modules() {
                         }}
                       />
                     ))}
-                  </div>
-                </section>
+                  </Grid>
+                </Stack>
               ))}
-            </div>
+            </Box>
           ) : (
             <EmptyStateScreen
               icon="tabler:apps-off"

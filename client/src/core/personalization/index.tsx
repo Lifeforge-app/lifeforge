@@ -1,4 +1,4 @@
-import { ModuleHeader } from '@lifeforge/ui'
+import { ModuleHeader, Stack } from '@lifeforge/ui'
 
 import BgImageSelector from './components/BgImageSelector'
 import BgTempSelector from './components/BgTempSelector'
@@ -14,7 +14,7 @@ function Personalization() {
   return (
     <>
       <ModuleHeader />
-      <div className="mb-8 space-y-3">
+      <Stack mb="xl">
         <LanguageSelector />
         <ThemeSelector />
         <ThemeColorSelector />
@@ -24,7 +24,7 @@ function Personalization() {
         <FontScaleSelector />
         <BorderRadiusSelector />
         <BorderedSelector />
-      </div>
+      </Stack>
     </>
   )
 }

@@ -44,7 +44,7 @@ function AuthSideImage() {
         style={{ inset: 0 }}
         width="100%"
       >
-        <Text color="custom-500" mb="lg" size="2xl" tracking="wider">
+        <Text color="primary" mb="lg" size="2xl" tracking="wider">
           {t('sideImageDesc.part1')}
         </Text>
         <Text color="bg-50" size="5xl" tracking="wide" weight="semibold">

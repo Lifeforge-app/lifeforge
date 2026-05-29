@@ -1,11 +1,10 @@
+import { getPublicKey } from '@functions/encryption'
 import corsAnywhere from '@lib/corsAnywhere'
 import dayjs from 'dayjs'
 import request from 'request'
 import z from 'zod'
 
 import { forgeRouter } from '@lifeforge/server-utils'
-
-import { getPublicKey } from '@functions/encryption'
 
 import forge from './forge'
 
@@ -103,5 +102,6 @@ const coreRoutes = forgeRouter({
   corsAnywhere,
   encryptionPublicKey
 })
+
 
 export default coreRoutes

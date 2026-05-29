@@ -19,14 +19,6 @@ function index() {
     navigate(-1)
     toast.success(t('redirected'))
   }, [])
-
-  return (
-    <>
-      <div className="flex size-full items-center justify-center">
-        <p className="text-bg-500 text-2xl font-medium">{t('redirecting')}</p>
-      </div>
-    </>
-  )
 }
 
 export default index

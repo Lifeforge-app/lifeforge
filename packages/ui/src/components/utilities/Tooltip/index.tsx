@@ -32,11 +32,11 @@ export function Tooltip({
   return (
     <>
       <span data-tooltip-id={`tooltip-${_.kebabCase(id)}`}>
-        <Icon className={iconClassName ?? ''} color="bg-500" icon={icon} />
+        <Icon className={iconClassName ?? ''} color="muted" icon={icon} />
       </span>
       <Box
         asChild
-        rounded="md"
+        r="md"
         style={{
           background:
             derivedTheme === 'light'

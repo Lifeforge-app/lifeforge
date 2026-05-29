@@ -120,7 +120,7 @@ export function SidebarItem({
             display="block"
             flexShrink="0"
             height="2rem"
-            rounded="full"
+            r="full"
             style={{ backgroundColor: sideStripColor }}
             width="0.25rem"
           />

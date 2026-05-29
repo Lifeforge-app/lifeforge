@@ -1,9 +1,16 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/shared'
-import { OptionsColumn } from '@lifeforge/ui'
+import {
+  Bordered,
+  Box,
+  Flex,
+  Grid,
+  Icon,
+  OptionsColumn,
+  Text,
+  Transition
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -21,7 +28,7 @@ function ThemeSelector() {
       orientation="vertical"
       title={t('themeSelector.title')}
     >
-      <div className="flex w-full flex-col gap-8 px-2 md:flex-row">
+      <Grid gap="lg" px="sm" templateCols={{ md: 2, lg: 3 }}>
         {[
           {
             id: 'system',
@@ -39,43 +46,54 @@ function ThemeSelector() {
             Image: '/assets/mockup/dark.png'
           }
         ].map(({ id, name, Image }) => (
-          <div
-            key={id}
-            className="flex w-full flex-col items-center gap-2 md:w-1/3"
-          >
-            <button
-              className={clsx(
-                'flex-1 rounded-lg border-2 lg:rounded-xl',
-                theme === id
-                  ? 'border-custom-500'
-                  : 'border-bg-200 hover:border-bg-500 dark:border-bg-700 dark:hover:border-bg-500'
-              )}
-              type="button"
-              onClick={() => {
-                changeTheme(id as 'system' | 'light' | 'dark')
-              }}
-            >
-              <div className="relative rounded-md p-2 lg:rounded-lg">
-                {theme === id && (
-                  <Icon
-                    className="text-custom-500 absolute right-2.5 bottom-2 block size-6 text-xl"
-                    icon="tabler:circle-check-filled"
-                  />
-                )}
-                <img alt={id} className="w-full rounded-lg" src={Image} />
-              </div>
-            </button>
-            <p
-              className={clsx(
-                'mt-4',
-                theme === id && 'text-custom-500 font-medium'
-              )}
+          <Flex key={id} align="center" direction="column" gap="sm">
+            <Transition>
+              <Bordered
+                as="button"
+                borderColor={
+                  theme === id
+                    ? 'custom-500'
+                    : {
+                        base: 'bg-200',
+                        hover: 'bg-500',
+                        dark: 'bg-700',
+                        darkHover: 'bg-500'
+                      }
+                }
+                borderWidth="2px"
+                r={{ base: 'lg', lg: 'xl' }}
+                type="button"
+                onClick={() => {
+                  changeTheme(id as 'system' | 'light' | 'dark')
+                }}
+              >
+                <Box p="sm" position="relative" r={{ base: 'md', lg: 'lg' }}>
+                  {theme === id && (
+                    <Box bottom="0.75em" position="absolute" right="0.75em">
+                      <Icon
+                        color="custom-500"
+                        icon="tabler:circle-check-filled"
+                        size="1.5em"
+                      />
+                    </Box>
+                  )}
+                  <Box asChild r="lg">
+                    <img alt={id} src={Image} />
+                  </Box>
+                </Box>
+              </Bordered>
+            </Transition>
+            <Text
+              as="p"
+              color={theme === id ? 'custom-500' : undefined}
+              mt="sm"
+              weight="medium"
             >
               {name}
-            </p>
-          </div>
+            </Text>
+          </Flex>
         ))}
-      </div>
+      </Grid>
     </OptionsColumn>
   )
 }

@@ -130,7 +130,7 @@ const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
       bg={{ darkHover: 'bg-800', hover: 'bg-100' }}
       gap="md"
       px="md"
-      rounded="md"
+      r="md"
       style={{
         cursor: 'pointer',
         paddingBottom: '0.75rem',

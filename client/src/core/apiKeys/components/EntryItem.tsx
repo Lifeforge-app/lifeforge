@@ -1,4 +1,3 @@
-import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
@@ -6,7 +5,6 @@ import relativeTime from 'dayjs/plugin/relativeTime.js'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import COLORS from 'tailwindcss/colors'
 
 import { useFederation } from '@lifeforge/shared'
 import {
@@ -16,7 +14,9 @@ import {
   ContextMenu,
   ContextMenuItem,
   Flex,
+  Icon,
   OptionsColumn,
+  TAILWIND_PALETTE,
   TagChip,
   Text,
   useModalStore
@@ -24,12 +24,13 @@ import {
 
 import forgeAPI from '@/forgeAPI'
 
+import type { APIKeyEntry } from '..'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
 
 dayjs.extend(relativeTime)
 
-function EntryItem({ entry }: { entry: any }) {
+function EntryItem({ entry }: { entry: APIKeyEntry }) {
   const { t } = useTranslation('common.apiKeys')
 
   const { modules } = useFederation()
@@ -41,8 +42,7 @@ function EntryItem({ entry }: { entry: any }) {
   const [isCopying, setIsCopying] = useState(false)
 
   const deleteMutation = useMutation(
-    forgeAPI
-      .untyped('apiKeys/entries/remove')
+    forgeAPI.apiKeys.entries.remove
       .input({
         id: entry.id
       })
@@ -67,8 +67,7 @@ function EntryItem({ entry }: { entry: any }) {
     setIsCopying(true)
 
     try {
-      const key = await forgeAPI
-        .untyped('apiKeys/entries/get')
+      const key = await forgeAPI.apiKeys.entries.get
         .input({
           keyId: entry.id
         })
@@ -118,8 +117,8 @@ function EntryItem({ entry }: { entry: any }) {
                 {t('misc.requiredBy', { count: modulesRequiredCount })}
               </Text>
               <Button
-                className="p-1!"
                 icon="tabler:info-circle"
+                p="xs"
                 variant="plain"
                 onClick={() =>
                   open(ModulesRequiredListModal, {
@@ -142,38 +141,30 @@ function EntryItem({ entry }: { entry: any }) {
               </Text>
             </Box>
           </Text>
-          <Box asChild ml="sm">
-            <TagChip
-              color={entry.exposable ? COLORS.green['500'] : COLORS.red['500']}
-              icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
-              label={
-                entry.exposable ? t('misc.exposable') : t('misc.internalOnly')
-              }
-            />
-          </Box>
+          <TagChip
+            color={
+              entry.exposable
+                ? TAILWIND_PALETTE.green['500']
+                : TAILWIND_PALETTE.red['500']
+            }
+            icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
+            label={
+              entry.exposable ? t('misc.exposable') : t('misc.internalOnly')
+            }
+            ml="sm"
+            size="sm"
+          />
         </>
       }
     >
       <Box mr="sm">
-        <Flex
-          align="center"
-          className="text-lg"
-          gap="sm"
-          justify={{ base: 'start', md: 'end' }}
-        >
+        <Flex align="center" gap="sm" justify={{ base: 'start', md: 'end' }}>
           {Array(12)
             .fill(0)
             .map((_, i) => (
-              <Icon
-                key={i}
-                icon="tabler:circle-filled"
-                style={{
-                  width: '4px',
-                  height: '4px'
-                }}
-              />
+              <Icon key={i} icon="tabler:circle-filled" size="4px" />
             ))}
-          <Text>{entry.key}</Text>
+          <Text size="lg">{entry.key}</Text>
         </Flex>
         <Text as="code" color="muted">
           {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}

@@ -25,7 +25,7 @@ async function syncUserData(
 ) {
   try {
     await forgeAPI
-      .untyped('/user/personalization/updatePersonalization')
+      .user.personalization.updatePersonalization
       .mutate({
         data
       })

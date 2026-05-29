@@ -1,10 +1,17 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useCallback } from 'react'
 import { toast } from 'react-toastify'
 
 import { useAuth, useMainSidebarState, useNavigate } from '@lifeforge/shared'
-import { Card, ContextMenu, ContextMenuItem } from '@lifeforge/ui'
+import {
+  Box,
+  Card,
+  ContextMenu,
+  ContextMenuItem,
+  Flex,
+  Icon,
+  Text,
+  Transition
+} from '@lifeforge/ui'
 
 function SidebarBottomBar() {
   const navigate = useNavigate()
@@ -28,56 +35,82 @@ function SidebarBottomBar() {
   if (!userData) return <></>
 
   return (
-    <div
-      className={clsx(
-        'flex-center w-full min-w-0 pt-0 pb-4',
-        sidebarExpanded && 'px-4'
-      )}
-    >
+    <Flex centered pb="md" px={sidebarExpanded ? 'lg' : 'none'} width="100%">
       <ContextMenu
         buttonComponent={
-          <Card
-            className={clsx(
-              'flex-between gap-8',
-              sidebarExpanded &&
-                'bg-bg-200/50 dark:bg-bg-800/50 dark:hover:bg-bg-800/80 hover:bg-bg-200/50 transition-all'
-            )}
-          >
-            <div className="flex-center w-full min-w-0 gap-3">
-              <div className="bg-bg-100 shadow-custom dark:bg-bg-800 flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full">
-                {userData.avatar !== '' ? (
-                  <img
-                    alt=""
-                    className="size-full object-cover"
-                    src={getAvatarURL()}
-                  />
-                ) : (
-                  <Icon className="text-bg-500 text-xl" icon="tabler:user" />
-                )}
-              </div>
-              <div
-                className={clsx(
-                  'w-full min-w-0 flex-col items-start',
-                  sidebarExpanded ? 'flex' : 'hidden'
-                )}
-              >
-                <div className="font-semibold">{userData?.name}</div>
-                <div className="text-bg-500 w-full min-w-0 truncate text-sm">
-                  {userData?.email}
-                </div>
-              </div>
-            </div>
-            <Icon
-              className={clsx(
-                'text-bg-500 size-5 shrink-0 stroke-[2px]',
-                sidebarExpanded ? 'flex' : 'hidden'
+          <Transition>
+            <Card
+              align="center"
+              bg={
+                sidebarExpanded
+                  ? {
+                      base: 'bg-100',
+                      dark: 'bg-800',
+                      darkHover: 'bg-700',
+                      hover: 'bg-200'
+                    }
+                  : 'transparent'
+              }
+              direction="row"
+              gap="xl"
+              justify={sidebarExpanded ? 'between' : 'center'}
+            >
+              <Flex centered gap="sm" minWidth="0">
+                <Flex
+                  centered
+                  shadow
+                  bg={{
+                    base: 'bg-100',
+                    dark: 'bg-700'
+                  }}
+                  flexShrink="0"
+                  height="2.5rem"
+                  overflow="hidden"
+                  r="full"
+                  width="2.5rem"
+                >
+                  {userData.avatar !== '' ? (
+                    <Box
+                      asChild
+                      height="100%"
+                      style={{
+                        objectFit: 'cover'
+                      }}
+                      width="100%"
+                    >
+                      <img alt="" src={getAvatarURL()} />
+                    </Box>
+                  ) : (
+                    <Icon color="muted" icon="tabler:user" />
+                  )}
+                </Flex>
+                <Flex
+                  direction="column"
+                  display={sidebarExpanded ? 'flex' : 'none'}
+                  minWidth="0"
+                >
+                  <Text truncate weight="semibold">
+                    {userData?.name}
+                  </Text>
+                  <Text truncate as="p" color="muted" size="sm">
+                    {userData?.email}
+                  </Text>
+                </Flex>
+              </Flex>
+              {sidebarExpanded && (
+                <Icon
+                  color={{ base: 'bg-400', dark: 'bg-600' }}
+                  display={sidebarExpanded ? 'flex' : 'none'}
+                  icon="ph:caret-up-down-bold"
+                />
               )}
-              icon="ph:caret-up-down-bold"
-            />
-          </Card>
+            </Card>
+          </Transition>
         }
-        classNames={{
-          wrapper: 'w-full'
+        styles={{
+          wrapper: {
+            width: '100%'
+          }
         }}
       >
         <ContextMenuItem
@@ -94,7 +127,7 @@ function SidebarBottomBar() {
           onClick={handleLoggingOut}
         />
       </ContextMenu>
-    </div>
+    </Flex>
   )
 }
 

@@ -63,7 +63,7 @@ export function ComboboxOption({
                           flexShrink="0"
                           p={color !== undefined ? 'sm' : undefined}
                           pr={color === undefined ? 'sm' : undefined}
-                          rounded="md"
+                          r="md"
                           style={
                             color !== undefined
                               ? {
@@ -93,7 +93,7 @@ export function ComboboxOption({
                             display="block"
                             flexShrink="0"
                             height="1rem"
-                            rounded="full"
+                            r="full"
                             style={{ backgroundColor: color }}
                             width="1rem"
                           />

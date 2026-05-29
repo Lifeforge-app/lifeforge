@@ -1,10 +1,9 @@
-import { Icon } from '@iconify/react'
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { Button, TextInput } from '@lifeforge/ui'
+import { Button, Flex, Icon, Stack, Text, TextInput } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -22,7 +21,7 @@ function UserCreationPage() {
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const createUserMutation = useMutation(
-    forgeAPI.untyped('user/auth/createFirstUser').mutationOptions({
+    forgeAPI.user.auth.createFirstUser.mutationOptions({
       onSuccess: () => {
         toast.success(t('messages.userCreated'))
         window.location.reload()
@@ -87,20 +86,37 @@ function UserCreationPage() {
   }
 
   return (
-    <div className="flex-center flex size-full flex-col px-8">
-      <h1 className="mb-8 flex items-center gap-2 text-3xl font-semibold whitespace-nowrap">
-        <Icon className="text-custom-500 text-5xl" icon="tabler:hammer" />
-        <div>
-          LifeForge<span className="text-custom-500 text-4xl">.</span>
-        </div>
-      </h1>
-      <h2 className="text-center text-4xl font-semibold tracking-wide sm:text-5xl">
+    <Flex centered direction="column" px="xl" width="100%">
+      <Flex asChild centered gap="sm" mb="xl">
+        <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
+          <Icon color="primary" icon="tabler:hammer" />
+          <div>
+            LifeForge
+            <Text color="primary" size="4xl">
+              .
+            </Text>
+          </div>
+        </Text>
+      </Flex>
+      <Text
+        align="center"
+        as="h2"
+        size={{ base: '4xl', sm: '5xl' }}
+        tracking="wide"
+        weight="semibold"
+      >
         {t('welcome.header')}
-      </h2>
-      <p className="text-bg-500 mt-2 text-center text-base sm:mt-4 sm:text-xl">
+      </Text>
+      <Text
+        align="center"
+        as="p"
+        color="muted"
+        mt={{ base: 'sm', sm: 'md' }}
+        size={{ base: 'base', sm: 'xl' }}
+      >
         {t('welcome.desc')}
-      </p>
-      <div className="mt-12 flex w-full max-w-md flex-col gap-4">
+      </Text>
+      <Stack maxWidth="40rem" mt="2xl" width="100%">
         <TextInput
           errorMsg={errors.email}
           icon="tabler:mail"
@@ -145,16 +161,16 @@ function UserCreationPage() {
           onChange={updateField('confirmPassword')}
         />
         <Button
-          className="mt-4"
           icon="tabler:arrow-right"
           iconPosition="end"
           loading={createUserMutation.isPending}
+          mt="md"
           onClick={handleSubmit}
         >
           {t('buttons.proceed')}
         </Button>
-      </div>
-    </div>
+      </Stack>
+    </Flex>
   )
 }
 

@@ -1,8 +1,7 @@
-import clsx from 'clsx'
 import { useState } from 'react'
 
 import { useMainSidebarState } from '@lifeforge/shared'
-import { SidebarItem } from '@lifeforge/ui'
+import { Flex, SidebarItem, Transition } from '@lifeforge/ui'
 
 import SidebarBottomBar from './SidebarBottomBar'
 import SidebarEventBanner from './SidebarEventBanner'
@@ -15,30 +14,56 @@ function Sidebar() {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <aside
-      className={clsx(
-        'bg-bg-50 shadow-custom border-bg-500/20 component-bg absolute top-0 left-0 z-9995 flex h-full shrink-0 flex-col overflow-hidden rounded-r-2xl backdrop-blur-xs transition-all duration-300 lg:relative lg:backdrop-blur-xs',
-        sidebarExpanded
-          ? 'w-full min-w-80 in-[.bordered]:border-2 sm:w-1/2 lg:w-3/12 xl:w-1/5'
-          : 'w-0 min-w-0 sm:w-[5.4rem] sm:in-[.bordered]:border-2'
-      )}
-    >
-      <SidebarEventBanner />
-      <SidebarHeader
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
-      <SidebarItems query={searchQuery} />
-      {!sidebarExpanded && (
-        <SidebarItem
-          active={false}
-          icon="tabler:layout-sidebar-left-expand"
-          label=""
-          onClick={toggleSidebar}
+    <Transition>
+      <Flex
+        shadow
+        as="aside"
+        bg={{ base: 'bg-50', dark: 'bg-900' }}
+        direction="column"
+        flexShrink="0"
+        height="100dvh"
+        left="0"
+        minWidth={sidebarExpanded ? '20em' : '0'}
+        overflow="hidden"
+        position={{
+          base: 'absolute',
+          lg: 'relative'
+        }}
+        rbr="2xl"
+        rtr="2xl"
+        top="0"
+        width={
+          sidebarExpanded
+            ? {
+                base: '100%',
+                sm: '50%',
+                lg: '25%',
+                xl: '20%'
+              }
+            : {
+                base: '0',
+                sm: '5.4em'
+              }
+        }
+        zIndex="9995"
+      >
+        <SidebarEventBanner />
+        <SidebarHeader
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
-      )}
-      <SidebarBottomBar />
-    </aside>
+        <SidebarItems query={searchQuery} />
+        {!sidebarExpanded && (
+          <SidebarItem
+            active={false}
+            icon="tabler:layout-sidebar-left-expand"
+            label=""
+            onClick={toggleSidebar}
+          />
+        )}
+        <SidebarBottomBar />
+      </Flex>
+    </Transition>
   )
 }
 

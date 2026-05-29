@@ -1,8 +1,7 @@
+import { decrypt2, encrypt2 } from '@functions/auth/encryption'
 import z from 'zod'
 
 import { ClientError, forgeRouter } from '@lifeforge/server-utils'
-
-import { decrypt2, encrypt2 } from '@functions/auth/encryption'
 
 import forge from '../forge'
 
@@ -21,13 +20,15 @@ const get = forge
       .collection('entries')
       .filter([
         {
-          field: 'keyId',
+          field: 'id',
           operator: '=',
           value: keyId
         }
       ])
       .execute()
       .catch(() => null)
+
+    console.log(await pb.getFullList.collection('entries').execute())
 
     if (!entry) {
       throw new ClientError('API Key not found', 404)

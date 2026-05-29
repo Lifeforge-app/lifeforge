@@ -1,8 +1,8 @@
-import { Flex, Icon, Text } from '@lifeforge/ui'
+import { Flex, Icon, Stack, Text } from '@lifeforge/ui'
 
 function AuthFooter() {
   return (
-    <Flex centered as="footer" direction="column" gap="sm" mt="xl">
+    <Stack centered as="footer" mt="xl">
       <Flex centered gap="sm">
         {[
           'creative-commons',
@@ -10,19 +10,14 @@ function AuthFooter() {
           'creative-commons-nc',
           'creative-commons-sa'
         ].map(icon => (
-          <Icon
-            key={icon}
-            color="bg-500"
-            icon={`tabler:${icon}`}
-            size="1.5em"
-          />
+          <Icon key={icon} color="muted" icon={`tabler:${icon}`} size="1.5em" />
         ))}
       </Flex>
-      <Text align="center" color="bg-500" size="sm">
+      <Text align="center" color="muted" size="sm">
         A project by{' '}
         <Text
           as="a"
-          color="custom-500"
+          color="primary"
           href="https://melvinchia.dev"
           rel="noreferrer"
           style={{
@@ -35,7 +30,7 @@ function AuthFooter() {
         licensed under{' '}
         <Text
           as="a"
-          color="custom-500"
+          color="primary"
           href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
           rel="noreferrer"
           style={{
@@ -47,7 +42,7 @@ function AuthFooter() {
         </Text>
         .
       </Text>
-    </Flex>
+    </Stack>
   )
 }
 

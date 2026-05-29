@@ -91,7 +91,7 @@ export function ListboxOption({
                             flexShrink="0"
                             p={convertedColor !== undefined ? 'sm' : undefined}
                             pr={convertedColor === undefined ? 'sm' : undefined}
-                            rounded="md"
+                            r="md"
                             style={
                               convertedColor !== undefined
                                 ? {
@@ -136,7 +136,7 @@ export function ListboxOption({
                               display="block"
                               flexShrink="0"
                               height="1rem"
-                              rounded="full"
+                              r="full"
                               style={{ backgroundColor: convertedColor }}
                               width="1rem"
                             />

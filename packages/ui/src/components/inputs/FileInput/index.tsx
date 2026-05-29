@@ -4,8 +4,7 @@ import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
 
 import { Button } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 import { useModalStore } from '@/providers'
 
 import { useInputLabel } from '../shared/hooks/useInputLabel'
@@ -79,14 +78,14 @@ export function FileInput({
       className={clsx('__file-input', styles.wrapper)}
       direction="column"
       p="lg"
-      rounded="md"
+      r="md"
       style={{
         opacity: disabled ? 0.5 : 1,
         pointerEvents: disabled ? 'none' : 'auto'
       }}
       width="100%"
     >
-      <Text asChild color="bg-500">
+      <Text asChild color="muted">
         <Flex align="center" gap="sm">
           <Icon icon={icon} style={{ height: '1.5rem', width: '1.5rem' }} />
           <Text as="span" color="inherit" weight="medium">
@@ -111,7 +110,7 @@ export function FileInput({
               Select
             </Button>
           </Box>
-          <Text align="center" as="p" color="bg-500" size="sm">
+          <Text align="center" as="p" color="muted" size="sm">
             {reminderText ||
               t('fileInputSupportedFormat', {
                 format: acceptedMimeTypes
@@ -132,7 +131,7 @@ export function FileInput({
             preview.startsWith('data:')) ? (
             <Box mt="lg">
               <Zoom zoomMargin={100}>
-                <Box asChild maxHeight="24rem" rounded="md">
+                <Box asChild maxHeight="24rem" r="md">
                   <img alt="" src={preview} />
                 </Box>
               </Zoom>
@@ -151,20 +150,19 @@ export function FileInput({
           ) : (
             <Flex align="center" gap="xl" justify="between" mt="md">
               <Flex align="center" gap="sm" minWidth="0">
-                <Box asChild flexShrink="0">
-                  <Text asChild color="bg-500">
-                    <Icon
-                      icon={
-                        FILE_ICONS[
-                          (file instanceof File
-                            ? file.name.split('.').pop()
-                            : '') as keyof typeof FILE_ICONS
-                        ] || 'tabler:file'
-                      }
-                      style={{ height: '1.5rem', width: '1.5rem' }}
-                    />
-                  </Text>
-                </Box>
+                <Text asChild color="muted">
+                  <Icon
+                    color="muted"
+                    icon={
+                      FILE_ICONS[
+                        (file instanceof File
+                          ? file.name.split('.').pop()
+                          : '') as keyof typeof FILE_ICONS
+                      ] || 'tabler:file'
+                    }
+                    style={{ height: '1.5rem', width: '1.5rem' }}
+                  />
+                </Text>
                 <Text truncate as="p">
                   {file instanceof File ? file.name : file}
                 </Text>

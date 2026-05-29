@@ -9,10 +9,10 @@ function AuthHeader() {
     <>
       <Flex asChild align="center" gap="sm" mb="lg">
         <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
-          <Icon color="custom-500" icon="tabler:hammer" size="5xl" />
+          <Icon color="primary" icon="tabler:hammer" />
           <Box>
             LifeForge
-            <Text color="custom-500" size="4xl">
+            <Text color="primary" size="4xl">
               .
             </Text>
           </Box>
@@ -30,7 +30,7 @@ function AuthHeader() {
       <Text
         align="center"
         as="p"
-        color="bg-500"
+        color="muted"
         mt={{ base: 'sm', sm: 'md' }}
         size={{ base: 'base', sm: 'xl' }}
       >

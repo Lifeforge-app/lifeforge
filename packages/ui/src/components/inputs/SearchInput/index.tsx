@@ -9,13 +9,7 @@ import { useDivSize } from '@lifeforge/shared'
 
 import { Card } from '@/components/layout'
 import { Icon } from '@/components/primitives'
-import {
-  Box,
-  Flex,
-  type FlexProps,
-  Text,
-  Transition
-} from '@/components/primitives'
+import { Box, Flex, type FlexProps, Transition } from '@/components/primitives'
 
 import { Button } from '../Button'
 import { Placeholder } from '../shared/components/Placeholder'
@@ -203,7 +197,7 @@ export function SearchInput({
         className={clsx(styles.searchWrapper, className)}
         p="md"
         position="relative"
-        rounded="lg"
+        r="lg"
         style={
           disabled
             ? {
@@ -221,11 +215,7 @@ export function SearchInput({
         }}
         {...props}
       >
-        <Box asChild flexShrink="0">
-          <Text asChild color="muted">
-            <Icon icon={icon} />
-          </Text>
-        </Box>
+        <Icon color="muted" icon={icon} />
         <Placeholder>
           <input
             autoComplete="one-time-code"

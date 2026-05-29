@@ -1,6 +1,6 @@
 import { normalizeResponsiveProp } from '@/system/responsive'
 
-import type { TokenizedSpacingProps } from '../spacing-props.css'
+import type { TokenizedSpacingProps } from '../props'
 
 export function resolveSpacingSprinklesProps({
   p,
