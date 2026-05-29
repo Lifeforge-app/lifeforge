@@ -1,8 +1,5 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-
 import { useMainSidebarState } from '@lifeforge/shared'
-import { SearchInput } from '@lifeforge/ui'
+import { Box, Button, Flex, Icon, SearchInput, Text } from '@lifeforge/ui'
 
 function SidebarHeader({
   searchQuery,
@@ -15,40 +12,47 @@ function SidebarHeader({
 
   return (
     <>
-      <div
-        className={clsx(
-          'flex-between flex h-24 w-full shrink-0 pl-6 transition-none',
-          !sidebarExpanded && 'overflow-hidden'
-        )}
+      <Flex
+        align="center"
+        flexShrink="0"
+        height="6em"
+        justify="between"
+        overflow={!sidebarExpanded ? 'hidden' : 'auto'}
+        px="lg"
       >
-        <h1 className="ml-1 flex shrink-0 items-center gap-2 text-xl font-semibold whitespace-nowrap">
-          <Icon className="text-custom-500 size-6" icon="tabler:hammer" />
-          {sidebarExpanded && (
-            <div>
-              LifeForge
-              <span className="text-custom-500 text-2xl">.</span>
-            </div>
-          )}
-        </h1>
+        <Flex asChild align="center" flexShrink="0" gap="sm">
+          <Text as="h1" size="xl" weight="semibold" whiteSpace="nowrap">
+            <Icon color="primary" icon="tabler:hammer" />
+            {sidebarExpanded && (
+              <Text tracking="wide">
+                LifeForge
+                <Text color="primary" size="2xl">
+                  .
+                </Text>
+              </Text>
+            )}
+          </Text>
+        </Flex>
         {sidebarExpanded && (
-          <button
-            className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-50 p-6 transition-all"
-            onClick={toggleSidebar}
-          >
-            <Icon className="size-6" icon="tabler:menu" />
-          </button>
+          <Button icon="tabler:menu" variant="plain" onClick={toggleSidebar} />
         )}
-      </div>
+      </Flex>
       {sidebarExpanded && (
-        <div className="px-4">
+        <Box px="md">
           <SearchInput
-            className="component-bg-lighter-with-hover mb-4"
+            bg={{
+              base: 'bg-50',
+              hover: 'bg-100',
+              dark: 'bg-800',
+              darkHover: 'bg-700'
+            }}
+            mb="md"
             namespace="common.sidebar"
             searchTarget="module"
             value={searchQuery}
             onChange={setSearchQuery}
           />
-        </div>
+        </Box>
       )}
     </>
   )

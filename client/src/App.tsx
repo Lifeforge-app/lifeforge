@@ -4,7 +4,6 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorScreen, Flex, ModalProvider, Text } from '@lifeforge/ui'
 
 import './i18n'
-import './index.css'
 import Providers from './providers'
 
 // @ts-expect-error - VITE_API_HOST is injected at build time
@@ -30,17 +29,7 @@ function App() {
           dark: 'bg-100'
         }}
       >
-        <Flex
-          as="main"
-          bg={{
-            base: 'bg-100'
-          }}
-          className="bg-bg-200/50 dark:bg-bg-900/50"
-          height="100dvh"
-          id="app"
-          overflow="hidden"
-          width="100%"
-        >
+        <Flex as="main" height="100dvh" id="app" overflow="hidden" width="100%">
           <ModalProvider>
             <Providers />
           </ModalProvider>

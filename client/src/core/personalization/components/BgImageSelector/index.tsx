@@ -30,7 +30,7 @@ function BgImageSelector() {
   }, [])
 
   const deleteMutation = useMutation(
-    forgeAPI.untyped('user/personalization/deleteBgImage').mutationOptions({
+    forgeAPI.user.personalization.deleteBgImage.mutationOptions({
       onSuccess: () => {
         setBgImage('')
         setBackdropFilters({
@@ -61,7 +61,7 @@ function BgImageSelector() {
   async function onSubmit(file: string | File) {
     try {
       const data = await forgeAPI
-        .untyped('user/personalization/updateBgImage')
+        .user.personalization.updateBgImage
         .mutate({
           file
         })

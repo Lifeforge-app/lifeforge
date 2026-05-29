@@ -46,7 +46,7 @@ export function SidebarSubsectionItemLink({
         align="center"
         ml="md"
         mr="md"
-        rounded="lg"
+        r="lg"
         style={{ gap: '0.75rem', height: '3.5rem' }}
         width="100%"
       >

@@ -21,7 +21,7 @@ function _CategoryEntry({
 }) {
   return (
     <Box as="section" mb="lg" width="100%">
-      <Box as="header" mb="xl" position="relative" rounded="lg">
+      <Box as="header" mb="xl" position="relative" r="lg">
         <Text align="center" as="h2" size="3xl" weight="semibold">
           {category}
           <Bordered

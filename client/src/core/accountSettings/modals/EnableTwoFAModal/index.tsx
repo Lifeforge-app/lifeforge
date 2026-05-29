@@ -3,14 +3,14 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '@lifeforge/shared'
-import { ModalHeader } from '@lifeforge/ui'
+import { Box, ModalHeader } from '@lifeforge/ui'
 
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 
 function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.accountSettings')
 
-  const { setUserData } = useAuth()
+  const { userData, setUserData } = useAuth()
 
   const handleSuccess = useCallback(() => {
     setUserData(userData =>
@@ -21,7 +21,7 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
   }, [])
 
   return (
-    <div>
+    <Box maxWidth={{ lg: '30em' }}>
       <ModalHeader
         icon="tabler:lock-access"
         namespace="common.accountSettings"
@@ -29,7 +29,7 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
         onClose={onClose}
       />
       <TwoFAEnableProcedure onSuccess={handleSuccess} />
-    </div>
+    </Box>
   )
 }
 

@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from 'react'
 import {
   Button,
   ContextMenuItem,
+  Flex,
   ModuleHeader,
   useModalStore
 } from '@lifeforge/ui'
@@ -26,7 +27,7 @@ function DashboardContent() {
   }, [widgets])
 
   return (
-    <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
+    <Flex ref={wrapperRef} direction="column" flex="1" mb="2xl">
       <ModuleHeader
         contextMenuProps={{
           children: (
@@ -74,7 +75,7 @@ function DashboardContent() {
           </div>
         </div>
       )}
-    </div>
+    </Flex>
   )
 }
 

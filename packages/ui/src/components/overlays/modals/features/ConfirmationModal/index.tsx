@@ -76,18 +76,13 @@ export function ConfirmationModal({
       )}
       {renderChildren?.(onClose) || (
         <Flex
+          direction={{ base: 'column-reverse', md: 'row' }}
+          gap="sm"
           justify="around"
           mt="xl"
-          style={{ flexDirection: 'column-reverse', gap: '0.5rem' }}
           width="100%"
-          wrap="wrap"
         >
-          <Button
-            icon=""
-            style={{ width: '100%' }}
-            variant="secondary"
-            onClick={onClose}
-          >
+          <Button flex="1" icon="" variant="secondary" onClick={onClose}>
             Cancel
           </Button>
           {typeof confirmationButton === 'string' ? (
@@ -97,6 +92,7 @@ export function ConfirmationModal({
                 !!confirmationPrompt &&
                 confirmationPrompt !== confirmationTextState
               }
+              flex="1"
               icon={
                 confirmationButton === 'delete'
                   ? 'tabler:trash'
@@ -116,8 +112,9 @@ export function ConfirmationModal({
                 !!confirmationPrompt &&
                 confirmationPrompt !== confirmationTextState
               }
+              flex="1"
               loading={isLoading}
-              style={{ width: '100%', ...confirmationButton.style }}
+              style={{ ...confirmationButton.style }}
               onClick={onClick}
             />
           )}

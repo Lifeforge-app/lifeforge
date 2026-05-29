@@ -18,7 +18,7 @@ function _OTPInputBox({
   lighter?: boolean
 }) {
   return (
-    <Flex direction="column" gap="md">
+    <Flex centered direction="column" gap="md">
       <OtpInput
         shouldAutoFocus
         numInputs={6}
@@ -35,7 +35,7 @@ function _OTPInputBox({
             maxHeight={{ base: '3rem', md: '4rem' }}
             maxWidth={{ base: '3rem', md: '4rem' }}
             mx="xs"
-            rounded="md"
+            r="md"
             style={{
               aspectRatio: '1/1'
             }}

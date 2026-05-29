@@ -1,9 +1,12 @@
-import clsx from 'clsx'
+import { BG_BLURS, usePersonalization } from '@lifeforge/shared'
 
-import { usePersonalization } from './PersonalizationProvider'
-import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
+import { Box, Flex } from '@/components/primitives'
 
-function BackgroundProvider({ children }: { children: React.ReactNode }) {
+export function BackgroundProvider({
+  children
+}: {
+  children: React.ReactNode
+}) {
   const {
     bgImage,
     derivedTheme,
@@ -11,22 +14,25 @@ function BackgroundProvider({ children }: { children: React.ReactNode }) {
   } = usePersonalization()
 
   return (
-    <div
-      className={clsx(
-        'relative isolate flex h-dvh w-full',
-        bgImage !== '' && 'has-bg-image bg-cover bg-center bg-no-repeat'
-      )}
+    <Flex
+      height="100dvh"
       style={
         bgImage !== ''
           ? {
-              backgroundImage: `url(${bgImage})`
+              backgroundImage: `url(${bgImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
             }
           : {}
       }
+      width="100%"
     >
       {bgImage !== '' && (
-        <div
-          className="absolute top-0 left-0 z-[-1] size-full"
+        <Box
+          height="100%"
+          left="0"
+          position="absolute"
           style={{
             backgroundColor: `color-mix(in oklab, var(--color-bg-${
               derivedTheme === 'dark' ? '950' : '50'
@@ -36,12 +42,13 @@ function BackgroundProvider({ children }: { children: React.ReactNode }) {
                 ? `brightness(${brightness}%) blur(${BG_BLURS[blur]}) contrast(${contrast}%) saturate(${saturation}%)`
                 : ''
           }}
+          top="0"
+          width="100%"
+          zIndex="-1"
         />
       )}
 
       {children}
-    </div>
+    </Flex>
   )
 }
-
-export default BackgroundProvider

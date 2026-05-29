@@ -1,61 +1,33 @@
 import { type CSSProperties, type ReactNode, type Ref } from 'react'
 
-import { COLORS, withOpacity } from '@/system'
+import { COLORS, type ColorToken, withOpacity } from '@/system'
 
 import { Slot } from '../Slot'
-import { divideBase } from './WithDivide.css'
-
-// ─── Props ────────────────────────────────────────────────────────────────────
+import { type DivideAxis, divideVariants } from './WithDivide.css'
 
 interface WithDivideProps {
   ref?: Ref<HTMLElement>
-  /**
-   * Border color applied between children in light mode.
-   * Accepts any CSS color value, e.g. `bg[200]`, `'#hexValue'`, `withOpacity(bg[500], 0.3)`.
-   * Defaults to `bg[200]`.
-   */
-  color?: string
-  /**
-   * Border color applied between children in dark mode.
-   * Defaults to `withOpacity(bg[700], 0.5)`.
-   */
-  darkColor?: string
+  axis?: DivideAxis
+  color?: ColorToken
+  darkColor?: ColorToken
   children?: ReactNode
 }
 
-// ─── Component ───────────────────────────────────────────────────────────────
-
-/**
- * Merges a top-border divider style onto its single child via slot.
- * The border is applied to every child that is not the first sibling,
- * matching the CSS `:not(:first-child)` selector.
- *
- * Wrap each repeating item with `<WithDivide>` inside a list and the borders
- * will appear automatically between items without any extra markup.
- *
- * @example
- * ```tsx
- * {items.map(item => (
- *   <WithDivide key={item.id}>
- *     <div>{item.label}</div>
- *   </WithDivide>
- * ))}
- * ```
- */
 export function WithDivide({
   ref,
-  color = COLORS['bg-200'],
-  darkColor = withOpacity(COLORS['bg-700'], 0.5),
+  axis = 'y',
+  color = 'bg-200',
+  darkColor: darkColorToken = 'bg-700',
   children
 }: WithDivideProps) {
   return (
     <Slot
       ref={ref}
-      className={divideBase}
+      className={divideVariants[axis]}
       style={
         {
-          '--divide-color': color,
-          '--divide-dark-color': darkColor
+          '--divide-color': COLORS[color],
+          '--divide-dark-color': withOpacity(COLORS[darkColorToken], 0.5)
         } as CSSProperties
       }
     >

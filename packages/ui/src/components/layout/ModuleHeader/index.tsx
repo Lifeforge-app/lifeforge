@@ -5,7 +5,6 @@ import { useMainSidebarState, useModuleHeaderState } from '@lifeforge/shared'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
-
 import { COLORS, withOpacity } from '@/system'
 
 import { ContextMenu } from '../../overlays/ContextMenu'
@@ -81,7 +80,7 @@ export function ModuleHeader({
               sm: '4em'
             }}
             justify="center"
-            rounded="lg"
+            r="lg"
             style={{
               backgroundColor: withOpacity(COLORS['custom-500'], 0.2)
             }}
@@ -159,7 +158,7 @@ export function ModuleHeader({
             display={{ base: 'none', md: 'block' }}
             overflow="hidden"
             position="relative"
-            rounded="md"
+            r="md"
             style={{ zIndex: 50 }}
             width="24em"
           >
@@ -172,7 +171,7 @@ export function ModuleHeader({
                     darkHover: 'bg-900'
                   }}
                   p="md"
-                  rounded="lg"
+                  r="lg"
                 >
                   <Text
                     asChild

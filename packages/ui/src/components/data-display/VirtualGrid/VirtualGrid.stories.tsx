@@ -3,7 +3,6 @@ import { useRef } from 'react'
 
 import { Card } from '@/components/layout'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-
 import { TAILWIND_PALETTE } from '@/system'
 
 import { VirtualGrid } from './index'
@@ -117,7 +116,7 @@ function CardItem({ item }: { item: SampleItem }) {
       <Flex
         align="center"
         justify="center"
-        rounded="lg"
+        r="lg"
         style={{
           aspectRatio: '16 / 9',
           backgroundColor: COLORS[item.id % COLORS.length]
@@ -223,7 +222,7 @@ export const CompactItems: Story = {
         renderItem={(item: SampleItem) => (
           <Card height="100%">
             <Flex
-              rounded="lg"
+              r="lg"
               style={{
                 aspectRatio: '1 / 1',
                 backgroundColor: COLORS[item.id % COLORS.length]

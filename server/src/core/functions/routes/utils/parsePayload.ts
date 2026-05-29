@@ -1,9 +1,8 @@
+import { decryptPayload } from '@functions/encryption'
 import { Request } from 'express'
 import z from 'zod'
 
 import { ClientError, ConvertMedia, MediaConfig } from '@lifeforge/server-utils'
-
-import { decryptPayload } from '@functions/encryption'
 
 import restoreFormDataType from './restoreDataType'
 import { splitMediaAndData } from './splitMediaAndData'

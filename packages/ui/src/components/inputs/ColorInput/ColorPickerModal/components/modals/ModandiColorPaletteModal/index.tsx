@@ -36,13 +36,7 @@ function MorandiColorPaletteModal({
         style={{ gap: '0.75rem' }}
       >
         {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
-          <Flex
-            key={index}
-            asChild
-            align="center"
-            justify="center"
-            rounded="md"
-          >
+          <Flex key={index} asChild align="center" justify="center" r="md">
             <button
               className={clsx(
                 styles.colorButton,

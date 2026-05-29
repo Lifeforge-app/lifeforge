@@ -15,11 +15,11 @@ function ResendOTPButton({
 
   return (
     <Button
-      width="100%"
       disabled={otpCooldown > 0}
       icon="tabler:refresh"
       loading={sendOtpLoading}
       variant="secondary"
+      width="100%"
       onClick={requestOTP}
     >
       {t('otp.buttons.resend')} {otpCooldown > 0 && `(${otpCooldown}s)`}

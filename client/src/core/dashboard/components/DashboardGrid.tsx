@@ -1,11 +1,10 @@
-import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
 
 import { useDivSize, usePersonalization } from '@lifeforge/shared'
-import { EmptyStateScreen, LoadingScreen } from '@lifeforge/ui'
+import { Box, EmptyStateScreen, Icon, LoadingScreen } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -57,7 +56,7 @@ function DashboardGrid({
 
   if (Object.values(enabledWidgets).every(e => e.length === 0)) {
     return (
-      <div className="flex h-full flex-1 items-center justify-center">
+      <Box asChild flex="1">
         <EmptyStateScreen
           icon="tabler:hammer"
           message={{
@@ -65,7 +64,7 @@ function DashboardGrid({
             namespace: 'common.dashboard'
           }}
         />
-      </div>
+      </Box>
     )
   }
 
@@ -73,15 +72,13 @@ function DashboardGrid({
     <ResponsiveGridLayout
       autoSize
       className={canLayoutChange ? 'pb-64' : undefined}
-      cols={
-        {
-          lg: 8,
-          md: 8,
-          sm: 4,
-          xs: 4,
-          xxs: 4
-        } as any
-      }
+      cols={{
+        lg: 8,
+        md: 8,
+        sm: 4,
+        xs: 4,
+        xxs: 4
+      }}
       containerPadding={[0, 0]}
       isDraggable={canLayoutChange}
       isDroppable={canLayoutChange}
@@ -90,8 +87,8 @@ function DashboardGrid({
       margin={[10, 10]}
       rowHeight={100}
       width={width}
-      onLayoutChange={(_: any, layouts: any) => {
-        changeDashboardLayout(layouts)
+      onLayoutChange={(_, layouts) => {
+        changeDashboardLayout(layouts as never)
       }}
     >
       {[
@@ -134,10 +131,12 @@ function DashboardGrid({
           {canLayoutChange && (
             <>
               <div className="bg-bg-900/30 absolute inset-0 top-0 left-0 rounded" />
-              <Icon
-                className="absolute right-0 bottom-0 text-2xl"
-                icon="clarity:drag-handle-corner-line"
-              />
+              <Box bottom="0" position="absolute" right="0">
+                <Icon
+                  className="1.5em"
+                  icon="clarity:drag-handle-corner-line"
+                />
+              </Box>
             </>
           )}
         </div>

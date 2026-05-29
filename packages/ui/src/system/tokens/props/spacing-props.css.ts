@@ -5,7 +5,7 @@ import {
   type ResponsiveProp,
   type SpaceToken,
   vars
-} from '..'
+} from '../..'
 
 interface TokenizedPaddingProps {
   p?: ResponsiveProp<SpaceToken>

@@ -1,5 +1,4 @@
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 interface LoadingScreenProps {
   /** An optional message to display below the loading indicator. */
@@ -10,21 +9,21 @@ interface LoadingScreenProps {
 
 export function LoadingScreen({ message, loaderSize }: LoadingScreenProps) {
   return (
-    <Text asChild color="muted" weight="medium">
+    <Text asChild color="muted" size="lg" weight="medium">
       <Flex
         align="center"
         direction="column"
         flexGrow="1"
-        gap="md"
         height="100%"
         justify="center"
         width="100%"
       >
         <Icon
+          color="muted"
           icon="svg-spinners:ring-resize"
           style={{
             fontSize: loaderSize || '2rem',
-            color: 'var(--color-bg-500)'
+            marginBottom: '1em'
           }}
         />
         {message}

@@ -20,6 +20,8 @@ interface TagChipProps extends Omit<BorderedProps, 'color'> {
   icon?: string
   /** The color of the tag chip. If provided, it customizes the text, border and background colors. */
   color?: string
+  /** The size variant of the tag chip. */
+  size?: 'sm' | 'base'
   /** Optional action button properties, including icon and click handler.
    * If provided, an action button will be displayed at the end of the tag chip. */
   variant?: 'outlined' | 'filled'
@@ -41,6 +43,7 @@ export function TagChip({
   icon,
   color,
   variant = 'outlined',
+  size = 'base',
   actionButtonProps,
   onClick,
   ...rest
@@ -97,7 +100,7 @@ export function TagChip({
           minWidth="0"
           px="sm"
           py="xs"
-          rounded="full"
+          r="full"
           style={computedStyle}
           onClick={onClick}
           {...rest}
@@ -119,12 +122,18 @@ export function TagChip({
                   </Flex>
                 )
               } else {
-                return <Icon icon={icon} size="1em" />
+                return (
+                  <Icon icon={icon} size={size === 'base' ? '1em' : '0.75em'} />
+                )
               }
             })()}
             {typeof label === 'string' ? (
               <Box asChild minWidth="0">
-                <Text truncate size="sm" weight="medium">
+                <Text
+                  truncate
+                  size={size === 'base' ? 'sm' : 'xs'}
+                  weight="medium"
+                >
                   {label}
                 </Text>
               </Box>

@@ -1,10 +1,6 @@
 import { defineProperties } from '@vanilla-extract/sprinkles'
 
-import {
-  RESPONSIVE_CONDITIONS,
-  type ResponsiveProp,
-  normalizeResponsiveProp
-} from '..'
+import { RESPONSIVE_CONDITIONS, type ResponsiveProp } from '../..'
 
 export type PositionValue =
   | 'static'

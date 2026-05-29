@@ -59,7 +59,7 @@ export function Tabs<
               <Text
                 asChild
                 color={
-                  currentTab !== id
+                  currentTab === id
                     ? { base: 'custom-500' }
                     : {
                         base: 'bg-400',

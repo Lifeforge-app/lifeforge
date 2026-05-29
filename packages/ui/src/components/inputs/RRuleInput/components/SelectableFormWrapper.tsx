@@ -25,7 +25,7 @@ export function SelectableFormWrapper({
         }
         borderWidth="2px"
         p="md"
-        rounded="md"
+        r="md"
         style={{
           opacity: selected ? 1 : 0.5
         }}

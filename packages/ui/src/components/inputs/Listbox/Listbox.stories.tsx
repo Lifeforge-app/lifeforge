@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import { Box, Flex, Icon, Text } from '@/components/primitives'
-
+import { Flex, Icon, Text } from '@/components/primitives'
 import { COLORS, TAILWIND_PALETTE } from '@/system'
 
 import { ListboxOption } from '../ListboxInput/components/ListboxOption'
@@ -70,14 +69,12 @@ export const Default: Story = {
       <Listbox
         renderContent={() => (
           <Flex align="center" gap="sm">
-            <Box asChild flexShrink="0">
-              <Icon
-                icon={selectedOption?.icon || 'tabler:cube'}
-                style={{
-                  color: selectedOption?.color || COLORS['bg-500']
-                }}
-              />
-            </Box>
+            <Icon
+              icon={selectedOption?.icon || 'tabler:cube'}
+              style={{
+                color: selectedOption?.color || COLORS['bg-500']
+              }}
+            />
             <Text truncate>{selectedOption?.label || 'Select an option'}</Text>
           </Flex>
         )}
@@ -118,14 +115,12 @@ export const Disabled: Story = {
         disabled
         renderContent={() => (
           <Flex align="center" gap="sm">
-            <Box asChild flexShrink="0">
-              <Icon
-                icon={selectedOption?.icon || 'tabler:cube'}
-                style={{
-                  color: selectedOption?.color || COLORS['bg-500']
-                }}
-              />
-            </Box>
+            <Icon
+              icon={selectedOption?.icon || 'tabler:cube'}
+              style={{
+                color: selectedOption?.color || COLORS['bg-500']
+              }}
+            />
             <Text truncate>{selectedOption?.label || 'Select an option'}</Text>
           </Flex>
         )}

@@ -312,6 +312,8 @@ export default class ForgeEndpoint<
       return this.mutateRaw(data)
     }
 
+    console.log(data)
+
     // Encrypt the request
     const { payload, session } = await encryptRequest(data)
 

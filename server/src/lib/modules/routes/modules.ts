@@ -51,7 +51,7 @@ export const list = forge
   .callback(async ({ core: { tempFile } }) => {
     const modules: InstalledModule[] = []
 
-    if (!fs.existsSync(APPS_DIR)) return { modules }
+    if (!fs.existsSync(APPS_DIR)) return modules
 
     const devModeModules =
       (new tempFile('module_dev_mode.json', 'array').read() as string[]) || []

@@ -31,7 +31,8 @@ function BorderRadiusSelector() {
       title={t('borderRadiusSelector.title')}
     >
       <Listbox
-        buttonContent={
+        className="component-bg-lighter min-w-48"
+        renderContent={() => (
           <div className="flex items-center gap-2">
             <BorderRadiusIcon radius={borderRadiusMultiplier} />
             <span className="-mt-px block truncate">
@@ -44,8 +45,7 @@ function BorderRadiusSelector() {
               )}
             </span>
           </div>
-        }
-        className="component-bg-lighter min-w-48"
+        )}
         value={borderRadiusMultiplier}
         onChange={value => {
           changeBorderRadiusMultiplier(value)

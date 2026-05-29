@@ -46,7 +46,7 @@ export function PreviewContainer({
           overflow="hidden"
           p="md"
           position="relative"
-          rounded="lg"
+          r="lg"
           style={{ minHeight: '8rem' }}
           width="100%"
         >
@@ -59,7 +59,7 @@ export function PreviewContainer({
             >
               <Text
                 asChild
-                color="bg-500"
+                color="muted"
                 style={{ height: '1.5rem', width: '1.5rem', flexShrink: 0 }}
               >
                 <Icon
@@ -86,7 +86,7 @@ export function PreviewContainer({
           </Flex>
           <Box
             asChild
-            rounded="md"
+            r="md"
             style={{ maxHeight: '24rem', objectFit: 'contain' }}
           >
             <img alt="" src={preview} />
@@ -110,7 +110,7 @@ export function PreviewContainer({
           >
             <Text
               asChild
-              color="bg-500"
+              color="muted"
               style={{ height: '1.5rem', width: '1.5rem' }}
             >
               <Icon

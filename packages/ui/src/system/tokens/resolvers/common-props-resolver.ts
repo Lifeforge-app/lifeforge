@@ -1,17 +1,25 @@
-import type { TokenizedLayoutProps } from '../layout-props.css'
-import type { TokenizedSpacingProps } from '../spacing-props.css'
-import { resolveLayoutSprinklesProps } from './layout-props-resolvers'
-import { resolveSpacingSprinklesProps } from './spacing-props-resolvers'
+import {
+  resolveLayoutSprinklesProps,
+  resolveRoundedSprinklesProps,
+  resolveSpacingSprinklesProps
+} from '.'
+import type {
+  TokenizedLayoutProps,
+  TokenizedRoundedProps,
+  TokenizedSpacingProps
+} from '../props'
 
 export interface TokenizedCommonProps
-  extends TokenizedLayoutProps, TokenizedSpacingProps {}
+  extends TokenizedLayoutProps, TokenizedSpacingProps, TokenizedRoundedProps {}
 
 export function resolveCommonSprinkleProps(
   spacing: TokenizedSpacingProps,
-  layout: TokenizedLayoutProps
+  layout: TokenizedLayoutProps,
+  rounded: TokenizedRoundedProps
 ) {
   return {
     ...resolveSpacingSprinklesProps(spacing),
-    ...resolveLayoutSprinklesProps(layout)
+    ...resolveLayoutSprinklesProps(layout),
+    ...resolveRoundedSprinklesProps(rounded)
   }
 }

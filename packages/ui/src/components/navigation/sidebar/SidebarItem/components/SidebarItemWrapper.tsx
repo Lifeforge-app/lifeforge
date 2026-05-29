@@ -40,7 +40,7 @@ export function SidebarItemWrapper({
           justify="between"
           pl="md"
           position="relative"
-          rounded="lg"
+          r="lg"
           style={{ gap: '0.75rem', height: '3.5rem', paddingRight: '0.75rem' }}
           width="100%"
         >

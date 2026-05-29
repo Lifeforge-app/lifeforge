@@ -62,5 +62,17 @@ export function useAppRouter() {
     return appRouter ?? loadingRouter
   }, [auth, authLoading, modulesLoading, appRouter, loadingRouter, authRouter])
 
-  return { router, isAuthenticated: !!auth }
+  const routerKey = useMemo(() => {
+    if (authLoading || modulesLoading) {
+      return 'loading'
+    }
+
+    if (!auth) {
+      return 'auth'
+    }
+
+    return appRouter ? 'app' : 'loading'
+  }, [auth, authLoading, modulesLoading, appRouter])
+
+  return { router, isAuthenticated: !!auth, routerKey }
 }

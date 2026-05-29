@@ -1,9 +1,16 @@
-import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/shared'
-import { Listbox, ListboxOption, OptionsColumn, WithQuery } from '@lifeforge/ui'
+import {
+  Flex,
+  Icon,
+  Listbox,
+  ListboxOption,
+  OptionsColumn,
+  Text,
+  WithQuery
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
@@ -15,17 +22,7 @@ function LanguageSelector() {
 
   const { t } = useTranslation('common.personalization')
 
-  const languagesQuery = useQuery(
-    forgeAPI
-      .untyped<
-        {
-          name: string
-          icon: string
-          displayName: string
-        }[]
-      >('locales/listLanguages')
-      .queryOptions()
-  )
+  const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
 
   return (
     <OptionsColumn
@@ -37,18 +34,23 @@ function LanguageSelector() {
       <WithQuery loaderSize="1.5em" query={languagesQuery}>
         {langs => (
           <Listbox
-            buttonContent={
-              <div className="flex items-center gap-2">
+            bg={{
+              base: 'bg-100',
+              hover: 'bg-200',
+              dark: 'bg-800',
+              darkHover: 'bg-700'
+            }}
+            minWidth="16em"
+            renderContent={() => (
+              <Flex align="center" gap="sm" maxWidth="16em" minWidth="0">
                 <Icon
-                  className="size-5"
                   icon={langs.find(({ name }) => name === language)?.icon ?? ''}
                 />
-                <span className="-mt-px block truncate">
+                <Text truncate>
                   {langs.find(({ name }) => name === language)?.displayName}
-                </span>
-              </div>
-            }
-            className="component-bg-lighter min-w-64"
+                </Text>
+              </Flex>
+            )}
             value={language}
             onChange={language => {
               changeLanguage(language)

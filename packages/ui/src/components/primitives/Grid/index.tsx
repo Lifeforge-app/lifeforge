@@ -10,7 +10,6 @@ import {
 import {
   type ArbitraryProps,
   type ColorToken,
-  type RadiusToken,
   type ResponsiveProp,
   type SpaceToken,
   type TokenizedCommonProps,
@@ -49,7 +48,6 @@ interface GridOwnProps<T extends ElementType = 'div'>
   gapX?: ResponsiveProp<SpaceToken>
   gapY?: ResponsiveProp<SpaceToken>
   bg?: ThemeConditionProp<ColorToken>
-  rounded?: ResponsiveProp<RadiusToken>
   shadow?: boolean
   className?: string
   style?: CSSProperties
@@ -78,7 +76,11 @@ export function Grid<T extends ElementType = 'div'>({
   gapX,
   gapY,
   bg,
-  rounded,
+  r,
+  rtl,
+  rtr,
+  rbl,
+  rbr,
   shadow,
   align,
   justify,
@@ -104,7 +106,6 @@ export function Grid<T extends ElementType = 'div'>({
   flexGrow,
   flexShrink,
   gridArea,
-
   gridColumnSpan,
   gridRowSpan,
   // Padding
@@ -141,7 +142,6 @@ export function Grid<T extends ElementType = 'div'>({
     sprinkleProps: {
       display: normalizeResponsiveProp(display),
       backgroundColor: bg,
-      borderRadius: normalizeResponsiveProp(rounded),
       gap: normalizeResponsiveProp(gap),
       rowGap: normalizeResponsiveProp(gapY),
       columnGap: normalizeResponsiveProp(gapX),
@@ -155,6 +155,13 @@ export function Grid<T extends ElementType = 'div'>({
           overflow,
           overflowX,
           overflowY
+        },
+        {
+          r,
+          rtl,
+          rtr,
+          rbl,
+          rbr
         }
       )
     },

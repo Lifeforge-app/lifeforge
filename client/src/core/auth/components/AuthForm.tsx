@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { useAuth, usePromiseLoading, useSearchParams } from '@lifeforge/shared'
-import { Flex, TextInput } from '@lifeforge/ui'
+import { Stack, TextInput } from '@lifeforge/ui'
 
 import AuthSignInButton from './AuthSignInButtons'
 
@@ -106,13 +106,7 @@ function AuthForm({ providers }: { providers: string[] }) {
   }, [password])
 
   return (
-    <Flex
-      direction="column"
-      gap="lg"
-      maxWidth="70%"
-      mt={{ base: 'lg', sm: '2xl' }}
-      width="100%"
-    >
+    <Stack maxWidth={{ sm: '70%' }} mt={{ base: 'lg', sm: '2xl' }}>
       {INPUT_FIELDS.map((input, index) => (
         <TextInput
           key={index}
@@ -131,7 +125,7 @@ function AuthForm({ providers }: { providers: string[] }) {
         providers={providers}
         signIn={onSubmit}
       />
-    </Flex>
+    </Stack>
   )
 }
 

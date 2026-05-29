@@ -65,7 +65,7 @@ export function ChipSelector({
         height="2rem"
         justify="center"
         px="sm"
-        rounded="full"
+        r="full"
       >
         <Text
           asChild

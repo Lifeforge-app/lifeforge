@@ -1,10 +1,19 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/shared'
-import { Button, ColorInput, OptionsColumn } from '@lifeforge/ui'
+import {
+  Bordered,
+  Box,
+  Button,
+  ColorInput,
+  Flex,
+  Icon,
+  OptionsColumn,
+  Ring,
+  Text,
+  Transition
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -24,38 +33,61 @@ function BgTempSelector() {
   return (
     <OptionsColumn
       breakpoint="md"
-      className="[@media(min-width:1170px)]:flex-row"
+      // className="[@media(min-width:1170px)]:flex-row"
       description={t('bgTempSelector.desc')}
       icon="tabler:temperature"
       title={t('bgTempSelector.title')}
     >
-      <div className="flex w-full min-w-0 flex-col items-center gap-3 lg:flex-row">
+      <Flex align="center" direction={{ base: 'column', lg: 'row' }} gap="md">
         <DefaultBgTempSelector bgTemp={bgTemp} />
-        <button
-          className={clsx(
-            'border-bg-500 ring-offset-bg-50 dark:ring-offset-bg-950 ml-4 flex h-12 w-full shrink-0 items-center justify-center gap-2 rounded-full border-2 ring-offset-2 transition-all lg:w-12',
-            bgTemp.startsWith('#')
-              ? 'ring-bg-500 ring-2'
-              : 'hover:ring-bg-500 hover:ring-2'
-          )}
-          onClick={() => {
-            changeBgTemp(customBgTemp)
-          }}
-        >
-          <Icon className="text-bg-500 size-6" icon="tabler:palette" />
-          <span className="text-bg-500 font-medium md:hidden">
-            {t('bgTempSelector.customBgTemp')}
-          </span>
-        </button>
+        <Transition>
+          <Bordered asChild borderColor="bg-500" borderWidth="2px">
+            <Ring
+              asChild
+              ringColor={
+                bgTemp.startsWith('#')
+                  ? 'bg-500'
+                  : { base: 'transparent', hover: 'bg-500' }
+              }
+              ringOffsetColor={{ base: 'bg-50', dark: 'bg-950' }}
+              ringOffsetWidth="2px"
+              ringWidth="2px"
+            >
+              <Flex
+                centered
+                as="button"
+                flexShrink="0"
+                gap="sm"
+                height="3em"
+                ml="md"
+                r="full"
+                width={{ base: '100%', lg: '3em' }}
+                onClick={() => {
+                  changeBgTemp(customBgTemp)
+                }}
+              >
+                <Icon color="muted" icon="tabler:palette" size="1.5em" />
+                <Text
+                  color="muted"
+                  display={{ base: 'inline', md: 'none' }}
+                  weight="medium"
+                >
+                  {t('bgTempSelector.customBgTemp')}
+                </Text>
+              </Flex>
+            </Ring>
+          </Bordered>
+        </Transition>
         {bgTemp.startsWith('#') && (
           <>
-            <ColorInput
-              className="w-full lg:w-min"
-              label="Color Hex"
-              namespace="common.personalization"
-              value={customBgTemp}
-              onChange={setCustomBgTemp}
-            />
+            <Box width={{ base: '100%', lg: '16em' }}>
+              <ColorInput
+                label="Color Hex"
+                namespace="common.personalization"
+                value={customBgTemp}
+                onChange={setCustomBgTemp}
+              />
+            </Box>
             {bgTemp !== customBgTemp &&
               customBgTemp.match(/^#[0-9A-F]{6}$/i) !== null && (
                 <>
@@ -79,7 +111,7 @@ function BgTempSelector() {
               )}
           </>
         )}
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

@@ -1,6 +1,6 @@
 import { defineProperties } from '@vanilla-extract/sprinkles'
 
-import { COLORS } from '..'
+import { COLORS } from '../..'
 
 export const tokenizedThemeColorProperties = defineProperties({
   conditions: {

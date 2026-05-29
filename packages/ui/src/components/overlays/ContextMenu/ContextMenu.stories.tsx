@@ -30,14 +30,14 @@ export const Default: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         height="100%"
         p="md"
-        rounded="lg"
+        r="lg"
         width="100%"
       >
         <Flex align="center" justify="between">
           <Flex align="center" style={{ gap: '0.75rem' }}>
             <Box
               p="sm"
-              rounded="md"
+              r="md"
               style={{
                 backgroundColor:
                   'color-mix(in srgb, var(--color-custom-500) 30%, transparent)'

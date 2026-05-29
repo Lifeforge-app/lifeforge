@@ -4,9 +4,9 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 import {
   RESPONSIVE_CONDITIONS,
   tokenizedLayoutProperties,
+  tokenizedRoundedProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties,
-  vars
+  tokenizedThemeColorProperties
 } from '@/system'
 
 /**
@@ -23,8 +23,7 @@ const borderedProperties = defineProperties({
   conditions: RESPONSIVE_CONDITIONS,
   defaultCondition: 'base',
   properties: {
-    display: ['block', 'inline', 'inline-block', 'none', 'contents'],
-    borderRadius: vars.radii
+    display: ['block', 'inline', 'inline-block', 'none', 'contents']
   }
 })
 
@@ -41,7 +40,8 @@ export const borderedSprinkles = createSprinkles(
   borderedProperties,
   tokenizedLayoutProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties
+  tokenizedThemeColorProperties,
+  tokenizedRoundedProperties
 )
 
 export type BorderedSprinkles = Parameters<typeof borderedSprinkles>[0]

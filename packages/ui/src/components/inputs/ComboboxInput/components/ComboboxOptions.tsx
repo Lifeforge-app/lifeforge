@@ -19,7 +19,7 @@ export function ComboboxOptions({
         bg={{ base: 'bg-100', dark: 'bg-800' }}
         className={styles.options}
         overflowY="auto"
-        rounded="md"
+        r="md"
         style={{
           // @ts-expect-error - headlessui CSS variable
           '--anchor-gap': '12px',

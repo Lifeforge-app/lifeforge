@@ -1,8 +1,6 @@
 import { Card } from '@/components/layout'
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 import { Tooltip } from '@/components/utilities'
-
 import type { ResponsiveProp, SpaceToken } from '@/system'
 
 type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
@@ -58,7 +56,7 @@ export function OptionsColumn({
   }
 
   return (
-    <Card direction={getDirection()} gap="xl" justify="between">
+    <Card direction={getDirection()} gapX="xl" gapY="md" justify="between">
       <Flex align="center" flexShrink="1" gap="md">
         <Icon
           icon={icon}

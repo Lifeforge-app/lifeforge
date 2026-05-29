@@ -23,7 +23,7 @@ function _IconEntry({
         bg={{ base: 'transparent', hover: 'bg-200', darkHover: 'bg-800' }}
         direction="column"
         p="md"
-        rounded="lg"
+        r="lg"
         style={{ cursor: 'pointer' }}
         width="100%"
         onClick={handleIconSelected}

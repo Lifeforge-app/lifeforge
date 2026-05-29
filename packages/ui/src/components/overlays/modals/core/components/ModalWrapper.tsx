@@ -72,7 +72,7 @@ export function ModalWrapper({
             overflowY="auto"
             p="lg"
             position="absolute"
-            rounded="xl"
+            r="xl"
             style={{
               transform: `translate(-50%, -50%) scale(${!isOpen ? '0.9' : isTopmost ? '1' : '0.95'})`,
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',

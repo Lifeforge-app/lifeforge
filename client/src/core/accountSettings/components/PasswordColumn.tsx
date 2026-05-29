@@ -11,7 +11,7 @@ function PasswordColumn() {
 
   async function handlePasswordChange() {
     try {
-      await forgeAPI.untyped('user/settings/requestPasswordReset').mutate({})
+      await forgeAPI.user.settings.requestPasswordReset.mutate({})
 
       toast.info('A password reset link has been sent to your email.')
     } catch {
@@ -28,11 +28,11 @@ function PasswordColumn() {
       title={t('settings.title.password')}
     >
       <Button
-        className="w-full whitespace-nowrap md:w-auto"
         icon="tabler:key"
         loading={loading}
         namespace="common.accountSettings"
         variant="secondary"
+        width={{ base: '100%', md: 'auto' }}
         onClick={onSubmit}
       >
         change password

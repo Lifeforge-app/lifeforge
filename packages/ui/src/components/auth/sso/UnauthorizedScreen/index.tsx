@@ -24,7 +24,7 @@ export function UnauthorizedScreen({ frontendURL }: { frontendURL: string }) {
         mt="3xl"
         p="md"
         px="lg"
-        rounded="md"
+        r="md"
         style={{
           color: 'var(--color-bg-800)',
           fontWeight: 600,

@@ -41,7 +41,7 @@ export function ContextMenuGroup({
           className={styles.groupContainer}
           direction="column"
           overflow="hidden"
-          rounded="lg"
+          r="lg"
         >
           {children}
         </Flex>

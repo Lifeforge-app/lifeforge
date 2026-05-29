@@ -58,7 +58,7 @@ export const Default: Story = {
   },
   render: args => (
     <Flex align="center" height="100%" justify="center" p="3xl">
-      <Bordered {...args} p="lg" rounded="lg" width="20rem">
+      <Bordered {...args} p="lg" r="lg" width="20rem">
         <Text as="p" color={{ base: 'bg-600', dark: 'bg-400' }}>
           A simple bordered container using the default neutral border color
           that adapts between light and dark themes automatically.
@@ -76,18 +76,18 @@ export const BorderColor: Story = {
   args: {},
   render: () => (
     <Grid gap="lg" p="3xl" templateCols={3}>
-      <Bordered p="md" rounded="lg">
+      <Bordered p="md" r="lg">
         <DemoBox label="Default (bg-200 / bg-700)" />
       </Bordered>
 
-      <Bordered borderColor="custom-500" p="md" rounded="lg">
+      <Bordered borderColor="custom-500" p="md" r="lg">
         <DemoBox label="custom-500 (flat)" />
       </Bordered>
 
       <Bordered
         borderColor={{ base: 'custom-300', dark: 'custom-600' }}
         p="md"
-        rounded="lg"
+        r="lg"
       >
         <DemoBox label="custom-300 / custom-600 (adaptive)" />
       </Bordered>
@@ -100,16 +100,12 @@ export const BorderColor: Story = {
           hover: 'custom-500'
         }}
         p="md"
-        rounded="lg"
+        r="lg"
       >
         <DemoBox label="hover + dark + darkHover conditions" />
       </Bordered>
 
-      <Bordered
-        borderColor={{ base: 'bg-200', dark: 'bg-800' }}
-        p="md"
-        rounded="lg"
-      >
+      <Bordered borderColor={{ base: 'bg-200', dark: 'bg-800' }} p="md" r="lg">
         <DemoBox label="bg-200 / bg-800 (subtle)" />
       </Bordered>
 
@@ -117,7 +113,7 @@ export const BorderColor: Story = {
         borderColor={{ base: 'custom-500', dark: 'custom-400' }}
         borderWidth="2px"
         p="md"
-        rounded="lg"
+        r="lg"
       >
         <DemoBox label="2px accent border" />
       </Bordered>
@@ -134,7 +130,7 @@ export const BorderWidth: Story = {
   render: () => (
     <ScrollableStory>
       {(['1px', '2px', '4px', '8px'] as const).map(w => (
-        <Bordered key={w} borderWidth={w} p="md" rounded="lg">
+        <Bordered key={w} borderWidth={w} p="md" r="lg">
           <DemoBox label={`borderWidth="${w}"`} />
         </Bordered>
       ))}
@@ -150,7 +146,7 @@ export const BorderStyle: Story = {
   render: () => (
     <ScrollableStory>
       {(['solid', 'dashed', 'dotted', 'double', 'none'] as const).map(s => (
-        <Bordered key={s} borderStyle={s} borderWidth="2px" p="md" rounded="lg">
+        <Bordered key={s} borderStyle={s} borderWidth="2px" p="md" r="lg">
           <DemoBox label={`borderStyle="${s}"`} />
         </Bordered>
       ))}
@@ -196,8 +192,8 @@ export const BorderRadius: Story = {
       <Grid gap="lg" templateCols="repeat(auto-fill, minmax(200px, 1fr)">
         {(['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'] as const).map(
           r => (
-            <Bordered key={r} p="md" rounded={r}>
-              <DemoBox label={`rounded="${r}"`} />
+            <Bordered key={r} p="md" r={r}>
+              <DemoBox label={`r="${r}"`} />
             </Bordered>
           )
         )}
@@ -214,12 +210,7 @@ export const WithBackground: Story = {
   args: {},
   render: () => (
     <Grid gap="lg" p="3xl" templateCols={2}>
-      <Bordered
-        shadow
-        bg={{ base: 'bg-50', dark: 'bg-900' }}
-        p="lg"
-        rounded="lg"
-      >
+      <Bordered shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" r="lg">
         <Text as="p" color={{ base: 'bg-600', dark: 'bg-400' }}>
           bg + border + shadow - a complete card panel.
         </Text>
@@ -230,7 +221,7 @@ export const WithBackground: Story = {
         borderColor="custom-500"
         borderWidth="2px"
         p="lg"
-        rounded="lg"
+        r="lg"
       >
         <Text as="p" color={{ base: 'custom-700', dark: 'custom-300' }}>
           Accent-tinted background with matching border.
@@ -255,7 +246,7 @@ export const AccentBar: Story = {
         borderWidth="4px"
         px="lg"
         py="md"
-        rounded="sm"
+        r="sm"
       >
         <Text weight="semibold">Info callout</Text>
         <Text as="p" color={{ base: 'bg-500', dark: 'bg-400' }} mt="xs">
@@ -306,7 +297,7 @@ export const AsChild: Story = {
         borderColor="custom-500"
         borderWidth="2px"
         p="lg"
-        rounded="lg"
+        r="lg"
       >
         <Flex
           align="center"

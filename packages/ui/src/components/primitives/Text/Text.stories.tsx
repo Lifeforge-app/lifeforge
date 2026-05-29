@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Alert } from '@/components/feedback'
 import { Box, Flex, Grid, Text } from '@/components/primitives'
-
 import { ScrollableStory } from '@/storybook/ScrollableStory'
 
 const meta = {
@@ -244,7 +243,7 @@ export const TextAlign: Story = {
           key={align}
           bg={{ base: 'bg-50', dark: 'bg-800' }}
           p="md"
-          rounded="lg"
+          r="lg"
           width="100%"
         >
           <Text align={align} as="p" size="lg">
@@ -352,7 +351,7 @@ export const LineClamp: Story = {
             bg={{ base: 'bg-50', dark: 'bg-800' }}
             maxWidth="32em"
             p="md"
-            rounded="lg"
+            r="lg"
             width="100%"
           >
             <Text
@@ -393,7 +392,7 @@ export const WhiteSpace: Story = {
             bg={{ base: 'bg-50', dark: 'bg-800' }}
             overflow="hidden"
             p="md"
-            rounded="lg"
+            r="lg"
           >
             <Text
               as="code"
@@ -499,7 +498,7 @@ export const Composition: Story = {
             shadow
             bg={{ base: 'bg-50', dark: 'bg-900' }}
             p="lg"
-            rounded="xl"
+            r="xl"
           >
             <Text
               color="primary"
@@ -571,7 +570,7 @@ export const Leading: Story = {
             key={leading}
             bg={{ base: 'bg-50', dark: 'bg-800' }}
             p="md"
-            rounded="lg"
+            r="lg"
             width="100%"
           >
             <Text

@@ -55,7 +55,7 @@ function useQRLoginApproval(scannedData: string) {
 
     try {
       const response = await forgeAPI
-        .untyped<{ browserInfo: string }>('/user/qrLogin/approveQRLogin')
+        .user.qrLogin.approveQRLogin
         .mutate({
           sessionId: sessionData.sessionId
         } as never)

@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 
 import { Box, Flex, Text } from '@/components/primitives'
-
 import { vars } from '@/system'
 
 import { InputIcon } from '../shared/components/InputIcon'
@@ -97,7 +96,7 @@ export function TextAreaInput({
             minHeight="4rem"
             p={variant === 'classic' ? 'xl' : 'none'}
             pl={variant === 'classic' ? 'none' : undefined}
-            rounded="lg"
+            r="lg"
             style={
               variant === 'classic'
                 ? { paddingBottom: vars.radii.md }

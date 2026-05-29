@@ -27,7 +27,7 @@ export function Card<T extends React.ElementType = 'div'>({
       direction="column"
       p="md"
       position="relative"
-      rounded="lg"
+      r="lg"
       style={{
         ...(isInteractive ? { cursor: 'pointer', transition: 'all 0.2s' } : {}),
         ...style

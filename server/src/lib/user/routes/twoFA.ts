@@ -1,3 +1,4 @@
+import { decrypt2, encrypt, encrypt2 } from '@functions/auth/encryption'
 import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import speakeasy from 'speakeasy'
@@ -6,15 +7,11 @@ import z from 'zod'
 
 import { ClientError } from '@lifeforge/server-utils'
 
-import { decrypt2, encrypt, encrypt2 } from '@functions/auth/encryption'
-import { default as _validateOTP } from '@functions/auth/validateOTP'
-
 import { currentSession } from '..'
 import forge from '../forge'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 import { verifyAppOTP, verifyEmailOTP } from '../utils/otp'
 
-let canDisable2FA = false
 let challenge = v4()
 
 setTimeout(
@@ -58,31 +55,31 @@ export const requestOTP = forge
     return currentSession.tokenId
   })
 
-export const validateOTP = forge
-  .mutation()
-  .noAuth()
-  .description('Verify OTP for two-factor authentication')
-  .input({
-    body: z.object({
-      otp: z.string(),
-      otpId: z.string()
-    })
-  })
-  .callback(async ({ pb, body }) => {
-    if (await _validateOTP(pb, body, challenge)) {
-      canDisable2FA = true
-      setTimeout(
-        () => {
-          canDisable2FA = false
-        },
-        1000 * 60 * 5
-      )
+// export const validateOTP = forge
+//   .mutation()
+//   .noAuth()
+//   .description('Verify OTP for two-factor authentication')
+//   .input({
+//     body: z.object({
+//       otp: z.string(),
+//       otpId: z.string()
+//     })
+//   })
+//   .callback(async ({ pb, body }) => {
+//     if (await _validateOTP(pb, body, challenge)) {
+//       canDisable2FA = true
+//       setTimeout(
+//         () => {
+//           canDisable2FA = false
+//         },
+//         1000 * 60 * 5
+//       )
 
-      return true
-    }
+//       return true
+//     }
 
-    return false
-  })
+//     return false
+//   })
 
 export const generateAuthenticatorLink = forge
   .query()
@@ -162,12 +159,13 @@ export const disable = forge
   .description('Disable two-factor authentication')
   .input({})
   .callback(async ({ pb }) => {
-    if (!canDisable2FA) {
-      throw new ClientError(
-        'You cannot disable 2FA right now. Please try again later.',
-        403
-      )
-    }
+    //TODO
+    // if (!canDisable2FA) {
+    //   throw new ClientError(
+    //     'You cannot disable 2FA right now. Please try again later.',
+    //     403
+    //   )
+    // }
 
     await pb.update
       .collection('users')
@@ -177,7 +175,7 @@ export const disable = forge
       })
       .execute()
 
-    canDisable2FA = false
+    // canDisable2FA = false
   })
 
 export const verify = forge

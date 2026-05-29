@@ -4,6 +4,7 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 import {
   RESPONSIVE_CONDITIONS,
   tokenizedLayoutProperties,
+  tokenizedRoundedProperties,
   tokenizedSpacingProperties,
   tokenizedThemeColorProperties,
   vars
@@ -35,8 +36,7 @@ const flexProperties = defineProperties({
     columnGap: vars.space,
     flexGrow: [0, 1],
     flexShrink: [0, 1],
-    flexWrap: ['nowrap', 'wrap', 'wrap-reverse'],
-    borderRadius: vars.radii
+    flexWrap: ['nowrap', 'wrap', 'wrap-reverse']
   }
 })
 
@@ -44,7 +44,8 @@ export const flexSprinkles = createSprinkles(
   flexProperties,
   tokenizedLayoutProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties
+  tokenizedThemeColorProperties,
+  tokenizedRoundedProperties
 )
 
 export type FlexSprinkles = Parameters<typeof flexSprinkles>[0]

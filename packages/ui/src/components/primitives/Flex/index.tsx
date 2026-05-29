@@ -10,7 +10,6 @@ import {
 import {
   type ArbitraryProps,
   type ColorToken,
-  type RadiusToken,
   type ResponsiveProp,
   type SpaceToken,
   type TokenizedCommonProps,
@@ -50,10 +49,10 @@ interface FlexOwnProps<T extends ElementType = 'div'>
   justify?: ResponsiveProp<JustifyValue>
   wrap?: ResponsiveProp<WrapValue>
   bg?: ThemeConditionProp<ColorToken>
-  rounded?: ResponsiveProp<RadiusToken>
   shadow?: boolean
   className?: string
   style?: CSSProperties
+  sus?: string
   children?: ReactNode
 }
 
@@ -91,7 +90,11 @@ export function Flex<T extends ElementType = 'div'>({
   justify: justifyProp,
   wrap,
   bg,
-  rounded,
+  r,
+  rtl,
+  rtr,
+  rbl,
+  rbr,
   shadow,
   // Layout props (CSS string - responsive)
   width,
@@ -149,7 +152,6 @@ export function Flex<T extends ElementType = 'div'>({
     sprinkleProps: {
       display: normalizeResponsiveProp(display),
       backgroundColor: bg,
-      borderRadius: normalizeResponsiveProp(rounded),
       flexDirection: normalizeResponsiveProp(direction),
       gap: normalizeResponsiveProp(gap),
       rowGap: normalizeResponsiveProp(gapY),
@@ -164,7 +166,8 @@ export function Flex<T extends ElementType = 'div'>({
           overflow,
           overflowX,
           overflowY
-        }
+        },
+        { r, rtl, rtr, rbl, rbr }
       )
     },
     arbitraryProps: {

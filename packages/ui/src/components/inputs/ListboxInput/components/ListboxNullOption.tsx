@@ -1,7 +1,13 @@
 import { ListboxOption as HeadlessListboxOption } from '@headlessui/react'
 
 import { Icon } from '@/components/primitives'
-import { Box, Flex, Text, Transition, WithDivide } from '@/components/primitives'
+import {
+  Box,
+  Flex,
+  Text,
+  Transition,
+  WithDivide
+} from '@/components/primitives'
 
 export function ListboxNullOption({
   icon,
@@ -47,7 +53,7 @@ export function ListboxNullOption({
                         flexShrink="0"
                         p={hasBgColor ? 'sm' : undefined}
                         pr={!hasBgColor ? 'sm' : undefined}
-                        rounded="md"
+                        r="md"
                       >
                         {hasBgColor ? (
                           <Text asChild color="muted">

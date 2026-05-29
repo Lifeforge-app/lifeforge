@@ -37,7 +37,7 @@ export function ViewModeSelector<
       className={styles.container}
       gap="xs"
       p={size === 'small' ? 'xs' : 'sm'}
-      rounded="lg"
+      r="lg"
     >
       {options.map(({ value, icon, text }) => (
         <Text
@@ -73,7 +73,7 @@ export function ViewModeSelector<
             gap="sm"
             px={size === 'small' ? 'sm' : 'md'}
             py={size === 'small' ? 'xs' : 'sm'}
-            rounded="md"
+            r="md"
             style={{
               transition: 'all 0.2s'
             }}

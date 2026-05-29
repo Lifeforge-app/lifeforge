@@ -24,7 +24,7 @@ export function ListboxOptions({
         className={styles.options}
         overflowY="auto"
         position={!portal ? 'absolute' : undefined}
-        rounded="md"
+        r="md"
         style={{
           // @ts-expect-error - headlessui CSS variable
           '--anchor-gap': '12px',

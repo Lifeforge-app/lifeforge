@@ -3,8 +3,7 @@ import _ from 'lodash'
 import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 import { Button } from '../../../../inputs/Button'
 
@@ -51,13 +50,7 @@ function _ModalHeader({
           style={{ gap: '0.75rem' }}
           width="100%"
         >
-          <Box
-            asChild
-            flexShrink="0"
-            style={{ height: '1.5rem', width: '1.5rem' }}
-          >
-            <Icon icon={innerIcon} />
-          </Box>
+          <Icon icon={innerIcon} size="1.5em" />
           {typeof innerTitle === 'string' ? (
             <>
               <Text truncate as="span" style={{ minWidth: 0 }}>

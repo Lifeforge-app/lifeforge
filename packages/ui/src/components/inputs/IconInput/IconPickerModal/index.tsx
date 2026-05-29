@@ -66,7 +66,7 @@ export function IconPickerModal({
               asChild
               bg={{ base: 'transparent', hover: 'bg-100', darkHover: 'bg-800' }}
               p="sm"
-              rounded="md"
+              r="md"
             >
               <Text
                 asChild
@@ -92,11 +92,7 @@ export function IconPickerModal({
       ) : (
         <ModalHeader
           appendTitle={
-            <Text
-              align="right"
-              color="bg-500"
-              size={{ base: 'sm', sm: 'base' }}
-            >
+            <Text align="right" color="muted" size={{ base: 'sm', sm: 'base' }}>
               powered by&nbsp;
               <Text asChild decoration="underline">
                 <a

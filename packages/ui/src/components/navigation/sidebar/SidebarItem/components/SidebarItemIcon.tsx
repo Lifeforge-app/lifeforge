@@ -41,7 +41,7 @@ export function SidebarItemIcon({
         borderWidth={active ? '1px' : '0px'}
         flexShrink="0"
         overflow="hidden"
-        rounded="sm"
+        r="sm"
       >
         <img
           className={className}

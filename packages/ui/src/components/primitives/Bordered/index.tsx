@@ -18,7 +18,7 @@ import {
 } from '@/system'
 import { normalizeGridSpan } from '@/system/grid-utils'
 import type { ThemeConditionProp } from '@/system/themes'
-import { type RadiusToken, shadowClass } from '@/system/vars.css'
+import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
 import {
@@ -44,7 +44,6 @@ interface BorderedOwnProps<T extends ElementType = 'div'>
   borderStyle?: BorderStyleValue
   borderSide?: BorderSide
   borderWidth?: string
-  rounded?: ResponsiveProp<RadiusToken>
   shadow?: boolean
   className?: string
   style?: CSSProperties
@@ -101,7 +100,11 @@ export function Bordered<T extends ElementType = 'div'>({
   // Container props
   bg,
   color,
-  rounded,
+  r,
+  rtl,
+  rtr,
+  rbl,
+  rbr,
   shadow,
   // Layout props (CSS string - responsive)
   bottom,
@@ -153,11 +156,8 @@ export function Bordered<T extends ElementType = 'div'>({
   const styles = resolveStyles({
     sprinkles: borderedSprinkles,
     sprinkleProps: {
-      backgroundColor: bg as BorderedSprinkles['backgroundColor'],
-      borderColor: borderColor as BorderedSprinkles['borderColor'],
-      borderRadius: normalizeResponsiveProp(
-        rounded
-      ) as BorderedSprinkles['borderRadius'],
+      backgroundColor: bg,
+      borderColor: borderColor,
       color: color as BorderedSprinkles['color'],
       display: normalizeResponsiveProp(display) as BorderedSprinkles['display'],
       ...resolveCommonSprinkleProps(
@@ -167,7 +167,8 @@ export function Bordered<T extends ElementType = 'div'>({
           overflow,
           overflowX,
           overflowY
-        }
+        },
+        { r, rtl, rtr, rbl, rbr }
       )
     },
     arbitraryProps: {

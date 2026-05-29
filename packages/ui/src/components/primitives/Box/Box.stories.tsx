@@ -72,7 +72,7 @@ export const Default: Story = {
       <Box
         {...args}
         bg={{ base: 'bg-50', dark: 'bg-800' }}
-        rounded="lg"
+        r="lg"
         style={{ width: '20rem' }}
       >
         <PlaceholderContent />
@@ -100,7 +100,7 @@ export const PolymorphicElement: Story = {
           as={tag}
           bg={{ base: 'bg-50', dark: 'bg-800' }}
           p="md"
-          rounded="md"
+          r="md"
         >
           <Text as="code" color={{ base: 'bg-500', dark: 'bg-400' }} size="sm">
             as=&quot;{tag}&quot;
@@ -120,11 +120,11 @@ export const BackgroundColor: Story = {
   args: {},
   render: () => (
     <ScrollableStory>
-      <Box bg="bg-50" p="md" rounded="lg">
+      <Box bg="bg-50" p="md" r="lg">
         <PlaceholderContent asCode label="bg='bg-50' (flat)" />
       </Box>
 
-      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" rounded="lg">
+      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" r="lg">
         <PlaceholderContent
           asCode
           label="bg={{ base: 'bg-50', dark: 'bg-800' }}"
@@ -139,7 +139,7 @@ export const BackgroundColor: Story = {
           hover: 'bg-200'
         }}
         p="md"
-        rounded="lg"
+        r="lg"
         style={{ cursor: 'pointer', transition: 'background-color 0.2s' }}
       >
         <PlaceholderContent
@@ -148,7 +148,7 @@ export const BackgroundColor: Story = {
         />
       </Box>
 
-      <Box bg={{ base: 'custom-100', dark: 'custom-900' }} p="md" rounded="lg">
+      <Box bg={{ base: 'custom-100', dark: 'custom-900' }} p="md" r="lg">
         <PlaceholderContent
           asCode
           label="bg={{ base: 'custom-100', dark: 'custom-900' }}"
@@ -168,13 +168,8 @@ export const BorderRadius: Story = {
     <ScrollableStory>
       {(['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full'] as const).map(
         r => (
-          <Box
-            key={r}
-            bg={{ base: 'bg-50', dark: 'bg-800' }}
-            p="md"
-            rounded={r}
-          >
-            <PlaceholderContent asCode label={`rounded="${r}"`} />
+          <Box key={r} bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" r={r}>
+            <PlaceholderContent asCode label={`r="${r}"`} />
           </Box>
         )
       )}
@@ -190,11 +185,11 @@ export const Shadow: Story = {
   args: {},
   render: () => (
     <ScrollableStory>
-      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="lg" rounded="lg">
+      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="lg" r="lg">
         <PlaceholderContent label="Without shadow" />
       </Box>
 
-      <Box shadow bg={{ base: 'bg-50', dark: 'bg-800' }} p="lg" rounded="lg">
+      <Box shadow bg={{ base: 'bg-50', dark: 'bg-800' }} p="lg" r="lg">
         <PlaceholderContent label="With shadow" />
       </Box>
     </ScrollableStory>
@@ -216,9 +211,9 @@ export const Spacing: Story = {
             key={token}
             bg={{ base: 'bg-50', dark: 'bg-800' }}
             p={token}
-            rounded="md"
+            r="md"
           >
-            <Box bg={{ base: 'bg-200', dark: 'bg-700' }} p="xs" rounded="sm">
+            <Box bg={{ base: 'bg-200', dark: 'bg-700' }} p="xs" r="sm">
               <PlaceholderContent asCode label={`p="${token}"`} />
             </Box>
           </Box>
@@ -240,7 +235,7 @@ export const Sizing: Story = {
         bg={{ base: 'bg-50', dark: 'bg-800' }}
         height="4rem"
         p="md"
-        rounded="md"
+        r="md"
         width="100%"
       >
         <PlaceholderContent asCode label="width='100%' height='4rem'" />
@@ -252,7 +247,7 @@ export const Sizing: Story = {
         maxWidth="24rem"
         minWidth="8rem"
         p="md"
-        rounded="md"
+        r="md"
         width="50%"
       >
         <PlaceholderContent
@@ -263,7 +258,7 @@ export const Sizing: Story = {
       <Box
         bg={{ base: 'bg-50', dark: 'bg-800' }}
         p="md"
-        rounded="md"
+        r="md"
         width={{ base: '100%', md: '50%', sm: '75%' }}
       >
         <PlaceholderContent
@@ -287,7 +282,7 @@ export const Positioning: Story = {
         bg={{ base: 'bg-50', dark: 'bg-800' }}
         height="100%"
         position="relative"
-        rounded="lg"
+        r="lg"
         width="100%"
       >
         <PlaceholderContent asCode label="position='relative'" />
@@ -297,7 +292,7 @@ export const Positioning: Story = {
           p="xs"
           position="absolute"
           right="0"
-          rounded="md"
+          r="md"
           style={{ margin: '0.5rem' }}
         >
           <PlaceholderContent
@@ -323,7 +318,7 @@ export const Overflow: Story = {
         height="5rem"
         overflow="hidden"
         p="md"
-        rounded="lg"
+        r="lg"
       >
         <PlaceholderContent>
           <code>overflow=&quot;hidden&quot;</code> - this content is clipped
@@ -338,7 +333,7 @@ export const Overflow: Story = {
         height="5rem"
         overflowY="auto"
         p="md"
-        rounded="lg"
+        r="lg"
       >
         <PlaceholderContent>
           <code>overflowY=&quot;auto&quot;</code> - scrollable when content
@@ -368,7 +363,7 @@ export const Display: Story = {
   render: () => (
     <ScrollableStory>
       {(['block', 'inline', 'inline-block'] as const).map(d => (
-        <Box key={d} bg={{ base: 'bg-50', dark: 'bg-900' }} p="md" rounded="lg">
+        <Box key={d} bg={{ base: 'bg-50', dark: 'bg-900' }} p="md" r="lg">
           <Text
             as="div"
             color={{ base: 'bg-500', dark: 'bg-400' }}
@@ -383,7 +378,7 @@ export const Display: Story = {
             minHeight="3em"
             minWidth="3em"
             p="sm"
-            rounded="sm"
+            r="sm"
           >
             <Text size="sm">A</Text>
           </Box>
@@ -393,7 +388,7 @@ export const Display: Story = {
             minHeight="3em"
             minWidth="3em"
             p="sm"
-            rounded="sm"
+            r="sm"
           >
             <Text size="sm">B</Text>
           </Box>
@@ -415,16 +410,16 @@ export const GridChildSpanning: Story = {
         bg={{ base: 'custom-100', dark: 'custom-900' }}
         gridColumnSpan={2}
         p="md"
-        rounded="md"
+        r="md"
       >
         <PlaceholderContent asCode label="gridColumn='span 2 / span 2'" />
       </Box>
 
-      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" rounded="md">
+      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" r="md">
         <PlaceholderContent asCode label="1 col" />
       </Box>
 
-      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" rounded="md">
+      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" r="md">
         <PlaceholderContent asCode label="1 col" />
       </Box>
 
@@ -432,7 +427,7 @@ export const GridChildSpanning: Story = {
         bg={{ base: 'custom-100', dark: 'custom-900' }}
         gridColumnSpan={2}
         p="md"
-        rounded="md"
+        r="md"
       >
         <PlaceholderContent asCode label="gridColumn='span 2 / span 2'" />
       </Box>
@@ -463,7 +458,7 @@ export const AsChild: Story = {
           shadow
           bg={{ base: 'bg-50', dark: 'bg-800' }}
           p="lg"
-          rounded="xl"
+          r="xl"
         >
           <section>
             <Text weight="semibold">

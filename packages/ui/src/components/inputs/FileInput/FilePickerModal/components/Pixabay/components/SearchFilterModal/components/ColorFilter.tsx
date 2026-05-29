@@ -20,7 +20,7 @@ export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
           <Bordered
             asChild
             borderColor={{ base: 'bg-200', dark: 'bg-700' }}
-            rounded="full"
+            r="full"
             style={{
               backgroundColor: COLORS.find(l => l.id === colors)?.color,
               height: '0.75rem',

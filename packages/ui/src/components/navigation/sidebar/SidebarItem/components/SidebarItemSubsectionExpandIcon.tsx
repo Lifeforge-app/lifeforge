@@ -16,7 +16,7 @@ export function SidebarItemSubsectionExpandIcon({
         darkHover: 'bg-700'
       }}
       p="sm"
-      rounded="md"
+      r="md"
       style={{
         transition: 'all 0.2s'
       }}

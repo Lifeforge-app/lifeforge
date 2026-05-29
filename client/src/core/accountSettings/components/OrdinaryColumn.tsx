@@ -4,7 +4,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useAuth } from '@lifeforge/shared'
-import { Button, OptionsColumn, useModalStore } from '@lifeforge/ui'
+import { Button, Flex, OptionsColumn, Text, useModalStore } from '@lifeforge/ui'
 
 import ModifyModal from '../modals/ModifyModal'
 
@@ -41,8 +41,8 @@ function OrdinaryColumn({
         icon={icon}
         title={t(`settings.title.${_.camelCase(title)}`)}
       >
-        <div className="flex-between w-full gap-3">
-          <span className="text-bg-500 whitespace-nowrap">
+        <Flex align="center" gap="md" justify="between" width="100%">
+          <Text color="bg-500" whiteSpace="nowrap">
             {(() => {
               if (!userData) return null
 
@@ -58,13 +58,13 @@ function OrdinaryColumn({
 
               return userData[id as keyof typeof userData]
             })()}
-          </span>
+          </Text>
           <Button
             icon="tabler:pencil"
             variant="plain"
             onClick={handleOpenModifyModal}
           />
-        </div>
+        </Flex>
       </OptionsColumn>
     </>
   )

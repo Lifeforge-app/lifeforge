@@ -5,7 +5,6 @@ import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
   AuthProvider,
-  BackgroundProvider,
   EncryptionProvider,
   FederationProvider,
   MainSidebarStateProvider,
@@ -16,6 +15,7 @@ import {
 } from '@lifeforge/shared'
 import {
   APIOnlineStatusWrapper,
+  BackgroundProvider,
   EncryptionWrapper,
   useModalStore
 } from '@lifeforge/ui'

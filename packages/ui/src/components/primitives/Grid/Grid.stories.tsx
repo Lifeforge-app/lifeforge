@@ -68,7 +68,7 @@ function Cell({
       }
       justify="center"
       p="md"
-      rounded="md"
+      r="md"
       {...props}
     >
       {props.asChild
@@ -99,7 +99,7 @@ export const Default: Story = {
         {...args}
         shadow
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        rounded="lg"
+        r="lg"
         templateCols={3}
         width="100%"
       >
@@ -137,7 +137,7 @@ export const Columns: Story = {
             bg={{ base: 'bg-50', dark: 'bg-900' }}
             gap="sm"
             p="md"
-            rounded="lg"
+            r="lg"
             templateCols={columns}
           >
             {['A', 'B', 'C', 'D', 'E', 'F'].map(c => (
@@ -162,7 +162,7 @@ export const Rows: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         gap="md"
         p="lg"
-        rounded="lg"
+        r="lg"
         templateCols={3}
         templateRows="5rem 8rem 5rem"
         width="100%"
@@ -196,7 +196,7 @@ export const Gap: Story = {
               bg={{ base: 'bg-50', dark: 'bg-900' }}
               gap={gap}
               p="md"
-              rounded="lg"
+              r="lg"
               templateCols={4}
             >
               {['A', 'B', 'C', 'D'].map(c => (
@@ -223,7 +223,7 @@ export const IndependentGap: Story = {
         gapX="xl"
         gapY="sm"
         p="lg"
-        rounded="lg"
+        r="lg"
         templateCols={3}
         width="100%"
       >
@@ -251,7 +251,7 @@ export const Align: Story = {
               bg={{ base: 'bg-50', dark: 'bg-900' }}
               gap="sm"
               p="md"
-              rounded="lg"
+              r="lg"
               style={{ minHeight: '6rem' }}
               templateCols={3}
             >
@@ -292,14 +292,14 @@ export const Flow: Story = {
             flow={flow}
             gap="sm"
             p="md"
-            rounded="lg"
+            r="lg"
             templateCols={4}
           >
             <Box
               bg={{ base: 'custom-100', dark: 'custom-900' }}
               gridColumnSpan={2}
               p="md"
-              rounded="md"
+              r="md"
             >
               <Text
                 color={{ base: 'custom-700', dark: 'custom-300' }}
@@ -332,7 +332,7 @@ export const SpanningCells: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         gap="md"
         p="lg"
-        rounded="lg"
+        r="lg"
         templateCols={3}
         templateRows="repeat(3, 5rem)"
         width="100%"
@@ -365,7 +365,7 @@ export const WithBackgroundAndShadow: Story = {
       bg={{ base: 'bg-50', dark: 'bg-900' }}
       gap="md"
       p="lg"
-      rounded="xl"
+      r="xl"
       templateCols={3}
       width="100%"
     >
@@ -379,7 +379,7 @@ export const WithBackgroundAndShadow: Story = {
           shadow
           bg={{ base: 'bg-100', dark: 'bg-800' }}
           p="lg"
-          rounded="lg"
+          r="lg"
         >
           <Text as="p" color={{ base: 'bg-500', dark: 'bg-400' }} size="sm">
             {title}
@@ -411,7 +411,7 @@ export const NumericColumns: Story = {
             bg={{ base: 'bg-50', dark: 'bg-900' }}
             gap="sm"
             p="md"
-            rounded="lg"
+            r="lg"
             templateCols={columns}
           >
             {['A', 'B', 'C', 'D', 'E', 'F'].map(c => (
@@ -436,7 +436,7 @@ export const ResponsiveColumns: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         gap="md"
         p="lg"
-        rounded="xl"
+        r="xl"
         templateCols={{
           base: 1,
           lg: 3,
@@ -470,7 +470,7 @@ export const AsChild: Story = {
           bg={{ base: 'bg-50', dark: 'bg-900' }}
           gap="md"
           p="lg"
-          rounded="xl"
+          r="xl"
           templateCols={3}
           width="100%"
         >

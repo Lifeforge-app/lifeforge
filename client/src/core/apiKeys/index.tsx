@@ -1,11 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
+import type { InferOutput } from '@lifeforge/shared'
 import {
   Button,
   EmptyStateScreen,
   FAB,
   ModuleHeader,
+  Stack,
   WithQuery,
   useModalStore
 } from '@lifeforge/ui'
@@ -15,14 +17,16 @@ import forgeAPI from '@/forgeAPI'
 import EntryItem from './components/EntryItem'
 import ModifyAPIKeyModal from './modals/ModifyAPIKeyModal'
 
+export type APIKeyEntry = InferOutput<
+  typeof forgeAPI.apiKeys.entries.list
+>[number]
+
 function APIKeys() {
   const { open } = useModalStore()
 
   const { t } = useTranslation('common.apiKeys')
 
-  const entriesQuery = useQuery<any[]>(
-    forgeAPI.untyped('apiKeys/entries/list').queryOptions()
-  )
+  const entriesQuery = useQuery(forgeAPI.apiKeys.entries.list.queryOptions())
 
   const handleCreateAPIKey = () => {
     open(ModifyAPIKeyModal, {
@@ -35,7 +39,7 @@ function APIKeys() {
       <ModuleHeader
         actionButton={
           <Button
-            className="hidden lg:flex"
+            display={{ base: 'none', lg: 'flex' }}
             icon="tabler:plus"
             tProps={{
               item: t('common.apiKeys:items.apiKey')
@@ -48,7 +52,7 @@ function APIKeys() {
       />
       <WithQuery query={entriesQuery}>
         {entries => (
-          <div className="mb-24 h-full flex-1 space-y-3 lg:mb-12">
+          <Stack flex="1" mb={{ base: '3xl', lg: '2xl' }}>
             {entries.length > 0 ? (
               entries.map(entry => <EntryItem key={entry.id} entry={entry} />)
             ) : (
@@ -60,7 +64,7 @@ function APIKeys() {
                 }}
               />
             )}
-          </div>
+          </Stack>
         )}
       </WithQuery>
       <FAB onClick={handleCreateAPIKey} />

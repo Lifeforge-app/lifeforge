@@ -1,7 +1,6 @@
 import { Select } from '@headlessui/react'
 import dayjs from 'dayjs'
 import { range } from 'lodash'
-import React from 'react'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
@@ -60,7 +59,7 @@ export function CalendarHeader({
               pl="sm"
               pr="xl"
               py="sm"
-              rounded="md"
+              r="md"
             >
               <Select
                 value={dayjs(date).year()}
@@ -83,7 +82,7 @@ export function CalendarHeader({
               pl="sm"
               pr="xl"
               py="sm"
-              rounded="md"
+              r="md"
             >
               <Select
                 value={months[dayjs(date).month()]}
@@ -104,7 +103,7 @@ export function CalendarHeader({
               display={{ base: 'block', sm: 'none' }}
               pr="xl"
               py="sm"
-              rounded="md"
+              r="md"
               style={{ paddingLeft: '0.75rem' }}
             >
               <Select

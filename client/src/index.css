@@ -1,28 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Onest:wght@100..900&display=swap')
-layer(base);
-@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap')
-layer(base);
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
-@layer modules, host, dependencies, custom;
-
-@import 'tailwindcss' layer(host);
-
-@plugin 'tailwindcss-animate';
-@plugin 'daisyui';
-@plugin '@tailwindcss/typography';
-
-/* 3rd party styles */
 @import 'react-grid-layout/css/styles.css';
-
-/* Core styles */
 @import '@lifeforge/ui/dist/index.css';
+@import '@core/dashboard/index.css';
 
-/* App styles */
 @source '../../apps/*/client/src';
 @source '../../apps/*/client/dist';
 @source '../../apps/*/client/dist-docker';
 @source '../../apps/**/*';
-@import '@core/dashboard/index.css';
 
 main#app {
   background-color: color-mix(in srgb, var(--color-bg-200) 50%, transparent);
@@ -32,4 +18,8 @@ main#app {
     background-color: color-mix(in srgb, var(--color-bg-900) 50%, transparent);
     color: var(--color-bg-50);
   }
+}
+
+body {
+  margin: 0 !important;
 }

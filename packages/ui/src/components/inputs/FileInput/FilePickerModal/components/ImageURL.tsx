@@ -30,7 +30,7 @@ export function ImageURL({
         mt="md"
         overflow="hidden"
         position="relative"
-        rounded="md"
+        r="md"
         style={{ flex: 1, isolation: 'isolate', minHeight: 0 }}
       >
         <Box asChild style={{ height: '100%', objectFit: 'contain' }}>

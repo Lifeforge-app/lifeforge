@@ -2,12 +2,15 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Card } from '@/components/layout'
 import { Box, Flex, Text } from '@/components/primitives'
-import { COLORS } from '@/system'
 
 import { WithDivide } from './index'
 
 const meta = {
   argTypes: {
+    axis: {
+      control: { type: 'select' },
+      options: ['x', 'y']
+    },
     children: { control: false },
     color: { control: 'color' },
     darkColor: { control: 'color' }
@@ -47,10 +50,28 @@ export const Default: Story = {
   )
 }
 
+export const Vertical: Story = {
+  args: {
+    axis: 'y',
+    children: null
+  },
+  render: () => (
+    <Flex>
+      {items.slice(0, 3).map(item => (
+        <WithDivide key={item.id} axis="y">
+          <Box p="md">
+            <Text weight="semibold">{item.title}</Text>
+          </Box>
+        </WithDivide>
+      ))}
+    </Flex>
+  )
+}
+
 export const CustomColor: Story = {
   args: {
     children: null,
-    color: COLORS['custom-500']
+    color: 'custom-500'
   },
   render: args => (
     <Card width="100%">

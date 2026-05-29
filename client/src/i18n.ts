@@ -8,7 +8,11 @@ const AVAILABLE_LANG = (await fetch(
   `${import.meta.env.VITE_API_HOST}/locales/listLanguages`
 )
   .then(res => res.json())
-  .then(data => data.data)) as {
+  .then(data => data.data)
+  .catch(err => {
+    console.warn('Failed to fetch available languages from backend:', err)
+    return [{ name: 'en', icon: 'twemoji:flag-united-states' }]
+  })) as {
   name: string
   alternative?: string[]
   icon: string
@@ -45,7 +49,7 @@ i18n
         return
       }
 
-      await forgeAPI.untyped('locales/notifyMissing').mutate({
+      await forgeAPI.locales.notifyMissing.mutate({
         namespace,
         key
       })
@@ -67,7 +71,7 @@ i18n
           return
         }
 
-        return forgeAPI.untyped('locales/getLocale').input({
+        return forgeAPI.locales.getLocale.input({
           lang: langs[0],
           namespace: namespace as 'apps' | 'common',
           subnamespace: subnamespace

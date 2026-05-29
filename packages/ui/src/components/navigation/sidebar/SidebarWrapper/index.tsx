@@ -20,7 +20,7 @@ export function SidebarWrapper({ children }: { children: React.ReactNode }) {
       minWidth={{ base: '0', xl: '24rem' }}
       position={{ base: 'absolute', xl: 'static' }}
       py="md"
-      rounded="lg"
+      r="lg"
       top="0"
       width={{ base: '100%', xl: '25%' }}
       zIndex={isSidebarOpen ? '9990' : '0'}

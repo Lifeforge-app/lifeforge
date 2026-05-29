@@ -91,7 +91,7 @@ export function ColorInput({
               borderWidth="1px"
               flexShrink="0"
               height={variant === 'plain' ? '1.5em' : '1em'}
-              rounded="full"
+              r="full"
               style={{
                 marginTop: '0.125rem',
                 backgroundColor: value?.match(/^#[0-9A-F]{6}$/i)

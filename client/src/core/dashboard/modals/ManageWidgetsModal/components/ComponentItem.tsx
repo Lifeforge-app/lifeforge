@@ -1,10 +1,9 @@
-import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { type IDashboardLayout, usePersonalization } from '@lifeforge/shared'
-import { Switch } from '@lifeforge/ui'
+import { Icon, Switch } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -120,7 +119,7 @@ function ComponentListItem({
               : 'bg-bg-200 text-bg-400 dark:bg-bg-700/50 dark:text-bg-500'
           )}
         >
-          <Icon className="size-6" icon={icon} />
+          <Icon icon={icon} size="1.5em" />
         </div>
         <div className="flex flex-col">
           <div className="font-semibold">

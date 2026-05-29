@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import DatePicker from 'react-datepicker'
 import tinycolor from 'tinycolor2'
 
@@ -70,8 +70,6 @@ export function DateInput({
 
   const ref = useRef<DatePicker | null>(null)
 
-  const [isCalendarOpen, setCalendarOpen] = useState(false)
-
   return (
     <InputWrapper
       className={className}
@@ -118,7 +116,15 @@ export function DateInput({
               popperClassName="-mx-13"
               popperPlacement="bottom-start"
               portalId="app"
-              renderCustomHeader={CalendarHeader}
+              renderCustomHeader={(props: {
+                date: Date
+                changeYear: (year: number) => void
+                changeMonth: (month: number) => void
+                decreaseMonth: () => void
+                increaseMonth: () => void
+                prevMonthButtonDisabled: boolean
+                nextMonthButtonDisabled: boolean
+              }) => <CalendarHeader {...props} />}
               selected={value || null}
               showPopperArrow={false}
               showTimeSelect={hasTime}
@@ -126,12 +132,6 @@ export function DateInput({
                 const isWeekend = date.getDay() === 0
 
                 return isWeekend ? styles.weekDayRed : styles.weekDayMuted
-              }}
-              onCalendarClose={() => {
-                setCalendarOpen(false)
-              }}
-              onCalendarOpen={() => {
-                setCalendarOpen(true)
               }}
               onChange={(value: Date | null) => onChange(value)}
             />

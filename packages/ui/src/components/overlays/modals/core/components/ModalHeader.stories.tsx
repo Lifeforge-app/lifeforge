@@ -32,7 +32,7 @@ function Shell({ children }: { children: React.ReactNode }) {
   return (
     <Box
       bg={{ base: 'bg-50', dark: 'bg-900' }}
-      rounded="xl"
+      r="xl"
       style={{ maxWidth: '32rem', padding: '1.5rem' }}
       width="100%"
     >

@@ -1,7 +1,14 @@
-import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '@lifeforge/ui'
+import {
+  Button,
+  Flex,
+  Icon,
+  Stack,
+  TAILWIND_PALETTE,
+  Text,
+  withOpacity
+} from '@lifeforge/ui'
 
 function SuccessScreen({
   onClose,
@@ -13,27 +20,44 @@ function SuccessScreen({
   const { t } = useTranslation('common.auth')
 
   return (
-    <div className="mt-4 flex flex-col items-center gap-4">
-      <div className="flex-center size-20 rounded-lg bg-green-500/20">
-        <Icon className="size-10 text-green-500" icon="tabler:check" />
-      </div>
+    <Stack align="center">
+      <Flex
+        centered
+        height="5em"
+        r="lg"
+        style={{
+          backgroundColor: withOpacity(TAILWIND_PALETTE.green[500], 0.2)
+        }}
+        width="5em"
+      >
+        <Icon
+          icon="tabler:check"
+          size="2.25em"
+          style={{
+            color: TAILWIND_PALETTE.green[500]
+          }}
+        />
+      </Flex>
 
-      <h3 className="text-xl font-medium">{t('qrLogin.success')}</h3>
+      <Text size="xl" weight="medium">
+        {t('qrLogin.success')}
+      </Text>
       {browserInfo && (
-        <p className="text-bg-500 mt-2">
+        <Text color="muted">
           {t('qrLogin.browserInfo')}: {browserInfo}
-        </p>
+        </Text>
       )}
 
       <Button
-        className="mt-4 w-full"
         icon="tabler:x"
+        mt="lg"
         variant="secondary"
+        width="100%"
         onClick={onClose}
       >
         Close
       </Button>
-    </div>
+    </Stack>
   )
 }
 

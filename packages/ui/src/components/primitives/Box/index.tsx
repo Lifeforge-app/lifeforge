@@ -10,7 +10,6 @@ import {
 import {
   type ArbitraryProps,
   type ColorToken,
-  type RadiusToken,
   type ResponsiveProp,
   type TokenizedCommonProps,
   normalizeResponsiveProp,
@@ -22,7 +21,7 @@ import type { ThemeConditionProp } from '@/system/themes'
 import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
-import { type BoxSprinkles, boxBase, boxSprinkles } from './Box.css'
+import { boxBase, boxSprinkles } from './Box.css'
 
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
 
@@ -33,7 +32,6 @@ interface BoxOwnProps<T extends ElementType = 'div'>
   ref?: Ref<HTMLElement>
   display?: ResponsiveProp<DisplayValue>
   bg?: ThemeConditionProp<ColorToken>
-  rounded?: ResponsiveProp<RadiusToken>
   shadow?: boolean
   className?: string
   style?: CSSProperties
@@ -90,7 +88,11 @@ export function Box<T extends ElementType = 'div'>({
   overflowX,
   overflowY,
   bg,
-  rounded,
+  r,
+  rtl,
+  rtr,
+  rbl,
+  rbr,
   shadow,
   // Standard props
   className,
@@ -103,11 +105,8 @@ export function Box<T extends ElementType = 'div'>({
   const styles = resolveStyles({
     sprinkles: boxSprinkles,
     sprinkleProps: {
-      display: normalizeResponsiveProp(display) as BoxSprinkles['display'],
-      backgroundColor: bg as BoxSprinkles['backgroundColor'],
-      borderRadius: normalizeResponsiveProp(
-        rounded
-      ) as BoxSprinkles['borderRadius'],
+      display: normalizeResponsiveProp(display),
+      backgroundColor: bg,
       ...resolveCommonSprinkleProps(
         { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
         {
@@ -115,7 +114,8 @@ export function Box<T extends ElementType = 'div'>({
           overflow,
           overflowX,
           overflowY
-        }
+        },
+        { r, rtl, rtr, rbl, rbr }
       )
     },
     arbitraryProps: {

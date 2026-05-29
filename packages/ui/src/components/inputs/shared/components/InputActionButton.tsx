@@ -43,7 +43,7 @@ export function InputActionButton({
         p="sm"
         position="absolute"
         right={hasError ? (variant === 'classic' ? '3em' : '2.5em') : '0'}
-        rounded="lg"
+        r="lg"
         style={{
           // the `mr` props cannot be used since the 0.75rem value is required to be exact for the plain variant
           marginRight: variant === 'classic' ? '1em' : '0.75em',

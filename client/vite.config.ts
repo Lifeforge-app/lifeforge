@@ -1,6 +1,6 @@
 // import MillionLint from '@million/lint'
 import federation from '@originjs/vite-plugin-federation'
-import tailwindcss from '@tailwindcss/vite'
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react from '@vitejs/plugin-react'
 import { globSync } from 'glob'
 import path from 'node:path'
@@ -13,6 +13,14 @@ const ReactCompilerConfig = {
 }
 
 export const alias: Alias[] = [
+  {
+    find: /^@lifeforge\/shared$/,
+    replacement: path.resolve(__dirname, '../shared/src/index.ts')
+  },
+  {
+    find: /^@lifeforge\/ui$/,
+    replacement: path.resolve(__dirname, '../packages/ui/src/index.ts')
+  },
   {
     find: '@providers',
     replacement: path.resolve(__dirname, './src/providers')
@@ -97,90 +105,100 @@ export const alias: Alias[] = [
   }
 ]
 
-export default defineConfig({
-  envDir: path.resolve(__dirname, '../env'),
-  plugins: [
-    // MillionLint.vite({}),
-    react({
-      babel: {
-        plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
-      }
-    }),
-    tailwindcss(),
-    federation({
-      name: 'host',
-      remotes: {
-        None: ''
-      },
-      shared: [
-        'react',
-        'react-dom',
-        {
-          shared: {
-            packagePath: './node_modules/@lifeforge/shared'
-          },
-          '@lifeforge/ui': {
-            packagePath: './node_modules/@lifeforge/ui'
-          }
-        },
-        '@tanstack/react-query',
-        'i18next',
-        'react-i18next'
-      ]
-    })
-  ],
-  server: {
-    fs: {
-      strict: true
-    },
-    watch: {
-      ignored: ['**/node_modules/**', '**/.git/**']
-    }
-  },
-  resolve: {
-    alias
-  },
-  build: {
-    commonjsOptions: {
-      transformMixedEsModules: true
-    },
-    target: 'esnext',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return id
-              .toString()
-              .split('node_modules/')
-              .pop()!
-              .split('/')[0]
-              .toString()
-          }
+export default defineConfig(({ command }) => {
+  const isDev = command === 'serve'
+  const activeAlias = isDev
+    ? alias
+    : alias.filter(a => {
+        if (a.find instanceof RegExp) {
+          return (
+            !a.find.test('@lifeforge/shared') && !a.find.test('@lifeforge/ui')
+          )
         }
-      }
-    }
-  },
-  optimizeDeps: {
-    esbuildOptions: {
+        return a.find !== '@lifeforge/shared' && a.find !== '@lifeforge/ui'
+      })
+
+  return {
+    envDir: path.resolve(__dirname, '../env'),
+    plugins: [
+      // MillionLint.vite({}),
+      react({
+        babel: {
+          plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
+        }
+      }),
+      vanillaExtractPlugin(),
+      federation({
+        name: 'host',
+        remotes: {
+          None: ''
+        },
+        shared: [
+          'react',
+          'react-dom',
+          '@lifeforge/shared',
+          '@lifeforge/ui',
+          '@tanstack/react-query',
+          'i18next',
+          'react-i18next'
+        ]
+      })
+    ],
+    server: {
+      fs: {
+        strict: true
+      },
+      watch: {
+        ignored: ['**/node_modules/**', '**/.git/**']
+      },
+      allowedHosts: ['_.melvinchia.dev']
+    },
+    resolve: {
+      alias: activeAlias
+    },
+    build: {
+      commonjsOptions: {
+        transformMixedEsModules: true
+      },
+      target: 'esnext',
       sourcemap: false,
-      target: 'esnext'
-    }
-  },
-  css: {
-    postcss: {
-      plugins: [
-        {
-          postcssPlugin: 'internal:charset-removal',
-          AtRule: {
-            charset: atRule => {
-              if (atRule.name === 'charset') {
-                atRule.remove()
-              }
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return id
+                .toString()
+                .split('node_modules/')
+                .pop()!
+                .split('/')[0]
+                .toString()
             }
           }
         }
-      ]
+      }
+    },
+    optimizeDeps: {
+      exclude: ['@lifeforge/shared', '@lifeforge/ui'],
+      esbuildOptions: {
+        sourcemap: false,
+        target: 'esnext'
+      }
+    },
+    css: {
+      postcss: {
+        plugins: [
+          {
+            postcssPlugin: 'internal:charset-removal',
+            AtRule: {
+              charset: atRule => {
+                if (atRule.name === 'charset') {
+                  atRule.remove()
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   }
 })
