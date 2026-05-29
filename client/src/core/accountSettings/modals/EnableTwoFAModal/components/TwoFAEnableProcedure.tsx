@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Button } from '@lifeforge/ui'
+import { Button, Stack, Text } from '@lifeforge/ui'
 
 import OTPConfirmScreen from './OTPConfirmScreen'
 import QRCodeDisplay from './QRCodeDisplay'
@@ -14,22 +14,23 @@ function TwoFAEnableProcedure({ onSuccess }: { onSuccess: () => void }) {
   return proceeded ? (
     <OTPConfirmScreen onSuccess={onSuccess} />
   ) : (
-    <div>
-      <p className="text-bg-500 max-w-[30rem]">
+    <Stack gap="lg">
+      <Text as="p" color="muted">
         {t('modals.enable2FA.description')}
-      </p>
+      </Text>
       <QRCodeDisplay />
       <Button
-        className="mt-6 w-full"
         icon="tabler:arrow-right"
         iconPosition="end"
+        mt="lg"
+        width="100%"
         onClick={() => {
           setProceeded(true)
         }}
       >
         Proceed
       </Button>
-    </div>
+    </Stack>
   )
 }
 

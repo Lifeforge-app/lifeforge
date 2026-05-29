@@ -77,7 +77,7 @@ export function DnDContainer({
       height="100%"
       justify="center"
       p="2xl"
-      rounded="lg"
+      r="lg"
       style={{ flex: 1, minHeight: '24rem' }}
       width="100%"
       {...(getRootProps() as any)}
@@ -90,7 +90,7 @@ export function DnDContainer({
       />
       <Text
         asChild
-        color="bg-500"
+        color="muted"
         style={{ height: '5rem', width: '5rem', flexShrink: 0 }}
       >
         <Icon icon="tabler:drag-drop" />
@@ -98,7 +98,7 @@ export function DnDContainer({
       <Text
         align="center"
         as="div"
-        color="bg-500"
+        color="muted"
         mt="md"
         size="2xl"
         weight="medium"
@@ -108,7 +108,7 @@ export function DnDContainer({
       <Text
         align="center"
         as="div"
-        color="bg-500"
+        color="muted"
         mt="md"
         size="lg"
         style={{ letterSpacing: '0.1em', textTransform: 'uppercase' }}
@@ -124,7 +124,7 @@ export function DnDContainer({
       >
         dnd.buttons.pasteFromClipboard
       </Button>
-      <Text align="center" as="p" color="bg-500" mt="lg" size="sm">
+      <Text align="center" as="p" color="muted" mt="lg" size="sm">
         {t('fileInputSupportedFormat', {
           format: acceptedMimeTypesFlattened || 'N/A'
         })}

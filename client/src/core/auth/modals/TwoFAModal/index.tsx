@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { useAuth } from '@lifeforge/shared'
-import { Button, ModalHeader } from '@lifeforge/ui'
+import { Button, Flex, ModalHeader } from '@lifeforge/ui'
 
+import OrAuthWithDivider from '../../components/OrAuthWithDivider'
 import UsingAuthApp from './components/UsingAuthApp'
 import UsingEmail from './components/UsingEmail'
 
@@ -36,7 +37,7 @@ function TwoFAModal({ onClose }: { onClose: () => void }) {
   }
 
   return (
-    <div>
+    <Flex direction="column" minWidth="40vw">
       <ModalHeader
         icon="tabler:lock-access"
         namespace="common.auth"
@@ -50,15 +51,8 @@ function TwoFAModal({ onClose }: { onClose: () => void }) {
       ) : (
         <UsingEmail callback={otp => verifyOTP(otp)} />
       )}
-      <div className="mt-6 flex items-center gap-3">
-        <div className="bg-bg-500 h-[2px] w-full"></div>
-        <div className="text-bg-500 shrink-0 font-medium">
-          {t('orAuthenticateWith')}
-        </div>
-        <div className="bg-bg-500 h-[2px] w-full"></div>
-      </div>
+      <OrAuthWithDivider />
       <Button
-        className="mt-6 w-full"
         icon={authMethod === 'app' ? 'tabler:mail' : 'tabler:device-mobile'}
         namespace="common.auth"
         variant="secondary"
@@ -70,7 +64,7 @@ function TwoFAModal({ onClose }: { onClose: () => void }) {
           ? 'modals.twoFA.buttons.useEmailOtp'
           : 'modals.twoFA.buttons.useAuthApp'}
       </Button>
-    </div>
+    </Flex>
   )
 }
 

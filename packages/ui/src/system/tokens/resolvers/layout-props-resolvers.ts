@@ -1,6 +1,6 @@
 import { normalizeResponsiveProp } from '@/system/responsive'
 
-import type { TokenizedLayoutProps } from '../layout-props.css'
+import type { TokenizedLayoutProps } from '../props'
 
 export function resolveLayoutSprinklesProps({
   position,

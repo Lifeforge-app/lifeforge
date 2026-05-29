@@ -30,7 +30,7 @@ function FontListItem({
 
   const togglePinMutation = useMutation(
     forgeAPI
-      .untyped('user/personalization/toggleGoogleFontsPin')
+      .user.personalization.toggleGoogleFontsPin
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({

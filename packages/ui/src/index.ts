@@ -24,9 +24,6 @@ export * from './components/overlays'
 
 export * from './components/utilities'
 
-// Theme tokens - typed CSS variable references
 export { withOpacity, TAILWIND_PALETTE, COLORS } from './system'
 
-export { ModalProvider, useModalStore } from './providers/ModalProvider'
-
-export type { ModalComponent } from './providers/ModalProvider'
+export * from './providers'

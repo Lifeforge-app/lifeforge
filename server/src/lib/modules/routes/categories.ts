@@ -7,7 +7,7 @@ export const list = forge
   .description('Get the category display order')
   .input({})
   .callback(async ({ core: { tempFile } }) =>
-    new tempFile('module_categories.json').read<
+    new tempFile('module_categories.json', 'object').read<
       Record<string, Record<string, string>>
     >()
   )

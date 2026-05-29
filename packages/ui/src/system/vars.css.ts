@@ -30,6 +30,7 @@ export const vars = createGlobalTheme(':root', {
     full: '9999px'
   },
   fontSize: {
+    xs: 'var(--text-xs)',
     sm: 'var(--text-sm)',
     base: 'var(--text-base)',
     lg: 'var(--text-lg)',
@@ -44,6 +45,7 @@ export const vars = createGlobalTheme(':root', {
     '9xl': 'var(--text-9xl)'
   },
   lineHeight: {
+    xs: 'var(--text-xs--line-height)',
     sm: 'var(--text-sm--line-height)',
     base: 'var(--text-base--line-height)',
     lg: 'var(--text-lg--line-height)',

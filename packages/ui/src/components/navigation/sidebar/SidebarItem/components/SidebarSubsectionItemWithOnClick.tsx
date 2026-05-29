@@ -51,7 +51,7 @@ export function SidebarSubsectionItemWithOnClick({
         height="3.5rem"
         ml="md"
         mr="md"
-        rounded="lg"
+        r="lg"
         style={{ paddingLeft: '3rem' }}
         width="100%"
       >

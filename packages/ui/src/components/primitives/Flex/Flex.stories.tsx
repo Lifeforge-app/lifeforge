@@ -85,7 +85,7 @@ function Item<T extends ElementType = 'div'>({
         }
         justify="center"
         p="md"
-        rounded="md"
+        r="md"
         {...(props as FlexProps<T>)}
       >
         {props.asChild
@@ -117,7 +117,7 @@ export const Default: Story = {
         {...args}
         shadow
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        rounded="lg"
+        r="lg"
         width="100%"
       >
         <Item label="Item A" />
@@ -145,7 +145,7 @@ export const Direction: Story = {
               gap="sm"
               mt="sm"
               p="md"
-              rounded="lg"
+              r="lg"
             >
               <Item label="A" />
               <Item label="B" />
@@ -176,7 +176,7 @@ export const Align: Story = {
               gap="sm"
               mt="sm"
               p="md"
-              rounded="lg"
+              r="lg"
               style={{ minHeight: '5rem' }}
             >
               {['Short', 'Tall', 'Short'].map((label, i) => (
@@ -210,7 +210,7 @@ export const Justify: Story = {
               gap="sm"
               justify={justify}
               p="md"
-              rounded="lg"
+              r="lg"
               width="100%"
             >
               <Item label="A" />
@@ -240,7 +240,7 @@ export const Gap: Story = {
               gap={gap}
               mt="sm"
               p="md"
-              rounded="lg"
+              r="lg"
             >
               <Item label="A" />
               <Item label="B" />
@@ -266,7 +266,7 @@ export const IndependentGap: Story = {
         gapX="xl"
         gapY="sm"
         p="lg"
-        rounded="lg"
+        r="lg"
         style={{ maxWidth: '24rem' }}
         wrap="wrap"
       >
@@ -293,7 +293,7 @@ export const Wrap: Story = {
             gap="sm"
             overflow="hidden"
             p="md"
-            rounded="lg"
+            r="lg"
             style={{ maxWidth: '20rem' }}
             wrap={wrap}
           >
@@ -323,13 +323,13 @@ export const WithBackgroundAndShadow: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         gap="md"
         p="lg"
-        rounded="xl"
+        r="xl"
       >
         <Flex
           centered
           flexShrink="0"
           height="3em"
-          rounded="md"
+          r="md"
           style={{
             backgroundColor: withOpacity(COLORS['custom-500'], 0.2)
           }}
@@ -361,7 +361,7 @@ export const ColumnLayout: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         direction="column"
         overflow="hidden"
-        rounded="xl"
+        r="xl"
         style={{ height: '20em', width: '20em' }}
       >
         <Flex
@@ -429,14 +429,14 @@ export const FlexChildProps: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         gap="sm"
         p="md"
-        rounded="lg"
+        r="lg"
         width="100%"
       >
         <Box
           bg={{ base: 'bg-200', dark: 'bg-700' }}
           flexShrink="0"
           p="md"
-          rounded="md"
+          r="md"
           style={{ width: '6rem' }}
         >
           <Text size="sm">shrink=0</Text>
@@ -446,7 +446,7 @@ export const FlexChildProps: Story = {
           bg={{ base: 'custom-100', dark: 'custom-900' }}
           flexGrow="1"
           p="md"
-          rounded="md"
+          r="md"
         >
           <Text size="sm">grow=1 (fills remaining space)</Text>
         </Box>
@@ -455,7 +455,7 @@ export const FlexChildProps: Story = {
           bg={{ base: 'bg-200', dark: 'bg-700' }}
           flexShrink="0"
           p="md"
-          rounded="md"
+          r="md"
           style={{ width: '6rem' }}
         >
           <Text size="sm">shrink=0</Text>
@@ -484,7 +484,7 @@ export const PolymorphicElement: Story = {
           bg={{ base: 'bg-50', dark: 'bg-800' }}
           gap="md"
           p="md"
-          rounded="xl"
+          r="xl"
           width="100%"
         >
           {['Home', 'About', 'Work', 'Contact'].map(item => (
@@ -520,7 +520,7 @@ export const AsChild: Story = {
         bg={{ base: 'bg-50', dark: 'bg-900' }}
         gap="md"
         p="lg"
-        rounded="xl"
+        r="xl"
       >
         <form>
           <Item
@@ -528,7 +528,7 @@ export const AsChild: Story = {
             shadow
             bg={{ base: 'bg-100', dark: 'bg-800' }}
             p="md"
-            rounded="md"
+            r="md"
           >
             <input placeholder="Enter your name" type="text" />
           </Item>
@@ -537,7 +537,7 @@ export const AsChild: Story = {
             shadow
             bg={{ base: 'bg-100', dark: 'bg-800' }}
             p="md"
-            rounded="md"
+            r="md"
           >
             <input placeholder="Enter your email" type="email" />
           </Item>

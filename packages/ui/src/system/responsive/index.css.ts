@@ -27,7 +27,9 @@ const RESPONSIVE_PROPS = [
     customProp: '--lf-gtc'
   },
   { className: 'lf-gtr', property: 'gridTemplateRows', customProp: '--lf-gtr' },
-  { className: 'lf-zi', property: 'zIndex', customProp: '--lf-zi' }
+  { className: 'lf-zi', property: 'zIndex', customProp: '--lf-zi' },
+  { className: 'lf-rw', property: '--lf-ring-width', customProp: '--lf-rw' },
+  { className: 'lf-row', property: '--lf-ring-offset-width', customProp: '--lf-row' }
 ] as const
 
 // Breakpoint media queries

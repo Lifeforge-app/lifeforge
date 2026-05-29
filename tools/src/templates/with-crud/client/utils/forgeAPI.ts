@@ -1,5 +1,5 @@
 import routes from '@server/index'
-import routes from '@server/index'
+
 import { createForgeProxy } from '@lifeforge/shared'
 
 if (!import.meta.env.VITE_API_HOST) {

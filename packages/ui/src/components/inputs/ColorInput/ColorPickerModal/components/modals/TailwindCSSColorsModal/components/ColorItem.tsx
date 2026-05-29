@@ -29,7 +29,7 @@ function _ColorItem({
 
   return (
     <Box as="li" width="100%">
-      <Flex asChild align="center" justify="center" rounded="md" width="100%">
+      <Flex asChild align="center" justify="center" r="md" width="100%">
         <button
           className={clsx(
             styles.colorButton,

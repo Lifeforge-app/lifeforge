@@ -51,7 +51,7 @@ export function QRCodeScanner({
         height="100%"
         overflow="hidden"
         position="relative"
-        rounded="lg"
+        r="lg"
         style={{ aspectRatio: '1 / 1' }}
         width="100%"
       >

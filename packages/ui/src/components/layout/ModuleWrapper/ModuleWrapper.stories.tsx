@@ -20,7 +20,7 @@ type Story = StoryObj<typeof meta>
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <Box shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" rounded="lg">
+    <Box shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" r="lg">
       <Text color={{ base: 'bg-500', dark: 'bg-400' }} size="sm">
         {label}
       </Text>
@@ -33,7 +33,7 @@ function StatCard({ label, value }: { label: string; value: string }) {
 
 function ContentCard({ body, title }: { title: string; body: string }) {
   return (
-    <Box shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" rounded="lg">
+    <Box shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" r="lg">
       <Text as="h3" mb="xs" size="lg" weight="semibold">
         {title}
       </Text>

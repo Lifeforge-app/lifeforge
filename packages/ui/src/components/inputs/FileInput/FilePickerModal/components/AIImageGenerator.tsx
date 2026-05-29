@@ -7,7 +7,6 @@ import { EmptyStateScreen } from '@/components/feedback'
 import { Button } from '@/components/inputs'
 import { Box, Flex } from '@/components/primitives'
 import { WithQueryData } from '@/components/utilities'
-
 import { forgeAPI } from '@/utils/forgeAPI'
 
 import { TextAreaInput } from '../../../TextAreaInput'
@@ -91,13 +90,13 @@ export function AIImageGenerator({
                 bg={{ base: 'bg-200', dark: 'bg-800' }}
                 justify="center"
                 p="xl"
-                rounded="lg"
+                r="lg"
                 style={{ height: '24rem' }}
                 width="100%"
               >
                 <Box
                   asChild
-                  rounded="lg"
+                  r="lg"
                   style={{ height: '100%', objectFit: 'contain' }}
                 >
                   <img alt="" src={file as string} />

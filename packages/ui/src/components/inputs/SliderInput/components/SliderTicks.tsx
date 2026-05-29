@@ -16,7 +16,7 @@ export function SliderTicks({
           key={`title-${label}-${index}`}
           bg={{ base: 'bg-300', dark: 'bg-700' }}
           position="relative"
-          rounded="full"
+          r="full"
           style={{ height: '0.5rem', width: '0.125rem' }}
         >
           <Text

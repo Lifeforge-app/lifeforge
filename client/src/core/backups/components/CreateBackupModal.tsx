@@ -12,7 +12,7 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
   const queryClient = useQueryClient()
 
   const mutation = useMutation(
-    forgeAPI.untyped('backups/create').mutationOptions({
+    forgeAPI.backups.create.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['backups'] })
       },

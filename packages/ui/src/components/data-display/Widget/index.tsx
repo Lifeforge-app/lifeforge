@@ -68,7 +68,7 @@ export function Widget({
       gap="lg"
       height="100%"
       p="md"
-      rounded="lg"
+      r="lg"
       width="100%"
     >
       {title && (

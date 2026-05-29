@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/shared'
-import { Button, ColorInput, OptionsColumn } from '@lifeforge/ui'
+import { Box, Button, ColorInput, Flex, OptionsColumn } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -17,7 +17,7 @@ function ThemeColorSelector() {
     themeColor.startsWith('#') ? themeColor : '#000000'
   )
 
-  const { t } = useTranslation('common.personalization')
+  const { t } = useTranslation(['common.personalization', 'common.buttons'])
 
   return (
     <OptionsColumn
@@ -26,35 +26,43 @@ function ThemeColorSelector() {
       icon="tabler:palette"
       title={t('themeColorSelector.title')}
     >
-      <div className="flex w-full flex-col items-center gap-3 md:flex-row">
+      <Flex
+        align="center"
+        direction={{ base: 'column', sm: 'row' }}
+        gap="md"
+        width="100%"
+      >
         <DefaultThemeColorSelector
           customThemeColor={customThemeColor}
           themeColor={themeColor}
         />
         {themeColor.startsWith('#') && (
           <>
-            <ColorInput
-              className="w-full md:w-min"
-              label="Color Hex"
-              namespace="common.personalization"
-              value={customThemeColor}
-              onChange={setCustomThemeColor}
-            />
+            <Box width={{ base: '100%', lg: '16em' }}>
+              <ColorInput
+                label="Color Hex"
+                namespace="common.personalization"
+                value={customThemeColor}
+                onChange={setCustomThemeColor}
+              />
+            </Box>
             {themeColor !== customThemeColor &&
               customThemeColor.match(/^#[0-9A-F]{6}$/i) !== null && (
                 <Button
-                  className="w-full lg:w-auto"
                   icon="uil:save"
+                  width={{ base: '100%', lg: 'auto' }}
                   onClick={() => {
                     changeThemeColor(customThemeColor)
                   }}
                 >
-                  <span className="inline lg:hidden">{t('buttons.save')}</span>
+                  <span className="inline lg:hidden">
+                    {t('common.buttons:save')}
+                  </span>
                 </Button>
               )}
           </>
         )}
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

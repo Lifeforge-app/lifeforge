@@ -3,7 +3,6 @@ import { Switch as HeadlessSwitch } from '@headlessui/react'
 import { usePersonalization } from '@lifeforge/shared'
 
 import { Box, Flex, Transition } from '@/components/primitives'
-
 import { COLORS } from '@/system'
 
 interface SwitchProps {
@@ -48,7 +47,7 @@ export function Switch({ value, onChange, disabled }: SwitchProps) {
         height="1.5em"
         justify="center"
         position="relative"
-        rounded="full"
+        r="full"
         style={disabled ? { cursor: 'not-allowed', opacity: 0.5 } : undefined}
         width="3em"
       >
@@ -61,7 +60,7 @@ export function Switch({ value, onChange, disabled }: SwitchProps) {
               as="span"
               display="inline-block"
               height="1em"
-              rounded="full"
+              r="full"
               style={{
                 transform: value
                   ? 'translateX(calc(100% - var(--spacing)))'

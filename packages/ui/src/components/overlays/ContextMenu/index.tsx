@@ -81,7 +81,7 @@ export function ContextMenu({
             className={classNames?.menu}
             minWidth="14rem"
             overflow="hidden"
-            rounded="lg"
+            r="lg"
             style={{
               width: 'var(--radix-popper-anchor-width)',
               ...styles?.menu

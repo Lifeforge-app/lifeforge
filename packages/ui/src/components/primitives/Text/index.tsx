@@ -26,6 +26,7 @@ import {
 } from './Text.css'
 
 type TextSize =
+  | 'xs'
   | 'sm'
   | 'base'
   | 'lg'

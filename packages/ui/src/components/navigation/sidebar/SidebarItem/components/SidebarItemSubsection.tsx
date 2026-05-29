@@ -55,7 +55,7 @@ export function SidebarItemSubsection({
               styles.subsectionListBg
           )}
           direction="column"
-          rounded="lg"
+          r="lg"
           style={{ gap: '0.125rem' }}
           width="100%"
         >

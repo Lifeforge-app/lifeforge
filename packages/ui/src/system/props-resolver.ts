@@ -6,20 +6,12 @@ import type { ArbitraryProps } from './arbitrary'
 import type { ResponsiveProp } from './responsive'
 import { getResponsiveLayoutStyles } from './responsive/utils/getResponsiveLayoutStyles'
 
-// ========================================
-// SPRINKLES
-// ========================================
-
 type AnySprinklesFn = {
   (props: any): string
   properties: Set<string>
 }
 
 type SprinklesProps<T extends AnySprinklesFn> = Parameters<T>[0]
-
-// ========================================
-// RESPONSIVE OUTPUTS
-// ========================================
 
 type ResolveResponsiveOutputs<T> = {
   [K in keyof T]: NonNullable<T[K]> extends ResponsiveProp<
@@ -31,32 +23,19 @@ type ResolveResponsiveOutputs<T> = {
     : T[K]
 }
 
-// ========================================
-// OPTIONS
-// ========================================
-
 type ResolveStylesOptions<
   T extends AnySprinklesFn,
   TComponentArbitraryProps extends object = {}
 > = {
   sprinkles: T
-
   sprinkleProps: Partial<SprinklesProps<T>>
-
   arbitraryProps?: Partial<ResolveResponsiveOutputs<ArbitraryProps>>
-
   componentArbitraryProps?: Partial<
     ResolveResponsiveOutputs<TComponentArbitraryProps>
   >
-
   style?: CSSProperties
-
   className?: string
 }
-
-// ========================================
-// RESOLVER
-// ========================================
 
 export function resolveStyles<
   T extends AnySprinklesFn,

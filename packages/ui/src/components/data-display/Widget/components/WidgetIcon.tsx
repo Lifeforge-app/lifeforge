@@ -26,7 +26,7 @@ export function WidgetIcon({
         className={clsx(!iconColor && styles.largeIconWrapperNoColor)}
         mb="xs"
         p={{ base: 'sm', sm: 'md' }}
-        rounded="lg"
+        r="lg"
         style={
           iconColor
             ? { backgroundColor: anyColorToHex(iconColor) + '20' }
@@ -48,7 +48,7 @@ export function WidgetIcon({
   }
 
   return (
-    <Box asChild rounded="md">
+    <Box asChild r="md">
       <Flex
         align="center"
         className={clsx(!iconColor && styles.defaultIconWrapperNoColor)}

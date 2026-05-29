@@ -40,7 +40,7 @@ export const Default: Story = {
         onto its single child - no extra DOM node is added.
       </Text>
 
-      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" rounded="lg">
+      <Box bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" r="lg">
         <Slot
           className="extra-class-from-slot"
           style={{ outline: '2px dashed oklch(0.6 0.1 220)' }}
@@ -88,7 +88,7 @@ export const AsChildPattern: Story = {
         examples.
       </Alert>
       <VariantContainer title="Without asChild - extra <div> wrapper:">
-        <Box shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" rounded="xl">
+        <Box shadow bg={{ base: 'bg-50', dark: 'bg-900' }} p="lg" r="xl">
           <article>
             <Text weight="semibold">Box wraps &lt;article&gt;</Text>
             <Text as="p" color={{ base: 'bg-500', dark: 'bg-400' }} mt="xs">
@@ -103,7 +103,7 @@ export const AsChildPattern: Story = {
           shadow
           bg={{ base: 'bg-50', dark: 'bg-900' }}
           p="lg"
-          rounded="xl"
+          r="xl"
         >
           <article>
             <Text weight="semibold">Box is &lt;article&gt;</Text>

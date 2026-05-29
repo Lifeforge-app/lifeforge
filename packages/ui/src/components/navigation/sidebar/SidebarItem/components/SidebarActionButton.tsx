@@ -16,7 +16,7 @@ export function SidebarActionButton({
 
   return (
     <Transition duration={200} property="opacity">
-      <Box asChild p="sm" rounded="md" zIndex="9999">
+      <Box asChild p="sm" r="md" zIndex="9999">
         <button
           className={styles.actionButton}
           onClick={e => {

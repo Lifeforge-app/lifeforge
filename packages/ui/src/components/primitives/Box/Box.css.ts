@@ -4,9 +4,9 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 import {
   RESPONSIVE_CONDITIONS,
   tokenizedLayoutProperties,
+  tokenizedRoundedProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties,
-  vars
+  tokenizedThemeColorProperties
 } from '@/system'
 
 export const boxBase = recipe({
@@ -19,8 +19,7 @@ const boxProperties = defineProperties({
   conditions: RESPONSIVE_CONDITIONS,
   defaultCondition: 'base',
   properties: {
-    display: ['block', 'inline', 'inline-block', 'none', 'contents'],
-    borderRadius: vars.radii
+    display: ['block', 'inline', 'inline-block', 'none', 'contents']
   }
 })
 
@@ -28,7 +27,8 @@ export const boxSprinkles = createSprinkles(
   boxProperties,
   tokenizedThemeColorProperties,
   tokenizedLayoutProperties,
-  tokenizedSpacingProperties
+  tokenizedSpacingProperties,
+  tokenizedRoundedProperties
 )
 
 export type BoxSprinkles = Parameters<typeof boxSprinkles>[0]

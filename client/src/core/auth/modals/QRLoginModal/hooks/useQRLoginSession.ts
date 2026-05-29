@@ -58,8 +58,7 @@ export default function useQRLoginSession({
 
       pollingIntervalRef.current = setInterval(async () => {
         try {
-          const response = await forgeAPI
-            .untyped('user/qrLogin/checkQRSessionStatus')
+          const response = await forgeAPI.user.qrLogin.checkQRSessionStatus
             .input({
               sessionId
             })
@@ -211,13 +210,10 @@ export default function useQRLoginSession({
         sessionIdRef.current = sessionId
 
         // Register the QR session with the server
-        const response = await forgeAPI
-          .untyped('user/qrLogin/registerQRSession')
-          .input({
-            sessionId,
-            browserInfo: getBrowserInfo()
-          })
-          .mutate({})
+        const response = await forgeAPI.user.qrLogin.registerQRSession.mutate({
+          sessionId,
+          browserInfo: getBrowserInfo()
+        })
 
         const newExpiresAt = response.expiresAt
 
