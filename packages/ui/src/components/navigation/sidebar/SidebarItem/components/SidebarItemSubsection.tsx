@@ -1,10 +1,7 @@
-import clsx from 'clsx'
-
 import { useMainSidebarState } from '@lifeforge/shared'
 
 import { Flex, Transition } from '@/components/primitives'
 
-import * as styles from './SidebarItemSubsection.css'
 import { SidebarSubsectionItemLink } from './SidebarSubsectionItemLink'
 import { SidebarSubsectionItemWithOnClick } from './SidebarSubsectionItemWithOnClick'
 
@@ -35,25 +32,23 @@ export function SidebarItemSubsection({
     <Transition>
       <Flex
         as="li"
-        className={clsx(
-          subsectionExpanded
-            ? styles.subsectionExpanded
-            : styles.subsectionCollapsed
-        )}
         direction="column"
         flexShrink="0"
         gap="sm"
+        maxHeight={subsectionExpanded ? '1000px' : '0'}
         overflow="hidden"
+        pb={subsectionExpanded ? 'sm' : 'none'}
+        pt={subsectionExpanded ? 'sm' : 'none'}
         px="md"
       >
         <Flex
           align="center"
           as="ul"
-          className={clsx(
-            !sidebarExpanded &&
-              typeof subsection[0].callback === 'string' &&
-              styles.subsectionListBg
-          )}
+          bg={
+            !sidebarExpanded && typeof subsection[0].callback === 'string'
+              ? { base: 'bg-100', dark: 'bg-800' }
+              : undefined
+          }
           direction="column"
           r="lg"
           style={{ gap: '0.125rem' }}

@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Text, Transition } from '@/components/primitives'
+import { colorWithOpacity } from '@/system/colors/color-with-opacity'
 
 import * as styles from './SidebarItemWrapper.css'
 
@@ -16,53 +17,58 @@ export function SidebarItemWrapper({
   onClick?: () => void
 }) {
   return (
-    <Text
-      asChild
-      color={active ? { base: 'bg-800', dark: 'bg-50' } : 'bg-500'}
-      weight={active ? 'semibold' : undefined}
-    >
-      <Flex
-        align="center"
-        as="li"
-        className={clsx(
-          'sidebar-item',
-          styles.listItemBase,
-          active && styles.listItemActiveIndicator,
-          className
-        )}
-        justify="center"
-        position="relative"
-        px="md"
+    <Transition>
+      <Text
+        asChild
+        color={active ? { base: 'bg-800', dark: 'bg-50' } : 'bg-500'}
+        weight={active ? 'semibold' : undefined}
       >
         <Flex
-          asChild
           align="center"
-          justify="between"
-          pl="md"
+          as="li"
+          className={clsx(
+            'sidebar-item',
+            active && styles.listItemActiveIndicator,
+            className
+          )}
+          justify="center"
           position="relative"
-          r="lg"
-          style={{ gap: '0.75rem', height: '3.5rem', paddingRight: '0.75rem' }}
-          width="100%"
+          px="md"
         >
-          <div
-            className={clsx(
-              'group',
-              styles.innerButtonInteractive,
-              active ? styles.innerButtonActive : styles.innerButtonInactive
-            )}
-            role="button"
-            tabIndex={0}
-            onClick={onClick}
-            onKeyDown={e => {
-              if (e.key === 'Enter') {
-                onClick?.()
+          <Transition duration="0.1s">
+            <Flex
+              asChild
+              align="center"
+              as="button"
+              bg={
+                active
+                  ? {
+                      base: colorWithOpacity('bg-200', '50%'),
+                      dark: 'bg-800'
+                    }
+                  : {
+                      hover: colorWithOpacity('bg-200', '30%'),
+                      darkHover: colorWithOpacity('bg-800', '30%')
+                    }
               }
-            }}
-          >
-            {children}
-          </div>
+              className="group"
+              gap="md"
+              height="3.5em"
+              justify="between"
+              pl="md"
+              position="relative"
+              pr="md"
+              r="lg"
+              role="button"
+              tabIndex={0}
+              width="100%"
+              onClick={onClick}
+            >
+              <Text align="left">{children}</Text>
+            </Flex>
+          </Transition>
         </Flex>
-      </Flex>
-    </Text>
+      </Text>
+    </Transition>
   )
 }

@@ -1,8 +1,7 @@
 import { useModuleSidebarState } from '@lifeforge/shared'
 
-import { Box, Icon, Transition } from '@/components/primitives'
-
-import * as styles from './SidebarActionButton.css'
+import { Box, Icon, Text, Transition } from '@/components/primitives'
+import { colorWithOpacity } from '@/system'
 
 export function SidebarActionButton({
   icon,
@@ -14,19 +13,33 @@ export function SidebarActionButton({
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   return (
-    <Transition duration={200} property="opacity">
-      <Box asChild p="sm" r="md" zIndex="9999">
-        <button
-          className={styles.actionButton}
+    <Transition duration={100}>
+      <Text
+        asChild
+        color={{
+          base: 'muted',
+          hover: 'bg-800',
+          darkHover: 'bg-100'
+        }}
+      >
+        <Box
+          as="button"
+          bg={{
+            hover: colorWithOpacity('bg-200', '70%'),
+            darkHover: colorWithOpacity('bg-700', '70%')
+          }}
+          p="sm"
+          r="md"
+          zIndex="9999"
           onClick={e => {
             e.stopPropagation()
             onClick()
             setIsSidebarOpen(false)
           }}
         >
-          <Icon icon={icon} style={{ height: '1.25rem', width: '1.25rem' }} />
-        </button>
-      </Box>
+          <Icon icon={icon} />
+        </Box>
+      </Text>
     </Transition>
   )
 }

@@ -1,9 +1,9 @@
 import { style } from '@vanilla-extract/css'
 
-import { COLORS } from '@/system'
+import { COLORS, shadowClass } from '@/system'
 
 export const colorButton = style({
-  boxShadow: 'var(--custom-shadow)',
+  boxShadow: shadowClass,
   aspectRatio: '1',
   cursor: 'pointer'
 })

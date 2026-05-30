@@ -1,4 +1,4 @@
-import { type ReactNode, type Ref } from 'react'
+import { type CSSProperties, type ReactNode, type Ref } from 'react'
 
 import { Slot } from '../Slot'
 
@@ -55,6 +55,8 @@ interface TransitionProps {
     | TransitionEntry
     | Array<PropertyValue | TransitionEntry>
   children?: ReactNode
+  className?: string
+  style?: CSSProperties
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -108,7 +110,8 @@ export function Transition({
   delay,
   property = 'all',
   children,
-  ...rest
+  className,
+  style
 }: TransitionProps) {
   const defaults = {
     duration: toTimeString(duration),
@@ -121,7 +124,7 @@ export function Transition({
   const transition = entries.map(e => buildEntry(e, defaults)).join(', ')
 
   return (
-    <Slot ref={ref} style={{ transition }} {...rest}>
+    <Slot ref={ref} className={className} style={{ transition, ...style }}>
       {children}
     </Slot>
   )

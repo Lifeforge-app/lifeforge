@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Button, Listbox, ListboxOption } from '@/components/inputs'
 import { Box, Grid, Text } from '@/components/primitives'
 import { ScrollableStory } from '@/storybook/ScrollableStory'
-import { TAILWIND_PALETTE } from '@/system'
+import { TAILWIND_PALETTE, type TokenizedColor } from '@/system'
 
 import { Widget } from './index'
 
@@ -100,18 +100,13 @@ export const WithIconColor: Story = {
   },
   render: args => (
     <ScrollableStory>
-      <Grid gap="md" templateCols={3}>
-        {[
-          TAILWIND_PALETTE.red[500],
-          TAILWIND_PALETTE.blue[500],
-          TAILWIND_PALETTE.green[500],
-          TAILWIND_PALETTE.yellow[500],
-          TAILWIND_PALETTE.purple[500],
-          TAILWIND_PALETTE.pink[500],
-          TAILWIND_PALETTE.indigo[500],
-          TAILWIND_PALETTE.orange[500]
-        ].map((color, i) => (
-          <Widget key={i} {...args} iconColor={color}>
+      <Grid gap="md" templateCols="repeat(auto-fit, minmax(200px, 1fr))">
+        {Object.keys(TAILWIND_PALETTE).map((color, i) => (
+          <Widget
+            key={i}
+            {...args}
+            iconColor={`${color}-500` as TokenizedColor}
+          >
             <Text as="p" color="bg-600">
               This is a widget with an icon color.
             </Text>
@@ -203,16 +198,13 @@ export const LargeIconWithIconColor: Story = {
   },
   render: args => (
     <ScrollableStory>
-      <Grid gap="md" templateCols={2}>
-        {[
-          TAILWIND_PALETTE.red[500],
-          TAILWIND_PALETTE.blue[500],
-          TAILWIND_PALETTE.green[500],
-          TAILWIND_PALETTE.yellow[500],
-          TAILWIND_PALETTE.purple[500],
-          TAILWIND_PALETTE.pink[500]
-        ].map((color, i) => (
-          <Widget key={i} {...args} iconColor={color}>
+      <Grid gap="md" templateCols="repeat(auto-fit, minmax(200px, 1fr))">
+        {Object.keys(TAILWIND_PALETTE).map((color, i) => (
+          <Widget
+            key={i}
+            {...args}
+            iconColor={`${color}-500` as TokenizedColor}
+          >
             <Text as="p" color="bg-600">
               This is a large icon variant widget.
             </Text>

@@ -67,8 +67,8 @@
 }
 
 body {
-  --custom-shadow: 2px 2px 4px 0px
-    color-mix(in srgb, var(--color-bg-300) 70%, transparent);
+  --custom-shadow: 2px 2px 2px 0px
+    color-mix(in srgb, var(--color-bg-300) 50%, transparent);
 
   .dark &,
   &.dark {

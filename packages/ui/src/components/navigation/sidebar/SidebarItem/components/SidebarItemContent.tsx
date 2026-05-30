@@ -42,13 +42,7 @@ export function SidebarItemContent({
 
   return (
     <>
-      <Flex
-        align="center"
-        justify="between"
-        minWidth="0"
-        style={{ gap: '0.75rem' }}
-        width="100%"
-      >
+      <Flex align="center" gap="md" justify="between" minWidth="0" width="100%">
         {(() => {
           if (!isMainSidebarItem) {
             return (
@@ -85,7 +79,7 @@ export function SidebarItemContent({
                   <Text truncate>
                     {typeof label === 'string'
                       ? t(`common.sidebar:apps.${label}.title`)
-                      : label}
+                      : label} 
                   </Text>
                 </Box>
               </Flex>

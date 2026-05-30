@@ -1,8 +1,8 @@
-import { COLORS, withOpacity } from '@/system'
+import { COLORS, colorWithOpacity, shadowClass } from '@/system'
 
 export const primary = {
   backgroundColor: COLORS['custom-500'],
-  boxShadow: 'var(--custom-shadow)',
+  boxShadow: shadowClass,
   color: `var(--button-text-color, ${COLORS['bg-50']})`,
   selectors: {
     '&:hover:not(:disabled)': {
@@ -10,45 +10,32 @@ export const primary = {
     },
     '&:disabled': {
       backgroundColor: COLORS['bg-200'],
-      borderColor: withOpacity(COLORS['bg-500'], 0.2),
       color: COLORS['bg-400']
     },
     '.dark &:disabled': {
-      backgroundColor: withOpacity(COLORS['bg-800'], 0.5),
+      backgroundColor: colorWithOpacity('bg-800', '50%').toString(),
       color: COLORS['bg-600']
-    },
-    '.bordered &': {
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      borderColor: withOpacity(COLORS['custom-900'], 0.2)
-    },
-    '.dark.bordered &': {
-      borderColor: COLORS['custom-900']
     }
   }
 } as const
 
 export const primaryDangerous = {
-  backgroundColor: 'var(--color-dangerous)',
-  color: `var(--button-text-color, var(--color-bg-50))`,
+  backgroundColor: COLORS['dangerous'],
+  color: COLORS['bg-100'],
   selectors: {
+    '.dark &': {
+      color: COLORS['bg-800']
+    },
     '&:hover:not(:disabled)': {
-      backgroundColor: 'var(--color-dangerous)'
+      backgroundColor: COLORS['red-600']
     },
     '&:disabled': {
-      backgroundColor:
-        'color-mix(in srgb, var(--color-dangerous) 10%, transparent)',
-      borderColor:
-        'color-mix(in srgb, var(--color-dangerous) 10%, transparent)',
-      color: 'var(--color-dangerous)'
+      backgroundColor: colorWithOpacity('dangerous', '10%').toString(),
+      color: colorWithOpacity('dangerous', '70%').toString()
     },
     '.dark &:disabled': {
-      backgroundColor:
-        'color-mix(in srgb, var(--color-dangerous) 10%, transparent)',
-      color: 'color-mix(in srgb, var(--color-dangerous) 50%, transparent)'
-    },
-    '.bordered &': {
-      borderColor: 'var(--color-dangerous)'
+      backgroundColor: colorWithOpacity('dangerous', '10%').toString(),
+      color: colorWithOpacity('dangerous', '70%').toString()
     }
   }
 } as const

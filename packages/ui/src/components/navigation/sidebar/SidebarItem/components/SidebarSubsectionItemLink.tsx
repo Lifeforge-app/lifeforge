@@ -1,13 +1,11 @@
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Link, useLocation, useMainSidebarState } from '@lifeforge/shared'
 
-import { Flex, Icon, Text } from '@/components/primitives'
-
-import * as styles from './SidebarSubsectionItemLink.css'
+import { Flex, Icon, Text, Transition } from '@/components/primitives'
+import { colorWithOpacity } from '@/system/colors/color-with-opacity'
 
 export function SidebarSubsectionItemLink({
   subsectionLabel,
@@ -38,49 +36,50 @@ export function SidebarSubsectionItemLink({
   }, [])
 
   return (
-    <Text asChild color={isActive ? undefined : 'bg-500'} weight="medium">
-      <Flex
-        asChild
-        align="center"
-        ml="md"
-        mr="md"
-        r="lg"
-        style={{ gap: '0.75rem', height: '3.5rem' }}
-        width="100%"
-      >
-        <Link
-          key={subsectionLabel}
-          className={clsx(
-            styles.link,
-            !sidebarExpanded ? styles.linkCollapsed : styles.linkExpanded,
-            isActive && styles.linkActive
-          )}
+    <Transition>
+      <Text asChild color={isActive ? undefined : 'bg-500'} weight="medium">
+        <Flex
+          align="center"
+          as={Link}
+          bg={
+            isActive
+              ? {
+                  base: colorWithOpacity('bg-200', '50%'),
+                  dark: 'bg-800'
+                }
+              : {
+                  hover: colorWithOpacity('bg-200', '30%'),
+                  darkHover: colorWithOpacity('bg-800', '30%')
+                }
+          }
+          className={isActive ? 'active' : undefined}
+          justify={!sidebarExpanded ? 'center' : undefined}
+          ml="md"
+          mr="md"
+          pl={!sidebarExpanded ? 'sm' : '2xl'}
+          pr={!sidebarExpanded ? 'sm' : undefined}
+          r="lg"
+          shadow={isActive ? true : undefined}
+          style={{ gap: '0.75rem', height: '3.5rem' }}
           to={`./${path.replace(/^\//, '')}`}
+          width="100%"
           onClick={handleClick}
         >
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: '1.75rem',
-              width: '1.75rem'
-            }}
-          >
+          <Flex centered height="1.75rem" width="1.75rem">
             {typeof icon === 'string' ? (
-              <Icon icon={icon} style={{ height: '1.5rem', width: '1.5rem' }} />
+              <Icon icon={icon} size="1.5rem" />
             ) : (
               icon
             )}
-          </div>
+          </Flex>
 
           {sidebarExpanded && (
             <Text truncate style={{ paddingRight: '1rem', width: '100%' }}>
               {t(`apps.${label}.subsections.${_.camelCase(subsectionLabel)}`)}
             </Text>
           )}
-        </Link>
-      </Flex>
-    </Text>
+        </Flex>
+      </Text>
+    </Transition>
   )
 }

@@ -5,8 +5,7 @@ import {
   RESPONSIVE_CONDITIONS,
   tokenizedLayoutProperties,
   tokenizedRoundedProperties,
-  tokenizedSpacingProperties,
-  tokenizedThemeColorProperties
+  tokenizedSpacingProperties
 } from '@/system'
 
 export const boxBase = recipe({
@@ -25,7 +24,6 @@ const boxProperties = defineProperties({
 
 export const boxSprinkles = createSprinkles(
   boxProperties,
-  tokenizedThemeColorProperties,
   tokenizedLayoutProperties,
   tokenizedSpacingProperties,
   tokenizedRoundedProperties

@@ -38,7 +38,7 @@ export function SliderHeader({
         >
           <Icon
             icon={icon}
-            style={{ width: '1.5rem', height: '1.5rem', flexShrink: 0 }}
+            size="1.5rem"
           />
           <Flex align="center" gap="sm" minWidth="0" width="100%">
             <Text truncate as="div" style={{ width: '100%', minWidth: 0 }}>

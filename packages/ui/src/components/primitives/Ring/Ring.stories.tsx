@@ -1,13 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { CSSProperties } from 'react'
 
+import { Button } from '@/components/inputs'
+import { Card } from '@/components/layout'
 import {
   Bordered,
   Flex,
-  Grid,
   Stack,
   Text,
   Transition
 } from '@/components/primitives'
+import { TAILWIND_PALETTE, type TokenizedColor } from '@/system'
 
 import { Ring } from './index'
 
@@ -29,13 +32,19 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-function DemoBox({ label }: { label: string }) {
+function DemoBox({
+  className,
+  label,
+  style
+}: {
+  label: string
+  className?: string
+  style?: CSSProperties
+}) {
   return (
-    <Flex align="center" justify="center" p="md">
-      <Text color={{ base: 'bg-500', dark: 'bg-400' }} size="sm">
-        {label}
-      </Text>
-    </Flex>
+    <Card centered className={className} p="md" style={style}>
+      <Text color={{ base: 'bg-500', dark: 'bg-400' }}>{label}</Text>
+    </Card>
   )
 }
 
@@ -45,44 +54,43 @@ export const Default: Story = {
     ringWidth: '3px'
   },
   render: args => (
-    <Flex align="center" height="100%" justify="center" p="3xl">
-      <Ring {...args} p="lg" r="lg" width="20rem">
-        <Text as="p" color={{ base: 'bg-600', dark: 'bg-400' }}>
-          A simple container with a 3px custom-500 ring. Very clean and
-          beautiful.
-        </Text>
-      </Ring>
-    </Flex>
+    <Ring asChild {...args} p="lg" r="lg">
+      <DemoBox label="The quick brown fox jump over the lazy dog" />
+    </Ring>
   )
 }
 
 export const RingColor: Story = {
   args: {},
   render: () => (
-    <Grid gap="lg" p="3xl" templateCols={3}>
-      <Ring p="md" r="lg" ringColor="custom-500">
+    <Stack gap="xl">
+      <Ring asChild p="md" r="lg" ringColor="custom-500">
         <DemoBox label="custom-500 (flat)" />
       </Ring>
       <Ring
+        asChild
         p="md"
         r="lg"
         ringColor={{ base: 'custom-300', dark: 'custom-600' }}
       >
         <DemoBox label="custom-300 / custom-600 (adaptive)" />
       </Ring>
-      <Ring
-        p="md"
-        r="lg"
-        ringColor={{
-          base: 'bg-400',
-          dark: 'bg-600',
-          darkHover: 'custom-400',
-          hover: 'custom-500'
-        }}
-      >
-        <DemoBox label="hover + dark + darkHover conditions" />
-      </Ring>
-    </Grid>
+      <Transition>
+        <Ring
+          asChild
+          p="md"
+          r="lg"
+          ringColor={{
+            base: 'bg-400',
+            dark: 'bg-600',
+            darkHover: 'custom-400',
+            hover: 'custom-500'
+          }}
+        >
+          <DemoBox label="hover + dark + darkHover conditions" />
+        </Ring>
+      </Transition>
+    </Stack>
   )
 }
 
@@ -91,7 +99,7 @@ export const RingWidth: Story = {
   render: () => (
     <Stack gap="xl" px="md">
       {(['1px', '2px', '4px', '8px'] as const).map(w => (
-        <Ring key={w} p="md" r="lg" ringWidth={w}>
+        <Ring key={w} asChild p="md" r="lg" ringWidth={w}>
           <DemoBox label={`ringWidth="${w}"`} />
         </Ring>
       ))}
@@ -104,36 +112,15 @@ export const RingOffset: Story = {
   render: () => (
     <Stack>
       <Ring
-        p="md"
+        asChild
         r="lg"
         ringColor="custom-500"
-        ringOffsetColor="dangerous"
-        ringOffsetWidth="6px"
+        ringOffsetWidth="10px"
         ringWidth="4px"
       >
-        <DemoBox label="6px away from container" />
+        <DemoBox label="10px away from container" />
       </Ring>
     </Stack>
-  )
-}
-
-export const InsetRing: Story = {
-  args: {},
-  render: () => (
-    <Flex align="center" height="100%" justify="center" p="3xl">
-      <Ring
-        ringInset
-        p="lg"
-        r="lg"
-        ringColor="custom-500"
-        ringWidth="4px"
-        width="20rem"
-      >
-        <Text as="p" color={{ base: 'bg-600', dark: 'bg-400' }}>
-          An inset ring drawn on the inside of the container edge.
-        </Text>
-      </Ring>
-    </Flex>
   )
 }
 
@@ -150,23 +137,10 @@ export const AsChild: Story = {
             darkHover: 'custom-400',
             hover: 'custom-500'
           }}
-          ringOffsetColor={{ base: 'bg-50', dark: 'bg-900' }}
           ringOffsetWidth="2px"
           ringWidth="3px"
         >
-          <button
-            style={{
-              backgroundColor: 'var(--color-custom-600)',
-              border: 'none',
-              borderRadius: '0.375rem',
-              color: 'white',
-              cursor: 'pointer',
-              fontWeight: '600',
-              padding: '1rem 2rem'
-            }}
-          >
-            Hover to see Ring
-          </button>
+          <Button>Hover to see Ring</Button>
         </Ring>
       </Transition>
     </Flex>
@@ -181,7 +155,6 @@ export const WithBordered: Story = {
         asChild
         r="lg"
         ringColor={{ base: 'bg-300', dark: 'bg-700' }}
-        ringOffsetColor={{ base: 'bg-50', dark: 'bg-900' }}
         ringOffsetWidth="3px"
         ringWidth="2px"
       >
@@ -201,6 +174,37 @@ export const WithBordered: Story = {
           </Text>
         </Bordered>
       </Ring>
+    </Flex>
+  )
+}
+
+function RainbowRings({
+  colors,
+  index = 0
+}: {
+  colors: string[]
+  index?: number
+}) {
+  if (index >= colors.length) {
+    return <DemoBox label="It feels good to look at some colorful stuff" />
+  }
+
+  return (
+    <Ring
+      ringColor={`${colors[index]}-500` as TokenizedColor}
+      ringOffsetWidth={`${index * 10}px`}
+      ringWidth="5px"
+    >
+      <RainbowRings colors={colors} index={index + 1} />
+    </Ring>
+  )
+}
+
+export const Rainbow: Story = {
+  args: {},
+  render: () => (
+    <Flex align="center" justify="center" p="3xl" width="100%">
+      <RainbowRings colors={Object.keys(TAILWIND_PALETTE)} />
     </Flex>
   )
 }

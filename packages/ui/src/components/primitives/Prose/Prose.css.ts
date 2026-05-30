@@ -1,6 +1,6 @@
 import { globalStyle, style } from '@vanilla-extract/css'
 
-import { COLORS, vars, withOpacity } from '@/system'
+import { COLORS, colorWithOpacity, vars } from '@/system'
 
 export const root = style({})
 
@@ -202,7 +202,7 @@ globalStyle(`${root} code:not(pre > code)`, {
 
 globalStyle(`.dark ${root} code:not(pre > code)`, {
   backgroundColor: COLORS['bg-800'],
-  boxShadow: `0 1px 0 0 ${withOpacity(COLORS['bg-500'], 0.2)}`,
+  boxShadow: `0 1px 0 0 ${colorWithOpacity('bg-500', '20%')}`,
   color: COLORS['bg-50']
 })
 
@@ -258,7 +258,7 @@ globalStyle(`${root} kbd`, {
 globalStyle(`.dark ${root} kbd`, {
   color: COLORS['bg-50'],
   backgroundColor: COLORS['bg-800'],
-  boxShadow: `0 1px 0 0 ${withOpacity(COLORS['bg-500'], 0.2)}`
+  boxShadow: `0 1px 0 0 ${colorWithOpacity('bg-500', '20%')}`
 })
 
 /* ---- Tables ---- */

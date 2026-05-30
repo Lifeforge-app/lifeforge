@@ -56,7 +56,7 @@ export function InputActionButton({
               onMouseDown={e => e.preventDefault()}
               {...rest}
             >
-              <Icon icon={icon} style={{ width: '1.25em', height: '1.25em' }} />
+              <Icon icon={icon} size="1.25em" />
             </button>
           )}
         </Text>
