@@ -1,7 +1,13 @@
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/shared'
-import { Listbox, ListboxOption, OptionsColumn } from '@lifeforge/ui'
+import {
+  Flex,
+  Listbox,
+  ListboxOption,
+  OptionsColumn,
+  Text
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -31,11 +37,17 @@ function BorderRadiusSelector() {
       title={t('borderRadiusSelector.title')}
     >
       <Listbox
-        className="component-bg-lighter min-w-48"
+        bg={{
+          base: 'bg-100',
+          hover: 'bg-200',
+          dark: 'bg-800',
+          darkHover: 'bg-700'
+        }}
+        minWidth="12em"
         renderContent={() => (
-          <div className="flex items-center gap-2">
+          <Flex align="center" gap="sm" maxWidth="12em" minWidth="0">
             <BorderRadiusIcon radius={borderRadiusMultiplier} />
-            <span className="-mt-px block truncate">
+            <Text truncate>
               {t(
                 `borderRadiusSelector.options.${
                   BORDER_RADIUS_OPTIONS.find(
@@ -43,8 +55,8 @@ function BorderRadiusSelector() {
                   )?.labelKey ?? 'default'
                 }`
               )}
-            </span>
-          </div>
+            </Text>
+          </Flex>
         )}
         value={borderRadiusMultiplier}
         onChange={value => {
@@ -55,9 +67,7 @@ function BorderRadiusSelector() {
           <ListboxOption
             key={value}
             label={t(`borderRadiusSelector.options.${labelKey}`)}
-            renderColorAndIcon={() => (
-              <BorderRadiusIcon className="mr-2 size-4" radius={value} />
-            )}
+            renderColorAndIcon={() => <BorderRadiusIcon radius={value} />}
             value={value}
           />
         ))}

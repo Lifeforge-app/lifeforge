@@ -44,7 +44,7 @@ function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
       <Text
         asChild
         style={{
-          margin: h > 2 ? 'auto' : '0'
+          margin: h < 2 ? '0' : 'auto'
         }}
         tracking="wider"
         weight="semibold"

@@ -55,7 +55,6 @@ function DashboardContent() {
         wrapperRef={wrapperRef}
       />
 
-      {/* Save Button Popup */}
       <SaveButtonPopup
         canChange={canLayoutChange}
         setCanChange={setCanLayoutChange}

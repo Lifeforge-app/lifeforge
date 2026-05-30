@@ -2,7 +2,14 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/shared'
-import { Box, Button, ColorInput, Flex, OptionsColumn } from '@lifeforge/ui'
+import {
+  Box,
+  Button,
+  ColorInput,
+  Flex,
+  OptionsColumn,
+  Text
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -55,9 +62,9 @@ function ThemeColorSelector() {
                     changeThemeColor(customThemeColor)
                   }}
                 >
-                  <span className="inline lg:hidden">
+                  <Text display={{ base: 'inline', lg: 'none' }}>
                     {t('common.buttons:save')}
-                  </span>
+                  </Text>
                 </Button>
               )}
           </>

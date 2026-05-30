@@ -7,6 +7,7 @@ export interface ArbitrarySizeProps {
   height?: ResponsiveProp<string>
   minHeight?: ResponsiveProp<string>
   maxHeight?: ResponsiveProp<string>
+  aspectRatio?: ResponsiveProp<string>
 }
 
 export interface ArbitraryPositionProps {

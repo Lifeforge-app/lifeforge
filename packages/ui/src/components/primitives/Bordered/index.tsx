@@ -131,6 +131,7 @@ export function Bordered<T extends ElementType = 'div'>({
   top,
   width,
   zIndex,
+  aspectRatio,
   // Padding
   p,
   pb,
@@ -188,6 +189,7 @@ export function Bordered<T extends ElementType = 'div'>({
       top,
       width,
       zIndex,
+      aspectRatio,
       gridColumnSpan: normalizeResponsiveProp(
         gridColumnSpan,
         normalizeGridSpan

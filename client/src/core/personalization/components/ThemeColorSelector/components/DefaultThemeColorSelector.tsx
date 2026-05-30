@@ -54,7 +54,7 @@ function DefaultThemeColorSelector({
       }}
       minWidth="16em"
       renderContent={() => (
-        <Flex align="center" gap="sm" minWidth="0">
+        <Flex align="center" gap="sm" maxWidth="16em" minWidth="0">
           <Bordered
             bg={!themeColor.startsWith('#') ? 'custom-500' : undefined}
             borderColor="bg-500"

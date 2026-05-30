@@ -42,7 +42,7 @@ function StackModal({ index }: { index: number }) {
     <ModalWrapper
       isOpen={localOpen && !isClosing}
       isTopmost={isTopmost}
-      zIndex={index * 10}
+      zIndex={index * 10 + 500}
       onExited={() => {
         if (isClosing) {
           remove(index)

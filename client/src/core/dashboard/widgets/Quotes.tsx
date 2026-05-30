@@ -1,10 +1,16 @@
 import { useQuery } from '@tanstack/react-query'
-import clsx from 'clsx'
 import tinycolor from 'tinycolor2'
 
 import { usePersonalization } from '@lifeforge/shared'
 import type { WidgetConfig } from '@lifeforge/shared'
-import { Icon, WithQuery } from '@lifeforge/ui'
+import {
+  Box,
+  Card,
+  Icon,
+  Text,
+  WithQuery,
+  colorWithOpacity
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -20,32 +26,68 @@ export default function Quotes() {
   const { derivedThemeColor: themeColor } = usePersonalization()
 
   return (
-    <div className="bg-custom-500 border-custom-900/20 dark:border-custom-900 shadow-custom relative flex size-full flex-col items-center justify-center gap-2 rounded-lg p-4 in-[.bordered]:border-2">
-      <Icon
-        className="text-bg-800/10 absolute top-2 right-2 text-8xl"
-        icon="tabler:quote"
-      />
-      <Icon
-        className="text-bg-800/10 absolute bottom-2 left-2 rotate-180 text-8xl"
-        icon="tabler:quote"
-      />
+    <Card
+      centered
+      bg="custom-500"
+      gap="sm"
+      height="100%"
+      position="relative"
+      style={{
+        isolation: 'isolate'
+      }}
+    >
+      <Box asChild position="absolute" right="1em" top="1em" zIndex="-1">
+        <Icon
+          color={colorWithOpacity('bg-800', '10%')}
+          icon="tabler:quote"
+          size="6em"
+        />
+      </Box>
+      <Box
+        asChild
+        bottom="1em"
+        left="1em"
+        position="absolute"
+        style={{
+          transform: 'rotate(180deg)'
+        }}
+        zIndex="-1"
+      >
+        <Icon
+          color={colorWithOpacity('bg-800', '10%')}
+          icon="tabler:quote"
+          size="6em"
+        />
+      </Box>
       <WithQuery query={quoteQuery}>
         {quote => (
-          <div
-            className={clsx(
-              'text-center text-lg sm:text-xl',
-              tinycolor(themeColor).isLight() ? 'text-bg-800' : 'text-bg-50'
-            )}
+          <Text
+            align="center"
+            as="p"
+            color={tinycolor(themeColor).isLight() ? 'bg-800' : 'bg-100'}
+            size={{ base: 'lg', sm: 'xl' }}
           >
-            {quote[0].q}
-            <br />
-            <span className="text-bg-800/50 mt-4 block text-base font-medium">
-              - {quote[0].a}
-            </span>
-          </div>
+            {quote.length ? (
+              <>
+                {quote[0].q}
+                <br />
+                <Text
+                  as="div"
+                  color={colorWithOpacity('bg-800', '50%')}
+                  mt="md"
+                  size="base"
+                  weight="medium"
+                >
+                  - {quote[0].a}
+                </Text>
+              </>
+            ) : (
+              <Text align="center">No quote for today :(</Text>
+            )}
+          </Text>
         )}
       </WithQuery>
-    </div>
+    </Card>
   )
 }
 

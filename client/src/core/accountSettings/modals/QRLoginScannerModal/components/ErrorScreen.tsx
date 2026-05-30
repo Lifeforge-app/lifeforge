@@ -15,10 +15,10 @@ function ErrorScreen({
   errorMessage: string
 }) {
   return (
-    <Stack align="center" gap="lg" height="100dvh">
+    <Stack align="center" gap="lg" height="100%">
       <Flex
-        bg={colorWithOpacity('dangerous', '20%')}
         centered
+        bg={colorWithOpacity('dangerous', '20%')}
         height="5em"
         r="lg"
         width="5em"

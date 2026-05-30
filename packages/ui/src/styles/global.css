@@ -37,6 +37,7 @@ textarea {
 
 button {
   cursor: pointer;
+  user-select: none;
 
   & > svg {
     pointer-events: none;
