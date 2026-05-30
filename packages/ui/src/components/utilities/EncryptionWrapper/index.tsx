@@ -6,7 +6,7 @@ export function EncryptionWrapper({ children }: { children: React.ReactNode }) {
   const { ready, error } = useEncryption()
 
   if (!ready) {
-    return <LoadingScreen message="Checking API status..." />
+    return <LoadingScreen message="Initializing end-to-end encryption..." />
   }
 
   if (error) {

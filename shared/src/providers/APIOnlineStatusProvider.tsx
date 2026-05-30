@@ -17,22 +17,23 @@ async function checkAPIStatus(
     controller.abort()
   }, 5000)
 
-  return await fetch(`${apiEndpoint}/status`, {
-    signal: controller.signal
-  })
-    .then(async res => {
-      if (res.ok) {
-        const data: any = await res.json()
-
-        return data.data.environment
-      }
-
-      return false
+  try {
+    const res = await fetch(`${apiEndpoint}/status`, {
+      signal: controller.signal
     })
-    .catch(() => false)
-    .finally(() => {
-      clearTimeout(timeoutId)
-    })
+
+    if (res.ok) {
+      const data: any = await res.json()
+
+      return data.data.environment
+    }
+
+    return false
+  } catch (err) {
+    return false
+  } finally {
+    clearTimeout(timeoutId)
+  }
 }
 
 interface IAPIOnlineStatus {
@@ -70,10 +71,11 @@ export default function APIOnlineStatusProvider({
         setEnvironment(status === false ? null : status)
         setIsOnline(status !== false)
       })
-      .catch(() => {
+      .catch(err => {
+        console.error(err)
         setIsOnline(false)
       })
-  }, [])
+  }, [apiEndpoint])
 
   useEffect(() => {
     handleRetry()

@@ -2,8 +2,7 @@ import type { StoryObj, Meta as _Meta } from '@storybook/react-vite'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 import { WithQuery } from '@/components/utilities'
 
 import { SearchInput } from './index'

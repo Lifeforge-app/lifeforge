@@ -1,12 +1,11 @@
 import { ROOT_DIR } from '@constants'
+import { decrypt2 } from '@functions/auth/encryption'
+import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { IPBService } from '@lifeforge/server-utils'
-
-import { decrypt2 } from '@functions/auth/encryption'
-import { createServiceLogger } from '@functions/logging'
 
 import PBService from './PBService'
 

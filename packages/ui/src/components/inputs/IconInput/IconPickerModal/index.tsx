@@ -2,8 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { GoBackButton } from '@/components/navigation'
 import { ModalHeader } from '@/components/overlays'
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text, Transition } from '@/components/primitives'
+import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
 
 import { IconSet } from './pages/IconSet'
 import { IconSetList } from './pages/IconSetList/index'

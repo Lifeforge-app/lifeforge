@@ -3,8 +3,7 @@ import clsx from 'clsx'
 
 import { usePersonalization } from '@lifeforge/shared'
 
-import { Icon } from '@/components/primitives'
-import { Bordered, Flex, Text, Transition } from '@/components/primitives'
+import { Bordered, Flex, Icon, Text, Transition } from '@/components/primitives'
 
 import { checkboxRootRecipe } from './Checkbox.css'
 

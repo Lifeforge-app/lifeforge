@@ -1,6 +1,5 @@
 import { ModalHeader } from '@/components/overlays'
 import { Box, Flex, Grid, Text } from '@/components/primitives'
-
 import { TAILWIND_PALETTE } from '@/system'
 
 import * as styles from './TailwindCSSColorsModal.css'
@@ -53,8 +52,8 @@ function TailwindCSSColorsModal({
               <Grid
                 key={index}
                 as="ul"
-                templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
                 style={{ gap: '0.75rem' }}
+                templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
                 width="100%"
               >
                 {Object.entries(

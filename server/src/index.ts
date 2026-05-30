@@ -1,15 +1,14 @@
 import { PORT } from '@constants'
-import chalk from 'chalk'
-import { program } from 'commander'
-import fs from 'fs'
-import { createServer } from 'node:http'
-
 import checkDB from '@functions/database/dbUtils'
 import ensureCredentials from '@functions/initialization/ensureCredentials'
 import { LocaleService } from '@functions/initialization/localeService'
 import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { LOG_LEVELS, type LogLevel, coreLogger } from '@functions/logging'
 import createSocketServer from '@functions/socketio/createSocketServer'
+import chalk from 'chalk'
+import { program } from 'commander'
+import fs from 'fs'
+import { createServer } from 'node:http'
 
 import app from './core/app'
 

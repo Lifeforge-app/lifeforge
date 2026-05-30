@@ -30,7 +30,6 @@ export default function CoreFederationProvider({
     try {
       const result = await loadModules()
 
-
       setModules(result.routes)
       setGlobalProviders(result.globalProviders)
       setCategoryTranslations(result.categoryTranslations)

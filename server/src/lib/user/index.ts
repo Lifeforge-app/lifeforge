@@ -1,9 +1,9 @@
-import { forgeRouter } from '@lifeforge/server-utils'
-
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
+
+import { forgeRouter } from '@lifeforge/server-utils'
 
 import forge from './forge'
 import * as authRoutes from './routes/auth'

@@ -1,11 +1,11 @@
 import { ListboxOption as HeadlessListboxOption } from '@headlessui/react'
 import { formatHex, parse } from 'culori'
 
-import { Icon } from '@/components/primitives'
 import {
   Bordered,
   Box,
   Flex,
+  Icon,
   Text,
   Transition,
   WithDivide

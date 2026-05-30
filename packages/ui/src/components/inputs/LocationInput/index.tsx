@@ -7,7 +7,6 @@ import { useAPIEndpoint } from '@lifeforge/shared'
 import { ComboboxInput, ComboboxOption } from '@/components/inputs'
 import type { InputVariants } from '@/components/inputs/shared/types'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-
 import { forgeAPI } from '@/utils/forgeAPI'
 
 import { useInputLabel } from '../shared/hooks/useInputLabel'

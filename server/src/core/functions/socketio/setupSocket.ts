@@ -1,7 +1,6 @@
+import { globalTaskPool } from '@functions/socketio/taskPool'
 import Pocketbase from 'pocketbase'
 import { Server } from 'socket.io'
-
-import { globalTaskPool } from '@functions/socketio/taskPool'
 
 export function setupSocket(io: Server) {
   // QR Login namespace - no authentication required

@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Button, Listbox, ListboxOption } from '@/components/inputs'
 import { Box, Grid, Text } from '@/components/primitives'
-
 import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { TAILWIND_PALETTE } from '@/system'
 
@@ -25,7 +24,7 @@ export const Default: Story = {
     title: 'Cool Widget'
   },
   render: args => (
-    <Grid templateCols={3} gap="lg" templateRows={3}>
+    <Grid gap="lg" templateCols={3} templateRows={3}>
       <Widget {...args}>
         <Text as="p" color="bg-600">
           This is a dashboard item.
@@ -63,7 +62,7 @@ export const WithDescription: Story = {
     title: 'Cool Widget'
   },
   render: args => (
-    <Grid templateCols={3} gap="lg" templateRows={3}>
+    <Grid gap="lg" templateCols={3} templateRows={3}>
       <Widget {...args}>
         <Text as="p" color="bg-600">
           This is a dashboard item.
@@ -101,7 +100,7 @@ export const WithIconColor: Story = {
   },
   render: args => (
     <ScrollableStory>
-      <Grid templateCols={3} gap="md">
+      <Grid gap="md" templateCols={3}>
         {[
           TAILWIND_PALETTE.red[500],
           TAILWIND_PALETTE.blue[500],
@@ -130,7 +129,7 @@ export const WithActionComponent: Story = {
     title: 'A Cool Widget'
   },
   render: args => (
-    <Grid templateCols={2} gap="lg" templateRows={3}>
+    <Grid gap="lg" templateCols={2} templateRows={3}>
       <Widget {...args}>
         <Text as="p" color="bg-600">
           This widget has a plus button beside the title. When clicked, maybe a
@@ -204,7 +203,7 @@ export const LargeIconWithIconColor: Story = {
   },
   render: args => (
     <ScrollableStory>
-      <Grid templateCols={2} gap="md">
+      <Grid gap="md" templateCols={2}>
         {[
           TAILWIND_PALETTE.red[500],
           TAILWIND_PALETTE.blue[500],

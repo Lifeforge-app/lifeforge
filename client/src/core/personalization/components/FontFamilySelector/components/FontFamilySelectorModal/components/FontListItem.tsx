@@ -29,18 +29,16 @@ function FontListItem({
   const queryClient = useQueryClient()
 
   const togglePinMutation = useMutation(
-    forgeAPI
-      .user.personalization.toggleGoogleFontsPin
-      .mutationOptions({
-        onSuccess: () => {
-          queryClient.invalidateQueries({
-            queryKey: ['user', 'personalization', 'listGoogleFontsPin']
-          })
-        },
-        onError: () => {
-          toast.error('Failed to toggle font pin')
-        }
-      })
+    forgeAPI.user.personalization.toggleGoogleFontsPin.mutationOptions({
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ['user', 'personalization', 'listGoogleFontsPin']
+        })
+      },
+      onError: () => {
+        toast.error('Failed to toggle font pin')
+      }
+    })
   )
 
   const [loadingPin, handleTogglePin] = usePromiseLoading(async () => {

@@ -1,6 +1,5 @@
 import { ListboxInput, ListboxOption } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Text } from '@/components/primitives'
+import { Icon, Text } from '@/components/primitives'
 
 import {
   type IPixabaySearchFilter,
@@ -26,9 +25,9 @@ export function CategoryFilter({
             style={{ height: '1.25rem', width: '1.25rem' }}
           />
           <Text
+            truncate
             as="span"
             style={{ display: 'block', marginTop: '-1px' }}
-            truncate
           >
             {CATEGORIES.find(l => l.id === category)?.name ?? 'None'}
           </Text>

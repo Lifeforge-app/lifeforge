@@ -16,7 +16,7 @@ function ErrorScreen({
   errorMessage: string
 }) {
   return (
-    <Stack align="center" gap="lg">
+    <Stack align="center" gap="lg" height="100dvh">
       <Flex
         centered
         height="5em"
@@ -26,7 +26,7 @@ function ErrorScreen({
         }}
         width="5em"
       >
-        <Icon color="dangerous" icon="tabler:alert-triangle" size="2.25em" />
+        <Icon color="dangerous" icon="tabler:alert-circle" size="2.25em" />
       </Flex>
       <Text size="xl" weight="medium">
         {errorMessage}

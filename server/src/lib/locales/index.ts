@@ -1,4 +1,8 @@
 import { ROOT_DIR } from '@constants'
+import {
+  ALLOWED_NAMESPACE,
+  LocaleService
+} from '@functions/initialization/localeService'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -6,11 +10,6 @@ import z from 'zod'
 
 import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 import { normalizeSubnamespace } from '@lifeforge/shared'
-
-import {
-  ALLOWED_NAMESPACE,
-  LocaleService
-} from '@functions/initialization/localeService'
 
 const forge = createForge({}, 'locales')
 
