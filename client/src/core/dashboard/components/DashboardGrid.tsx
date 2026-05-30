@@ -1,10 +1,15 @@
-import clsx from 'clsx'
 import { useMemo } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
 
 import { useDivSize, usePersonalization } from '@lifeforge/shared'
-import { Box, EmptyStateScreen, Icon, LoadingScreen } from '@lifeforge/ui'
+import {
+  Box,
+  EmptyStateScreen,
+  Icon,
+  LoadingScreen,
+  colorWithOpacity
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -69,10 +74,7 @@ function DashboardGrid({
   }
 
   return (
-    <Box
-      asChild
-      style={canLayoutChange ? { paddingBottom: '16em' } : undefined}
-    >
+    <Box asChild style={canLayoutChange ? { marginBottom: '16em' } : undefined}>
       <ResponsiveGridLayout
         autoSize
         cols={{
@@ -101,9 +103,12 @@ function DashboardGrid({
               .flat()
           )
         ].map(widgetId => (
-          <div
+          <Box
             key={widgetId}
-            className={clsx('relative', canLayoutChange && 'cursor-move')}
+            position="relative"
+            style={{
+              cursor: canLayoutChange ? 'move' : 'default'
+            }}
           >
             {(() => {
               if (!width || !height) {
@@ -133,16 +138,21 @@ function DashboardGrid({
             })()}
             {canLayoutChange && (
               <>
-                <div className="bg-bg-900/30 absolute inset-0 top-0 left-0 rounded" />
-                <Box bottom="0" position="absolute" right="0">
-                  <Icon
-                    className="1.5em"
-                    icon="clarity:drag-handle-corner-line"
-                  />
+                <Box
+                  bg={colorWithOpacity('bg-900', '30%')}
+                  height="100%"
+                  left="0"
+                  position="absolute"
+                  r="lg"
+                  top="0"
+                  width="100%"
+                />
+                <Box asChild bottom="0" position="absolute" right="0">
+                  <Icon icon="clarity:drag-handle-corner-line" size="1.5em" />
                 </Box>
               </>
             )}
-          </div>
+          </Box>
         ))}
       </ResponsiveGridLayout>
     </Box>

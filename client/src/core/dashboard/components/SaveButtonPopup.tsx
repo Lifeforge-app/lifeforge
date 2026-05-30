@@ -28,9 +28,10 @@ function SaveButtonPopup({
       style={{
         transform: 'translateX(-50%)'
       }}
+      width={{ base: '90%', sm: 'auto' }}
       zIndex="50"
     >
-      <Text as="p" weight="medium">
+      <Text as="p" weight="medium" whiteSpace="nowrap">
         You are editing dashboard layout
       </Text>
       <Button icon="tabler:device-floppy" onClick={() => setCanChange(false)}>

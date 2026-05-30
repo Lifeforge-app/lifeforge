@@ -52,6 +52,9 @@ export function ListboxOption({
             minWidth="0"
             p="md"
             position="relative"
+            style={{
+              cursor: 'pointer'
+            }}
             width="100%"
           >
             <HeadlessListboxOption value={value} onClick={onClick}>

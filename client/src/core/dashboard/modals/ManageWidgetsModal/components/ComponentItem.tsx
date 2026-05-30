@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { type IDashboardLayout, usePersonalization } from '@lifeforge/shared'
 import {
+  Box,
   Card,
   Flex,
   Icon,
@@ -116,41 +117,41 @@ function ComponentListItem({
   return (
     <Card
       shadow
-      align="center"
+      align={{ base: 'start', sm: 'center' }}
       as="li"
       bg={{
         base: 'bg-50',
         dark: colorWithOpacity('bg-800', '50%')
       }}
-      direction="row"
-      gap="xl"
+      direction={{ base: 'column', sm: 'row' }}
+      gap="md"
       justify="between"
       onClick={toggleComponent}
     >
-      <Flex align="center" gap="md">
-        <Transition>
-          <Flex
-            centered
-            bg={
-              isEnabled
-                ? colorWithOpacity('custom-500', '10%')
-                : {
-                    base: 'bg-200',
-                    dark: colorWithOpacity('bg-700', '50%')
-                  }
-            }
-            flexShrink="0"
-            height="3em"
-            r="lg"
-            width="3em"
-          >
-            <Icon
-              color={isEnabled ? 'custom-500' : 'bg-500'}
-              icon={icon}
-              size="1.5em"
-            />
-          </Flex>
-        </Transition>
+      <Transition>
+        <Flex
+          centered
+          bg={
+            isEnabled
+              ? colorWithOpacity('custom-500', '10%')
+              : {
+                  base: 'bg-200',
+                  dark: colorWithOpacity('bg-700', '50%')
+                }
+          }
+          flexShrink="0"
+          height="3em"
+          r="lg"
+          width="3em"
+        >
+          <Icon
+            color={isEnabled ? 'custom-500' : 'bg-500'}
+            icon={icon}
+            size="1.5em"
+          />
+        </Flex>
+      </Transition>
+      <Flex align="center" gap="md" justify="between" width="100%">
         <Stack gap="none">
           <Text as="h3" weight="semibold">
             {t([
@@ -168,13 +169,19 @@ function ComponentListItem({
             ])}
           </Text>
         </Stack>
+        <Box
+          position={{ base: 'absolute', sm: 'static' }}
+          right="1em"
+          top="1.75em"
+        >
+          <Switch
+            value={isEnabled}
+            onChange={() => {
+              toggleComponent()
+            }}
+          />
+        </Box>
       </Flex>
-      <Switch
-        value={isEnabled}
-        onChange={() => {
-          toggleComponent()
-        }}
-      />
     </Card>
   )
 }

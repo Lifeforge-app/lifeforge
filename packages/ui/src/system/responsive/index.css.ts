@@ -35,7 +35,8 @@ const RESPONSIVE_PROPS = [
     customProp: '--lf-row'
   },
   { className: 'lf-size', property: 'width', customProp: '--lf-size' },
-  { className: 'lf-size', property: 'height', customProp: '--lf-size' }
+  { className: 'lf-size', property: 'height', customProp: '--lf-size' },
+  { className: 'lf-ar', property: 'aspectRatio', customProp: '--lf-ar' }
 ] as const
 
 // Breakpoint media queries

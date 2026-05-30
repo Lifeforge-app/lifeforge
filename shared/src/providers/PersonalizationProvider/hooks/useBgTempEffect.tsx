@@ -18,6 +18,10 @@ function useBgTempEffect(
         'bg-neutral',
         'bg-zinc',
         'bg-stone',
+        'bg-mauve',
+        'bg-olive',
+        'bg-mist',
+        'bg-taupe',
         'bg-custom'
       )
       rootElement.classList.add(bgTemp.startsWith('#') ? 'bg-custom' : bgTemp)

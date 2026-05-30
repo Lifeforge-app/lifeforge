@@ -4,6 +4,7 @@ import { type HTMLAttributes, type ReactNode, type Ref } from 'react'
 import {
   type ColorValue,
   type ThemeConditionProp,
+  colorWithOpacity,
   resolveColorProp
 } from '@/system'
 
@@ -20,7 +21,7 @@ interface WithDivideProps extends Omit<HTMLAttributes<HTMLElement>, 'color'> {
 export function WithDivide({
   ref,
   axis = 'y',
-  color = 'bg-200',
+  color = { base: 'bg-200', dark: colorWithOpacity('bg-700', '70%') },
   children,
   ...rest
 }: WithDivideProps) {

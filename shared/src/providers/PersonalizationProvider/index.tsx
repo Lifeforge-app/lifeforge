@@ -95,7 +95,7 @@ export default function PersonalizationProvider({
   const [rawThemeColor, setRawThemeColor] = useState(defaultValue.rawThemeColor)
 
   const [bgTemp, setBgTemp] = useState<
-    'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone' | string
+    'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone' | 'bg-mauve' | 'bg-olive' | 'bg-mist' | 'bg-taupe' | string
   >(defaultValue.bgTemp)
 
   const [bgImage, setBgImage] = useState(defaultValue.bgImage)

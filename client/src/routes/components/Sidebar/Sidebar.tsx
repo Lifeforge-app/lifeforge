@@ -45,7 +45,7 @@ function Sidebar() {
                 sm: '5.4em'
               }
         }
-        zIndex="9995"
+        zIndex="99"
       >
         <SidebarEventBanner />
         <SidebarHeader

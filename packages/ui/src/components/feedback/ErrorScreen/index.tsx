@@ -17,15 +17,11 @@ export function ErrorScreen({ message, showRetryButton }: ErrorScreenProps) {
       align="center"
       direction="column"
       gap="lg"
-      height="100%"
+      height="100dvh"
       justify="center"
       width="100%"
     >
-      <Icon
-        color="dangerous"
-        icon="tabler:alert-triangle"
-        size="4rem"
-      />
+      <Icon color="dangerous" icon="tabler:alert-triangle" size="4rem" />
       <Text align="center" as="p" color="dangerous" size="lg" weight="medium">
         {message}
       </Text>

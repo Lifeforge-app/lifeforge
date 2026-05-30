@@ -102,6 +102,10 @@ export const LAYOUT_PROP_DEFS = {
   ringOffsetWidth: {
     className: 'lf-row',
     customProperties: ['--lf-row']
+  },
+  aspectRatio: {
+    className: 'lf-ar',
+    customProperties: ['--lf-ar']
   }
 } as const satisfies Record<string, PropDef>
 
