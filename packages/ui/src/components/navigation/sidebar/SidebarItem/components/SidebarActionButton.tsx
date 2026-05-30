@@ -1,7 +1,6 @@
 import { useModuleSidebarState } from '@lifeforge/shared'
 
-import { Icon } from '@/components/primitives'
-import { Box, Transition } from '@/components/primitives'
+import { Box, Icon, Transition } from '@/components/primitives'
 
 import * as styles from './SidebarActionButton.css'
 

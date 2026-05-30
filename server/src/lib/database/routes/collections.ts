@@ -1,9 +1,9 @@
-import { createForge, forgeRouter } from '@lifeforge/server-utils'
-
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
+
+import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'database')
 

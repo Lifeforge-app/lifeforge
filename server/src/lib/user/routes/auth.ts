@@ -1,15 +1,14 @@
+import { default as _validateOTP } from '@functions/auth/validateOTP'
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@functions/database/dbUtils'
 import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
 import z from 'zod'
 
 import { ClientError } from '@lifeforge/server-utils'
-
-import { default as _validateOTP } from '@functions/auth/validateOTP'
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@functions/database/dbUtils'
 
 import { currentSession } from '..'
 import forge from '../forge'

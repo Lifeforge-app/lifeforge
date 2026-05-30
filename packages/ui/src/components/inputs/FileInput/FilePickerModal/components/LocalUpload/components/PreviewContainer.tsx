@@ -1,8 +1,7 @@
 import { useMemo } from 'react'
 
 import { Button } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 import { FILE_ICONS } from '../../../constants/file_icons'
 

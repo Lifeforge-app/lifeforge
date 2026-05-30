@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import { type CSSProperties, memo } from 'react'
 
-import { Icon } from '@/components/primitives'
-import { Flex, Text, Transition } from '@/components/primitives'
+import { Flex, Icon, Text, Transition } from '@/components/primitives'
 
 import { useInputFocused } from '../../contexts/InputFocusContext'
 import {

@@ -2,8 +2,7 @@ import { usePersonalization } from '@lifeforge/shared'
 
 import { Card } from '@/components/layout'
 import { ModalHeader } from '@/components/overlays'
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Grid, Text } from '@/components/primitives'
+import { Box, Flex, Grid, Icon, Text } from '@/components/primitives'
 
 import PALETTES from './constants/palettes.json'
 
@@ -27,11 +26,11 @@ function FlatUIColorsModal({
         onClose={onClose}
       />
       <Grid
+        style={{ gap: '0.75rem' }}
         templateCols={{
           base: 1,
           sm: 'repeat(auto-fill, minmax(300px, 1fr))'
         }}
-        style={{ gap: '0.75rem' }}
       >
         {PALETTES.map(({ name, icon, colors }) => (
           <Card key={name} bg={{ base: 'bg-100', dark: 'bg-800' }}>
@@ -44,7 +43,7 @@ function FlatUIColorsModal({
                 {name}
               </Text>
             </Flex>
-            <Grid templateCols={5} style={{ gap: '0.5rem' }}>
+            <Grid style={{ gap: '0.5rem' }} templateCols={5}>
               {colors.map((flatUiColor, index) => (
                 <Flex
                   key={index}

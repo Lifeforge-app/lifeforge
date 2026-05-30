@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useModuleSidebarState } from '@lifeforge/shared'
 
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 import * as styles from './SidebarSubsectionItemWithOnClick.css'
 

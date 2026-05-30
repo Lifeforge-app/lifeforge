@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 interface EmptyStateScreenProps {
   /** Props for the call-to-action button. Refer to the Button component for available props. */
@@ -71,6 +70,7 @@ export function EmptyStateScreen({
         <Text
           align="center"
           as="h2"
+          color={{ base: 'bg-800', dark: 'bg-100' }}
           size={smaller ? '2xl' : '3xl'}
           style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
           weight="semibold"

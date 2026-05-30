@@ -1,8 +1,7 @@
 import clsx from 'clsx'
 import React from 'react'
 
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 import * as styles from './Alert.css'
 

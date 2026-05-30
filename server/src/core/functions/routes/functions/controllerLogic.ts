@@ -13,6 +13,8 @@
  * The main export is:
  * - `registerController`: Function to register a ForgeControllerBuilder with an Express router
  */
+import { encryptResponse } from '@functions/encryption'
+import { coreLogger } from '@functions/logging'
 import type { Request, Response, Router } from 'express'
 
 import {
@@ -23,9 +25,6 @@ import {
   Forge,
   MediaConfig
 } from '@lifeforge/server-utils'
-
-import { encryptResponse } from '@functions/encryption'
-import { coreLogger } from '@functions/logging'
 
 import checkRecordExistence from '../utils/checkRecordExistence'
 import { createCoreContext } from '../utils/coreContext'
@@ -88,7 +87,6 @@ function createHandler<
     if (!(await isAuthTokenValid(req, res, noAuth))) return
 
     const aesKey = getAESKey(req, res, encrypted, callerModuleId)
-
 
     try {
       parseQuery(req, schema.query)

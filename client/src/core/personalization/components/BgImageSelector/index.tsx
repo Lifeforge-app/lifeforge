@@ -60,11 +60,9 @@ function BgImageSelector() {
 
   async function onSubmit(file: string | File) {
     try {
-      const data = await forgeAPI
-        .user.personalization.updateBgImage
-        .mutate({
-          file
-        })
+      const data = await forgeAPI.user.personalization.updateBgImage.mutate({
+        file
+      })
 
       setBgImage(forgeAPI.getMedia(data))
       toast.success('Background image updated')

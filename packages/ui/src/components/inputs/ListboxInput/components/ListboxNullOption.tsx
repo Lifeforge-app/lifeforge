@@ -1,9 +1,9 @@
 import { ListboxOption as HeadlessListboxOption } from '@headlessui/react'
 
-import { Icon } from '@/components/primitives'
 import {
   Box,
   Flex,
+  Icon,
   Text,
   Transition,
   WithDivide

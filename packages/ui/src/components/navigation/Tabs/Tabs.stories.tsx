@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { Box } from '@/components/primitives'
-
 import { TAILWIND_PALETTE } from '@/system'
 
 import { Tabs } from '../Tabs'

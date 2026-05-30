@@ -69,79 +69,83 @@ function DashboardGrid({
   }
 
   return (
-    <ResponsiveGridLayout
-      autoSize
-      className={canLayoutChange ? 'pb-64' : undefined}
-      cols={{
-        lg: 8,
-        md: 8,
-        sm: 4,
-        xs: 4,
-        xxs: 4
-      }}
-      containerPadding={[0, 0]}
-      isDraggable={canLayoutChange}
-      isDroppable={canLayoutChange}
-      isResizable={canLayoutChange}
-      layouts={enabledWidgets}
-      margin={[10, 10]}
-      rowHeight={100}
-      width={width}
-      onLayoutChange={(_, layouts) => {
-        changeDashboardLayout(layouts as never)
-      }}
+    <Box
+      asChild
+      style={canLayoutChange ? { paddingBottom: '16em' } : undefined}
     >
-      {[
-        ...new Set(
-          Object.values(enabledWidgets)
-            .map(widgetArray => widgetArray.map(widget => widget.i))
-            .flat()
-        )
-      ].map(widgetId => (
-        <div
-          key={widgetId}
-          className={clsx('relative', canLayoutChange && 'cursor-move')}
-        >
-          {(() => {
-            if (!width || !height) {
-              return null
-            }
+      <ResponsiveGridLayout
+        autoSize
+        cols={{
+          lg: 8,
+          md: 8,
+          sm: 4,
+          xs: 4,
+          xxs: 4
+        }}
+        containerPadding={[0, 0]}
+        isDraggable={canLayoutChange}
+        isDroppable={canLayoutChange}
+        isResizable={canLayoutChange}
+        layouts={enabledWidgets}
+        margin={[10, 10]}
+        rowHeight={100}
+        width={width}
+        onLayoutChange={(_, layouts) => {
+          changeDashboardLayout(layouts as never)
+        }}
+      >
+        {[
+          ...new Set(
+            Object.values(enabledWidgets)
+              .map(widgetArray => widgetArray.map(widget => widget.i))
+              .flat()
+          )
+        ].map(widgetId => (
+          <div
+            key={widgetId}
+            className={clsx('relative', canLayoutChange && 'cursor-move')}
+          >
+            {(() => {
+              if (!width || !height) {
+                return null
+              }
 
-            const Component = (COMPONENTS[
-              widgetId as keyof typeof COMPONENTS
-            ] ?? NotFoundWidget) as React.FC<{
-              dimension: { w: number; h: number }
-              widgetId?: string
-            }>
+              const Component = (COMPONENTS[
+                widgetId as keyof typeof COMPONENTS
+              ] ?? NotFoundWidget) as React.FC<{
+                dimension: { w: number; h: number }
+                widgetId?: string
+              }>
 
-            const dimension = (
-              enabledWidgets[getBreakpointFromWidth(width)] || []
-            ).find(l => l.i === widgetId)
+              const dimension = (
+                enabledWidgets[getBreakpointFromWidth(width)] || []
+              ).find(l => l.i === widgetId)
 
-            return (
-              <Component
-                dimension={{
-                  w: dimension?.w ?? 0,
-                  h: dimension?.h ?? 0
-                }}
-                widgetId={widgetId}
-              />
-            )
-          })()}
-          {canLayoutChange && (
-            <>
-              <div className="bg-bg-900/30 absolute inset-0 top-0 left-0 rounded" />
-              <Box bottom="0" position="absolute" right="0">
-                <Icon
-                  className="1.5em"
-                  icon="clarity:drag-handle-corner-line"
+              return (
+                <Component
+                  dimension={{
+                    w: dimension?.w ?? 0,
+                    h: dimension?.h ?? 0
+                  }}
+                  widgetId={widgetId}
                 />
-              </Box>
-            </>
-          )}
-        </div>
-      ))}
-    </ResponsiveGridLayout>
+              )
+            })()}
+            {canLayoutChange && (
+              <>
+                <div className="bg-bg-900/30 absolute inset-0 top-0 left-0 rounded" />
+                <Box bottom="0" position="absolute" right="0">
+                  <Icon
+                    className="1.5em"
+                    icon="clarity:drag-handle-corner-line"
+                  />
+                </Box>
+              </>
+            )}
+          </div>
+        ))}
+      </ResponsiveGridLayout>
+    </Box>
   )
 }
 

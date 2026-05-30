@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { Switch } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 import { type PixabaySearchFilterAction } from '../../../typescript/pixabay_interfaces'
 

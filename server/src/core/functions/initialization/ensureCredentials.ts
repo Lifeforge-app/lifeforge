@@ -1,9 +1,8 @@
 import { ROOT_DIR } from '@constants'
-import dotenv from 'dotenv'
-import path from 'path'
-
 import { ensureKeysExist } from '@functions/encryption'
 import { coreLogger } from '@functions/logging'
+import dotenv from 'dotenv'
+import path from 'path'
 
 export default function ensureCredentials(): void {
   dotenv.config({

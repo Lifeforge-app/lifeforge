@@ -1,7 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 
 import {
-  Button,
   ContextMenuItem,
   Flex,
   ModuleHeader,
@@ -9,6 +8,7 @@ import {
 } from '@lifeforge/ui'
 
 import DashboardGrid from './components/DashboardGrid'
+import SaveButtonPopup from './components/SaveButtonPopup'
 import './index.css'
 import ManageWidgetsModal from './modals/ManageWidgetsModal'
 import WidgetProvider, { useWidgets } from './providers/WidgetProvider'
@@ -56,25 +56,10 @@ function DashboardContent() {
       />
 
       {/* Save Button Popup */}
-      {canLayoutChange && (
-        <div className="fixed right-6 bottom-6 z-50">
-          <div className="bg-bg-100 dark:bg-bg-800 flex items-center gap-4 rounded-md p-4 shadow-lg">
-            <div className="min-w-0">
-              <div className="text-sm font-medium">
-                You are Editing Dashboard Layout
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                icon="tabler:device-floppy"
-                onClick={() => setCanLayoutChange(false)}
-              >
-                Save
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+      <SaveButtonPopup
+        canChange={canLayoutChange}
+        setCanChange={setCanLayoutChange}
+      />
     </Flex>
   )
 }

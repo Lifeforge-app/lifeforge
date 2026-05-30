@@ -66,9 +66,9 @@ export const Default: Story = {
         <ModuleHeader />
 
         <Grid
-          templateCols="repeat(auto-fit, minmax(200px, 1fr))"
           gap="md"
           mb="xl"
+          templateCols="repeat(auto-fit, minmax(200px, 1fr))"
           width="100%"
         >
           <StatCard label="Total Items" value="1,284" />

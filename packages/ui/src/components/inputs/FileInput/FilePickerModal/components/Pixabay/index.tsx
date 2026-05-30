@@ -11,7 +11,6 @@ import {
 import { Button, SearchInput } from '@/components/inputs'
 import { Flex } from '@/components/primitives'
 import { WithQueryData } from '@/components/utilities'
-
 import { forgeAPI } from '@/utils/forgeAPI'
 
 import { SearchFilterModal } from './components/SearchFilterModal'

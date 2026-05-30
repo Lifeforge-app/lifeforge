@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Icon } from '@/components/primitives'
-import { Text } from '@/components/primitives'
+import { Icon, Text } from '@/components/primitives'
 
 export function EllipsisIcon() {
   return (

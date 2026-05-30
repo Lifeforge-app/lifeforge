@@ -1,10 +1,9 @@
 import { ROOT_DIR } from '@constants'
+import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
-
-import { createServiceLogger } from '@functions/logging'
 
 const localeLogger = createServiceLogger('Locale')
 

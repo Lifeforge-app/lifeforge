@@ -4,8 +4,7 @@ import { memo, useMemo } from 'react'
 
 import { usePersonalization } from '@lifeforge/shared'
 
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 import * as styles from './ColorItem.css'
 

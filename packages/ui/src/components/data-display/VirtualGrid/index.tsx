@@ -79,10 +79,10 @@ export function VirtualGrid<T>({
                 >
                   <Grid
                     as="div"
-                    templateCols={`repeat(${itemsPerRow}, 1fr)`}
                     gap="md"
                     pb="md"
                     style={style}
+                    templateCols={`repeat(${itemsPerRow}, 1fr)`}
                     width="100%"
                   >
                     {items.slice(fromIndex, toIndex).map(item => (

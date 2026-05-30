@@ -3,11 +3,9 @@ import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { Link, useLocation } from '@lifeforge/shared'
-import { useMainSidebarState } from '@lifeforge/shared'
+import { Link, useLocation, useMainSidebarState } from '@lifeforge/shared'
 
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 import * as styles from './SidebarSubsectionItemLink.css'
 

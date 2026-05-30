@@ -30,9 +30,9 @@ export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
             <div />
           </Bordered>
           <Text
+            truncate
             as="span"
             style={{ display: 'block', marginTop: '-1px' }}
-            truncate
           >
             {COLORS.find(l => l.id === colors)?.name ?? 'None'}
           </Text>

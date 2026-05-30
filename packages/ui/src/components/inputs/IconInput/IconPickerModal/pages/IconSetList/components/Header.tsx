@@ -3,7 +3,12 @@ import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { memo, useCallback, useMemo } from 'react'
 
-import { Button, Listbox, ListboxOption, SearchInput } from '@/components/inputs'
+import {
+  Button,
+  Listbox,
+  ListboxOption,
+  SearchInput
+} from '@/components/inputs'
 import { Box, Flex } from '@/components/primitives'
 
 const collections: Record<string, IconifyInfo> = importedCollections

@@ -4,9 +4,6 @@
  * This module provides the implementation of core utilities that modules
  * access via the `core` parameter in their callbacks.
  */
-import { type Logger, createLogger } from '@lifeforge/log'
-import { CoreContext, IPBService } from '@lifeforge/server-utils'
-
 import {
   decrypt,
   decrypt2,
@@ -27,6 +24,9 @@ import {
 } from '@functions/socketio/taskPool'
 import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
 import TempFileManager from '@functions/utils/tempFileManager'
+
+import { type Logger, createLogger } from '@lifeforge/log'
+import { CoreContext, IPBService } from '@lifeforge/server-utils'
 
 // Cache loggers per module to avoid creating new file stream listeners per request
 const loggerCache = new Map<string, Logger>()

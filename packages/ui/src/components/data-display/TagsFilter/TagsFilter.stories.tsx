@@ -3,7 +3,6 @@ import { useState } from 'react'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Text } from '@/components/primitives'
-
 import { TAILWIND_PALETTE } from '@/system'
 
 import { TagsFilter } from './index'

@@ -1,7 +1,6 @@
 import { ROOT_DIR } from '@constants'
-import path from 'path'
-
 import { createServiceLogger } from '@functions/logging'
+import path from 'path'
 
 // Key storage paths
 export const KEYS_DIR = path.join(ROOT_DIR, 'keys')

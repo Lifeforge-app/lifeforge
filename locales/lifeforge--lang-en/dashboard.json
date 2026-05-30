@@ -27,7 +27,7 @@
   "empty": {
     "welcome": {
       "title": "Welcome to LifeForge!",
-      "description": "Get started by installing some modules from the ForgeStore."
+      "description": "Get started by installing some modules from Forgistry."
     },
     "notFound": {
       "title": "Widget Not Found",

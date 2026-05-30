@@ -3,8 +3,7 @@ import { useCallback, useMemo, useState } from 'react'
 import { usePersonalization } from '@lifeforge/shared'
 
 import { TagChip } from '@/components/data-display'
-import { Icon } from '@/components/primitives'
-import { Flex, Text, Transition } from '@/components/primitives'
+import { Flex, Icon, Text, Transition } from '@/components/primitives'
 
 export function ChipSelector({
   options,

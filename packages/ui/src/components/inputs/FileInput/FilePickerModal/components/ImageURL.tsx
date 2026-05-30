@@ -1,6 +1,5 @@
 import { TextInput } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Box, Text } from '@/components/primitives'
+import { Box, Icon, Text } from '@/components/primitives'
 
 export function ImageURL({
   file,

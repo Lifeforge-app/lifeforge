@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { Text } from '@/components/primitives'
-
 import { ScrollableStory } from '@/storybook/ScrollableStory'
 
 import { RRuleInput } from './index'

@@ -291,8 +291,8 @@ export const Positioning: Story = {
           bottom="0"
           p="xs"
           position="absolute"
-          right="0"
           r="md"
+          right="0"
           style={{ margin: '0.5rem' }}
         >
           <PlaceholderContent

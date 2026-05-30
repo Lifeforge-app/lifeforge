@@ -54,11 +54,9 @@ function useQRLoginApproval(scannedData: string) {
     if (!sessionData) return
 
     try {
-      const response = await forgeAPI
-        .user.qrLogin.approveQRLogin
-        .mutate({
-          sessionId: sessionData.sessionId
-        } as never)
+      const response = await forgeAPI.user.qrLogin.approveQRLogin.mutate({
+        sessionId: sessionData.sessionId
+      } as never)
 
       setBrowserInfo(response.browserInfo)
       setStep('success')

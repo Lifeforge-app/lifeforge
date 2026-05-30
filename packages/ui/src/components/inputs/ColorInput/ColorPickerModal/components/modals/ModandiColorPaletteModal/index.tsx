@@ -4,8 +4,7 @@ import { sortFn } from 'color-sorter'
 import { usePersonalization } from '@lifeforge/shared'
 
 import { ModalHeader } from '@/components/overlays'
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Grid } from '@/components/primitives'
+import { Box, Flex, Grid, Icon } from '@/components/primitives'
 
 import * as styles from './MorandiColorPaletteModal.css'
 import { MORANDI_COLORS } from './constants/morandi_colors'
@@ -30,10 +29,10 @@ function MorandiColorPaletteModal({
         onClose={onClose}
       />
       <Grid
-        templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
         pb="md"
         px="md"
         style={{ gap: '0.75rem' }}
+        templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
       >
         {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
           <Flex key={index} asChild align="center" justify="center" r="md">
