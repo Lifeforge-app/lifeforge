@@ -4,8 +4,7 @@ import type { DropzoneInputProps, DropzoneRootProps } from 'react-dropzone'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 import * as styles from './DnDContainer.css'
 

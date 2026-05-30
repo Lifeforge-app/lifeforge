@@ -1,6 +1,5 @@
-import { Request, Response } from 'express'
-
 import { decryptAESKey } from '@functions/encryption'
+import { Request, Response } from 'express'
 
 import { clientError } from './response'
 

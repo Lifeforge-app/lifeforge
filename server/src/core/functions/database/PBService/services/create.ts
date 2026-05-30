@@ -1,3 +1,4 @@
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
@@ -10,8 +11,6 @@ import {
   ICreateData,
   ICreateFactory
 } from '@lifeforge/server-utils'
-
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'

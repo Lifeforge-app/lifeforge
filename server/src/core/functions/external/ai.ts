@@ -1,3 +1,7 @@
+import { getAPIKey } from '@functions/database'
+import { validateCallerAccess } from '@functions/database/getAPIKey'
+import { createServiceLogger } from '@functions/logging'
+import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 import chalk from 'chalk'
 import Groq from 'groq-sdk'
 import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
@@ -9,11 +13,6 @@ import {
   FetchAIFunc,
   getCallerModuleId
 } from '@lifeforge/server-utils'
-
-import { getAPIKey } from '@functions/database'
-import { validateCallerAccess } from '@functions/database/getAPIKey'
-import { createServiceLogger } from '@functions/logging'
-import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 
 const logger = createServiceLogger('AI')
 

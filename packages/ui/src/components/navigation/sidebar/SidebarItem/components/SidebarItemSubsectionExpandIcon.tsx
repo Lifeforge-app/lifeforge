@@ -1,5 +1,4 @@
-import { Icon } from '@/components/primitives'
-import { Box, Text, Transition } from '@/components/primitives'
+import { Box, Icon, Text, Transition } from '@/components/primitives'
 
 export function SidebarItemSubsectionExpandIcon({
   toggleSubsection,

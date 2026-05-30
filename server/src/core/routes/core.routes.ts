@@ -103,5 +103,4 @@ const coreRoutes = forgeRouter({
   encryptionPublicKey
 })
 
-
 export default coreRoutes

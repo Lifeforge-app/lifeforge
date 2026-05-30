@@ -1,8 +1,7 @@
+import { coreLogger } from '@functions/logging'
 import chalk from 'chalk'
 import { Request, Response } from 'express'
 import morgan from 'morgan'
-
-import { coreLogger } from '@functions/logging'
 
 const METHOD_COLOR = {
   GET: '#34ace0',

@@ -4,7 +4,6 @@ import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
 import { Flex, Icon, Text } from '@/components/primitives'
-
 import { vars } from '@/system'
 
 import * as styles from './ContextMenuItem.css'

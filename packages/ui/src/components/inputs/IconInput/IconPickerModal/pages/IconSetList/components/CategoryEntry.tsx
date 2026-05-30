@@ -40,11 +40,11 @@ function _CategoryEntry({
         </Text>
       </Box>
       <Grid
+        gap="sm"
         templateCols={{
           base: '1',
           sm: 'repeat(auto-fill, minmax(320px, 1fr))'
         }}
-        gap="sm"
       >
         {iconSets.map(iconSet => (
           <IconSetEntry

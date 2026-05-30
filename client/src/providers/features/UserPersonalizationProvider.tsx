@@ -24,11 +24,9 @@ async function syncUserData(
   setUserData: React.Dispatch<React.SetStateAction<any>>
 ) {
   try {
-    await forgeAPI
-      .user.personalization.updatePersonalization
-      .mutate({
-        data
-      })
+    await forgeAPI.user.personalization.updatePersonalization.mutate({
+      data
+    })
 
     if (setUserData) {
       setUserData((oldData: any) => {

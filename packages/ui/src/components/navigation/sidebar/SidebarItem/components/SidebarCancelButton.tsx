@@ -1,7 +1,6 @@
 import { useModuleSidebarState } from '@lifeforge/shared'
 
-import { Icon } from '@/components/primitives'
-import { Box, Text } from '@/components/primitives'
+import { Box, Icon, Text } from '@/components/primitives'
 
 export function SidebarCancelButton({ onClick }: { onClick: () => void }) {
   const { setIsSidebarOpen } = useModuleSidebarState()

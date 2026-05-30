@@ -57,13 +57,13 @@ export function SliderInput({
       >
         <Box className={styles.fill} style={{ width: `${progress}%` }} />
         <input
+          className={styles.input}
           disabled={disabled}
           max={max}
           min={min}
           step={step}
           type="range"
           value={value}
-          className={styles.input}
           onChange={e => {
             onChange(parseFloat(e.target.value))
           }}

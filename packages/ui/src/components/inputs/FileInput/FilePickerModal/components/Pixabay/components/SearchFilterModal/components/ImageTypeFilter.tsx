@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { ListboxInput, ListboxOption } from '@/components/inputs'
-import { Icon } from '@/components/primitives'
-import { Text } from '@/components/primitives'
+import { Icon, Text } from '@/components/primitives'
 
 import {
   type IPixabaySearchFilter,
@@ -30,9 +29,9 @@ export function ImageTypeFilter({
             style={{ height: '1.25rem', width: '1.25rem' }}
           />
           <Text
+            truncate
             as="span"
             style={{ display: 'block', marginTop: '-1px' }}
-            truncate
           >
             {t(
               `imagePicker.imageType.${IMAGE_TYPES.find(l => l.id === imageType)?.id}`

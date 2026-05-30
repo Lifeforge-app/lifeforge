@@ -36,9 +36,9 @@ export function InputFocusProvider({
   return (
     <span
       ref={containerRef as React.Ref<HTMLSpanElement>}
+      style={{ display: 'contents' }}
       onBlur={handleBlur}
       onFocus={handleFocus}
-      style={{ display: 'contents' }}
     >
       <InputFocusContext.Provider value={isFocused}>
         {children}

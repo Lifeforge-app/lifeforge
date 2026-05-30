@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-
 import { COLORS, TAILWIND_PALETTE } from '@/system'
 
 import { ListboxNullOption } from './components/ListboxNullOption'

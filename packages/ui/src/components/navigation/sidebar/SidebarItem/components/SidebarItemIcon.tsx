@@ -1,5 +1,4 @@
-import { Icon } from '@/components/primitives'
-import { Bordered, Text } from '@/components/primitives'
+import { Bordered, Icon, Text } from '@/components/primitives'
 
 export function SidebarItemIcon({
   icon,

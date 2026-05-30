@@ -1,10 +1,9 @@
 import { ROOT_DIR } from '@constants'
+import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
 import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
-
-import { createServiceLogger } from '@functions/logging'
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 

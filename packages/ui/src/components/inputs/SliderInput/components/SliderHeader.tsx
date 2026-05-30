@@ -1,6 +1,5 @@
 import { useInputLabel } from '@/components/inputs/shared/hooks/useInputLabel'
-import { Icon } from '@/components/primitives'
-import { Flex, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 export function SliderHeader({
   icon,

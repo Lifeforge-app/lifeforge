@@ -3,7 +3,16 @@ import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { type IDashboardLayout, usePersonalization } from '@lifeforge/shared'
-import { Icon, Switch } from '@lifeforge/ui'
+import {
+  COLORS,
+  Card,
+  Flex,
+  Icon,
+  Switch,
+  Text,
+  Transition,
+  withOpacity
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -106,21 +115,49 @@ function ComponentListItem({
   }
 
   return (
-    <li
-      className="flex-between bg-bg-50 shadow-custom dark:bg-bg-800/50 flex gap-8 rounded-lg p-4"
+    <Card
+      shadow
+      align="center"
+      as="li"
+      bg={{
+        base: 'bg-50',
+        dark: 'bg-800'
+      }}
+      direction="row"
+      gap="xl"
+      justify="between"
       onClick={toggleComponent}
     >
-      <div className="flex items-center gap-3">
-        <div
-          className={clsx(
-            'flex size-10 shrink-0 items-center justify-center rounded-lg transition-all',
-            Object.keys(enabledWidgets).includes(id)
-              ? 'bg-custom-500/20 text-custom-500'
-              : 'bg-bg-200 text-bg-400 dark:bg-bg-700/50 dark:text-bg-500'
-          )}
-        >
-          <Icon icon={icon} size="1.5em" />
-        </div>
+      <Flex align="center" gap="md">
+        <Transition>
+          <Flex
+            centered
+            className={clsx(
+              Object.keys(enabledWidgets).includes(id)
+                ? 'bg-custom-500/20'
+                : 'bg-bg-200 dark:bg-bg-700/50'
+            )}
+            flexShrink="0"
+            height="2.5em"
+            r="lg"
+            style={{
+              backgroundColor: Object.keys(enabledWidgets).includes(id)
+                ? withOpacity(COLORS['custom-500'], 0.2)
+                : ''
+            }}
+            width="2.5em"
+          >
+            <Icon
+              color={
+                Object.keys(enabledWidgets).includes(id)
+                  ? 'custom-500'
+                  : 'bg-500'
+              }
+              icon={icon}
+              size="1.5em"
+            />
+          </Flex>
+        </Transition>
         <div className="flex flex-col">
           <div className="font-semibold">
             {t([
@@ -131,21 +168,21 @@ function ComponentListItem({
               id
             ])}
           </div>
-          <div className="text-bg-500 text-sm">
+          <Text color="muted" size="sm">
             {t([
               `widgets.${namespace}.${id}.description`,
               `widgets.${id}.description`
             ])}
-          </div>
+          </Text>
         </div>
-      </div>
+      </Flex>
       <Switch
         value={isEnabled}
         onChange={() => {
           toggleComponent()
         }}
       />
-    </li>
+    </Card>
   )
 }
 

@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router'
 
 import { ContextMenuItem } from '@/components/overlays'
 import { Flex, Text } from '@/components/primitives'
-
 import { TAILWIND_PALETTE } from '@/system'
 
 import { SidebarWrapper } from '../SidebarWrapper'

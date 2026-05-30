@@ -4,8 +4,7 @@ import {
 } from '@headlessui/react'
 import { useCallback, useMemo } from 'react'
 
-import { Icon } from '@/components/primitives'
-import { Box, Flex, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'

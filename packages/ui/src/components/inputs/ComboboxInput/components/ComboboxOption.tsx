@@ -1,10 +1,10 @@
 import { ComboboxOption as HeadlessComboboxOption } from '@headlessui/react'
 
-import { Icon } from '@/components/primitives'
 import {
   Bordered,
   Box,
   Flex,
+  Icon,
   Text,
   Transition,
   WithDivide
