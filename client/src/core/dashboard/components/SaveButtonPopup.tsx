@@ -30,7 +30,7 @@ function SaveButtonPopup({
       }}
       zIndex="50"
     >
-      <Text as="p" className="font-medium" weight="medium">
+      <Text as="p" weight="medium">
         You are editing dashboard layout
       </Text>
       <Button icon="tabler:device-floppy" onClick={() => setCanChange(false)}>

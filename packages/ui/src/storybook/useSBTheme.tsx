@@ -90,7 +90,6 @@ function styleBody(context: any) {
   Object.assign(body.style, {
     display: 'flex',
     height: '100%',
-    transition: 'all 0.2s',
     flexDirection: 'column'
   })
   body.classList.add('theme-custom')

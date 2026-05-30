@@ -2,7 +2,7 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { Checkbox } from '@/components/inputs'
-import { Bordered, Box, Flex, Text } from '@/components/primitives'
+import { Bordered, Box, Flex, Text, Transition } from '@/components/primitives'
 
 export function SelectableFormWrapper({
   selected,
@@ -45,18 +45,19 @@ export function SelectableFormWrapper({
           {children}
         </Flex>
       </Bordered>
-      <Box
-        as="button"
-        inset="0"
-        position="absolute"
-        style={{
-          opacity: selected ? 0 : 1,
-          transition: 'opacity 200ms',
-          zIndex: selected ? -1 : 0
-        }}
-        width="100%"
-        onClick={onSelect}
-      />
+      <Transition property="opacity">
+        <Box
+          as="button"
+          inset="0"
+          position="absolute"
+          style={{
+            opacity: selected ? 0 : 1
+          }}
+          width="100%"
+          zIndex={selected ? '-1' : '0'}
+          onClick={onSelect}
+        />
+      </Transition>
     </Box>
   )
 }

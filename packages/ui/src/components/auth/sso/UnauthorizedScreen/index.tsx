@@ -1,4 +1,5 @@
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Button } from '@/components/inputs'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 export function UnauthorizedScreen({ frontendURL }: { frontendURL: string }) {
   return (
@@ -17,27 +18,9 @@ export function UnauthorizedScreen({ frontendURL }: { frontendURL: string }) {
         Please authenticate through single sign-on (SSO) in the system to access
         the locale editor.
       </Text>
-      <Box
-        as="a"
-        bg="custom-500"
-        href={frontendURL}
-        mt="3xl"
-        p="md"
-        px="lg"
-        r="md"
-        style={{
-          color: 'var(--color-bg-800)',
-          fontWeight: 600,
-          letterSpacing: '0.1em',
-          textTransform: 'uppercase',
-          transition: 'all 0.2s'
-        }}
-      >
-        <Flex align="center" gap="sm" justify="center">
-          <Icon icon="tabler:hammer" size="1.5rem" />
-          Go to System
-        </Flex>
-      </Box>
+      <Button as="a" href={frontendURL} icon="tabler:hammer">
+        Go to System
+      </Button>
     </Flex>
   )
 }

@@ -1,11 +1,8 @@
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
 import { Button } from '@/components/inputs'
-import { Flex, Text } from '@/components/primitives'
-
-import * as styles from './SidebarTitle.css'
+import { Flex, Text, Transition } from '@/components/primitives'
 
 type SidebarTitleProps = {
   /** Label string or React element to display for the sidebar title. */
@@ -33,53 +30,55 @@ export function SidebarTitle({
   const { t } = useTranslation([namespace, 'common.sidebar'])
 
   return (
-    <Flex
-      align="center"
-      as="li"
-      className={styles.listItem}
-      justify="between"
-      pb={actionButton !== undefined ? 'sm' : 'md'}
-      pl="xl"
-      pt="sm"
-      style={{ gap: '0.75rem', paddingRight: '1.25rem' }}
-    >
-      <Text
-        as="h3"
-        className={clsx(styles.title, className)}
-        color={{ base: 'bg-400', dark: 'bg-600' }}
-        size="sm"
-        transform="uppercase"
-        weight="semibold"
-        whiteSpace="nowrap"
+    <Transition>
+      <Flex
+        align="center"
+        as="li"
+        justify="between"
+        pb={actionButton !== undefined ? 'sm' : 'md'}
+        pl="xl"
+        pt="sm"
+        style={{ gap: '0.75rem', paddingRight: '1.25rem' }}
       >
-        {t([
-          `sidebar.${_.camelCase(label)}`,
-          `common.sidebar:categories.${_.camelCase(label)}`,
-          label
-        ])}
-      </Text>
-      {actionButton && 'icon' in actionButton ? (
         <Text
-          asChild
-          color={{
-            base: 'bg-400',
-            hover: 'bg-800',
-            dark: 'bg-500',
-            darkHover: 'bg-100'
-          }}
+          as="h3"
+          className={className}
+          color={{ base: 'bg-400', dark: 'bg-600' }}
+          size="sm"
+          tracking="widest"
+          transform="uppercase"
+          weight="semibold"
+          whiteSpace="nowrap"
         >
-          <Button
-            icon={actionButton.icon}
-            style={{
-              padding: '0.5em'
-            }}
-            variant="plain"
-            onClick={actionButton.onClick}
-          />
+          {t([
+            `sidebar.${_.camelCase(label)}`,
+            `common.sidebar:categories.${_.camelCase(label)}`,
+            label
+          ])}
         </Text>
-      ) : (
-        actionButton
-      )}
-    </Flex>
+        {actionButton && 'icon' in actionButton ? (
+          <Text
+            asChild
+            color={{
+              base: 'bg-400',
+              hover: 'bg-800',
+              dark: 'bg-500',
+              darkHover: 'bg-100'
+            }}
+          >
+            <Button
+              icon={actionButton.icon}
+              style={{
+                padding: '0.5em'
+              }}
+              variant="plain"
+              onClick={actionButton.onClick}
+            />
+          </Text>
+        ) : (
+          actionButton
+        )}
+      </Flex>
+    </Transition>
   )
 }
