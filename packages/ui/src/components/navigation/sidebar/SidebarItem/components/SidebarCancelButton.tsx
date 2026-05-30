@@ -1,34 +1,33 @@
 import { useModuleSidebarState } from '@lifeforge/shared'
 
-import { Box, Icon, Text } from '@/components/primitives'
+import { Box, Icon, Text, Transition } from '@/components/primitives'
 
 export function SidebarCancelButton({ onClick }: { onClick: () => void }) {
   const { setIsSidebarOpen } = useModuleSidebarState()
 
   return (
-    <Box
-      asChild
-      bg={{
-        hover: 'bg-200',
-        darkHover: 'bg-700'
-      }}
-      p="sm"
-      r="md"
-      style={{
-        transition: 'all 0.2s'
-      }}
-    >
-      <Text
-        as="button"
-        color={{ base: 'bg-500', hover: 'bg-800', darkHover: 'bg-50' }}
-        onClick={e => {
-          e.stopPropagation()
-          onClick()
-          setIsSidebarOpen(false)
+    <Transition>
+      <Box
+        asChild
+        bg={{
+          hover: 'bg-200',
+          darkHover: 'bg-700'
         }}
+        p="sm"
+        r="md"
       >
-        <Icon icon="tabler:x" size="1.25rem" />
-      </Text>
-    </Box>
+        <Text
+          as="button"
+          color={{ base: 'bg-500', hover: 'bg-800', darkHover: 'bg-50' }}
+          onClick={e => {
+            e.stopPropagation()
+            onClick()
+            setIsSidebarOpen(false)
+          }}
+        >
+          <Icon icon="tabler:x" size="1.25rem" />
+        </Text>
+      </Box>
+    </Transition>
   )
 }

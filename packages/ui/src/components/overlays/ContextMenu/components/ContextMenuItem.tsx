@@ -69,12 +69,12 @@ export function ContextMenuItem({
     <DropdownMenuPrimitive.Item
       asChild
       disabled={disabled || loading}
-      onClick={e => {
+      onSelect={e => {
         if (disabled || loading) {
+          e.preventDefault()
+
           return
         }
-
-        e.stopPropagation()
 
         if (!shouldCloseMenuOnClick) {
           e.preventDefault()
