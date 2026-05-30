@@ -4,14 +4,13 @@ import { useTranslation } from 'react-i18next'
 
 import { type IDashboardLayout, usePersonalization } from '@lifeforge/shared'
 import {
-  COLORS,
   Card,
   Flex,
   Icon,
   Switch,
   Text,
   Transition,
-  withOpacity
+  colorWithOpacity
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
@@ -132,6 +131,11 @@ function ComponentListItem({
         <Transition>
           <Flex
             centered
+            bg={
+              Object.keys(enabledWidgets).includes(id)
+                ? colorWithOpacity('custom-500', '20%')
+                : undefined
+            }
             className={clsx(
               Object.keys(enabledWidgets).includes(id)
                 ? 'bg-custom-500/20'
@@ -140,11 +144,6 @@ function ComponentListItem({
             flexShrink="0"
             height="2.5em"
             r="lg"
-            style={{
-              backgroundColor: Object.keys(enabledWidgets).includes(id)
-                ? withOpacity(COLORS['custom-500'], 0.2)
-                : ''
-            }}
             width="2.5em"
           >
             <Icon

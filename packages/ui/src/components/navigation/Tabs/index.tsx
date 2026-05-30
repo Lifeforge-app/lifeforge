@@ -88,11 +88,7 @@ export function Tabs<
                   {icon && (
                     <Icon
                       icon={icon}
-                      style={{
-                        width: '1.25rem',
-                        height: '1.25rem',
-                        flexShrink: 0
-                      }}
+                      size="1.25rem"
                     />
                   )}
                   <Text

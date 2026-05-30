@@ -1,7 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import _ from 'lodash'
 
 import { Alert } from '@/components/feedback'
-import { Flex } from '@/components/primitives'
+import { Card } from '@/components/layout'
+import { Box, Flex, Grid } from '@/components/primitives'
+import { ScrollableStory } from '@/storybook/ScrollableStory'
+import { VariantContainer } from '@/storybook/VariantContainer'
 
 import { Button } from './index'
 
@@ -13,62 +17,45 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-/**
- * A primary button variant. Suitable for main actions.
- */
-export const PrimaryVariant: Story = {
-  args: {
-    children: 'Button',
-    disabled: false,
-    icon: 'tabler:cube',
-    iconPosition: 'start',
-    onClick: () => {
-      alert('Button clicked!')
-    },
-    tProps: {},
-    variant: 'primary'
-  },
-  render: props => <Button {...props} />
-}
+const variants = ['primary', 'secondary', 'tertiary', 'plain'] as const
 
-/**
- * A secondary button variant. Suitable for less prominent actions.
- */
-export const SecondaryVariant: Story = {
-  args: {
-    children: 'Secondary',
-    icon: 'tabler:cube',
-    tProps: {},
-    variant: 'secondary'
-  },
-  render: props => <Button {...props} />
-}
-
-/**
- * A tertiary button variant. Suitable for less prominent actions.
- */
-export const TertiaryVariant: Story = {
-  args: {
-    children: 'Tertiary',
-    icon: 'tabler:cube',
-    tProps: {},
-    variant: 'tertiary'
-  },
-
-  render: props => <Button {...props} />
-}
-
-/**
- * A plain button variant. Suitable for actions without emphasis, or button with icon only.
- */
-export const PlaintVariant: Story = {
-  args: {
-    children: 'Plain Button',
-    icon: 'tabler:cube',
-    tProps: {},
-    variant: 'plain'
-  },
-  render: props => <Button {...props} />
+export const AllVariants: Story = {
+  parameters: { layout: 'centered' },
+  render: () => (
+    <ScrollableStory>
+      {variants.map(variant => (
+        <Box key={variant} width="100%">
+          <VariantContainer title={variant}>
+            <Card width="100%">
+              <Grid gap="md" templateCols={2}>
+                {[false, true].map(dangerous => (
+                  <>
+                    <Button
+                      dangerous={dangerous}
+                      icon="tabler:cube"
+                      variant={variant}
+                    >
+                      {_.startCase(variant)}
+                      {dangerous ? ' (Dangerous)' : ''}
+                    </Button>
+                    <Button
+                      disabled
+                      dangerous={dangerous}
+                      icon="tabler:cube"
+                      variant={variant}
+                    >
+                      {_.startCase(variant)}
+                      {dangerous ? ' (Dangerous)' : ''}
+                    </Button>
+                  </>
+                ))}
+              </Grid>
+            </Card>
+          </VariantContainer>
+        </Box>
+      ))}
+    </ScrollableStory>
+  )
 }
 
 /**
@@ -79,20 +66,6 @@ export const IconAtEnd: Story = {
     children: 'Proceed',
     icon: 'tabler:arrow-right',
     iconPosition: 'end',
-    loading: false,
-    tProps: {}
-  },
-  render: props => <Button {...props} />
-}
-
-/**
- * A button that is not interactive, indicating an action that is not available.
- */
-export const Disabled: Story = {
-  args: {
-    children: 'Submit',
-    disabled: true,
-    icon: 'tabler:arrow-right',
     loading: false,
     tProps: {}
   },
@@ -135,20 +108,6 @@ export const IconsOnlyWithNoBg: Story = {
     icon: 'tabler:arrows-exchange',
     tProps: {},
     variant: 'plain'
-  },
-  render: props => <Button {...props} />
-}
-
-/**
- * A red button variant. Suitable for destructive actions like deleting an item.
- */
-export const RedButton: Story = {
-  args: {
-    children: 'Delete',
-    dangerous: true,
-    icon: 'tabler:trash',
-    tProps: {},
-    variant: 'primary'
   },
   render: props => <Button {...props} />
 }

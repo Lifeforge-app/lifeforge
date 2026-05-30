@@ -1,12 +1,12 @@
-import { COLORS, withOpacity } from '@/system'
+import { COLORS, colorWithOpacity, shadowClass } from '@/system'
 
 export const tertiary = {
   backgroundColor: 'transparent',
   color: COLORS['custom-500'],
   selectors: {
     '&:hover:not(:disabled)': {
-      backgroundColor: withOpacity(COLORS['custom-500'], 0.15),
-      boxShadow: 'var(--custom-shadow)'
+      backgroundColor: colorWithOpacity('custom-500', '10%').toString(),
+      boxShadow: shadowClass
     },
     '&:disabled': {
       color: COLORS['bg-300']
@@ -18,17 +18,16 @@ export const tertiary = {
 } as const
 
 export const tertiaryDangerous = {
-  color: 'var(--color-dangerous)',
+  color: COLORS['dangerous'],
   selectors: {
     '&:hover:not(:disabled)': {
-      backgroundColor:
-        'color-mix(in srgb, var(--color-dangerous) 10%, transparent)'
+      backgroundColor: colorWithOpacity('dangerous', '10%').toString()
     },
     '&:disabled': {
-      color: 'var(--color-dangerous)'
+      color: colorWithOpacity('dangerous', '70%').toString()
     },
     '.dark &:disabled': {
-      color: 'color-mix(in srgb, var(--color-dangerous) 50%, transparent)'
+      color: colorWithOpacity('dangerous', '70%').toString()
     }
   }
 } as const

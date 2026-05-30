@@ -1,8 +1,4 @@
-import clsx from 'clsx'
-
 import { Flex, Icon, Text } from '@/components/primitives'
-
-import * as styles from './ViewModeSelector.css'
 
 interface ViewModeSelectorProps<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
@@ -34,7 +30,6 @@ export function ViewModeSelector<
       shadow
       align="center"
       bg={{ base: 'bg-50', dark: 'bg-900' }}
-      className={styles.container}
       gap="xs"
       p={size === 'small' ? 'xs' : 'sm'}
       r="lg"
@@ -68,7 +63,6 @@ export function ViewModeSelector<
                     darkHover: 'bg-900'
                   }
             }
-            className={clsx(value === currentMode && styles.optionActive)}
             flex="1"
             gap="sm"
             px={size === 'small' ? 'sm' : 'md'}

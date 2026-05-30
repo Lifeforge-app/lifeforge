@@ -1,12 +1,7 @@
-import type { ResponsiveProp } from '@/system'
+import type { ResolvedStyle, ResponsiveProp } from '@/system'
 
 import { LAYOUT_PROP_DEFS, type LayoutPropDefsKey } from '../constant'
 import type { Breakpoint, PropDef } from '../types'
-
-interface ResponsiveStyleResult {
-  className: string
-  style: Record<string, string>
-}
 
 function isResponsiveObject<T>(
   value: ResponsiveProp<T>
@@ -14,10 +9,10 @@ function isResponsiveObject<T>(
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-function getResponsiveStyles(
+export function getResponsiveStyles(
   propDef: PropDef,
   value: ResponsiveProp<string | number> | undefined
-): ResponsiveStyleResult | undefined {
+): ResolvedStyle | undefined {
   if (value === undefined) return undefined
 
   const classNames: string[] = []
@@ -56,7 +51,7 @@ function getResponsiveStyles(
 
 export function getResponsiveLayoutStyles(
   props: Partial<Record<LayoutPropDefsKey, ResponsiveProp<string | number>>>
-): ResponsiveStyleResult {
+): ResolvedStyle {
   const classNames: string[] = []
 
   const style: Record<string, string> = {}

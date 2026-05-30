@@ -1,12 +1,29 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-import { Flex, Icon, Text } from '@/components/primitives'
-import { vars } from '@/system'
+import {
+  Flex,
+  Icon,
+  Text,
+  Transition,
+  WithDivide
+} from '@/components/primitives'
+import type { ColorValue, ThemeConditionProp } from '@/system'
+import { colorWithOpacity } from '@/system/colors/color-with-opacity'
 
-import * as styles from './ContextMenuItem.css'
+function getItemColor(
+  disabled: boolean,
+  active: boolean,
+  dangerous: boolean
+): ThemeConditionProp<ColorValue> {
+  if (disabled) return { base: 'bg-400', dark: 'bg-600' }
+  if (active && dangerous) return 'dangerous'
+  if (active) return { base: 'bg-800', dark: 'bg-50' }
+  if (dangerous) return 'dangerous'
+
+  return 'bg-500'
+}
 
 interface ContextMenuItemProps {
   /** The text label for the menu item. */
@@ -31,18 +48,6 @@ interface ContextMenuItemProps {
   tProps?: Record<string, unknown>
   /** Callback function called when the menu item is clicked. */
   onClick: () => void
-}
-
-export function getStateClassName(
-  disabled: boolean,
-  active: boolean,
-  dangerous: boolean
-): string {
-  if (disabled) return styles.itemDisabled
-  if (active)
-    return dangerous ? styles.itemActiveDangerous : styles.itemActiveSafe
-
-  return dangerous ? styles.itemInactiveDangerous : styles.itemInactiveSafe
 }
 
 export function ContextMenuItem({
@@ -78,62 +83,69 @@ export function ContextMenuItem({
         onClick()
       }}
     >
-      <Flex
-        align="center"
-        className={clsx(
-          styles.item,
-          getStateClassName(disabled || loading, checked, dangerous),
-          !disabled && !loading && styles.itemHoverable,
-          className
-        )}
-        p="md"
-        style={{ gap: '0.75rem' }}
-        width="100%"
-      >
-        {(() => {
-          if (loading) {
-            return (
-              <Icon
-                icon="svg-spinners:ring-resize"
-                style={{ width: '1.25rem', height: '1.25rem', flexShrink: 0 }}
-              />
-            )
-          }
+      <Transition duration={100}>
+        <WithDivide
+          color={{ base: colorWithOpacity('bg-200', '80%'), dark: 'bg-700' }}
+        >
+          <Text
+            asChild
+            color={getItemColor(disabled || loading, checked, dangerous)}
+            weight={checked ? 'medium' : undefined}
+          >
+            <Flex
+              align="center"
+              bg={
+                disabled || loading || checked
+                  ? undefined
+                  : {
+                      hover: 'bg-200',
+                      darkHover: colorWithOpacity('bg-700', '50%')
+                    }
+              }
+              className={className}
+              gap="md"
+              p="md"
+              style={{
+                cursor: disabled || loading ? 'not-allowed' : 'pointer'
+              }}
+              width="100%"
+            >
+              {(() => {
+                if (loading) {
+                  return <Icon icon="svg-spinners:ring-resize" />
+                }
 
-          if (typeof icon === 'string') {
-            return (
-              <Icon
-                icon={icon}
-                style={{ width: '1.25rem', height: '1.25rem', flexShrink: 0 }}
-              />
-            )
-          }
+                if (typeof icon === 'string') {
+                  return <Icon icon={icon} />
+                }
 
-          return icon
-        })()}
-        <Text truncate style={{ width: '100%' }}>
-          {namespace
-            ? t(
-                [_.camelCase(label), `buttons.${_.camelCase(label)}`, label],
-                tProps
-              )
-            : label}
-        </Text>
-        {checked && (
-          <Icon
-            className={
-              dangerous ? styles.checkIconDangerous : styles.checkIconSafe
-            }
-            icon="tabler:check"
-            style={{
-              marginLeft: vars.space.md,
-              width: '1.25rem',
-              height: '1.25rem',
-              flexShrink: 0
-            }}
-          />
-        )}
-      </Flex>
+                return icon
+              })()}
+              <Text truncate style={{ width: '100%' }}>
+                {namespace
+                  ? t(
+                      [
+                        _.camelCase(label),
+                        `buttons.${_.camelCase(label)}`,
+                        label
+                      ],
+                      tProps
+                    )
+                  : label}
+              </Text>
+              {checked && (
+                <Icon
+                  color={
+                    dangerous ? 'dangerous' : { base: 'bg-800', dark: 'bg-50' }
+                  }
+                  icon="tabler:check"
+                  ml="md"
+                />
+              )}
+            </Flex>
+          </Text>
+        </WithDivide>
+      </Transition>
     </DropdownMenuPrimitive.Item>
   )
 }

@@ -1,3 +1,5 @@
 export * from './constants'
 
-export * from './utils'
+export * from './color-with-opacity'
+
+export * from './color-resolver'

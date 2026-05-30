@@ -5,7 +5,7 @@ import { useMainSidebarState, useModuleHeaderState } from '@lifeforge/shared'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
-import { COLORS, withOpacity } from '@/system'
+import { colorWithOpacity } from '@/system'
 
 import { ContextMenu } from '../../overlays/ContextMenu'
 
@@ -74,6 +74,7 @@ export function ModuleHeader({
         {icon !== undefined && (
           <Flex
             align="center"
+            bg={colorWithOpacity('custom-500', '20%')}
             flexShrink="0"
             height={{
               base: '3.5em',
@@ -81,9 +82,6 @@ export function ModuleHeader({
             }}
             justify="center"
             r="lg"
-            style={{
-              backgroundColor: withOpacity(COLORS['custom-500'], 0.2)
-            }}
             width={{
               base: '3.5em',
               sm: '4em'

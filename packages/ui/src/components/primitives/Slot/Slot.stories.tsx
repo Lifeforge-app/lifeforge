@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Alert } from '@/components/feedback'
 import { Box, Flex, Text } from '@/components/primitives'
 import { VariantContainer } from '@/storybook/VariantContainer'
-import { COLORS, withOpacity } from '@/system'
+import { COLORS, colorWithOpacity } from '@/system'
 
 import { Slot } from './index'
 
@@ -179,14 +179,9 @@ export const StyleMerging: Story = {
             padding: '1.5rem'
           }}
         >
-          <div
-            style={{
-              background: withOpacity(COLORS['custom-500'], 0.2),
-              borderRadius: '0.5rem'
-            }}
-          >
+          <Box bg={colorWithOpacity('custom-500', '20%')} r="md">
             <Text>Slot style + child style merged</Text>
-          </div>
+          </Box>
         </Slot>
       </VariantContainer>
     </Flex>

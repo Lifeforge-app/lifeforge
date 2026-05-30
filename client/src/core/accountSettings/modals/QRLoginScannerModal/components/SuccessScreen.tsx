@@ -5,9 +5,8 @@ import {
   Flex,
   Icon,
   Stack,
-  TAILWIND_PALETTE,
   Text,
-  withOpacity
+  colorWithOpacity
 } from '@lifeforge/ui'
 
 function SuccessScreen({
@@ -23,20 +22,12 @@ function SuccessScreen({
     <Stack align="center">
       <Flex
         centered
+        bg={colorWithOpacity('green-500', '20%')}
         height="5em"
         r="lg"
-        style={{
-          backgroundColor: withOpacity(TAILWIND_PALETTE.green[500], 0.2)
-        }}
         width="5em"
       >
-        <Icon
-          icon="tabler:check"
-          size="2.25em"
-          style={{
-            color: TAILWIND_PALETTE.green[500]
-          }}
-        />
+        <Icon color="green-500" icon="tabler:check" size="2.25em" />
       </Flex>
 
       <Text size="xl" weight="medium">

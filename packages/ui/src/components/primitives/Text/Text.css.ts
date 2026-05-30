@@ -1,41 +1,10 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import {
-  COLORS,
-  RESPONSIVE_CONDITIONS,
-  tokenizedSpacingProperties,
-  vars
-} from '@/system'
+import { RESPONSIVE_CONDITIONS, tokenizedSpacingProperties, vars } from '@/system'
 
 export const textBase = recipe({
   base: {}
-})
-
-const textColorValues = {
-  ...COLORS,
-  inherit: 'inherit',
-  default: 'var(--color-bg-900)',
-  muted: 'var(--color-bg-500)',
-  primary: 'var(--color-custom-500)',
-  dangerous: COLORS.dangerous
-} as const
-
-/** Theme-aware color/backgroundColor for Text - supports dark/hover/hasBgImage conditions. */
-const textColorProperties = defineProperties({
-  conditions: {
-    base: {},
-    dark: { selector: '.dark &' },
-    hover: { selector: '&:hover' },
-    darkHover: { selector: '.dark &:hover' },
-    hasBgImage: { selector: '.has-bg-image &' },
-    darkHasBgImage: { selector: '.dark .has-bg-image &' }
-  },
-  defaultCondition: 'base',
-  properties: {
-    color: textColorValues,
-    backgroundColor: COLORS
-  }
 })
 
 const textProperties = defineProperties({
@@ -45,7 +14,6 @@ const textProperties = defineProperties({
     fontSize: vars.fontSize,
     lineHeight: {
       ...vars.lineHeight,
-      // Named leading scale (overrides size-based lineHeight when 'leading' prop is used)
       none: '1',
       tight: '1.25',
       snug: '1.375',
@@ -90,11 +58,8 @@ const textProperties = defineProperties({
 })
 
 export const textSprinkles = createSprinkles(
-  textColorProperties,
   textProperties,
   tokenizedSpacingProperties
 )
 
 export type TextSprinkles = Parameters<typeof textSprinkles>[0]
-
-export type TextColorValues = keyof typeof textColorValues

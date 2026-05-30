@@ -116,14 +116,7 @@ export function ListboxOption({
                                   }}
                                 />
                               ) : (
-                                <Icon
-                                  icon={icon}
-                                  style={{
-                                    width: '1.25rem',
-                                    height: '1.25rem',
-                                    flexShrink: 0
-                                  }}
-                                />
+                                <Icon icon={icon} />
                               )
                             ) : (
                               icon
@@ -148,14 +141,7 @@ export function ListboxOption({
                       </Flex>
                     </Text>
                     {finalSelected && (
-                      <Text
-                        asChild
-                        color="custom-500"
-                        size="lg"
-                        style={{ display: 'block', flexShrink: 0 }}
-                      >
-                        <Icon icon="tabler:check" />
-                      </Text>
+                      <Icon color="custom-500" icon="tabler:check" size="lg" />
                     )}
                   </>
                 )

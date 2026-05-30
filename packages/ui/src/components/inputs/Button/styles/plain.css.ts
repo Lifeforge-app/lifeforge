@@ -1,15 +1,15 @@
-import { COLORS, withOpacity } from '@/system'
+import { COLORS, colorWithOpacity } from '@/system'
 
 export const plain = {
   backgroundColor: 'transparent',
   color: COLORS['bg-500'],
   selectors: {
     '&:hover:not(:disabled)': {
-      backgroundColor: withOpacity(COLORS['bg-200'], 0.5),
+      backgroundColor: colorWithOpacity('bg-200', '50%').toString(),
       color: COLORS['bg-800']
     },
     '.dark &:hover:not(:disabled)': {
-      backgroundColor: withOpacity(COLORS['bg-800'], 0.5),
+      backgroundColor: colorWithOpacity('bg-800', '50%').toString(),
       color: COLORS['bg-50']
     },
     '&:disabled': {
@@ -22,23 +22,17 @@ export const plain = {
 } as const
 
 export const plainDangerous = {
-  color: 'var(--color-dangerous)',
+  color: COLORS['dangerous'],
   selectors: {
     '&:hover:not(:disabled)': {
-      backgroundColor:
-        'color-mix(in srgb, var(--color-dangerous) 10%, transparent)',
-      color: 'var(--color-dangerous)'
-    },
-    '.dark &:hover:not(:disabled)': {
-      backgroundColor:
-        'color-mix(in srgb, var(--color-dangerous) 10%, transparent)',
-      color: 'var(--color-dangerous)'
+      color: COLORS['dangerous'],
+      backgroundColor: colorWithOpacity('dangerous', '10%').toString()
     },
     '&:disabled': {
-      color: 'var(--color-dangerous)'
+      color: colorWithOpacity('dangerous', '70%').toString()
     },
     '.dark &:disabled': {
-      color: 'color-mix(in srgb, var(--color-dangerous) 50%, transparent)'
+      color: colorWithOpacity('dangerous', '70%').toString()
     }
   }
 } as const

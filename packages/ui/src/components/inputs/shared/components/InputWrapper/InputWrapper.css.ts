@@ -1,32 +1,14 @@
 import { style } from '@vanilla-extract/css'
 import { recipe } from '@vanilla-extract/recipes'
 
-import { COLORS, vars, withOpacity } from '@/system'
+import { COLORS, vars } from '@/system'
 
 export const inputWrapperRecipe = recipe({
-  base: {
-    transition: 'all 0.2s',
-    backgroundColor: withOpacity(COLORS['bg-200'], 0.5),
-    selectors: {
-      '.dark &': { backgroundColor: withOpacity(COLORS['bg-800'], 0.7) },
-      '&:hover': { backgroundColor: COLORS['bg-200'] },
-      '.dark &:hover': { backgroundColor: COLORS['bg-800'] }
-    }
-  },
   variants: {
     variant: {
       classic: {
         borderTopLeftRadius: vars.radii.lg,
-        borderTopRightRadius: vars.radii.lg,
-        borderBottomWidth: '2px',
-        borderBottomStyle: 'solid',
-        selectors: {
-          '.bordered &': {
-            borderRadius: vars.radii.lg,
-            borderWidth: '2px',
-            borderStyle: 'solid'
-          }
-        }
+        borderTopRightRadius: vars.radii.lg
       },
       plain: {
         borderRadius: vars.radii.lg
@@ -38,11 +20,11 @@ export const inputWrapperRecipe = recipe({
     },
     hasError: {
       true: {
-        borderColor: 'var(--color-dangerous)',
-        outlineColor: 'var(--color-dangerous)',
+        borderColor: COLORS['dangerous'],
+        outlineColor: COLORS['dangerous'],
         selectors: {
           '&:focus-within': {
-            borderColor: 'var(--color-dangerous)'
+            borderColor: COLORS['dangerous']
           }
         }
       },
@@ -51,9 +33,6 @@ export const inputWrapperRecipe = recipe({
         selectors: {
           '&:focus-within': {
             borderColor: COLORS['custom-500']
-          },
-          '.bordered &': {
-            borderColor: withOpacity(COLORS['bg-500'], 0.2)
           }
         }
       }
@@ -91,5 +70,5 @@ export const inputWrapperRecipe = recipe({
 })
 
 export const inputWrapperErrorTextStyle = style({
-  color: 'var(--color-dangerous)'
+  color: COLORS['dangerous']
 })

@@ -6,7 +6,6 @@ import {
   tokenizedLayoutProperties,
   tokenizedRoundedProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties,
   vars
 } from '@/system'
 
@@ -44,7 +43,6 @@ export const flexSprinkles = createSprinkles(
   flexProperties,
   tokenizedLayoutProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties,
   tokenizedRoundedProperties
 )
 

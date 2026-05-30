@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import clsx from 'clsx'
 import { useCallback } from 'react'
 
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
+import { colorWithOpacity } from '@/system'
 
 import { InputFocusProvider } from '../../contexts/InputFocusContext'
 import type { InputSize, InputVariant } from '../../types'
@@ -84,36 +84,48 @@ export function InputWrapper({
         style={disabled ? { opacity: 0.5 } : undefined}
         width="100%"
       >
-        <Flex
-          shadow
-          align="center"
-          className={clsx('group', wrapperClassName)}
-          flexShrink="0"
-          minWidth="0"
-          position="relative"
-          role="button"
-          style={
-            variant === 'plain' && errorMsg
-              ? { outline: '2px solid var(--color-dangerous)' }
-              : {}
-          }
-          tabIndex={0}
-          width="100%"
-          onClick={focusInput}
-          onFocus={focusInput}
-          onKeyDown={handleKeyDown}
-        >
-          {children}
-          {errorMsg && (
-            <Box
-              asChild
-              flexShrink="0"
-              mr={variant === 'classic' ? 'lg' : undefined}
-            >
-              <Icon color="dangerous" icon="tabler:alert-circle" size="1.5em" />
-            </Box>
-          )}
-        </Flex>
+        <Transition>
+          <Flex
+            shadow
+            align="center"
+            bg={{
+              base: colorWithOpacity('bg-200', '50%'),
+              dark: colorWithOpacity('bg-800', '70%'),
+              hover: 'bg-200',
+              darkHover: 'bg-800'
+            }}
+            className={wrapperClassName}
+            flexShrink="0"
+            minWidth="0"
+            position="relative"
+            role="button"
+            style={
+              variant === 'plain' && errorMsg
+                ? { outline: '2px solid var(--color-dangerous)' }
+                : {}
+            }
+            tabIndex={0}
+            width="100%"
+            onClick={focusInput}
+            onFocus={focusInput}
+            onKeyDown={handleKeyDown}
+          >
+            {children}
+            {errorMsg && (
+              <Box
+                asChild
+                flexShrink="0"
+                mr={variant === 'classic' ? 'lg' : undefined}
+              >
+                <Icon
+                  color="dangerous"
+                  icon="tabler:alert-circle"
+                  size="1.5em"
+                />
+              </Box>
+            )}
+          </Flex>
+        </Transition>
         {errorMsg && (
           <Text
             className={inputWrapperErrorTextStyle}

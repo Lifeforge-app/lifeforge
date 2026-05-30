@@ -4,19 +4,40 @@ import { useTranslation } from 'react-i18next'
 
 import {
   Bordered,
-  COLORS,
   Flex,
   Icon,
-  TAILWIND_PALETTE,
   Text,
   Transition,
-  withOpacity
+  colorWithOpacity
 } from '@lifeforge/ui'
 
-import useQRLoginSession from '../hooks/useQRLoginSession'
+import useQRLoginSession, { type QRStatus } from '../hooks/useQRLoginSession'
 import QRByStatus from './QRByStatus'
 
 dayjs.extend(duration)
+
+const STYLES = {
+  expired: {
+    border: colorWithOpacity('red-500', '70%'),
+    bg: colorWithOpacity('red-500', '20%')
+  },
+  approved: {
+    border: colorWithOpacity('green-500', '70%'),
+    bg: colorWithOpacity('green-500', '20%')
+  },
+  default: {
+    bg: colorWithOpacity('bg-500', '20%'),
+    border: colorWithOpacity('bg-500', '70%')
+  }
+} as const
+
+const getStyle = (status: QRStatus) => {
+  if (status in STYLES) {
+    return STYLES[status as keyof typeof STYLES]
+  }
+
+  return STYLES.default
+}
 
 function QRContent({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.auth')
@@ -28,31 +49,12 @@ function QRContent({ onClose }: { onClose: () => void }) {
   return (
     <>
       <Transition>
-        <Bordered
-          asChild
-          borderWidth="2px"
-          style={{
-            borderColor:
-              status === 'expired'
-                ? withOpacity(TAILWIND_PALETTE.red['500'], 0.7)
-                : status === 'approved'
-                  ? withOpacity(TAILWIND_PALETTE.green['500'], 0.7)
-                  : withOpacity(COLORS['bg-500'], 0.7)
-          }}
-        >
+        <Bordered asChild borderWidth="2px" {...getStyle(status)}>
           <Flex
             centered
             p="lg"
             r="lg"
-            style={{
-              backgroundColor:
-                status === 'expired'
-                  ? withOpacity(TAILWIND_PALETTE.red['500'], 0.2)
-                  : status === 'approved'
-                    ? withOpacity(TAILWIND_PALETTE.green['500'], 0.2)
-                    : withOpacity(COLORS['bg-500'], 0.2),
-              aspectRatio: '1/1'
-            }}
+            style={{ aspectRatio: '1/1' }}
             width="100%"
           >
             <QRByStatus

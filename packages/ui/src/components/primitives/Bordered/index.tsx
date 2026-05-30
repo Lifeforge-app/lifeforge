@@ -9,15 +9,15 @@ import {
 
 import {
   type ArbitraryProps,
-  type ColorToken,
+  type ColorValue,
   type ResponsiveProp,
+  type ThemeConditionProp,
   type TokenizedCommonProps,
   normalizeResponsiveProp,
   resolveCommonSprinkleProps,
   resolveStyles
 } from '@/system'
 import { normalizeGridSpan } from '@/system/grid-utils'
-import type { ThemeConditionProp } from '@/system/themes'
 import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
@@ -39,8 +39,9 @@ interface BorderedOwnProps<T extends ElementType = 'div'>
   asChild?: boolean
   ref?: Ref<HTMLElement>
   display?: ResponsiveProp<DisplayValue>
-  bg?: ThemeConditionProp<ColorToken>
-  borderColor?: ThemeConditionProp<ColorToken>
+  bg?: ThemeConditionProp<ColorValue>
+  borderColor?: ThemeConditionProp<ColorValue>
+  color?: ThemeConditionProp<ColorValue>
   borderStyle?: BorderStyleValue
   borderSide?: BorderSide
   borderWidth?: string
@@ -156,9 +157,6 @@ export function Bordered<T extends ElementType = 'div'>({
   const styles = resolveStyles({
     sprinkles: borderedSprinkles,
     sprinkleProps: {
-      backgroundColor: bg,
-      borderColor: borderColor,
-      color: color as BorderedSprinkles['color'],
       display: normalizeResponsiveProp(display) as BorderedSprinkles['display'],
       ...resolveCommonSprinkleProps(
         { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
@@ -196,6 +194,7 @@ export function Bordered<T extends ElementType = 'div'>({
       ),
       gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
     },
+    colorProps: { bg, borderColor, color },
     className: clsx(borderedBase(), className, shadow && shadowClass),
     style: {
       ...computeBorderStyles(borderSide, borderWidth, borderStyle),

@@ -37,7 +37,7 @@ function FlatUIColorsModal({
             <Flex align="center" mb="md" style={{ gap: '0.75rem' }}>
               <Icon
                 icon={icon || 'tabler:palette'}
-                style={{ width: '1.5rem', height: '1.5rem' }}
+                size="1.5rem"
               />
               <Text as="span" size="lg" weight="medium">
                 {name}

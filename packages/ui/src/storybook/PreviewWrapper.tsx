@@ -34,7 +34,7 @@ export function PreviewWrapper(Story: any, context: any) {
                   id="app"
                   justify="center"
                   maxWidth={{
-                    lg: '50vw',
+                    lg: '70vw',
                     base: '100vw'
                   }}
                   minHeight="0"
