@@ -1,5 +1,4 @@
 import { useDebounce } from '@uidotdev/usehooks'
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
@@ -184,104 +183,106 @@ export function SearchInput({
       onBlur={handleBlur}
       onFocus={() => setIsFocused(true)}
     >
-      <Flex
-        shadow
-        align="center"
-        as="search"
-        bg={{
-          base: 'bg-50',
-          dark: 'bg-900',
-          hover: disabled ? undefined : 'bg-100',
-          darkHover: disabled ? undefined : 'bg-800'
-        }}
-        className={clsx(styles.searchWrapper, className)}
-        p="md"
-        position="relative"
-        r="lg"
-        style={
-          disabled
-            ? {
-                cursor: 'not-allowed',
-                gap: '0.75rem',
-                minHeight: '3.5rem',
-                opacity: 0.5
-              }
-            : { cursor: 'text', gap: '0.75rem', minHeight: '3.5rem' }
-        }
-        width="100%"
-        onClick={e => {
-          if (disabled) return
-          e.currentTarget.querySelector('input')?.focus()
-        }}
-        {...props}
-      >
-        <Icon color="muted" icon={icon} />
-        <Placeholder>
-          <input
-            autoComplete="one-time-code"
-            autoCorrect="off"
-            className={styles.searchInput}
-            data-form-type="other"
-            data-lpignore="true"
-            disabled={disabled}
-            placeholder={t([`search`, `Search ${searchTarget}`], {
-              item: t([
-                `${namespace}:items.${_.camelCase(searchTarget)}`,
-                `${namespace}:items.${searchTarget}`,
-                `${namespace}:${_.camelCase(searchTarget)}`,
-                `${namespace}:${searchTarget}`,
-                `common.misc:items.${_.camelCase(searchTarget)}`,
-                `common.misc:items.${searchTarget}`,
-                `common.misc:${_.camelCase(searchTarget)}`,
-                `common.misc:${searchTarget}`,
-                searchTarget
-              ])
-            })}
-            style={{ paddingRight: actionButtonProps ? '5rem' : '2.5rem' }}
-            type="text"
-            value={displayValue}
-            onChange={e => {
-              handleChange(e.target.value)
-            }}
-            onKeyUp={onKeyUp}
-          />
-        </Placeholder>
+      <Transition>
         <Flex
+          shadow
           align="center"
-          gap="sm"
-          position="absolute"
-          right="1rem"
-          style={{ transform: 'translateY(-50%)' }}
-          top="50%"
+          as="search"
+          bg={{
+            base: 'bg-50',
+            dark: 'bg-900',
+            hover: disabled ? undefined : 'bg-100',
+            darkHover: disabled ? undefined : 'bg-800'
+          }}
+          className={className}
+          p="md"
+          position="relative"
+          r="lg"
+          style={
+            disabled
+              ? {
+                  cursor: 'not-allowed',
+                  gap: '0.75rem',
+                  minHeight: '3.5rem',
+                  opacity: 0.5
+                }
+              : { cursor: 'text', gap: '0.75rem', minHeight: '3.5rem' }
+          }
+          width="100%"
+          onClick={e => {
+            if (disabled) return
+            e.currentTarget.querySelector('input')?.focus()
+          }}
+          {...props}
         >
-          <Button
-            disabled={disabled}
-            icon="tabler:x"
-            style={{
-              height: '2rem',
-              opacity: displayValue ? 1 : 0,
-              padding: 0,
-              visibility: displayValue ? 'visible' : 'hidden',
-              width: '2rem'
-            }}
-            variant="plain"
-            onClick={handleClear}
-          />
-          {actionButtonProps && (
+          <Icon color="muted" icon={icon} />
+          <Placeholder>
+            <input
+              autoComplete="one-time-code"
+              autoCorrect="off"
+              className={styles.searchInput}
+              data-form-type="other"
+              data-lpignore="true"
+              disabled={disabled}
+              placeholder={t([`search`, `Search ${searchTarget}`], {
+                item: t([
+                  `${namespace}:items.${_.camelCase(searchTarget)}`,
+                  `${namespace}:items.${searchTarget}`,
+                  `${namespace}:${_.camelCase(searchTarget)}`,
+                  `${namespace}:${searchTarget}`,
+                  `common.misc:items.${_.camelCase(searchTarget)}`,
+                  `common.misc:items.${searchTarget}`,
+                  `common.misc:${_.camelCase(searchTarget)}`,
+                  `common.misc:${searchTarget}`,
+                  searchTarget
+                ])
+              })}
+              style={{ paddingRight: actionButtonProps ? '5rem' : '2.5rem' }}
+              type="text"
+              value={displayValue}
+              onChange={e => {
+                handleChange(e.target.value)
+              }}
+              onKeyUp={onKeyUp}
+            />
+          </Placeholder>
+          <Flex
+            align="center"
+            gap="sm"
+            position="absolute"
+            right="1rem"
+            style={{ transform: 'translateY(-50%)' }}
+            top="50%"
+          >
             <Button
-              {...actionButtonProps}
-              disabled={disabled || actionButtonProps.disabled}
+              disabled={disabled}
+              icon="tabler:x"
               style={{
                 height: '2rem',
+                opacity: displayValue ? 1 : 0,
                 padding: 0,
-                width: '2rem',
-                ...actionButtonProps.style
+                visibility: displayValue ? 'visible' : 'hidden',
+                width: '2rem'
               }}
-              variant={actionButtonProps.variant || 'plain'}
+              variant="plain"
+              onClick={handleClear}
             />
-          )}
+            {actionButtonProps && (
+              <Button
+                {...actionButtonProps}
+                disabled={disabled || actionButtonProps.disabled}
+                style={{
+                  height: '2rem',
+                  padding: 0,
+                  width: '2rem',
+                  ...actionButtonProps.style
+                }}
+                variant={actionButtonProps.variant || 'plain'}
+              />
+            )}
+          </Flex>
         </Flex>
-      </Flex>
+      </Transition>
       {children &&
         createPortal(
           <Transition property="all">

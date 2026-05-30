@@ -168,7 +168,7 @@ export function ComboboxInput<T>({
         <ComboboxButton>
           <Icon
             icon="heroicons:chevron-up-down-16-solid"
-            style={{ width: '1.25em', height: '1.25em' }}
+            size="1.25em"
           />
         </ComboboxButton>
       </InputActionButton>

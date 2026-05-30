@@ -123,14 +123,15 @@ export const FontSize: Story = {
         ] as const
       ).map(size => (
         <Flex key={size} align="baseline" gap="md">
-          <Text
-            as="code"
-            color={{ base: 'bg-400', dark: 'bg-500' }}
-            size="sm"
-            style={{ flexShrink: 0, width: '3rem' }}
-          >
-            {size}
-          </Text>
+          <Box asChild flexShrink="0" width="3rem">
+            <Text
+              as="code"
+              color={{ base: 'bg-400', dark: 'bg-500' }}
+              size="sm"
+            >
+              {size}
+            </Text>
+          </Box>
           <Text size={size}>Ag</Text>
         </Flex>
       ))}
@@ -147,14 +148,15 @@ export const FontWeight: Story = {
     <ScrollableStory>
       {(['normal', 'medium', 'semibold', 'bold'] as const).map(weight => (
         <Flex key={weight} align="center" gap="lg">
-          <Text
-            as="code"
-            color={{ base: 'bg-400', dark: 'bg-500' }}
-            size="sm"
-            style={{ flexShrink: 0, width: '6rem' }}
-          >
-            {weight}
-          </Text>
+          <Box asChild flexShrink="0" width="6rem">
+            <Text
+              as="code"
+              color={{ base: 'bg-400', dark: 'bg-500' }}
+              size="sm"
+            >
+              {weight}
+            </Text>
+          </Box>
           <Text size="xl" weight={weight}>
             The quick brown fox
           </Text>
@@ -167,14 +169,14 @@ export const FontWeight: Story = {
 /**
  * `color` accepts either a flat `ColorToken` or a `ThemeConditionProp` map
  * for theme-adaptive and interactive colours. Named semantic shortcuts
- * `'default'`, `'muted'`, `'primary'`, and `'inherit'` are also supported.
+ * `'muted'`, `'primary'`, and `'inherit'` are also supported.
  */
 export const Color: Story = {
   args: {},
   render: () => (
     <ScrollableStory>
-      <Text color="default" size="lg">
-        color=&quot;default&quot; (bg-900 / bg-50 adaptive)
+      <Text color="bg-900" size="lg">
+        color=&quot;bg-900&quot;
       </Text>
       <Text color="muted" size="lg">
         color=&quot;muted&quot; (bg-500 adaptive)
@@ -209,7 +211,7 @@ export const Color: Story = {
 
 /**
  * `bg` sets a background colour on the text element itself, using the same
- * `ThemeConditionProp<ColorToken>` type as `color`. Useful for highlighted
+ * `ThemeConditionProp<ColorPropValue>` type as `color`. Useful for highlighted
  * or selected text runs.
  */
 export const BackgroundColor: Story = {
@@ -538,14 +540,15 @@ export const Tracking: Story = {
       {(['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'] as const).map(
         tracking => (
           <Flex key={tracking} align="baseline" gap="md">
+          <Box asChild flexShrink="0" width="5rem">
             <Text
               as="code"
               color={{ base: 'bg-400', dark: 'bg-500' }}
               size="sm"
-              style={{ flexShrink: 0, width: '5rem' }}
             >
               {tracking}
             </Text>
+          </Box>
             <Text size="lg" tracking={tracking}>
               The quick brown fox jumps over the lazy dog.
             </Text>

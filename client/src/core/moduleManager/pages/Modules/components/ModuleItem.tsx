@@ -5,7 +5,6 @@ import { toast } from 'react-toastify'
 import { useAPIOnlineStatus, useFederation } from '@lifeforge/shared'
 import {
   Box,
-  COLORS,
   Card,
   ConfirmationModal,
   ContextMenu,
@@ -15,8 +14,8 @@ import {
   TAILWIND_PALETTE,
   TagChip,
   Text,
-  useModalStore,
-  withOpacity
+  colorWithOpacity,
+  useModalStore
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
@@ -108,12 +107,10 @@ function ModuleItem({
         <Flex
           centered
           shadow
+          bg={colorWithOpacity('custom-500', '20%')}
           flexShrink="0"
           height="3em"
           r="lg"
-          style={{
-            backgroundColor: withOpacity(COLORS['custom-500'], 0.2)
-          }}
           width="3em"
         >
           <Icon color="primary" icon={module.icon} size="1.5em" />

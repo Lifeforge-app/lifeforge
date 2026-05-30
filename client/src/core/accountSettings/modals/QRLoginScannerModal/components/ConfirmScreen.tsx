@@ -2,12 +2,11 @@ import { useTranslation } from 'react-i18next'
 
 import {
   Button,
-  COLORS,
   Flex,
   Icon,
   Stack,
   Text,
-  withOpacity
+  colorWithOpacity
 } from '@lifeforge/ui'
 
 function ConfirmScreen({
@@ -25,11 +24,9 @@ function ConfirmScreen({
     <Stack align="center" gap="lg">
       <Flex
         centered
+        bg={colorWithOpacity('custom-500', '20%')}
         height="5em"
         r="lg"
-        style={{
-          backgroundColor: withOpacity(COLORS['custom-500'], 0.2)
-        }}
         width="5em"
       >
         <Icon color="primary" icon="tabler:device-laptop" size="2.25em" />

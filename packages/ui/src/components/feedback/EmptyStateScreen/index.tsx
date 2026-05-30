@@ -60,8 +60,7 @@ export function EmptyStateScreen({
               icon={icon}
               style={{
                 width: smaller ? '4.5rem' : '8rem',
-                height: smaller ? '4.5rem' : '8rem',
-                flexShrink: 0
+                height: smaller ? '4.5rem' : '8rem'
               }}
             />
           ) : (

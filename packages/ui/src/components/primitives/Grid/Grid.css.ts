@@ -6,7 +6,6 @@ import {
   tokenizedLayoutProperties,
   tokenizedRoundedProperties,
   tokenizedSpacingProperties,
-  tokenizedThemeColorProperties,
   vars
 } from '@/system'
 
@@ -39,7 +38,6 @@ const gridProperties = defineProperties({
 
 export const gridSprinkles = createSprinkles(
   gridProperties,
-  tokenizedThemeColorProperties,
   tokenizedLayoutProperties,
   tokenizedSpacingProperties,
   tokenizedRoundedProperties

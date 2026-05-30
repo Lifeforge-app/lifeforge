@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { CSSProperties } from '@vanilla-extract/css'
 import clsx from 'clsx'
+import type { CSSProperties } from 'react'
 
 import type { ArbitraryProps } from './arbitrary'
+import { type ColorPropName, type ColorProps, resolveColorProp } from './colors'
 import type { ResponsiveProp } from './responsive'
 import { getResponsiveLayoutStyles } from './responsive/utils/getResponsiveLayoutStyles'
 
@@ -33,8 +34,21 @@ type ResolveStylesOptions<
   componentArbitraryProps?: Partial<
     ResolveResponsiveOutputs<TComponentArbitraryProps>
   >
+  colorProps?: ColorProps
   style?: CSSProperties
   className?: string
+}
+
+export interface ResolvedStyle {
+  className: string
+  style: CSSProperties
+}
+
+export function mergeStyle(...styles: ResolvedStyle[]): ResolvedStyle {
+  return {
+    className: clsx(...styles.map(s => s.className)),
+    style: Object.assign({}, ...styles.map(s => s.style))
+  }
 }
 
 export function resolveStyles<
@@ -45,9 +59,10 @@ export function resolveStyles<
   sprinkleProps,
   arbitraryProps,
   componentArbitraryProps,
+  colorProps,
   style,
   className
-}: ResolveStylesOptions<T, TComponentArbitraryProps>) {
+}: ResolveStylesOptions<T, TComponentArbitraryProps>): ResolvedStyle {
   const sprinklesClassName = sprinkles(sprinkleProps as SprinklesProps<T>)
 
   const responsiveStyles = getResponsiveLayoutStyles({
@@ -55,11 +70,14 @@ export function resolveStyles<
     ...componentArbitraryProps
   })
 
-  return {
-    className: clsx(sprinklesClassName, responsiveStyles.className, className),
-    style: {
-      ...responsiveStyles.style,
-      ...style
-    } as CSSProperties
-  }
+  const colorStyles = Object.entries(colorProps || {}).reduce<ResolvedStyle>(
+    (acc, [key, value]) =>
+      mergeStyle(acc, resolveColorProp(key as ColorPropName, value)),
+    { className: '', style: {} }
+  )
+
+  return mergeStyle(responsiveStyles, colorStyles, {
+    className: clsx(sprinklesClassName, className),
+    style: style ?? {}
+  })
 }

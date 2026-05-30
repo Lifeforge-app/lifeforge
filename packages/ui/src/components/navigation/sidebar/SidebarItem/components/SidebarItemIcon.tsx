@@ -1,4 +1,4 @@
-import { Bordered, Icon, Text } from '@/components/primitives'
+import { Bordered, Box, Icon, Text } from '@/components/primitives'
 
 export function SidebarItemIcon({
   icon,
@@ -22,10 +22,12 @@ export function SidebarItemIcon({
 
     return (
       <Text asChild color={active ? 'custom-500' : undefined}>
-        <span
+        <Box
           className={className}
           dangerouslySetInnerHTML={{ __html: htmlString }}
-          style={{ flexShrink: 0, height: '1.5rem', width: '1.5rem' }}
+          flexShrink="0"
+          height="1.5em"
+          width="1.5em"
         />
       </Text>
     )
@@ -55,12 +57,11 @@ export function SidebarItemIcon({
   }
 
   return (
-    <Text asChild color={active ? 'custom-500' : undefined}>
-      <Icon
-        className={className}
-        icon={icon}
-        style={{ flexShrink: 0, height: '1.5rem', width: '1.5rem' }}
-      />
-    </Text>
+    <Icon
+      className={className}
+      color={active ? 'custom-500' : undefined}
+      icon={icon}
+      size="1.5rem"
+    />
   )
 }

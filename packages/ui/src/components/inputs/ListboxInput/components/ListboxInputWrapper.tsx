@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { inputWrapperRecipe } from '@/components/inputs/shared/components/InputWrapper/InputWrapper.css'
 import { InputFocusProvider } from '@/components/inputs/shared/contexts/InputFocusContext'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { colorWithOpacity } from '@/system'
 
 import type { InputSize, InputVariant } from '../../shared/types'
 import { useListboxBlurOnClose } from '../hooks/useListboxBlurOnClose'
@@ -46,6 +47,12 @@ export function ListboxInputWrapper<T>({
         <Flex
           asChild
           align="center"
+          bg={{
+            base: colorWithOpacity('bg-200', '50%'),
+            dark: colorWithOpacity('bg-800', '70%'),
+            hover: 'bg-200',
+            darkHover: 'bg-800'
+          }}
           gap="xs"
           position="relative"
           shadow={variant === 'classic'}

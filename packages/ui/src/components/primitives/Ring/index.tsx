@@ -9,8 +9,9 @@ import {
 
 import {
   type ArbitraryProps,
-  type ColorToken,
+  type ColorValue,
   type ResponsiveProp,
+  type ThemeConditionProp,
   type TokenizedCommonProps,
   normalizeResponsiveProp,
   resolveCommonSprinkleProps,
@@ -18,7 +19,6 @@ import {
   shadowClass
 } from '@/system'
 import { normalizeGridSpan } from '@/system/grid-utils'
-import type { ThemeConditionProp } from '@/system/themes'
 
 import { Slot } from '../Slot'
 import { type RingSprinkles, ringBase, ringSprinkles } from './Ring.css'
@@ -31,10 +31,8 @@ type RingProps<T extends ElementType = 'div'> = TokenizedCommonProps &
     ref?: Ref<HTMLElement>
     display?: ResponsiveProp<DisplayValue>
     ringWidth?: ResponsiveProp<string>
-    ringColor?: ThemeConditionProp<ColorToken>
+    ringColor?: ThemeConditionProp<ColorValue>
     ringOffsetWidth?: ResponsiveProp<string>
-    ringOffsetColor?: ThemeConditionProp<ColorToken>
-    ringInset?: boolean
     shadow?: boolean
     className?: string
     style?: CSSProperties
@@ -48,8 +46,6 @@ type RingProps<T extends ElementType = 'div'> = TokenizedCommonProps &
     | 'ringWidth'
     | 'ringColor'
     | 'ringOffsetWidth'
-    | 'ringOffsetColor'
-    | 'ringInset'
     | 'shadow'
     | 'className'
     | 'style'
@@ -64,8 +60,6 @@ export function Ring<T extends ElementType = 'div'>({
   ringWidth = '3px',
   ringColor = 'custom-500',
   ringOffsetWidth = '0px',
-  ringOffsetColor = 'transparent',
-  ringInset = false,
   shadow = false,
   p,
   pb,
@@ -119,8 +113,6 @@ export function Ring<T extends ElementType = 'div'>({
   const styles = resolveStyles({
     sprinkles: ringSprinkles,
     sprinkleProps: {
-      ringColor: ringColor,
-      ringOffsetColor: ringOffsetColor,
       display: normalizeResponsiveProp(display) as RingSprinkles['display'],
       ...resolveCommonSprinkleProps(
         { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
@@ -161,11 +153,9 @@ export function Ring<T extends ElementType = 'div'>({
       ringWidth: normalizeResponsiveProp(ringWidth),
       ringOffsetWidth: normalizeResponsiveProp(ringOffsetWidth)
     },
+    colorProps: { ringColor },
     className: clsx(ringBase(), shadow && shadowClass, className),
-    style: {
-      '--lf-ring-inset': ringInset ? 'inset' : ' ',
-      ...style
-    } as CSSProperties
+    style
   })
 
   return (

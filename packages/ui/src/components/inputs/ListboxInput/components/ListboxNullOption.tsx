@@ -56,31 +56,20 @@ export function ListboxNullOption({
                         r="md"
                       >
                         {hasBgColor ? (
-                          <Text asChild color="muted">
-                            <Icon
-                              icon={icon}
-                              style={{ width: '1.25rem', height: '1.25rem' }}
-                            />
-                          </Text>
+                          <Icon color="muted" icon={icon} />
                         ) : (
-                          <Icon
-                            icon={icon}
-                            style={{ width: '1.25rem', height: '1.25rem' }}
-                          />
+                          <Icon icon={icon} />
                         )}
                       </Box>
                       <span>{text}</span>
                     </Flex>
                   </Text>
                   {selected && (
-                    <Text
-                      asChild
+                    <Icon
                       color="custom-500"
+                      icon="tabler:check"
                       size="lg"
-                      style={{ display: 'block', flexShrink: 0 }}
-                    >
-                      <Icon icon="tabler:check" />
-                    </Text>
+                    />
                   )}
                 </>
               )}

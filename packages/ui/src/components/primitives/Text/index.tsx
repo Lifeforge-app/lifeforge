@@ -8,22 +8,17 @@ import {
 } from 'react'
 
 import {
-  type ColorToken,
+  type ColorValue,
   type ResponsiveProp,
+  type ThemeConditionProp,
   type TokenizedSpacingProps,
   normalizeResponsiveProp,
   resolveSpacingSprinklesProps,
   resolveStyles
 } from '@/system'
-import type { ThemeConditionProp } from '@/system/themes'
 
 import { Slot } from '../Slot'
-import {
-  type TextColorValues,
-  type TextSprinkles,
-  textBase,
-  textSprinkles
-} from './Text.css'
+import { type TextSprinkles, textBase, textSprinkles } from './Text.css'
 
 type TextSize =
   | 'xs'
@@ -75,8 +70,8 @@ interface TextOwnProps<
   asChild?: boolean
   ref?: Ref<HTMLElement>
   size?: ResponsiveProp<TextSize>
-  color?: ThemeConditionProp<TextColorValues>
-  bg?: ThemeConditionProp<ColorToken>
+  color?: ThemeConditionProp<ColorValue>
+  bg?: ThemeConditionProp<ColorValue>
   weight?: ResponsiveProp<FontWeight>
   align?: ResponsiveProp<TextAlign>
   decoration?: ResponsiveProp<TextDecoration>
@@ -180,8 +175,6 @@ export function Text<T extends ElementType = 'span'>({
       fontSize: normalizeResponsiveProp(size) as TextSprinkles['fontSize'],
       lineHeight: normalizeResponsiveProp(leading ?? size),
       trim: normalizeResponsiveProp(trim, v => trimMap[v]),
-      color: color,
-      backgroundColor: bg,
       fontWeight: normalizeResponsiveProp(
         weight
       ) as TextSprinkles['fontWeight'],
@@ -223,6 +216,7 @@ export function Text<T extends ElementType = 'span'>({
         ml
       })
     },
+    colorProps: { color, bg },
     style: {
       ...style,
       ...truncateStyle,

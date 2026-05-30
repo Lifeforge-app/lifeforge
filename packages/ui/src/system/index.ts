@@ -1,4 +1,4 @@
-// Internal system exports - not for public consumption
+import './colors/color-props.css'
 
 export * from './vars.css'
 
@@ -9,8 +9,6 @@ export * from './responsive'
 export * from './arbitrary'
 
 export * from './grid-utils'
-
-export * from './tailwind-palette'
 
 export * from './vars.css'
 

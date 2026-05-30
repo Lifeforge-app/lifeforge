@@ -80,7 +80,7 @@ export const SmallScreen: Story = {
 
     return (
       <Bordered asChild borderColor="bg-500" height="100%" p="lg" width="320px">
-        <Flex align="center" justify="center">
+        <Flex centered>
           <OTPInputBox {...props} otp={otp} setOtp={setOtp} />
         </Flex>
       </Bordered>

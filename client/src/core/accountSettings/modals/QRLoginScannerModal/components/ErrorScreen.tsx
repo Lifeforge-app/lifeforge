@@ -1,11 +1,10 @@
 import {
   Button,
-  COLORS,
   Flex,
   Icon,
   Stack,
   Text,
-  withOpacity
+  colorWithOpacity
 } from '@lifeforge/ui'
 
 function ErrorScreen({
@@ -18,12 +17,10 @@ function ErrorScreen({
   return (
     <Stack align="center" gap="lg" height="100dvh">
       <Flex
+        bg={colorWithOpacity('dangerous', '20%')}
         centered
         height="5em"
         r="lg"
-        style={{
-          backgroundColor: withOpacity(COLORS['dangerous'], 0.2)
-        }}
         width="5em"
       >
         <Icon color="dangerous" icon="tabler:alert-circle" size="2.25em" />

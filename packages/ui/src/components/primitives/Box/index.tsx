@@ -9,15 +9,15 @@ import {
 
 import {
   type ArbitraryProps,
-  type ColorToken,
+  type ColorValue,
   type ResponsiveProp,
+  type ThemeConditionProp,
   type TokenizedCommonProps,
   normalizeResponsiveProp,
   resolveCommonSprinkleProps,
   resolveStyles
 } from '@/system'
 import { normalizeGridSpan } from '@/system/grid-utils'
-import type { ThemeConditionProp } from '@/system/themes'
 import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
@@ -31,7 +31,7 @@ interface BoxOwnProps<T extends ElementType = 'div'>
   asChild?: boolean
   ref?: Ref<HTMLElement>
   display?: ResponsiveProp<DisplayValue>
-  bg?: ThemeConditionProp<ColorToken>
+  bg?: ThemeConditionProp<ColorValue>
   shadow?: boolean
   className?: string
   style?: CSSProperties
@@ -106,7 +106,6 @@ export function Box<T extends ElementType = 'div'>({
     sprinkles: boxSprinkles,
     sprinkleProps: {
       display: normalizeResponsiveProp(display),
-      backgroundColor: bg,
       ...resolveCommonSprinkleProps(
         { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
         {
@@ -142,6 +141,7 @@ export function Box<T extends ElementType = 'div'>({
       ),
       gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
     },
+    colorProps: { bg },
     className: clsx(boxBase(), className, shadow && shadowClass),
     style
   })

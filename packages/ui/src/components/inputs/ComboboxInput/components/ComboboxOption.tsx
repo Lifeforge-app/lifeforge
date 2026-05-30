@@ -74,14 +74,7 @@ export function ComboboxOption({
                           }
                         >
                           {typeof icon === 'string' ? (
-                            <Icon
-                              icon={icon}
-                              style={{
-                                width: '1.25rem',
-                                height: '1.25rem',
-                                flexShrink: 0
-                              }}
-                            />
+                            <Icon icon={icon} />
                           ) : (
                             icon
                           )}
@@ -99,20 +92,15 @@ export function ComboboxOption({
                           />
                         )
                       )}
-                      <Text truncate style={{ width: '100%', minWidth: 0 }}>
-                        {label}
-                      </Text>
+                      <Text truncate>{label}</Text>
                     </Flex>
                   </Text>
                   {selected && (
-                    <Text
-                      asChild
+                    <Icon
                       color="custom-500"
+                      icon="tabler:check"
                       size="lg"
-                      style={{ display: 'block', flexShrink: 0 }}
-                    >
-                      <Icon icon="tabler:check" />
-                    </Text>
+                    />
                   )}
                 </>
               )}

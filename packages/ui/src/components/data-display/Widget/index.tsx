@@ -1,8 +1,6 @@
-import clsx from 'clsx'
-
 import { Flex } from '@/components/primitives'
+import type { TokenizedColor } from '@/system'
 
-import * as styles from './Widget.css'
 import { TitleAndDesc } from './components/TitleAndDesc'
 import { WidgetIcon } from './components/WidgetIcon'
 
@@ -11,7 +9,7 @@ export interface WidgetProps {
   className?: string
   /** The icon to display beside the title. Should be a valid icon name from Iconify. */
   icon: string
-  iconColor?: string
+  iconColor?: TokenizedColor
   /** The title of the widget. This title will be used as a key for translation if a namespace is provided.
    *
    * The translation shall be looked up using the keys:
@@ -63,7 +61,7 @@ export function Widget({
       shadow
       as="div"
       bg={{ base: 'bg-50', dark: 'bg-900' }}
-      className={clsx(styles.wrapper, className)}
+      className={className}
       direction="column"
       gap="lg"
       height="100%"

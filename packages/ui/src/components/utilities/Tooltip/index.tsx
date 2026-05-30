@@ -36,14 +36,16 @@ export function Tooltip({
       </span>
       <Box
         asChild
-        r="md"
+        shadow
+        // Intentionally kept as inline style due to the styling limitation
+        // of react-tooltip
         style={{
           background:
             derivedTheme === 'light'
               ? 'var(--color-bg-50)'
               : 'var(--color-bg-800)',
-          boxShadow: 'var(--custom-shadow)',
-          zIndex: 9999
+          borderRadius: '0.5em',
+          zIndex: '9999'
         }}
       >
         <ReactTooltip

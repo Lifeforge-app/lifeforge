@@ -33,7 +33,9 @@ const RESPONSIVE_PROPS = [
     className: 'lf-row',
     property: '--lf-ring-offset-width',
     customProp: '--lf-row'
-  }
+  },
+  { className: 'lf-size', property: 'width', customProp: '--lf-size' },
+  { className: 'lf-size', property: 'height', customProp: '--lf-size' }
 ] as const
 
 // Breakpoint media queries

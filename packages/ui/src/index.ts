@@ -24,6 +24,17 @@ export * from './components/overlays'
 
 export * from './components/utilities'
 
-export { withOpacity, TAILWIND_PALETTE, COLORS } from './system'
+export {
+  TAILWIND_PALETTE,
+  COLORS,
+  colorWithOpacity,
+  ColorWithOpacity
+} from './system'
+
+export type {
+  ColorValue,
+  OpacityValue,
+  ColorValue as ColorPropValue
+} from './system'
 
 export * from './providers'

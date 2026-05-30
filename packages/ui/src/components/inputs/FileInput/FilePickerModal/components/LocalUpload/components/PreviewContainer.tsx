@@ -56,19 +56,15 @@ export function PreviewContainer({
               style={{ gap: '0.75rem' }}
               width="100%"
             >
-              <Text
-                asChild
+              <Icon
                 color="muted"
-                style={{ height: '1.5rem', width: '1.5rem', flexShrink: 0 }}
-              >
-                <Icon
-                  icon={
-                    FILE_ICONS[
-                      finalFileName?.split('.').pop() as keyof typeof FILE_ICONS
-                    ] || 'tabler:file'
-                  }
-                />
-              </Text>
+                icon={
+                  FILE_ICONS[
+                    finalFileName?.split('.').pop() as keyof typeof FILE_ICONS
+                  ] || 'tabler:file'
+                }
+                size="1.5rem"
+              />
               <Text truncate as="p" style={{ width: '100%' }}>
                 {finalFileName}
               </Text>

@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import Zoom from 'react-medium-image-zoom'
@@ -6,9 +5,9 @@ import Zoom from 'react-medium-image-zoom'
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 import { useModalStore } from '@/providers'
+import { colorWithOpacity } from '@/system'
 
 import { useInputLabel } from '../shared/hooks/useInputLabel'
-import * as styles from './FileInput.css'
 import { FilePickerModal } from './FilePickerModal'
 import { FILE_ICONS } from './FilePickerModal/constants/file_icons'
 
@@ -75,7 +74,11 @@ export function FileInput({
   return (
     <Flex
       shadow
-      className={clsx('__file-input', styles.wrapper)}
+      bg={{
+        base: colorWithOpacity('bg-200', '50%'),
+        dark: colorWithOpacity('bg-800', '70%')
+      }}
+      className="__file-input"
       direction="column"
       p="lg"
       r="md"
@@ -87,7 +90,7 @@ export function FileInput({
     >
       <Text asChild color="muted">
         <Flex align="center" gap="sm">
-          <Icon icon={icon} style={{ height: '1.5rem', width: '1.5rem' }} />
+          <Icon icon={icon} size="1.5rem" />
           <Text as="span" color="inherit" weight="medium">
             {inputLabel}{' '}
             {required === true && (
@@ -150,8 +153,7 @@ export function FileInput({
           ) : (
             <Flex align="center" gap="xl" justify="between" mt="md">
               <Flex align="center" gap="sm" minWidth="0">
-                <Text asChild color="muted">
-                  <Icon
+                <Icon
                     color="muted"
                     icon={
                       FILE_ICONS[
@@ -160,9 +162,8 @@ export function FileInput({
                           : '') as keyof typeof FILE_ICONS
                       ] || 'tabler:file'
                     }
-                    style={{ height: '1.5rem', width: '1.5rem' }}
+                    size="1.5rem"
                   />
-                </Text>
                 <Text truncate as="p">
                   {file instanceof File ? file.name : file}
                 </Text>

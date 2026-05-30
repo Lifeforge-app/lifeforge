@@ -12,8 +12,7 @@ const meta = {
       options: ['x', 'y']
     },
     children: { control: false },
-    color: { control: 'color' },
-    darkColor: { control: 'color' }
+    color: { control: 'color' }
   },
   component: WithDivide
 } satisfies Meta<typeof WithDivide>

@@ -138,17 +138,15 @@ const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
       }}
       onClick={() => alert(`Selected product: ${product.title}`)}
     >
-      <img
-        alt={product.title}
-        src={product.thumbnail}
-        style={{
-          borderRadius: 'var(--radius-md)',
-          flexShrink: 0,
-          height: '3rem',
-          objectFit: 'cover',
-          width: '3rem'
-        }}
-      />
+      <Box asChild flexShrink="0" height="3em" r="md" width="3em">
+        <img
+          alt={product.title}
+          src={product.thumbnail}
+          style={{
+            objectFit: 'cover'
+          }}
+        />
+      </Box>
       <Flex direction="column" flexGrow="1" minWidth="0">
         <Text color="muted" size="sm">
           {product.category}

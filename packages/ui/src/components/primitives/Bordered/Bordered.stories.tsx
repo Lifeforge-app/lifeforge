@@ -36,7 +36,7 @@ type Story = StoryObj<typeof meta>
 
 function DemoBox({ label }: { label: string }) {
   return (
-    <Flex align="center" justify="center" p="md">
+    <Flex centered p="md">
       <Text color={{ base: 'bg-500', dark: 'bg-400' }} size="sm">
         {label}
       </Text>

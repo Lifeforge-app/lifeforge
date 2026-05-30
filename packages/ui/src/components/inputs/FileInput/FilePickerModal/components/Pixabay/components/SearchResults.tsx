@@ -1,13 +1,11 @@
-import clsx from 'clsx'
 import type { CSSProperties, SetStateAction } from 'react'
 import PhotoAlbum from 'react-photo-album'
 
 import { Pagination } from '@/components/navigation'
-import { Box } from '@/components/primitives'
+import { Box, Ring, Transition } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'
 
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
-import * as styles from './SearchResults.css'
 
 export function SearchResults({
   results,
@@ -47,7 +45,7 @@ export function SearchResults({
             onPageChange={handlePageChange}
           />
         </Box>
-        <div className={styles.photoWrapper}>
+        <Box px="sm">
           <PhotoAlbum
             layout="rows"
             photos={results.hits.map(image => ({
@@ -58,27 +56,46 @@ export function SearchResults({
               fullResURL: image.imageURL
             }))}
             renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
-              <button
-                className={clsx(
-                  styles.photoButton,
-                  photo.fullResURL === file && styles.photoButtonSelected
-                )}
-                style={style as CSSProperties}
-                onClick={() => {
-                  setFile(photo.fullResURL)
-                  setPreview(photo.src)
-                }}
-              >
-                <img
-                  alt={alt}
-                  src={src}
-                  style={{ height: '100%', objectFit: 'cover', width: '100%' }}
-                />
-              </button>
+              <Transition>
+                <Ring
+                  ringColor={
+                    photo.fullResURL === file
+                      ? 'custom-500'
+                      : {
+                          hover: 'bg-400',
+                          darkHover: 'bg-600'
+                        }
+                  }
+                  ringOffsetWidth="2px"
+                  ringWidth="2px"
+                >
+                  <Box
+                    as="button"
+                    bg={{ base: 'bg-200', dark: 'bg-800' }}
+                    overflow="hidden"
+                    r="md"
+                    style={style as CSSProperties}
+                    onClick={() => {
+                      setFile(photo.fullResURL)
+                      setPreview(photo.src)
+                    }}
+                  >
+                    <img
+                      alt={alt}
+                      src={src}
+                      style={{
+                        height: '100%',
+                        objectFit: 'cover',
+                        width: '100%'
+                      }}
+                    />
+                  </Box>
+                </Ring>
+              </Transition>
             )}
             spacing={12}
           />
-        </div>
+        </Box>
         <Box asChild mt="md">
           <Pagination
             page={page}

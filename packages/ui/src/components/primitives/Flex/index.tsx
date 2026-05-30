@@ -9,9 +9,10 @@ import {
 
 import {
   type ArbitraryProps,
-  type ColorToken,
+  type ColorValue,
   type ResponsiveProp,
   type SpaceToken,
+  type ThemeConditionProp,
   type TokenizedCommonProps,
   normalizeGridSpan,
   normalizeResponsiveProp,
@@ -19,7 +20,6 @@ import {
   resolveStyles,
   shadowClass
 } from '@/system'
-import type { ThemeConditionProp } from '@/system/themes'
 
 import { Slot } from '../Slot'
 import { flexBase, flexSprinkles } from './Flex.css'
@@ -48,7 +48,7 @@ interface FlexOwnProps<T extends ElementType = 'div'>
   align?: ResponsiveProp<AlignValue>
   justify?: ResponsiveProp<JustifyValue>
   wrap?: ResponsiveProp<WrapValue>
-  bg?: ThemeConditionProp<ColorToken>
+  bg?: ThemeConditionProp<ColorValue>
   shadow?: boolean
   className?: string
   style?: CSSProperties
@@ -151,7 +151,6 @@ export function Flex<T extends ElementType = 'div'>({
     sprinkles: flexSprinkles,
     sprinkleProps: {
       display: normalizeResponsiveProp(display),
-      backgroundColor: bg,
       flexDirection: normalizeResponsiveProp(direction),
       gap: normalizeResponsiveProp(gap),
       rowGap: normalizeResponsiveProp(gapY),
@@ -194,6 +193,7 @@ export function Flex<T extends ElementType = 'div'>({
       ),
       gridRowSpan: normalizeResponsiveProp(gridRowSpan, normalizeGridSpan)
     },
+    colorProps: { bg },
     className: clsx(flexBase(), className, shadow && shadowClass),
     style
   })

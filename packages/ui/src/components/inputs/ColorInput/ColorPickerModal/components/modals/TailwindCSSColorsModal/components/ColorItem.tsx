@@ -1,12 +1,9 @@
-import clsx from 'clsx'
 import { converter, formatHex, parse } from 'culori'
 import { memo, useMemo } from 'react'
 
 import { usePersonalization } from '@lifeforge/shared'
 
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-
-import * as styles from './ColorItem.css'
 
 function _ColorItem({
   name,
@@ -28,13 +25,14 @@ function _ColorItem({
 
   return (
     <Box as="li" width="100%">
-      <Flex asChild align="center" justify="center" r="md" width="100%">
-        <button
-          className={clsx(
-            styles.colorButton,
-            selected === value && styles.colorButtonSelected
-          )}
-          style={{ backgroundColor: value }}
+      <Flex asChild centered r="md" width="100%">
+        <Box
+          shadow
+          as="button"
+          style={{
+            aspectRatio: '1/1',
+            backgroundColor: value
+          }}
           onClick={() => onSelect(colorHex)}
         >
           {selected === colorHex && (
@@ -47,7 +45,7 @@ function _ColorItem({
               }}
             />
           )}
-        </button>
+        </Box>
       </Flex>
       <Text as="p" mt="sm" size="sm" weight="medium">
         {name}

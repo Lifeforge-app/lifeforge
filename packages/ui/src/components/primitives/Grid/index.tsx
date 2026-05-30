@@ -9,9 +9,10 @@ import {
 
 import {
   type ArbitraryProps,
-  type ColorToken,
+  type ColorValue,
   type ResponsiveProp,
   type SpaceToken,
+  type ThemeConditionProp,
   type TokenizedCommonProps,
   normalizeGridSpan,
   normalizeGridTrack,
@@ -19,7 +20,6 @@ import {
   resolveCommonSprinkleProps,
   resolveStyles
 } from '@/system'
-import type { ThemeConditionProp } from '@/system/themes'
 import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
@@ -47,7 +47,7 @@ interface GridOwnProps<T extends ElementType = 'div'>
   gap?: ResponsiveProp<SpaceToken>
   gapX?: ResponsiveProp<SpaceToken>
   gapY?: ResponsiveProp<SpaceToken>
-  bg?: ThemeConditionProp<ColorToken>
+  bg?: ThemeConditionProp<ColorValue>
   shadow?: boolean
   className?: string
   style?: CSSProperties
@@ -141,7 +141,6 @@ export function Grid<T extends ElementType = 'div'>({
     sprinkles: gridSprinkles,
     sprinkleProps: {
       display: normalizeResponsiveProp(display),
-      backgroundColor: bg,
       gap: normalizeResponsiveProp(gap),
       rowGap: normalizeResponsiveProp(gapY),
       columnGap: normalizeResponsiveProp(gapX),
@@ -199,6 +198,7 @@ export function Grid<T extends ElementType = 'div'>({
         normalizeGridTrack
       )
     },
+    colorProps: { bg },
     className: clsx(gridBase(), className, shadow && shadowClass),
     style
   })

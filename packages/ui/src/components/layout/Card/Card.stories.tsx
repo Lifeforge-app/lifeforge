@@ -139,7 +139,7 @@ export const WithImage: Story = {
     children: <></>
   },
   render: () => (
-    <Flex align="center" justify="center" p="xl" style={{ width: '60vw' }}>
+    <Flex centered p="xl" style={{ width: '60vw' }}>
       <Card style={{ padding: 0, width: '24rem' }}>
         <img
           alt="Card Image"
@@ -169,7 +169,7 @@ export const WithImageAndButton: Story = {
     children: <></>
   },
   render: () => (
-    <Flex align="center" justify="center" p="xl" style={{ width: '60vw' }}>
+    <Flex centered p="xl" style={{ width: '60vw' }}>
       <Card style={{ padding: 0, width: '24rem' }}>
         <img
           alt="Card Image"

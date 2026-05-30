@@ -13,7 +13,7 @@ import {
 } from '@/components/primitives'
 import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { VariantContainer } from '@/storybook/VariantContainer'
-import { COLORS, withOpacity } from '@/system'
+import { colorWithOpacity } from '@/system'
 
 const meta = {
   argTypes: {
@@ -327,12 +327,10 @@ export const WithBackgroundAndShadow: Story = {
       >
         <Flex
           centered
+          bg={colorWithOpacity('custom-500', '20%')}
           flexShrink="0"
           height="3em"
           r="md"
-          style={{
-            backgroundColor: withOpacity(COLORS['custom-500'], 0.2)
-          }}
           width="3em"
         >
           <Icon color="custom-500" icon="tabler:cube" size="1.5em" />

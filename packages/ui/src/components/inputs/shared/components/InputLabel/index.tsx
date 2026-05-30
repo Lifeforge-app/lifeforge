@@ -56,15 +56,7 @@ function _InputLabel({
           {label}
         </Text>
         {required && (
-          <Text color="dangerous" display="block">
-            <Icon
-              icon="uil:asterisk"
-              style={{
-                width: '0.75em',
-                height: '0.75em'
-              }}
-            />
-          </Text>
+          <Icon color="dangerous" icon="uil:asterisk" size="0.75em" />
         )}
       </Flex>
     </Transition>

@@ -1,6 +1,12 @@
+import clsx from 'clsx'
 import { type CSSProperties, type ReactNode, type Ref } from 'react'
 
-import { COLORS, type ColorToken, withOpacity } from '@/system'
+import {
+  type ColorValue,
+  type ThemeConditionProp,
+  colorWithOpacity,
+  resolveColorProp
+} from '@/system'
 
 import { Slot } from '../Slot'
 import { type DivideAxis, divideVariants } from './WithDivide.css'
@@ -8,28 +14,27 @@ import { type DivideAxis, divideVariants } from './WithDivide.css'
 interface WithDivideProps {
   ref?: Ref<HTMLElement>
   axis?: DivideAxis
-  color?: ColorToken
-  darkColor?: ColorToken
+  color?: ThemeConditionProp<ColorValue>
   children?: ReactNode
+  className?: string
+  style?: CSSProperties
 }
 
 export function WithDivide({
   ref,
   axis = 'y',
-  color = 'bg-200',
-  darkColor: darkColorToken = 'bg-700',
-  children
+  color = { base: 'bg-200', dark: colorWithOpacity('bg-700', '50%') },
+  children,
+  className,
+  style
 }: WithDivideProps) {
+  const resolvedColor = resolveColorProp('divideColor', color)
+
   return (
     <Slot
       ref={ref}
-      className={divideVariants[axis]}
-      style={
-        {
-          '--divide-color': COLORS[color],
-          '--divide-dark-color': withOpacity(COLORS[darkColorToken], 0.5)
-        } as CSSProperties
-      }
+      className={clsx(divideVariants[axis], resolvedColor.className, className)}
+      style={{ ...resolvedColor.style, ...style }}
     >
       {children}
     </Slot>

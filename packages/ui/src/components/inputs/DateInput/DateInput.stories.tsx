@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
+import { Flex } from '@/components/primitives'
+import { ScrollableStory } from '@/storybook/ScrollableStory'
+
 import { DateInput } from './index'
 
 const meta = {
@@ -26,7 +29,11 @@ export const Default: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <DateInput {...args} value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
   }
 }
 
@@ -47,7 +54,11 @@ export const WithTime: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <DateInput {...args} value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
   }
 }
 
@@ -63,7 +74,11 @@ export const Required: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <DateInput {...args} value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
   }
 }
 
@@ -77,7 +92,11 @@ export const Disabled: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} disabled value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <DateInput {...args} disabled value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
   }
 }
 
@@ -93,7 +112,11 @@ export const WithErrorMessage: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <DateInput {...args} value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
   }
 }
 
@@ -109,7 +132,11 @@ export const DisabledWithErrorMessage: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} disabled value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <DateInput {...args} disabled value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
   }
 }
 
@@ -125,7 +152,11 @@ export const PlainVariant: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <DateInput {...args} value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
   }
 }
 
@@ -142,6 +173,12 @@ export const PlainVariantWithErrorMessage: Story = {
   render: args => {
     const [date, setDate] = useState(args.value)
 
-    return <DateInput {...args} value={date} onChange={setDate} />
+    return (
+      <ScrollableStory>
+        <Flex p="sm">
+          <DateInput {...args} value={date} onChange={setDate} />
+        </Flex>
+      </ScrollableStory>
+    )
   }
 }

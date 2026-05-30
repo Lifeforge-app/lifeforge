@@ -23,6 +23,7 @@ import { CalendarHeader } from './components/CalendarHeader'
  * Props for the DateInput component.
  */
 interface DateInputProps {
+  variant?: 'classic' | 'plain'
   /** The label text displayed above the date input field. Required for 'classic' style. */
   label?: string
   /** The icon to display in the date input field. Should be a valid icon name from Iconify. Required for 'classic' style. */

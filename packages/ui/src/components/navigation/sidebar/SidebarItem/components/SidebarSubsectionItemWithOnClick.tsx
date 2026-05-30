@@ -1,13 +1,11 @@
-import clsx from 'clsx'
 import _ from 'lodash'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useModuleSidebarState } from '@lifeforge/shared'
 
-import { Flex, Icon, Text } from '@/components/primitives'
-
-import * as styles from './SidebarSubsectionItemWithOnClick.css'
+import { Flex, Icon, Text, Transition } from '@/components/primitives'
+import { colorWithOpacity } from '@/system'
 
 export function SidebarSubsectionItemWithOnClick({
   subsectionLabel,
@@ -42,21 +40,35 @@ export function SidebarSubsectionItemWithOnClick({
   }, [])
 
   return (
-    <Text asChild color={active ? undefined : 'bg-500'} weight="medium">
-      <Flex
+    <Transition>
+      <Text
         asChild
-        align="center"
-        gap="md"
-        height="3.5rem"
-        ml="md"
-        mr="md"
-        r="lg"
-        style={{ paddingLeft: '3rem' }}
-        width="100%"
+        align="left"
+        color={active ? undefined : 'bg-500'}
+        weight="medium"
       >
-        <button
-          key={subsectionLabel}
-          className={clsx(styles.button, active && styles.buttonActive)}
+        <Flex
+          asChild
+          align="center"
+          as="button"
+          bg={
+            active
+              ? {
+                  base: colorWithOpacity('bg-200', '50%'),
+                  dark: 'bg-800'
+                }
+              : {
+                  hover: colorWithOpacity('bg-200', '30%'),
+                  darkHover: colorWithOpacity('bg-800', '30%')
+                }
+          }
+          gap="md"
+          height="3.5rem"
+          ml="md"
+          mr="md"
+          r="lg"
+          style={{ paddingLeft: '3rem' }}
+          width="100%"
           onClick={handleClick}
         >
           <Flex
@@ -66,7 +78,7 @@ export function SidebarSubsectionItemWithOnClick({
             width="1.75rem"
           >
             {typeof icon === 'string' ? (
-              <Icon icon={icon} style={{ height: '1.5rem', width: '1.5rem' }} />
+              <Icon icon={icon} size="1.5rem" />
             ) : (
               icon
             )}
@@ -88,8 +100,8 @@ export function SidebarSubsectionItemWithOnClick({
               </Text>
             </Flex>
           )}
-        </button>
-      </Flex>
-    </Text>
+        </Flex>
+      </Text>
+    </Transition>
   )
 }

@@ -76,9 +76,7 @@ export function Listbox<T>({
                 {value as unknown as string}
               </Text>
             )}
-            <Text asChild color="muted" style={{ flexShrink: 0 }}>
-              <Icon icon="tabler:chevron-down" />
-            </Text>
+            <Icon color="muted" icon="tabler:chevron-down" />
           </ListboxButton>
         </Flex>
       </Transition>

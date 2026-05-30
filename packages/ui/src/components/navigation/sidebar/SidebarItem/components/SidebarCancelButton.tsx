@@ -27,7 +27,7 @@ export function SidebarCancelButton({ onClick }: { onClick: () => void }) {
           setIsSidebarOpen(false)
         }}
       >
-        <Icon icon="tabler:x" style={{ height: '1.25rem', width: '1.25rem' }} />
+        <Icon icon="tabler:x" size="1.25rem" />
       </Text>
     </Box>
   )

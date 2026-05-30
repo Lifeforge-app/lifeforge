@@ -58,16 +58,7 @@ export function OptionsColumn({
   return (
     <Card direction={getDirection()} gapX="xl" gapY="md" justify="between">
       <Flex align="center" flexShrink="1" gap="md">
-        <Icon
-          icon={icon}
-          style={{
-            color: 'var(--color-bg-500)',
-            flexShrink: 0,
-            width: '24px',
-            height: '24px',
-            margin: '0 0.5rem'
-          }}
-        />
+        <Icon color="muted" icon={icon} mx="sm" size="1.8em" />
         <Flex direction="column">
           <Flex
             align="center"

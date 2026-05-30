@@ -35,7 +35,7 @@ function MorandiColorPaletteModal({
         templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
       >
         {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
-          <Flex key={index} asChild align="center" justify="center" r="md">
+          <Flex key={index} asChild centered r="md">
             <button
               className={clsx(
                 styles.colorButton,

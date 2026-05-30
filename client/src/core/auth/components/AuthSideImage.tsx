@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { Box, COLORS, Flex, Text, withOpacity } from '@lifeforge/ui'
+import { Box, Flex, Text, colorWithOpacity } from '@lifeforge/ui'
 
 function AuthSideImage() {
   const { t } = useTranslation('common.auth')
@@ -30,12 +30,9 @@ function AuthSideImage() {
         }}
       />
       <Box
+        bg={colorWithOpacity('bg-900', '50%')}
         position="absolute"
-        style={{
-          backgroundColor: withOpacity(COLORS['bg-900'], 0.5),
-          inset: 0,
-          position: 'absolute'
-        }}
+        style={{ inset: 0 }}
       />
       <Flex
         centered

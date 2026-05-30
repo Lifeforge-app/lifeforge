@@ -125,7 +125,7 @@ export function LocationInput({
                 ))}
               </>
             ) : (
-              <Flex align="center" justify="center" my="3xl">
+              <Flex centered my="3xl">
                 <Icon
                   color={{ base: 'bg-500' }}
                   icon="svg-spinners:ring-resize"
