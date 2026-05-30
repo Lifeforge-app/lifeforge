@@ -170,7 +170,7 @@ export const Interactive: Story = {
             gap="xs"
             style={{ cursor: 'pointer' }}
           >
-            <Transition duration="0.2s">
+            <Transition>
               <Icon
                 color={{
                   base: 'bg-500',

@@ -1,4 +1,9 @@
-import { type CSSProperties, type ReactNode, type Ref } from 'react'
+import {
+  type CSSProperties,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref
+} from 'react'
 
 import { Slot } from '../Slot'
 
@@ -37,9 +42,12 @@ interface TransitionEntry {
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
-interface TransitionProps {
+interface TransitionProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  'property'
+> {
   ref?: Ref<HTMLElement>
-  /** Transition duration in ms, or a CSS time string e.g. `'200ms'` / `'0.2s'`. Defaults to `'200ms'`. */
+  /** Transition duration in ms, or a CSS time string e.g. `'100ms'` / `'0.1s'`. Defaults to `'100ms'`. */
   duration?: number | string
   /** CSS transition-timing-function. Defaults to `'ease-in-out'`. */
   easing?: EasingValue
@@ -99,19 +107,20 @@ export function buildEntry(
  * A component that applies CSS transitions to its children. You can specify the transition properties, duration, easing, and delay. This component generates the appropriate CSS `transition` property based on the provided props and applies it to a wrapper element around the children.
  *
  * Defaults:
- * - `duration`: `'200ms'`
+ * - `duration`: `'100ms'`
  * - `easing`: `'ease-in-out'`
  * - `property`: `'all'`
  */
 export function Transition({
   ref,
-  duration = '200ms',
+  duration = '100ms',
   easing = 'ease-in-out',
   delay,
   property = 'all',
   children,
   className,
-  style
+  style,
+  ...rest
 }: TransitionProps) {
   const defaults = {
     duration: toTimeString(duration),
@@ -124,7 +133,12 @@ export function Transition({
   const transition = entries.map(e => buildEntry(e, defaults)).join(', ')
 
   return (
-    <Slot ref={ref} className={className} style={{ transition, ...style }}>
+    <Slot
+      ref={ref}
+      className={className}
+      style={{ transition, ...style }}
+      {...rest}
+    >
       {children}
     </Slot>
   )

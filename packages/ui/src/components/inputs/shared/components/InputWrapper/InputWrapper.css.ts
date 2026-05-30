@@ -8,7 +8,9 @@ export const inputWrapperRecipe = recipe({
     variant: {
       classic: {
         borderTopLeftRadius: vars.radii.lg,
-        borderTopRightRadius: vars.radii.lg
+        borderTopRightRadius: vars.radii.lg,
+        borderBottomWidth: '2px',
+        borderBottomStyle: 'solid'
       },
       plain: {
         borderRadius: vars.radii.lg

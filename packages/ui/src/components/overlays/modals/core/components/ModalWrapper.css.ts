@@ -4,15 +4,13 @@ import { colorWithOpacity } from '@/system'
 
 export const overlay = recipe({
   base: {
-    overscrollBehavior: 'contain',
-    transition: 'opacity 200ms ease-out'
+    overscrollBehavior: 'contain'
   },
   variants: {
     open: {
       true: { opacity: 1 },
       false: {
-        opacity: 0,
-        transition: 'z-index 0.1s linear 0.2s, opacity 0.2s ease-out'
+        opacity: 0
       }
     },
     topmost: {

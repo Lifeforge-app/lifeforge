@@ -49,7 +49,6 @@ function BgTempSelector() {
                   ? 'bg-500'
                   : { base: 'transparent', hover: 'bg-500' }
               }
-              ringOffsetColor={{ base: 'bg-50', dark: 'bg-950' }}
               ringOffsetWidth="2px"
               ringWidth="2px"
             >

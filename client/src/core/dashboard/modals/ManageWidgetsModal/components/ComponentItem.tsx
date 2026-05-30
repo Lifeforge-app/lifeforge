@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -7,6 +6,7 @@ import {
   Card,
   Flex,
   Icon,
+  Stack,
   Switch,
   Text,
   Transition,
@@ -120,7 +120,7 @@ function ComponentListItem({
       as="li"
       bg={{
         base: 'bg-50',
-        dark: 'bg-800'
+        dark: colorWithOpacity('bg-800', '50%')
       }}
       direction="row"
       gap="xl"
@@ -132,33 +132,27 @@ function ComponentListItem({
           <Flex
             centered
             bg={
-              Object.keys(enabledWidgets).includes(id)
-                ? colorWithOpacity('custom-500', '20%')
-                : undefined
+              isEnabled
+                ? colorWithOpacity('custom-500', '10%')
+                : {
+                    base: 'bg-200',
+                    dark: colorWithOpacity('bg-700', '50%')
+                  }
             }
-            className={clsx(
-              Object.keys(enabledWidgets).includes(id)
-                ? 'bg-custom-500/20'
-                : 'bg-bg-200 dark:bg-bg-700/50'
-            )}
             flexShrink="0"
-            height="2.5em"
+            height="3em"
             r="lg"
-            width="2.5em"
+            width="3em"
           >
             <Icon
-              color={
-                Object.keys(enabledWidgets).includes(id)
-                  ? 'custom-500'
-                  : 'bg-500'
-              }
+              color={isEnabled ? 'custom-500' : 'bg-500'}
               icon={icon}
               size="1.5em"
             />
           </Flex>
         </Transition>
-        <div className="flex flex-col">
-          <div className="font-semibold">
+        <Stack gap="none">
+          <Text as="h3" weight="semibold">
             {t([
               `widgets.${namespace}.${id}.title`,
               `widgets.${id}.title`,
@@ -166,14 +160,14 @@ function ComponentListItem({
               `widgets.${id}`,
               id
             ])}
-          </div>
+          </Text>
           <Text color="muted" size="sm">
             {t([
               `widgets.${namespace}.${id}.description`,
               `widgets.${id}.description`
             ])}
           </Text>
-        </div>
+        </Stack>
       </Flex>
       <Switch
         value={isEnabled}

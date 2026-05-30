@@ -1,8 +1,8 @@
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useEffect, useState } from 'react'
 
 import { type WidgetConfig } from '@lifeforge/shared'
+import { Card, Flex, Text } from '@lifeforge/ui'
 
 function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   const [time, setTime] = useState(dayjs().format('HH:mm'))
@@ -19,50 +19,48 @@ function Clock({ dimension: { h } }: { dimension: { w: number; h: number } }) {
   }, [])
 
   return (
-    <div
-      className={clsx(
-        'shadow-custom component-bg border-bg-500/20 flex size-full gap-6 rounded-lg p-4 in-[.bordered]:border-2',
-        h < 2
-          ? 'items-center justify-center min-[488px]:justify-between'
-          : 'flex-col'
-      )}
+    <Card
+      align={h < 2 ? 'center' : undefined}
+      direction={h < 2 ? 'row' : 'column'}
+      gap="md"
+      height="100%"
+      justify={h < 2 ? { base: 'center', sm: 'between' } : undefined}
     >
-      <div
-        className={clsx(
-          'flex-col',
-          h === 1 ? 'hidden min-[488px]:flex' : 'flex'
-        )}
+      <Flex
+        direction="column"
+        display={h === 1 ? { base: 'none', sm: 'flex' } : 'flex'}
       >
-        <span className="font-medium">
+        <Text weight="medium">
           {Intl.DateTimeFormat()
             .resolvedOptions()
             .timeZone.split('/')[1]
             .replace('_', ' ')}
-        </span>
-        <span className="text-bg-500">
+        </Text>
+        <Text color="muted">
           UTC {dayjs().utcOffset() > 0 ? '+' : ''}
           {dayjs().utcOffset() / 60}
-        </span>
-      </div>
-      <span
-        className={clsx(
-          'flex items-end font-semibold tracking-wider',
-          h < 2
-            ? 'text-4xl'
-            : 'my-auto justify-center text-center text-4xl min-[520px]:text-6xl'
-        )}
+        </Text>
+      </Flex>
+      <Text
+        asChild
+        style={{
+          margin: h > 2 ? 'auto' : '0'
+        }}
+        tracking="wider"
+        weight="semibold"
       >
-        {time}
-        <span
-          className={clsx(
-            'text-bg-500 -mb-0.5 ml-1 inline-block w-9',
-            h < 2 ? 'text-2xl' : 'text-2xl min-[520px]:text-4xl'
-          )}
-        >
-          {second}
-        </span>
-      </span>
-    </div>
+        <Flex align="end">
+          <Text size={h < 2 ? '4xl' : { base: '4xl', sm: '6xl' }}>{time}</Text>
+          <Text
+            color="muted"
+            ml="xs"
+            size={h < 2 ? '2xl' : { base: '2xl', sm: '4xl' }}
+          >
+            {second}
+          </Text>
+        </Flex>
+      </Text>
+    </Card>
   )
 }
 

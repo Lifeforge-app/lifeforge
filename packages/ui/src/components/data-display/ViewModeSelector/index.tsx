@@ -1,4 +1,4 @@
-import { Flex, Icon, Text } from '@/components/primitives'
+import { Flex, Icon, Text, Transition } from '@/components/primitives'
 
 interface ViewModeSelectorProps<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
@@ -35,50 +35,48 @@ export function ViewModeSelector<
       r="lg"
     >
       {options.map(({ value, icon, text }) => (
-        <Text
-          key={value}
-          asChild
-          color={
-            value === currentMode
-              ? {
-                  base: 'bg-800',
-                  dark: 'bg-100'
-                }
-              : 'muted'
-          }
-          size={size === 'small' ? 'sm' : 'base'}
-          weight={value === currentMode ? 'semibold' : 'normal'}
-        >
-          <Flex
-            align="center"
-            as="button"
-            bg={
+        <Transition key={value}>
+          <Text
+            asChild
+            color={
               value === currentMode
                 ? {
-                    base: 'bg-200',
-                    dark: 'bg-800'
+                    base: 'bg-800',
+                    dark: 'bg-100'
                   }
-                : {
-                    hover: 'bg-200',
-                    darkHover: 'bg-900'
-                  }
+                : 'muted'
             }
-            flex="1"
-            gap="sm"
-            px={size === 'small' ? 'sm' : 'md'}
-            py={size === 'small' ? 'xs' : 'sm'}
-            r="md"
-            style={{
-              transition: 'all 0.2s'
-            }}
-            onClick={() => {
-              onModeChange(value as TKey)
-            }}
+            size={size === 'small' ? 'sm' : 'base'}
+            weight={value === currentMode ? 'semibold' : 'normal'}
           >
-            {icon && <Icon icon={icon} size="1.5em" />}
-            {text}
-          </Flex>
-        </Text>
+            <Flex
+              align="center"
+              as="button"
+              bg={
+                value === currentMode
+                  ? {
+                      base: 'bg-200',
+                      dark: 'bg-800'
+                    }
+                  : {
+                      hover: 'bg-200',
+                      darkHover: 'bg-900'
+                    }
+              }
+              flex="1"
+              gap="sm"
+              px={size === 'small' ? 'sm' : 'md'}
+              py={size === 'small' ? 'xs' : 'sm'}
+              r="md"
+              onClick={() => {
+                onModeChange(value as TKey)
+              }}
+            >
+              {icon && <Icon icon={icon} size="1.5em" />}
+              {text}
+            </Flex>
+          </Text>
+        </Transition>
       ))}
     </Flex>
   )

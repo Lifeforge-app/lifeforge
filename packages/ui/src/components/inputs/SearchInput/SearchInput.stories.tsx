@@ -2,7 +2,7 @@ import type { StoryObj, Meta as _Meta } from '@storybook/react-vite'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
 import { WithQuery } from '@/components/utilities'
 
 import { SearchInput } from './index'
@@ -124,67 +124,64 @@ interface Review {
 
 const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
   return (
-    <Flex
-      align="center"
-      bg={{ darkHover: 'bg-800', hover: 'bg-100' }}
-      gap="md"
-      px="md"
-      r="md"
-      style={{
-        cursor: 'pointer',
-        paddingBottom: '0.75rem',
-        paddingTop: '0.75rem',
-        transition: 'all 0.2s'
-      }}
-      onClick={() => alert(`Selected product: ${product.title}`)}
-    >
-      <Box asChild flexShrink="0" height="3em" r="md" width="3em">
-        <img
-          alt={product.title}
-          src={product.thumbnail}
-          style={{
-            objectFit: 'cover'
-          }}
-        />
-      </Box>
-      <Flex direction="column" flexGrow="1" minWidth="0">
-        <Text color="muted" size="sm">
-          {product.category}
-        </Text>
-        <Text truncate weight="medium">
-          {product.title}
-        </Text>
-      </Flex>
+    <Transition>
       <Flex
-        align="end"
-        direction="column"
-        flexShrink="0"
-        style={{ gap: '0.25rem' }}
+        align="center"
+        as="button"
+        bg={{ darkHover: 'bg-800', hover: 'bg-100' }}
+        gap="md"
+        p="md"
+        r="md"
+        onClick={() => alert(`Selected product: ${product.title}`)}
       >
-        <Flex align="center" style={{ gap: '0.25rem' }}>
-          <Text color="primary" weight="semibold">
-            $
-            {(product.price * (1 - product.discountPercentage / 100)).toFixed(
-              2
-            )}
+        <Box asChild flexShrink="0" height="3em" r="md" width="3em">
+          <img
+            alt={product.title}
+            src={product.thumbnail}
+            style={{
+              objectFit: 'cover'
+            }}
+          />
+        </Box>
+        <Flex direction="column" flexGrow="1" minWidth="0">
+          <Text color="muted" size="sm">
+            {product.category}
           </Text>
-          {product.discountPercentage > 0 && (
-            <Text color="muted" decoration="line-through" size="sm">
-              ${product.price.toFixed(2)}
-            </Text>
-          )}
+          <Text truncate weight="medium">
+            {product.title}
+          </Text>
         </Flex>
-        <Text asChild color="muted" size="sm">
+        <Flex
+          align="end"
+          direction="column"
+          flexShrink="0"
+          style={{ gap: '0.25rem' }}
+        >
           <Flex align="center" style={{ gap: '0.25rem' }}>
-            <Icon
-              icon="tabler:star"
-              style={{ height: '1rem', width: '1rem' }}
-            />
-            {product.rating.toFixed(1)}
+            <Text color="primary" weight="semibold">
+              $
+              {(product.price * (1 - product.discountPercentage / 100)).toFixed(
+                2
+              )}
+            </Text>
+            {product.discountPercentage > 0 && (
+              <Text color="muted" decoration="line-through" size="sm">
+                ${product.price.toFixed(2)}
+              </Text>
+            )}
           </Flex>
-        </Text>
+          <Text asChild color="muted" size="sm">
+            <Flex align="center" style={{ gap: '0.25rem' }}>
+              <Icon
+                icon="tabler:star"
+                style={{ height: '1rem', width: '1rem' }}
+              />
+              {product.rating.toFixed(1)}
+            </Flex>
+          </Text>
+        </Flex>
       </Flex>
-    </Flex>
+    </Transition>
   )
 }
 
