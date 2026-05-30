@@ -1,5 +1,7 @@
 import js from '@eslint/js'
+import importPlugin from 'eslint-plugin-import'
 import jsxA11y from 'eslint-plugin-jsx-a11y'
+import perfectionist from 'eslint-plugin-perfectionist'
 import pluginReact from 'eslint-plugin-react'
 import reactCompiler from 'eslint-plugin-react-compiler'
 import sonarjs from 'eslint-plugin-sonarjs'
@@ -73,6 +75,16 @@ export default [
     }
   },
 
+  // Import Plugin
+  {
+    plugins: {
+      import: importPlugin
+    },
+    rules: {
+      'import/no-duplicates': 'error'
+    }
+  },
+
   // Unused Imports
   {
     plugins: {
@@ -127,6 +139,19 @@ export default [
     files: ['**/*.test.ts', '**/*.test.tsx', '**/*.spec.ts', '**/*.spec.tsx'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'off'
+    }
+  },
+
+  // Stories Files - Sort object properties alphabetically (auto-fixable)
+  {
+    files: ['**/*.stories.tsx', '**/*.stories.ts'],
+    plugins: { perfectionist },
+    rules: {
+      'sort-keys': 'off',
+      'perfectionist/sort-objects': [
+        'error',
+        { type: 'natural', order: 'asc', ignoreCase: true }
+      ]
     }
   }
 ]

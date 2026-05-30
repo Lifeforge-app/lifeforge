@@ -1,11 +1,11 @@
-import { RouterProvider } from 'shared'
+import { RouterProvider } from '@lifeforge/shared'
 
 import { useAppRouter } from '../hooks/useAppRouter'
 
 function AppRoutesProvider() {
-  const { router } = useAppRouter()
+  const { router, routerKey } = useAppRouter()
 
-  return <RouterProvider router={router} />
+  return <RouterProvider key={routerKey} router={router} />
 }
 
 export default AppRoutesProvider

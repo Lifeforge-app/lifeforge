@@ -1,0 +1,62 @@
+import { useTranslation } from 'react-i18next'
+
+import { Button } from '@/components/inputs'
+import { Flex, Text } from '@/components/primitives'
+
+interface NotFoundScreenProps {
+  /** The title to display on the Not Found screen. Defaults to a translated "Not Found" message. */
+  title?: string
+  /** The message to display on the Not Found screen. Defaults to a translated description message. */
+  message?: string
+  /** A link to report a bug. Defaults to LifeForge's GitHub issues page. */
+  reportIssueLink?: string
+}
+
+export function NotFoundScreen({
+  title,
+  message,
+  reportIssueLink = 'https://github.com/LifeForge-app/lifeforge/issues'
+}: NotFoundScreenProps) {
+  const { t } = useTranslation('common.misc')
+
+  return (
+    <Flex
+      align="center"
+      direction="column"
+      flexGrow="1"
+      gap="lg"
+      justify="center"
+      px="xl"
+      width="100%"
+    >
+      <Text
+        color="custom-500"
+        style={{ fontSize: '10rem', lineHeight: '13rem' }}
+      >
+        ;-;
+      </Text>
+      <Text align="center" as="h1" size="4xl" weight="semibold">
+        {title ?? t('notFound.title')}
+      </Text>
+      <Text align="center" as="p" color="muted" size="xl">
+        {message ?? t('notFound.description')}
+      </Text>
+      <Flex centered mt="lg" style={{ gap: '0.75rem' }}>
+        <Button as="a" href="/" icon="tabler:arrow-left">
+          Go Back
+        </Button>
+        <Button
+          as="a"
+          href={reportIssueLink}
+          icon="tabler:bug"
+          namespace="common.misc"
+          rel="noopener noreferrer"
+          target="_blank"
+          variant="secondary"
+        >
+          Report Bug
+        </Button>
+      </Flex>
+    </Flex>
+  )
+}

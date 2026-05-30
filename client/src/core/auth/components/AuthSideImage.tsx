@@ -1,24 +1,54 @@
 import { useTranslation } from 'react-i18next'
 
+import { Box, Flex, Text, colorWithOpacity } from '@lifeforge/ui'
+
 function AuthSideImage() {
   const { t } = useTranslation('common.auth')
 
   return (
-    <section className="relative hidden h-full w-1/2 lg:flex">
+    <Flex
+      display={{ base: 'none', lg: 'flex' }}
+      height="100%"
+      position="relative"
+      width="50%"
+    >
       <img
         alt="Login"
-        className="h-full object-cover"
         src="/assets/login.jpg"
+        style={{
+          height: '100%',
+          objectFit: 'cover'
+        }}
       />
-      <div className="from-custom-500 to-custom-600 absolute inset-0 bg-linear-to-br opacity-30" />
-      <div className="bg-bg-900/50 absolute inset-0" />
-      <p className="text-bg-50 absolute top-1/2 left-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 flex-col text-center text-5xl font-semibold tracking-wide">
-        <span className="text-custom-400 mb-4 text-2xl">
+      <div
+        style={{
+          background:
+            'linear-gradient(to bottom right, var(--color-custom-100), var(--color-custom-900))',
+          inset: 0,
+          opacity: 0.5,
+          position: 'absolute'
+        }}
+      />
+      <Box
+        bg={colorWithOpacity('bg-900', '50%')}
+        position="absolute"
+        style={{ inset: 0 }}
+      />
+      <Flex
+        centered
+        direction="column"
+        position="absolute"
+        style={{ inset: 0 }}
+        width="100%"
+      >
+        <Text color="primary" mb="lg" size="2xl" tracking="wider">
           {t('sideImageDesc.part1')}
-        </span>
-        {t('sideImageDesc.part2')}
-      </p>
-    </section>
+        </Text>
+        <Text color="bg-50" size="5xl" tracking="wide" weight="semibold">
+          {t('sideImageDesc.part2')}
+        </Text>
+      </Flex>
+    </Flex>
   )
 }
 

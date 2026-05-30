@@ -1,23 +1,41 @@
-import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
+
+import { Box, Flex, Icon, Text } from '@lifeforge/ui'
 
 function AuthHeader() {
   const { t } = useTranslation('common.auth')
 
   return (
     <>
-      <h1 className="mb-8 flex items-center gap-2 text-3xl font-semibold whitespace-nowrap">
-        <Icon className="text-custom-500 text-5xl" icon="tabler:hammer" />
-        <div>
-          LifeForge<span className="text-custom-500 text-4xl">.</span>
-        </div>
-      </h1>
-      <h2 className="text-center text-4xl font-semibold tracking-wide sm:text-5xl">
+      <Flex asChild align="center" gap="sm" mb="lg">
+        <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
+          <Icon color="primary" icon="tabler:hammer" />
+          <Box>
+            LifeForge
+            <Text color="primary" size="4xl">
+              .
+            </Text>
+          </Box>
+        </Text>
+      </Flex>
+      <Text
+        align="center"
+        as="h2"
+        size={{ base: '4xl', sm: '5xl' }}
+        tracking="wide"
+        weight="semibold"
+      >
         {t('header')}
-      </h2>
-      <p className="text-bg-500 mt-2 text-center text-base sm:mt-4 sm:text-xl">
+      </Text>
+      <Text
+        align="center"
+        as="p"
+        color="muted"
+        mt={{ base: 'sm', sm: 'md' }}
+        size={{ base: 'base', sm: 'xl' }}
+      >
         {t('desc')}
-      </p>
+      </Text>
     </>
   )
 }

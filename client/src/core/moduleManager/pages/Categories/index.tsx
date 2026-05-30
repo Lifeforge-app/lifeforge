@@ -13,17 +13,21 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable'
-import {
-  Alert,
-  Button,
-  EmptyStateScreen,
-  ModuleHeader,
-  useModalStore
-} from 'lifeforge-ui'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { SYSTEM_CATEGORIES, useFederation } from 'shared'
+
+import { SYSTEM_CATEGORIES, useFederation } from '@lifeforge/shared'
+import {
+  Alert,
+  Box,
+  Button,
+  EmptyStateScreen,
+  ModuleHeader,
+  Stack,
+  Text,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -91,7 +95,7 @@ function Categories() {
 
       newCategoryTranslations[newData.key] = newData.value
 
-      await forgeAPI.untyped('modules/categories/update').mutate({
+      await forgeAPI.modules.categories.update.mutate({
         data: newCategoryTranslations
       })
 
@@ -127,7 +131,7 @@ function Categories() {
             newCategoryTranslations[item.key] = item.value
           }
 
-          await forgeAPI.untyped('modules/categories/update').mutate({
+          await forgeAPI.modules.categories.update.mutate({
             data: newCategoryTranslations
           })
 
@@ -146,7 +150,7 @@ function Categories() {
       <ModuleHeader
         actionButton={
           <Button
-            className="hidden md:flex"
+            display={{ base: 'none', md: 'flex' }}
             icon="tabler:plus"
             tProps={{
               item: t('items.category')
@@ -168,17 +172,19 @@ function Categories() {
         totalItems={items.length}
       />
       {missingKeys.length > 0 && (
-        <Alert className="text-bg-500 mb-6" type="warning">
-          {missingKeys.length} categories are missing translations:{' '}
-          {missingKeys.map((key, idx) => (
-            <>
-              <code key={key} className="text-bg-800 dark:text-bg-100">
-                {key}
-              </code>
-              {idx < missingKeys.length - 1 && ', '}
-            </>
-          ))}
-        </Alert>
+        <Box asChild mb="lg">
+          <Alert type="warning">
+            {missingKeys.length} categories are missing translations:{' '}
+            {missingKeys.map((key, idx) => (
+              <>
+                <Text key={key} as="code">
+                  {key}
+                </Text>
+                {idx < missingKeys.length - 1 && ', '}
+              </>
+            ))}
+          </Alert>
+        </Box>
       )}
       {items.length > 0 ? (
         <DndContext
@@ -190,7 +196,7 @@ function Categories() {
             items={items.map(item => item.key)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="space-y-3">
+            <Stack>
               {items.map(item => (
                 <CategoryItem
                   key={item.key}
@@ -199,7 +205,7 @@ function Categories() {
                   onModify={handleModify}
                 />
               ))}
-            </div>
+            </Stack>
           </SortableContext>
         </DndContext>
       ) : (

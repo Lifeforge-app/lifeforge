@@ -1,8 +1,14 @@
-import { ContextMenuItem, ModuleHeader, Button } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
 import { useCallback, useRef, useState } from 'react'
 
+import {
+  ContextMenuItem,
+  Flex,
+  ModuleHeader,
+  useModalStore
+} from '@lifeforge/ui'
+
 import DashboardGrid from './components/DashboardGrid'
+import SaveButtonPopup from './components/SaveButtonPopup'
 import './index.css'
 import ManageWidgetsModal from './modals/ManageWidgetsModal'
 import WidgetProvider, { useWidgets } from './providers/WidgetProvider'
@@ -21,13 +27,13 @@ function DashboardContent() {
   }, [widgets])
 
   return (
-    <div ref={wrapperRef} className="mb-12 flex w-full flex-1 flex-col">
+    <Flex ref={wrapperRef} direction="column" flex="1" mb="2xl">
       <ModuleHeader
         contextMenuProps={{
           children: (
             <>
               <ContextMenuItem
-                icon='tabler:pencil'
+                icon="tabler:pencil"
                 label={'Edit Layout'}
                 namespace="common.dashboard"
                 onClick={() => {
@@ -49,20 +55,12 @@ function DashboardContent() {
         wrapperRef={wrapperRef}
       />
 
-	  {/* Save Button Popup */}
-      {canLayoutChange && (
-        <div className="fixed right-6 bottom-6 z-50">
-          <div className="bg-bg-100 dark:bg-bg-800 rounded-md shadow-lg p-4 flex items-center gap-4">
-            <div className="min-w-0">
-              <div className="text-sm font-medium">You are Editing Dashboard Layout</div>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button icon='tabler:device-floppy' onClick={() => setCanLayoutChange(false)}>Save</Button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+      {/* Save Button Popup */}
+      <SaveButtonPopup
+        canChange={canLayoutChange}
+        setCanChange={setCanLayoutChange}
+      />
+    </Flex>
   )
 }
 

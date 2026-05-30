@@ -1,11 +1,10 @@
 // import * as webauthn from '@passwordless-id/webauthn'
-import { TextInput } from 'lifeforge-ui'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useSearchParams } from 'shared'
-import { usePromiseLoading } from 'shared'
-import { useAuth } from 'shared'
+
+import { useAuth, usePromiseLoading, useSearchParams } from '@lifeforge/shared'
+import { Stack, TextInput } from '@lifeforge/ui'
 
 import AuthSignInButton from './AuthSignInButtons'
 
@@ -107,7 +106,7 @@ function AuthForm({ providers }: { providers: string[] }) {
   }, [password])
 
   return (
-    <div className="mt-6 flex w-full max-w-md flex-col gap-6 sm:mt-12">
+    <Stack maxWidth={{ sm: '70%' }} mt={{ base: 'lg', sm: '2xl' }}>
       {INPUT_FIELDS.map((input, index) => (
         <TextInput
           key={index}
@@ -126,7 +125,7 @@ function AuthForm({ providers }: { providers: string[] }) {
         providers={providers}
         signIn={onSubmit}
       />
-    </div>
+    </Stack>
   )
 }
 

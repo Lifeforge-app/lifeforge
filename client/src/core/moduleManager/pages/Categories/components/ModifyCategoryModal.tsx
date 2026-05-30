@@ -1,16 +1,21 @@
-import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
 import {
+  Box,
   Button,
+  Flex,
+  Icon,
   ModalHeader,
+  Stack,
+  Text,
   TextInput,
   WithQuery,
   WithQueryData,
   useModalStore
-} from 'lifeforge-ui'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -32,9 +37,7 @@ function ModifyCategoryModal({
 }) {
   const { t } = useTranslation('common.moduleManager')
 
-  const languagesQuery = useQuery(
-    forgeAPI.untyped<{ name: string }[]>('locales/listLanguages').queryOptions()
-  )
+  const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
 
   const { open } = useModalStore()
 
@@ -77,15 +80,10 @@ function ModifyCategoryModal({
     try {
       const languages = data.value.map(([key]) => key)
 
-      const result = await forgeAPI
-        .untyped<{
-          key: string
-          value: string
-        }>('modules/categories/aiTranslate')
-        .mutate({
-          key: data.key,
-          languages
-        })
+      const result = await forgeAPI.modules.categories.aiTranslate.mutate({
+        key: data.key,
+        languages
+      })
 
       if (!result) {
         throw new Error('Something went wrong')
@@ -114,7 +112,7 @@ function ModifyCategoryModal({
   }, [languagesQuery.data])
 
   return (
-    <div className="min-w-[40vw]">
+    <Box minWidth="40vw">
       <ModalHeader
         icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
         namespace="common.moduleManager"
@@ -148,86 +146,88 @@ function ModifyCategoryModal({
                   value={data.key}
                   onChange={value => setData({ ...data, key: value })}
                 />
-                <div className="text-bg-500 mt-6 flex items-center gap-2">
-                  <Icon className="size-5" icon="mingcute:translate-line" />
-                  <span className="font-medium">{t('misc.translations')}</span>
-                </div>
-                <div className="mt-3 space-y-3">
+                <Text asChild color="muted" weight="medium">
+                  <Flex align="center" gap="sm" mt="xl">
+                    <Icon icon="mingcute:translate-line" />
+                    {t('misc.translations')}
+                  </Flex>
+                </Text>
+                <Stack mt="md">
                   {data.value.map(([key, value], index) => (
-                    <div key={index} className="space-y-3">
-                      <div className="flex items-center gap-3">
-                        <TextInput
-                          required
-                          actionButtonProps={{
-                            icon: 'tabler:pencil',
-                            onClick: () => {
-                              open(ModifyTranslationKeyModal, {
-                                openType: 'update',
-                                key,
-                                onSubmit: key => {
-                                  setData({
-                                    ...data,
-                                    value: data.value.map(([k, v], i) =>
-                                      i === index ? [key, v] : [k, v]
-                                    )
-                                  })
-                                }
-                              })
-                            }
-                          }}
-                          icon="tabler:language"
-                          label={key}
-                          placeholder="e.g. Productivity, Produktiviti, 生产力, 生產力, etc."
-                          value={value}
-                          onChange={value => {
-                            setData({
-                              ...data,
-                              value: data.value.map(([k, v], i) =>
-                                i === index ? [k, value] : [k, v]
-                              )
+                    <Flex key={index} align="center" gap="md">
+                      <TextInput
+                        required
+                        actionButtonProps={{
+                          icon: 'tabler:pencil',
+                          onClick: () => {
+                            open(ModifyTranslationKeyModal, {
+                              openType: 'update',
+                              key,
+                              onSubmit: key => {
+                                setData({
+                                  ...data,
+                                  value: data.value.map(([k, v], i) =>
+                                    i === index ? [key, v] : [k, v]
+                                  )
+                                })
+                              }
                             })
-                          }}
-                        />
-                        <Button
-                          dangerous
-                          icon="tabler:trash"
-                          variant="plain"
-                          onClick={() => {
-                            setData({
-                              ...data,
-                              value: data.value.filter((_, i) => i !== index)
-                            })
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                  <Button
-                    className="w-full"
-                    icon="tabler:plus"
-                    namespace="common.moduleManager"
-                    variant="plain"
-                    onClick={() => {
-                      open(ModifyTranslationKeyModal, {
-                        openType: 'create',
-                        onSubmit: key => {
-                          if (data.value.some(([k]) => k === key))
-                            throw new Error('Translation key already exists')
-
+                          }
+                        }}
+                        icon="tabler:language"
+                        label={key}
+                        placeholder="e.g. Productivity, Produktiviti, 生产力, 生產力, etc."
+                        value={value}
+                        onChange={value => {
                           setData({
                             ...data,
-                            value: [...data.value, [key, '']]
+                            value: data.value.map(([k, v], i) =>
+                              i === index ? [k, value] : [k, v]
+                            )
                           })
-                        }
-                      })
-                    }}
-                  >
-                    Add Translation
-                  </Button>
-                </div>
+                        }}
+                      />
+                      <Button
+                        dangerous
+                        icon="tabler:trash"
+                        variant="plain"
+                        onClick={() => {
+                          setData({
+                            ...data,
+                            value: data.value.filter((_, i) => i !== index)
+                          })
+                        }}
+                      />
+                    </Flex>
+                  ))}
+                </Stack>
                 <Button
-                  className="mt-6 w-full"
+                  icon="tabler:plus"
+                  mt="lg"
+                  namespace="common.moduleManager"
+                  variant="plain"
+                  width="100%"
+                  onClick={() => {
+                    open(ModifyTranslationKeyModal, {
+                      openType: 'create',
+                      onSubmit: key => {
+                        if (data.value.some(([k]) => k === key))
+                          throw new Error('Translation key already exists')
+
+                        setData({
+                          ...data,
+                          value: [...data.value, [key, '']]
+                        })
+                      }
+                    })
+                  }}
+                >
+                  Add Translation
+                </Button>
+                <Button
                   icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
+                  mt="xl"
+                  width="100%"
                   onClick={handleSubmit}
                 >
                   {openType}
@@ -237,7 +237,7 @@ function ModifyCategoryModal({
           </WithQuery>
         )}
       </WithQueryData>
-    </div>
+    </Box>
   )
 }
 

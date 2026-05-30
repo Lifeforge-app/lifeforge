@@ -1,4 +1,4 @@
-import { ModuleHeader } from 'lifeforge-ui'
+import { ModuleHeader, Stack } from '@lifeforge/ui'
 
 import AvatarColumn from './components/AvatarColumn'
 import OrdinaryColumn from './components/OrdinaryColumn'
@@ -10,7 +10,7 @@ function AccountSettings() {
   return (
     <>
       <ModuleHeader />
-      <div className="mb-8 space-y-3">
+      <Stack mb="xl">
         <AvatarColumn />
         <OrdinaryColumn
           icon="tabler:user"
@@ -39,7 +39,7 @@ function AccountSettings() {
         <PasswordColumn />
         <TwoFAColumn />
         <QRLoginColumn />
-      </div>
+      </Stack>
     </>
   )
 }

@@ -1,8 +1,10 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { Button, OptionsColumn, SliderInput } from 'lifeforge-ui'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { Box, Button, Flex, OptionsColumn, SliderInput } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 function FontScaleSelector() {
   const { fontScale } = usePersonalization()
@@ -19,29 +21,36 @@ function FontScaleSelector() {
       icon="tabler:text-size"
       title={t('fontScaleSelector.title')}
     >
-      <div className="flex w-full flex-col items-center gap-6 md:flex-row">
-        <SliderInput
-          className="w-full"
-          max={2}
-          min={0.5}
-          namespace="common.personalization"
-          step={0.1}
-          value={selectedFontScale}
-          onChange={value => {
-            setSelectedFontScale(value)
-          }}
-        />
+      <Flex
+        align="center"
+        direction={{ base: 'column', md: 'row' }}
+        gap="lg"
+        mt={{ base: 'md', md: 'none' }}
+        width="100%"
+      >
+        <Box minWidth={{ md: '16em' }} width="100%">
+          <SliderInput
+            max={2}
+            min={0.5}
+            namespace="common.personalization"
+            step={0.1}
+            value={selectedFontScale}
+            onChange={value => {
+              setSelectedFontScale(value)
+            }}
+          />
+        </Box>
         <Button
-          className="w-full md:w-auto"
           disabled={selectedFontScale === fontScale}
           icon="tabler:check"
+          width={{ base: '100%', md: 'auto' }}
           onClick={() => {
             changeFontScale(selectedFontScale)
           }}
         >
           save
         </Button>
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import fs from 'fs'
 import prompts from 'prompts'
 
@@ -5,7 +6,6 @@ import { ROOT_DIR } from '@/constants/constants'
 import logger from '@/utils/logger'
 
 import { AVAILABLE_TEMPLATE_MODULE_TYPES } from '../../handlers/createModuleHandler'
-import chalk from 'chalk'
 
 export async function promptModuleType(): Promise<
   keyof typeof AVAILABLE_TEMPLATE_MODULE_TYPES

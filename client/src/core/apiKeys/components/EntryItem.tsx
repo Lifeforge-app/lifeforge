@@ -1,31 +1,36 @@
-import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import copy from 'copy-to-clipboard'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime.js'
+import { useCallback, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { useFederation } from '@lifeforge/shared'
 import {
+  Box,
   Button,
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  Flex,
+  Icon,
   OptionsColumn,
-  TagChip
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { useFederation } from 'shared'
-import COLORS from 'tailwindcss/colors'
+  TAILWIND_PALETTE,
+  TagChip,
+  Text,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
+import type { APIKeyEntry } from '..'
 import ModifyAPIKeyModal from '../modals/ModifyAPIKeyModal'
 import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
 
 dayjs.extend(relativeTime)
 
-function EntryItem({ entry }: { entry: any }) {
+function EntryItem({ entry }: { entry: APIKeyEntry }) {
   const { t } = useTranslation('common.apiKeys')
 
   const { modules } = useFederation()
@@ -37,8 +42,7 @@ function EntryItem({ entry }: { entry: any }) {
   const [isCopying, setIsCopying] = useState(false)
 
   const deleteMutation = useMutation(
-    forgeAPI
-      .untyped('apiKeys/entries/remove')
+    forgeAPI.apiKeys.entries.remove
       .input({
         id: entry.id
       })
@@ -63,8 +67,7 @@ function EntryItem({ entry }: { entry: any }) {
     setIsCopying(true)
 
     try {
-      const key = await forgeAPI
-        .untyped('apiKeys/entries/get')
+      const key = await forgeAPI.apiKeys.entries.get
         .input({
           keyId: entry.id
         })
@@ -108,55 +111,68 @@ function EntryItem({ entry }: { entry: any }) {
       key={entry.id}
       description={
         modulesRequiredCount > 0 && (
-          <p className="text-bg-500 mt-2 flex items-center gap-1">
-            {t('misc.requiredBy', { count: modulesRequiredCount })}
-            <Button
-              className="p-1!"
-              icon="tabler:info-circle"
-              variant="plain"
-              onClick={() =>
-                open(ModulesRequiredListModal, {
-                  keyId: entry.keyId
-                })
-              }
-            />
-          </p>
+          <Box mt="sm">
+            <Flex align="center" gap="sm">
+              <Text color="muted">
+                {t('misc.requiredBy', { count: modulesRequiredCount })}
+              </Text>
+              <Button
+                icon="tabler:info-circle"
+                p="xs"
+                variant="plain"
+                onClick={() =>
+                  open(ModulesRequiredListModal, {
+                    keyId: entry.keyId
+                  })
+                }
+              />
+            </Flex>
+          </Box>
         )
       }
       icon={entry.icon}
       title={
         <>
-          {entry.name}
-          <code className="text-bg-500 text-sm">({entry.keyId})</code>
+          <Text>
+            {entry.name}
+            <Box asChild ml="sm">
+              <Text as="code" color="muted" size="sm">
+                ({entry.keyId})
+              </Text>
+            </Box>
+          </Text>
           <TagChip
-            className="ml-2 text-xs!"
-            color={entry.exposable ? COLORS.green['500'] : COLORS.red['500']}
+            color={
+              entry.exposable
+                ? TAILWIND_PALETTE.green['500']
+                : TAILWIND_PALETTE.red['500']
+            }
             icon={entry.exposable ? 'tabler:world' : 'tabler:lock'}
-            iconClassName="size-3.5!"
             label={
               entry.exposable ? t('misc.exposable') : t('misc.internalOnly')
             }
+            ml="sm"
+            size="sm"
           />
         </>
       }
     >
-      <div className="w-full">
-        <code className="flex items-center gap-1 text-lg md:justify-end">
+      <Box mr="sm">
+        <Flex align="center" gap="sm" justify={{ base: 'start', md: 'end' }}>
           {Array(12)
             .fill(0)
             .map((_, i) => (
-              <Icon key={i} className="size-1" icon="tabler:circle-filled" />
+              <Icon key={i} icon="tabler:circle-filled" size="4px" />
             ))}
-          <span className="ml-0.5">{entry.key}</span>
-        </code>
-        <span className="text-bg-500 text-sm">
+          <Text size="lg">{entry.key}</Text>
+        </Flex>
+        <Text as="code" color="muted">
           {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}
-        </span>
-      </div>
-      <div className="ml-2 flex gap-2">
+        </Text>
+      </Box>
+      <Flex gap="sm">
         {entry.exposable && (
           <Button
-            className="shrink-0"
             icon="tabler:copy"
             loading={isCopying}
             variant="plain"
@@ -178,7 +194,7 @@ function EntryItem({ entry }: { entry: any }) {
             onClick={handleDeleteEntry}
           />
         </ContextMenu>
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

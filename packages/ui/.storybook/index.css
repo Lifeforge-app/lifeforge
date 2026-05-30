@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+
+@import '../src/styles/index.css';
+
+.sb-show-main {
+  & input[type='radio'] {
+    background-color: var(--color-bg-200) !important;
+    height: 1rem;
+    width: 1rem;
+    appearance: none;
+    border-radius: 9999px;
+
+    &:checked {
+      border-color: transparent;
+      background-color: #3b82f6 !important;
+    }
+  }
+}
+
+#storybook-root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  flex-direction: column;
+}
+
+.sb-show-main {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.sbdocs-title {
+  margin-bottom: 0 !important;
+
+  & + p {
+    margin-top: 0.5rem !important;
+  }
+}
+
+.css-o1d7ko {
+  white-space: nowrap !important;
+}
+
+.css-1ije3e2 * {
+  max-width: 18rem;
+  word-break: break-all !important;
+}
+
+.css-wzniqs {
+  margin-bottom: 0 !important;
+
+  & + p {
+    margin-top: 0.5rem !important;
+  }
+}
+
+.sb-show-main {
+  &.sb-main-padded {
+    padding: 0 !important;
+  }
+}
+
+body:has(#storybook-docs) {
+  background-color: rgb(27, 28, 29) !important;
+}
+
+.prismjs .token {
+  font-family: 'JetBrains Mono', monospace !important;
+}

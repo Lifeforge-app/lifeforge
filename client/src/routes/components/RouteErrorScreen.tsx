@@ -1,5 +1,6 @@
-import { ErrorScreen } from 'lifeforge-ui'
 import { useRouteError } from 'react-router'
+
+import { ErrorScreen } from '@lifeforge/ui'
 
 function RouteErrorScreen() {
   const error = useRouteError()

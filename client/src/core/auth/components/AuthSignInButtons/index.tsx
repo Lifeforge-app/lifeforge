@@ -1,9 +1,10 @@
-import { Button, useModalStore } from 'lifeforge-ui'
 import { memo } from 'react'
-import { useTranslation } from 'react-i18next'
+
+import { Box, Button, Grid, useModalStore } from '@lifeforge/ui'
 
 import QRLoginModal from '@/core/auth/modals/QRLoginModal'
 
+import OrAuthWithDivider from '../OrAuthWithDivider'
 import SignInButton from './components/SignInButton'
 import SigninWithProviderButton from './components/SigninWithProviderButton'
 
@@ -16,22 +17,18 @@ function AuthSignInButton({
   signIn: () => void
   providers: string[]
 }) {
-  const { t } = useTranslation('common.auth')
-
   const { open } = useModalStore()
 
   return (
-    <div className="mt-6 space-y-3">
+    <Box mt="lg">
       <SignInButton loading={loading} signIn={signIn} />
-      <div className="my-6! flex items-center gap-3">
-        <div className="bg-bg-400 dark:bg-bg-700 h-[1.5px] w-full"></div>
-        <div className="text-bg-400 dark:text-bg-700 shrink-0 font-medium">
-          {t('orAuthenticateWith')}
-        </div>
-        <div className="bg-bg-400 dark:bg-bg-700 h-[1.5px] w-full"></div>
-      </div>
+      <OrAuthWithDivider />
       {providers.length > 0 && (
-        <div className="grid w-full grid-cols-2 gap-3">
+        <Grid
+          gap="md"
+          mb="md"
+          templateCols="repeat(auto-fit, minmax(150px, 1fr))"
+        >
           {providers.map(provider => (
             <SigninWithProviderButton
               key={provider}
@@ -39,18 +36,18 @@ function AuthSignInButton({
               provider={provider}
             />
           ))}
-        </div>
+        </Grid>
       )}
       <Button
-        className="w-full"
         icon="tabler:qrcode"
         namespace="common.auth"
         variant="secondary"
+        width="100%"
         onClick={() => open(QRLoginModal, {})}
       >
         qrLogin.title
       </Button>
-    </div>
+    </Box>
   )
 }
 

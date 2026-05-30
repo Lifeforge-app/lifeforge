@@ -1,6 +1,12 @@
-import { Decrypt2Func, DecryptFunc, Encrypt2Func, EncryptFunc } from '@lifeforge/server-utils'
 import crypto from 'crypto'
 import CryptoJS from 'crypto-js'
+
+import {
+  Decrypt2Func,
+  DecryptFunc,
+  Encrypt2Func,
+  EncryptFunc
+} from '@lifeforge/server-utils'
 
 const ALGORITHM = 'aes-256-ctr'
 

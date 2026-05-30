@@ -1,4 +1,4 @@
-import { usePersonalization } from 'shared'
+import { usePersonalization } from '@lifeforge/shared'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 

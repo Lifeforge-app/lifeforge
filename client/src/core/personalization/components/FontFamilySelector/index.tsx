@@ -1,8 +1,15 @@
 import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
-import { Button, OptionsColumn, WithQuery, useModalStore } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import {
+  Button,
+  Flex,
+  OptionsColumn,
+  WithQuery,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -16,8 +23,7 @@ function FontFamilySelector() {
   const { fontFamily } = usePersonalization()
 
   const customFontQuery = useQuery(
-    forgeAPI
-      .untyped('user/customFonts/get')
+    forgeAPI.user.customFonts.get
       .input({
         id: fontFamily.replace('custom:', '')
       })
@@ -43,7 +49,12 @@ function FontFamilySelector() {
         </>
       }
     >
-      <div className="flex w-full flex-col items-center gap-6 md:flex-row">
+      <Flex
+        align="center"
+        direction={{ base: 'column', md: 'row' }}
+        gap="lg"
+        width="100%"
+      >
         {fontFamily.startsWith('custom:') ? (
           <WithQuery query={customFontQuery}>
             {customFont => (
@@ -64,20 +75,20 @@ function FontFamilySelector() {
               fontFamily
             }}
           >
-            {fontFamily}
+            {fontFamily || 'Onest'}
           </div>
         )}
         <Button
-          className="w-full md:w-auto"
           icon="tabler:text-size"
           variant="secondary"
+          width={{ base: '100%', md: 'auto' }}
           onClick={() => {
             open(FontFamilySelectorModal, {})
           }}
         >
           Select
         </Button>
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

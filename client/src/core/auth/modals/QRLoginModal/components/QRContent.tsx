@@ -1,65 +1,42 @@
-import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
-import { Button, LoadingScreen } from 'lifeforge-ui'
-import { QRCodeSVG } from 'qrcode.react'
 import { useTranslation } from 'react-i18next'
 
-import useQRLoginSession from '../hooks/useQRLoginSession'
+import {
+  Bordered,
+  Flex,
+  Icon,
+  Text,
+  Transition,
+  colorWithOpacity
+} from '@lifeforge/ui'
+
+import useQRLoginSession, { type QRStatus } from '../hooks/useQRLoginSession'
+import QRByStatus from './QRByStatus'
 
 dayjs.extend(duration)
 
-function QRByStatus({
-  status,
-  qrData,
-  refreshSession
-}: {
-  status: 'loading' | 'ready' | 'waiting' | 'approved' | 'expired' | 'error'
-  qrData: string
-  refreshSession: () => void
-}) {
-  const { t } = useTranslation('common.auth')
-
-  switch (status) {
-    case 'loading':
-      return (
-        <div className="flex-center size-full">
-          <LoadingScreen />
-        </div>
-      )
-    case 'ready':
-    case 'waiting':
-      return qrData ? (
-        <QRCodeSVG
-          bgColor="transparent"
-          className="size-full"
-          fgColor="currentColor"
-          level="M"
-          value={qrData}
-        />
-      ) : null
-    case 'approved':
-      return (
-        <div className="flex-center size-full">
-          <Icon className="size-10 text-green-500" icon="tabler:check" />
-        </div>
-      )
-    case 'expired':
-    case 'error':
-      return (
-        <Button
-          dangerous
-          className="w-full"
-          icon="tabler:refresh"
-          variant="secondary"
-          onClick={refreshSession}
-        >
-          {t('refresh')}
-        </Button>
-      )
-    default:
-      return null
+const STYLES = {
+  expired: {
+    border: colorWithOpacity('red-500', '70%'),
+    bg: colorWithOpacity('red-500', '20%')
+  },
+  approved: {
+    border: colorWithOpacity('green-500', '70%'),
+    bg: colorWithOpacity('green-500', '20%')
+  },
+  default: {
+    bg: colorWithOpacity('bg-500', '20%'),
+    border: colorWithOpacity('bg-500', '70%')
   }
+} as const
+
+const getStyle = (status: QRStatus) => {
+  if (status in STYLES) {
+    return STYLES[status as keyof typeof STYLES]
+  }
+
+  return STYLES.default
 }
 
 function QRContent({ onClose }: { onClose: () => void }) {
@@ -71,33 +48,37 @@ function QRContent({ onClose }: { onClose: () => void }) {
 
   return (
     <>
-      <div
-        className={`flex-center relative aspect-square w-full rounded-lg border-2 p-6 transition-all ${
-          status === 'expired'
-            ? 'border-red-300 bg-red-50 dark:border-red-800 dark:bg-red-950'
-            : status === 'approved'
-              ? 'border-green-300 bg-green-50 dark:border-green-800 dark:bg-green-950'
-              : 'border-bg-200 bg-bg-50 dark:border-bg-700 dark:bg-bg-800'
-        }`}
-      >
-        <QRByStatus
-          qrData={qrData}
-          refreshSession={refreshSession}
-          status={status}
-        />
-      </div>
+      <Transition>
+        <Bordered asChild borderWidth="2px" {...getStyle(status)}>
+          <Flex
+            centered
+            p="lg"
+            r="lg"
+            style={{ aspectRatio: '1/1' }}
+            width="100%"
+          >
+            <QRByStatus
+              qrData={qrData}
+              refreshSession={refreshSession}
+              status={status}
+            />
+          </Flex>
+        </Bordered>
+      </Transition>
       {(status === 'ready' || status === 'waiting') &&
         (() => (
           <>
             {timeLeft > 0 && (
-              <p className="text-bg-400 mt-4 text-center text-sm">
+              <Text align="center" color="muted" mt="md" size="sm">
                 {dayjs.duration(timeLeft, 'second').format('mm:ss')}
-              </p>
+              </Text>
             )}
-            <p className="text-bg-400 flex-center mt-4 gap-2 text-sm">
-              <Icon className="size-4" icon="svg-spinners:ring-resize" />
-              {t('qrLogin.waiting')}
-            </p>
+            <Flex asChild centered gap="sm" mt="md">
+              <Text color="muted" size="sm">
+                <Icon icon="svg-spinners:ring-resize" />
+                {t('qrLogin.waiting')}
+              </Text>
+            </Flex>
           </>
         ))()}
     </>

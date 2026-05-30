@@ -1,7 +1,6 @@
+import { PBService } from '@functions/database'
 import { Request, Response } from 'express'
 import Pocketbase from 'pocketbase'
-
-import { PBService } from '@functions/database'
 
 export default async function isAuthTokenValid(
   req: Request<unknown, unknown, unknown, unknown>,

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ClientError } from '@lifeforge/server-utils'
+import { PBService, checkExistence } from '@functions/database'
 import { Request } from 'express'
 
-import { PBService, checkExistence } from '@functions/database'
+import { ClientError } from '@lifeforge/server-utils'
 
 async function check(
   pb: PBService<any>,

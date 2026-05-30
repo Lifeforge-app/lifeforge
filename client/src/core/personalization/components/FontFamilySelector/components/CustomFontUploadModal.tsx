@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
-import { getFormFileFieldInitialData } from 'shared'
+
+import { getFormFileFieldInitialData } from '@lifeforge/shared'
+import { FormModal, defineForm } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -18,8 +19,7 @@ function CustomFontUploadModal({
   const queryClient = useQueryClient()
 
   const uploadMutation = useMutation(
-    forgeAPI
-      .untyped('user/customFonts/upload')
+    forgeAPI.user.customFonts.upload
       .input({
         id: openType === 'edit' && initialData ? initialData.id : undefined
       })

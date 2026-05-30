@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'shared'
+
+import { useNavigate } from '@lifeforge/shared'
 
 function index() {
   const navigate = useNavigate()
@@ -18,14 +19,6 @@ function index() {
     navigate(-1)
     toast.success(t('redirected'))
   }, [])
-
-  return (
-    <>
-      <div className="flex size-full items-center justify-center">
-        <p className="text-bg-500 text-2xl font-medium">{t('redirecting')}</p>
-      </div>
-    </>
-  )
 }
 
 export default index

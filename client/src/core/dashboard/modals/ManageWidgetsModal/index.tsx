@@ -1,4 +1,4 @@
-import { ModalHeader } from 'lifeforge-ui'
+import { Box, ModalHeader, Stack } from '@lifeforge/ui'
 
 import type { WidgetEntry } from '../../providers/WidgetProvider'
 import ComponentListItem from './components/ComponentItem'
@@ -11,14 +11,14 @@ function ManageWidgetsModal({
   data: { widgets: Record<string, WidgetEntry> }
 }) {
   return (
-    <div className="min-w-[40vw]">
+    <Box minWidth="40vw">
       <ModalHeader
         icon="tabler:apps"
         namespace="common.dashboard"
         title="Manage Widgets"
         onClose={onClose}
       />
-      <ul className="space-y-2 overflow-y-auto">
+      <Stack as="ul">
         {Object.entries(widgets).map(
           ([key, { icon, minW, minH, maxW, maxH, namespace }]) => (
             <ComponentListItem
@@ -33,8 +33,8 @@ function ManageWidgetsModal({
             />
           )
         )}
-      </ul>
-    </div>
+      </Stack>
+    </Box>
   )
 }
 

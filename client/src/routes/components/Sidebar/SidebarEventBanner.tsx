@@ -1,11 +1,13 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { useMemo } from 'react'
-import { useMainSidebarState } from 'shared'
-import { usePersonalization } from 'shared'
-import { useAuth } from 'shared'
 import tinycolor from 'tinycolor2'
+
+import {
+  useAuth,
+  useMainSidebarState,
+  usePersonalization
+} from '@lifeforge/shared'
+import { COLORS, Flex, Icon, Text } from '@lifeforge/ui'
 
 function addNumberSuffix(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']
@@ -58,7 +60,7 @@ const getEventIcon = (eventType: string) => {
   return iconMap[eventType] || ''
 }
 
-const SidebarEventBanner = () => {
+export default function SidebarEventBanner() {
   const { sidebarExpanded } = useMainSidebarState()
 
   const { derivedThemeColor: themeColor } = usePersonalization()
@@ -72,35 +74,39 @@ const SidebarEventBanner = () => {
 
   if (!sidebarExpanded || !eventType || !userData) return <></>
 
-  const textColor = tinycolor(themeColor).isLight()
-    ? 'text-bg-800'
-    : 'text-bg-50'
-
   const bgColor =
-    eventType === 'christmas' ? 'bg-[#f14e63] text-bg-100!' : 'bg-custom-500'
+    eventType === 'christmas'
+      ? {
+          backgroundColor: '#f14e63',
+          color: COLORS['bg-100']
+        }
+      : {
+          backgroundColor: COLORS['custom-500'],
+          color: tinycolor(themeColor).isLight()
+            ? COLORS['bg-800']
+            : COLORS['bg-100']
+        }
 
   return (
-    <div
-      className={clsx(
-        'flex-between flex w-full gap-2 rounded-tr-2xl p-4 text-lg font-medium whitespace-nowrap',
-        bgColor,
-        textColor
-      )}
-    >
-      <div className="flex w-full min-w-0 items-center gap-3">
-        {eventType === 'christmas' && (
-          <Icon
-            className="shrink-0 text-2xl"
-            icon="mingcute:christmas-hat-line"
-          />
-        )}
-        <p className="line-clamp-2 w-full whitespace-normal">
-          {getEventMessage(eventType, userData.name, userData.dateOfBirth)}
-        </p>
-      </div>
-      <Icon className="text-2xl" icon={getEventIcon(eventType)} />
-    </div>
+    <Text asChild size="lg" weight="medium" whiteSpace="nowrap">
+      <Flex
+        align="center"
+        gap="sm"
+        justify="between"
+        p="md"
+        rtr="2xl"
+        style={bgColor}
+      >
+        <Flex align="center" gap="sm">
+          {eventType === 'christmas' && (
+            <Icon icon="mingcute:christmas-hat-line" size="1.5em" />
+          )}
+          <Text as="p" lineClamp={2} whiteSpace="normal">
+            {getEventMessage(eventType, userData.name, userData.dateOfBirth)}
+          </Text>
+        </Flex>
+        <Icon icon={getEventIcon(eventType)} size="1.5em" />
+      </Flex>
+    </Text>
   )
 }
-
-export default SidebarEventBanner

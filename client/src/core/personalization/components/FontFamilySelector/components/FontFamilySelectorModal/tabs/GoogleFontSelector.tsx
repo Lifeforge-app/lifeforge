@@ -1,4 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
+import _ from 'lodash'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { AutoSizer } from 'react-virtualized'
+
+import { usePersonalization } from '@lifeforge/shared'
 import {
   EmptyStateScreen,
   Listbox,
@@ -7,11 +12,7 @@ import {
   Scrollbar,
   SearchInput,
   WithQuery
-} from 'lifeforge-ui'
-import _ from 'lodash'
-import { useEffect, useMemo, useRef, useState } from 'react'
-import { AutoSizer } from 'react-virtualized'
-import { usePersonalization } from 'shared'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -90,13 +91,13 @@ function GoogleFontSelector({
     enabled: boolean
     items: FontFamily[]
   }>(
-    forgeAPI.untyped('user/personalization/listGoogleFonts').queryOptions({
+    forgeAPI.user.personalization.listGoogleFonts.queryOptions({
       enabled: apiKeyAvailable.data === true
     })
   )
 
   const pinnedFontsQuery = useQuery<string[]>(
-    forgeAPI.untyped('user/personalization/listGoogleFontsPin').queryOptions({
+    forgeAPI.user.personalization.listGoogleFontsPin.queryOptions({
       enabled: apiKeyAvailable.data === true
     })
   )
@@ -158,12 +159,12 @@ function GoogleFontSelector({
           <>
             <div className="mb-4 flex flex-col items-center gap-2 md:flex-row">
               <Listbox
-                buttonContent={
+                className="component-bg-lighter-with-hover md:max-w-56"
+                renderContent={() => (
                   <span>
                     {_.startCase(selectedCategory || '') || 'All category'}
                   </span>
-                }
-                className="component-bg-lighter-with-hover md:max-w-56"
+                )}
                 value={selectedCategory}
                 onChange={setSelectedCategory}
               >

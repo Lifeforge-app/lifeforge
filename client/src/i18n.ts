@@ -4,20 +4,39 @@ import { initReactI18next } from 'react-i18next'
 
 import forgeAPI from './forgeAPI'
 
-const AVAILABLE_LANG = (await fetch(
-  `${import.meta.env.VITE_API_HOST}/locales/listLanguages`
-)
-  .then(res => res.json())
-  .then(data => data.data)) as {
+export let AVAILABLE_LANG: {
   name: string
   alternative?: string[]
   icon: string
-}[]
+}[] = [{ name: 'en', icon: 'circle-flags:gb' }]
 
-i18n
-  .use(I18NextHttpBackend)
-  .use(initReactI18next)
-  .init({
+i18n.use(I18NextHttpBackend).use(initReactI18next)
+
+export async function initI18n() {
+  if (i18n.isInitialized) {
+    return i18n
+  }
+
+  try {
+    const langRes = await fetch(
+      `${import.meta.env.VITE_API_HOST}/locales/listLanguages`
+    )
+
+    if (langRes.ok) {
+      const data = await langRes.json()
+
+      if (data?.data) {
+        AVAILABLE_LANG = data.data
+      }
+    }
+  } catch (err) {
+    console.warn(
+      'Failed to fetch available languages, falling back to default:',
+      err
+    )
+  }
+
+  await i18n.init({
     lng: 'en',
     fallbackLng: 'en',
     cache: {
@@ -45,7 +64,7 @@ i18n
         return
       }
 
-      await forgeAPI.untyped('locales/notifyMissing').mutate({
+      await forgeAPI.locales.notifyMissing.mutate({
         namespace,
         key
       })
@@ -67,7 +86,7 @@ i18n
           return
         }
 
-        return forgeAPI.untyped('locales/getLocale').input({
+        return forgeAPI.locales.getLocale.input({
           lang: langs[0],
           namespace: namespace as 'apps' | 'common',
           subnamespace: subnamespace
@@ -78,8 +97,6 @@ i18n
       }
     }
   })
-  .catch(err => {
-    console.error('Failed to initialize i18n: ', err)
-  })
 
-export default i18n
+  return i18n
+}

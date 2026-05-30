@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { usePromiseLoading } from 'shared'
+
+import { usePromiseLoading } from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -53,11 +54,9 @@ function useQRLoginApproval(scannedData: string) {
     if (!sessionData) return
 
     try {
-      const response = await forgeAPI
-        .untyped<{ browserInfo: string }>('/user/qrLogin/approveQRLogin')
-        .mutate({
-          sessionId: sessionData.sessionId
-        } as never)
+      const response = await forgeAPI.user.qrLogin.approveQRLogin.mutate({
+        sessionId: sessionData.sessionId
+      } as never)
 
       setBrowserInfo(response.browserInfo)
       setStep('success')

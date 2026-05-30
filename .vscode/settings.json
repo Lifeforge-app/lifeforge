@@ -1,5 +1,15 @@
 {
-  "cSpell.words": ["ITMDB", "nuqs", "Sizer", "subnamespace"],
+  "cSpell.words": [
+    "Bg",
+    "centered",
+    "color",
+    "datepicker",
+    "ITMDB",
+    "nuqs",
+    "Sizer",
+    "subnamespace",
+    "vars"
+  ],
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.experimental.useTsgo": false
 }

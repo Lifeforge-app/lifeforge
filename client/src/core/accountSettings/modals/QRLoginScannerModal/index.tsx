@@ -1,4 +1,4 @@
-import { ModalHeader } from 'lifeforge-ui'
+import { Box, ModalHeader } from '@lifeforge/ui'
 
 import InnerContent from './components/InnerContent'
 
@@ -12,7 +12,7 @@ function QRLoginApprovalModal({
   }
 }) {
   return (
-    <div className="min-w-[40vw]">
+    <Box minWidth="40vw">
       <ModalHeader
         icon="tabler:qrcode"
         namespace="common.auth"
@@ -20,7 +20,7 @@ function QRLoginApprovalModal({
         onClose={onClose}
       />
       <InnerContent scannedData={scannedData} onClose={onClose} />
-    </div>
+    </Box>
   )
 }
 

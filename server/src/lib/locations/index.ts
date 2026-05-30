@@ -1,7 +1,7 @@
-import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
+import searchLocations from '@functions/external/location'
 import z from 'zod'
 
-import searchLocations from '@functions/external/location'
+import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'locations')
 

@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { DataRouter } from 'shared'
-import { createBrowserRouter, useAuth, useFederation } from 'shared'
+
+import type { DataRouter } from '@lifeforge/shared'
+import { createBrowserRouter, useAuth, useFederation } from '@lifeforge/shared'
 
 import {
   createAuthLoadingConfig,
@@ -61,5 +62,17 @@ export function useAppRouter() {
     return appRouter ?? loadingRouter
   }, [auth, authLoading, modulesLoading, appRouter, loadingRouter, authRouter])
 
-  return { router, isAuthenticated: !!auth }
+  const routerKey = useMemo(() => {
+    if (authLoading || modulesLoading) {
+      return 'loading'
+    }
+
+    if (!auth) {
+      return 'auth'
+    }
+
+    return appRouter ? 'app' : 'loading'
+  }, [auth, authLoading, modulesLoading, appRouter])
+
+  return { router, isAuthenticated: !!auth, routerKey }
 }

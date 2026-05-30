@@ -1,17 +1,20 @@
-import { Icon } from '@iconify/react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
+import prettyBytes from 'pretty-bytes'
+import { useCallback, useState } from 'react'
+import { toast } from 'react-toastify'
+
 import {
-  Button,
+  Box,
   Card,
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  Flex,
+  Icon,
+  Text,
   useModalStore
-} from 'lifeforge-ui'
-import prettyBytes from 'pretty-bytes'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -31,8 +34,7 @@ function BackupItem({
   const [downloadLoading, setDownloadLoading] = useState(false)
 
   const deleteMutation = useMutation(
-    forgeAPI
-      .untyped('backups/remove')
+    forgeAPI.backups.remove
       .input({
         key: backup.key
       })
@@ -49,8 +51,7 @@ function BackupItem({
   const handleDownloadBackup = useCallback(async () => {
     setDownloadLoading(true)
 
-    const buffer = (await forgeAPI
-      .untyped('backups/download')
+    const buffer = (await forgeAPI.backups.download
       .input({
         key: backup.key
       })
@@ -90,43 +91,26 @@ function BackupItem({
   }, [backup.key])
 
   return (
-    <Card as="li" className="flex-between gap-6">
-      <div className="flex w-full min-w-0 items-center gap-3">
-        <Icon
-          className="text-bg-500 ml-2 size-7 shrink-0"
-          icon="tabler:file-zip"
-        />
-        <div className="w-full min-w-0">
-          <h3 className="flex w-full min-w-0 items-end gap-2 text-lg font-medium">
-            <p className="truncate">{backup.key}</p>{' '}
-            <p className="text-bg-500 mb-0.5 block text-sm whitespace-nowrap">
-              ({prettyBytes(backup.size)})
-            </p>
-          </h3>
-          <p className="text-bg-500 mt-1 text-sm">
+    <Card align="center" as="li" direction="row" gap="lg" justify="between">
+      <Flex align="center" gap="md" minWidth="0" width="100%">
+        <Icon color="muted" icon="tabler:file-zip" ml="sm" size="2em" />
+        <Box minWidth="0" width="100%">
+          <Flex asChild align="baseline" gap="sm" minWidth="0" width="100%">
+            <Text as="h3" weight="medium">
+              <Text truncate size="lg">
+                {backup.key}
+              </Text>{' '}
+              <Text color="muted" size="sm" whiteSpace="nowrap">
+                ({prettyBytes(backup.size)})
+              </Text>
+            </Text>
+          </Flex>
+          <Text color="muted" mt="xs" size="sm">
             {dayjs(backup.modified).format('MMM D, YYYY h:mm A')}
-          </p>
-        </div>
-      </div>
-      <div className="hidden shrink-0 items-center gap-2 sm:flex">
-        <Button
-          icon="tabler:download"
-          loading={downloadLoading}
-          variant="plain"
-          onClick={handleDownloadBackup}
-        />
-        <Button
-          dangerous
-          icon="tabler:trash"
-          variant="plain"
-          onClick={handleDeleteBackup}
-        />
-      </div>
-      <ContextMenu
-        classNames={{
-          wrapper: 'flex sm:hidden'
-        }}
-      >
+          </Text>
+        </Box>
+      </Flex>
+      <ContextMenu>
         <ContextMenuItem
           icon="tabler:download"
           label="Download"

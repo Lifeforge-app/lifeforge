@@ -1,10 +1,13 @@
-import { Button, OTPInputBox, ResendOTPButton, TextInput } from 'lifeforge-ui'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { Button, OTPInputBox, Stack, Text, TextInput } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
+
+import ResendOTPButton from './ResendOTPButton'
 
 function UsingEmail({
   callback
@@ -46,10 +49,7 @@ function UsingEmail({
     setSendOtpLoading(true)
 
     try {
-      const res = await forgeAPI
-        .untyped('user/2fa/requestOTP')
-        .input({ email })
-        .query()
+      const res = await forgeAPI.user['2fa'].requestOTP.input({ email }).query()
 
       tid.current = res
       setOtpSent(true)
@@ -94,60 +94,58 @@ function UsingEmail({
 
   return (
     <>
-      <p className="mb-6">{t('modals.twoFA.emailDescription')}</p>
-      <div className="flex-center w-full flex-col">
-        {otpSent ? (
-          <div className="space-y-3">
-            <OTPInputBox
-              buttonFullWidth
-              lighter
-              otp={otp}
-              setOtp={setOTP}
-              verifyOTP={async otp => {
-                setVerifyOtpLoading(true)
-                callback(otp).finally(() => {
-                  setVerifyOtpLoading(false)
-                })
-              }}
-              verifyOtpLoading={verifyOtpLoading}
-            />
-            <ResendOTPButton
-              buttonFullWidth
-              otpCooldown={otpCooldown}
-              sendOtpLoading={sendOtpLoading}
-              onClick={() => {
-                setEmail('')
-                setOtpSent(false)
-                setOtpCooldown(0)
-                localStorage.removeItem(`otpId:2fa`)
-                localStorage.removeItem(`otpCooldown:2fa`)
-              }}
-            />
-          </div>
-        ) : (
-          <>
-            <TextInput
-              className="mb-4 w-full"
-              icon="tabler:mail"
-              inputMode="email"
-              label="modals.twoFA.inputs.email"
-              namespace="common.auth"
-              placeholder="johndoe@gmail.com"
-              value={email}
-              onChange={setEmail}
-            />
-            <Button
-              className="w-full"
-              icon="tabler:mail"
-              loading={sendOtpLoading}
-              namespace="common.vault"
-              onClick={requestOTP}
-            >
-              otp.buttons.request
-            </Button>
-          </>
-        )}
-      </div>
+      <Text color="muted" mb="lg">
+        {t('modals.twoFA.emailDescription')}
+      </Text>
+      {otpSent ? (
+        <Stack>
+          <OTPInputBox
+            lighter
+            otp={otp}
+            setOtp={setOTP}
+            verifyOTP={async otp => {
+              setVerifyOtpLoading(true)
+              callback(otp).finally(() => {
+                setVerifyOtpLoading(false)
+              })
+            }}
+            verifyOtpLoading={verifyOtpLoading}
+          />
+          <ResendOTPButton
+            otpCooldown={otpCooldown}
+            sendOtpLoading={sendOtpLoading}
+            onClick={() => {
+              setEmail('')
+              setOtpSent(false)
+              setOtpCooldown(0)
+              localStorage.removeItem(`otpId:2fa`)
+              localStorage.removeItem(`otpCooldown:2fa`)
+            }}
+          />
+        </Stack>
+      ) : (
+        <>
+          <TextInput
+            icon="tabler:mail"
+            inputMode="email"
+            label="modals.twoFA.inputs.email"
+            namespace="common.auth"
+            placeholder="johndoe@gmail.com"
+            value={email}
+            onChange={setEmail}
+          />
+          <Button
+            icon="tabler:mail"
+            loading={sendOtpLoading}
+            mt="lg"
+            namespace="common.vault"
+            width="100%"
+            onClick={requestOTP}
+          >
+            otp.buttons.request
+          </Button>
+        </>
+      )}
     </>
   )
 }

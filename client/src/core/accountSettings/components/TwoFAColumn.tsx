@@ -1,8 +1,8 @@
-import { OptionsColumn, Switch } from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { Flex, OptionsColumn, Switch, Text, useModalStore } from '@lifeforge/ui'
 
 import DisableTwoFAModal from '../modals/DisableTwoFAModal'
 import EnableTwoFAModal from '../modals/EnableTwoFAModal'
@@ -31,15 +31,15 @@ function TwoFAColumn() {
         icon="tabler:lock-access"
         title={t('settings.title.twoFA')}
       >
-        <div className="flex w-full items-center justify-between gap-3">
-          <span className="text-bg-500">
+        <Flex align="center" gap="md" justify="between" width="100%">
+          <Text color="muted">
             {t(userData.twoFAEnabled ? 'misc.enabled' : 'misc.disabled')}
-          </span>
+          </Text>
           <Switch
             value={userData.twoFAEnabled}
             onChange={handleToggle2FAModal}
           />
-        </div>
+        </Flex>
       </OptionsColumn>
     </>
   )

@@ -1,15 +1,16 @@
 import { useMutation } from '@tanstack/react-query'
+import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
+import { usePersonalization } from '@lifeforge/shared'
 import {
   Button,
   ConfirmationModal,
   FilePickerModal,
-  OptionsColumn
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
-import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import { usePersonalization } from 'shared'
+  OptionsColumn,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -29,7 +30,7 @@ function BgImageSelector() {
   }, [])
 
   const deleteMutation = useMutation(
-    forgeAPI.untyped('user/personalization/deleteBgImage').mutationOptions({
+    forgeAPI.user.personalization.deleteBgImage.mutationOptions({
       onSuccess: () => {
         setBgImage('')
         setBackdropFilters({
@@ -59,11 +60,9 @@ function BgImageSelector() {
 
   async function onSubmit(file: string | File) {
     try {
-      const data = await forgeAPI
-        .untyped('user/personalization/updateBgImage')
-        .mutate({
-          file
-        })
+      const data = await forgeAPI.user.personalization.updateBgImage.mutate({
+        file
+      })
 
       setBgImage(forgeAPI.getMedia(data))
       toast.success('Background image updated')

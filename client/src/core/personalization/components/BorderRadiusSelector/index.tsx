@@ -1,7 +1,9 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
-import { Listbox, ListboxOption, OptionsColumn } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { usePersonalization } from 'shared'
+
+import { usePersonalization } from '@lifeforge/shared'
+import { Listbox, ListboxOption, OptionsColumn } from '@lifeforge/ui'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 import BorderRadiusIcon from './components/BorderRadiusIcon'
 
@@ -29,7 +31,8 @@ function BorderRadiusSelector() {
       title={t('borderRadiusSelector.title')}
     >
       <Listbox
-        buttonContent={
+        className="component-bg-lighter min-w-48"
+        renderContent={() => (
           <div className="flex items-center gap-2">
             <BorderRadiusIcon radius={borderRadiusMultiplier} />
             <span className="-mt-px block truncate">
@@ -42,8 +45,7 @@ function BorderRadiusSelector() {
               )}
             </span>
           </div>
-        }
-        className="component-bg-lighter min-w-48"
+        )}
         value={borderRadiusMultiplier}
         onChange={value => {
           changeBorderRadiusMultiplier(value)

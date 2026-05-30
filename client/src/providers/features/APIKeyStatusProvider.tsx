@@ -1,7 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
-import { Button, Card, EmptyStateScreen, WithQuery } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { Link, type ModuleCategory } from 'shared'
+
+import { Link, type ModuleCategory } from '@lifeforge/shared'
+import {
+  Button,
+  Card,
+  EmptyStateScreen,
+  Stack,
+  Text,
+  WithQuery
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -19,7 +27,8 @@ function APIKeyStatusProvider({
     .map(([key]) => key)
 
   const hasRequiredAPIKeysQuery = useQuery(
-    forgeAPI.checkAPIKeys({
+    forgeAPI
+      .checkAPIKeys({
         keys: requiredAPIKeys.join(',')
       })
       .queryOptions({
@@ -40,32 +49,45 @@ function APIKeyStatusProvider({
                 message={{
                   title: t('missing.title'),
                   description: (
-                    <div className="flex-center w-full flex-col gap-4 space-y-3 px-8 sm:w-3/4 lg:w-1/2">
-                      <p className="text-bg-400 dark:text-bg-600 text-center text-lg">
+                    <Stack
+                      centered
+                      px="xl"
+                      width={{
+                        sm: '75%',
+                        lg: '50%'
+                      }}
+                    >
+                      <Text align="center" as="p" color="muted" size="lg">
                         {t('missing.description')}
-                      </p>
+                      </Text>
                       {requiredAPIKeys.map((key, index) => (
-                        <Card key={index} className="w-full">
-                          <code className="text-xl">{key}</code>
-                          <p className="text-bg-500 mt-1">
+                        <Card key={index} width="100%">
+                          <Text
+                            as="code"
+                            color={{ base: 'bg-800', dark: 'bg-100' }}
+                            size="lg"
+                          >
+                            {key}
+                          </Text>
+                          <Text as="p" color="muted" mt="xs">
                             {
                               APIKeyAccess?.[key as keyof typeof APIKeyAccess]
                                 .usage
                             }
-                          </p>
+                          </Text>
                         </Card>
                       ))}
                       <Button
                         as={Link}
-                        className="w-full"
                         icon="tabler:arrow-right"
                         iconPosition="end"
                         namespace="common.apiKeys"
                         to="/api-keys"
+                        width="100%"
                       >
                         configAPIKeys
                       </Button>
-                    </div>
+                    </Stack>
                   )
                 }}
               />

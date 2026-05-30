@@ -1,5 +1,6 @@
-import { ModalHeader } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+
+import { ModalHeader, Text } from '@lifeforge/ui'
 
 import QRContent from './components/QRContent'
 
@@ -14,7 +15,9 @@ function QRLoginModal({ onClose }: { onClose: () => void }) {
         title="qrLogin.title"
         onClose={onClose}
       />
-      <p className="text-bg-500 mb-6">{t('qrLogin.description')}</p>
+      <Text color="muted" mb="lg">
+        {t('qrLogin.description')}
+      </Text>
 
       <QRContent onClose={onClose} />
     </>

@@ -1,6 +1,7 @@
-import { OptionsColumn, SliderInput } from 'lifeforge-ui'
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
+
+import { OptionsColumn, SliderInput } from '@lifeforge/ui'
 
 function AdjustmentColumn({
   icon,
@@ -20,7 +21,7 @@ function AdjustmentColumn({
   return (
     <OptionsColumn
       breakpoint="md"
-      className="dark:bg-bg-800/30 min-w-0"
+      // className="dark:bg-bg-800/30 min-w-0"
       description={t(
         `bgImageSelector.modals.adjustBackground.columns.${_.camelCase(title)}.desc`
       )}

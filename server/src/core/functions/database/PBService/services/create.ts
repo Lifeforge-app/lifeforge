@@ -1,3 +1,7 @@
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+
 import {
   CleanedSchemas,
   CollectionKey,
@@ -7,10 +11,6 @@ import {
   ICreateData,
   ICreateFactory
 } from '@lifeforge/server-utils'
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
-
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
@@ -164,7 +164,10 @@ const create = <TSchemas extends CleanedSchemas>(
   collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
   ) => {
-    const finalCollectionName = toPocketBaseCollectionName(collection as string, module.id)
+    const finalCollectionName = toPocketBaseCollectionName(
+      collection as string,
+      module.id
+    )
 
     return new Create<TSchemas, TCollectionKey>(
       pb,

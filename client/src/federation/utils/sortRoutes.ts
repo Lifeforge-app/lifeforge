@@ -1,4 +1,4 @@
-import { type ModuleCategory, SYSTEM_CATEGORIES } from 'shared'
+import { type ModuleCategory, SYSTEM_CATEGORIES } from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -9,7 +9,7 @@ export type CategoryOrder = Record<string, Record<string, string>>
  */
 export async function fetchCategoryOrder(): Promise<CategoryOrder> {
   try {
-    return (await forgeAPI.untyped('modules/categories/list').query()) ?? {}
+    return (await forgeAPI.modules.categories.list.query()) ?? {}
   } catch (e) {
     console.warn('Failed to fetch category order:', e)
 

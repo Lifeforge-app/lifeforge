@@ -1,8 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { FormModal, defineForm } from 'lifeforge-ui'
 import { toast } from 'react-toastify'
 
+import { FormModal, defineForm } from '@lifeforge/ui'
+
 import forgeAPI from '@/forgeAPI'
+
+import type { APIKeyEntry } from '..'
 
 function ModifyAPIKeyModal({
   data: { type, initialData },
@@ -10,7 +13,7 @@ function ModifyAPIKeyModal({
 }: {
   data: {
     type: 'create' | 'update'
-    initialData?: any
+    initialData?: APIKeyEntry
   }
   onClose: () => void
 }) {
@@ -18,8 +21,8 @@ function ModifyAPIKeyModal({
 
   const mutation = useMutation(
     (type === 'create'
-      ? forgeAPI.untyped('apiKeys/entries/create')
-      : forgeAPI.untyped('apiKeys/entries/update').input({
+      ? forgeAPI.apiKeys.entries.create
+      : forgeAPI.apiKeys.entries.update.input({
           id: initialData?.id || ''
         })
     ).mutationOptions({

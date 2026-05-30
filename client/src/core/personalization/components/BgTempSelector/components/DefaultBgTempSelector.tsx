@@ -1,7 +1,8 @@
-import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
+
+import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
 const COLORS = ['bg-slate', 'bg-gray', 'bg-zinc', 'bg-neutral', 'bg-stone']
 

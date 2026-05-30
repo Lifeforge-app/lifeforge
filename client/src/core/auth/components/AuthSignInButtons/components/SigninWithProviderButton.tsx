@@ -1,9 +1,9 @@
-import { Button } from 'lifeforge-ui'
 import _ from 'lodash'
 import { memo, useCallback } from 'react'
 import { toast } from 'react-toastify'
-import { useSearchParams } from 'shared'
-import { useAuth } from 'shared'
+
+import { useAuth, useSearchParams } from '@lifeforge/shared'
+import { Button } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -20,7 +20,7 @@ function SigninWithProviderButton({
 
   const signInWithProvider = useCallback(async () => {
     const providerInstance = await fetch(
-      forgeAPI.untyped('user/oauth/getEndpoint').input({
+      forgeAPI.user.oauth.getEndpoint.input({
         provider
       }).endpoint
     )
@@ -50,7 +50,6 @@ function SigninWithProviderButton({
   return (
     <Button
       key={provider}
-      className="w-full"
       icon={`tabler:brand-${provider}`}
       loading={
         loading ||
@@ -59,6 +58,7 @@ function SigninWithProviderButton({
           searchParams.get('state') !== null)
       }
       variant="secondary"
+      width="100%"
       onClick={signInWithProvider}
     >
       {_.capitalize(provider)}

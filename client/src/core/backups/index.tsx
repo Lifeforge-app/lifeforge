@@ -1,13 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+
 import {
   Button,
   EmptyStateScreen,
   FAB,
   ModuleHeader,
+  Stack,
   WithQuery,
   useModalStore
-} from 'lifeforge-ui'
-import { useTranslation } from 'react-i18next'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -19,24 +21,14 @@ function Backups() {
 
   const { open } = useModalStore()
 
-  const backupsQuery = useQuery(
-    forgeAPI
-      .untyped<
-        {
-          key: string
-          size: number
-          modified: string
-        }[]
-      >('/backups/list')
-      .queryOptions()
-  )
+  const backupsQuery = useQuery(forgeAPI.backups.list.queryOptions())
 
   return (
     <>
       <ModuleHeader
         actionButton={
           <Button
-            className="hidden sm:flex"
+            display={{ base: 'none', sm: 'flex' }}
             icon="tabler:plus"
             tProps={{
               item: t('items.backup')
@@ -50,27 +42,25 @@ function Backups() {
         }
         totalItems={backupsQuery.data?.length ?? 0}
       />
-      <div className="flex-1">
-        <WithQuery query={backupsQuery}>
-          {data =>
-            data.length > 0 ? (
-              <ul className="flex flex-col gap-3">
-                {data.map(backup => (
-                  <BackupItem key={backup.key} backup={backup} />
-                ))}
-              </ul>
-            ) : (
-              <EmptyStateScreen
-                icon="tabler:history-off"
-                message={{
-                  id: 'noBackups',
-                  namespace: 'common.backups'
-                }}
-              />
-            )
-          }
-        </WithQuery>
-      </div>
+      <WithQuery query={backupsQuery}>
+        {data =>
+          data.length > 0 ? (
+            <Stack as="ul">
+              {data.map(backup => (
+                <BackupItem key={backup.key} backup={backup} />
+              ))}
+            </Stack>
+          ) : (
+            <EmptyStateScreen
+              icon="tabler:history-off"
+              message={{
+                id: 'noBackups',
+                namespace: 'common.backups'
+              }}
+            />
+          )
+        }
+      </WithQuery>
       <FAB
         onClick={() => {
           open(CreateBackupModal, {})

@@ -1,0 +1,71 @@
+:root {
+  interpolate-size: allow-keywords;
+  font-size: 14px;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  scrollbar-color: transparent transparent;
+  scrollbar-width: thin;
+  interpolate-size: allow-keywords;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  &::selection {
+    background-color: var(--color-custom-500);
+    color: var(--lf-selection-bg);
+  }
+}
+
+*:focus-visible {
+  outline: none !important;
+}
+
+input,
+textarea {
+  border: none;
+  caret-color: var(--color-custom-500) !important;
+}
+
+button {
+  cursor: pointer;
+
+  & > svg {
+    pointer-events: none;
+  }
+}
+
+code {
+  font-family: 'Jetbrains Mono', monospace;
+}
+
+@page {
+  size: A4 portrait;
+  margin: 10mm;
+}
+
+@media print {
+  .print-area footer {
+    position: fixed;
+    bottom: -5rem;
+    width: 100%;
+  }
+
+  .print-area {
+    page-break-inside: avoid;
+    zoom: 0.87;
+  }
+}
+
+#app {
+  font-size: var(--text-base);
+  vertical-align: bottom;
+}

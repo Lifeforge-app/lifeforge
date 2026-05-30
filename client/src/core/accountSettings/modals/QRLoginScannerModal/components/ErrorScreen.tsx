@@ -1,5 +1,11 @@
-import { Icon } from '@iconify/react'
-import { Button } from 'lifeforge-ui'
+import {
+  Button,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  colorWithOpacity
+} from '@lifeforge/ui'
 
 function ErrorScreen({
   onClose,
@@ -9,22 +15,29 @@ function ErrorScreen({
   errorMessage: string
 }) {
   return (
-    <div className="mt-4 flex flex-col items-center gap-4">
-      <div className="flex-center size-20 rounded-lg bg-red-500/20">
-        <Icon className="size-10 text-red-500" icon="tabler:alert-triangle" />
-      </div>
-      <div className="text-center">
-        <h3 className="text-xl font-medium">{errorMessage}</h3>
-      </div>
+    <Stack align="center" gap="lg" height="100dvh">
+      <Flex
+        bg={colorWithOpacity('dangerous', '20%')}
+        centered
+        height="5em"
+        r="lg"
+        width="5em"
+      >
+        <Icon color="dangerous" icon="tabler:alert-circle" size="2.25em" />
+      </Flex>
+      <Text size="xl" weight="medium">
+        {errorMessage}
+      </Text>
       <Button
-        className="mt-4 w-full"
         icon="tabler:x"
+        mt="md"
         variant="secondary"
+        width="100%"
         onClick={onClose}
       >
         Close
       </Button>
-    </div>
+    </Stack>
   )
 }
 

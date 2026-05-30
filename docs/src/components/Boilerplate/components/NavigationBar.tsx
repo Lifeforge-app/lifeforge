@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useMemo } from 'react'
-import { Link, useLocation } from 'shared'
+
+import { Link, useLocation } from '@lifeforge/shared'
 
 import ROUTES from '../../../Router'
 

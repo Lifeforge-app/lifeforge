@@ -1,8 +1,8 @@
-import { Button, ModalHeader } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { usePromiseLoading } from 'shared'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { ConfirmationModal } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -13,7 +13,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
 
   async function handleConfirm() {
     try {
-      await forgeAPI.untyped('user/2fa/disable').mutate({})
+      await forgeAPI.user['2fa'].disable.mutate({})
 
       setUserData(userData =>
         userData ? { ...userData, twoFAEnabled: false } : null
@@ -25,34 +25,16 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
     }
   }
 
-  const [loading, onConfirm] = usePromiseLoading(handleConfirm)
-
   return (
-    <div>
-      <ModalHeader
-        icon="tabler:lock-access-off"
-        namespace="common.accountSettings"
-        title="disable2FA"
-        onClose={onClose}
-      />
-
-      <p className="text-bg-500">{t('modals.disable2FA.description')}</p>
-      <div className="mt-6 flex w-full flex-col-reverse gap-2 sm:flex-row">
-        <Button className="sm:w-1/2" icon="" onClick={onClose}>
-          Cancel
-        </Button>
-        <Button
-          dangerous
-          className="sm:w-1/2"
-          icon="tabler:check"
-          loading={loading}
-          variant="secondary"
-          onClick={onConfirm}
-        >
-          Confirm
-        </Button>
-      </div>
-    </div>
+    <ConfirmationModal
+      data={{
+        title: t('modals.disable2FA.title'),
+        description: t('modals.disable2FA.description'),
+        confirmationButton: 'confirm',
+        onConfirm: handleConfirm
+      }}
+      onClose={onClose}
+    />
   )
 }
 

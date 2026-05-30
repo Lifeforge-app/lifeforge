@@ -1,10 +1,10 @@
-import { Icon } from '@iconify/react'
 import { useQuery } from '@tanstack/react-query'
 import clsx from 'clsx'
-import { WithQuery } from 'lifeforge-ui'
-import { usePersonalization } from 'shared'
-import type { WidgetConfig } from 'shared'
 import tinycolor from 'tinycolor2'
+
+import { usePersonalization } from '@lifeforge/shared'
+import type { WidgetConfig } from '@lifeforge/shared'
+import { Icon, WithQuery } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

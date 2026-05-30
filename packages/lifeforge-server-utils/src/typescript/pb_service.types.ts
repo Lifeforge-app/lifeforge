@@ -1,5 +1,6 @@
-import { CleanedSchemas } from '@lifeforge/server-utils'
 import { ZodArray, ZodObject, ZodType, z } from 'zod'
+
+import { CleanedSchemas } from '@lifeforge/server-utils'
 
 export type SchemaWithPB<T> = T & {
   id: string

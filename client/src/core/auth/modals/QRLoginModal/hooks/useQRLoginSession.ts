@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { getBrowserInfo, useAPIEndpoint, useAuth } from 'shared'
 import { Socket, io } from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
+
+import { getBrowserInfo, useAPIEndpoint, useAuth } from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -57,8 +58,7 @@ export default function useQRLoginSession({
 
       pollingIntervalRef.current = setInterval(async () => {
         try {
-          const response = await forgeAPI
-            .untyped('user/qrLogin/checkQRSessionStatus')
+          const response = await forgeAPI.user.qrLogin.checkQRSessionStatus
             .input({
               sessionId
             })
@@ -210,13 +210,10 @@ export default function useQRLoginSession({
         sessionIdRef.current = sessionId
 
         // Register the QR session with the server
-        const response = await forgeAPI
-          .untyped('user/qrLogin/registerQRSession')
-          .input({
-            sessionId,
-            browserInfo: getBrowserInfo()
-          })
-          .mutate({})
+        const response = await forgeAPI.user.qrLogin.registerQRSession.mutate({
+          sessionId,
+          browserInfo: getBrowserInfo()
+        })
 
         const newExpiresAt = response.expiresAt
 

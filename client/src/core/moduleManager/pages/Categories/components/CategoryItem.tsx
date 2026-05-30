@@ -1,15 +1,20 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { toast } from 'react-toastify'
+
+import { useFederation } from '@lifeforge/shared'
 import {
+  Box,
   Button,
   Card,
   ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
+  Flex,
+  Text,
+  WithDivide,
   useModalStore
-} from 'lifeforge-ui'
-import { toast } from 'react-toastify'
-import { useFederation } from 'shared'
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -54,7 +59,7 @@ function CategoryItem({
 
       delete newCategoryTranslations[key]
 
-      await forgeAPI.untyped('modules/categories/update').mutate({
+      await forgeAPI.modules.categories.update.mutate({
         data: newCategoryTranslations
       })
 
@@ -74,35 +79,58 @@ function CategoryItem({
   }
 
   return (
-    <Card ref={setNodeRef} className="flex-between" style={style}>
-      <div className="flex items-center gap-4">
+    <Card
+      ref={setNodeRef}
+      align="center"
+      direction="row"
+      justify="between"
+      style={style}
+    >
+      <Flex align="center" gap="md">
         <Button
           {...attributes}
           {...listeners}
-          className="cursor-move! touch-none"
           icon="tabler:menu"
+          style={{
+            cursor: 'move',
+            touchAction: 'none'
+          }}
           variant="plain"
         />
-        <div>
-          <h3 className="text-lg font-medium">{key}</h3>
-          <p className="text-bg-500 divide-bg-700 mt-1 flex flex-wrap items-center divide-x text-sm">
-            {Object.entries(value).map(([lang, text], index) => (
-              <span
-                key={lang}
-                className={
-                  index === 0
-                    ? 'pr-2'
-                    : index === Object.entries(value).length - 1
-                      ? 'pl-2'
-                      : 'px-2'
-                }
-              >
-                <span className="font-medium">{lang}</span>: {text}
-              </span>
-            ))}
-          </p>
-        </div>
-      </div>
+        <Box>
+          <Text as="code" size="lg" weight="medium">
+            {key}
+          </Text>
+          <Flex asChild align="center" mt="xs" wrap="wrap">
+            <Text as="p" color="muted" size="sm">
+              {Object.entries(value).map(([lang, text], index) => (
+                <WithDivide
+                  key={lang}
+                  axis="x"
+                  color="bg-200"
+                  darkColor="bg-600"
+                >
+                  <Text
+                    pl={
+                      index === Object.entries(value).length - 1
+                        ? 'sm'
+                        : undefined
+                    }
+                    pr={index === 0 ? 'sm' : undefined}
+                    px={
+                      index && index !== Object.entries(value).length - 1
+                        ? 'sm'
+                        : undefined
+                    }
+                  >
+                    <Text weight="medium">{lang}</Text>: {text}
+                  </Text>
+                </WithDivide>
+              ))}
+            </Text>
+          </Flex>
+        </Box>
+      </Flex>
       <ContextMenu>
         <ContextMenuItem
           icon="tabler:pencil"

@@ -1,7 +1,7 @@
-import { CleanedSchemas, IPBService } from '@lifeforge/server-utils'
+import { createServiceLogger } from '@functions/logging'
 import PocketBase from 'pocketbase'
 
-import { createServiceLogger } from '@functions/logging'
+import { CleanedSchemas, IPBService } from '@lifeforge/server-utils'
 
 import create from './services/create'
 import deleteRecord from './services/delete'

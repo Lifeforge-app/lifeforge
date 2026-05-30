@@ -1,7 +1,7 @@
-import { MediaConfig } from '@lifeforge/server-utils'
+import { coreLogger } from '@functions/logging'
 import chalk from 'chalk'
 
-import { coreLogger } from '@functions/logging'
+import { MediaConfig } from '@lifeforge/server-utils'
 
 type MediaResponse = Record<
   string,

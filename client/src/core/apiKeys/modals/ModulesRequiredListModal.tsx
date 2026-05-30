@@ -1,8 +1,17 @@
-import { Icon } from '@iconify/react'
-import { Card, ModalHeader, TagChip } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
-import { useFederation } from 'shared'
-import COLORS from 'tailwindcss/colors'
+
+import { useFederation } from '@lifeforge/shared'
+import {
+  Box,
+  Card,
+  Flex,
+  Icon,
+  ModalHeader,
+  Stack,
+  TAILWIND_PALETTE,
+  TagChip,
+  Text
+} from '@lifeforge/ui'
 
 function ModulesRequiredListModal({
   onClose,
@@ -22,49 +31,58 @@ function ModulesRequiredListModal({
     .filter(item => item.APIKeyAccess?.[keyId])
 
   return (
-    <div className="min-w-[40vw] space-y-6">
+    <Box minWidth="40vw">
       <ModalHeader
         icon="tabler:cube"
         namespace="common.apiKeys"
         title="modulesRequired.title"
         onClose={onClose}
       />
-      <p className="text-bg-500">
+      <Text as="p" color="muted">
         {t('modals.modulesRequired.totalModulesRequire', {
           count: modulesRequired.length
         })}
-      </p>
-      <div className="space-y-3">
+      </Text>
+      <Stack mt="lg">
         {modulesRequired.map(module => (
-          <Card key={module.name} className="component-bg-lighter flex-between">
-            <div>
-              <h3 className="flex items-center gap-2 text-lg font-medium">
-                <Icon className="size-6" icon={module.icon} />
-                {module.name}
-              </h3>
-              <p className="text-bg-500 mt-1">
+          <Card
+            key={module.name}
+            align="center"
+            bg={{
+              base: 'bg-50',
+              dark: 'bg-800'
+            }}
+            direction="row"
+            justify="between"
+          >
+            <Box>
+              <Flex asChild centered gap="sm">
+                <Text as="h3" size="lg" weight="medium">
+                  <Icon icon={module.icon} />
+                  {module.name}
+                </Text>
+              </Flex>
+              <Text as="p" color="muted" mt="xs">
                 {module.APIKeyAccess?.[keyId].usage}
-              </p>
-            </div>
+              </Text>
+            </Box>
             {module.APIKeyAccess?.[keyId].required ? (
               <TagChip
-                color={COLORS.red['500']}
+                color={TAILWIND_PALETTE.red['500']}
                 icon="tabler:alert-circle"
-                iconClassName="size-3.5!"
                 label="Required"
               />
             ) : (
               <TagChip
-                color={COLORS.green['500']}
+                color={TAILWIND_PALETTE.green['500']}
                 icon="tabler:circle-check"
-                iconClassName="size-3.5!"
                 label="Optional"
               />
             )}
           </Card>
         ))}
-      </div>
-    </div>
+      </Stack>
+    </Box>
   )
 }
 

@@ -1,12 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { EncryptionWrapper, useModalStore } from 'lifeforge-ui'
-import { APIOnlineStatusWrapper } from 'lifeforge-ui'
 import { useMemo } from 'react'
+
 import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
   AuthProvider,
-  BackgroundProvider,
   EncryptionProvider,
   FederationProvider,
   MainSidebarStateProvider,
@@ -14,7 +12,13 @@ import {
   PersonalizationProvider,
   SocketProvider,
   ToastProvider
-} from 'shared'
+} from '@lifeforge/shared'
+import {
+  APIOnlineStatusWrapper,
+  BackgroundProvider,
+  EncryptionWrapper,
+  useModalStore
+} from '@lifeforge/ui'
 
 import TwoFAModal from '@/core/auth/modals/TwoFAModal'
 import CoreFederationProvider from '@/federation/providers/CoreFederationProvider'
@@ -22,6 +26,7 @@ import forgeAPI from '@/forgeAPI'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 
 import ExternalModuleProviders from './features/ExternalModuleProviders'
+import I18nInitProvider from './features/I18nInitProvider'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
 
@@ -43,15 +48,11 @@ function Providers() {
         // Provider that tells components the API endpoint to use
         [APIEndpointProvider, { endpoint: import.meta.env.VITE_API_HOST }],
 
-        // Provider that initializes end-to-end encryption (fetches server public key)
-        [EncryptionProvider, { apiHost: import.meta.env.VITE_API_HOST }],
-        [EncryptionWrapper],
-
         // Provider that stores all the theming information
         [PersonalizationProvider, { forgeAPI }],
 
         // Provider that checks if the API is online or not
-        // A wrapper exported from lifeforge-ui is used to avoid circular dependencies
+        // A wrapper exported from @lifeforge/ui is used to avoid circular dependencies
         [
           APIOnlineStatusProvider,
           {
@@ -61,6 +62,13 @@ function Providers() {
           }
         ],
         [APIOnlineStatusWrapper],
+
+        // All subsequent providers are gated behind the API status check!
+        [I18nInitProvider],
+
+        // Provider that initializes end-to-end encryption (fetches server public key)
+        [EncryptionProvider, { apiHost: import.meta.env.VITE_API_HOST }],
+        [EncryptionWrapper],
 
         // Provider that handles authentication, very obviously
         [

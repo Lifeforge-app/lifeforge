@@ -1,12 +1,12 @@
 import { ROOT_DIR } from '@constants'
-import { forgeRouter } from '@lifeforge/server-utils'
-import express from 'express'
-import path from 'path'
-
 import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { loadModuleRoutes } from '@functions/modules/loadModuleRoutes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
+import express from 'express'
+import path from 'path'
+
+import { forgeRouter } from '@lifeforge/server-utils'
 
 import coreRoutes from './core.routes'
 import forge from './forge'

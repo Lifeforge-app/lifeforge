@@ -1,16 +1,19 @@
-import { Icon } from '@iconify/react'
 import { useMutation } from '@tanstack/react-query'
-import {
-  Button,
-  ConfirmationModal,
-  FilePickerModal,
-  OptionsColumn
-} from 'lifeforge-ui'
-import { useModalStore } from 'lifeforge-ui'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import {
+  Box,
+  Button,
+  ConfirmationModal,
+  FilePickerModal,
+  Flex,
+  Icon,
+  OptionsColumn,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -29,7 +32,7 @@ function AvatarColumn() {
     }
 
     try {
-      const data = await forgeAPI.untyped('user/settings/updateAvatar').mutate({
+      const data = await forgeAPI.user.settings.updateAvatar.mutate({
         file
       })
 
@@ -42,7 +45,7 @@ function AvatarColumn() {
   }
 
   const deleteAvatarMutation = useMutation(
-    forgeAPI.untyped('user/settings/deleteAvatar').mutationOptions({
+    forgeAPI.user.settings.deleteAvatar.mutationOptions({
       onSuccess: () => {
         setUserData(userData => (userData ? { ...userData, avatar: '' } : null))
         toast.success('Avatar removed successfully')
@@ -73,17 +76,37 @@ function AvatarColumn() {
       icon="tabler:camera"
       title={t('settings.title.profilePicture')}
     >
-      <div className="bg-bg-100 shadow-custom dark:bg-bg-800 mr-4 flex size-12 items-center justify-center overflow-hidden rounded-full">
+      <Flex
+        centered
+        shadow
+        bg={{ base: 'bg-100', dark: 'bg-800' }}
+        flexShrink="0"
+        height="3em"
+        mr="md"
+        overflow="hidden"
+        r="full"
+        width="3em"
+      >
         {userData.avatar !== '' ? (
-          <img alt="" className="size-full object-cover" src={getAvatarURL()} />
+          <Box
+            asChild
+            height="100%"
+            style={{
+              objectFit: 'cover'
+            }}
+            width="100%"
+          >
+            <img alt="" src={getAvatarURL()} />
+          </Box>
         ) : (
-          <Icon className="text-bg-500 text-2xl" icon="tabler:user" />
+          <Icon color="muted" icon="tabler:user" size="1.5em" />
         )}
-      </div>
-      <div className="flex items-center">
+      </Flex>
+      <Flex align="center" gap="sm" width="100%">
         <Button
+          flex="1"
           icon="tabler:photo-hexagon"
-          variant={userData.avatar !== '' ? 'plain' : 'primary'}
+          variant={userData.avatar !== '' ? 'secondary' : 'primary'}
           onClick={() =>
             open(FilePickerModal, {
               acceptedMimeTypes: {
@@ -108,7 +131,7 @@ function AvatarColumn() {
             remove
           </Button>
         )}
-      </div>
+      </Flex>
     </OptionsColumn>
   )
 }

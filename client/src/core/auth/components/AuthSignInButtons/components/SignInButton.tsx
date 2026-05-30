@@ -1,6 +1,7 @@
-import { Button } from 'lifeforge-ui'
 import { memo } from 'react'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { Button } from '@lifeforge/ui'
 
 function SignInButton({
   loading,
@@ -13,11 +14,11 @@ function SignInButton({
 
   return (
     <Button
-      className="w-full"
       icon="tabler:arrow-right"
       iconPosition="end"
       loading={loading || auth}
       namespace="common.auth"
+      width="100%"
       onClick={signIn}
     >
       Sign In

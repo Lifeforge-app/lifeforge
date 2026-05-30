@@ -1,6 +1,13 @@
-import { Icon } from '@iconify/react'
-import { Button } from 'lifeforge-ui'
 import { useTranslation } from 'react-i18next'
+
+import {
+  Button,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  colorWithOpacity
+} from '@lifeforge/ui'
 
 function ConfirmScreen({
   onClose,
@@ -14,32 +21,44 @@ function ConfirmScreen({
   const { t } = useTranslation('common.auth')
 
   return (
-    <div className="mt-4 flex flex-col items-center gap-4">
-      <div className="bg-custom-500/20 flex-center size-20 rounded-lg">
-        <Icon className="text-custom-500 size-10" icon="tabler:device-laptop" />
-      </div>
-      <p className="text-bg-500 mt-2 text-center">
+    <Stack align="center" gap="lg">
+      <Flex
+        centered
+        bg={colorWithOpacity('custom-500', '20%')}
+        height="5em"
+        r="lg"
+        width="5em"
+      >
+        <Icon color="primary" icon="tabler:device-laptop" size="2.25em" />
+      </Flex>
+      <Text align="center" mt="sm" size="xl" weight="medium">
         {t('qrLogin.approvalDescription')}
-      </p>
-      <div className="mt-4 flex w-full flex-col-reverse gap-2 sm:flex-row">
+      </Text>
+      <Flex
+        direction={{ base: 'column-reverse', sm: 'row' }}
+        gap="sm"
+        mt="md"
+        width="100%"
+      >
         <Button
-          className="sm:w-1/2"
-          icon=""
+          dangerous
+          icon="tabler:ban"
           variant="secondary"
+          width={{ base: '100%', sm: '50%' }}
           onClick={onClose}
         >
           {t('qrLogin.deny')}
         </Button>
         <Button
-          className="sm:w-1/2"
           icon="tabler:check"
           loading={loading}
+          width={{ base: '100%', sm: '50%' }}
           onClick={onApprove}
         >
           {t('qrLogin.approve')}
         </Button>
-      </div>
-    </div>
+      </Flex>
+    </Stack>
   )
 }
 

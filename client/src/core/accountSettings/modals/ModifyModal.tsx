@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
-import { FormModal, defineForm } from 'lifeforge-ui'
 import _ from 'lodash'
 import { toast } from 'react-toastify'
-import { useAuth } from 'shared'
+
+import { useAuth } from '@lifeforge/shared'
+import { FormModal, defineForm } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
@@ -16,7 +17,7 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
   const { userData, setUserData } = useAuth()
 
   const mutation = useMutation(
-    forgeAPI.untyped('/user/settings/updateProfile').mutationOptions({
+    forgeAPI.user.settings.updateProfile.mutationOptions({
       onSuccess: (_, newData) => {
         if (!userData) return
 

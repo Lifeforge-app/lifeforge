@@ -1,3 +1,7 @@
+import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+import chalk from 'chalk'
+import PocketBase from 'pocketbase'
+
 import {
   CleanedSchemas,
   CollectionKey,
@@ -7,10 +11,6 @@ import {
   IUpdateData,
   IUpdateFactory
 } from '@lifeforge/server-utils'
-import chalk from 'chalk'
-import PocketBase from 'pocketbase'
-
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
