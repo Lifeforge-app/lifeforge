@@ -1,5 +1,4 @@
 import mdx, { Options } from '@mdx-js/rollup'
-import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import remarkGfm from 'remark-gfm'
@@ -13,7 +12,7 @@ const options: Options = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), mdx(options), tailwindcss(), mdxListCountsPlugin()],
+  plugins: [react(), mdx(options), mdxListCountsPlugin()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

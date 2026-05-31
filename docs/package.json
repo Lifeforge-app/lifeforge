@@ -23,7 +23,6 @@
     "@mdx-js/mdx": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@mdx-js/rollup": "^3.1.0",
-    "@tailwindcss/vite": "^4.1.11",
     "@types/react-custom-scrollbars": "^4.0.13",
     "autoprefixer": "^10.4.21",
     "copy-to-clipboard": "^3.3.3",
@@ -42,7 +41,6 @@
     "react-syntax-highlighter": "^15.6.1",
     "remark-gfm": "^4.0.1",
     "@lifeforge/shared": "workspace:*",
-    "tailwindcss": "^4.1.11",
     "vite-plugin-mdx": "^3.6.1"
   },
   "devDependencies": {

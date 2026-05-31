@@ -1,0 +1,21 @@
+import { Alert } from "@lifeforge/ui"
+import Commit from "../../components/Commit";
+import Code from "@/components/Code";
+
+## UI Library Overhaul & Tailwind Migration
+
+### Zero-Runtime CSS-in-JS with Vanilla Extract
+
+The core UI library has been completely rebuilt on **[Vanilla Extract](https://vanilla-extract.style/)** and **[Sprinkles](https://vanilla-extract.style/documentation/packages/sprinkles/)** — a zero-runtime CSS-in-JS architecture that provides full type safety, compile-time optimization, and seamless theme integration without the performance tax of traditional runtime CSS-in-JS solutions.
+
+### Tailwind Elimination in Core Client
+
+With the new UI primitives (`Box`, `Flex`, `Stack`, `Grid`, `Text`, `Icon`, etc.) now fully covering all layout and styling needs, **Tailwind CSS has been completely removed from the core client codebase**. The `component-bg-*` utility classes and direct `@iconify/react` imports have been migrated to their UI library equivalents.
+
+### Migration Status
+
+The core client codebase migration is **complete**. The remaining work involves migrating the individual federated modules (`lifeforge--achievements`, `lifeforge--wallet`, etc.) to the same patterns.
+
+<Alert type="info" className="mb-4 mt-6">
+Refer to the <a href="/ui-guide">UI Library Guide</a> for the complete architecture documentation, component API reference, and migration patterns.
+</Alert>

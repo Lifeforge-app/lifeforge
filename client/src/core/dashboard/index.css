@@ -1,5 +1,3 @@
-@import 'tailwindcss' source ('.');
-
 .react-grid-layout {
   @apply isolate;
 }
