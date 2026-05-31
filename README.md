@@ -1,5 +1,5 @@
 > [!NOTE]
-> Don't worry, LifeForge is still alive and kicking. Progress is being made [here](https://github.com/Lifeforge-app/lifeforge/tree/features/forge-ui-overhaul).
+> Don't worry, LifeForge is still alive and kicking.
 > ### Update 31 May 2026
 > The UI library rework and the subsequent core client codebase migration away from Tailwind has been completed. The only thing left is to migrate all the modules.
 
