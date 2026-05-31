@@ -28,8 +28,6 @@ const get = forge
       .execute()
       .catch(() => null)
 
-    console.log(await pb.getFullList.collection('entries').execute())
-
     if (!entry) {
       throw new ClientError('API Key not found', 404)
     }

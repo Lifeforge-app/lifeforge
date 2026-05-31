@@ -1,7 +1,5 @@
-import { Icon } from '@iconify/react'
-import clsx from 'clsx'
-
 import { usePersonalization } from '@lifeforge/shared'
+import { Box, Flex, Icon, Stack, Text, colorWithOpacity, surface } from '@lifeforge/ui'
 
 import { BG_BLURS } from '../constants/bg_blurs'
 
@@ -21,57 +19,93 @@ function ResultShowcase({
   const { bgImage } = usePersonalization()
 
   return (
-    <div
-      className="shadow-custom relative isolate max-h-84 w-full shrink-0 overflow-y-auto rounded-md bg-cover bg-center bg-no-repeat md:overflow-hidden"
+    <Box
+      shadow
+      height="21rem"
+      maxHeight="21rem"
+      overflow="hidden"
+      position="relative"
+      r="md"
       style={{
-        backgroundImage: `url(${bgImage})`
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        isolation: 'isolate'
       }}
+      width="100%"
     >
-      <div
-        className="flex size-full flex-col p-12"
+      <Box
+        height="100%"
+        p="xl"
         style={{
           backdropFilter: `brightness(${bgBrightness}%) blur(${BG_BLURS[bgBlur]}) contrast(${bgContrast}%) saturate(${bgSaturation}%)`
         }}
+        width="100%"
       >
-        <div
-          className="bg-bg-50 shadow-custom dark:bg-bg-950 absolute top-0 left-0 z-[-1] size-full"
-          style={{
-            opacity: `${overlayOpacity}%`
-          }}
-        />
-        <div
-          className={clsx(
-            'shadow-custom component-bg flex size-full flex-col gap-3 rounded-lg p-4'
-          )}
+        <Stack
+          shadow
+          bg={surface.default}
+          height="100%"
+          p="md"
+          r="lg"
+          width="100%"
         >
-          <h1 className="flex items-center gap-2 text-2xl font-semibold">
-            <Icon className="size-8 shrink-0" icon="tabler:box" />
-            Lorem ipsum dolor sit amet
-          </h1>
-          <p className="text-bg-500">
+          <Box
+            shadow
+            bg={{ base: 'bg-50', dark: 'bg-950' }}
+            height="100%"
+            position="absolute"
+            style={{
+              inset: 0,
+              opacity: `${overlayOpacity}%`,
+              zIndex: '-1',
+              borderRadius: 'inherit'
+            }}
+            width="100%"
+          />
+          <Flex align="center" gap="sm" position="relative" zIndex="2">
+            <Icon icon="tabler:box" size="1.5em" />
+            <Text as="h1" size="xl" weight="semibold">
+              Lorem ipsum dolor sit amet
+            </Text>
+          </Flex>
+          <Text as="p" color="muted">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ac.
-          </p>
-          <div className="flex gap-3">
-            <div
-              className={clsx(
-                'component-bg-lighter flex w-full flex-col items-start gap-3 rounded-lg p-4 sm:flex-row sm:items-center'
-              )}
+          </Text>
+          <Flex
+            align="center"
+            bg={surface.light}
+            direction={{ base: 'column', sm: 'row' }}
+            gap="md"
+            mt="md"
+            p="md"
+            position="relative"
+            r="lg"
+          >
+            <Flex
+              align="center"
+              bg={colorWithOpacity('custom-500', '20%')}
+              flexShrink="0"
+              justify="center"
+              p="md"
+              r="md"
             >
-              <span className="bg-custom-500/20 text-custom-500 block rounded-md p-4">
-                <Icon className="size-8" icon="tabler:box" />
-              </span>
-              <div className="flex flex-col">
-                <h2 className="text-lg font-semibold">Lorem ipsum dolor</h2>
-                <p className="text-bg-500">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam ac.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              <Icon color="custom-500" icon="tabler:box" size="2em" />
+            </Flex>
+            <Box>
+              <Text as="h2" size="lg" weight="semibold">
+                Lorem ipsum dolor
+              </Text>
+              <Text as="p" color="muted">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                ac.
+              </Text>
+            </Box>
+          </Flex>
+        </Stack>
+      </Box>
+    </Box>
   )
 }
 

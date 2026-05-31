@@ -9,7 +9,8 @@ import {
   ListboxOption,
   OptionsColumn,
   Text,
-  WithQuery
+  WithQuery,
+  surface
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
@@ -34,12 +35,7 @@ function LanguageSelector() {
       <WithQuery loaderSize="1.5em" query={languagesQuery}>
         {langs => (
           <Listbox
-            bg={{
-              base: 'bg-100',
-              hover: 'bg-200',
-              dark: 'bg-800',
-              darkHover: 'bg-700'
-            }}
+            bg={surface.lightInteractive}
             minWidth="16em"
             renderContent={() => (
               <Flex align="center" gap="sm" maxWidth="16em" minWidth="0">

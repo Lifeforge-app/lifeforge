@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { surface } from '@/system/colors/surfaces'
+
 import { Flex, type FlexProps } from '../../primitives'
 
 export type CardProps<T extends React.ElementType = 'div'> = FlexProps<T> & {
@@ -14,16 +16,7 @@ export function Card<T extends React.ElementType = 'div'>({
   return (
     <Flex
       shadow
-      bg={
-        isInteractive
-          ? {
-              base: 'bg-50',
-              dark: 'bg-900',
-              hover: 'bg-100',
-              darkHover: 'bg-800'
-            }
-          : { base: 'bg-50', dark: 'bg-900' }
-      }
+      bg={isInteractive ? surface.defaultInteractive : surface.default}
       direction="column"
       p="md"
       position="relative"

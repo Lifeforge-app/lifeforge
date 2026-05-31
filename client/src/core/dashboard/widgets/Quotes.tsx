@@ -28,7 +28,7 @@ export default function Quotes() {
   return (
     <Card
       centered
-      bg="custom-500"
+      bg="primary"
       gap="sm"
       height="100%"
       position="relative"

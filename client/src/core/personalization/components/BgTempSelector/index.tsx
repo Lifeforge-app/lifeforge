@@ -33,7 +33,12 @@ function BgTempSelector() {
       icon="tabler:temperature"
       title={t('bgTempSelector.title')}
     >
-      <Flex align="center" direction={{ base: 'column', sm: 'row' }} gap="md">
+      <Flex
+        align="center"
+        direction={{ base: 'column', sm: 'row' }}
+        gap="md"
+        width="100%"
+      >
         <DefaultBgTempSelector bgTemp={bgTemp} customBgTemp={customBgTemp} />
         {bgTemp.startsWith('#') && (
           <>

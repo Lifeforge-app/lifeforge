@@ -124,6 +124,40 @@ type ThemeConditionPropName =
 />
 ```
 
+#### Pre-built Surface Presets (`surface`)
+
+The most common background patterns are available as a pre-built `surface` object exported from `@lifeforge/ui`:
+
+```typescript
+import { surface } from '@lifeforge/ui'
+
+// Light static surface — for non-interactive light backgrounds
+surface.light
+// => { base: 'bg-100', dark: 'bg-800' }
+
+// Light interactive surface — for controls (Listbox, SearchInput, selectable Cards)
+surface.lightInteractive
+// => { base: 'bg-100', hover: 'bg-200', dark: 'bg-800', darkHover: colorWithOpacity('bg-700', '50%') }
+
+// Default surface — for static Cards
+surface.default
+// => { base: 'bg-50', dark: 'bg-900' }
+
+// Default interactive surface — for clickable Cards
+surface.defaultInteractive
+// => { base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }
+```
+
+These are `as const` objects that can be spread or passed directly into the `bg` prop:
+
+```tsx
+<Listbox bg={surface.lightInteractive} ... />
+<Card bg={surface.lightInteractive} ... />    {/* Override Card's default */}
+<Card isInteractive ... />                    {/* Uses surface.defaultInteractive automatically */}
+```
+
+> The `surface.default` and `surface.defaultInteractive` presets already serve as the built-in defaults for the `Card` component — you only need to pass them explicitly when overriding or when using them on non-Card primitives.
+
 ### B. Opacity Modifiers (`colorWithOpacity`)
 To prevent heavy runtimes, colors can be blended with transparency using CSS `color-mix` through the `colorWithOpacity` helper:
 ```typescript
@@ -133,6 +167,20 @@ import { colorWithOpacity } from '@lifeforge/ui'
 const semiTransparentPrimary = colorWithOpacity('primary', '30%')
 ```
 *Supported Opacity Levels:* `'5%'`, `'10%'`, `'20%'`, `'30%'`, `'40%'`, `'50%'`, `'60%'`, `'70%'`, `'80%'`, `'90%'`.
+
+`colorWithOpacity` can be used **directly in the `bg` prop** — no inline `style` needed:
+```tsx
+<Flex
+  align="center"
+  bg={colorWithOpacity('custom-500', '20%')}
+  justify="center"
+  p="md"
+  r="md"
+>
+  <Icon color="custom-500" icon="tabler:box" />
+</Flex>
+```
+This replaces the old pattern of inline `style={{ backgroundColor: 'color-mix(...)' }}`.
 
 ### C. Responsive Properties & Breakpoints
 Layout props support responsive values. Breakpoints are defined as:
@@ -198,6 +246,13 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
   minHeight?: ResponsiveProp<string>; maxHeight?: ResponsiveProp<string>
   inset?: ResponsiveProp<string>; top?: ResponsiveProp<string>; bottom?: ResponsiveProp<string>
   left?: ResponsiveProp<string>; right?: ResponsiveProp<string>; zIndex?: ResponsiveProp<string>
+```
+
+> [!WARNING]
+> **`top`, `right`, `bottom`, `left`, and `inset` accept raw CSS strings** (e.g. `"0.5rem"`, `"8px"`, `"50%"`), not `SpaceToken` values like `sm`, `md`, `lg`.  
+> Spacing tokens only work with padding (`p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`) and margin (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`) props.  
+> ❌ `top="sm"` — will not resolve  
+> ✅ `top="0.5rem"` — correct
   
   // Border Radius (Uses RadiusTokens)
   r?: ResponsiveProp<RadiusToken>     // All corners
@@ -313,6 +368,17 @@ export function Stack<T extends ElementType = 'div'>(props: FlexProps<T>) {
 ```
 
 #### Example:
+
+For listing content, Stack's default `gap="sm"` is usually sufficient — no need to explicitly set `gap`:
+```tsx
+<Stack>
+  <Text>Item 1</Text>
+  <Text>Item 2</Text>
+  <Text>Item 3</Text>
+</Stack>
+```
+
+Override `gap` only when you need more or less spacing than the default:
 ```tsx
 <Stack gap="md">
   <Text size="lg">Form Title</Text>
@@ -345,6 +411,8 @@ interface TextOwnProps {
 ```
 
 #### Example: Headline and Subtitle
+
+`Text` also accepts all spacing props (`mt`, `mb`, `py`, `px`, etc.) and `style` directly — no wrapping `Box` needed.
 ```tsx
 <Stack gap="xs">
   <Text as="h1" size="3xl" weight="bold" leading="tight" tracking="tight">
@@ -354,6 +422,10 @@ interface TextOwnProps {
     Welcome back to LifeForge.
   </Text>
 </Stack>
+
+<Text as="p" mt="md" py="sm" style={{ fontFamily: 'Inter' }}>
+  Direct spacing and style — no Box wrapper.
+</Text>
 ```
 
 ---
@@ -541,17 +613,16 @@ When constructing standard layout components, follow this order:
 The core button component manages accessibility, internationalization translations, dynamic loading spinners, and personalization background-contrast matching.
 
 ```typescript
-type ButtonProps = {
-  variant?: 'primary' | 'secondary' | 'tertiary' | 'plain'
-  dangerous?: boolean                        // Destructive actions (red style)
-  icon?: string                              // Iconify name, e.g. 'tabler:plus'
-  iconPosition?: 'start' | 'end'
-  loading?: boolean                          // When true, disables clicks and renders a spinner
-  disabled?: boolean
-  namespace?: string                         // i18n translation prefix (defaults to 'common.buttons')
-  children?: ReactNode
-}
+type ButtonProps<T extends ElementType = 'button'> = ButtonOwnProps &
+  FlexProps<T>
 ```
+
+| Category | Props |
+|---|---|---|
+| **Button-specific** | `variant`, `dangerous`, `icon`, `iconPosition`, `loading`, `disabled`, `namespace` |
+| **Inherited from Flex** | All `FlexProps` — `mt`, `width`, `position`, `top`, `gap`, and everything from `BoxProps` (`bg`, `p`, `r`, `shadow`, etc.) |
+
+Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop available on `Flex` or `Box` can be passed directly** — no wrapping `Box` needed. Only reach for `Box asChild` when you need a prop that Flex/Box doesn't support (e.g. CSS properties only available via inline `style`).
 
 #### Notable Engineering Features:
 1. **Dynamic Contrast Matching:** In `useButtonStyleProps`, when `variant="primary"` is set, the button fetches the user's active theme color (`derivedThemeColor`) and runs `getMostReadableColor()` to compute a text color with optimal contrast.
@@ -564,6 +635,8 @@ type ButtonProps = {
   variant="primary"
   icon="tabler:send"
   loading={isSubmitting}
+  mt="lg"              // Inherited from Flex — no Box wrapper needed
+  width="100%"         // Inherited from Flex
   onClick={onSubmit}
 >
   sendFeedback
@@ -773,7 +846,198 @@ export default UserCreationPage
 
 ---
 
-## 8. Developer Quick-Reference Checklist
+---
+
+## 8. Migration Guide: Legacy `component-bg-*` Utility Classes
+
+The legacy `component-bg-*` utility classes have been **removed** from the codebase. These were Tailwind-based utilities defined in `src/core/styles/themes/componentBG.css`. Every one of them must be replaced with the corresponding `bg` prop on UI primitives (`Box`, `Flex`, `Card`, etc.).
+
+### Legacy → Modern Mapping
+
+| Legacy Class | Equivalent `surface` Preset |
+|---|---|
+| `component-bg` | `surface.default` |
+| `component-bg-with-hover` | `surface.defaultInteractive` |
+| `component-bg-lighter` | `surface.light` |
+| `component-bg-lighter-with-hover` | `surface.lightInteractive` |
+| `darker-component-bg-with-hover` | `{ base: 'bg-200', dark: 'bg-800', hover: 'bg-200', darkHover: 'bg-800' }` (no preset — inline if needed) |
+
+The legacy classes also had `.has-bg-image &` nested variants that applied `backdrop-blur-xs` and reduced opacity. In the new system, the `.has-bg-image` and `.hasBgImage`/`.darkHasBgImage` state keys on the `bg` prop handle this automatically — you **do not** need to manually apply backdrop or opacity.
+
+### Migration Pattern
+
+Before (using removed Tailwind utilities):
+```tsx
+<button className="component-bg-lighter-with-hover w-full rounded-lg p-6 text-left">
+  <span className="font-medium">Item</span>
+</button>
+```
+
+After (using UI primitives with `surface` preset):
+```tsx
+import { Box, Text, surface } from '@lifeforge/ui'
+
+<Box
+  as="button"
+  bg={surface.lightInteractive}
+  p="lg"
+  r="lg"
+  width="100%"
+>
+  <Text weight="medium">Item</Text>
+</Box>
+```
+
+Most legacy classes map directly to a `surface` preset (see table above). Prefer using the preset over writing the object inline.
+
+### Selected/Active State Borders
+
+Legacy code often combined `component-bg-lighter-with-hover` with Tailwind border utilities to indicate selection:
+```tsx
+className="component-bg-lighter-with-hover border-2 border-custom-500"
+```
+
+Replace this with `Card` (which already handles interactive backgrounds and shadows), or use `Box` with `bg` state conditions directly:
+
+```tsx
+<Card isInteractive r="lg">
+  <Text weight="medium">Item</Text>
+</Card>
+```
+
+The `Card` component with `isInteractive` applies the correct background mapping automatically:
+```tsx
+bg={
+  isInteractive
+    ? { base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }
+    : { base: 'bg-50', dark: 'bg-900' }
+}
+```
+
+If you need custom background shades, use `Box` directly:
+
+```tsx
+<Box
+  as="button"
+  bg={{
+    base: 'bg-100',
+    dark: 'bg-800',
+    hover: 'bg-200',
+    darkHover: 'bg-700'
+  }}
+  p="lg"
+  r="lg"
+  width="100%"
+>
+  <Text weight="medium">Item</Text>
+</Box>
+```
+
+For selected-state borders, use the `Ring` primitive to wrap the card instead of absolute-position hacks:
+
+```tsx
+<Ring ringWidth="2px" ringColor="custom-500" r="lg">
+  <Card isInteractive ...>
+    ...
+  </Card>
+</Ring>
+```
+
+> [!NOTE]
+> `Ring` applies the outline to its child using `outline`, which does not affect layout — no absolute positioning needed.
+
+### Check Icon Overlay
+
+When an item is selected, a check icon overlay can be placed with absolute positioning:
+
+Before:
+```tsx
+<Icon className="text-custom-500 absolute right-1.5 bottom-2 size-6" icon="tabler:check" />
+```
+
+After:
+```tsx
+<Box position="absolute" bottom="sm" right="sm">
+  <Icon color="custom-500" icon="tabler:check" size="1.5em" />
+</Box>
+```
+
+### Running a Migration
+
+1. Search for `component-bg` in your component files.
+2. Map each class to the `bg` prop using the table above.
+3. Remove `className` entirely — use primitive props (`p`, `py`, `r`, `width`, etc.) for all layout.
+4. Replace selected-state borders with `Bordered` overlay pattern.
+5. Replace all `text-custom-500`, `text-bg-500` etc. Tailwind color classes with the `color` prop on `Text` or `Icon`.
+
+---
+
+## 9. Migration Guide: `@iconify/react` → `@lifeforge/ui` Icon Primitive
+
+The standalone `Icon` from `@iconify/react` must never be imported directly. Always use the `Icon` primitive exported by `@lifeforge/ui`.
+
+### Key Differences
+
+| Aspect | `@iconify/react` Icon | `@lifeforge/ui` Icon |
+|---|---|---|
+| Import | `import { Icon } from '@iconify/react'` | `import { Icon } from '@lifeforge/ui'` |
+| Sizing | `width` / `height` props (e.g. `width="1.5em"`) | **`size`** prop (e.g. `size="1.5em"`) |
+| Color | `className="text-custom-500"` (Tailwind) | `color="custom-500"` (design token) |
+| Layout | `className="absolute right-1.5 bottom-2"` (Tailwind) | `Box asChild position="absolute" bottom="sm" right="sm"` |
+| Inherits | — | All `Text` props (`ml`, `mr`, `display`, `truncate`, etc.) |
+
+> `Icon` is built on top of the `Text` primitive, so any prop that `Text` accepts (e.g. `ml`, `mr`, `display`, `truncate`, `wrap`, `className`, `style`) works directly on `Icon` without needing a `Box` wrapper.
+
+### Migration Pattern
+
+Before:
+```tsx
+import { Icon } from '@iconify/react'
+
+<Icon
+  className="text-custom-500"
+  icon="tabler:check"
+  width="1.5em"
+  height="1.5em"
+/>
+```
+
+After (positioned):
+```tsx
+import { Box, Icon } from '@lifeforge/ui'
+
+<Box asChild position="absolute" bottom="sm" right="sm">
+  <Icon
+    color="custom-500"
+    icon="tabler:check"
+    size="1.5em"
+  />
+</Box>
+```
+
+After (inline — no positioning needed):
+```tsx
+import { Icon } from '@lifeforge/ui'
+
+<Icon
+  color="custom-500"
+  icon="tabler:check"
+/>
+```
+
+> `Box asChild` is only needed when the Icon needs layout props it doesn't inherit (`position`, `top`, `left`, etc.). For spacing (`ml`, `mr`) and display properties, pass them directly to `Icon` since it inherits all `Text` props.
+
+### Migration Checklist
+
+1. Replace `import { Icon } from '@iconify/react'` with `import { Icon } from '@lifeforge/ui'` (or add `Icon` to the existing destructured import from `@lifeforge/ui`).
+2. Replace `width="..." height="..."` with a single `size="..."`.
+3. Replace `className="text-custom-500"` / `className="text-bg-500"` with `color="custom-500"` / `color="muted"`.
+4. For positioned icons (`position`, `top`, `right`, `bottom`), wrap with `Box asChild`. For spacing and display, pass props directly to `Icon` (it inherits all `Text` props).
+5. Remove all remaining `className` props from `Icon` — they are not used anywhere in the codebase.
+
+---
+
+## 10. Developer Quick-Reference Checklist
 
 Before submitting a pull request, verify that you have adhered to all core design patterns:
 

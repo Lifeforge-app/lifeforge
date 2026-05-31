@@ -1,4 +1,4 @@
-import * as opentype from 'opentype.js'
+import { parse } from 'opentype.js'
 
 export interface FontMetadata {
   family: string
@@ -23,7 +23,9 @@ export async function detectFontMetadata(
   try {
     const arrayBuffer = await fileData.arrayBuffer()
 
-    const font = opentype.parse(arrayBuffer)
+    const font = parse(arrayBuffer)
+
+    font.names = (font.names as any).windows || font.names
 
     // Get font family from name table
     const family =

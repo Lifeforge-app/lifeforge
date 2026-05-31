@@ -71,7 +71,7 @@ function ThemeSelector() {
                   {theme === id && (
                     <Box bottom="0.75em" position="absolute" right="0.75em">
                       <Icon
-                        color="custom-500"
+                        color="primary"
                         icon="tabler:circle-check-filled"
                         size="1.5em"
                       />

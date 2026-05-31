@@ -2,8 +2,5 @@
   "name": "@lifeforge/apps",
   "private": true,
   "description": "LifeForge modules",
-  "dependencies": {
-    "@lifeforge/TedMeadow--lang-ru": "workspace:*",
-    "@lifeforge/lifeforge--achievements": "workspace:*"
-  }
+  "dependencies": {}
 }

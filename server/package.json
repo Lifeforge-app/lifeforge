@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "@lifeforge/log": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/shared": "workspace:*",
     "bcryptjs": "^3.0.2",
     "chalk": "^5.4.1",
     "commander": "^14.0.2",
@@ -42,17 +44,16 @@
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
+    "node-cache": "^5.1.2",
     "openai": "^6.7.0",
     "pdf2pic": "^3.2.0",
     "pocketbase": "^0.26.2",
     "request": "^2.88.2",
-    "@lifeforge/shared": "workspace:*",
     "socket.io": "^4.8.1",
     "speakeasy": "^2.0.0",
     "tesseract.js": "^6.0.1",
     "uuid": "^9.0.1",
-    "zod": "4.3.5",
-    "@lifeforge/server-utils": "workspace:*"
+    "zod": "4.3.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
@@ -65,6 +66,7 @@
     "@types/lodash": "^4.17.21",
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.12",
+    "@types/node-cache": "^4.2.5",
     "@types/request": "^2.48.12",
     "@types/speakeasy": "^2.0.10",
     "@types/uuid": "^10.0.0",

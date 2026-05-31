@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { usePersonalization } from '@lifeforge/shared'
-import { Button, ModalHeader } from '@lifeforge/ui'
+import { Button, ModalHeader, Stack } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 
@@ -92,7 +92,7 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
   }, [])
 
   return (
-    <div className="min-w-[40vw]">
+    <Stack gap="none" minWidth="40vw">
       <ModalHeader
         icon="tabler:adjustments"
         title={t('bgImageSelector.modals.adjustBackground.title')}
@@ -105,15 +105,15 @@ function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
         bgSaturation={bgSaturation}
         overlayOpacity={overlayOpacity}
       />
-      <div className="mt-6 w-full min-w-0 flex-1 space-y-3">
+      <Stack gap="md" mt="lg" px="xs" width="100%">
         {ADJUSTMENTS_COLUMNS.map(({ title, ...props }) => (
           <AdjustmentColumn key={title} title={title} {...props} />
         ))}
-        <Button className="mt-8 w-full" icon="uil:save" onClick={onSaveChanges}>
+        <Button icon="uil:save" mt="lg" width="100%" onClick={onSaveChanges}>
           Save
         </Button>
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   )
 }
 

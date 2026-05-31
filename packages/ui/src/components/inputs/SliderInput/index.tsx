@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 
-import { Box } from '@/components/primitives'
+import { Box, type BoxProps } from '@/components/primitives'
 
 import * as styles from './SliderInput.css'
 import { SliderHeader } from './components/SliderHeader'
 import { SliderTicks } from './components/SliderTicks'
 
-interface SliderInputProps {
+interface SliderInputProps extends Omit<BoxProps<'div'>, 'value' | 'onChange'> {
   label?: string
   icon?: string
   value: number
@@ -17,7 +17,6 @@ interface SliderInputProps {
   max?: number
   step?: number
   className?: string
-  wrapperClassName?: string
   namespace?: string
 }
 
@@ -32,13 +31,13 @@ export function SliderInput({
   max = 100,
   step = 1,
   className,
-  wrapperClassName,
-  namespace
+  namespace,
+  ...rest
 }: SliderInputProps) {
   const progress = ((value - min) / (max - min)) * 100
 
   return (
-    <Box className={wrapperClassName} width="100%">
+    <Box width="100%" {...rest}>
       <SliderHeader
         icon={icon}
         label={label}

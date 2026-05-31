@@ -1,8 +1,11 @@
+import NodeCache from 'node-cache'
 import z from 'zod'
 
 import { ClientError } from '@lifeforge/server-utils'
 
 import forge from '../forge'
+
+const fontCache = new NodeCache({ stdTTL: 86400, checkperiod: 3600 })
 
 interface FontFamily {
   family: string
@@ -67,6 +70,13 @@ export const listGoogleFonts = forge
         api: { getAPIKey }
       }
     }) => {
+      const cached = fontCache.get<{ enabled: boolean; items: FontFamily[] }>(
+        'listGoogleFonts'
+      )
+      if (cached) {
+        return cached
+      }
+
       const key = await getAPIKey('gcloud', pb)
 
       if (!key) {
@@ -82,10 +92,14 @@ export const listGoogleFonts = forge
 
       const data = await response.json()
 
-      return {
+      const result = {
         enabled: true,
         items: data.items as FontFamily[]
       }
+
+      fontCache.set('listGoogleFonts', result)
+
+      return result
     }
   )
 
@@ -105,6 +119,14 @@ export const getGoogleFont = forge
         api: { getAPIKey }
       }
     }) => {
+      const cacheKey = `getGoogleFont:${family}`
+      const cached = fontCache.get<{ enabled: boolean; items?: unknown }>(
+        cacheKey
+      )
+      if (cached) {
+        return cached
+      }
+
       const key = await getAPIKey('gcloud', pb).catch(() => null)
 
       if (!key) {
@@ -119,10 +141,14 @@ export const getGoogleFont = forge
 
       const data = await response.json()
 
-      return {
+      const result = {
         enabled: true,
         items: data.items
       }
+
+      fontCache.set(cacheKey, result)
+
+      return result
     }
   )
 

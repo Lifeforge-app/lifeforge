@@ -7,7 +7,7 @@ import { FormModal, defineForm } from '@lifeforge/ui'
 import forgeAPI from '@/forgeAPI'
 
 import { detectFontMetadata } from '../utils/detectFontMetadata'
-import type { CustomFont } from './FontFamilySelectorModal/tabs/CustomFontSelector'
+import type { CustomFont } from './FontFamilySelectorModal/tabs/custom'
 
 function CustomFontUploadModal({
   onClose,
@@ -62,7 +62,7 @@ function CustomFontUploadModal({
         label: 'fontFamily.inputs.fontFile',
         required: true,
         acceptedMimeTypes: {
-          'font/*': ['ttf', 'otf', 'woff', 'woff2']
+          font: ['ttf', 'otf', 'woff', 'woff2']
         }
       },
       displayName: {
@@ -88,6 +88,9 @@ function CustomFontUploadModal({
               const metadata = await detectFontMetadata(
                 (currentState.file as any).file
               )
+
+              //TODO
+              console.log(currentState.file.file, metadata)
 
               formStateStore.setState({
                 family: metadata.family,

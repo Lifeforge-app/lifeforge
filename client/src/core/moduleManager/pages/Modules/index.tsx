@@ -4,7 +4,6 @@ import { toast } from 'react-toastify'
 
 import { useFederation, usePersonalization } from '@lifeforge/shared'
 import {
-  Box,
   EmptyStateScreen,
   Grid,
   ModuleHeader,
@@ -97,7 +96,7 @@ function Modules() {
       <WithQuery query={modulesQuery}>
         {modules =>
           modules.length > 0 ? (
-            <Box mb="2xl">
+            <Stack gap="2xl" mb="2xl">
               {Object.entries(groupedModules).map(([category, mods]) => (
                 <Stack key={category} as="section">
                   <Text as="h2" size="2xl" weight="medium">
@@ -124,7 +123,7 @@ function Modules() {
                   </Grid>
                 </Stack>
               ))}
-            </Box>
+            </Stack>
           ) : (
             <EmptyStateScreen
               icon="tabler:apps-off"

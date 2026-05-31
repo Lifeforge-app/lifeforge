@@ -29,7 +29,7 @@ export default function DateWidget({
       align={
         h === 2 ? 'start' : h === 1 ? { base: 'center', sm: 'end' } : 'start'
       }
-      bg="custom-500"
+      bg="primary"
       direction={h === 2 ? 'column' : h === 1 ? 'row' : 'column'}
       gap="md"
       height="100%"
@@ -41,7 +41,7 @@ export default function DateWidget({
       >
         <Text
           asChild
-          color="custom-500"
+          color="primary"
           size={w === 2 && h === 1 ? { base: '2xl', sm: '4xl' } : '4xl'}
           weight="semibold"
         >

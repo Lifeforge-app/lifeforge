@@ -6,7 +6,8 @@ import {
   Flex,
   Listbox,
   ListboxOption,
-  Text
+  Text,
+  surface
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
@@ -34,15 +35,15 @@ function DefaultBgTempSelector({
 
   return (
     <Listbox
-      bg={{
-        base: 'bg-100',
-        hover: 'bg-200',
-        dark: 'bg-800',
-        darkHover: 'bg-700'
-      }}
+      bg={surface.lightInteractive}
       minWidth="12em"
       renderContent={() => (
-        <Flex align="center" gap="sm" maxWidth="12em" minWidth="0">
+        <Flex
+          align="center"
+          gap="sm"
+          maxWidth={{ base: 'none', md: '12em' }}
+          minWidth="0"
+        >
           <Box
             bg="bg-500"
             className={bgTemp}
@@ -60,6 +61,7 @@ function DefaultBgTempSelector({
         </Flex>
       )}
       value={bgTemp.startsWith('#') ? 'bg-custom' : bgTemp}
+      width="100%"
       onChange={color => {
         changeBgTemp(color === 'bg-custom' ? customBgTemp : color)
       }}

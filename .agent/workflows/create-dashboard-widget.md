@@ -59,8 +59,14 @@ export const config: WidgetConfig = {
 }
 ```
 
+> [!IMPORTANT]
+> **Import paths for module widgets require special handling.** Module widgets live under `apps/<module>/client/src/` and use different import paths than core:
+> - `@lifeforge/ui` → `lifeforge-ui` (no `@` prefix)
+> - `@lifeforge/shared` → `shared`
+> - `@/forgeAPI` → `@/utils/forgeAPI` (or `@/forgeAPI` depending on module setup)
+
 > [!TIP]
-> For small/compact widgets where space is limited, the `title` prop can be omitted from the `Widget` wrapper. The widget will still display properly without a header, giving more room for content. See `apps/momentVault/client/src/widgets/QuickAudioCapture.tsx` for an example.
+> For small/compact widgets where space is limited, the `title` prop can be omitted from the `Widget` wrapper. The widget will still display properly without a header, giving more room for content.
 
 ### Widget with Dimension Constraints
 
@@ -80,9 +86,19 @@ export const config: WidgetConfig = {
 
 ```tsx
 import { useQuery } from '@tanstack/react-query'
-import { Button, EmptyStateScreen, Widget, WithQuery } from '@lifeforge/ui'
-import { Link } from '@lifeforge/shared'
-import type { WidgetConfig } from '@lifeforge/shared'
+import {
+  Button,
+  Card,
+  EmptyStateScreen,
+  Flex,
+  Icon,
+  Text,
+  Widget,
+  WithQuery,
+  surface
+} from 'lifeforge-ui'
+import { Link } from 'shared'
+import type { WidgetConfig } from 'shared'
 
 import forgeAPI from '@/utils/forgeAPI'
 
@@ -93,8 +109,6 @@ export default function MyDataWidget() {
     <Widget
       actionComponent={
         <Button
-          as={Link}
-          className="p-2!"
           icon="tabler:chevron-right"
           to="/<module-route>"
           variant="plain"
@@ -107,11 +121,34 @@ export default function MyDataWidget() {
       <WithQuery query={dataQuery}>
         {data => (
           data.length > 0 ? (
-            <ul>
+            <Flex direction="column" gap="sm">
               {data.map(item => (
-                <li key={item.id}>{item.name}</li>
+                <Card
+                  key={item.id}
+                  isInteractive
+                  as={Link}
+                  to="/<module-route>"
+                >
+                  <Flex align="center" gap="md">
+                    <Flex
+                      align="center"
+                      bg={surface.light}
+                      flexShrink="0"
+                      height="2.5rem"
+                      justify="center"
+                      r="md"
+                      width="2.5rem"
+                    >
+                      <Icon color="muted" icon={item.icon} size="1.25em" />
+                    </Flex>
+                    <Box>
+                      <Text weight="medium">{item.name}</Text>
+                      <Text color="muted" size="sm">{item.description}</Text>
+                    </Box>
+                  </Flex>
+                </Card>
               ))}
-            </ul>
+            </Flex>
           ) : (
             <EmptyStateScreen
               smaller
@@ -138,25 +175,67 @@ export const config: WidgetConfig = {
 
 ### Widget with Dimension-Responsive Layout
 
-Widgets can receive dimension props to adapt their layout:
+Widgets receive `dimension` props to adapt their layout. Use `Card` as the root element for responsive widgets that don't need the `Widget` header wrapper:
 
 ```tsx
-function ResponsiveWidget({
+import { Card, Flex, Text } from '@lifeforge/ui'
+import type { WidgetConfig } from '@lifeforge/shared'
+
+export default function ResponsiveWidget({
   dimension: { w, h }
 }: {
   dimension: { w: number; h: number }
 }) {
   return (
-    <div
-      className={clsx(
-        'shadow-custom component-bg flex size-full rounded-lg p-4',
-        h < 2 ? 'flex-row' : 'flex-col' // Adjust based on height
-      )}
+    <Card
+      align={h < 2 ? 'center' : undefined}
+      direction={h < 2 ? 'row' : 'column'}
+      gap="md"
+      height="100%"
+      justify={h < 2 ? 'between' : undefined}
     >
-      {/* Content that adapts to dimensions */}
-    </div>
+      <Text weight="medium">Widget Content</Text>
+      <Text color="muted" size="sm">
+        Adapts to {w}x{h}
+      </Text>
+    </Card>
   )
 }
+
+export const config: WidgetConfig = {
+  id: '<widgetId>',
+  icon: 'tabler:icon-name',
+  minW: 2,
+  minH: 1
+}
+```
+
+> [!NOTE]
+> When using `Card` directly as a widget root (no `Widget` wrapper), `Card` already provides the correct default background (`surface.default`), shadow, padding, and rounded corners — no inline styles or Tailwind classes needed.
+
+### Legacy Pattern (Do NOT Use)
+
+```tsx
+// ❌ OLD — uses removed component-bg classes, clsx, inline styles, and @iconify/react
+import { Icon } from '@iconify/react'
+import clsx from 'clsx'
+
+<div
+  className={clsx(
+    'shadow-custom component-bg flex size-full rounded-lg p-4',
+    h < 2 ? 'flex-row' : 'flex-col'
+  )}
+>
+```
+
+```tsx
+// ✅ NEW — use Card with direction/align/justify props
+<Card
+  align={h < 2 ? 'center' : undefined}
+  direction={h < 2 ? 'row' : 'column'}
+  gap="md"
+  height="100%"
+>
 ```
 
 ---
@@ -241,31 +320,42 @@ interface WidgetConfig {
 
 ## Widget Component Props Reference
 
-The `Widget` component from `lifeforge-ui` accepts:
+The `Widget` component from `@lifeforge/ui` accepts:
 
 | Prop              | Type              | Description                                          |
 | ----------------- | ----------------- | ---------------------------------------------------- |
 | `icon`            | `string`          | Iconify icon name                                    |
-| `title`           | `string`          | Widget title (auto-translated if namespace provided) |
+| `iconColor`       | `TokenizedColor`  | Optional custom icon color                           |
+| `title`           | `ReactNode`       | Widget title (auto-translated if namespace provided) |
+| `description`     | `ReactNode`       | Widget description                                   |
 | `namespace`       | `string \| false` | Translation namespace, `false` to disable            |
-| `className`       | `string`          | Additional CSS classes                               |
 | `actionComponent` | `ReactNode`       | Component beside title (e.g., navigation button)     |
+| `variant`         | `'default' \| 'large-icon'` | Visual variant                         |
 | `children`        | `ReactNode`       | Widget content                                       |
 
 ---
 
 ## Common UI Components for Widgets
 
-Import from `lifeforge-ui`:
+Import from `lifeforge-ui` (modules) or `@lifeforge/ui` (core):
 
 | Component          | Usage                                        |
 | ------------------ | -------------------------------------------- |
 | `Widget`           | Container wrapper with title and icon        |
+| `Card`             | Card wrapper for dimension-responsive widgets|
+| `Flex`             | Flexbox layout container                     |
+| `Box`              | Generic layout primitive                     |
+| `Text`             | Typography (with spacing and style props)    |
+| `Icon`             | Icon display (uses `size` prop, not `width`/`height`) |
 | `WithQuery`        | Handles loading/error states for API queries |
 | `EmptyStateScreen` | Shows when no data exists                    |
 | `Scrollbar`        | Scrollable content wrapper                   |
 | `Button`           | Action buttons                               |
 | `LoadingScreen`    | Loading indicator                            |
+| `surface`          | Pre-built bg presets (`surface.light`, `surface.lightInteractive`, `surface.default`, `surface.defaultInteractive`) |
+
+> [!WARNING]
+> Never import `Icon` from `@iconify/react` directly. Always use the `Icon` primitive from the UI library. Use the `size` prop (not `width`/`height`) for sizing, and the `color` prop (not `className="text-..."`) for colors.
 
 ---
 
@@ -275,14 +365,14 @@ Examine these existing widgets for patterns:
 
 ### Simple Display Widgets (No API)
 
-- `client/src/apps/dashboard/widgets/Clock.tsx` - Time display with dimensions
-- `client/src/apps/dashboard/widgets/Date.tsx` - Date display with theming
-- `client/src/apps/dashboard/widgets/Quotes.tsx` - External API fetch
+- `client/src/core/dashboard/widgets/Clock.tsx` - Time display with dimensions
+- `client/src/core/dashboard/widgets/Date.tsx` - Date display with theming
+- `client/src/core/dashboard/widgets/Quotes.tsx` - External API fetch
 
 ### Data-Driven Widgets
 
 - `apps/calendar/client/src/widgets/TodaysEvent.tsx` - List with items
-- `apps/wallet/client/src/widgets/AssetsBalance.tsx` - Grid layout with toggle
+- `apps/wallet/client/src/widgets/AssetsBalance.tsx` - Grid layout with toggle (not yet migrated — see as legacy reference)
 - `apps/todoList/client/src/widgets/TodoList.tsx` - List with context provider
 - `apps/codeTime/client/src/widgets/CodeTime.tsx` - Chart visualization
 
@@ -298,7 +388,12 @@ Examine these existing widgets for patterns:
 - [ ] Create `apps/<module>/client/src/widgets/<WidgetName>.tsx`
 - [ ] Export default React component
 - [ ] Export named `config: WidgetConfig`
-- [ ] Use `Widget` wrapper component
+- [ ] Use `Widget` wrapper component (or `Card` for dimension-responsive widgets without header)
+- [ ] Import `Icon` from UI library, not `@iconify/react`
+- [ ] Use `size` prop for icon sizing, `color` prop for icon colors
+- [ ] No `className` with Tailwind classes
+- [ ] No `component-bg-*` classes — use `surface` presets or `Card` instead
+- [ ] Use `@lifeforge/ui` / `@lifeforge/shared` for core, `lifeforge-ui` / `shared` for modules
 - [ ] Add `namespace` for translations
 - [ ] Set appropriate dimension constraints
 - [ ] Add locale entries in all language files

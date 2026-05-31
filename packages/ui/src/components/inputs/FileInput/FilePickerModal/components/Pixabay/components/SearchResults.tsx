@@ -58,10 +58,12 @@ export function SearchResults({
             renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
               <Transition>
                 <Ring
+                  asChild
                   ringColor={
                     photo.fullResURL === file
                       ? 'custom-500'
                       : {
+                          base: 'transparent',
                           hover: 'bg-400',
                           darkHover: 'bg-600'
                         }
@@ -75,6 +77,7 @@ export function SearchResults({
                     overflow="hidden"
                     r="md"
                     style={style as CSSProperties}
+                    width="100%"
                     onClick={() => {
                       setFile(photo.fullResURL)
                       setPreview(photo.src)
