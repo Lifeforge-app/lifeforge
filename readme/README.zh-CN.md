@@ -1,21 +1,79 @@
 > [!NOTE]
-> 别担心，LifeForge 仍在活跃开发中。最新进展请查阅[此处](https://github.com/Lifeforge-app/lifeforge/tree/features/forge-ui-overhaul)。
-> ### 2026年5月31日 更新
-> UI 库重构及随后的核心客户端代码库从 Tailwind 迁移的工作已经完成。剩下的工作就是迁移所有模块。
+>
+> 别担心，LifeForge 仍在活跃开发中。🚀
+>
+> ### 更新 · 2026年5月31日
+>
+> UI 库的重写以及随后从 Tailwind CSS 的迁移已成功完成。
+>
+> 核心客户端架构现在完全运行在新的内部 UI 系统之上。剩余工作主要涉及迁移现有模块以及更新项目文档。
+>
+> 这一里程碑标志着 LifeForge 历史上最大规模架构转型之一的完成。
+>
+> 不过，也别太放松。这肯定不会是最后一次大规模转型。如果 LifeForge 教会了我们什么，那就是每一个"最终架构"最终都会变成明天的迁移项目。:)
 
-> [!CAUTION]
+> [!IMPORTANT]
 >
-> ## ⚠️ 开发暂停 – 严重 CSS 架构问题
+> ## UI 架构迁移已完成
 >
-> **整个系统的开发进度曾暂时受阻**，原因在于宿主应用与联邦模块之间存在严重的 CSS 层叠冲突。
+> 此前，开发因模块联邦架构中的一个关键样式问题而受阻。
 >
-> **根本原因：** 当宿主和联邦模块各自独立打包 Tailwind CSS 时，CSS 层叠规则冲突，导致跨模块边界的样式不可预测地覆盖，破坏响应式工具类（例如 `flex md:grid`），并使模块样式意外覆盖宿主样式。此问题源于模块联邦环境中全局 CSS 实用驱动的固有特性，无法仅通过配置可靠缓解。
+> ### 发生了什么？
 >
-> **解决方案方向：**
-> PR **#93** 引入了内部 UI 库的增强版本，旨在**完全取代 Tailwind**。新系统基于设计令牌、组件化，避免全局 CSS 实用类，从设计上消除了跨边界层叠冲突。这一变更在宿主和所有联邦模块之间建立了一套统一、可预测的样式约定。
+> 宿主应用和联邦模块各自独立打包 Tailwind CSS，导致 CSS 层叠规则在模块边界之间产生冲突，具体表现为：
 >
-> **重要提示：**
-> 本次迁移涉及**破坏性变更**，是一次深思熟虑的架构转型。虽然短期内会造成不便，但对于确保模块联邦系统的长期稳定性和正确性来说是必要的。请参阅该[议题](https://github.com/lifeforge-app/lifeforge/issues/93)获取最新进展和迁移详情。
+> * 不可预测的样式覆盖
+> * 响应式工具类失效
+> * 跨模块样式干扰
+> * 宿主与远程应用间渲染行为不一致
+>
+> 当多个 Tailwind CSS 包共存于同一运行时中时，层叠规则的顺序变得难以可靠控制。
+>
+> 每个联邦模块都会生成自己的 CSS 输出，但所有样式最终会汇入同一个文档层叠中。随着模块的动态加载与组合，样式的优先级可能取决于注入顺序而非应用意图，从而产生难以调试的细微样式冲突。
+>
+> 虽然 Tailwind CSS 在传统应用架构中表现出色，但它并非为大规模联邦前端系统而设计。
+>
+> **问题从来都不隐蔽。**
+>
+> 一旦多个 Tailwind 包被引入模块联邦架构，样式冲突立即显现，并可能影响 UI 的整个区域。由于冲突源于独立生成的 CSS 输出在共享层叠中的相互作用，在不改变底层样式模型的前提下，不存在实用且可靠的修复方案。
+>
+> 因此，从 Tailwind 迁移并非偏好变更，而是架构上的必然选择。
+>
+> ### 解决方案
+>
+> PR #93 引入了内部 UI 库和样式架构的完整重新设计。
+>
+> 新系统具有以下特点：
+> 
+> * 基于设计令牌
+> * 组件化
+> * 完全独立于 Tailwind CSS
+> * 专门为模块联邦设计
+> * 建立在单一共享 UI 约定之上
+> 
+> 所有应用不再各自生成并打包 CSS，而是直接通过 `@lifeforge/ui` 使用 UI 原语、令牌和样式行为。
+> 
+> 这使得 `@lifeforge/ui` 成为整个平台视觉呈现的唯一权威来源。
+> 
+> 效果如下：
+> 
+> * 联邦模块不再打包自己的样式系统
+> * 无论模块加载顺序如何，视觉行为保持一致
+> * 样式所有权集中且可预测
+> * 跨模块层叠冲突从根本上被消除
+> 
+> 此次迁移引入了破坏性变更，需要对整个代码库进行大规模重构，但它永久性地解决了一类在之前模型中无法可靠解决的架构问题。
+
+> [!TIP]
+>
+> ## 寻找旧版？
+>
+> 基于 Tailwind 的最终实现已被保留，可供参考。
+>
+> * 旧版发布：https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
+> * 旧版分支：https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
+>
+> 旧版不再积极开发，但仍可作为历史参考、迁移指南或回顾先前实现的资料。
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/lifeforge-logo.svg" alt="LifeForge Logo" width="240" height="80"/>
@@ -27,23 +85,31 @@
 
 <div align="center">
 
-![skills](https://img.shields.io/badge/-TYPESCRIPT-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![skills](https://img.shields.io/badge/-HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![skills](https://img.shields.io/badge/-CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![skills](https://img.shields.io/badge/-REACT_JS-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![skills](https://img.shields.io/badge/-NODE_JS-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![skills](https://img.shields.io/badge/-EXPRESS_JS-000000?style=for-the-badge&logo=express&logoColor=white)
-![skills](https://img.shields.io/badge/-POCKETBASE-B8DEEB?style=for-the-badge&logo=pocketbase&logoColor=black)
+![skills](https://img.shields.io/badge/-TYPESCRIPT-FF0000?style=for-the-badge&logo=typescript&logoColor=white&color=3178C6)
+![skills](https://img.shields.io/badge/-HTML-FF0000?style=for-the-badge&logo=html5&logoColor=white&color=orange)
+![skills](https://img.shields.io/badge/-CSS-FF0000?style=for-the-badge&logo=css3&logoColor=white&color=blue)
+![skills](https://img.shields.io/badge/-TAILWIND_CSS-FF0000?style=for-the-badge&logo=tailwindcss&logoColor=white&color=teal)
+![skills](https://img.shields.io/badge/-REACT_JS-FF0000?style=for-the-badge&logo=react&logoColor=white&color=skyblue)
+![skills](https://img.shields.io/badge/-NODE_JS-FF0000?style=for-the-badge&logo=node.js&logoColor=white&color=green)
+![skills](https://img.shields.io/badge/-EXPRESS_JS-FF0000?style=for-the-badge&logo=express&logoColor=white&color=black)
+![skills](https://img.shields.io/badge/-POCKETBASE-FF0000?style=for-the-badge&logo=pocketbase&logoColor=black&color=white)
 
 </div>
 
+<div align="center">
+<a href="../README.md">🇬🇧 English</a>
+<a href="README.zh-CN.md">🇨🇳 简体中文</a>
+<a href="README.zh-TW.md">🇹🇼 繁體中文</a>
+<a href="README.ms.md">🇲🇾 Bahasa Malaysia</a>
+</div>
+
 <h3 align="center">
-	🚧 项目正处于早期开发阶段，功能与模块可能会出现大幅度调整。最新动态请查阅 <a href="https://docs.lifeforge.dev/progress/changelog">更新日志</a>。
+  🚧 项目正处于早期开发阶段，功能与模块可能会出现大幅度调整。最新动态请查阅 <a href="https://docs.lifeforge.dev/progress/changelog">更新日志</a>。
 </h3>
 
 ## 📋 目录
 
-- [� 目录](#-目录)
+- [📋 目录](#-目录)
 - [🔥 支持作者](#-支持作者)
 - [🤔 面临的问题](#-面临的问题)
 - [✅ 我们的方案](#-我们的方案)
@@ -57,13 +123,6 @@
   - [协助翻译](#协助翻译)
 - [💡 灵感与致谢](#-灵感与致谢)
 - [📄 开源许可](#-开源许可)
-
-<div align="center">
-<a href="../README.md">🇬🇧 English</a>
-<a href="README.zh-CN.md">🇨🇳 简体中文</a>
-<a href="README.zh-TW.md">🇹🇼 繁體中文</a>
-<a href="README.ms.md">🇲🇾 Bahasa Malaysia</a>
-</div>
 
 ## 🔥 支持作者
 
