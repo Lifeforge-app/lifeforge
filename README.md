@@ -65,6 +65,7 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
   - [Feature Requests \& Bug Reports](#feature-requests--bug-reports)
   - [Translation](#translation)
 - [💡 Credits](#-credits)
+- [⭐️ Star History](#️-star-history)
 - [📄 License](#-license)
 
 ## 🔥 Support the Author
