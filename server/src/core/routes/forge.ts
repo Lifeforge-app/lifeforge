@@ -1,5 +1,5 @@
-import { createForge } from '@lifeforge/server-utils'
+import { createForgeContractBuilder } from '@lifeforge/server-utils'
 
-const forge = createForge({})
+const forge = createForgeContractBuilder({})
 
 export default forge

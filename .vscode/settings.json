@@ -11,5 +11,6 @@
     "vars"
   ],
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.experimental.useTsgo": false
+  "typescript.experimental.useTsgo": false,
+  "js/ts.tsdk.path": "node_modules/typescript/lib"
 }

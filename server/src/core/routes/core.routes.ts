@@ -9,12 +9,17 @@ import { forgeRouter } from '@lifeforge/server-utils'
 import forge from './forge'
 
 const welcome = forge
-  .query()
-  .noAuth()
-  .noEncryption()
-  .description('Welcome to LifeForge API')
-  .input({})
-  .callback(async () => 'Get ready to forge your life!' as const)
+  .query({
+    description: 'Welcome to LifeForge API',
+    noAuth: true,
+    encrypted: false,
+    output: {
+      
+    }
+  })
+  .callback(async () => 'Get ready to forge your life!')
+
+type OutputKeys = keyof OutputType
 
 const ping = forge
   .mutation()

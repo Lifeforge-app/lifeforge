@@ -4,7 +4,7 @@ export interface RouterInput {
   [key: string]:
     | Router
     | {
-        __isForgeController: true
+        __isForgeContract: true
       }
     | RouterInput
 }

@@ -13,7 +13,7 @@ type ZodObjectOrIntersection =
  * Infers the input TypeScript type from a Forge endpoint config object.
  * Uses embedded Zod schema definitions to produce a plain object type.
  *
- * @template T - The endpoint config object with `__isForgeController` and `__input` fields
+ * @template T - The endpoint config object with `__isForgeContract` and `__input` fields
  *
  * @example
  * ```typescript
@@ -22,7 +22,7 @@ type ZodObjectOrIntersection =
  * ```
  */
 export type InferInput<T> = T extends {
-  __isForgeController: true
+  __isForgeContract: true
   __input: infer I
   __media: infer M
 }
@@ -54,7 +54,7 @@ export type InferInput<T> = T extends {
 /**
  * Infers the output (response) TypeScript type from a Forge endpoint config object.
  *
- * @template T - The endpoint config object with `__isForgeController` and `__output` fields
+ * @template T - The endpoint config object with `__isForgeContract` and `__output` fields
  *
  * @example
  * ```typescript
@@ -63,7 +63,7 @@ export type InferInput<T> = T extends {
  * ```
  */
 export type InferOutput<T> = T extends {
-  __isForgeController: true
+  __isForgeContract: true
   __output: infer O
 }
   ? O
@@ -81,7 +81,7 @@ export type InferOutput<T> = T extends {
  */
 export type InferClientControllerInput<T extends ForgeEndpoint<any>> =
   T['__type'] extends {
-    __isForgeController: true
+    __isForgeContract: true
     __input: infer I
     __media: infer M
   }
@@ -119,7 +119,7 @@ export type InferClientControllerInput<T extends ForgeEndpoint<any>> =
  */
 export type InferClientControllerOutput<T extends ForgeEndpoint<any>> =
   T['__type'] extends {
-    __isForgeController: true
+    __isForgeContract: true
     __output: infer O
   }
     ? O
@@ -141,7 +141,7 @@ export type InferClientControllerOutput<T extends ForgeEndpoint<any>> =
  * ```
  */
 export type ProxyTree<T> = {
-  [K in keyof T]: T[K] extends { __isForgeController: true }
+  [K in keyof T]: T[K] extends { __isForgeContract: true }
     ? ForgeEndpoint<T[K]>
     : ProxyTree<T[K]>
 } & {
@@ -172,7 +172,7 @@ export type ProxyTree<T> = {
  * ```
  */
 export type UntypedEndpointType<TOutput = any, TBody = any, TQuery = any> = {
-  __isForgeController: true
+  __isForgeContract: true
   __input: { body: TBody; query: TQuery }
   __output: TOutput
   __media: null

@@ -20,7 +20,7 @@ import { getFormData, hasFile, joinObjectsRecursively } from './utils'
  * - Get React Query options via `.queryOptions()` and `.mutationOptions()`
  * - Execute requests directly with `.query()` and `.mutate()`
  *
- * @template T The endpoint type, inferred from API schema, must include `__isForgeController: true`.
+ * @template T The endpoint type, inferred from API schema, must include `__isForgeContract: true`.
  *
  * @example
  * ```typescript
@@ -32,7 +32,7 @@ import { getFormData, hasFile, joinObjectsRecursively } from './utils'
  * ```
  */
 export default class ForgeEndpoint<
-  T extends { __isForgeController: true } = any
+  T extends { __isForgeContract: true } = any
 > {
   /** Internal type marker for type inference */
   public __type!: T

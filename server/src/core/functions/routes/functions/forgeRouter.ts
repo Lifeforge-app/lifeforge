@@ -1,6 +1,10 @@
 import { Router } from 'express'
 
-import { Forge, ForgeRouter, RouterInput } from '@lifeforge/server-utils'
+import {
+  ForgeContract,
+  ForgeRouter,
+  RouterInput
+} from '@lifeforge/server-utils'
 
 import { registerController } from './controllerLogic'
 
@@ -13,12 +17,12 @@ function isRouter(value: unknown): value is Router {
   )
 }
 
-function isForgeController(value: unknown): value is Forge<any> {
+function isForgeController(value: unknown): value is ForgeContract {
   return !!(
     value &&
     typeof value === 'object' &&
-    '__isForgeController' in value &&
-    (value as Record<string, unknown>).__isForgeController === true
+    '__isForgeContract' in value &&
+    (value as Record<string, unknown>).__isForgeContract === true
   )
 }
 
@@ -38,10 +42,10 @@ function isForgeController(value: unknown): value is Forge<any> {
  * @example
  * ```typescript
  * const routes = {
- *   users: forgeController.query()...,
+ *   users: forgeContract.query()...,
  *   posts: {
- *     list: forgeController.query()...,
- *     create: forgeController.mutation()...
+ *     list: forgeContract.query()...,
+ *     create: forgeContract.mutation()...
  *   },
  * };
  * const router = registerRoutes(routes);

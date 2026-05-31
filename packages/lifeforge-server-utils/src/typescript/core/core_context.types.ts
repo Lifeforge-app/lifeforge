@@ -4,19 +4,19 @@ import z from 'zod'
 
 import type { Logger } from '@lifeforge/log'
 
-import IPBService from './PBService.interface'
-import { CollectionKey } from './pb_service.types'
+import IPBService from '../pocketbase/PBService.interface'
+import { CollectionKey } from '../pocketbase/pb_service.types'
 import { ITempFileManagerConstructor } from './tempfile_manager.types'
 
 export type FetchAIFunc = <
-  T extends z.ZodType<any> | undefined = undefined
+  T extends z.ZodTypeAny | undefined = undefined
 >(params: {
-  pb: IPBService<any>
+  pb: IPBService<CleanedSchemas>
   provider: 'groq' | 'openai'
   model: string
-  messages: any[]
+  messages: Record<string, unknown>[]
   structure?: T
-}) => Promise<(T extends z.ZodType<any> ? z.infer<T> : string) | null>
+}) => Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null>
 
 export type SearchLocationsFunc = (
   key: string,
@@ -35,7 +35,7 @@ type CheckExistenceFunc = <TSchemas extends CleanedSchemas>(
   id: string
 ) => Promise<boolean>
 
-type GetAPIKeyFunc = (id: string, pb: IPBService<any>) => Promise<string>
+type GetAPIKeyFunc = (id: string, pb: IPBService<CleanedSchemas>) => Promise<string>
 
 type CheckModulesAvailabilityFunc = (moduleIds: string) => Promise<boolean>
 
@@ -56,7 +56,7 @@ export type TaskPoolTask = {
   module: string
   description: string
   status: 'pending' | 'running' | 'completed' | 'failed'
-  data?: any
+  data?: unknown
   error?: string
   createdAt: Date
   updatedAt: Date
@@ -88,7 +88,7 @@ export type EncryptFunc = (data: Buffer, key: string) => Buffer
 export type Encrypt2Func = (data: string, key: string) => string
 
 export type ValidateOTPFunc = (
-  pb: IPBService<any>,
+  pb: IPBService<CleanedSchemas>,
   {
     otp,
     otpId
