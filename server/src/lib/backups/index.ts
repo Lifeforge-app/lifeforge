@@ -10,63 +10,84 @@ import { createForge, forgeRouter } from '@lifeforge/server-utils'
 const forge = createForge({}, 'backups')
 
 const list = forge
-  .query()
-  .description('Retrieve all database backups')
-  .input({})
-  .callback(async () => {
+  .query({
+    description: 'Retrieve all database backups',
+    input: {},
+    output: {
+      OK: z.array(
+        z.object({
+          key: z.string(),
+          size: z.number(),
+          modified: z.string()
+        })
+      )
+    }
+  })
+  .callback(async ({ response }) => {
     const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     const allBackups = await pb.backups.getFullList()
 
-    return allBackups.sort((a, b) => b.modified.localeCompare(a.modified)) as {
-      key: string
-      size: number
-      modified: string
-    }[]
+    return response.ok(
+      allBackups.sort((a, b) => b.modified.localeCompare(a.modified)) as {
+        key: string
+        size: number
+        modified: string
+      }[]
+    )
   })
 
 const download = forge
-  .query()
-  .description('Download a database backup file')
-  .input({
-    query: z.object({
-      key: z.string()
-    })
+  .query({
+    description: 'Download a database backup file',
+    input: {
+      query: z.object({
+        key: z.string()
+      })
+    },
+    isDownloadable: true,
+    output: {
+      OK: z.null(),
+      BAD_REQUEST: z.string()
+    }
   })
-  .isDownloadable()
-  .callback(async ({ res, query: { key } }) => {
+  .callback(async ({ res, query: { key }, response }) => {
     const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     const token = await pb.files.getToken()
 
     const downloadURL = pb.backups.getDownloadURL(token, key)
 
-    const response = await fetch(downloadURL)
+    const r = await fetch(downloadURL)
 
-    if (!response.ok) {
-      throw new Error(`Failed to download backup: ${response.statusText}`)
+    if (!r.ok) {
+      return response.badRequest(`Failed to download backup: ${r.statusText}`)
     }
 
-    const buffer = Buffer.from(await response.arrayBuffer())
+    const buffer = Buffer.from(await r.arrayBuffer())
 
     res.setHeader('Content-Type', 'application/zip')
     res.setHeader('Content-Disposition', `attachment; filename="${key}.zip"`)
     res.setHeader('Content-Length', buffer.length)
 
-    // @ts-expect-error - res type
     res.send(buffer)
+
+    return response.ok(null)
   })
 
 const create = forge
-  .mutation()
-  .description('Create a new database backup')
-  .input({
-    body: z.object({
-      backupName: z.string().optional()
-    })
+  .mutation({
+    description: 'Create a new database backup',
+    input: {
+      body: z.object({
+        backupName: z.string().optional()
+      })
+    },
+    output: {
+      CREATED: z.void()
+    }
   })
-  .statusCode(201)
-  .callback(async ({ body: { backupName } }) => {
+  .callback(async ({ body: { backupName }, response }) => {
     const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     if (!backupName) {
@@ -74,21 +95,28 @@ const create = forge
     }
 
     await pb.backups.create(backupName)
+
+    return response.created()
   })
 
 const remove = forge
-  .mutation()
-  .description('Delete a database backup')
-  .input({
-    query: z.object({
-      key: z.string()
-    })
+  .mutation({
+    description: 'Delete a database backup',
+    input: {
+      query: z.object({
+        key: z.string()
+      })
+    },
+    output: {
+      OK: z.void()
+    }
   })
-  .statusCode(204)
-  .callback(async ({ query: { key } }) => {
+  .callback(async ({ query: { key }, response }) => {
     const pb = await connectToPocketBase(validateEnvironmentVariables())
 
     await pb.backups.delete(key)
+
+    return response.ok()
   })
 
 export default forgeRouter({

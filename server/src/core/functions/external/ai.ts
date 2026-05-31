@@ -4,9 +4,7 @@ import { createServiceLogger } from '@functions/logging'
 import { zodTextFormat } from '@functions/utils/zodResponseFormat'
 import chalk from 'chalk'
 import Groq from 'groq-sdk'
-import { ChatCompletionMessageParam as GroqChatCompletionMessageParam } from 'groq-sdk/resources/chat/completions.mjs'
 import OpenAI from 'openai'
-import { ResponseInputItem } from 'openai/resources/responses/responses.mjs'
 
 import {
   ClientError,
@@ -53,7 +51,7 @@ const fetchAI: FetchAIFunc = async ({
     })
 
     const response = await client.chat.completions.create({
-      messages: messages as GroqChatCompletionMessageParam[],
+      messages: messages as never,
       model
     })
 
@@ -79,7 +77,7 @@ const fetchAI: FetchAIFunc = async ({
   if (structure) {
     const completion = await client.responses.parse({
       model,
-      input: messages as ResponseInputItem[],
+      input: messages as never,
       text: {
         format: zodTextFormat(structure, 'response')
       }
@@ -101,7 +99,7 @@ const fetchAI: FetchAIFunc = async ({
   }
 
   const response = await client.responses.create({
-    input: messages as ResponseInputItem[],
+    input: messages as never,
     model
   })
 

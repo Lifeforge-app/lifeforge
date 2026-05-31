@@ -8,12 +8,11 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
+import { createForge, forgeRouter } from '@lifeforge/server-utils'
 import { normalizeSubnamespace } from '@lifeforge/shared'
 
 const forge = createForge({}, 'locales')
 
-// Scan apps directory for modules with locales
 const appsDir = path.join(ROOT_DIR, 'apps')
 
 function getModulesWithLocales(): string[] {
@@ -32,32 +31,50 @@ function getModulesWithLocales(): string[] {
 }
 
 const listLanguages = forge
-  .query()
-  .noAuth()
-  .noEncryption()
-  .description('List all languages')
-  .input({})
-  .callback(async () => {
-    return LocaleService.getLangManifests() as unknown as {
-      name: string
-      alternative?: string[]
-      icon: string
-      displayName: string
-    }[]
+  .query({
+    description: 'List all languages',
+    noAuth: true,
+    encrypted: false,
+    input: {},
+    output: {
+      OK: z.array(
+        z.object({
+          name: z.string(),
+          alternative: z.array(z.string()).optional(),
+          icon: z.string(),
+          displayName: z.string()
+        })
+      )
+    }
+  })
+  .callback(async ({ response }) => {
+    return response.ok(
+      LocaleService.getLangManifests() as unknown as {
+        name: string
+        alternative?: string[]
+        icon: string
+        displayName: string
+      }[]
+    )
   })
 
 const getLocale = forge
-  .query()
-  .noAuth()
-  .description('Retrieve localization strings for namespace')
-  .input({
-    query: z.object({
-      lang: z.string(),
-      namespace: z.enum(ALLOWED_NAMESPACE),
-      subnamespace: z.string()
-    })
+  .query({
+    description: 'Retrieve localization strings for namespace',
+    noAuth: true,
+    input: {
+      query: z.object({
+        lang: z.string(),
+        namespace: z.enum(ALLOWED_NAMESPACE),
+        subnamespace: z.string()
+      })
+    },
+    output: {
+      OK: z.record(z.string(), z.any()),
+      NOT_FOUND: true
+    }
   })
-  .callback(async ({ query: { lang, namespace, subnamespace } }) => {
+  .callback(async ({ query: { lang, namespace, subnamespace }, response }) => {
     const moduleApps = getModulesWithLocales()
 
     subnamespace = normalizeSubnamespace(subnamespace)
@@ -67,32 +84,31 @@ const getLocale = forge
     )?.[0]
 
     if (!finalLang) {
-      throw new ClientError(`Language ${lang} does not exist`, 404)
+      return response.notFound()
     }
 
     let data
 
     if (namespace === 'apps') {
-      // Find module by extracting name from path (e.g., lifeforge--calendar -> calendar)
       const target = moduleApps.find(
         modulePath =>
           normalizeSubnamespace(path.basename(modulePath)) === subnamespace
       )
 
       if (!target) {
-        return {}
+        return response.ok({})
       }
 
       const localePath = path.join(target, 'locales', `${finalLang}.json`)
 
       if (!fs.existsSync(localePath)) {
-        return {}
+        return response.ok({})
       }
 
       data = JSON.parse(fs.readFileSync(localePath, 'utf-8'))
     } else {
       if (!LocaleService.getSystemLocales()[finalLang][subnamespace]) {
-        return {}
+        return response.ok({})
       }
 
       data = LocaleService.getSystemLocales()[finalLang][subnamespace]
@@ -142,21 +158,29 @@ const getLocale = forge
       }
     }
 
-    return data
+    return response.ok(data)
   })
 
 const notifyMissing = forge
-  .mutation()
-  .description('Report missing localization key')
-  .input({
-    body: z.object({
-      namespace: z.string(),
-      key: z.string()
-    })
+  .mutation({
+    description: 'Report missing localization key',
+    input: {
+      body: z.object({
+        namespace: z.string(),
+        key: z.string()
+      })
+    },
+    output: {
+      OK: z.void()
+    }
   })
-  .callback(async ({ body: { namespace, key }, core: { logging } }) => {
-    logging.warn(`Missing locale ${chalk.red(`${namespace}:${key}`)}`)
-  })
+  .callback(
+    async ({ body: { namespace, key }, core: { logging }, response }) => {
+      logging.warn(`Missing locale ${chalk.red(`${namespace}:${key}`)}`)
+
+      return response.ok()
+    }
+  )
 
 export default forgeRouter({
   listLanguages,

@@ -2,26 +2,21 @@ import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import z from 'zod'
 
-import { ClientError } from '@lifeforge/server-utils'
-
 import forge from '../forge'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 
-// In-memory storage for pending QR login sessions
-// In production, consider using Redis for multi-instance support
 interface PendingQRSession {
   sessionId: string
   browserInfo: string
   createdAt: string
   expiresAt: string
-  userId?: string // Set when approved
-  sessionToken?: string // Set when approved
+  userId?: string
+  sessionToken?: string
   status: 'pending' | 'approved' | 'expired'
 }
 
 const pendingQRSessions = new Map<string, PendingQRSession>()
 
-// Cleanup expired sessions every minute
 setInterval(() => {
   const now = dayjs()
 
@@ -32,28 +27,29 @@ setInterval(() => {
   }
 }, 60 * 1000)
 
-/**
- * Register a new QR login session.
- * Called by the unauthenticated desktop client.
- * Data is already encrypted by forgeAPI layer.
- */
 export const registerQRSession = forge
-  .mutation()
-  .noAuth()
-  .description('Register a new QR login session')
-  .input({
-    body: z.object({
-      sessionId: z.string().uuid(),
-      browserInfo: z.string()
-    })
+  .mutation({
+    description: 'Register a new QR login session',
+    noAuth: true,
+    input: {
+      body: z.object({
+        sessionId: z.string().uuid(),
+        browserInfo: z.string()
+      })
+    },
+    output: {
+      CREATED: z.object({
+        sessionId: z.string(),
+        expiresAt: z.string()
+      }),
+      BAD_REQUEST: z.string()
+    }
   })
-  .callback(async ({ body: { sessionId, browserInfo } }) => {
-    // Check if session ID already exists
+  .callback(async ({ body: { sessionId, browserInfo }, response }) => {
     if (pendingQRSessions.has(sessionId)) {
-      throw new ClientError('Session already registered', 400)
+      return response.badRequest('Session already registered')
     }
 
-    // Create the pending session with 5-minute expiration
     const session: PendingQRSession = {
       sessionId,
       browserInfo,
@@ -64,51 +60,52 @@ export const registerQRSession = forge
 
     pendingQRSessions.set(sessionId, session)
 
-    return {
+    return response.created({
       sessionId,
       expiresAt: session.expiresAt
-    }
-  })
-
-/**
- * Approve a QR login session from an authenticated mobile device.
- */
-export const approveQRLogin = forge
-  .mutation()
-  .description('Approve a QR login request')
-  .input({
-    body: z.object({
-      sessionId: z.string().uuid()
     })
   })
-  .callback(async ({ pb, body: { sessionId }, req }) => {
-    // Find the pending session
+
+export const approveQRLogin = forge
+  .mutation({
+    description: 'Approve a QR login request',
+    input: {
+      body: z.object({
+        sessionId: z.string().uuid()
+      })
+    },
+    output: {
+      OK: z.object({
+        success: z.boolean(),
+        browserInfo: z.string()
+      }),
+      NOT_FOUND: true,
+      BAD_REQUEST: z.string()
+    }
+  })
+  .callback(async ({ pb, body: { sessionId }, req, response }) => {
     const pendingSession = pendingQRSessions.get(sessionId)
 
     if (!pendingSession) {
-      throw new ClientError('Session not found or expired', 404)
+      return response.notFound()
     }
 
-    // Check if already approved
     if (pendingSession.status === 'approved') {
-      throw new ClientError('Session already approved', 400)
+      return response.badRequest('Session already approved')
     }
 
-    // Check if expired
     if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
       pendingQRSessions.delete(sessionId)
-      throw new ClientError('Session expired', 400)
+
+      return response.badRequest('Session expired')
     }
 
-    // Get the approving user's data
     const userData = pb.instance.authStore.record
 
     if (!userData) {
-      throw new ClientError('User not found', 404)
+      return response.notFound()
     }
 
-    // Create a new session for the desktop client
-    // We need to refresh to get a fresh token
     const newPb = new PocketBase(process.env.PB_HOST)
 
     newPb.authStore.save(pb.instance.authStore.token, userData)
@@ -116,17 +113,14 @@ export const approveQRLogin = forge
 
     const newSessionToken = newPb.authStore.token
 
-    // Update the pending session
     pendingSession.status = 'approved'
     pendingSession.userId = userData.id
     pendingSession.sessionToken = newSessionToken
 
-    // Update user data if needed
     const sanitizedUserData = removeSensitiveData(userData)
 
     await updateNullData(sanitizedUserData, pb.instance)
 
-    // Emit the session to the WebSocket room
     const io = req.io
 
     if (io) {
@@ -138,54 +132,62 @@ export const approveQRLogin = forge
       })
     }
 
-    return {
+    return response.ok({
       success: true,
       browserInfo: pendingSession.browserInfo
-    }
-  })
-
-/**
- * Check the status of a QR login session.
- * Fallback for WebSocket connection issues.
- */
-export const checkQRSessionStatus = forge
-  .query()
-  .noAuth()
-  .description('Check QR login session status')
-  .input({
-    query: z.object({
-      sessionId: z.string().uuid()
     })
   })
-  .callback(async ({ query: { sessionId } }) => {
+
+export const checkQRSessionStatus = forge
+  .query({
+    description: 'Check QR login session status',
+    noAuth: true,
+    input: {
+      query: z.object({
+        sessionId: z.string().uuid()
+      })
+    },
+    output: {
+      OK: z.union([
+        z.object({ status: z.literal('not_found') }),
+        z.object({ status: z.literal('expired') }),
+        z.object({
+          status: z.literal('approved'),
+          session: z.string()
+        }),
+        z.object({
+          status: z.literal('pending'),
+          expiresAt: z.string()
+        })
+      ])
+    }
+  })
+  .callback(async ({ query: { sessionId }, response }) => {
     const pendingSession = pendingQRSessions.get(sessionId)
 
     if (!pendingSession) {
-      return { status: 'not_found' as const }
+      return response.ok({ status: 'not_found' as const })
     }
 
-    // Check if expired
     if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
       pendingQRSessions.delete(sessionId)
 
-      return { status: 'expired' as const }
+      return response.ok({ status: 'expired' as const })
     }
 
     if (pendingSession.status === 'approved' && pendingSession.sessionToken) {
-      // Return the session token and clean up
       const result = {
         status: 'approved' as const,
         session: pendingSession.sessionToken
       }
 
-      // Clean up after returning the session
       pendingQRSessions.delete(sessionId)
 
-      return result
+      return response.ok(result)
     }
 
-    return {
+    return response.ok({
       status: pendingSession.status as 'pending',
       expiresAt: pendingSession.expiresAt
-    }
+    })
   })

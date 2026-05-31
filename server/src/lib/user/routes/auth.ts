@@ -8,49 +8,72 @@ import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
 import z from 'zod'
 
-import { ClientError } from '@lifeforge/server-utils'
-
 import { currentSession } from '..'
 import forge from '../forge'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 
 export const validateOTP = forge
-  .mutation()
-  .noEncryption()
-  .description('Verify one-time password')
-  .input({
-    body: z.object({
-      otp: z.string(),
-      otpId: z.string()
-    })
+  .mutation({
+    description: 'Verify one-time password',
+    encrypted: false,
+    input: {
+      body: z.object({
+        otp: z.string(),
+        otpId: z.string()
+      })
+    },
+    output: {
+      OK: z.any()
+    }
   })
-  .callback(({ pb, body }) => _validateOTP(pb, body))
+  .callback(async ({ pb, body, response }) =>
+    response.ok(_validateOTP(pb, body))
+  )
 
 export const generateOTP = forge
-  .query()
-  .noEncryption()
-  .description('Generate one-time password')
-  .input({})
-  .callback(
-    async ({ pb }) =>
+  .query({
+    description: 'Generate one-time password',
+    encrypted: false,
+    input: {},
+    output: {
+      OK: z.string()
+    }
+  })
+  .callback(async ({ pb, response }) =>
+    response.ok(
       (
         await pb.instance
           .collection('users')
           .requestOTP(pb.instance.authStore.record?.email)
       ).otpId
+    )
   )
 
 export const login = forge
-  .mutation()
-  .noAuth()
-  .description('Authenticate user with credentials')
-  .input({
-    body: z.object({
-      email: z.string(),
-      password: z.string()
-    })
+  .mutation({
+    description: 'Authenticate user with credentials',
+    noAuth: true,
+    input: {
+      body: z.object({
+        email: z.string(),
+        password: z.string()
+      })
+    },
+    output: {
+      OK: z.union([
+        z.object({
+          state: z.literal('2fa_required'),
+          tid: z.string()
+        }),
+        z.object({
+          state: z.literal('success'),
+          session: z.string()
+        })
+      ]),
+      UNAUTHORIZED: true
+    }
   })
-  .callback(async ({ body: { email, password } }) => {
+  .callback(async ({ body: { email, password }, response }) => {
     const pb = new PocketBase(process.env.PB_HOST)
 
     let failed = false
@@ -66,7 +89,7 @@ export const login = forge
       const userData = pb.authStore.record
 
       if (!userData) {
-        throw new ClientError('Invalid credentials', 401)
+        return response.unauthorized()
       }
 
       const sanitizedUserData = removeSensitiveData(userData)
@@ -76,35 +99,40 @@ export const login = forge
         currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
         currentSession.tokenId = v4()
 
-        return {
+        return response.ok({
           state: '2fa_required' as const,
           tid: currentSession.tokenId
-        }
+        })
       }
 
       await updateNullData(sanitizedUserData, pb)
 
-      return {
+      return response.ok({
         state: 'success' as const,
         session: pb.authStore.token
-      }
+      })
     } else {
-      throw new ClientError('Invalid credentials', 401)
+      return response.unauthorized()
     }
   })
 
 export const verifySessionToken = forge
-  .mutation()
-  .noEncryption()
-  .description('Validate user session token')
-  .input({})
-  .callback(async ({ req }) => {
+  .mutation({
+    description: 'Validate user session token',
+    encrypted: false,
+    input: {},
+    output: {
+      OK: z.boolean(),
+      UNAUTHORIZED: true
+    }
+  })
+  .callback(async ({ req, response }) => {
     const bearerToken = req.headers.authorization?.split(' ')[1].trim()
 
     const pb = new PocketBase(process.env.PB_HOST)
 
     if (!bearerToken) {
-      throw new ClientError('No token provided', 401)
+      return response.unauthorized()
     }
 
     pb.authStore.save(bearerToken, null)
@@ -114,47 +142,59 @@ export const verifySessionToken = forge
       .catch(() => {})
 
     if (!pb.authStore.isValid) {
-      throw new ClientError('Invalid session', 401)
+      return response.unauthorized()
     }
 
     if (!pb.authStore.record) {
-      throw new ClientError('Invalid session', 401)
+      return response.unauthorized()
     }
 
-    return true
+    return response.ok(true)
   })
 
 export const getUserData = forge
-  .query()
-  .description('Get current user data')
-  .input({})
-  .callback(async ({ pb }) => {
+  .query({
+    description: 'Get current user data',
+    input: {},
+    output: {
+      OK: z.any(),
+      NOT_FOUND: true
+    }
+  })
+  .callback(async ({ pb, response }) => {
     const userData = pb.instance.authStore.record
 
     if (!userData) {
-      throw new ClientError('User not found', 404)
+      return response.notFound()
     }
 
     const sanitizedUserData = removeSensitiveData(userData)
 
     await updateNullData(sanitizedUserData, pb.instance)
 
-    return sanitizedUserData
+    return response.ok(sanitizedUserData)
   })
 
 export const createFirstUser = forge
-  .mutation()
-  .noAuth()
-  .description('Create the first user (only works when no users exist)')
-  .input({
-    body: z.object({
-      email: z.email(),
-      username: z.string().min(3),
-      name: z.string().min(1),
-      password: z.string().min(8)
-    })
+  .mutation({
+    description: 'Create the first user (only works when no users exist)',
+    noAuth: true,
+    input: {
+      body: z.object({
+        email: z.string().email(),
+        username: z.string().min(3),
+        name: z.string().min(1),
+        password: z.string().min(8)
+      })
+    },
+    output: {
+      CREATED: z.object({
+        state: z.literal('success')
+      }),
+      BAD_REQUEST: z.string()
+    }
   })
-  .callback(async ({ body: { email, username, name, password } }) => {
+  .callback(async ({ body: { email, username, name, password }, response }) => {
     const config = validateEnvironmentVariables()
 
     const superPBInstance = await connectToPocketBase(config)
@@ -162,7 +202,7 @@ export const createFirstUser = forge
     const users = await superPBInstance.collection('users').getFullList()
 
     if (users.length > 0) {
-      throw new ClientError('Users already exist', 400)
+      return response.badRequest('Users already exist')
     }
 
     await superPBInstance.collection('users').create({
@@ -178,7 +218,7 @@ export const createFirstUser = forge
       borderRadiusMultiplier: 1.0
     })
 
-    return {
+    return response.created({
       state: 'success' as const
-    }
+    })
   })

@@ -67,8 +67,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
     const TOutput extends OutputDefinition,
     TQuery extends z.ZodTypeAny | undefined = undefined,
     TBody extends z.ZodTypeAny | undefined = undefined,
-    TMedia extends MediaConfig | null = null,
-    TExistenceCheck = undefined
+    TMedia extends MediaConfig | null = null
   >(
     method: TMethod,
     metadata: {
@@ -81,20 +80,22 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: TExistenceCheck & {
-        body?: Partial<
-          Record<
-            TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
-            CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-          >
-        >
-        query?: Partial<
-          Record<
-            TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
-            CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-          >
-        >
-      }
+      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
+        ? {
+            body?: Partial<
+              Record<
+                TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
+                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
+              >
+            >
+            query?: Partial<
+              Record<
+                TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
+                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
+              >
+            >
+          }
+        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
     }
@@ -171,8 +172,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       const TOutput extends OutputDefinition,
       TQuery extends z.ZodTypeAny | undefined = undefined,
       TBody extends z.ZodTypeAny | undefined = undefined,
-      TMedia extends MediaConfig | null = null,
-      TExistenceCheck = undefined
+      TMedia extends MediaConfig | null = null
     >(metadata: {
       description: string
       input?: {
@@ -183,24 +183,26 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: TExistenceCheck & {
-        body?: Partial<
-          Record<
-            TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
-            CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-          >
-        >
-        query?: Partial<
-          Record<
-            TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
-            CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-          >
-        >
-      }
+      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
+        ? {
+            body?: Partial<
+              Record<
+                TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
+                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
+              >
+            >
+            query?: Partial<
+              Record<
+                TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
+                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
+              >
+            >
+          }
+        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
     }) {
-      return buildRoute<'get', TOutput, TQuery, TBody, TMedia, TExistenceCheck>(
+      return buildRoute<'get', TOutput, TQuery, TBody, TMedia>(
         'get',
         metadata
       )
@@ -210,8 +212,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       const TOutput extends OutputDefinition,
       TQuery extends z.ZodTypeAny | undefined = undefined,
       TBody extends z.ZodTypeAny | undefined = undefined,
-      TMedia extends MediaConfig | null = null,
-      TExistenceCheck = undefined
+      TMedia extends MediaConfig | null = null
     >(metadata: {
       description: string
       input?: {
@@ -222,20 +223,22 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: TExistenceCheck & {
-        body?: Partial<
-          Record<
-            TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
-            CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-          >
-        >
-        query?: Partial<
-          Record<
-            TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
-            CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-          >
-        >
-      }
+      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
+        ? {
+            body?: Partial<
+              Record<
+                TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
+                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
+              >
+            >
+            query?: Partial<
+              Record<
+                TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
+                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
+              >
+            >
+          }
+        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
     }) {
@@ -244,8 +247,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         TOutput,
         TQuery,
         TBody,
-        TMedia,
-        TExistenceCheck
+        TMedia
       >('post', metadata)
     }
   }
