@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @fileoverview Controller Logic - Business logic for Express.js route controllers
  *
@@ -19,11 +18,10 @@ import type { Request, Response, Router } from 'express'
 
 import {
   BaseResponse,
-  CleanedSchemas,
   ClientError,
-  ConvertMedia,
-  Forge,
-  MediaConfig
+  ForgeContract,
+  MediaConfig,
+  getStatusMessage
 } from '@lifeforge/server-utils'
 
 import checkRecordExistence from '../utils/checkRecordExistence'
@@ -35,36 +33,38 @@ import { clientError, serverError, success } from '../utils/response'
 import fieldsUploadMiddleware from '../utils/uploadMiddleware'
 import isAuthTokenValid from '../utils/validateAuthToken'
 
+export type ForgeRequestHandler = ((
+  req: Request,
+  res: Response<BaseResponse<unknown>>
+) => Promise<void>) & {
+  meta: {
+    schema: ReturnType<ForgeContract['getValue']>['schema']
+    output: ReturnType<ForgeContract['getValue']>['output']
+    description: string
+    options: {
+      noDefaultResponse: boolean
+      existenceCheck: ReturnType<ForgeContract['getValue']>['existenceCheck']
+      isDownloadable: boolean
+      encrypted: boolean
+      method: 'get' | 'post'
+      noAuth: boolean
+      media: ReturnType<ForgeContract['getValue']>['media']
+      callerModule: ReturnType<ForgeContract['getValue']>['callerModule']
+    }
+  }
+}
+
 /**
  * Creates an Express request handler from a ForgeControllerBuilder's configuration.
  * This is kept private and only used internally by registerController.
  */
-function createHandler<
-  TSchemas extends CleanedSchemas,
-  TMethod extends 'get' | 'post',
-  TInput extends { body?: any; query?: any },
-  TOutput,
-  TMedia extends MediaConfig | null
->(
-  config: ReturnType<
-    Forge<TSchemas, TMethod, TInput, TOutput, TMedia>['getValue']
-  >
-): ((req: Request, res: Response<BaseResponse<TOutput>>) => Promise<void>) & {
-  meta: {
-    schema: TInput
-    description: string
-    options: {
-      statusCode: number
-      noDefaultResponse: boolean
-      existenceCheck: any
-      isDownloadable: boolean
-      encrypted: boolean
-    }
-  }
-} {
+function createHandler(
+  config: ReturnType<ForgeContract['getValue']>
+): ForgeRequestHandler {
   const {
-    schema,
-    statusCode,
+    method,
+    schema: input,
+    output,
     noDefaultResponse,
     existenceCheck,
     isDownloadable,
@@ -78,7 +78,7 @@ function createHandler<
 
   const _handler = async (
     req: Request,
-    res: Response<BaseResponse<TOutput>>
+    res: Response<BaseResponse<unknown>>
   ) => {
     const callerModuleId = callerModule
       ? `${callerModule.source}:${callerModule.id}`
@@ -89,14 +89,9 @@ function createHandler<
     const aesKey = getAESKey(req, res, encrypted, callerModuleId)
 
     try {
-      parseQuery(req, schema.query)
+      parseQuery(req, input.query)
 
-      parseBodyPayload<NonNullable<TMedia>>(
-        req,
-        (media || {}) as NonNullable<TMedia>,
-        encrypted,
-        schema.body
-      )
+      parseBodyPayload(req, (media || {}) as MediaConfig, encrypted, input.body)
 
       for (const type of ['query', 'body'] as const) {
         await checkRecordExistence({
@@ -120,27 +115,49 @@ function createHandler<
       }
 
       const result = await callback({
-        req: req as any,
-        res: res as any,
+        req,
+        res,
         io: req.io,
         pb: req.pb(callerModule || { id: '' }),
-        body: req.body as any,
-        query: req.query as any,
-        media: (req.media || {}) as ConvertMedia<NonNullable<TMedia>>,
+        body: req.body,
+        query: req.query,
+        media: req.media || {},
         core: createCoreContext({
           pb: req.pb(callerModule || { id: '' }),
           module: callerModule as never
         })
       })
 
+      if (res.headersSent) {
+        return
+      }
+
       if (noDefaultResponse) {
         return
       }
 
+      const status = result?.$status ?? 200
+
+      const payload =
+        result && typeof result === 'object' && '$status' in result
+          ? result.payload
+          : result
+
+      if (status >= 400) {
+        return clientError({
+          res,
+          message: payload ?? getStatusMessage(status),
+          code: status,
+          moduleName: callerModuleId
+        })
+      }
+
       success(
         res,
-        encrypted && aesKey ? (encryptResponse(result, aesKey) as any) : result,
-        statusCode
+        encrypted && aesKey
+          ? (encryptResponse(payload, aesKey) as unknown)
+          : payload,
+        status
       )
     } catch (err) {
       if (ClientError.isClientError(err)) {
@@ -161,29 +178,21 @@ function createHandler<
   }
 
   // Create handler with metadata attached
-  const handlerWithMeta = _handler as typeof _handler & {
-    meta: {
-      schema: TInput
-      description: string
-      options: {
-        statusCode: number
-        noDefaultResponse: boolean
-        existenceCheck: any
-        isDownloadable: boolean
-        encrypted: boolean
-      }
-    }
-  }
+  const handlerWithMeta = _handler as unknown as ForgeRequestHandler
 
   handlerWithMeta.meta = {
-    schema,
-    description: description as string,
+    schema: input,
+    output,
+    description: description,
     options: {
-      statusCode,
       noDefaultResponse,
       existenceCheck,
       isDownloadable,
-      encrypted
+      encrypted,
+      method,
+      noAuth,
+      media,
+      callerModule
     }
   }
 
@@ -201,7 +210,7 @@ function createHandler<
  *
  * @example
  * ```typescript
- * const controller = forgeController.mutation()
+ * const controller = forgeContract.mutation()
  *   .input({ body: z.object({ name: z.string() }) })
  *   .callback(async ({ body }) => ({ success: true }))
  *
@@ -209,14 +218,8 @@ function createHandler<
  * // Registers POST /users
  * ```
  */
-export function registerController<
-  TSchemas extends CleanedSchemas,
-  TMethod extends 'get' | 'post',
-  TInput extends { body?: any; query?: any },
-  TOutput,
-  TMedia extends MediaConfig | null
->(
-  controller: Forge<TSchemas, TMethod, TInput, TOutput, TMedia>,
+export function registerController(
+  controller: ForgeContract,
   router: Router,
   routeName: string = ''
 ): void {
@@ -229,9 +232,7 @@ export function registerController<
     process.exit(1)
   }
 
-  const handler = createHandler<TSchemas, TMethod, TInput, TOutput, TMedia>(
-    config
-  )
+  const handler = createHandler(config)
 
   router[config.method](
     `/${routeName}`,

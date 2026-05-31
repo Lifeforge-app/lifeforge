@@ -1,7 +1,7 @@
 export default class ClientError extends Error {
   code: number
 
-  constructor(message: any, code: number = 400) {
+  constructor(message: string, code: number = 400) {
     super(message)
     this.name = 'ClientError'
     this.code = code

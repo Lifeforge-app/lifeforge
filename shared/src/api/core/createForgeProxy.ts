@@ -51,7 +51,7 @@ export default function createForgeProxy<T>(
   path = Array.isArray(path) ? path : [path]
 
   const endpoint = new ForgeEndpoint<
-    T extends { __isForgeController: true } ? T : never
+    T extends { __isForgeContract: true } ? T : never
   >(apiHost, path.join('/'))
 
   return new Proxy(() => {}, {
