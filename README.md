@@ -1,21 +1,79 @@
 > [!NOTE]
-> Don't worry, LifeForge is still alive and kicking.
-> ### Update 31 May 2026
-> The UI library rework and the subsequent core client codebase migration away from Tailwind has been completed. The only thing left is to migrate all the documentation and all the modules.
+>
+> Don't worry, LifeForge is still alive and kicking. 🚀
+>
+> ### Update · 31 May 2026
+>
+> The UI library rewrite and the subsequent migration away from Tailwind CSS have been successfully completed.
+>
+> The core client architecture now runs entirely on the new internal UI system. Remaining work primarily involves migrating existing modules and updating project documentation.
+>
+> This milestone marks the completion of one of the largest architectural transitions in LifeForge's history.
+>
+> Don't get too comfortable, though. This is definitely not the largest forever. If LifeForge has taught us anything, it's that every "final architecture" eventually becomes tomorrow's migration project. :)
 
-> [!CAUTION]
+> [!IMPORTANT]
 >
-> ## ⚠️ Development Paused – Critical CSS Architecture Issue
+> ## UI Architecture Migration Completed
 >
-> **Progress on the entire system was temporarily blocked** due to a severe CSS layering conflict between the host application and federated modules.
+> Development was previously blocked by a critical styling issue in the module federation architecture.
 >
-> **Root Cause:** When both the host and federated modules bundle Tailwind CSS independently, CSS cascade layer conflicts occur. This leads to unpredictable style overrides across module boundaries, breaking responsive utilities (for example `flex md:grid`) and causing module styles to unintentionally override host styles. This issue is inherent to utility-driven global CSS in a module federation environment and cannot be reliably mitigated with configuration alone.
+> ### What happened?
 >
-> **Resolution Direction:**
-> PR **#93** introduces an enhanced version of the internal UI library designed to **replace Tailwind entirely**. The new system is token-driven, component-based, and avoids global utility CSS, eliminating cross-boundary cascade conflicts by design. This change establishes a single, predictable styling contract across the host and all federated modules.
+> Both the host application and federated modules were bundling Tailwind CSS independently. This created CSS cascade layer conflicts across module boundaries, resulting in:
 >
-> **Important:**
-> This migration involves **breaking changes** and represents a deliberate architectural shift. While disruptive in the short term, it is necessary to ensure long-term stability and correctness of the module federation system. Please refer to the [issue](https://github.com/lifeforge-app/lifeforge/issues/93) for ongoing updates and migration details.
+> * Unpredictable style overrides
+> * Broken responsive utilities
+> * Cross-module styling interference
+> * Inconsistent rendering behavior between host and remote applications
+>
+> When multiple Tailwind CSS bundles coexist within the same runtime, cascade layer ordering becomes difficult to control reliably.
+>
+> Each federated module generates its own CSS output, but all styles ultimately converge into a single document cascade. As modules are loaded and composed dynamically, style precedence can become dependent on injection order rather than application intent, creating subtle and difficult-to-debug styling conflicts.
+>
+> While Tailwind CSS excels in conventional application architectures, it was never designed with large-scale federated frontend systems as a primary use case.
+>
+> **The problem was never subtle.**
+>
+> Once multiple Tailwind bundles were introduced into the module federation architecture, styling conflicts became immediately visible and could affect entire sections of the UI. Because the conflict originated from the interaction between independently generated CSS outputs sharing the same cascade, no practical or reliable fix existed without changing the underlying styling model itself.
+>
+> The migration away from Tailwind was therefore not a preference change, but an architectural necessity.
+>
+> ### Resolution
+>
+> PR #93 introduced a complete redesign of the internal UI library and styling architecture.
+>
+> The new system is:
+> 
+> * Token-driven
+> * Component-based
+> * Fully independent of Tailwind CSS
+> * Designed specifically for module federation
+> * Built around a single shared UI contract
+> 
+> Rather than allowing each module to generate and ship its own CSS, all applications now consume UI primitives, tokens, and styling behavior directly from `@lifeforge/ui`.
+> 
+> This establishes `@lifeforge/ui` as the single source of truth for visual presentation across the entire platform.
+> 
+> As a result:
+> 
+> * Federated modules no longer bundle their own styling systems
+> * Visual behavior remains consistent regardless of module load order
+> * Styling ownership is centralized and predictable
+> * Cross-module cascade conflicts are eliminated by design
+> 
+> The migration introduced breaking changes and required substantial refactoring across the codebase, but it permanently resolved a class of architectural problems that could not be reliably addressed within the previous model.
+
+> [!TIP]
+>
+> ## Looking for the Legacy Version?
+>
+> The final Tailwind-based implementation has been preserved and remains available for reference.
+>
+> * Legacy Release: https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
+> * Legacy Branch: https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
+>
+> The legacy version is no longer actively developed, but it may still be useful for historical reference, migration guidance, or reviewing previous implementations.
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/lifeforge-logo.svg" alt="LifeForge Logo" width="240" height="80"/></img>
@@ -31,6 +89,7 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
 ![skills](https://img.shields.io/badge/-TYPESCRIPT-FF0000?style=for-the-badge&logo=typescript&logoColor=white&color=3178C6)
 ![skills](https://img.shields.io/badge/-HTML-FF0000?style=for-the-badge&logo=html5&logoColor=white&color=orange)
 ![skills](https://img.shields.io/badge/-CSS-FF0000?style=for-the-badge&logo=css3&logoColor=white&color=blue)
+![skills](https://img.shields.io/badge/-TAILWIND_CSS-FF0000?style=for-the-badge&logo=tailwindcss&logoColor=white&color=teal)
 ![skills](https://img.shields.io/badge/-REACT_JS-FF0000?style=for-the-badge&logo=react&logoColor=white&color=skyblue)
 ![skills](https://img.shields.io/badge/-NODE_JS-FF0000?style=for-the-badge&logo=node.js&logoColor=white&color=green)
 ![skills](https://img.shields.io/badge/-EXPRESS_JS-FF0000?style=for-the-badge&logo=express&logoColor=white&color=black)
@@ -64,7 +123,6 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
   - [Feature Requests \& Bug Reports](#feature-requests--bug-reports)
   - [Translation](#translation)
 - [💡 Credits](#-credits)
-- [⭐️ Star History](#️-star-history)
 - [📄 License](#-license)
 
 ## 🔥 Support the Author
@@ -72,6 +130,7 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
 <a href="https://www.buymeacoffee.com/melvinchiah" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217">
 </a>
+
 
 ## 🤔 The Problem
 
@@ -127,6 +186,9 @@ explore and discover within the project.
   <img width="49%" src="https://github.com/user-attachments/assets/16b23910-37bf-4f56-892d-c971d70b19ae">
 </div>
 
+
+
+
 ## ⌨️ Setup
 
 **LifeForge now supports Docker for easy deployment! 🐳 You can get up and running with just a few commands. For those who prefer manual installation, that option is still available.**
@@ -136,6 +198,7 @@ Visit the [Documentation](https://docs.lifeforge.dev) to see how to install and 
 ## Contributing
 
 We welcome contributions from the community! If you're interested in contributing to LifeForge, please check out our [Contributing Guidelines](https://docs.lifeforge.dev/developer-guide/contributing).
+
 
 ### Contributing to Core
 
