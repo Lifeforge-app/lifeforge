@@ -6,8 +6,8 @@ import { FormModal, defineForm } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
-import { detectFontMetadata } from '../utils/detectFontMetadata'
-import type { CustomFont } from './FontFamilySelectorModal/tabs/custom'
+import type { CustomFont } from '..'
+import { detectFontMetadata } from '../../../../../utils/detectFontMetadata'
 
 function CustomFontUploadModal({
   onClose,
@@ -88,9 +88,6 @@ function CustomFontUploadModal({
               const metadata = await detectFontMetadata(
                 (currentState.file as any).file
               )
-
-              //TODO
-              console.log(currentState.file.file, metadata)
 
               formStateStore.setState({
                 family: metadata.family,

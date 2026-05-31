@@ -3,30 +3,21 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { AutoSizer } from 'react-virtualized'
 
-import { usePersonalization } from '@lifeforge/shared'
 import {
-  Box,
   Button,
-  Card,
   ConfirmationModal,
-  ContextMenu,
-  ContextMenuItem,
   EmptyStateScreen,
   Flex,
-  Icon,
-  Ring,
   Scrollbar,
   Stack,
-  Text,
   WithQuery,
-  colorWithOpacity,
-  surface,
   useModalStore
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
-import CustomFontUploadModal from '../../../CustomFontUploadModal'
+import CustomFontCard from './components/CustomFontCard'
+import CustomFontUploadModal from './components/CustomFontUploadModal'
 
 export type CustomFont = {
   id: string
@@ -45,8 +36,6 @@ function CustomFontSelector({
   setSelectedFont: (font: string | null) => void
 }) {
   const { t } = useTranslation('common.personalization')
-
-  const { fontFamily } = usePersonalization()
 
   const { open } = useModalStore()
 
@@ -91,10 +80,6 @@ function CustomFontSelector({
     })
   }
 
-  const isCustomFontSelected = (fontId: string) => {
-    return selectedFont === `custom:${fontId}`
-  }
-
   return (
     <Stack flex="1" minHeight="0">
       <Button
@@ -119,92 +104,13 @@ function CustomFontSelector({
                   >
                     <Stack p="sm">
                       {fonts.map(font => (
-                        <Ring
+                        <CustomFontCard
                           key={font.id}
-                          asChild
-                          ringColor="custom-500"
-                          ringWidth={
-                            isCustomFontSelected(font.id) ? '2px' : '0px'
-                          }
-                        >
-                          <Card
-                            isInteractive
-                            align="center"
-                            bg={surface.lightInteractive}
-                            direction="row"
-                            role="button"
-                            tabIndex={0}
-                            onClick={() => setSelectedFont(`custom:${font.id}`)}
-                            onKeyDown={e => {
-                              if (e.key === 'Enter' || e.key === ' ') {
-                                setSelectedFont(
-                                  selectedFont === `custom:${font.id}`
-                                    ? null
-                                    : `custom:${font.id}`
-                                )
-                              }
-                            }}
-                          >
-                            <Flex align="center" gap="md" width="100%">
-                              <Flex
-                                align="center"
-                                bg={
-                                  selectedFont === `custom:${font.id}`
-                                    ? colorWithOpacity('custom-500', '10%')
-                                    : { base: 'bg-200', dark: 'bg-700' }
-                                }
-                                flexShrink="0"
-                                height="3rem"
-                                justify="center"
-                                r="lg"
-                                width="3rem"
-                              >
-                                <Icon
-                                  color={
-                                    selectedFont === `custom:${font.id}`
-                                      ? 'custom-500'
-                                      : 'muted'
-                                  }
-                                  icon="tabler:typography"
-                                  size="1.5em"
-                                />
-                              </Flex>
-                              <Box>
-                                <Text as="h3" weight="medium">
-                                  {font.displayName}
-                                </Text>
-                                <Text as="p" color="muted" size="sm">
-                                {font.family} • Weight {font.weight}
-                                </Text>
-                              </Box>
-                            </Flex>
-
-                            <Flex align="center" gap="md">
-                              {isCustomFontSelected(font.id) && (
-                                <Icon color="primary" icon="tabler:check" />
-                              )}
-                              <ContextMenu>
-                                <ContextMenuItem
-                                  icon="tabler:pencil"
-                                  label="Edit"
-                                  onClick={() => {
-                                    open(CustomFontUploadModal, {
-                                      openType: 'edit',
-                                      initialData: font
-                                    })
-                                  }}
-                                />
-                                <ContextMenuItem
-                                  dangerous
-                                  disabled={fontFamily === `custom:${font.id}`}
-                                  icon="tabler:trash"
-                                  label="Delete"
-                                  onClick={() => handleDeleteClick(font)}
-                                />
-                              </ContextMenu>
-                            </Flex>
-                          </Card>
-                        </Ring>
+                          font={font}
+                          handleDeleteClick={handleDeleteClick}
+                          selectedFont={selectedFont}
+                          setSelectedFont={setSelectedFont}
+                        />
                       ))}
                     </Stack>
                   </Scrollbar>
