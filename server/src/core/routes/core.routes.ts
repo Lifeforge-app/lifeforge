@@ -14,57 +14,73 @@ const welcome = forge
     noAuth: true,
     encrypted: false,
     output: {
-      
+      OK: z.literal('Get ready to forge your life!')
     }
   })
-  .callback(async () => 'Get ready to forge your life!')
-
-type OutputKeys = keyof OutputType
+  .callback(async ({ response }) =>
+    response.ok('Get ready to forge your life!')
+  )
 
 const ping = forge
-  .mutation()
-  .noAuth()
-  .noEncryption()
-  .description('Ping the server')
-  .input({
-    body: z.object({
-      timestamp: z.number().min(0)
-    })
+  .mutation({
+    description: 'Ping the server',
+    noAuth: true,
+    encrypted: false,
+    input: {
+      body: z.object({
+        timestamp: z.number().min(0)
+      })
+    },
+    output: {
+      OK: z.string()
+    }
   })
-  .callback(
-    async ({ body: { timestamp } }) =>
-      `Pong at ${dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss')}`
+  .callback(async ({ body: { timestamp }, response }) =>
+    response.ok(`Pong at ${dayjs(timestamp).format('YYYY-MM-DD HH:mm:ss')}`)
   )
 
 const status = forge
-  .query()
-  .noAuth()
-  .noEncryption()
-  .description('Get server status')
-  .input({})
-  .callback(async () => ({
-    environment: process.env.NODE_ENV || 'development'
-  }))
+  .query({
+    description: 'Get server status',
+    noAuth: true,
+    encrypted: false,
+    input: {},
+    output: {
+      OK: z.object({
+        environment: z.string()
+      })
+    }
+  })
+  .callback(async ({ response }) =>
+    response.ok({
+      environment: process.env.NODE_ENV || 'development'
+    })
+  )
 
 const getMedia = forge
-  .query()
-  .noAuth()
-  .noEncryption()
-  .description('Retrieve media file from PocketBase')
-  .input({
-    query: z.object({
-      collectionId: z.string(),
-      recordId: z.string(),
-      fieldId: z.string(),
-      thumb: z.string().optional(),
-      token: z.string().optional()
-    })
+  .query({
+    description: 'Retrieve media file from PocketBase',
+    noAuth: true,
+    encrypted: false,
+
+    input: {
+      query: z.object({
+        collectionId: z.string(),
+        recordId: z.string(),
+        fieldId: z.string(),
+        thumb: z.string().optional(),
+        token: z.string().optional()
+      })
+    },
+    output: {
+      OK: z.null()
+    }
   })
-  .noDefaultResponse()
   .callback(
     async ({
       query: { collectionId, recordId, fieldId, thumb, token },
-      res
+      res,
+      response
     }) => {
       const searchParams = new URLSearchParams()
 
@@ -79,16 +95,22 @@ const getMedia = forge
       request(
         `${process.env.PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${searchParams.toString()}`
       ).pipe(res)
+
+      return response.ok(null)
     }
   )
 
 const encryptionPublicKey = forge
-  .query()
-  .noAuth()
-  .noEncryption()
-  .description('Get server public key for end-to-end encryption')
-  .input({})
-  .callback(async () => getPublicKey())
+  .query({
+    description: 'Get server public key for end-to-end encryption',
+    noAuth: true,
+    encrypted: false,
+    input: {},
+    output: {
+      OK: z.string()
+    }
+  })
+  .callback(async ({ response }) => response.ok(getPublicKey()))
 
 const coreRoutes = forgeRouter({
   '': welcome,

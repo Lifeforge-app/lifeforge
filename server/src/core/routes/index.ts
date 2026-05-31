@@ -5,6 +5,7 @@ import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 import express from 'express'
 import path from 'path'
+import z from 'zod'
 
 import { forgeRouter } from '@lifeforge/server-utils'
 
@@ -18,10 +19,26 @@ const router = express.Router()
 const appRoutes = await loadModuleRoutes()
 
 const listRoutes = forge
-  .query()
-  .description('List all available API routes')
-  .input({})
-  .callback(async () => traceRouteStack(router.stack))
+  .query({
+    description: 'List all available API routes',
+    input: {},
+    output: {
+      OK: z.array(
+        z.object({
+          method: z.string(),
+          path: z.string(),
+          description: z.string(),
+          schema: z.object({
+            response: z.unknown(),
+            params: z.unknown().optional(),
+            body: z.unknown().optional(),
+            query: z.unknown().optional()
+          })
+        })
+      )
+    }
+  })
+  .callback(async ({ response }) => response.ok(traceRouteStack(router.stack)))
 
 const mainRoutes = forgeRouter({
   ...appRoutes,

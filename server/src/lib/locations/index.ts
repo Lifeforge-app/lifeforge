@@ -1,17 +1,31 @@
 import searchLocations from '@functions/external/location'
 import z from 'zod'
 
-import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
+import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'locations')
 
 const search = forge
-  .query()
-  .description('Search for locations using Google Places API')
-  .input({
-    query: z.object({
-      q: z.string()
-    })
+  .query({
+    description: 'Search for locations using Google Places API',
+    input: {
+      query: z.object({
+        q: z.string()
+      })
+    },
+    output: {
+      OK: z.array(
+        z.object({
+          name: z.string(),
+          formattedAddress: z.string(),
+          location: z.object({
+            latitude: z.number(),
+            longitude: z.number()
+          })
+        })
+      ),
+      BAD_REQUEST: z.string()
+    }
   })
   .callback(
     async ({
@@ -19,15 +33,16 @@ const search = forge
       pb,
       core: {
         api: { getAPIKey }
-      }
+      },
+      response
     }) => {
       const key = await getAPIKey('gcloud', pb)
 
       if (!key) {
-        throw new ClientError('API key not found')
+        return response.badRequest('API key not found')
       }
 
-      return await searchLocations(key, q)
+      return response.ok(await searchLocations(key, q))
     }
   )
 

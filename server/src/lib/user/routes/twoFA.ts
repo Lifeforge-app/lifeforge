@@ -5,8 +5,6 @@ import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
 import z from 'zod'
 
-import { ClientError } from '@lifeforge/server-utils'
-
 import { currentSession } from '..'
 import forge from '../forge'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
@@ -24,73 +22,61 @@ setTimeout(
 let tempCode = ''
 
 export const getChallenge = forge
-  .query()
-  .description('Retrieve 2FA challenge token')
-  .input({})
-  .callback(async () => challenge)
+  .query({
+    description: 'Retrieve 2FA challenge token',
+    input: {},
+    output: {
+      OK: z.string()
+    }
+  })
+  .callback(async ({ response }) => response.ok(challenge))
 
 export const requestOTP = forge
-  .query()
-  .noAuth()
-  .description('Request OTP for two-factor authentication')
-  .input({
-    query: z.object({
-      email: z.string().email()
-    })
+  .query({
+    description: 'Request OTP for two-factor authentication',
+    noAuth: true,
+    input: {
+      query: z.object({
+        email: z.string().email()
+      })
+    },
+    output: {
+      OK: z.string(),
+      BAD_REQUEST: z.string()
+    }
   })
-  .callback(async ({ pb, query: { email } }) => {
+  .callback(async ({ pb, query: { email }, response }) => {
     const otp = await pb.instance
       .collection('users')
-      .requestOTP(email as string)
+      .requestOTP(email)
       .catch(() => null)
 
     if (!otp) {
-      throw new Error('Failed to request OTP')
+      return response.badRequest('Failed to request OTP')
     }
 
     currentSession.tokenId = v4()
     currentSession.otpId = otp.otpId
     currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
 
-    return currentSession.tokenId
+    return response.ok(currentSession.tokenId)
   })
 
-// export const validateOTP = forge
-//   .mutation()
-//   .noAuth()
-//   .description('Verify OTP for two-factor authentication')
-//   .input({
-//     body: z.object({
-//       otp: z.string(),
-//       otpId: z.string()
-//     })
-//   })
-//   .callback(async ({ pb, body }) => {
-//     if (await _validateOTP(pb, body, challenge)) {
-//       canDisable2FA = true
-//       setTimeout(
-//         () => {
-//           canDisable2FA = false
-//         },
-//         1000 * 60 * 5
-//       )
-
-//       return true
-//     }
-
-//     return false
-//   })
-
 export const generateAuthenticatorLink = forge
-  .query()
-  .description('Generate authenticator app setup link')
-  .input({})
+  .query({
+    description: 'Generate authenticator app setup link',
+    input: {},
+    output: {
+      OK: z.string()
+    }
+  })
   .callback(
     async ({
       pb,
       req: {
         headers: { authorization }
-      }
+      },
+      response
     }) => {
       const { email } = pb.instance.authStore.record!
 
@@ -100,23 +86,30 @@ export const generateAuthenticatorLink = forge
         issuer: 'LifeForge.'
       }).base32
 
-      return encrypt2(
+      return response.ok(
         encrypt2(
-          `otpauth://totp/${email}?secret=${tempCode}&issuer=LifeForge.`,
-          challenge
-        ),
-        authorization!.replace('Bearer ', '')
+          encrypt2(
+            `otpauth://totp/${email}?secret=${tempCode}&issuer=LifeForge.`,
+            challenge
+          ),
+          authorization!.replace('Bearer ', '')
+        )
       )
     }
   )
 
 export const verifyAndEnable = forge
-  .mutation()
-  .description('Verify and activate two-factor authentication')
-  .input({
-    body: z.object({
-      otp: z.string()
-    })
+  .mutation({
+    description: 'Verify and activate two-factor authentication',
+    input: {
+      body: z.object({
+        otp: z.string()
+      })
+    },
+    output: {
+      OK: z.void(),
+      UNAUTHORIZED: true
+    }
   })
   .callback(
     async ({
@@ -124,7 +117,8 @@ export const verifyAndEnable = forge
       body: { otp },
       req: {
         headers: { authorization }
-      }
+      },
+      response
     }) => {
       const decryptedOTP = decrypt2(
         decrypt2(otp, authorization!.replace('Bearer ', '')),
@@ -138,7 +132,7 @@ export const verifyAndEnable = forge
       })
 
       if (!verified) {
-        throw new ClientError('Invalid OTP', 401)
+        return response.unauthorized()
       }
 
       await pb.update
@@ -151,22 +145,20 @@ export const verifyAndEnable = forge
           ).toString('base64')
         })
         .execute()
+
+      return response.ok()
     }
   )
 
 export const disable = forge
-  .mutation()
-  .description('Disable two-factor authentication')
-  .input({})
-  .callback(async ({ pb }) => {
-    //TODO
-    // if (!canDisable2FA) {
-    //   throw new ClientError(
-    //     'You cannot disable 2FA right now. Please try again later.',
-    //     403
-    //   )
-    // }
-
+  .mutation({
+    description: 'Disable two-factor authentication',
+    input: {},
+    output: {
+      OK: z.void()
+    }
+  })
+  .callback(async ({ pb, response }) => {
     await pb.update
       .collection('users')
       .id(pb.instance.authStore.record!.id)
@@ -175,35 +167,42 @@ export const disable = forge
       })
       .execute()
 
-    // canDisable2FA = false
+    return response.ok()
   })
 
 export const verify = forge
-  .mutation()
-  .noAuth()
-  .description('Verify two-factor authentication code')
-  .input({
-    body: z.object({
-      otp: z.string(),
-      tid: z.string(),
-      type: z.enum(['email', 'app'])
-    })
+  .mutation({
+    description: 'Verify two-factor authentication code',
+    noAuth: true,
+    input: {
+      body: z.object({
+        otp: z.string(),
+        tid: z.string(),
+        type: z.enum(['email', 'app'])
+      })
+    },
+    output: {
+      OK: z.object({
+        session: z.string()
+      }),
+      UNAUTHORIZED: true
+    }
   })
-  .callback(async ({ body: { otp, tid, type } }) => {
+  .callback(async ({ body: { otp, tid, type }, response }) => {
     const pb = new PocketBase(process.env.PB_HOST)
 
     if (tid !== currentSession.tokenId) {
-      throw new ClientError('Invalid token ID', 401)
+      return response.unauthorized()
     }
 
     if (dayjs().isAfter(dayjs(currentSession.tokenExpireAt))) {
-      throw new ClientError('Token expired', 401)
+      return response.unauthorized()
     }
 
     const currentSessionToken = currentSession.token
 
     if (!currentSessionToken) {
-      throw new ClientError('No session token found', 401)
+      return response.unauthorized()
     }
 
     pb.authStore.save(currentSessionToken, null)
@@ -213,7 +212,7 @@ export const verify = forge
       .catch(() => {})
 
     if (!pb.authStore.isValid || !pb.authStore.record) {
-      throw new ClientError('Invalid session', 401)
+      return response.unauthorized()
     }
 
     let verified = false
@@ -225,7 +224,7 @@ export const verify = forge
     }
 
     if (!verified) {
-      throw new ClientError('Invalid OTP', 401)
+      return response.unauthorized()
     }
 
     const userData = pb.authStore.record
@@ -234,7 +233,7 @@ export const verify = forge
 
     await updateNullData(sanitizedUserData, pb)
 
-    return {
+    return response.ok({
       session: pb.authStore.token
-    }
+    })
   })

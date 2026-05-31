@@ -2,6 +2,7 @@ import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
+import z from 'zod'
 
 import { forgeRouter } from '@lifeforge/server-utils'
 
@@ -23,18 +24,22 @@ export const currentSession = {
 
 export default forgeRouter({
   exists: forge
-    .query()
-    .noAuth()
-    .description('Check if user exists')
-    .input({})
-    .callback(async () => {
+    .query({
+      description: 'Check if user exists',
+      noAuth: true,
+      input: {},
+      output: {
+        OK: z.boolean()
+      }
+    })
+    .callback(async ({ response }) => {
       const config = validateEnvironmentVariables()
 
       const superPBInstance = await connectToPocketBase(config)
 
       const users = await superPBInstance.collection('users').getFullList()
 
-      return users.length > 0
+      return response.ok(users.length > 0)
     }),
   auth: authRoutes,
   oauth: oAuthRoutes,

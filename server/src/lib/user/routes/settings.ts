@@ -4,12 +4,16 @@ import z from 'zod'
 import forge from '../forge'
 
 export const updateAvatar = forge
-  .mutation()
-  .description('Upload new user avatar')
-  .input({})
-  .media({
-    file: {
-      optional: false
+  .mutation({
+    description: 'Upload new user avatar',
+    input: {},
+    media: {
+      file: {
+        optional: false
+      }
+    },
+    output: {
+      OK: z.string()
     }
   })
   .callback(
@@ -18,7 +22,8 @@ export const updateAvatar = forge
       pb,
       core: {
         media: { retrieveMedia }
-      }
+      },
+      response
     }) => {
       const fileResult = await retrieveMedia('avatar', rawFile)
 
@@ -30,16 +35,19 @@ export const updateAvatar = forge
         .data(fileResult)
         .execute()
 
-      return newRecord.avatar
+      return response.ok(newRecord.avatar)
     }
   )
 
 export const deleteAvatar = forge
-  .mutation()
-  .description('Remove user avatar')
-  .input({})
-  .statusCode(204)
-  .callback(async ({ pb }) => {
+  .mutation({
+    description: 'Remove user avatar',
+    input: {},
+    output: {
+      OK: z.void()
+    }
+  })
+  .callback(async ({ pb, response }) => {
     const { id } = pb.instance.authStore.record!
 
     await pb.update
@@ -49,32 +57,37 @@ export const deleteAvatar = forge
         avatar: ''
       })
       .execute()
+
+    return response.ok()
   })
 
 export const updateProfile = forge
-  .mutation()
-  .description('Update user profile information')
-  .input({
-    body: z.object({
-      data: z.object({
-        username: z
-          .string()
-          .regex(/^[a-zA-Z0-9]+$/)
-          .optional(),
-        email: z.email().optional(),
-        name: z.string().optional(),
-        dateOfBirth: z.string().optional()
+  .mutation({
+    description: 'Update user profile information',
+    input: {
+      body: z.object({
+        data: z.object({
+          username: z
+            .string()
+            .regex(/^[a-zA-Z0-9]+$/)
+            .optional(),
+          email: z.string().email().optional(),
+          name: z.string().optional(),
+          dateOfBirth: z.string().optional()
+        })
       })
-    })
+    },
+    output: {
+      OK: z.void()
+    }
   })
-  .statusCode(200)
-  .callback(async ({ body: { data }, pb }) => {
+  .callback(async ({ body: { data }, pb, response }) => {
     const { id } = pb.instance.authStore.record!
 
     if (data.email) {
       await pb.instance.collection('users').requestEmailChange(data.email)
 
-      return
+      return response.ok()
     }
 
     const updateData: {
@@ -93,14 +106,22 @@ export const updateProfile = forge
     if (Object.keys(updateData).length > 0) {
       await pb.update.collection('users').id(id).data(updateData).execute()
     }
+
+    return response.ok()
   })
 
 export const requestPasswordReset = forge
-  .mutation()
-  .description('Request password reset email')
-  .input({})
-  .callback(({ pb }) =>
-    pb.instance
+  .mutation({
+    description: 'Request password reset email',
+    input: {},
+    output: {
+      OK: z.void()
+    }
+  })
+  .callback(async ({ pb, response }) => {
+    await pb.instance
       .collection('users')
       .requestPasswordReset(pb.instance.authStore.record?.email)
-  )
+
+    return response.ok()
+  })

@@ -1,69 +1,87 @@
 import z from 'zod'
 
-import { ClientError, createForge, forgeRouter } from '@lifeforge/server-utils'
+import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'pixabay')
 
 const searchImages = forge
-  .query()
-  .description('Search for images on Pixabay')
-  .input({
-    query: z.object({
-      q: z.string().min(1),
-      page: z
-        .string()
-        .optional()
-        .default('1')
-        .transform(val => parseInt(val, 10) || 1),
-      type: z.enum(['all', 'photo', 'illustration', 'vector']).default('all'),
-      category: z
-        .enum([
-          'backgrounds',
-          'fashion',
-          'nature',
-          'science',
-          'education',
-          'feelings',
-          'health',
-          'people',
-          'religion',
-          'places',
-          'animals',
-          'industry',
-          'computer',
-          'food',
-          'sports',
-          'transportation',
-          'travel',
-          'buildings',
-          'business',
-          'music'
-        ])
-        .optional(),
-      colors: z
-        .enum([
-          'grayscale',
-          'transparent',
-          'red',
-          'orange',
-          'yellow',
-          'green',
-          'turquoise',
-          'blue',
-          'lilac',
-          'pink',
-          'white',
-          'gray',
-          'black',
-          'brown'
-        ])
-        .optional()
-        .nullable(),
-      editors_choice: z
-        .enum(['true', 'false'])
-        .default('false')
-        .transform(val => val === 'true')
-    })
+  .query({
+    description: 'Search for images on Pixabay',
+    input: {
+      query: z.object({
+        q: z.string().min(1),
+        page: z
+          .string()
+          .optional()
+          .default('1')
+          .transform(val => parseInt(val, 10) || 1),
+        type: z.enum(['all', 'photo', 'illustration', 'vector']).default('all'),
+        category: z
+          .enum([
+            'backgrounds',
+            'fashion',
+            'nature',
+            'science',
+            'education',
+            'feelings',
+            'health',
+            'people',
+            'religion',
+            'places',
+            'animals',
+            'industry',
+            'computer',
+            'food',
+            'sports',
+            'transportation',
+            'travel',
+            'buildings',
+            'business',
+            'music'
+          ])
+          .optional(),
+        colors: z
+          .enum([
+            'grayscale',
+            'transparent',
+            'red',
+            'orange',
+            'yellow',
+            'green',
+            'turquoise',
+            'blue',
+            'lilac',
+            'pink',
+            'white',
+            'gray',
+            'black',
+            'brown'
+          ])
+          .optional()
+          .nullable(),
+        editors_choice: z
+          .enum(['true', 'false'])
+          .default('false')
+          .transform(val => val === 'true')
+      })
+    },
+    output: {
+      OK: z.object({
+        total: z.number(),
+        hits: z.array(
+          z.object({
+            id: z.number(),
+            thumbnail: z.object({
+              url: z.string(),
+              width: z.number(),
+              height: z.number()
+            }),
+            imageURL: z.string()
+          })
+        )
+      }),
+      BAD_REQUEST: z.string()
+    }
   })
   .callback(
     async ({
@@ -71,12 +89,13 @@ const searchImages = forge
       pb,
       core: {
         api: { getAPIKey }
-      }
+      },
+      response
     }) => {
       const key = await getAPIKey('pixabay', pb)
 
       if (!key) {
-        throw new ClientError('Pixabay API key is not set')
+        return response.badRequest('Pixabay API key is not set')
       }
 
       const url = new URL('https://pixabay.com/api/')
@@ -95,17 +114,17 @@ const searchImages = forge
       }
       url.searchParams.append('editors_choice', editors_choice.toString())
 
-      const response = await fetch(url.toString())
+      const r = await fetch(url.toString())
 
-      if (!response.ok) {
-        throw new Error(
-          `Pixabay API request failed with status ${response.status}`
+      if (!r.ok) {
+        return response.badRequest(
+          `Pixabay API request failed with status ${r.status}`
         )
       }
 
-      const data = await response.json()
+      const data = await r.json()
 
-      return {
+      return response.ok({
         total: data.totalHits,
         hits: data.hits.map((hit: any) => ({
           id: hit.id,
@@ -116,7 +135,7 @@ const searchImages = forge
           },
           imageURL: hit.largeImageURL
         }))
-      }
+      })
     }
   )
 
