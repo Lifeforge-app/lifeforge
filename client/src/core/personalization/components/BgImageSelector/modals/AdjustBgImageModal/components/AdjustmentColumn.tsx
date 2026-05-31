@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { useTranslation } from 'react-i18next'
 
-import { OptionsColumn, SliderInput } from '@lifeforge/ui'
+import { OptionsColumn, SliderInput, surface } from '@lifeforge/ui'
 
 function AdjustmentColumn({
   icon,
@@ -20,18 +20,17 @@ function AdjustmentColumn({
 
   return (
     <OptionsColumn
-      breakpoint="md"
-      // className="dark:bg-bg-800/30 min-w-0"
+      bg={surface.light}
       description={t(
         `bgImageSelector.modals.adjustBackground.columns.${_.camelCase(title)}.desc`
       )}
       icon={icon}
+      orientation="vertical"
       title={t(
         `bgImageSelector.modals.adjustBackground.columns.${_.camelCase(title)}.title`
       )}
     >
       <SliderInput
-        className="min-w-0"
         max={max}
         min={0}
         step={1}

@@ -1,11 +1,11 @@
-import { Card } from '@/components/layout'
+import { Card, type CardProps } from '@/components/layout'
 import { Flex, Icon, Text } from '@/components/primitives'
 import { Tooltip } from '@/components/utilities'
 import type { ResponsiveProp, SpaceToken } from '@/system'
 
 type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'
 
-interface OptionsColumnProps {
+interface OptionsColumnProps extends Omit<CardProps, 'title'> {
   /** The title of the configuration column */
   title: string | React.ReactNode
   /** A brief description of the configuration column */
@@ -32,7 +32,8 @@ export function OptionsColumn({
   orientation = 'horizontal',
   tooltip,
   children,
-  breakpoint = 'md'
+  breakpoint = 'md',
+  ...rest
 }: OptionsColumnProps) {
   const getDirection = (): ResponsiveProp<DirectionValue> => {
     if (orientation === 'vertical') return 'column'
@@ -56,7 +57,13 @@ export function OptionsColumn({
   }
 
   return (
-    <Card direction={getDirection()} gapX="xl" gapY="md" justify="between">
+    <Card
+      direction={getDirection()}
+      gapX="xl"
+      gapY="md"
+      justify="between"
+      {...rest}
+    >
       <Flex align="center" flexShrink="1" gap="md">
         <Icon color="muted" icon={icon} mx="sm" size="1.8em" />
         <Flex direction="column">

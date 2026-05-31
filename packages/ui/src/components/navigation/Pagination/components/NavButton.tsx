@@ -12,8 +12,6 @@ export function NavButton({
 }): React.ReactElement {
   const icon = direction === 'previous' ? 'uil:angle-left' : 'uil:angle-right'
 
-  const label = direction === 'previous' ? 'Previous' : 'Next'
-
   if (hidden) {
     return <Box width={{ base: '3em', sm: '8em' }} />
   }
@@ -25,6 +23,7 @@ export function NavButton({
           base: 'none',
           sm: 'flex'
         }}
+        justify={direction === 'previous' ? 'start' : 'end'}
         width="9em"
       >
         <Button
@@ -33,7 +32,7 @@ export function NavButton({
           variant="plain"
           onClick={onClick}
         >
-          {label}
+          {direction === 'previous' ? 'Previous' : 'Next'}
         </Button>
       </Flex>
       <Flex

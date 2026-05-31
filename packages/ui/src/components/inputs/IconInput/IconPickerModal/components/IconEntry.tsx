@@ -28,7 +28,7 @@ function _IconEntry({
         width="100%"
         onClick={handleIconSelected}
       >
-        <Icon icon={`${iconSet}:${icon}`} size="8em" />
+        <Icon icon={`${iconSet}:${icon}`} size="2em" />
         <Text
           align="center"
           mt="md"

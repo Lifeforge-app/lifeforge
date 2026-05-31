@@ -8,6 +8,7 @@ import {
   Button,
   ConfirmationModal,
   FilePickerModal,
+  Flex,
   OptionsColumn,
   useModalStore
 } from '@lifeforge/ui'
@@ -91,36 +92,38 @@ function BgImageSelector() {
         title={t('bgImageSelector.title')}
       >
         {bgImage !== '' ? (
-          <>
+          <Flex
+            direction={{ base: 'column', md: 'row' }}
+            gap="sm"
+            width={{ base: '100%', md: 'auto' }}
+          >
             <Button
-              className="w-1/2 md:w-auto"
               icon="tabler:adjustments"
               variant="plain"
+              width={{ base: '100%', md: 'auto' }}
               onClick={handleAdjustBgImage}
             >
               adjust
             </Button>
             <Button
               dangerous
-              className="w-1/2 md:w-auto"
               icon="tabler:trash"
               variant="plain"
+              width={{ base: '100%', md: 'auto' }}
               onClick={handleDeleteBgImage}
             >
               remove
             </Button>
-          </>
+          </Flex>
         ) : (
-          <>
-            <Button
-              className="w-full md:w-auto"
-              icon="tabler:photo-hexagon"
-              variant="secondary"
-              onClick={handleOpenImageSelector}
-            >
-              select
-            </Button>
-          </>
+          <Button
+            icon="tabler:photo-hexagon"
+            variant="secondary"
+            width={{ base: '100%', md: 'auto' }}
+            onClick={handleOpenImageSelector}
+          >
+            select
+          </Button>
         )}
       </OptionsColumn>
     </>

@@ -154,18 +154,22 @@ export function FileInput({
             <Flex align="center" gap="xl" justify="between" mt="md">
               <Flex align="center" gap="sm" minWidth="0">
                 <Icon
-                    color="muted"
-                    icon={
-                      FILE_ICONS[
-                        (file instanceof File
-                          ? file.name.split('.').pop()
-                          : '') as keyof typeof FILE_ICONS
-                      ] || 'tabler:file'
-                    }
-                    size="1.5rem"
-                  />
+                  color="muted"
+                  icon={
+                    FILE_ICONS[
+                      (file instanceof File
+                        ? file.name.split('.').pop()
+                        : '') as keyof typeof FILE_ICONS
+                    ] || 'tabler:file'
+                  }
+                  size="1.5rem"
+                />
                 <Text truncate as="p">
-                  {file instanceof File ? file.name : file}
+                  {file instanceof File
+                    ? file.name
+                    : file === 'keep'
+                      ? (preview ?? '<File to be remained unchanged>')
+                      : (preview ?? file)}
                 </Text>
               </Flex>
               <Button

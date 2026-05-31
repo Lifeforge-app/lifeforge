@@ -14,7 +14,7 @@ function Sidebar() {
   const [searchQuery, setSearchQuery] = useState('')
 
   return (
-    <Transition>
+    <Transition duration="300ms">
       <Flex
         shadow
         as="aside"

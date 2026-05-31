@@ -7,7 +7,8 @@ import {
   Flex,
   Listbox,
   ListboxOption,
-  Text
+  Text,
+  surface
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
@@ -46,12 +47,7 @@ function DefaultThemeColorSelector({
 
   return (
     <Listbox
-      bg={{
-        base: 'bg-100',
-        hover: 'bg-200',
-        dark: 'bg-800',
-        darkHover: 'bg-700'
-      }}
+      bg={surface.lightInteractive}
       minWidth="16em"
       renderContent={() => (
         <Flex align="center" gap="sm" maxWidth="16em" minWidth="0">
@@ -100,7 +96,7 @@ function DefaultThemeColorSelector({
           )}
           renderColorAndIcon={() => (
             <Box
-              bg="custom-500"
+              bg="primary"
               className={`theme-${color}`}
               display="inline-block"
               flexShrink="0"

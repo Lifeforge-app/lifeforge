@@ -28,7 +28,8 @@ export {
   TAILWIND_PALETTE,
   COLORS,
   colorWithOpacity,
-  ColorWithOpacity
+  ColorWithOpacity,
+  surface
 } from './system'
 
 export type {

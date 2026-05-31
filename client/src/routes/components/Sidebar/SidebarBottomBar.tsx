@@ -10,7 +10,8 @@ import {
   Flex,
   Icon,
   Text,
-  Transition
+  Transition,
+  surface
 } from '@lifeforge/ui'
 
 function SidebarBottomBar() {
@@ -41,16 +42,7 @@ function SidebarBottomBar() {
           <Transition>
             <Card
               align="center"
-              bg={
-                sidebarExpanded
-                  ? {
-                      base: 'bg-100',
-                      dark: 'bg-800',
-                      darkHover: 'bg-700',
-                      hover: 'bg-200'
-                    }
-                  : 'transparent'
-              }
+              bg={sidebarExpanded ? surface.lightInteractive : 'transparent'}
               direction="row"
               gap="xl"
               justify={sidebarExpanded ? 'between' : 'center'}

@@ -1,5 +1,13 @@
 import { useMainSidebarState } from '@lifeforge/shared'
-import { Box, Button, Flex, Icon, SearchInput, Text } from '@lifeforge/ui'
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  SearchInput,
+  Text,
+  surface
+} from '@lifeforge/ui'
 
 function SidebarHeader({
   searchQuery,
@@ -16,7 +24,7 @@ function SidebarHeader({
         align="center"
         flexShrink="0"
         height="6em"
-        justify="between"
+        justify={sidebarExpanded ? 'between' : 'center'}
         overflow={!sidebarExpanded ? 'hidden' : 'auto'}
         px="lg"
       >
@@ -40,12 +48,7 @@ function SidebarHeader({
       {sidebarExpanded && (
         <Box px="md">
           <SearchInput
-            bg={{
-              base: 'bg-50',
-              hover: 'bg-100',
-              dark: 'bg-800',
-              darkHover: 'bg-700'
-            }}
+            bg={surface.lightInteractive}
             mb="md"
             namespace="common.sidebar"
             searchTarget="module"

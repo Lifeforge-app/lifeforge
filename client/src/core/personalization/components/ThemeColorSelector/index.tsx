@@ -28,7 +28,7 @@ function ThemeColorSelector() {
 
   return (
     <OptionsColumn
-      breakpoint="lg"
+      breakpoint={themeColor.startsWith('#') ? 'lg' : 'md'}
       description={t('themeColorSelector.desc')}
       icon="tabler:palette"
       title={t('themeColorSelector.title')}
