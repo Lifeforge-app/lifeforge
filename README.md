@@ -1,7 +1,7 @@
 > [!NOTE]
 > Don't worry, LifeForge is still alive and kicking.
 > ### Update 31 May 2026
-> The UI library rework and the subsequent core client codebase migration away from Tailwind has been completed. The only thing left is to migrate all the modules.
+> The UI library rework and the subsequent core client codebase migration away from Tailwind has been completed. The only thing left is to migrate all the documentation and all the modules.
 
 > [!CAUTION]
 >
