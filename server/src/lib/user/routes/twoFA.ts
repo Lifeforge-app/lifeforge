@@ -107,7 +107,7 @@ export const verifyAndEnable = forge
       })
     },
     output: {
-      OK: z.void(),
+      NO_CONTENT: true,
       UNAUTHORIZED: true
     }
   })
@@ -146,7 +146,7 @@ export const verifyAndEnable = forge
         })
         .execute()
 
-      return response.ok()
+      return response.noContent()
     }
   )
 
@@ -155,7 +155,7 @@ export const disable = forge
     description: 'Disable two-factor authentication',
     input: {},
     output: {
-      OK: z.void()
+      NO_CONTENT: true
     }
   })
   .callback(async ({ pb, response }) => {
@@ -167,7 +167,7 @@ export const disable = forge
       })
       .execute()
 
-    return response.ok()
+    return response.noContent()
   })
 
 export const verify = forge

@@ -5,23 +5,17 @@ import {
   // @ts-expect-error - Virtual federation methods
 } from 'virtual:__federation__'
 
-import type { ModuleCategory, ModuleConfig } from '@lifeforge/shared'
+import type {
+  InferOutput,
+  ModuleCategory,
+  ModuleConfig
+} from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
 
-interface FederatedModule {
-  name: string
-  displayName: string
-  version: string
-  description: string
-  author: string
-  icon: string
-  category: string
-  remoteEntryUrl: string
-  isInternal: boolean
-  isDevMode?: boolean
-  APIKeyAccess?: Record<string, { usage: string; required: boolean }>
-}
+type FederatedModule = InferOutput<
+  typeof forgeAPI.modules.manifest
+>['modules'][number]
 
 /**
  * Fetches module manifest from the server

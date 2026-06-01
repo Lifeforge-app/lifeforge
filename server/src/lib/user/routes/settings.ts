@@ -44,7 +44,7 @@ export const deleteAvatar = forge
     description: 'Remove user avatar',
     input: {},
     output: {
-      OK: z.void()
+      NO_CONTENT: true
     }
   })
   .callback(async ({ pb, response }) => {
@@ -58,7 +58,7 @@ export const deleteAvatar = forge
       })
       .execute()
 
-    return response.ok()
+    return response.noContent()
   })
 
 export const updateProfile = forge
@@ -78,7 +78,7 @@ export const updateProfile = forge
       })
     },
     output: {
-      OK: z.void()
+      NO_CONTENT: true
     }
   })
   .callback(async ({ body: { data }, pb, response }) => {
@@ -87,7 +87,7 @@ export const updateProfile = forge
     if (data.email) {
       await pb.instance.collection('users').requestEmailChange(data.email)
 
-      return response.ok()
+      return response.noContent()
     }
 
     const updateData: {
@@ -107,7 +107,7 @@ export const updateProfile = forge
       await pb.update.collection('users').id(id).data(updateData).execute()
     }
 
-    return response.ok()
+    return response.noContent()
   })
 
 export const requestPasswordReset = forge
@@ -115,7 +115,7 @@ export const requestPasswordReset = forge
     description: 'Request password reset email',
     input: {},
     output: {
-      OK: z.void()
+      NO_CONTENT: true
     }
   })
   .callback(async ({ pb, response }) => {
@@ -123,5 +123,5 @@ export const requestPasswordReset = forge
       .collection('users')
       .requestPasswordReset(pb.instance.authStore.record?.email)
 
-    return response.ok()
+    return response.noContent()
   })

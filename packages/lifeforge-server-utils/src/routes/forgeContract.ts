@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import type { RequestHandler } from 'express'
 import type { z } from 'zod'
 
@@ -27,13 +29,17 @@ export function snakeCaseToCamelCase(str: string): string {
     .replace(/_([a-z])/g, (_, letter) => letter.toUpperCase())
 }
 
-export function createOutputHelpers<TOutput extends OutputDefinition>(
+export function createOutputHelpers<TOutput extends OutputDefinition | 'custom'>(
   output: TOutput
 ): OutputHelpers<TOutput> {
   const helpers = {} as Record<
     string,
     (payload?: unknown) => { $status: number; payload?: unknown }
   >
+
+  if (output === 'custom') {
+    return helpers as unknown as OutputHelpers<TOutput>
+  }
 
   for (const key of Object.keys(output)) {
     const camelKey = snakeCaseToCamelCase(key)
@@ -64,7 +70,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
 ) {
   function buildRoute<
     TMethod extends 'get' | 'post',
-    const TOutput extends OutputDefinition,
+    const TOutput extends OutputDefinition | 'custom',
     TQuery extends z.ZodTypeAny | undefined = undefined,
     TBody extends z.ZodTypeAny | undefined = undefined,
     TMedia extends MediaConfig | null = null
@@ -123,7 +129,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
             ): Promise<{ $status: number; payload?: unknown }> {
               const responseHelpers = createOutputHelpers(metadata.output)
 
-              return await cb({
+              return (await cb({
                 response: responseHelpers,
                 body: ctx.body as TBody extends z.ZodTypeAny
                   ? z.infer<TBody>
@@ -137,7 +143,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
                 io: ctx.io,
                 pb: ctx.pb as IPBService<TSchemas>,
                 core: ctx.core
-              })
+              })) as any
             }
 
             return {
@@ -147,7 +153,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
                 query: metadata.input?.query as TQuery,
                 body: metadata.input?.body as TBody
               },
-              output: metadata.output as OutputDefinition,
+              output: metadata.output as OutputDefinition | 'custom',
               noDefaultResponse: false,
               existenceCheck: (metadata.existenceCheck ?? {}) as {
                 body?: Record<string, string>
@@ -169,7 +175,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
 
   return {
     query: function <
-      const TOutput extends OutputDefinition,
+      const TOutput extends OutputDefinition | 'custom',
       TQuery extends z.ZodTypeAny | undefined = undefined,
       TBody extends z.ZodTypeAny | undefined = undefined,
       TMedia extends MediaConfig | null = null
@@ -209,7 +215,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
     },
 
     mutation: function <
-      const TOutput extends OutputDefinition,
+      const TOutput extends OutputDefinition | 'custom',
       TQuery extends z.ZodTypeAny | undefined = undefined,
       TBody extends z.ZodTypeAny | undefined = undefined,
       TMedia extends MediaConfig | null = null

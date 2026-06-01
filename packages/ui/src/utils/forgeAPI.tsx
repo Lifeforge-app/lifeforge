@@ -1,3 +1,5 @@
 import { createForgeProxy } from '@lifeforge/shared'
 
-export const forgeAPI = createForgeProxy()
+import contract from '@/contract'
+
+export const forgeAPI = createForgeProxy(contract)

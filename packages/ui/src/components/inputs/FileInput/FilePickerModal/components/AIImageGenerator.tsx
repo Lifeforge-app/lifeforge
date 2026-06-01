@@ -34,8 +34,7 @@ export function AIImageGenerator({
     }
 
     try {
-      const response = await forgeAPI
-        .untyped('/ai/imageGeneration/generateImage')
+      const response = await forgeAPI.ai.imageGeneration.generateImage
         .setHost(apiHost)
         .mutate({
           prompt
@@ -54,10 +53,7 @@ export function AIImageGenerator({
 
   return (
     <WithQueryData
-      controller={forgeAPI
-        .untyped('/apiKeys/entries/checkKeys')
-        .setHost(apiHost)
-        .input({ keys: 'openai' })}
+      controller={forgeAPI.checkAPIKeys({ keys: 'openai' }).setHost(apiHost)}
     >
       {keyExists =>
         keyExists ? (

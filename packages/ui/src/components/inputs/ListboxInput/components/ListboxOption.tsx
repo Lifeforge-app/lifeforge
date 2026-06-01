@@ -76,7 +76,7 @@ export function ListboxOption({
                       <Flex
                         align="center"
                         direction={iconAtEnd ? 'row-reverse' : undefined}
-                        gap={convertedColor === undefined ? 'sm' : undefined}
+                        gap="sm"
                         justify={iconAtEnd ? 'between' : undefined}
                         minWidth="0"
                         style={
@@ -90,7 +90,6 @@ export function ListboxOption({
                           renderColorAndIcon({ color, icon })
                         ) : icon !== undefined ? (
                           <Box
-                            as="span"
                             flexShrink="0"
                             p={convertedColor !== undefined ? 'sm' : undefined}
                             pr={convertedColor === undefined ? 'sm' : undefined}

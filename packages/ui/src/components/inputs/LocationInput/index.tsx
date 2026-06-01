@@ -54,11 +54,10 @@ export function LocationInput({
 
   const enabledQuery = useQuery(
     forgeAPI
-      .untyped('/apiKeys/entries/checkKeys')
-      .setHost(apiHost)
-      .input({
+      .checkAPIKeys({
         keys: 'gcloud'
       })
+      .setHost(apiHost)
       .queryOptions()
   )
 
@@ -70,8 +69,7 @@ export function LocationInput({
         : false
 
   const dataQuery = useQuery(
-    forgeAPI
-      .untyped('/locations/search')
+    forgeAPI.locations.search
       .setHost(apiHost)
       .input({
         q: debouncedQuery

@@ -1,7 +1,7 @@
 import { Fragment } from 'react/jsx-runtime'
 
 import { ListboxInput, ListboxOption } from '@/components/inputs'
-import { Flex, Icon, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 import type {
   BaseFieldProps,
@@ -55,14 +55,15 @@ function OptionColorAndIcon({
   }
 
   return (
-    <span
+    <Box
+      display="inline-block"
+      flexShrink="0"
+      height="0.75em"
+      r="full"
       style={{
-        backgroundColor: color,
-        borderRadius: '9999px',
-        display: 'inline-block',
-        height: '0.5rem',
-        width: '0.5rem'
+        backgroundColor: color
       }}
+      width="0.75em"
     />
   )
 }
@@ -114,12 +115,12 @@ function ListboxButtonContent({
   }
 
   return (
-    <>
+    <Flex align="center" gap="sm">
       <OptionColorAndIcon color={targetOption.color} icon={targetOption.icon} />
       <Text truncate>
         {options.find(l => l.value === value)?.text ?? 'None'}
       </Text>
-    </>
+    </Flex>
   )
 }
 

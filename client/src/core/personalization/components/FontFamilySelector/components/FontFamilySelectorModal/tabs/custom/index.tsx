@@ -1,11 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import { AutoSizer } from 'react-virtualized'
 
 import {
   Button,
-  ConfirmationModal,
   EmptyStateScreen,
   Flex,
   Scrollbar,
@@ -39,44 +37,13 @@ function CustomFontSelector({
 
   const { open } = useModalStore()
 
-  const queryClient = useQueryClient()
-
   const customFontsQuery = useQuery(
     forgeAPI.user.customFonts.list.queryOptions()
-  )
-
-  const deleteMutation = useMutation(
-    forgeAPI.user.customFonts.remove.mutationOptions({
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: ['user', 'customFonts', 'list']
-        })
-        toast.success('Custom font deleted successfully!')
-      },
-      onError: () => {
-        toast.error('Failed to delete custom font')
-      }
-    })
   )
 
   const handleUploadClick = () => {
     open(CustomFontUploadModal, {
       openType: 'create'
-    })
-  }
-
-  const handleDeleteClick = (font: CustomFont) => {
-    open(ConfirmationModal, {
-      title: t('fontFamily.customFonts.delete.title'),
-      description: t('fontFamily.customFonts.delete.description'),
-      confirmationButton: 'delete',
-      onConfirm: async () => {
-        await deleteMutation.mutateAsync({ id: font.id })
-
-        if (selectedFont === `custom:${font.id}`) {
-          setSelectedFont(null)
-        }
-      }
     })
   }
 
@@ -107,7 +74,6 @@ function CustomFontSelector({
                         <CustomFontCard
                           key={font.id}
                           font={font}
-                          handleDeleteClick={handleDeleteClick}
                           selectedFont={selectedFont}
                           setSelectedFont={setSelectedFont}
                         />

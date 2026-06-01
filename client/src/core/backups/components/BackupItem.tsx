@@ -85,7 +85,7 @@ function BackupItem({
       description: `Are you sure you want to delete the backup "${backup.key}"? This action cannot be undone.`,
       confirmationButton: 'delete',
       onConfirm: async () => {
-        await deleteMutation.mutateAsync({})
+        await deleteMutation.mutateAsync(undefined)
       }
     })
   }, [backup.key])

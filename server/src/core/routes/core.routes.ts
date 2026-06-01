@@ -72,15 +72,12 @@ const getMedia = forge
         token: z.string().optional()
       })
     },
-    output: {
-      OK: z.null()
-    }
+    output: 'custom'
   })
   .callback(
     async ({
       query: { collectionId, recordId, fieldId, thumb, token },
-      res,
-      response
+      res
     }) => {
       const searchParams = new URLSearchParams()
 
@@ -95,8 +92,6 @@ const getMedia = forge
       request(
         `${process.env.PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${searchParams.toString()}`
       ).pipe(res)
-
-      return response.ok(null)
     }
   )
 

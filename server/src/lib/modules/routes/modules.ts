@@ -17,7 +17,29 @@ export const manifest = forge
     input: {},
     output: {
       OK: z.object({
-        modules: z.array(z.any())
+        modules: z.array(
+          z.object({
+            name: z.string(),
+            displayName: z.string(),
+            version: z.string(),
+            description: z.string(),
+            author: z.string(),
+            icon: z.string(),
+            category: z.string(),
+            remoteEntryUrl: z.string(),
+            isInternal: z.boolean(),
+            isDevMode: z.boolean().optional(),
+            APIKeyAccess: z
+              .record(
+                z.string(),
+                z.object({
+                  usage: z.string(),
+                  required: z.boolean()
+                })
+              )
+              .optional()
+          })
+        )
       })
     }
   })
@@ -55,7 +77,21 @@ export const list = forge
     description: 'List installed modules with metadata',
     input: {},
     output: {
-      OK: z.array(z.custom<InstalledModule>())
+      OK: z.array(
+        z.object({
+          name: z.string(),
+          displayName: z.string(),
+          version: z.string(),
+          description: z.string(),
+          author: z.string(),
+          icon: z.string(),
+          category: z.string(),
+          isInternal: z.boolean(),
+          isDevMode: z.boolean(),
+          hasDist: z.boolean(),
+          hasSource: z.boolean()
+        })
+      )
     }
   })
   .callback(async ({ core: { tempFile }, response }) => {

@@ -4,7 +4,7 @@ import type { ModuleCategory } from '@lifeforge/shared'
 
 export default {
   routes: {
-    '/': lazy(() => import('.'))
+    '/': lazy(() => import('./index'))
   },
   name: 'documentation',
   displayName: 'Documentation',

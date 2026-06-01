@@ -10,11 +10,7 @@ const searchImages = forge
     input: {
       query: z.object({
         q: z.string().min(1),
-        page: z
-          .string()
-          .optional()
-          .default('1')
-          .transform(val => parseInt(val, 10) || 1),
+        page: z.string().optional().default('1'),
         type: z.enum(['all', 'photo', 'illustration', 'vector']).default('all'),
         category: z
           .enum([
@@ -59,10 +55,7 @@ const searchImages = forge
           ])
           .optional()
           .nullable(),
-        editors_choice: z
-          .enum(['true', 'false'])
-          .default('false')
-          .transform(val => val === 'true')
+        editors_choice: z.enum(['true', 'false']).default('false')
       })
     },
     output: {
@@ -70,7 +63,7 @@ const searchImages = forge
         total: z.number(),
         hits: z.array(
           z.object({
-            id: z.number(),
+            id: z.string(),
             thumbnail: z.object({
               url: z.string(),
               width: z.number(),
@@ -102,7 +95,7 @@ const searchImages = forge
 
       url.searchParams.append('key', key)
       url.searchParams.append('q', q)
-      url.searchParams.append('page', page.toString())
+      url.searchParams.append('page', page)
       url.searchParams.append('image_type', type)
 
       if (category) {
@@ -112,7 +105,7 @@ const searchImages = forge
       if (colors) {
         url.searchParams.append('colors', colors)
       }
-      url.searchParams.append('editors_choice', editors_choice.toString())
+      url.searchParams.append('editors_choice', editors_choice)
 
       const r = await fetch(url.toString())
 

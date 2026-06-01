@@ -128,19 +128,15 @@ export function ListboxInput<T>({
               <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
             )}
             {variant === 'classic' && label && (
-              <Box
-                asChild
+              <InputLabel
+                active={isActive}
+                hasError={!!errorMsg}
+                label={inputLabel}
+                required={required === true}
                 style={{
                   marginLeft: 'calc(var(--spacing) * 14)'
                 }}
-              >
-                <InputLabel
-                  active={isActive}
-                  hasError={!!errorMsg}
-                  label={inputLabel}
-                  required={required === true}
-                />
-              </Box>
+              />
             )}
             <InputInnerWrapper hasActionButton variant={variant}>
               <Box minHeight="1.5em">

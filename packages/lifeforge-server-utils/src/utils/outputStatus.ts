@@ -7,6 +7,9 @@ export const Output = {
     $status: 201,
     hasPayload: true
   },
+  NO_CONTENT: {
+    $status: 204
+  },
   BAD_REQUEST: {
     $status: 400,
     hasPayload: true
@@ -14,7 +17,7 @@ export const Output = {
   UNAUTHORIZED: {
     $status: 401
   },
-  FORBIDDEN: {
+  FORBIDDEN: {  
     $status: 403
   },
   NOT_FOUND: {

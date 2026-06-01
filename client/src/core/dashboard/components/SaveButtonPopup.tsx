@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { useMainSidebarState } from '@lifeforge/shared'
 import { Button, Flex, Text } from '@lifeforge/ui'
 
 function SaveButtonPopup({
@@ -10,8 +9,6 @@ function SaveButtonPopup({
   canChange: boolean
   setCanChange: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const { sidebarExpanded } = useMainSidebarState()
-
   if (!canChange) return null
 
   return (

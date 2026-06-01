@@ -54,7 +54,7 @@ function BgImageSelector() {
       description: 'Are you sure you want to delete your background image?',
       confirmationButton: 'delete',
       onConfirm: async () => {
-        await deleteMutation.mutateAsync({})
+        await deleteMutation.mutateAsync(undefined)
       }
     })
   }, [])

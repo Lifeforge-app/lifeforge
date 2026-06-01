@@ -104,12 +104,7 @@ function CategoryItem({
           <Flex asChild align="center" mt="xs" wrap="wrap">
             <Text as="p" color="muted" size="sm">
               {Object.entries(value).map(([lang, text], index) => (
-                <WithDivide
-                  key={lang}
-                  axis="x"
-                  color="bg-200"
-                  darkColor="bg-600"
-                >
+                <WithDivide key={lang} axis="x">
                   <Text
                     pl={
                       index === Object.entries(value).length - 1

@@ -11,7 +11,7 @@ function PasswordColumn() {
 
   async function handlePasswordChange() {
     try {
-      await forgeAPI.user.settings.requestPasswordReset.mutate({})
+      await forgeAPI.user.settings.requestPasswordReset.mutate(undefined)
 
       toast.info('A password reset link has been sent to your email.')
     } catch {

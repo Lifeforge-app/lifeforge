@@ -66,27 +66,26 @@ export function ContextMenuItem({
   const { t } = useTranslation(namespace)
 
   return (
-    <DropdownMenuPrimitive.Item
-      asChild
-      disabled={disabled || loading}
-      onSelect={e => {
-        if (disabled || loading) {
-          e.preventDefault()
+    <WithDivide>
+      <DropdownMenuPrimitive.Item
+        asChild
+        disabled={disabled || loading}
+        onClick={e => {
+          if (disabled || loading) {
+            e.preventDefault()
 
-          return
-        }
+            return
+          }
 
-        if (!shouldCloseMenuOnClick) {
-          e.preventDefault()
-        }
+          if (!shouldCloseMenuOnClick) {
+            e.preventDefault()
+          }
+          e.stopPropagation()
 
-        onClick()
-      }}
-    >
-      <Transition duration={100}>
-        <WithDivide
-          color={{ base: colorWithOpacity('bg-200', '80%'), dark: 'bg-700' }}
-        >
+          onClick()
+        }}
+      >
+        <Transition duration={100}>
           <Text
             asChild
             color={getItemColor(disabled || loading, checked, dangerous)}
@@ -144,8 +143,8 @@ export function ContextMenuItem({
               )}
             </Flex>
           </Text>
-        </WithDivide>
-      </Transition>
-    </DropdownMenuPrimitive.Item>
+        </Transition>
+      </DropdownMenuPrimitive.Item>
+    </WithDivide>
   )
 }

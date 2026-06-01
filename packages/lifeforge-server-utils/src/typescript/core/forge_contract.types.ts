@@ -34,7 +34,7 @@ export interface ForgeContract {
       query: z.ZodTypeAny | undefined
       body: z.ZodTypeAny | undefined
     }
-    output: OutputDefinition
+    output: OutputDefinition | 'custom'
     noDefaultResponse: boolean
     existenceCheck: {
       body?: Record<string, string>
@@ -56,7 +56,7 @@ export type ForgeContext<
   TSchemas extends CleanedSchemas,
   TQuery extends z.ZodTypeAny | undefined,
   TBody extends z.ZodTypeAny | undefined,
-  TOutput extends OutputDefinition,
+  TOutput extends OutputDefinition | 'custom',
   TMedia extends MediaConfig | null
 > = {
   response: OutputHelpers<TOutput>

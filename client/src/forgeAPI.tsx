@@ -1,8 +1,9 @@
 import { createForgeProxy } from '@lifeforge/shared'
 
-import type { CoreRoutes } from '../../server/src/core/routes/core-routes.types'
+import contract from './contract'
 
-const forgeAPI = createForgeProxy<CoreRoutes>(
+const forgeAPI = createForgeProxy(
+  contract,
   import.meta.env.VITE_API_HOST || 'https://localhost:3000'
 )
 

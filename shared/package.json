@@ -27,6 +27,7 @@
     "crypto-js": "^4.2.0",
     "culori": "^4.0.2",
     "javascript-color-gradient": "^2.5.0",
+    "json-schema-to-ts": "^3.1.1",
     "lodash": "^4.17.21",
     "nuqs": "^2.7.1",
     "react": "^19.2.0",

@@ -60,6 +60,9 @@ export function SidebarItemWrapper({
               pr="md"
               r="lg"
               role="button"
+              style={{
+                cursor: 'pointer'
+              }}
               tabIndex={0}
               width="100%"
               onClick={onClick}

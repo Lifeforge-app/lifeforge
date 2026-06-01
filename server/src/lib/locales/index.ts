@@ -171,14 +171,14 @@ const notifyMissing = forge
       })
     },
     output: {
-      OK: z.void()
+      NO_CONTENT: true
     }
   })
   .callback(
     async ({ body: { namespace, key }, core: { logging }, response }) => {
       logging.warn(`Missing locale ${chalk.red(`${namespace}:${key}`)}`)
 
-      return response.ok()
+      return response.noContent()
     }
   )
 
