@@ -33,13 +33,13 @@ export function WeeklyForm({
       <ListboxInput
         multiple
         required
-        buttonContent={
+        renderContent={() => (
           <>
             {data.onDays
               .map(day => t(`common.misc:dates.days.${DAYS.indexOf(day)}`))
               .join(', ')}
           </>
-        }
+        )}
         customActive={data.onDays.length > 0}
         icon="tabler:calendar"
         label={t('inputs.weekly.inputs.onDays')}

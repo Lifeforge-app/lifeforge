@@ -47,7 +47,7 @@ function EntryItem({ entry }: { entry: Entry }) {
       description: `Are you sure you want to delete the entry "${entry.name}"? This action cannot be undone.`,
       confirmationButton: 'delete',
       onConfirm: async () => {
-        deleteMutation.mutateAsync({})
+        deleteMutation.mutateAsync(undefined)
       }
     })
   }

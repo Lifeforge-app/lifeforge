@@ -7,7 +7,7 @@ import express from 'express'
 import path from 'path'
 import z from 'zod'
 
-import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
+import { forgeRouter } from '@lifeforge/server-utils'
 
 import coreRoutes from './core.routes'
 import forge from './forge'
@@ -101,16 +101,6 @@ router.get('*', (_, res) => {
     moduleName: 'core'
   })
 })
-
-writeContractFileToClient(
-  mainRoutes,
-  path.resolve(import.meta.dirname, '../../..')
-)
-writeContractFileToClient(
-  mainRoutes,
-  path.resolve(import.meta.dirname, '../../../../packages/ui/src'),
-  '.'
-)
 
 export { mainRoutes }
 

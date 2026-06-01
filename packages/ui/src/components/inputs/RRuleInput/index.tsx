@@ -228,7 +228,7 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
       <Box mt="md">
         <ListboxInput
           required
-          buttonContent={<>{t(`recurring.freqs.${rruleParams.freq}`)}</>}
+          renderContent={() => <>{t(`recurring.freqs.${rruleParams.freq}`)}</>}
           icon="tabler:repeat"
           label="frequency"
           namespace="apps.calendar"
@@ -260,9 +260,9 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
         <Box flex="1">
           <ListboxInput
             required
-            buttonContent={
+            renderContent={() => (
               <>{t(`recurring.endTypes.${rruleParams.end.type}`)}</>
-            }
+            )}
             icon="tabler:calendar"
             label="endType"
             namespace="apps.calendar"
@@ -356,9 +356,9 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
           <Box flex="1" minWidth="12rem">
             <ListboxInput
               required
-              buttonContent={
+              renderContent={() => (
                 <>{t(`recurring.durationUnits.${duration.unit}`)}</>
-              }
+              )}
               icon="tabler:clock"
               label={t('recurring.inputs.durationUnit')}
               value={duration.unit}

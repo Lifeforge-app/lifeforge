@@ -23,6 +23,8 @@ import type {
 } from '../typescript/standalone/media.types'
 import { Output, OutputType } from '../utils/outputStatus'
 
+type KeysOf<T> = T extends any ? keyof T : never
+
 export function snakeCaseToCamelCase(str: string): string {
   return str
     .toLowerCase()
@@ -90,13 +92,13 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         ? {
             body?: Partial<
               Record<
-                TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
+                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
                 CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
               >
             >
             query?: Partial<
               Record<
-                TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
+                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
                 CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
               >
             >
@@ -193,13 +195,13 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         ? {
             body?: Partial<
               Record<
-                TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
+                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
                 CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
               >
             >
             query?: Partial<
               Record<
-                TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
+                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
                 CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
               >
             >
@@ -233,13 +235,13 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         ? {
             body?: Partial<
               Record<
-                TBody extends z.ZodTypeAny ? keyof z.infer<TBody> : string,
+                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
                 CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
               >
             >
             query?: Partial<
               Record<
-                TQuery extends z.ZodTypeAny ? keyof z.infer<TQuery> : string,
+                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
                 CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
               >
             >

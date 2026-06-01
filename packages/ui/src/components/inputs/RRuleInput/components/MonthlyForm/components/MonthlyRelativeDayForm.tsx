@@ -20,7 +20,7 @@ export function MonthlyRelativeDayForm({
       <Box flex="1">
         <ListboxInput
           required
-          buttonContent={<>{t(`recurring.onThe.${data.onThe}`)}</>}
+          renderContent={() => <>{t(`recurring.onThe.${data.onThe}`)}</>}
           icon="tabler:calendar"
           label={t('inputs.monthly.relativeDay.inputs.onThe')}
           value={data.onThe}
@@ -38,7 +38,7 @@ export function MonthlyRelativeDayForm({
       <Box flex="1">
         <ListboxInput
           required
-          buttonContent={
+          renderContent={() => (
             <>
               {t(
                 data.onTheDay.length === 3 && data.onTheDay !== 'day'
@@ -46,7 +46,7 @@ export function MonthlyRelativeDayForm({
                   : `recurring.onTheDay.${data.onTheDay}`
               )}
             </>
-          }
+          )}
           icon="tabler:calendar"
           label={t('inputs.monthly.relativeDay.inputs.onTheDay')}
           value={data.onTheDay}
