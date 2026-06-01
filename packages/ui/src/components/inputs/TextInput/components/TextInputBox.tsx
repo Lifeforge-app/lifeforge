@@ -9,6 +9,7 @@ import { textInputBoxRecipe } from './TextInputBox.css'
 export function TextInputBox({
   value,
   onChange,
+  onRawChange,
   isPassword = false,
   inputMode,
   showPassword,
@@ -23,6 +24,7 @@ export function TextInputBox({
 }: {
   value: string
   onChange: (value: string) => void
+  onRawChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   isPassword?: boolean
   inputMode?:
     | 'none'
@@ -71,6 +73,9 @@ export function TextInputBox({
           type={isPassword && showPassword !== true ? 'password' : 'text'}
           value={value}
           onChange={e => {
+            if (onRawChange) {
+              onRawChange(e)
+            }
             onChange(e.target.value)
           }}
           {...inputProps}

@@ -18,6 +18,7 @@ export type TextInputProps = {
   placeholder: string
   value: string
   onChange: (value: string) => void
+  onRawChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   required?: boolean
   disabled?: boolean
   autoFocus?: boolean
@@ -35,6 +36,7 @@ export type TextInputProps = {
   className?: string
   namespace?: string
   errorMsg?: string
+  inputRef?: React.RefObject<HTMLInputElement | null>
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> &
   InputVariants<true>
 
@@ -46,6 +48,7 @@ export function _TextInput({
   placeholder,
   value,
   onChange,
+  onRawChange,
   required = false,
   disabled = false,
   isPassword = false,
@@ -55,11 +58,13 @@ export function _TextInput({
   namespace,
   errorMsg,
   autoFocus = false,
+  inputRef: externalInputRef,
   ...inputProps
 }: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
 
-  const inputRef = useRef<HTMLInputElement | null>(null)
+  const localInputRef = useRef<HTMLInputElement | null>(null)
+  const inputRef = externalInputRef || localInputRef
 
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
@@ -105,6 +110,7 @@ export function _TextInput({
           value={value}
           variant={variant}
           onChange={onChange}
+          onRawChange={onRawChange}
           {...inputProps}
         />
         {isPassword && (
