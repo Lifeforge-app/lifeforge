@@ -36,7 +36,7 @@ export type {
   IUpdate,
   IUpdateData,
   IUpdateFactory
-} from './typescript/pocketbase/PBService.interface'
+} from './typescript/pb/PBService.interface'
 
 export type {
   SchemaWithPB,
@@ -52,7 +52,7 @@ export type {
   MultiItemsReturnType,
   PickSelectedFields,
   SingleItemReturnType
-} from './typescript/pocketbase/pb_service.types'
+} from './typescript/pb/pb_service.types'
 
 export {
   default as createForgeContractBuilder,

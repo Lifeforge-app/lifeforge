@@ -4,8 +4,8 @@ import z from 'zod'
 
 import type { Logger } from '@lifeforge/log'
 
-import IPBService from '../pocketbase/PBService.interface'
-import { CollectionKey } from '../pocketbase/pb_service.types'
+import IPBService from '../pb/PBService.interface'
+import { CollectionKey } from '../pb/pb_service.types'
 import { ITempFileManagerConstructor } from './tempfile_manager.types'
 
 export type FetchAIFunc = <
@@ -35,7 +35,10 @@ type CheckExistenceFunc = <TSchemas extends CleanedSchemas>(
   id: string
 ) => Promise<boolean>
 
-type GetAPIKeyFunc = (id: string, pb: IPBService<CleanedSchemas>) => Promise<string>
+type GetAPIKeyFunc = (
+  id: string,
+  pb: IPBService<CleanedSchemas>
+) => Promise<string>
 
 type CheckModulesAvailabilityFunc = (moduleIds: string) => Promise<boolean>
 
