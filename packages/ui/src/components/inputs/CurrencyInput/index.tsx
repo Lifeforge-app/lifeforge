@@ -13,7 +13,7 @@ import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 
-type CurrencyInputProps = {
+export type CurrencyInputProps = {
   /** The currency symbol to display, or the currency code (e.g., "$", "€", "USD"). */
   prefix?: string
   /** The label text displayed above the currency input field. Required for 'classic' style. */

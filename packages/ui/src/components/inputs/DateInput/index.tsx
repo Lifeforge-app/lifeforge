@@ -22,7 +22,7 @@ import { CalendarHeader } from './components/CalendarHeader'
 /**
  * Props for the DateInput component.
  */
-interface DateInputProps {
+export interface DateInputProps {
   variant?: 'classic' | 'plain'
   /** The label text displayed above the date input field. Required for 'classic' style. */
   label?: string

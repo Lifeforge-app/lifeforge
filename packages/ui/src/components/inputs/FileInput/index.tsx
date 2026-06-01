@@ -1,75 +1,110 @@
 import { useCallback } from 'react'
-import { useTranslation } from 'react-i18next'
-import Zoom from 'react-medium-image-zoom'
 
-import { Button } from '@/components/inputs'
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 import { useModalStore } from '@/providers'
 import { colorWithOpacity } from '@/system'
 
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import { FilePickerModal } from './FilePickerModal'
-import { FILE_ICONS } from './FilePickerModal/constants/file_icons'
+import { CompactFileDisplay } from './components/CompactFileDisplay'
+import { EmptyFileInput } from './components/EmptyFileInput'
+import { PreviewFileDisplay } from './components/PreviewFileDisplay'
 
-export type FileData = {
-  file: string | File | null
-  preview: string | null
+export type FileValue =
+  | {
+      type: 'empty'
+    }
+  | {
+      type: 'file'
+      source: 'existing'
+      id: string
+      filename: string
+      preview?: string
+    }
+  | {
+      type: 'file'
+      source: 'upload'
+      file: File
+      preview?: string
+    }
+  | {
+      type: 'file'
+      source: 'url'
+      url: string
+      preview?: string
+    }
+
+export interface FilePickerSourceConfig {
+  pixabay?: boolean
+  url?: boolean
+  ai?:
+    | {
+        defaultPrompt: string
+      }
+    | false
 }
 
 export function FileInput({
   icon,
   label,
   reminderText,
-  file,
-  preview,
-  setData,
+  value,
+  onChange,
   onImageRemoved,
   required,
   namespace,
   disabled,
-  enablePixabay = false,
-  enableUrl = false,
-  enableAI = false,
-  defaultAIPrompt = '',
-  acceptedMimeTypes
+  sources = {
+    pixabay: false,
+    ai: false,
+    url: false
+  },
+  mimeTypes
 }: {
   icon: string
   label: string
   reminderText?: string
-  file: string | File | null
-  preview: string | null
-  setData: (data: {
-    file: string | File | null
-    preview: string | null
-  }) => void
+  value: FileValue
+  onChange: (value: FileValue) => void
   onImageRemoved?: () => void
   required?: boolean
   namespace?: string
   disabled?: boolean
-  enablePixabay?: boolean
-  enableUrl?: boolean
-  enableAI?: boolean
-  defaultAIPrompt?: string
-  acceptedMimeTypes?: Record<string, string[]>
+  sources?: FilePickerSourceConfig
+  mimeTypes?: Record<string, string[]>
 }) {
   const { open } = useModalStore()
 
-  const { t } = useTranslation('common.misc')
-
   const inputLabel = useInputLabel({ namespace, label })
 
-  const handleFilePickerOpen = useCallback(() => {
-    open(FilePickerModal, {
-      enablePixabay,
-      enableUrl,
-      enableAI,
-      defaultAIPrompt,
-      acceptedMimeTypes,
-      onSelect: async (file: string | File, preview: string | null) => {
-        setData({ file, preview })
-      }
-    })
-  }, [enablePixabay, enableUrl, enableAI, defaultAIPrompt, acceptedMimeTypes])
+  const handleFilePickerOpen = useCallback(
+    function () {
+      open(FilePickerModal, {
+        sources,
+        mimeTypes,
+        onSelect: async function (file: string | File, preview: string | null) {
+          if (file instanceof File) {
+            onChange({
+              type: 'file',
+              source: 'upload',
+              file,
+              preview: preview ?? undefined
+            })
+          } else {
+            onChange({
+              type: 'file',
+              source: 'url',
+              url: file,
+              preview: preview ?? undefined
+            })
+          }
+        }
+      })
+    },
+    [sources, mimeTypes, onChange]
+  )
+
+  const previewUrl = value.type === 'file' ? value.preview : undefined
 
   return (
     <Flex
@@ -101,87 +136,29 @@ export function FileInput({
           </Text>
         </Flex>
       </Text>
-      {!file || file === 'removed' ? (
-        <>
-          <Box asChild my="md">
-            <Button
-              icon="tabler:file-plus"
-              style={{ width: '100%' }}
-              variant="secondary"
-              onClick={handleFilePickerOpen}
-            >
-              Select
-            </Button>
-          </Box>
-          <Text align="center" as="p" color="muted" size="sm">
-            {reminderText ||
-              t('fileInputSupportedFormat', {
-                format: acceptedMimeTypes
-                  ? Object.entries(acceptedMimeTypes)
-                      .flatMap(([type, exts]) =>
-                        exts.map(ext => `${type}/${ext}`)
-                      )
-                      .join(', ') || 'N/A'
-                  : 'N/A'
-              })}
-          </Text>
-        </>
+      {value.type === 'empty' ? (
+        <EmptyFileInput
+          acceptedMimeTypes={mimeTypes}
+          reminderText={reminderText}
+          onSelect={handleFilePickerOpen}
+        />
       ) : (
         <>
-          {preview &&
-          (preview.startsWith('http') ||
-            preview.startsWith('blob:') ||
-            preview.startsWith('data:')) ? (
-            <Box mt="lg">
-              <Zoom zoomMargin={100}>
-                <Box asChild maxHeight="24rem" r="md">
-                  <img alt="" src={preview} />
-                </Box>
-              </Zoom>
-              <Button
-                dangerous
-                icon="tabler:x"
-                style={{ marginTop: '1.5rem', width: '100%' }}
-                onClick={() => {
-                  setData({ file: null, preview: null })
-                  onImageRemoved?.()
-                }}
-              >
-                Remove
-              </Button>
-            </Box>
+          {previewUrl &&
+          (previewUrl.startsWith('http') ||
+            previewUrl.startsWith('blob:') ||
+            previewUrl.startsWith('data:')) ? (
+            <PreviewFileDisplay
+              previewUrl={previewUrl}
+              onChange={onChange}
+              onImageRemoved={onImageRemoved}
+            />
           ) : (
-            <Flex align="center" gap="xl" justify="between" mt="md">
-              <Flex align="center" gap="sm" minWidth="0">
-                <Icon
-                  color="muted"
-                  icon={
-                    FILE_ICONS[
-                      (file instanceof File
-                        ? file.name.split('.').pop()
-                        : '') as keyof typeof FILE_ICONS
-                    ] || 'tabler:file'
-                  }
-                  size="1.5rem"
-                />
-                <Text truncate as="p">
-                  {file instanceof File
-                    ? file.name
-                    : file === 'keep'
-                      ? (preview ?? '<File to be remained unchanged>')
-                      : (preview ?? file)}
-                </Text>
-              </Flex>
-              <Button
-                icon="tabler:x"
-                p="sm"
-                variant="plain"
-                onClick={() => {
-                  setData({ file: null, preview: null })
-                  onImageRemoved?.()
-                }}
-              />
-            </Flex>
+            <CompactFileDisplay
+              value={value}
+              onChange={onChange}
+              onImageRemoved={onImageRemoved}
+            />
           )}
         </>
       )}

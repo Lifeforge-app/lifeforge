@@ -1,0 +1,67 @@
+import { useEffect, useState } from 'react'
+
+import { useModalStore } from '@/providers'
+
+import { ModalWrapper } from '../ModalWrapper'
+
+function FinalElement({ index }: { index: number }) {
+  const { stack, close } = useModalStore()
+
+  const item = stack[index]
+
+  const { data, component: ModalComponent } = item || {}
+
+  if (!ModalComponent) {
+    return null
+  }
+
+  return <ModalComponent data={data} onClose={close} />
+}
+
+function StackModal({ index }: { index: number }) {
+  const { stack, remove } = useModalStore()
+
+  const item = stack[index]
+
+  const { isClosing } = item || {}
+
+  const [localOpen, setLocalOpen] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLocalOpen(true)
+    }, 10)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Check if this modal is the topmost (last non-closing modal in stack)
+  const isTopmost = stack.findLastIndex(modal => !modal.isClosing) === index
+
+  return (
+    <ModalWrapper
+      isOpen={localOpen && !isClosing}
+      isTopmost={isTopmost}
+      zIndex={index * 10 + 500}
+      onExited={() => {
+        if (isClosing) {
+          remove(index)
+        }
+      }}
+    >
+      <FinalElement index={index} />
+    </ModalWrapper>
+  )
+}
+
+export function ModalManager() {
+  const { stack } = useModalStore()
+
+  return (
+    <>
+      {stack.map((_, index) => (
+        <StackModal key={`modal-${index}`} index={index} />
+      ))}
+    </>
+  )
+}

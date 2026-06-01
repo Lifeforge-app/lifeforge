@@ -89,10 +89,13 @@ export function ListboxOption({
                         {renderColorAndIcon ? (
                           renderColorAndIcon({ color, icon })
                         ) : icon !== undefined ? (
-                          <Box
+                          <Flex
+                            centered
+                            aspectRatio="1/1"
                             flexShrink="0"
-                            p={convertedColor !== undefined ? 'sm' : undefined}
-                            pr={convertedColor === undefined ? 'sm' : undefined}
+                            minHeight="0"
+                            minWidth="0"
+                            px={convertedColor !== undefined ? 'sm' : undefined}
                             r="md"
                             style={
                               convertedColor !== undefined
@@ -123,7 +126,7 @@ export function ListboxOption({
                             ) : (
                               icon
                             )}
-                          </Box>
+                          </Flex>
                         ) : (
                           convertedColor !== undefined && (
                             <Bordered

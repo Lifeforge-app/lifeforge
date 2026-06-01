@@ -12,7 +12,7 @@ import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
 import { TextInputBox } from './components/TextInputBox'
 
-type TextInputProps = {
+export type TextInputProps = {
   label?: string
   icon?: string
   placeholder: string

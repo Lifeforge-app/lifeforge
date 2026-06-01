@@ -11,7 +11,7 @@ import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 
-type TextAreaInputProps = {
+export type TextAreaInputProps = {
   /** The label text displayed above the textarea field. Required for 'classic' style. */
   label?: string
   /** The icon to display next to the label. Should be a valid icon name from Iconify. Required for 'classic' style. */
