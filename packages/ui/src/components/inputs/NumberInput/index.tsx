@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
+import { NumericFormat } from 'react-number-format'
 
 import { Button } from '../Button'
 import { TextInput } from '../TextInput'
@@ -35,6 +36,31 @@ export interface NumberInputProps {
   actionButtonProps?: React.ComponentProps<typeof Button>
 }
 
+function NumberTextInputAdapter(props: any) {
+  const { onChange, getInputRef, ...rest } = props
+
+  const localRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(function () {
+    if (getInputRef) {
+      if (typeof getInputRef === 'function') {
+        getInputRef(localRef.current)
+      } else {
+        getInputRef.current = localRef.current
+      }
+    }
+  })
+
+  return (
+    <TextInput
+      {...rest}
+      inputRef={localRef}
+      onChange={function () {}}
+      onRawChange={onChange}
+    />
+  )
+}
+
 export function NumberInput({
   variant = 'classic',
   size = 'default',
@@ -53,50 +79,24 @@ export function NumberInput({
   placeholder = '123',
   actionButtonProps
 }: NumberInputProps & InputVariants<true>) {
-  const [currentStringValue, setCurrentStringValue] = useState<string>(
-    value.toString() === '0' ? '' : value.toString()
-  )
-
-  useEffect(() => {
-    setCurrentStringValue(value.toString() === '0' ? '' : value.toString())
-  }, [value])
-
   return (
-    <TextInput
+    <NumericFormat
       actionButtonProps={actionButtonProps}
       autoFocus={autoFocus}
       className={className}
+      customInput={NumberTextInputAdapter}
       disabled={disabled}
       errorMsg={errorMsg}
       icon={icon}
-      inputMode="numeric"
       label={label}
       namespace={namespace}
       placeholder={placeholder}
       required={required}
       size={size as never}
-      value={currentStringValue}
+      value={value}
       variant={variant as never}
-      onBlur={() => {
-        if (currentStringValue.trim() === '') {
-          onChange(0)
-
-          return
-        }
-
-        //negative value as well
-        if (!currentStringValue.match(/^(-?)\d*\.?\d*$/)) {
-          onChange(value)
-          setCurrentStringValue(
-            value.toString() === '0' ? '' : value.toString()
-          )
-
-          return
-        }
-
-        let numericValue = currentStringValue.includes('.')
-          ? parseFloat(currentStringValue)
-          : parseInt(currentStringValue)
+      onBlur={function () {
+        let numericValue = value
 
         if (min !== undefined && numericValue < min) {
           numericValue = min
@@ -106,10 +106,14 @@ export function NumberInput({
           numericValue = max
         }
 
-        onChange(numericValue)
+        if (numericValue !== value) {
+          onChange(numericValue)
+        }
       }}
-      onChange={(value: string) => {
-        setCurrentStringValue(value)
+      onValueChange={function (values) {
+        const numericValue = values.floatValue ?? 0
+
+        onChange(numericValue)
       }}
     />
   )
