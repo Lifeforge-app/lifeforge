@@ -20,8 +20,6 @@ export type CurrencyInputProps = {
   label?: string
   /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
   icon?: string
-  /** The placeholder text displayed when the input is empty. */
-  placeholder: string
   /** The current numeric value of the currency input. */
   value: number
   /** Callback function called when the input value changes. */
@@ -46,7 +44,6 @@ export function CurrencyInput({
   variant = 'classic',
   label,
   icon,
-  placeholder,
   value,
   onChange,
   required = false,
@@ -114,7 +111,7 @@ export function CurrencyInput({
                   ref={autoFocusableRef(autoFocus, inputRef)}
                   decimalsLimit={2}
                   name={label}
-                  placeholder={placeholder}
+                  placeholder="48.96"
                   onFocus={() => setFocused(true)}
                   onBlur={() => {
                     setFocused(false)

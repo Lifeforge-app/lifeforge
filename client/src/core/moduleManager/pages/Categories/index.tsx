@@ -20,7 +20,6 @@ import { toast } from 'react-toastify'
 import { SYSTEM_CATEGORIES, useFederation } from '@lifeforge/shared'
 import {
   Alert,
-  Box,
   Button,
   EmptyStateScreen,
   ModuleHeader,
@@ -172,19 +171,17 @@ function Categories() {
         totalItems={items.length}
       />
       {missingKeys.length > 0 && (
-        <Box asChild mb="lg">
-          <Alert type="warning">
-            {missingKeys.length} categories are missing translations:{' '}
-            {missingKeys.map((key, idx) => (
-              <>
-                <Text key={key} as="code">
-                  {key}
-                </Text>
-                {idx < missingKeys.length - 1 && ', '}
-              </>
-            ))}
-          </Alert>
-        </Box>
+        <Alert mb="md" type="warning">
+          {missingKeys.length} categories are missing translations:{' '}
+          {missingKeys.map((key, idx) => (
+            <>
+              <Text key={key} as="code">
+                {key}
+              </Text>
+              {idx < missingKeys.length - 1 && ', '}
+            </>
+          ))}
+        </Alert>
       )}
       {items.length > 0 ? (
         <DndContext

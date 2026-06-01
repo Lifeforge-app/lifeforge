@@ -15,7 +15,7 @@ function OrdinaryColumn({
   type
 }: {
   title: string
-  id: string
+  id: 'username' | 'name' | 'email' | 'dateOfBirth'
   icon: string
   type: 'text' | 'datetime'
 }) {

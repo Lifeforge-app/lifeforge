@@ -38,7 +38,7 @@ const FontFamilySchema = z.object({
   variants: z.array(z.string()),
   subsets: z.array(z.string()),
   version: z.string(),
-  lastModified: z.coerce.date(),
+  lastModified: z.date(),
   files: FilesSchema,
   category: CategorySchema,
   kind: KindSchema,

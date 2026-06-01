@@ -1,11 +1,47 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import z from 'zod'
 
-import { FormModal, defineForm } from '@lifeforge/ui'
+import {
+  CheckboxField,
+  FormModal,
+  IconField,
+  TextField,
+  createDefaultValues
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
 import type { APIKeyEntry } from '..'
+
+const schema = z
+  .object({
+    _type: z.enum(['create', 'update']),
+    keyId: z
+      .string()
+      .regex(
+        /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/,
+        'Key ID must be in kebab-case (e.g. my-api-key)'
+      ),
+    name: z.string().min(1, 'Key name is required'),
+    icon: z.string().min(1, 'Key icon is required'),
+    overrideKey: z.boolean(),
+    key: z.string(),
+    exposable: z.boolean()
+  })
+  .superRefine(({ _type, overrideKey, key }, ctx) => {
+    if (_type === 'create' || (_type === 'update' && overrideKey)) {
+      if (!key || key.length === 0) {
+        ctx.addIssue({
+          code: 'custom',
+          message: 'API key is required',
+          path: ['key']
+        })
+      }
+    }
+  })
 
 function ModifyAPIKeyModal({
   data: { type, initialData },
@@ -35,80 +71,84 @@ function ModifyAPIKeyModal({
     })
   )
 
-  const { formProps } = defineForm<{
-    keyId: string
-    name: string
-    icon: string
-    key: string
-    exposable: boolean
-    overrideKey: boolean
-  }>({
-    icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-    namespace: 'common.apiKeys',
-    title: `apiKey.${type}`,
-    onClose,
-    submitButton: type
-  })
-    .typesMap({
-      keyId: 'text',
-      name: 'text',
-      icon: 'icon',
-      overrideKey: 'checkbox',
-      key: 'text',
-      exposable: 'checkbox'
-    })
-    .setupFields({
-      keyId: {
-        required: true,
-        placeholder: 'id-of-the-api-key',
-        label: 'Key ID',
-        icon: 'tabler:id'
-      },
-      name: {
-        required: true,
-        placeholder: 'My API Key',
-        label: 'Key Name',
-        icon: 'tabler:key'
-      },
-      icon: {
-        required: true,
-        label: 'Key Icon',
-        type: 'icon'
-      },
-      overrideKey: {
-        label: 'Override Key',
-        icon: 'tabler:refresh'
-      },
-      key: {
-        required: true,
-        isPassword: true,
-        placeholder: '••••••••••••••••',
-        label: 'API Key',
-        icon: 'tabler:key'
-      },
-      exposable: {
-        required: false,
-        label: 'isExposable',
-        icon: 'tabler:eye'
-      }
-    })
-    .conditionalFields({
-      key: data => (type === 'update' ? data.overrideKey : true),
-      overrideKey: () => type === 'update'
-    })
-    .initialData({
+  const form = useForm({
+    defaultValues: {
+      ...createDefaultValues(schema),
+      _type: type,
       keyId: initialData?.keyId || '',
       name: initialData?.name || '',
       icon: initialData?.icon || '',
       key: '',
       exposable: initialData?.exposable || false
-    })
-    .onSubmit(async data => {
-      await mutation.mutateAsync(data)
-    })
-    .build()
+    },
+    mode: 'all',
+    resolver: zodResolver(schema)
+  })
 
-  return <FormModal {...formProps} />
+  const overrideKey = useWatch({ control: form.control, name: 'overrideKey' })
+
+  return (
+    <FormModal
+      form={form}
+      submissionConfig={{
+        handler: async data => {
+          const { _type: _omit, ...payload } = data
+
+          await mutation.mutateAsync(payload)
+        },
+        template: type
+      }}
+      uiConfig={{
+        icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
+        namespace: 'common.apiKeys',
+        title: `apiKey.${type}`,
+        onClose
+      }}
+    >
+      <TextField
+        required
+        control={form.control}
+        icon="tabler:id"
+        label="Key ID"
+        name="keyId"
+        placeholder="id-of-the-api-key"
+      />
+      <TextField
+        required
+        control={form.control}
+        icon="tabler:key"
+        label="Key Name"
+        name="name"
+        placeholder="My API Key"
+      />
+      <IconField required control={form.control} label="Key Icon" name="icon" />
+      {type === 'update' && (
+        <CheckboxField
+          control={form.control}
+          icon="tabler:refresh"
+          label="Override Key"
+          name="overrideKey"
+        />
+      )}
+      {(type === 'create' || overrideKey) && (
+        <TextField
+          isPassword
+          required
+          control={form.control}
+          icon="tabler:key"
+          label="API Key"
+          name="key"
+          placeholder="••••••••••••••••"
+        />
+      )}
+      <CheckboxField
+        control={form.control}
+        icon="tabler:eye"
+        label="isExposable"
+        name="exposable"
+      />
+    </FormModal>
+  )
 }
 
 export default ModifyAPIKeyModal
