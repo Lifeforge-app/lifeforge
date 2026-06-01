@@ -18,7 +18,9 @@ export function YearlyExactDateForm({
       <Box flex="1">
         <ListboxInput
           required
-          buttonContent={<>{t(`common.misc:dates.months.${data.month - 1}`)}</>}
+          renderContent={() => (
+            <>{t(`common.misc:dates.months.${data.month - 1}`)}</>
+          )}
           icon="tabler:calendar"
           label={t('inputs.yearly.exactDate.inputs.month')}
           value={data.month}

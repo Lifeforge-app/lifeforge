@@ -18,7 +18,7 @@ export function CategoryFilter({
 }: CategoryFilterProps) {
   return (
     <ListboxInput
-      buttonContent={
+      renderContent={() => (
         <>
           <Icon
             icon={CATEGORIES.find(l => l.id === category)?.icon ?? ''}
@@ -32,7 +32,7 @@ export function CategoryFilter({
             {CATEGORIES.find(l => l.id === category)?.name ?? 'None'}
           </Text>
         </>
-      }
+      )}
       icon="tabler:category"
       label="imagePicker.inputs.imageCategory"
       namespace="common.modals"

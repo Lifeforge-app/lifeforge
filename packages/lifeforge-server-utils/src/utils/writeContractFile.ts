@@ -1,6 +1,39 @@
 import fs from 'fs'
 import path from 'path'
 
+function fixJSONSchemaRecord(schema: any): any {
+  if (!schema || typeof schema !== 'object') {
+    return schema
+  }
+
+  if (Array.isArray(schema)) {
+    return schema.map(fixJSONSchemaRecord)
+  }
+
+  const result = { ...schema }
+
+  for (const key of Object.keys(result)) {
+    result[key] = fixJSONSchemaRecord(result[key])
+  }
+
+  if (
+    result.type === 'object' &&
+    result.propertyNames &&
+    result.propertyNames.enum &&
+    Array.isArray(result.propertyNames.enum) &&
+    result.additionalProperties &&
+    typeof result.additionalProperties === 'object'
+  ) {
+    result.properties = result.properties ?? {}
+    for (const key of result.propertyNames.enum) {
+      result.properties[key] = result.additionalProperties
+    }
+    result.additionalProperties = false
+  }
+
+  return result
+}
+
 export function serializeRoutes(node: any): any {
   if (node && typeof node === 'object') {
     if (
@@ -20,12 +53,12 @@ export function serializeRoutes(node: any): any {
           query:
             val.schema?.query &&
             typeof val.schema.query.toJSONSchema === 'function'
-              ? val.schema.query.toJSONSchema()
+              ? fixJSONSchemaRecord(val.schema.query.toJSONSchema())
               : undefined,
           body:
             val.schema?.body &&
             typeof val.schema.body.toJSONSchema === 'function'
-              ? val.schema.body.toJSONSchema()
+              ? fixJSONSchemaRecord(val.schema.body.toJSONSchema())
               : undefined
         },
         output: typeof val.output === 'string'
@@ -37,7 +70,7 @@ export function serializeRoutes(node: any): any {
                   v === true
                     ? true
                     : v && typeof (v as any).toJSONSchema === 'function'
-                      ? (v as any).toJSONSchema()
+                      ? fixJSONSchemaRecord((v as any).toJSONSchema())
                       : v
                 ])
               )

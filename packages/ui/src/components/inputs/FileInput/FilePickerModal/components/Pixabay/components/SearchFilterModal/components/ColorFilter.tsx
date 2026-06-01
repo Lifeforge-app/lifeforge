@@ -15,7 +15,7 @@ interface ColorFilterProps {
 export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
   return (
     <ListboxInput
-      buttonContent={
+      renderContent={() => (
         <>
           <Bordered
             asChild
@@ -37,7 +37,7 @@ export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
             {COLORS.find(l => l.id === colors)?.name ?? 'None'}
           </Text>
         </>
-      }
+      )}
       icon="tabler:color-swatch"
       label="imagePicker.inputs.imageColor"
       namespace="common.modals"

@@ -58,7 +58,6 @@ function OptionButtonContent({ value }: { value: string }) {
  */
 export const Default: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     icon: 'tabler:category',
     label: 'Category',
@@ -72,7 +71,7 @@ export const Default: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={<OptionButtonContent value={value} />}
+        renderContent={() => <OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >
@@ -95,7 +94,6 @@ export const Default: Story = {
  */
 export const Required: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     icon: 'tabler:category',
     label: 'Category',
@@ -110,7 +108,7 @@ export const Required: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={<OptionButtonContent value={value} />}
+        renderContent={() => <OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >
@@ -133,7 +131,6 @@ export const Required: Story = {
  */
 export const Disabled: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     disabled: true,
     icon: 'tabler:category',
@@ -148,7 +145,7 @@ export const Disabled: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={<OptionButtonContent value={value} />}
+        renderContent={() => <OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >
@@ -171,7 +168,6 @@ export const Disabled: Story = {
  */
 export const WithErrorMessage: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     errorMsg: 'Please select a category',
     icon: 'tabler:category',
@@ -186,7 +182,7 @@ export const WithErrorMessage: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={<OptionButtonContent value={value} />}
+        renderContent={() => <OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >
@@ -206,7 +202,6 @@ export const WithErrorMessage: Story = {
 
 export const DisabledWithErrorMessage: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     disabled: true,
     errorMsg: 'Please select a category',
@@ -222,7 +217,7 @@ export const DisabledWithErrorMessage: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={<OptionButtonContent value={value} />}
+        renderContent={() => <OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >
@@ -245,7 +240,6 @@ export const DisabledWithErrorMessage: Story = {
  */
 export const PlainVariant: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     onChange: () => {},
     value: '',
@@ -257,7 +251,7 @@ export const PlainVariant: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={<OptionButtonContent value={value} />}
+        renderContent={() => <OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >
@@ -280,7 +274,6 @@ export const PlainVariant: Story = {
  */
 export const PlainVariantSmall: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     onChange: () => {},
     size: 'small',
@@ -294,7 +287,7 @@ export const PlainVariantSmall: Story = {
       <Box width="16rem">
         <ListboxInput
           {...args}
-          buttonContent={<OptionButtonContent value={value} />}
+          renderContent={() => <OptionButtonContent value={value} />}
           value={value}
           onChange={onChange}
         >
@@ -318,7 +311,6 @@ export const PlainVariantSmall: Story = {
  */
 export const MultipleSelection: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     icon: 'tabler:category',
     label: 'Category',
@@ -333,7 +325,7 @@ export const MultipleSelection: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={
+        renderContent={() => (
           <Flex align="center" gap="sm" wrap="wrap">
             {value.length > 0 ? (
               value.map((v, index) => (
@@ -366,7 +358,7 @@ export const MultipleSelection: Story = {
               <Text color="muted">Select options</Text>
             )}
           </Flex>
-        }
+        )}
         value={value}
         onChange={onChange}
       >
@@ -389,7 +381,6 @@ export const MultipleSelection: Story = {
  */
 export const WithNullOption: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     icon: 'tabler:category',
     label: 'Category',
@@ -403,7 +394,7 @@ export const WithNullOption: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={
+        renderContent={() =>
           value ? (
             <OptionButtonContent value={value} />
           ) : (
@@ -430,7 +421,6 @@ export const WithNullOption: Story = {
 
 export const PlainVariantWithErrorMessage: Story = {
   args: {
-    buttonContent: <></>,
     children: <></>,
     errorMsg: 'Invalid options selected',
     onChange: () => {},
@@ -444,7 +434,7 @@ export const PlainVariantWithErrorMessage: Story = {
     return (
       <ListboxInput
         {...args}
-        buttonContent={<OptionButtonContent value={value} />}
+        renderContent={() => <OptionButtonContent value={value} />}
         value={value}
         onChange={onChange}
       >

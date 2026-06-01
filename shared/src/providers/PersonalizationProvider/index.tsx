@@ -1,8 +1,8 @@
-import type { ProxyTree } from '@shared/api/typescript/forge_proxy.types'
 import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
 import tinycolor from 'tinycolor2'
 
+import type { ProxyTree } from '../../api/typescript/forge_proxy.types'
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
 import useBgTempEffect from './hooks/useBgTempEffect'
@@ -95,7 +95,16 @@ export default function PersonalizationProvider({
   const [rawThemeColor, setRawThemeColor] = useState(defaultValue.rawThemeColor)
 
   const [bgTemp, setBgTemp] = useState<
-    'bg-slate' | 'bg-gray' | 'bg-neutral' | 'bg-zinc' | 'bg-stone' | 'bg-mauve' | 'bg-olive' | 'bg-mist' | 'bg-taupe' | string
+    | 'bg-slate'
+    | 'bg-gray'
+    | 'bg-neutral'
+    | 'bg-zinc'
+    | 'bg-stone'
+    | 'bg-mauve'
+    | 'bg-olive'
+    | 'bg-mist'
+    | 'bg-taupe'
+    | string
   >(defaultValue.bgTemp)
 
   const [bgImage, setBgImage] = useState(defaultValue.bgImage)

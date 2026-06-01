@@ -1,4 +1,4 @@
-import type { ProxyTree } from '@shared/api/typescript/forge_proxy.types'
+import type { ProxyTree } from '../api/typescript/forge_proxy.types'
 
 export default function getFormFileFieldInitialData(
   forgeAPI: ProxyTree<any>,

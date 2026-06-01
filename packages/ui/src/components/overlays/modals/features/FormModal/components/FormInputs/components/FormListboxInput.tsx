@@ -137,9 +137,9 @@ export function FormListboxInput({
 
   return (
     <ListboxInput
-      buttonContent={
+      renderContent={() => (
         <ListboxButtonContent field={field} options={options} value={value} />
-      }
+      )}
       disabled={field.disabled}
       errorMsg={field.errorMsg}
       hasActionButton={!!field.actionButtonOption}

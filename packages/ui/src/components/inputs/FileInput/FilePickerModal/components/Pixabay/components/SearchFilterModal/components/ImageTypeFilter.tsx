@@ -22,7 +22,7 @@ export function ImageTypeFilter({
 
   return (
     <ListboxInput
-      buttonContent={
+      renderContent={() => (
         <>
           <Icon
             icon={IMAGE_TYPES.find(l => l.id === imageType)?.icon ?? ''}
@@ -38,7 +38,7 @@ export function ImageTypeFilter({
             )}
           </Text>
         </>
-      }
+      )}
       icon="tabler:list"
       label="imagePicker.inputs.imageType"
       namespace="common.modals"
