@@ -10,7 +10,7 @@ import { Box, Flex, Icon, Text } from '@/components/primitives'
 import { forgeAPI } from '@/utils/forgeAPI'
 
 import { useInputLabel } from '../shared/hooks/useInputLabel'
-import { LocationActionButton } from './components/LocationActionButton'
+import { LocationServiceStatusIndicator } from './components/LocationServiceStatusIndicator'
 
 export type Location = {
   name: string
@@ -133,13 +133,7 @@ export function LocationInput({
             ))}
         </ComboboxInput>
       </Box>
-      <Box
-        mr={variant === 'classic' ? 'lg' : 'md'}
-        mt="lg"
-        style={{ pointerEvents: 'all' }}
-      >
-        <LocationActionButton enabled={enabled} />
-      </Box>
+      <LocationServiceStatusIndicator enabled={enabled} />
     </Flex>
   )
 }
