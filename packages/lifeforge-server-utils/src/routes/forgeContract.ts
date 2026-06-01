@@ -1,9 +1,5 @@
-import fs from 'fs'
-import path from 'path'
 import type { RequestHandler } from 'express'
 import type { z } from 'zod'
-
-import { CleanedSchemas, CollectionKey } from '@lifeforge/server-utils'
 
 import { getCallerModuleId } from '..'
 import type {
@@ -11,7 +7,8 @@ import type {
   ForgeContract,
   ForgeExpressContext
 } from '../typescript/core/forge_contract.types'
-import type IPBService from '../typescript/pocketbase/PBService.interface'
+import type IPBService from '../typescript/pb/PBService.interface'
+import { CollectionKey } from '../typescript/pb/pb_service.types'
 import type {
   OutputDefinition,
   OutputHelpers,
@@ -22,6 +19,7 @@ import type {
   MediaConfig
 } from '../typescript/standalone/media.types'
 import { Output, OutputType } from '../utils/outputStatus'
+import { CleanedSchemas } from '../utils/schemaUtils'
 
 type KeysOf<T> = T extends any ? keyof T : never
 
@@ -31,9 +29,9 @@ export function snakeCaseToCamelCase(str: string): string {
     .replace(/_([a-z])/g, (_, letter) => letter.toUpperCase())
 }
 
-export function createOutputHelpers<TOutput extends OutputDefinition | 'custom'>(
-  output: TOutput
-): OutputHelpers<TOutput> {
+export function createOutputHelpers<
+  TOutput extends OutputDefinition | 'custom'
+>(output: TOutput): OutputHelpers<TOutput> {
   const helpers = {} as Record<
     string,
     (payload?: unknown) => { $status: number; payload?: unknown }
@@ -210,10 +208,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       media?: TMedia
       middlewares?: RequestHandler[]
     }) {
-      return buildRoute<'get', TOutput, TQuery, TBody, TMedia>(
-        'get',
-        metadata
-      )
+      return buildRoute<'get', TOutput, TQuery, TBody, TMedia>('get', metadata)
     },
 
     mutation: function <
@@ -250,13 +245,10 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       media?: TMedia
       middlewares?: RequestHandler[]
     }) {
-      return buildRoute<
+      return buildRoute<'post', TOutput, TQuery, TBody, TMedia>(
         'post',
-        TOutput,
-        TQuery,
-        TBody,
-        TMedia
-      >('post', metadata)
+        metadata
+      )
     }
   }
 }
