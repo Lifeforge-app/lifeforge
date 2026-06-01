@@ -9,14 +9,15 @@ import { RRuleInput } from '@/components/inputs'
 
 type RRuleFieldProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
-  name: FieldPathByValue<TFieldValues, string>
+  name: FieldPathByValue<TFieldValues, string | null | undefined>
   hasDuration?: boolean
 }
 
 export function RRuleField<TFieldValues extends FieldValues>({
   control,
   name,
-  hasDuration = false
+  hasDuration = false,
+  ...rest
 }: RRuleFieldProps<TFieldValues>) {
   const { field } = useController({
     control,
@@ -28,6 +29,7 @@ export function RRuleField<TFieldValues extends FieldValues>({
       hasDuration={hasDuration}
       value={field.value ?? ''}
       onChange={field.onChange}
+      {...rest}
     />
   )
 }

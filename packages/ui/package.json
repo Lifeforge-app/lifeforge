@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
-    "@hookform/resolvers": "^5.4.0",
     "@iconify/collections": "^1.0.690",
     "@iconify/react": "^6.0.2",
     "@iconify/tools": "^4.1.4",
@@ -67,7 +66,6 @@
     "react-datepicker": "^8.7.0",
     "react-dom": "^19.2.0",
     "react-dropzone": "^14.3.8",
-    "react-hook-form": "^7.77.0",
     "react-i18next": "^15.7.4",
     "react-medium-image-zoom": "^5.4.0",
     "react-number-format": "^5.4.5",

@@ -32,7 +32,9 @@ export type ResponseObject<TOutputs extends OutputDefinition | 'custom'> =
     ? void | undefined | unknown
     : {
         [K in keyof TOutputs]: {
-          $status: K extends keyof OutputType ? OutputType[K]['$status'] : number
+          $status: K extends keyof OutputType
+            ? OutputType[K]['$status']
+            : number
         } & (K extends keyof OutputType
           ? OutputType[K] extends { hasPayload: true }
             ? { payload: z.infer<Extract<TOutputs[K], z.ZodTypeAny>> }

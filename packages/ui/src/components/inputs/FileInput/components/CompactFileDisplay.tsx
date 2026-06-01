@@ -19,31 +19,30 @@ export function CompactFileDisplay({
         <Icon
           color="muted"
           icon={(() => {
-            if (value.type !== 'file') return 'tabler:file'
+            if (value.type === 'empty') return 'tabler:file'
 
             const ext = (
-              value.source === 'existing'
+              value.type === 'existing'
                 ? value.filename
-                : value.source === 'upload'
+                : value.type === 'upload'
                   ? value.file.name
-                  : value.url.split('/').pop()?.split('?')[0] || ''
+                  : value.type === 'url'
+                    ? value.url.split('/').pop()?.split('?')[0] || ''
+                    : ''
             )
               .split('.')
               .pop()
               ?.toLowerCase()
 
-            return (
-              FILE_ICONS[ext as keyof typeof FILE_ICONS] ||
-              'tabler:file'
-            )
+            return FILE_ICONS[ext as keyof typeof FILE_ICONS] || 'tabler:file'
           })()}
           size="1.5rem"
         />
         <Text truncate as="p">
           {(() => {
-            if (value.type !== 'file') return ''
-            if (value.source === 'existing') return value.filename
-            if (value.source === 'upload') return value.file.name
+            if (value.type === 'empty') return ''
+            if (value.type === 'existing') return value.filename
+            if (value.type === 'upload') return value.file.name
 
             return value.url
           })()}

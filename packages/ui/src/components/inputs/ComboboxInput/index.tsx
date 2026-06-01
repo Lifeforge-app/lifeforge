@@ -166,10 +166,7 @@ export function ComboboxInput<T>({
       </Flex>
       <InputActionButton hasError={!!errorMsg} icon="" variant={variant}>
         <ComboboxButton>
-          <Icon
-            icon="heroicons:chevron-up-down-16-solid"
-            size="1.25em"
-          />
+          <Icon icon="heroicons:chevron-up-down-16-solid" size="1.25em" />
         </ComboboxButton>
       </InputActionButton>
       <ComboboxOptions>{children}</ComboboxOptions>

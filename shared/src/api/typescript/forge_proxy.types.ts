@@ -21,11 +21,11 @@ export type InferFromJSONSchema<T> = T extends undefined
 export type InferContractInput<T> = 0 extends 1 & T
   ? any
   : T extends {
-      readonly input?: {
-        readonly query?: infer Q
-        readonly body?: infer B
+        readonly input?: {
+          readonly query?: infer Q
+          readonly body?: infer B
+        }
       }
-    }
     ? {
         body: B extends ZodTypeAny
           ? B
@@ -46,8 +46,8 @@ export type InferContractInput<T> = 0 extends 1 & T
 export type InferContractOutput<T> = 0 extends 1 & T
   ? any
   : T extends {
-      readonly output: infer O
-    }
+        readonly output: infer O
+      }
     ? O extends { readonly OK: infer OKSchema }
       ? InferFromJSONSchema<OKSchema>
       : O extends { readonly CREATED: infer CreatedSchema }
@@ -58,8 +58,8 @@ export type InferContractOutput<T> = 0 extends 1 & T
 export type InferContractMedia<T> = 0 extends 1 & T
   ? any
   : T extends {
-      readonly media?: infer M
-    }
+        readonly media?: infer M
+      }
     ? M extends undefined
       ? null
       : M

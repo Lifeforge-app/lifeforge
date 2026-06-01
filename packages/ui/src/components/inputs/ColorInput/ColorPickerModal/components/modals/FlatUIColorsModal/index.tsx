@@ -35,10 +35,7 @@ function FlatUIColorsModal({
         {PALETTES.map(({ name, icon, colors }) => (
           <Card key={name} bg={{ base: 'bg-100', dark: 'bg-800' }}>
             <Flex align="center" mb="md" style={{ gap: '0.75rem' }}>
-              <Icon
-                icon={icon || 'tabler:palette'}
-                size="1.5rem"
-              />
+              <Icon icon={icon || 'tabler:palette'} size="1.5rem" />
               <Text as="span" size="lg" weight="medium">
                 {name}
               </Text>

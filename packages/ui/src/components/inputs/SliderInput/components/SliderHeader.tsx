@@ -36,10 +36,7 @@ export function SliderHeader({
           minWidth="0"
           style={{ letterSpacing: '0.025em' }}
         >
-          <Icon
-            icon={icon}
-            size="1.5rem"
-          />
+          <Icon icon={icon} size="1.5rem" />
           <Flex align="center" gap="sm" minWidth="0" width="100%">
             <Text truncate as="div" style={{ width: '100%', minWidth: 0 }}>
               {inputLabel}

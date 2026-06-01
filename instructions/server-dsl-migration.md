@@ -5,6 +5,7 @@ Migrate routes from the old chaining API to the new object-based DSL.
 ## Overview
 
 ### Old API (chaining)
+
 ```typescript
 forge
   .query()
@@ -22,6 +23,7 @@ forge
 ```
 
 ### New API (object)
+
 ```typescript
 forge
   .query({
@@ -56,16 +58,16 @@ forge
 
 All configuration moves inside `query({...})` / `mutation({...})`:
 
-| Old method | New property |
-|---|---|
-| `.description('...')` | `description: '...'` |
-| `.noAuth()` | `noAuth: true` |
-| `.noEncryption()` | `encrypted: false` |
-| `.input({...})` | `input: {...}` |
-| `.media({...})` | `media: {...}` |
-| `.isDownloadable()` | `isDownloadable: true` |
-| `.statusCode(N)` | ❌ Removed — status comes from output key |
-| `.existenceCheck('query', {...})` | `existenceCheck: { query: {...} }` |
+| Old method                        | New property                              |
+| --------------------------------- | ----------------------------------------- |
+| `.description('...')`             | `description: '...'`                      |
+| `.noAuth()`                       | `noAuth: true`                            |
+| `.noEncryption()`                 | `encrypted: false`                        |
+| `.input({...})`                   | `input: {...}`                            |
+| `.media({...})`                   | `media: {...}`                            |
+| `.isDownloadable()`               | `isDownloadable: true`                    |
+| `.statusCode(N)`                  | ❌ Removed — status comes from output key |
+| `.existenceCheck('query', {...})` | `existenceCheck: { query: {...} }`        |
 
 When there were multiple `.existenceCheck()` calls in the old API (e.g. one for `query` and one for `body`), merge them into a single `existenceCheck` object:
 
@@ -85,18 +87,19 @@ existenceCheck: {
 
 Every route **must** declare an `output` object with at least one status key. The available status keys and their HTTP status codes are defined in `packages/lifeforge-server-utils/src/utils/outputStatus.ts`:
 
-| Status | Code | Has Payload |
-|---|---|---|
-| `OK` | 200 | ✅ `z.schema()` |
-| `CREATED` | 201 | ✅ `z.schema()` |
-| `NO_CONTENT` | 204 | ❌ `true` |
-| `BAD_REQUEST` | 400 | ✅ `z.string()` |
-| `UNAUTHORIZED` | 401 | ❌ `true` |
-| `FORBIDDEN` | 403 | ❌ `true` |
-| `NOT_FOUND` | 404 | ❌ `true` |
-| `CONFLICT` | 409 | ❌ `true` |
+| Status         | Code | Has Payload     |
+| -------------- | ---- | --------------- |
+| `OK`           | 200  | ✅ `z.schema()` |
+| `CREATED`      | 201  | ✅ `z.schema()` |
+| `NO_CONTENT`   | 204  | ❌ `true`       |
+| `BAD_REQUEST`  | 400  | ✅ `z.string()` |
+| `UNAUTHORIZED` | 401  | ❌ `true`       |
+| `FORBIDDEN`    | 403  | ❌ `true`       |
+| `NOT_FOUND`    | 404  | ❌ `true`       |
+| `CONFLICT`     | 409  | ❌ `true`       |
 
 **Rules:**
+
 - If `hasPayload: true` → value must be a `z.ZodTypeAny` schema
 - If `hasPayload` is absent → value must be `true`
 - `BAD_REQUEST` payload is `z.string()` (error message)
@@ -160,14 +163,15 @@ input: {
   })
 }
 // callback
-(async ({ query: { year, month } }) => {
+;async ({ query: { year, month } }) => {
   const parsedYear = parseInt(year)
   const parsedMonth = parseInt(month)
   // ...
-})
+}
 ```
 
 For optional fields:
+
 ```typescript
 input: {
   query: z.object({
@@ -180,6 +184,7 @@ const parsedYear = year ? parseInt(year) : undefined
 ```
 
 For complex transforms (like splitting a comma-separated string into an array):
+
 ```typescript
 input: {
   query: z.object({
@@ -192,6 +197,7 @@ const parsedViewFilter: ('income' | 'expenses' | 'transfer')[] =
 ```
 
 For short single-use input schemas, inline them directly rather than extracting into a named variable:
+
 ```typescript
 // ✅ Good — inline for single use
 input: {
@@ -259,12 +265,13 @@ return response.created(result)
 ### 8. Replace `.statusCode(N)` with the correct output key
 
 | Old `.statusCode(N)` | New output key |
-|---|---|
-| `.statusCode(200)` | `OK` |
-| `.statusCode(201)` | `CREATED` |
-| `.statusCode(204)` | `NO_CONTENT` |
+| -------------------- | -------------- |
+| `.statusCode(200)`   | `OK`           |
+| `.statusCode(201)`   | `CREATED`      |
+| `.statusCode(204)`   | `NO_CONTENT`   |
 
 For `.statusCode(204)`:
+
 - Output Config: `{ NO_CONTENT: true }`
 - Return: `return response.noContent()`
 
@@ -281,6 +288,7 @@ existenceCheck: {
 ```
 
 `NOT_FOUND` must be declared in the output when `existenceCheck` is present:
+
 ```typescript
 output: {
   OK: z.string(),
@@ -322,6 +330,7 @@ After replacing all `throw new ClientError(...)`, the `ClientError` import can b
 ## Full Example
 
 ### Before
+
 ```typescript
 import { ClientError } from '@lifeforge/server-utils'
 
@@ -370,6 +379,7 @@ export const remove = forge
 ```
 
 ### After
+
 ```typescript
 import forge from '../forge'
 
@@ -377,10 +387,12 @@ export const list = forge
   .query({
     description: 'Get all items',
     output: {
-      OK: z.array(z.object({
-        id: z.string(),
-        name: z.string()
-      }))
+      OK: z.array(
+        z.object({
+          id: z.string(),
+          name: z.string()
+        })
+      )
     }
   })
   .callback(async ({ pb, response }) =>

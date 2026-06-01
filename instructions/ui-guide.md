@@ -19,7 +19,9 @@ The LifeForge UI library is built on a **zero-runtime CSS-in-JS** architecture p
 > Custom inline `style` objects must be avoided. If a style can be represented through component props or tokens, you **must** use those props. Inline styles are reserved solely for truly dynamic runtime calculations (e.g., coordinates from drag-and-drop events).
 
 ### Design Tokens & Dynamic Scaling
+
 The design system defines global tokens under `vars` (compiled to CSS variables) that automatically scale with user personalisation settings:
+
 - **Font Scale (`--custom-font-scale`):** Scales typography and padding/margin dynamically.
 - **Border Radius Multiplier (`--custom-border-radius-multiplier`):** Auto-scales corners from sharp to pill-like.
 - **Custom Themes (`.theme-[color]` & `.bg-[palette]`):** Sets theme shades for brand colors (`--color-custom-*`) and background palettes (`--color-bg-*` like slate, zinc, neutral, mauve, olive, mist, taupe).
@@ -31,7 +33,9 @@ The design system defines global tokens under `vars` (compiled to CSS variables)
 All standard layout and typography options are referenced via type-safe tokens exported by the system.
 
 ### A. Spacing & Margin/Padding Tokens
+
 Spacing scales are defined under `vars.space` and scale with font size to keep visual rhythm:
+
 - `none`: `'0'`
 - `xs`: `calc(var(--spacing) * 1)` (equivalent to `4px` base)
 - `sm`: `calc(var(--spacing) * 2)` (`8px` base)
@@ -42,7 +46,9 @@ Spacing scales are defined under `vars.space` and scale with font size to keep v
 - `3xl`: `calc(var(--spacing) * 16)` (`64px` base)
 
 ### B. Border Radius (Rounding) Tokens
+
 Border corners are defined under `vars.radii` and scale with the user's corner multiplier:
+
 - `none`: `'0'`
 - `sm`: `var(--radius-sm)`
 - `md`: `var(--radius-md)`
@@ -53,25 +59,27 @@ Border corners are defined under `vars.radii` and scale with the user's corner m
 - `full`: `'9999px'`
 
 ### C. Typography Scales
+
 Typography values scale with `--custom-font-scale`:
 
-| Size Token | Font Size (`fontSize`) | Line Height (`lineHeight`) |
-| :--- | :--- | :--- |
-| `xs` | `var(--text-xs)` | `var(--text-xs--line-height)` |
-| `sm` | `var(--text-sm)` | `var(--text-sm--line-height)` |
-| `base` | `var(--text-base)` | `var(--text-base--line-height)` |
-| `lg` | `var(--text-lg)` | `var(--text-lg--line-height)` |
-| `xl` | `var(--text-xl)` | `var(--text-xl--line-height)` |
-| `2xl` | `var(--text-2xl)` | `var(--text-2xl--line-height)` |
-| `3xl` | `var(--text-3xl)` | `var(--text-3xl--line-height)` |
-| `4xl` | `var(--text-4xl)` | `var(--text-4xl--line-height)` |
-| `5xl` | `var(--text-5xl)` | `1` |
-| `6xl` | `var(--text-6xl)` | `1` |
-| `7xl` | `var(--text-7xl)` | `1` |
-| `8xl` | `var(--text-8xl)` | `1` |
-| `9xl` | `var(--text-9xl)` | `1` |
+| Size Token | Font Size (`fontSize`) | Line Height (`lineHeight`)      |
+| :--------- | :--------------------- | :------------------------------ |
+| `xs`       | `var(--text-xs)`       | `var(--text-xs--line-height)`   |
+| `sm`       | `var(--text-sm)`       | `var(--text-sm--line-height)`   |
+| `base`     | `var(--text-base)`     | `var(--text-base--line-height)` |
+| `lg`       | `var(--text-lg)`       | `var(--text-lg--line-height)`   |
+| `xl`       | `var(--text-xl)`       | `var(--text-xl--line-height)`   |
+| `2xl`      | `var(--text-2xl)`      | `var(--text-2xl--line-height)`  |
+| `3xl`      | `var(--text-3xl)`      | `var(--text-3xl--line-height)`  |
+| `4xl`      | `var(--text-4xl)`      | `var(--text-4xl--line-height)`  |
+| `5xl`      | `var(--text-5xl)`      | `1`                             |
+| `6xl`      | `var(--text-6xl)`      | `1`                             |
+| `7xl`      | `var(--text-7xl)`      | `1`                             |
+| `8xl`      | `var(--text-8xl)`      | `1`                             |
+| `9xl`      | `var(--text-9xl)`      | `1`                             |
 
 **Font Weights:**
+
 - `normal`: `'400'`
 - `medium`: `'500'`
 - `semibold`: `'600'`
@@ -81,10 +89,12 @@ Typography values scale with `--custom-font-scale`:
 
 ## 3. Style Resolution & The Styling Engine
 
-LifeForge uses a custom styling resolver, `resolveStyles()`, which translates token-based properties and responsive objects into static class names and CSS custom properties at runtime. 
+LifeForge uses a custom styling resolver, `resolveStyles()`, which translates token-based properties and responsive objects into static class names and CSS custom properties at runtime.
 
 ### A. Color Properties & State Resolvers
+
 Colors in LifeForge are resolved through an **arbitrary CSS variable architecture** that handles dynamic user personalization and interactions. The primary color properties are:
+
 - `bg`: Background Color (`--lf-bg`)
 - `color`: Text/Foreground Color (`--lf-color`)
 - `borderColor`: Border Color (`--lf-border-color`)
@@ -93,32 +103,36 @@ Colors in LifeForge are resolved through an **arbitrary CSS variable architectur
 - `divideColor`: Dividing Line Color (`--lf-divide-color`)
 
 #### Supported Color Keys
+
 1. **Base Palette:** `transparent`, `dangerous` (`#ef4444`), `muted` (mid-gray), `primary` (user-accented), `inherit`, `custom-50` to `custom-900` (accent shades), and `bg-50` to `bg-950` (system background shades).
 2. **Tailwind Palette Names:** Colors like `red-500`, `blue-600`, `emerald-400` map directly to tailwind shades.
 3. **Color with Opacity:** Zero-runtime opacity can be added using the `colorWithOpacity(token, opacityValue)` utility.
 
 #### Theme & State Specific Variants
+
 Any color prop can receive a static color value or a map of conditions representing interactive states:
+
 ```typescript
 type ThemeConditionPropName =
-  | 'base'               // Default style
-  | 'dark'               // Dark mode
-  | 'hover'              // Hover state
-  | 'darkHover'          // Hover state in dark mode
-  | 'hasBgImage'         // Active when page has a background image
-  | 'darkHasBgImage'     // Active in dark mode with a background image
-  | 'hasBgImageHover'    
+  | 'base' // Default style
+  | 'dark' // Dark mode
+  | 'hover' // Hover state
+  | 'darkHover' // Hover state in dark mode
+  | 'hasBgImage' // Active when page has a background image
+  | 'darkHasBgImage' // Active in dark mode with a background image
+  | 'hasBgImageHover'
   | 'hasBgImageDarkHover'
 ```
 
 ##### Example Usage:
+
 ```tsx
-<Box 
-  bg={{ 
-    base: 'bg-50', 
-    dark: 'bg-900', 
-    hover: 'bg-200', 
-    darkHover: 'bg-800' 
+<Box
+  bg={{
+    base: 'bg-50',
+    dark: 'bg-900',
+    hover: 'bg-200',
+    darkHover: 'bg-800'
   }}
   color={{ base: 'bg-950', dark: 'bg-50' }}
 />
@@ -159,16 +173,20 @@ These are `as const` objects that can be spread or passed directly into the `bg`
 > The `surface.default` and `surface.defaultInteractive` presets already serve as the built-in defaults for the `Card` component — you only need to pass them explicitly when overriding or when using them on non-Card primitives.
 
 ### B. Opacity Modifiers (`colorWithOpacity`)
+
 To prevent heavy runtimes, colors can be blended with transparency using CSS `color-mix` through the `colorWithOpacity` helper:
+
 ```typescript
 import { colorWithOpacity } from '@lifeforge/ui'
 
 // Generates: color-mix(in srgb, var(--color-custom-500) 30%, transparent)
 const semiTransparentPrimary = colorWithOpacity('primary', '30%')
 ```
-*Supported Opacity Levels:* `'5%'`, `'10%'`, `'20%'`, `'30%'`, `'40%'`, `'50%'`, `'60%'`, `'70%'`, `'80%'`, `'90%'`.
+
+_Supported Opacity Levels:_ `'5%'`, `'10%'`, `'20%'`, `'30%'`, `'40%'`, `'50%'`, `'60%'`, `'70%'`, `'80%'`, `'90%'`.
 
 `colorWithOpacity` can be used **directly in the `bg` prop** — no inline `style` needed:
+
 ```tsx
 <Flex
   align="center"
@@ -180,10 +198,13 @@ const semiTransparentPrimary = colorWithOpacity('primary', '30%')
   <Icon color="custom-500" icon="tabler:box" />
 </Flex>
 ```
+
 This replaces the old pattern of inline `style={{ backgroundColor: 'color-mix(...)' }}`.
 
 ### C. Responsive Properties & Breakpoints
+
 Layout props support responsive values. Breakpoints are defined as:
+
 - `base`: Mobile first (default, no media query)
 - `sm`: `@media (min-width: 640px)`
 - `md`: `@media (min-width: 768px)`
@@ -192,6 +213,7 @@ Layout props support responsive values. Breakpoints are defined as:
 - `2xl`: `@media (min-width: 1536px)`
 
 Any responsive property accepts a scalar or a responsive configuration object:
+
 ```tsx
 // Single width everywhere
 <Box width="100%" />
@@ -199,7 +221,8 @@ Any responsive property accepts a scalar or a responsive configuration object:
 // Responsive width
 <Box width={{ base: '100%', md: '50%', lg: '33.33%' }} />
 ```
-*How it works under the hood:* The engine applies `.lf-w` and `.md:lf-w` classes while defining CSS variables (`--lf-w: 100%`, `--lf-w-md: 50%`) inline, keeping output stylesheet sizes extremely small.
+
+_How it works under the hood:_ The engine applies `.lf-w` and `.md:lf-w` classes while defining CSS variables (`--lf-w: 100%`, `--lf-w-md: 50%`) inline, keeping output stylesheet sizes extremely small.
 
 ---
 
@@ -224,6 +247,7 @@ graph TD
 ---
 
 ### A. Box
+
 The foundational primitive. Renders a `div` by default. It manages spacing, padding, basic layout variables, borders, and rounded corners.
 
 ```typescript
@@ -233,13 +257,13 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
   display?: ResponsiveProp<'block' | 'inline' | 'inline-block' | 'none' | 'contents'>
   bg?: ThemeConditionProp<ColorValue>
   shadow?: boolean           // Applies smooth global card shadow (deactivated in dark mode)
-  
+
   // Padding & Margin (Uses SpaceTokens)
   p?: ResponsiveProp<SpaceToken>; px?: ResponsiveProp<SpaceToken>; py?: ResponsiveProp<SpaceToken>
   pt?: ResponsiveProp<SpaceToken>; pb?: ResponsiveProp<SpaceToken>; pl?: ResponsiveProp<SpaceToken>; pr?: ResponsiveProp<SpaceToken>
   m?: ResponsiveProp<SpaceToken>; mx?: ResponsiveProp<SpaceToken>; my?: ResponsiveProp<SpaceToken>
   mt?: ResponsiveProp<SpaceToken>; mb?: ResponsiveProp<SpaceToken>; ml?: ResponsiveProp<SpaceToken>; mr?: ResponsiveProp<SpaceToken>
-  
+
   // Custom Size & Positioning (Responsive CSS strings/numbers)
   width?: ResponsiveProp<string>; height?: ResponsiveProp<string>
   minWidth?: ResponsiveProp<string>; maxWidth?: ResponsiveProp<string>
@@ -253,43 +277,49 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
 > Spacing tokens only work with padding (`p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`) and margin (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`) props.  
 > ❌ `top="sm"` — will not resolve  
 > ✅ `top="0.5rem"` — correct
-  
-  // Border Radius (Uses RadiusTokens)
-  r?: ResponsiveProp<RadiusToken>     // All corners
-  rtl?: ResponsiveProp<RadiusToken>   // Top Left
-  rtr?: ResponsiveProp<RadiusToken>   // Top Right
-  rbl?: ResponsiveProp<RadiusToken>   // Bottom Left
-  rbr?: ResponsiveProp<RadiusToken>   // Bottom Right
+
+// Border Radius (Uses RadiusTokens)
+r?: ResponsiveProp<RadiusToken> // All corners
+rtl?: ResponsiveProp<RadiusToken> // Top Left
+rtr?: ResponsiveProp<RadiusToken> // Top Right
+rbl?: ResponsiveProp<RadiusToken> // Bottom Left
+rbr?: ResponsiveProp<RadiusToken> // Bottom Right
 }
-```
+
+````
 
 #### Example:
 ```tsx
-<Box 
+<Box
   as="section"
   bg={{ base: 'bg-50', dark: 'bg-950' }}
-  p="lg" 
-  r="xl" 
+  p="lg"
+  r="xl"
   shadow
   width={{ base: '100%', md: '50rem' }}
 >
   Box Content
 </Box>
-```
+````
 
 ---
 
 ### B. Flex
+
 Implements a flexbox container. Renders a `flex` layout by default.
 
 ```typescript
 interface FlexOwnProps extends BoxOwnProps {
   display?: ResponsiveProp<'none' | 'flex' | 'inline-flex'>
-  direction?: ResponsiveProp<'row' | 'column' | 'row-reverse' | 'column-reverse'>
+  direction?: ResponsiveProp<
+    'row' | 'column' | 'row-reverse' | 'column-reverse'
+  >
   align?: ResponsiveProp<'stretch' | 'center' | 'start' | 'end' | 'baseline'>
-  justify?: ResponsiveProp<'start' | 'center' | 'between' | 'around' | 'evenly' | 'end'>
+  justify?: ResponsiveProp<
+    'start' | 'center' | 'between' | 'around' | 'evenly' | 'end'
+  >
   wrap?: ResponsiveProp<'nowrap' | 'wrap' | 'wrap-reverse'>
-  centered?: boolean         // Shortcut to center children perfectly on both axes
+  centered?: boolean // Shortcut to center children perfectly on both axes
   gap?: ResponsiveProp<SpaceToken>
   gapX?: ResponsiveProp<SpaceToken>
   gapY?: ResponsiveProp<SpaceToken>
@@ -297,11 +327,12 @@ interface FlexOwnProps extends BoxOwnProps {
 ```
 
 #### Example: Responsive Navbar
+
 ```tsx
-<Flex 
+<Flex
   align="center"
-  direction={{ base: 'column', sm: 'row' }} 
-  justify="between" 
+  direction={{ base: 'column', sm: 'row' }}
+  justify="between"
   p="md"
   gap="sm"
 >
@@ -316,14 +347,17 @@ interface FlexOwnProps extends BoxOwnProps {
 ---
 
 ### C. Grid
+
 Implements a CSS grid container with specialized normalization utilities.
 
 ```typescript
 interface GridOwnProps extends BoxOwnProps {
   display?: ResponsiveProp<'none' | 'grid' | 'inline-grid'>
   templateCols?: ResponsiveProp<number | string> // Numbers auto-resolve to 'repeat(N, 1fr)'
-  templateRows?: ResponsiveProp<number | string> 
-  flow?: ResponsiveProp<'row' | 'column' | 'dense' | 'row dense' | 'column dense'>
+  templateRows?: ResponsiveProp<number | string>
+  flow?: ResponsiveProp<
+    'row' | 'column' | 'dense' | 'row dense' | 'column dense'
+  >
   align?: ResponsiveProp<'stretch' | 'center' | 'start' | 'end' | 'baseline'>
   justify?: ResponsiveProp<'start' | 'center' | 'end' | 'between'>
   gap?: ResponsiveProp<SpaceToken>
@@ -333,29 +367,33 @@ interface GridOwnProps extends BoxOwnProps {
 ```
 
 #### Grid Item Options (Passed to children inside any Primitive):
+
 Grid children can utilize custom positioning properties which auto-resolve:
+
 - `gridColumnSpan` (e.g., `2` resolves to `span 2`)
 - `gridRowSpan` (e.g., `3` resolves to `span 3`)
 - `gridArea`
 
 #### Example: Responsive 3-Column Card Layout
+
 ```tsx
-<Grid 
-  templateCols={{ base: 1, md: 3 }} 
-  gap="lg" 
-  width="100%"
->
-  <Box bg="bg-200" p="md">Card 1</Box>
+<Grid templateCols={{ base: 1, md: 3 }} gap="lg" width="100%">
+  <Box bg="bg-200" p="md">
+    Card 1
+  </Box>
   <Box bg="bg-200" p="md" gridColumnSpan={{ base: 1, md: 2 }}>
     Card 2 (Spans 2 columns on desktops)
   </Box>
-  <Box bg="bg-200" p="md">Card 3</Box>
+  <Box bg="bg-200" p="md">
+    Card 3
+  </Box>
 </Grid>
 ```
 
 ---
 
 ### D. Stack
+
 A highly optimized, pre-configured `Flex` container intended for vertical lists. It overrides default flex directions to `column` and sets default width/sizing constraints.
 
 ```tsx
@@ -370,6 +408,7 @@ export function Stack<T extends ElementType = 'div'>(props: FlexProps<T>) {
 #### Example:
 
 For listing content, Stack's default `gap="sm"` is usually sufficient — no need to explicitly set `gap`:
+
 ```tsx
 <Stack>
   <Text>Item 1</Text>
@@ -379,6 +418,7 @@ For listing content, Stack's default `gap="sm"` is usually sufficient — no nee
 ```
 
 Override `gap` only when you need more or less spacing than the default:
+
 ```tsx
 <Stack gap="md">
   <Text size="lg">Form Title</Text>
@@ -390,29 +430,37 @@ Override `gap` only when you need more or less spacing than the default:
 ---
 
 ### E. Text
+
 The absolute engine for typography. Renders a `span` by default. It manages clipping, white-space constraints, tracking, and leading.
 
 ```typescript
 interface TextOwnProps {
-  size?: ResponsiveProp<TextSize>            // xs to 9xl
+  size?: ResponsiveProp<TextSize> // xs to 9xl
   color?: ThemeConditionProp<ColorValue>
   bg?: ThemeConditionProp<ColorValue>
-  weight?: ResponsiveProp<FontWeight>        // normal, medium, semibold, bold
+  weight?: ResponsiveProp<FontWeight> // normal, medium, semibold, bold
   align?: ResponsiveProp<'left' | 'center' | 'right'>
   decoration?: ResponsiveProp<'underline' | 'line-through' | 'none'>
   transform?: ResponsiveProp<'uppercase' | 'lowercase' | 'capitalize' | 'none'>
   wrap?: ResponsiveProp<'wrap' | 'nowrap' | 'pretty' | 'balance'>
-  whiteSpace?: ResponsiveProp<'normal' | 'nowrap' | 'pre' | 'pre-line' | 'pre-wrap'>
-  truncate?: boolean                         // Ellipsis clipping on a single line
-  lineClamp?: number                         // Standard multi-line truncation
-  tracking?: ResponsiveProp<'tighter' | 'tight' | 'normal' | 'wide' | 'wider' | 'widest'>
-  leading?: ResponsiveProp<'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose'>
+  whiteSpace?: ResponsiveProp<
+    'normal' | 'nowrap' | 'pre' | 'pre-line' | 'pre-wrap'
+  >
+  truncate?: boolean // Ellipsis clipping on a single line
+  lineClamp?: number // Standard multi-line truncation
+  tracking?: ResponsiveProp<
+    'tighter' | 'tight' | 'normal' | 'wide' | 'wider' | 'widest'
+  >
+  leading?: ResponsiveProp<
+    'none' | 'tight' | 'snug' | 'normal' | 'relaxed' | 'loose'
+  >
 }
 ```
 
 #### Example: Headline and Subtitle
 
 `Text` also accepts all spacing props (`mt`, `mb`, `py`, `px`, etc.) and `style` directly — no wrapping `Box` needed.
+
 ```tsx
 <Stack gap="xs">
   <Text as="h1" size="3xl" weight="bold" leading="tight" tracking="tight">
@@ -431,16 +479,18 @@ interface TextOwnProps {
 ---
 
 ### F. Icon
+
 Wraps `@iconify/react` into a text-compatible block. Inherits the text color of the parent container by default and maps custom sizes seamlessly.
 
 ```typescript
 type IconProps = Omit<TextProps, 'size'> & {
-  icon: string                               // e.g. "tabler:pencil", "tabler:hammer"
-  size?: ResponsiveProp<string | number>     // Defaults to '1.25em'
+  icon: string // e.g. "tabler:pencil", "tabler:hammer"
+  size?: ResponsiveProp<string | number> // Defaults to '1.25em'
 }
 ```
 
 #### Example:
+
 ```tsx
 <Flex align="center" gap="sm">
   <Icon color="primary" icon="tabler:settings" size="1.5em" />
@@ -451,6 +501,7 @@ type IconProps = Omit<TextProps, 'size'> & {
 ---
 
 ### G. Bordered
+
 A primitive specifically made to draw layout borders without writing custom CSS borders.
 
 ```typescript
@@ -458,14 +509,15 @@ interface BorderedOwnProps extends BoxOwnProps {
   borderColor?: ThemeConditionProp<ColorValue> // Defaults to base: 'bg-300', dark: 'bg-600'
   borderStyle?: 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
   borderSide?: 'all' | 'top' | 'right' | 'bottom' | 'left' | 'x' | 'y'
-  borderWidth?: string                         // Defaults to '1px'
+  borderWidth?: string // Defaults to '1px'
 }
 ```
 
 #### Example: Side Border Sidebar
+
 ```tsx
-<Bordered 
-  borderSide="right" 
+<Bordered
+  borderSide="right"
   borderColor={{ base: 'bg-200', dark: 'bg-800' }}
   borderWidth="2px"
   height="100vh"
@@ -478,17 +530,19 @@ interface BorderedOwnProps extends BoxOwnProps {
 ---
 
 ### H. Ring
+
 Renders an interactive outline (focus rings, custom borders) mapping dynamically to states. Ideal for input focus effects.
 
 ```typescript
 interface RingProps extends BoxOwnProps {
-  ringWidth?: ResponsiveProp<string>          // Defaults to '3px'
-  ringColor?: ThemeConditionProp<ColorValue>   // Defaults to 'custom-500'
-  ringOffsetWidth?: ResponsiveProp<string>    // Defaults to '0px'
+  ringWidth?: ResponsiveProp<string> // Defaults to '3px'
+  ringColor?: ThemeConditionProp<ColorValue> // Defaults to 'custom-500'
+  ringOffsetWidth?: ResponsiveProp<string> // Defaults to '0px'
 }
 ```
 
 #### Example:
+
 ```tsx
 <Ring ringWidth="2px" ringColor="primary" r="md">
   <button>Clickable Element</button>
@@ -498,18 +552,20 @@ interface RingProps extends BoxOwnProps {
 ---
 
 ### I. WithDivide
+
 An extremely clever composition primitive that adds borders between adjacent sibling nodes. It avoids needing `border-bottom` logic on item render lists.
 
 ```typescript
 interface WithDivideProps {
-  axis?: 'x' | 'y'                           // 'y' divides vertically (adds borderTop)
-                                             // 'x' divides horizontally (adds borderLeft)
-  color?: ThemeConditionProp<ColorValue>     // Defaults to base: bg-200, dark: bg-700
+  axis?: 'x' | 'y' // 'y' divides vertically (adds borderTop)
+  // 'x' divides horizontally (adds borderLeft)
+  color?: ThemeConditionProp<ColorValue> // Defaults to base: bg-200, dark: bg-700
   children?: ReactNode
 }
 ```
 
 #### Example: List Group Dividers
+
 ```tsx
 <WithDivide axis="y" color={{ base: 'bg-300', dark: 'bg-800' }}>
   <Stack gap="none">
@@ -523,21 +579,32 @@ interface WithDivideProps {
 ---
 
 ### J. Transition
+
 Applies CSS transitions to a wrapped component utilizing the `asChild` composition pattern. No wrapper elements are injected into the DOM.
 
 ```typescript
 interface TransitionProps {
-  duration?: number | string                 // e.g. 200, '300ms', '0.2s'. Defaults to '100ms'
-  easing?: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | (string & {})
+  duration?: number | string // e.g. 200, '300ms', '0.2s'. Defaults to '100ms'
+  easing?:
+    | 'linear'
+    | 'ease'
+    | 'ease-in'
+    | 'ease-out'
+    | 'ease-in-out'
+    | (string & {})
   delay?: number | string
-  property?: PropertyValue | TransitionEntry | Array<PropertyValue | TransitionEntry>
+  property?:
+    | PropertyValue
+    | TransitionEntry
+    | Array<PropertyValue | TransitionEntry>
 }
 ```
 
 #### Example: Smooth Color Change on Hover
+
 ```tsx
 <Transition duration="150ms" property={['background-color', 'color']}>
-  <Box 
+  <Box
     bg={{ base: 'bg-100', hover: 'primary' }}
     color={{ base: 'bg-950', hover: 'bg-50' }}
     p="md"
@@ -555,6 +622,7 @@ interface TransitionProps {
 Primitives are designed to be composed together using the `asChild` pattern. This merges the class names, styling resolvers, and custom variables of multiple layers onto a single DOM node.
 
 ### A. The `asChild` composition
+
 When `asChild` is set, the primitive passes all of its compiled props and styles directly to its only child.
 
 ```tsx
@@ -567,10 +635,10 @@ When `asChild` is set, the primitive passes all of its compiled props and styles
 
 //     CORRECT: Flattens the hierarchy into a single clean DOM node
 <Transition duration="200ms" property="all">
-  <Box 
-    asChild 
-    bg={{ base: 'bg-100', hover: 'bg-200' }} 
-    p="md" 
+  <Box
+    asChild
+    bg={{ base: 'bg-100', hover: 'bg-200' }}
+    p="md"
     r="md"
   >
     <Text as="h3" size="lg">Headline</Text>
@@ -579,7 +647,9 @@ When `asChild` is set, the primitive passes all of its compiled props and styles
 ```
 
 ### B. Standard Layout Chain
+
 When constructing standard layout components, follow this order:
+
 1. **Structural Grid/Stack:** Define overall templates and spacing bounds.
 2. **Interactive/Animated Transition:** Handle states and transition variables.
 3. **Card/Bordered Wrapper:** Render the visible card backgrounds, shadows, and corners.
@@ -589,14 +659,11 @@ When constructing standard layout components, follow this order:
 <Grid templateCols={{ base: 1, md: 3 }} gap="lg">
   {items.map(item => (
     <Transition key={item.id} duration="150ms" property="all">
-      <Bordered 
-        asChild
-        bg={{ base: 'bg-100', hover: 'bg-200' }}
-        p="lg"
-        r="lg"
-      >
+      <Bordered asChild bg={{ base: 'bg-100', hover: 'bg-200' }} p="lg" r="lg">
         <Stack gap="md">
-          <Text size="xl" weight="bold">{item.title}</Text>
+          <Text size="xl" weight="bold">
+            {item.title}
+          </Text>
           <Text color="muted">{item.desc}</Text>
         </Stack>
       </Bordered>
@@ -610,6 +677,7 @@ When constructing standard layout components, follow this order:
 ## 6. High-Level Forms & Interactive Components
 
 ### A. Button
+
 The core button component manages accessibility, internationalization translations, dynamic loading spinners, and personalization background-contrast matching.
 
 ```typescript
@@ -617,26 +685,28 @@ type ButtonProps<T extends ElementType = 'button'> = ButtonOwnProps &
   FlexProps<T>
 ```
 
-| Category | Props |
-|---|---|---|
-| **Button-specific** | `variant`, `dangerous`, `icon`, `iconPosition`, `loading`, `disabled`, `namespace` |
+| Category                | Props                                                                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Button-specific**     | `variant`, `dangerous`, `icon`, `iconPosition`, `loading`, `disabled`, `namespace`                                         |
 | **Inherited from Flex** | All `FlexProps` — `mt`, `width`, `position`, `top`, `gap`, and everything from `BoxProps` (`bg`, `p`, `r`, `shadow`, etc.) |
 
 Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop available on `Flex` or `Box` can be passed directly** — no wrapping `Box` needed. Only reach for `Box asChild` when you need a prop that Flex/Box doesn't support (e.g. CSS properties only available via inline `style`).
 
 #### Notable Engineering Features:
+
 1. **Dynamic Contrast Matching:** In `useButtonStyleProps`, when `variant="primary"` is set, the button fetches the user's active theme color (`derivedThemeColor`) and runs `getMostReadableColor()` to compute a text color with optimal contrast.
 2. **Smart i18n Translation:** If the children is a string, it automatically attempts to search for translations across various namespaces (e.g., `buttons.cancel`, `common.buttons:cancel`).
 3. **Loading Spinners:** Renders the pre-animated `svg-spinners:ring-resize` icon automatically.
 
 #### Example:
+
 ```tsx
-<Button 
+<Button
   variant="primary"
   icon="tabler:send"
   loading={isSubmitting}
-  mt="lg"              // Inherited from Flex — no Box wrapper needed
-  width="100%"         // Inherited from Flex
+  mt="lg" // Inherited from Flex — no Box wrapper needed
+  width="100%" // Inherited from Flex
   onClick={onSubmit}
 >
   sendFeedback
@@ -646,14 +716,17 @@ Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop
 ---
 
 ### B. Form Input Infrastructure (`TextInput`)
+
 All inputs share a unified visual style by extending components from the `inputs/shared` module:
+
 - `InputWrapper`: Creates the surrounding classic/plain background field, error display, and click handlers.
 - `InputLabel`: Coordinates labels, required asterisks, and floating positions.
 - `InputIcon`: Renders helper icons aligned within field paddings.
 
 #### Example: Password Input with Visibility Toggles
+
 ```tsx
-<TextInput 
+<TextInput
   isPassword
   label="Password"
   placeholder="••••••••"
@@ -677,6 +750,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { Button, Flex, Icon, Stack, Text, TextInput } from '@lifeforge/ui'
+
 import forgeAPI from '@/forgeAPI'
 
 function UserCreationPage() {
@@ -751,19 +825,21 @@ function UserCreationPage() {
   return (
     // 1. Center layout with responsive paddings and full width bounds
     <Flex centered direction="column" px="xl" width="100%">
-      
-      // 2. Main title using asChild to combine structural Box with semantic Heading
+      // 2. Main title using asChild to combine structural Box with semantic
+      Heading
       <Flex asChild centered gap="sm" mb="xl">
         <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
           <Icon color="primary" icon="tabler:hammer" />
           <div>
             LifeForge
-            <Text color="primary" size="4xl">.</Text>
+            <Text color="primary" size="4xl">
+              .
+            </Text>
           </div>
         </Text>
       </Flex>
-
-      // 3. Responsive typography heading (scales automatically on tablet/desktop)
+      // 3. Responsive typography heading (scales automatically on
+      tablet/desktop)
       <Text
         align="center"
         as="h2"
@@ -773,7 +849,6 @@ function UserCreationPage() {
       >
         {t('welcome.header')}
       </Text>
-
       // 4. Subtitle with themed color and responsive margins
       <Text
         align="center"
@@ -784,7 +859,6 @@ function UserCreationPage() {
       >
         {t('welcome.desc')}
       </Text>
-
       // 5. Central form container bounded by max width
       <Stack maxWidth="40rem" mt="2xl" width="100%">
         <TextInput
@@ -796,7 +870,6 @@ function UserCreationPage() {
           value={formData.email}
           onChange={updateField('email')}
         />
-        
         <TextInput
           errorMsg={errors.username}
           icon="tabler:at"
@@ -805,7 +878,6 @@ function UserCreationPage() {
           value={formData.username}
           onChange={updateField('username')}
         />
-
         <TextInput
           isPassword
           errorMsg={errors.password}
@@ -815,7 +887,6 @@ function UserCreationPage() {
           value={formData.password}
           onChange={updateField('password')}
         />
-
         <TextInput
           isPassword
           errorMsg={errors.confirmPassword}
@@ -825,7 +896,6 @@ function UserCreationPage() {
           value={formData.confirmPassword}
           onChange={updateField('confirmPassword')}
         />
-
         // 6. Action Button with custom icons, alignment, and loading states
         <Button
           icon="tabler:arrow-right"
@@ -854,19 +924,20 @@ The legacy `component-bg-*` utility classes have been **removed** from the codeb
 
 ### Legacy → Modern Mapping
 
-| Legacy Class | Equivalent `surface` Preset |
-|---|---|
-| `component-bg` | `surface.default` |
-| `component-bg-with-hover` | `surface.defaultInteractive` |
-| `component-bg-lighter` | `surface.light` |
-| `component-bg-lighter-with-hover` | `surface.lightInteractive` |
-| `darker-component-bg-with-hover` | `{ base: 'bg-200', dark: 'bg-800', hover: 'bg-200', darkHover: 'bg-800' }` (no preset — inline if needed) |
+| Legacy Class                      | Equivalent `surface` Preset                                                                               |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `component-bg`                    | `surface.default`                                                                                         |
+| `component-bg-with-hover`         | `surface.defaultInteractive`                                                                              |
+| `component-bg-lighter`            | `surface.light`                                                                                           |
+| `component-bg-lighter-with-hover` | `surface.lightInteractive`                                                                                |
+| `darker-component-bg-with-hover`  | `{ base: 'bg-200', dark: 'bg-800', hover: 'bg-200', darkHover: 'bg-800' }` (no preset — inline if needed) |
 
 The legacy classes also had `.has-bg-image &` nested variants that applied `backdrop-blur-xs` and reduced opacity. In the new system, the `.has-bg-image` and `.hasBgImage`/`.darkHasBgImage` state keys on the `bg` prop handle this automatically — you **do not** need to manually apply backdrop or opacity.
 
 ### Migration Pattern
 
 Before (using removed Tailwind utilities):
+
 ```tsx
 <button className="component-bg-lighter-with-hover w-full rounded-lg p-6 text-left">
   <span className="font-medium">Item</span>
@@ -874,16 +945,11 @@ Before (using removed Tailwind utilities):
 ```
 
 After (using UI primitives with `surface` preset):
+
 ```tsx
 import { Box, Text, surface } from '@lifeforge/ui'
 
-<Box
-  as="button"
-  bg={surface.lightInteractive}
-  p="lg"
-  r="lg"
-  width="100%"
->
+;<Box as="button" bg={surface.lightInteractive} p="lg" r="lg" width="100%">
   <Text weight="medium">Item</Text>
 </Box>
 ```
@@ -893,8 +959,9 @@ Most legacy classes map directly to a `surface` preset (see table above). Prefer
 ### Selected/Active State Borders
 
 Legacy code often combined `component-bg-lighter-with-hover` with Tailwind border utilities to indicate selection:
+
 ```tsx
-className="component-bg-lighter-with-hover border-2 border-custom-500"
+className = 'component-bg-lighter-with-hover border-2 border-custom-500'
 ```
 
 Replace this with `Card` (which already handles interactive backgrounds and shadows), or use `Box` with `bg` state conditions directly:
@@ -906,6 +973,7 @@ Replace this with `Card` (which already handles interactive backgrounds and shad
 ```
 
 The `Card` component with `isInteractive` applies the correct background mapping automatically:
+
 ```tsx
 bg={
   isInteractive
@@ -951,11 +1019,16 @@ For selected-state borders, use the `Ring` primitive to wrap the card instead of
 When an item is selected, a check icon overlay can be placed with absolute positioning:
 
 Before:
+
 ```tsx
-<Icon className="text-custom-500 absolute right-1.5 bottom-2 size-6" icon="tabler:check" />
+<Icon
+  className="text-custom-500 absolute right-1.5 bottom-2 size-6"
+  icon="tabler:check"
+/>
 ```
 
 After:
+
 ```tsx
 <Box position="absolute" bottom="sm" right="sm">
   <Icon color="custom-500" icon="tabler:check" size="1.5em" />
@@ -978,23 +1051,24 @@ The standalone `Icon` from `@iconify/react` must never be imported directly. Alw
 
 ### Key Differences
 
-| Aspect | `@iconify/react` Icon | `@lifeforge/ui` Icon |
-|---|---|---|
-| Import | `import { Icon } from '@iconify/react'` | `import { Icon } from '@lifeforge/ui'` |
-| Sizing | `width` / `height` props (e.g. `width="1.5em"`) | **`size`** prop (e.g. `size="1.5em"`) |
-| Color | `className="text-custom-500"` (Tailwind) | `color="custom-500"` (design token) |
-| Layout | `className="absolute right-1.5 bottom-2"` (Tailwind) | `Box asChild position="absolute" bottom="sm" right="sm"` |
-| Inherits | — | All `Text` props (`ml`, `mr`, `display`, `truncate`, etc.) |
+| Aspect   | `@iconify/react` Icon                                | `@lifeforge/ui` Icon                                       |
+| -------- | ---------------------------------------------------- | ---------------------------------------------------------- |
+| Import   | `import { Icon } from '@iconify/react'`              | `import { Icon } from '@lifeforge/ui'`                     |
+| Sizing   | `width` / `height` props (e.g. `width="1.5em"`)      | **`size`** prop (e.g. `size="1.5em"`)                      |
+| Color    | `className="text-custom-500"` (Tailwind)             | `color="custom-500"` (design token)                        |
+| Layout   | `className="absolute right-1.5 bottom-2"` (Tailwind) | `Box asChild position="absolute" bottom="sm" right="sm"`   |
+| Inherits | —                                                    | All `Text` props (`ml`, `mr`, `display`, `truncate`, etc.) |
 
 > `Icon` is built on top of the `Text` primitive, so any prop that `Text` accepts (e.g. `ml`, `mr`, `display`, `truncate`, `wrap`, `className`, `style`) works directly on `Icon` without needing a `Box` wrapper.
 
 ### Migration Pattern
 
 Before:
+
 ```tsx
 import { Icon } from '@iconify/react'
 
-<Icon
+;<Icon
   className="text-custom-500"
   icon="tabler:check"
   width="1.5em"
@@ -1003,26 +1077,21 @@ import { Icon } from '@iconify/react'
 ```
 
 After (positioned):
+
 ```tsx
 import { Box, Icon } from '@lifeforge/ui'
 
-<Box asChild position="absolute" bottom="sm" right="sm">
-  <Icon
-    color="custom-500"
-    icon="tabler:check"
-    size="1.5em"
-  />
+;<Box asChild position="absolute" bottom="sm" right="sm">
+  <Icon color="custom-500" icon="tabler:check" size="1.5em" />
 </Box>
 ```
 
 After (inline — no positioning needed):
+
 ```tsx
 import { Icon } from '@lifeforge/ui'
 
-<Icon
-  color="custom-500"
-  icon="tabler:check"
-/>
+;<Icon color="custom-500" icon="tabler:check" />
 ```
 
 > `Box asChild` is only needed when the Icon needs layout props it doesn't inherit (`position`, `top`, `left`, etc.). For spacing (`ml`, `mr`) and display properties, pass them directly to `Icon` since it inherits all `Text` props.

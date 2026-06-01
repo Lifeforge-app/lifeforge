@@ -5,12 +5,18 @@ import {
   useController
 } from 'react-hook-form'
 
-import { QRCodeScanner, TextInput, type TextInputProps } from '@/components/inputs'
+import {
+  QRCodeScanner,
+  TextInput,
+  type TextInputProps
+} from '@/components/inputs'
 import { useModalStore } from '@/providers'
+
+import { useNamespace } from '../FormModal'
 
 type TextFieldProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
-  name: FieldPathByValue<TFieldValues, string>
+  name: FieldPathByValue<TFieldValues, string | null | undefined>
   qrScanner?: boolean
 } & Omit<TextInputProps, 'value' | 'onChange'>
 
@@ -19,13 +25,19 @@ export function TextField<TFieldValues extends FieldValues>({
   name,
   qrScanner = false,
   actionButtonProps,
+  namespace,
   ...rest
 }: TextFieldProps<TFieldValues>) {
   const { open } = useModalStore()
+
   const { field, fieldState } = useController({
     control,
     name
   })
+
+  const contextNamespace = useNamespace()
+
+  const activeNamespace = namespace ?? contextNamespace
 
   function handleQRScanned(data: string) {
     field.onChange(data)
@@ -50,13 +62,10 @@ export function TextField<TFieldValues extends FieldValues>({
     ...rest,
     actionButtonProps: computedActionButtonProps,
     errorMsg: fieldState.error?.message,
+    namespace: activeNamespace,
     value: field.value ?? '',
     onChange: field.onChange
   } as TextInputProps
 
-  return (
-    <TextInput
-      {...textInputProps}
-    />
-  )
+  return <TextInput {...textInputProps} />
 }

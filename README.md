@@ -22,10 +22,10 @@
 >
 > Both the host application and federated modules were bundling Tailwind CSS independently. This created CSS cascade layer conflicts across module boundaries, resulting in:
 >
-> * Unpredictable style overrides
-> * Broken responsive utilities
-> * Cross-module styling interference
-> * Inconsistent rendering behavior between host and remote applications
+> - Unpredictable style overrides
+> - Broken responsive utilities
+> - Cross-module styling interference
+> - Inconsistent rendering behavior between host and remote applications
 >
 > When multiple Tailwind CSS bundles coexist within the same runtime, cascade layer ordering becomes difficult to control reliably.
 >
@@ -44,24 +44,24 @@
 > PR #93 introduced a complete redesign of the internal UI library and styling architecture.
 >
 > The new system is:
-> 
-> * Token-driven
-> * Component-based
-> * Fully independent of Tailwind CSS
-> * Designed specifically for module federation
-> * Built around a single shared UI contract
-> 
+>
+> - Token-driven
+> - Component-based
+> - Fully independent of Tailwind CSS
+> - Designed specifically for module federation
+> - Built around a single shared UI contract
+>
 > Rather than allowing each module to generate and ship its own CSS, all applications now consume UI primitives, tokens, and styling behavior directly from `@lifeforge/ui`.
-> 
+>
 > This establishes `@lifeforge/ui` as the single source of truth for visual presentation across the entire platform.
-> 
+>
 > As a result:
-> 
-> * Federated modules no longer bundle their own styling systems
-> * Visual behavior remains consistent regardless of module load order
-> * Styling ownership is centralized and predictable
-> * Cross-module cascade conflicts are eliminated by design
-> 
+>
+> - Federated modules no longer bundle their own styling systems
+> - Visual behavior remains consistent regardless of module load order
+> - Styling ownership is centralized and predictable
+> - Cross-module cascade conflicts are eliminated by design
+>
 > The migration introduced breaking changes and required substantial refactoring across the codebase, but it permanently resolved a class of architectural problems that could not be reliably addressed within the previous model.
 
 > [!TIP]
@@ -70,8 +70,8 @@
 >
 > The final Tailwind-based implementation has been preserved and remains available for reference.
 >
-> * Legacy Release: https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
-> * Legacy Branch: https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
+> - Legacy Release: https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
+> - Legacy Branch: https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
 >
 > The legacy version is no longer actively developed, but it may still be useful for historical reference, migration guidance, or reviewing previous implementations.
 
@@ -131,7 +131,6 @@ A self-hosted solution to streamline and organize all aspects of your life.</p>
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="60" width="217">
 </a>
 
-
 ## 🤔 The Problem
 
 People nowadays having tons of different apps to increase their productivity, but [using too much apps distracts your focus](https://theunfilteredreport.com/why-productivity-apps-are-making-people-less-productive/).
@@ -186,9 +185,6 @@ explore and discover within the project.
   <img width="49%" src="https://github.com/user-attachments/assets/16b23910-37bf-4f56-892d-c971d70b19ae">
 </div>
 
-
-
-
 ## ⌨️ Setup
 
 **LifeForge now supports Docker for easy deployment! 🐳 You can get up and running with just a few commands. For those who prefer manual installation, that option is still available.**
@@ -198,7 +194,6 @@ Visit the [Documentation](https://docs.lifeforge.dev) to see how to install and 
 ## Contributing
 
 We welcome contributions from the community! If you're interested in contributing to LifeForge, please check out our [Contributing Guidelines](https://docs.lifeforge.dev/developer-guide/contributing).
-
 
 ### Contributing to Core
 

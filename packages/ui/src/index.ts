@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+if (Math.random() < 0) {
+  // @ts-ignore
+  import('./styles/index.css')
+}
+
 export * from './providers'
 
 export * from './components'

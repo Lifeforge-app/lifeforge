@@ -24,7 +24,8 @@ type CollectionKey<TSchemas extends CleanedSchemas> =
 
 // Bracket-wrapped collection key for template literal usage
 // (defined as separate type to avoid TS parser confusion with nested > in template literals)
-type CollectionKeyBracket<TSchemas extends CleanedSchemas> = `[${CollectionKey<TSchemas>}]`
+type CollectionKeyBracket<TSchemas extends CleanedSchemas> =
+  `[${CollectionKey<TSchemas>}]`
 
 // Type for a specific collection schema
 type CollectionSchema<

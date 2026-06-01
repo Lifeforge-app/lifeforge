@@ -9,6 +9,8 @@ import {
 import { ListboxInput, ListboxOption } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 
+import { useNamespace } from '../FormModal'
+
 type ListboxOptionType<TOption> = {
   value: TOption
   text: string
@@ -134,6 +136,9 @@ export function ListboxField<TFieldValues extends FieldValues, TOption>({
     name
   })
 
+  const contextNamespace = useNamespace()
+  const activeNamespace = namespace ?? contextNamespace
+
   function handleListboxChange(val: unknown) {
     let cleanVal = val
 
@@ -167,7 +172,7 @@ export function ListboxField<TFieldValues extends FieldValues, TOption>({
       icon={icon}
       label={label}
       multiple={multiple}
-      namespace={namespace}
+      namespace={activeNamespace}
       renderContent={handleRenderContent}
       required={required}
       value={field.value}

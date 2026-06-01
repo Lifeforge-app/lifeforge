@@ -1,5 +1,13 @@
 import { usePersonalization } from '@lifeforge/shared'
-import { Box, Flex, Icon, Stack, Text, colorWithOpacity, surface } from '@lifeforge/ui'
+import {
+  Box,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  colorWithOpacity,
+  surface
+} from '@lifeforge/ui'
 
 import { BG_BLURS } from '../constants/bg_blurs'
 

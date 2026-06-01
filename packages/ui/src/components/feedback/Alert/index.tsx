@@ -54,10 +54,7 @@ export function Alert({
       width="100%"
     >
       <Flex align="center" gap="sm" style={{ color: STYLES[type].color }}>
-        <Icon
-          icon={STYLES[type].icon}
-          size="1.5rem"
-        />
+        <Icon icon={STYLES[type].icon} size="1.5rem" />
         <Text as="h4" size="lg" weight="medium">
           {STYLES[type].title}
         </Text>
