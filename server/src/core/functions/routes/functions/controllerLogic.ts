@@ -33,38 +33,15 @@ import { clientError, serverError, success } from '../utils/response'
 import fieldsUploadMiddleware from '../utils/uploadMiddleware'
 import isAuthTokenValid from '../utils/validateAuthToken'
 
-export type ForgeRequestHandler = ((
-  req: Request,
-  res: Response<BaseResponse<unknown>>
-) => Promise<void>) & {
-  meta: {
-    schema: ReturnType<ForgeContract['getValue']>['schema']
-    output: ReturnType<ForgeContract['getValue']>['output']
-    description: string
-    options: {
-      noDefaultResponse: boolean
-      existenceCheck: ReturnType<ForgeContract['getValue']>['existenceCheck']
-      isDownloadable: boolean
-      encrypted: boolean
-      method: 'get' | 'post'
-      noAuth: boolean
-      media: ReturnType<ForgeContract['getValue']>['media']
-      callerModule: ReturnType<ForgeContract['getValue']>['callerModule']
-    }
-  }
-}
-
 /**
  * Creates an Express request handler from a ForgeControllerBuilder's configuration.
  * This is kept private and only used internally by registerController.
  */
 function createHandler(
   config: ReturnType<ForgeContract['getValue']>
-): ForgeRequestHandler {
+): (req: Request, res: Response<BaseResponse<unknown>>) => Promise<void> {
   const {
-    method,
     schema: input,
-    output,
     noDefaultResponse,
     existenceCheck,
     isDownloadable,
@@ -73,13 +50,10 @@ function createHandler(
     encrypted,
     callback,
     callerModule,
-    description
+    output
   } = config
 
-  const _handler = async (
-    req: Request,
-    res: Response<BaseResponse<unknown>>
-  ) => {
+  return async (req: Request, res: Response<BaseResponse<unknown>>) => {
     const callerModuleId = callerModule
       ? `${callerModule.source}:${callerModule.id}`
       : undefined
@@ -132,7 +106,7 @@ function createHandler(
         return
       }
 
-      if (noDefaultResponse) {
+      if (noDefaultResponse || output === 'custom') {
         return
       }
 
@@ -176,27 +150,6 @@ function createHandler(
       )
     }
   }
-
-  // Create handler with metadata attached
-  const handlerWithMeta = _handler as unknown as ForgeRequestHandler
-
-  handlerWithMeta.meta = {
-    schema: input,
-    output,
-    description: description,
-    options: {
-      noDefaultResponse,
-      existenceCheck,
-      isDownloadable,
-      encrypted,
-      method,
-      noAuth,
-      media,
-      callerModule
-    }
-  }
-
-  return handlerWithMeta
 }
 
 /**

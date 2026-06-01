@@ -102,7 +102,7 @@ function EntryItem({ entry }: { entry: APIKeyEntry }) {
       description: `Are you sure you want to delete the API Key "${entry.name}"? This action cannot be undone.`,
       confirmationButton: 'delete',
       onConfirm: async () => {
-        await deleteMutation.mutateAsync({})
+        await deleteMutation.mutateAsync(undefined)
       }
     })
 

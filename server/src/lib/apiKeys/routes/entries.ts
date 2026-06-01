@@ -4,6 +4,7 @@ import z from 'zod'
 import { forgeRouter } from '@lifeforge/server-utils'
 
 import forge from '../forge'
+import schema from '../schema'
 
 const get = forge
   .query({
@@ -58,7 +59,7 @@ const list = forge
     description: 'Retrieve all API key entries',
     input: {},
     output: {
-      OK: z.array(z.any())
+      OK: z.array(schema.entries)
     }
   })
   .callback(async ({ pb, response }) => {
@@ -202,14 +203,14 @@ const remove = forge
       }
     },
     output: {
-      OK: z.void(),
+      NO_CONTENT: true,
       NOT_FOUND: true
     }
   })
   .callback(async ({ pb, query: { id }, response }) => {
     await pb.delete.collection('entries').id(id).execute()
 
-    return response.ok()
+    return response.noContent()
   })
 
 export default forgeRouter({

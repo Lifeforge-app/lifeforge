@@ -1,7 +1,12 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
+
 import { usePersonalization } from '@lifeforge/shared'
 import {
   Box,
   Card,
+  ConfirmationModal,
   ContextMenu,
   ContextMenuItem,
   Flex,
@@ -13,30 +18,69 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
+import forgeAPI from '@/forgeAPI'
+
 import type { CustomFont } from '..'
 import CustomFontUploadModal from './CustomFontUploadModal'
 
 function CustomFontCard({
   font,
   selectedFont,
-  handleDeleteClick,
   setSelectedFont
 }: {
   font: CustomFont
   selectedFont: string | null
-  handleDeleteClick: (font: CustomFont) => void
   setSelectedFont: (font: string | null) => void
 }) {
+  const { t } = useTranslation('common.personalization')
+
+  const queryClient = useQueryClient()
+
   const { open } = useModalStore()
 
   const { fontFamily } = usePersonalization()
+
+  const isSelected = selectedFont?.replace(/^custom:/, '') === font.id
+
+  const deleteMutation = useMutation(
+    forgeAPI.user.customFonts.remove
+      .input({
+        id: font.id
+      })
+      .mutationOptions({
+        onSuccess: () => {
+          queryClient.invalidateQueries({
+            queryKey: ['user', 'customFonts', 'list']
+          })
+          toast.success('Custom font deleted successfully!')
+        },
+        onError: () => {
+          toast.error('Failed to delete custom font')
+        }
+      })
+  )
+
+  const handleDeleteClick = (font: CustomFont) => {
+    open(ConfirmationModal, {
+      title: t('fontFamily.customFonts.delete.title'),
+      description: t('fontFamily.customFonts.delete.description'),
+      confirmationButton: 'delete',
+      onConfirm: async () => {
+        await deleteMutation.mutateAsync(undefined)
+
+        if (selectedFont === `custom:${font.id}`) {
+          setSelectedFont(null)
+        }
+      }
+    })
+  }
 
   return (
     <Ring
       key={font.id}
       asChild
       ringColor="custom-500"
-      ringWidth={font.id === selectedFont ? '2px' : '0px'}
+      ringWidth={isSelected ? '2px' : '0px'}
     >
       <Card
         isInteractive
@@ -58,7 +102,7 @@ function CustomFontCard({
           <Flex
             align="center"
             bg={
-              selectedFont === `custom:${font.id}`
+              isSelected
                 ? colorWithOpacity('custom-500', '10%')
                 : { base: 'bg-200', dark: 'bg-700' }
             }
@@ -69,9 +113,7 @@ function CustomFontCard({
             width="3rem"
           >
             <Icon
-              color={
-                selectedFont === `custom:${font.id}` ? 'custom-500' : 'muted'
-              }
+              color={isSelected ? 'custom-500' : 'muted'}
               icon="tabler:typography"
               size="1.5em"
             />
@@ -85,9 +127,13 @@ function CustomFontCard({
             </Text>
           </Box>
         </Flex>
-        <Flex align="center" gap="md">
-          {font.id === selectedFont && (
-            <Icon color="primary" icon="tabler:check" />
+        <Flex align="center" gap="sm">
+          {isSelected && (
+            <Icon
+              color="primary"
+              icon="tabler:circle-check-filled"
+              size="1.5em"
+            />
           )}
           <ContextMenu>
             <ContextMenuItem

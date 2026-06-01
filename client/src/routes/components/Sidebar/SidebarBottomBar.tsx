@@ -42,6 +42,7 @@ function SidebarBottomBar() {
           <Transition>
             <Card
               align="center"
+              as="button"
               bg={sidebarExpanded ? surface.lightInteractive : 'transparent'}
               direction="row"
               gap="xl"
@@ -81,10 +82,10 @@ function SidebarBottomBar() {
                   display={sidebarExpanded ? 'flex' : 'none'}
                   minWidth="0"
                 >
-                  <Text truncate weight="semibold">
+                  <Text truncate align="left" weight="semibold">
                     {userData?.name}
                   </Text>
-                  <Text truncate as="p" color="muted" size="sm">
+                  <Text truncate align="left" as="p" color="muted" size="sm">
                     {userData?.email}
                   </Text>
                 </Flex>

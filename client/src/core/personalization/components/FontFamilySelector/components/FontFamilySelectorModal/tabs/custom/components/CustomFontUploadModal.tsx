@@ -146,7 +146,7 @@ function CustomFontUploadModal({
       await uploadMutation.mutateAsync({
         displayName: formData.displayName,
         family: formData.family,
-        weight: formData.weight,
+        weight: formData.weight || 400,
         file: formData.file
       })
     })

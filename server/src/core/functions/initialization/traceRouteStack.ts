@@ -46,7 +46,7 @@ export default function traceRouteStack(
         method: methods[0]?.toUpperCase() || 'GET',
         path: routePath,
         schema: {
-          response: z.void()
+          response: z.null()
         },
         description: ''
       }

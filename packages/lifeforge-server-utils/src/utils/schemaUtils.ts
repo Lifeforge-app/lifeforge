@@ -1,4 +1,4 @@
-import { ZodObject, ZodRawShape } from 'zod'
+import { ZodObject, ZodRawShape, ZodString, z } from 'zod'
 
 // Helper type to convert union to intersection
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,7 +15,15 @@ type SchemaEntry = {
 
 export type RawSchemas = Record<string, SchemaEntry>
 
-type SchemaOf<T> = T extends { schema: infer S } ? S : never
+type SchemaOf<T> = T extends { schema: ZodObject<infer Shape> }
+  ? ZodObject<
+      Omit<Shape, 'id' | 'collectionId' | 'collectionName'> & {
+        id: ZodString
+        collectionId: ZodString
+        collectionName: ZodString
+      }
+    >
+  : never
 
 export type CleanedSchemas<T = {}> = UnionToIntersection<
   {
@@ -30,7 +38,17 @@ export function cleanSchemas<T extends RawSchemas>(
 ): CleanedSchemas<T> {
   const out = {} as any
 
-  for (const k in schemas) out[k] = schemas[k].schema
+  for (const k in schemas) {
+    out[k] = schemaWithPB(schemas[k].schema)
+  }
 
   return out
+}
+
+export function schemaWithPB<T extends ZodRawShape>(schema: ZodObject<T>) {
+  return schema.extend({
+    id: z.string(),
+    collectionId: z.string(),
+    collectionName: z.string()
+  })
 }

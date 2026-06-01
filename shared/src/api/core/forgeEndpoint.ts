@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
+import { z } from 'zod'
 
 import {
   createEncryptionSession,
@@ -44,11 +45,27 @@ export default class ForgeEndpoint<
    * Creates a new ForgeEndpoint for a specific route.
    * @param _apiHost - The base URL of the API server (e.g., 'https://api.example.com')
    * @param _route - The endpoint path (e.g., 'users/list')
+   * @param _contract - Optional contract definition containing JSON schemas
    */
   constructor(
     private _apiHost: string = '',
-    private _route: string
+    private _route: string,
+    private _contract?: any
   ) {}
+
+  /**
+   * Returns Zod schemas derived from the contract's JSON schemas.
+   */
+  public get schema() {
+    return {
+      query: this._contract?.input?.query
+        ? z.fromJSONSchema(this._contract.input.query)
+        : undefined,
+      body: this._contract?.input?.body
+        ? z.fromJSONSchema(this._contract.input.body)
+        : undefined
+    }
+  }
 
   /**
    * Returns the current cache key, which includes the route and query params.
@@ -255,14 +272,16 @@ export default class ForgeEndpoint<
    * @returns Promise resolving to the API response
    */
   mutateRaw(data: InferInput<T>['body'] | FormData) {
+    const payloadData = data === undefined ? {} : data
+
     return fetchAPI<InferOutput<T>>(this._apiHost, this._getPath(), {
       method: 'POST',
       body:
-        data instanceof FormData
-          ? data
-          : hasFile(data)
-            ? getFormData(data)
-            : data
+        payloadData instanceof FormData
+          ? payloadData
+          : hasFile(payloadData)
+            ? getFormData(payloadData)
+            : payloadData
     })
   }
 
@@ -304,16 +323,19 @@ export default class ForgeEndpoint<
    * ```
    */
   async mutate(data: InferInput<T>['body']): Promise<InferOutput<T>> {
+    const payloadData = data === undefined ? {} : data
+
     // If data contains files, fall back to raw mode (server also disables encryption for media endpoints)
     const isFormData =
-      typeof FormData !== 'undefined' && (data as any) instanceof FormData
+      typeof FormData !== 'undefined' &&
+      (payloadData as any) instanceof FormData
 
-    if (isFormData || hasFile(data)) {
-      return this.mutateRaw(data)
+    if (isFormData || hasFile(payloadData)) {
+      return this.mutateRaw(payloadData as any)
     }
 
     // Encrypt the request
-    const { payload, session } = await encryptRequest(data)
+    const { payload, session } = await encryptRequest(payloadData as any)
 
     // Send encrypted payload
     const response = await fetchAPI<{ iv: string; data: string; tag: string }>(

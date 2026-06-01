@@ -19,6 +19,8 @@ function index() {
     navigate(-1)
     toast.success(t('redirected'))
   }, [])
+
+  return null
 }
 
 export default index

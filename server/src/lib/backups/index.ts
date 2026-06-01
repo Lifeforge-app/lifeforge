@@ -47,7 +47,7 @@ const download = forge
     },
     isDownloadable: true,
     output: {
-      OK: z.null(),
+      NO_CONTENT: true,
       BAD_REQUEST: z.string()
     }
   })
@@ -72,7 +72,7 @@ const download = forge
 
     res.send(buffer)
 
-    return response.ok(null)
+    return response.noContent()
   })
 
 const create = forge
@@ -84,7 +84,7 @@ const create = forge
       })
     },
     output: {
-      CREATED: z.void()
+      CREATED: z.null()
     }
   })
   .callback(async ({ body: { backupName }, response }) => {
@@ -96,7 +96,7 @@ const create = forge
 
     await pb.backups.create(backupName)
 
-    return response.created()
+    return response.created(null)
   })
 
 const remove = forge
@@ -108,7 +108,7 @@ const remove = forge
       })
     },
     output: {
-      OK: z.void()
+      NO_CONTENT: true
     }
   })
   .callback(async ({ query: { key }, response }) => {
@@ -116,7 +116,7 @@ const remove = forge
 
     await pb.backups.delete(key)
 
-    return response.ok()
+    return response.noContent()
   })
 
 export default forgeRouter({

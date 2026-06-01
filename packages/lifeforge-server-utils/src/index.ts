@@ -8,6 +8,7 @@ export {
 
 export {
   cleanSchemas,
+  schemaWithPB,
   type RawSchemas,
   type CleanedSchemas
 } from './utils/schemaUtils'
@@ -102,3 +103,8 @@ export {
   type Location,
   LocationSchema
 } from './typescript/standalone/location.types'
+
+export {
+  serializeRoutes,
+  writeContractFileToClient
+} from './utils/writeContractFile'

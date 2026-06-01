@@ -181,12 +181,12 @@ export const remove = forge
       })
     },
     output: {
-      OK: z.void(),
+      NO_CONTENT: true,
       NOT_FOUND: true
     }
   })
   .callback(async ({ pb, query: { id }, response }) => {
     await pb.delete.collection('font_family_upload').id(id).execute()
 
-    return response.ok()
+    return response.noContent()
   })
