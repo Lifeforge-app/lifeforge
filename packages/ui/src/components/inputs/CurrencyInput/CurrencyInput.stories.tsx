@@ -15,7 +15,7 @@ export const Default: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
+
     prefix: '',
     value: 0,
     variant: 'classic'
@@ -28,7 +28,7 @@ export const WithCurrencyPrefix: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
+
     prefix: 'MYR',
     value: 87.69,
     variant: 'classic'
@@ -41,7 +41,7 @@ export const Required: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
+
     required: true,
     value: 0
   },
@@ -54,7 +54,7 @@ export const Disabled: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
+
     value: 42.5
   },
   render: args => <CurrencyInput {...args} />
@@ -66,7 +66,7 @@ export const WithErrorMessage: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
+
     value: 0
   },
   render: args => <CurrencyInput {...args} />
@@ -79,7 +79,7 @@ export const DisabledWithErrorMessage: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
+
     value: 42.5
   },
   render: args => <CurrencyInput {...args} />
@@ -90,7 +90,6 @@ export const PlainVariant: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
     prefix: 'MYR',
     value: 87.69,
     variant: 'plain'
@@ -104,7 +103,6 @@ export const PlainVariantWithErrorMessage: Story = {
     icon: 'tabler:currency-dollar',
     label: 'Price',
     onChange: () => {},
-    placeholder: '8.70',
     prefix: 'MYR',
     value: 87.69,
     variant: 'plain'

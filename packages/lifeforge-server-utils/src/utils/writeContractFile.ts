@@ -1,6 +1,28 @@
 import fs from 'fs'
 import path from 'path'
 
+function cleanAdditionalProperties(schema: any): any {
+  if (!schema || typeof schema !== 'object') {
+    return schema
+  }
+
+  if (Array.isArray(schema)) {
+    return schema.map(cleanAdditionalProperties)
+  }
+
+  const result = { ...schema }
+
+  if ('additionalProperties' in result) {
+    delete result.additionalProperties
+  }
+
+  for (const key of Object.keys(result)) {
+    result[key] = cleanAdditionalProperties(result[key])
+  }
+
+  return result
+}
+
 function fixJSONSchemaRecord(schema: any): any {
   if (!schema || typeof schema !== 'object') {
     return schema
@@ -29,6 +51,19 @@ function fixJSONSchemaRecord(schema: any): any {
       result.properties[key] = result.additionalProperties
     }
     result.additionalProperties = false
+  }
+
+  if (result.allOf && Array.isArray(result.allOf)) {
+    result.allOf = result.allOf.map((sub: any) => {
+      if (sub && typeof sub === 'object') {
+        const cleanedSub = { ...sub }
+        if ('additionalProperties' in cleanedSub) {
+          delete cleanedSub.additionalProperties
+        }
+        return cleanAdditionalProperties(cleanedSub)
+      }
+      return sub
+    })
   }
 
   return result

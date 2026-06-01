@@ -26,6 +26,7 @@ export function CurrencyField<TFieldValues extends FieldValues>({
   })
 
   const contextNamespace = useNamespace()
+
   const activeNamespace = namespace ?? contextNamespace
 
   return (

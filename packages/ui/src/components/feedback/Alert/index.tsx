@@ -1,7 +1,8 @@
+import type { CSSProperties } from '@vanilla-extract/css'
 import clsx from 'clsx'
 import React from 'react'
 
-import { Flex, Icon, Text } from '@/components/primitives'
+import { Flex, type FlexProps, Icon, Text } from '@/components/primitives'
 
 import * as styles from './Alert.css'
 
@@ -35,21 +36,28 @@ const STYLES = {
 
 export function Alert({
   type,
-  children
+  children,
+  ...rest
 }: {
   type: typeof STYLES extends Record<infer K, unknown> ? K : never
+  className?: string
+  style?: CSSProperties
   children: React.ReactNode
-}) {
+} & FlexProps<'div'>) {
   return (
     <Flex
-      className={clsx('_alert', styles.wrapper)}
+      {...rest}
+      className={clsx('_alert', styles.wrapper, rest.className)}
       direction="column"
       gap="md"
       p="sm"
       pl="lg"
       position="relative"
       style={
-        { '--_alert-stripe-color': STYLES[type].color } as React.CSSProperties
+        {
+          '--_alert-stripe-color': STYLES[type].color,
+          ...rest.style
+        } as React.CSSProperties
       }
       width="100%"
     >

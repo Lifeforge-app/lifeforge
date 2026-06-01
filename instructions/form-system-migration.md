@@ -189,9 +189,9 @@ For each modal file being migrated, the following must be done:
 - [ ] **`useForm()` call** — set `resolver: zodResolver(schema)` and `defaultValues: createDefaultValues(schema)`, merge any overrides
 - [ ] **Remove builder chain** — replace `.typesMap()`, `.setupFields()`, `.initialData()`, `.onSubmit()`, `.build()` with JSX
 - [ ] **JSX children** — compose field components (`<TextField>`, `<NumberField>`, etc.) as children of `<FormModal>`
-- [ ] **Submission config** — move `onSubmit` logic into `submissionConfig.handler`
-- [ ] **Conditional fields** — replace `.conditionalFields()` with `form.watch()` + conditional rendering
-- [ ] **Derived listbox options** — replace function-based `options: (state) => [...]` with `form.watch()` + computed variable
+- [ ] **Submission config** — move `onSubmit` logic into `submissionConfig.handler`; pass `mutation.mutateAsync` directly if no data transformation is needed
+- [ ] **Conditional fields** — replace `.conditionalFields()` with `useWatch()` + conditional rendering
+- [ ] **Derived listbox options** — replace function-based `options: (state) => [...]` with `useWatch()` + computed variable
 - [ ] **Explicit state access** — replace `formStateStore` / `formStateStore.getState()` with `form.getValues()` / `form.setValue()`
 - [ ] **Cross-field validation** — replace `formStateStore.getState().password` with `schema.superRefine()` in the Zod schema
 - [ ] **Auto-focus** — replace `.autoFocusField('name')` with `<TextField autoFocus .../>`
@@ -261,7 +261,7 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Email                 | `z.email('Invalid email')` (top-level factory)                                                   |
 | URL                   | `z.url('Invalid URL')`                                                                           |
 | UUID                  | `z.uuid()` — any UUID version                                                                    |
-| Color hex             | `z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Invalid hex')`                                           |
+| Color hex             | `z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Color must be a valid hex color (e.g. #FF0000)')`                                           |
 | Icon identifier       | `z.string().regex(/^[a-z]+:[a-z-]+$/)` — or just `z.string()` if you trust the icon picker       |
 | Lowercase / Uppercase | `z.string().lowercase()` / `z.string().uppercase()`                                              |
 | Trim whitespace       | `z.string().trim()` (overwrites value)                                                           |
@@ -275,6 +275,8 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Emoji                 | `z.emoji()`                                                                                      |
 | NanoID / CUID / ULID  | `z.nanoid()` / `z.cuid()` / `z.ulid()`                                                           |
 
+> **Important:** Color hex values must always be validated with this regex. The `ColorField` component returns a hex string, but the Zod schema must enforce it — otherwise any string would pass validation. Always use `/^#[0-9A-Fa-f]{6}$/`.
+>
 > **Note:** In Zod v4, format validators like `z.email()` are top-level factories that return a `ZodString` with the format constraint baked in. You can chain `.optional()`, `.nullable()`, `.default()`, etc. on them just like any schema: `z.email().optional().default('')`.
 
 ##### Number Fields (`<NumberField>`, `<CurrencyField>`, `<SliderField>`)
@@ -332,8 +334,10 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 
 | Validation               | Zod Code                                                                                                                                       |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Nullable location object | `z.object({ name: z.string(), location: z.object({ latitude: z.number(), longitude: z.number() }), formattedAddress: z.string() }).nullable()` |
-| Optional location        | `z.object({...}).optional()`                                                                                                                   |
+| Required location object | `z.object({ name: z.string(), location: z.object({ latitude: z.number(), longitude: z.number() }), formattedAddress: z.string() })` |
+| Optional location        | `z.object({...}).optional()` (use `.optional()` — NOT `.nullable()`, because react-hook-form uses `undefined` for unset fields, not `null`) |
+
+> **Important:** Location fields must use `.optional()`, not `.nullable()`. React-hook-form represents unset/empty fields as `undefined`, and using `.nullable()` (`| null`) creates a type mismatch with the form's `FieldValues` generic. Always use `.optional()` for optional locations. The default value should be `undefined` (or omit it from `defaultValues`) rather than `null`.
 
 ##### File Fields (`<FileField>`)
 
@@ -455,13 +459,13 @@ const transactionSchema = z.object({
 ```tsx
 const budgetSchema = z.object({
   amount: z.number().nonnegative('Amount must be non-negative'),
-  rollover_enabled: z.boolean().default(false),
-  rollover_cap: z.number().nonnegative().optional().default(100),
-  alert_threshold: z.number().gte(0).lte(100).default(80)
+  rollover_enabled: z.boolean(),
+  rollover_cap: z.number().nonnegative().optional(),
+  alert_threshold: z.number().gte(0).lte(200)
 })
 ```
 
-> The `rollover_cap` field is conditionally rendered — it should be `.optional()` so it doesn't block submission when hidden. The `.default(100)` ensures it has a value even when never touched.
+> The `rollover_cap` field is conditionally rendered — it should be `.optional()` so it doesn't block submission when hidden. The defaults are set in `useForm()`'s `defaultValues`, not in the schema.
 
 #### Cross-Field Validation with `.superRefine()`
 
@@ -519,6 +523,7 @@ const form = useForm({
 - Merge `initialData` on top of it: `{ ...createDefaultValues(schema), ...initialData }`.
 - The old `.initialData()` method accepted `Partial<FormData>`. The new approach is the same — spread the `initialData` object on top of the defaults.
 - For complex fields like `Location`, `date` (Date object conversion), or `file` (FileValue conversion), you must transform the raw API data in the spread, just as you did in the old `.initialData()`.
+- **🚨 Default values should NEVER be set via the Zod schema (`.default()`).** Always set them in the `defaultValues` object passed to `useForm()`. The schema should only define validation rules — not business defaults. Defaults like `rollover_cap: 100` or `alert_threshold: 80` belong in the `defaultValues` spread, not in `z.number().default(100)`. Using `.default()` in the schema couples validation logic with default-value logic and makes it harder to override defaults per-modal-instance.
 
 **File field special handling:**
 
@@ -655,7 +660,34 @@ return (
 )
 ```
 
-> **Tip:** If no preprocessing or transformation is needed before the API call, you can pass the mutation function directly — `handler: mutation.mutateAsync`. This works because `mutation.mutateAsync` already accepts the form data as its argument and returns a promise. Only inline the handler if you need to transform the data first (e.g., `dayjs(date).format('YYYY-MM-DD')`, renaming keys, etc.).
+> ### 🚨 Direct handler rule
+> If no preprocessing or transformation is needed before the API call, **always** pass the mutation function directly — `handler: mutation.mutateAsync`. This works because `mutation.mutateAsync` already accepts the form data as its argument and returns a promise. Only inline the handler if you need to transform the data first (e.g., `dayjs(date).format('YYYY-MM-DD')`, stripping tracking fields like `_type`, converting `FileValue` with `convertFormFileFieldData`, etc.).
+>
+> **✅ Correct (no transform needed):**
+> ```tsx
+> submissionConfig={{
+>   template: 'create',
+>   handler: mutation.mutateAsync
+> }}
+> ```
+>
+> **❌ Unnecessary wrapping (no transform needed):**
+> ```tsx
+> submissionConfig={{
+>   template: 'create',
+>   handler: async data => { await mutation.mutateAsync(data) }
+> }}
+> ```
+>
+> **✅ Correct (transform needed):**
+> ```tsx
+> submissionConfig={{
+>   handler: async formData => {
+>     const { _type: _omit, ...payload } = formData
+>     await mutation.mutateAsync(payload)
+>   }
+> }}
+> ```
 
 **`uiConfig` old → new mapping:**
 
@@ -721,7 +753,7 @@ For each field in `.setupFields({...})`, render the corresponding new field comp
 
 Conditional fields were done via `.conditionalFields({ fieldName: (data) => boolean })`.
 
-In the new system, use `form.watch()` + conditional rendering:
+In the new system, use `useWatch` + conditional rendering:
 
 **Old:**
 
@@ -735,7 +767,9 @@ In the new system, use `form.watch()` + conditional rendering:
 **New:**
 
 ```tsx
-const rolloverEnabled = form.watch('rollover_enabled')
+import { useWatch } from 'react-hook-form'
+
+const rolloverEnabled = useWatch({ control: form.control, name: 'rollover_enabled' })
 
 return (
   <FormModal ...>
@@ -764,7 +798,7 @@ return (
 
 In the old system, `options` could be a function `(formState) => [...]` that received the current Zustand state.
 
-In the new system, use `form.watch()` to reactively compute options:
+In the new system, use `useWatch` to reactively compute options:
 
 **Old:**
 
@@ -782,7 +816,9 @@ In the new system, use `form.watch()` to reactively compute options:
 **New:**
 
 ```tsx
-const watchedType = form.watch('type')
+import { useWatch } from 'react-hook-form'
+
+const watchedType = useWatch({ control: form.control, name: 'type' })
 
 const categoryOptions = categories
   .filter(cat => cat.type === watchedType)
@@ -817,9 +853,9 @@ In the new system, this is replaced by `react-hook-form`'s API:
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | `formStateStore.getState()`                                                   | `form.getValues()`                                                                  |
 | `formStateStore.getState().fieldName`                                         | `form.getValues('fieldName')`                                                       |
-| `formStateStore.subscribe(callback)`                                          | `form.watch((data) => {...})` or `useEffect(() => { const sub = form.watch(...) })` |
-| `setData(old => ({ ...old, key: val }))`                                      | `form.setValue('key', val)`                                                         |
-| `formStateStore.getState().fieldName` in field's `actionButtonOption.onClick` | Just use JS closure — `form` is available in the component scope                    |
+| `formStateStore.subscribe(callback)` | `useWatch({ control })` in render, or `form.watch((data) => {...})` for side-effects |
+| `setData(old => ({ ...old, key: val }))` | `form.setValue('key', val)` |
+| `formStateStore.getState().fieldName` in field's `actionButtonOption.onClick` | Just use JS closure — `form` is available in the component scope |
 
 > **Important:** When using `form.setValue()` programmatically (not triggered by user input), pass `{ shouldValidate: true }` as the third argument to ensure the new value is validated immediately. Without this, the error state won't update until the next user interaction. Example: `form.setValue('family', metadata.family, { shouldValidate: true })`.
 
@@ -838,8 +874,8 @@ category: {
 ```
 
 ```tsx
-// New: use form.watch or form.getValues in the closure
-const type = form.watch('type')
+// New: use useWatch or form.getValues in the closure
+const type = useWatch({ control: form.control, name: 'type' })
 
 <ListboxField
   actionButtonOption={{
@@ -1226,15 +1262,22 @@ const schema = z.object({
 
 The old system's listbox always stored `string` values. In the new system, `ListboxField<TOption>` uses a generic type. If your listbox's value is a number, boolean, or object, ensure your Zod schema reflects the correct type.
 
-### 5. `form.watch()` performance
+### 5. Always use `useWatch` instead of `form.watch()`
 
-Calling `form.watch('fieldName')` in the render path causes re-renders on every change to that field. For heavy forms or expensive computations, use `useWatch` from `react-hook-form` instead:
+Calling `form.watch('fieldName')` in the render path re-renders the entire component on every change to that field. Use `useWatch` from `react-hook-form` — it isolates the re-render to only the fields you're watching:
 
 ```tsx
 import { useWatch } from 'react-hook-form'
 
-const watchedType = useWatch({ control: form.control, name: 'type' })
+const overrideKey = useWatch({ control: form.control, name: 'overrideKey' })
 ```
+
+This applies everywhere you need to reactively read form values in the render path:
+- Conditional field visibility (Step 6)
+- Derived/computed listbox options (Step 7)
+- Any other render-time value reading from the form
+
+**Never use `form.watch()` in the render path.** Reserve `form.watch()` only for side-effect callbacks (e.g., `form.watch(data => console.log(data))`).
 
 ### 6. `FileField` now supports errors natively
 

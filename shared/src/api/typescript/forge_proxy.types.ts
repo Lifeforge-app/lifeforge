@@ -10,13 +10,29 @@ type ZodObjectOrIntersection =
   | ZodObject<ZodRawShape>
   | ZodIntersection<ZodTypeAny, ZodTypeAny>
 
-export type InferFromJSONSchema<T> = T extends undefined
-  ? undefined
-  : T extends boolean
+export type OmitIndexSignature<T> = T extends object
+  ? T extends Array<any>
+    ? T
+    : {
+        [K in keyof T as string extends K
+          ? never
+          : number extends K
+            ? never
+            : symbol extends K
+              ? never
+              : K]: OmitIndexSignature<T[K]>
+      }
+  : T
+
+export type InferFromJSONSchema<T> = 0 extends 1 & T
+  ? any
+  : T extends undefined
     ? undefined
-    : T extends object
-      ? FromSchema<T>
-      : undefined
+    : T extends boolean
+      ? undefined
+      : T extends object
+        ? OmitIndexSignature<FromSchema<T>>
+        : undefined
 
 export type InferContractInput<T> = 0 extends 1 & T
   ? any
