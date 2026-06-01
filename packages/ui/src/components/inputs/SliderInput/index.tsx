@@ -6,7 +6,7 @@ import * as styles from './SliderInput.css'
 import { SliderHeader } from './components/SliderHeader'
 import { SliderTicks } from './components/SliderTicks'
 
-interface SliderInputProps extends Omit<BoxProps<'div'>, 'value' | 'onChange'> {
+export interface SliderInputProps extends Omit<BoxProps<'div'>, 'value' | 'onChange'> {
   label?: string
   icon?: string
   value: number

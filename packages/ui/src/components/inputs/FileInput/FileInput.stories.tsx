@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { FileInput } from './index'
+import type { FileValue } from './index'
 
 const meta = {
   component: FileInput
@@ -13,32 +14,24 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
-    acceptedMimeTypes: {
+    mimeTypes: {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    file: null,
+    value: { type: 'empty' },
     icon: 'tabler:file',
     label: 'Upload Image',
     namespace: 'namespace',
-    preview: null,
-    setData: () => {}
+    onChange: function () {}
   },
-  render: args => {
-    const [image, setImage] = useState<string | File | null>(null)
-
-    const [preview, setPreview] = useState<string | null>(null)
+  render: function (args) {
+    const [val, setVal] = useState<FileValue>({ type: 'empty' })
 
     return (
       <FileInput
         {...args}
-        enablePixabay
-        file={image}
-        preview={preview}
-        setData={({ file, preview }) => {
-          setImage(file)
-          setPreview(preview)
-        }}
+        value={val}
+        onChange={setVal}
       />
     )
   }
@@ -46,33 +39,25 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
-    acceptedMimeTypes: {
+    mimeTypes: {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    file: null,
+    value: { type: 'empty' },
     icon: 'tabler:file',
     label: 'Upload Image',
     namespace: 'namespace',
-    preview: null,
-    setData: () => {}
+    onChange: function () {}
   },
-  render: args => {
-    const [image, setImage] = useState<string | File | null>(null)
-
-    const [preview, setPreview] = useState<string | null>(null)
+  render: function (args) {
+    const [val, setVal] = useState<FileValue>({ type: 'empty' })
 
     return (
       <FileInput
         {...args}
         disabled
-        enablePixabay
-        file={image}
-        preview={preview}
-        setData={({ file, preview }) => {
-          setImage(file)
-          setPreview(preview)
-        }}
+        value={val}
+        onChange={setVal}
       />
     )
   }

@@ -15,7 +15,7 @@ import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import { IconPickerModal } from './IconPickerModal'
 import { IconPreview } from './components/IconPreview'
 
-interface IconInputProps {
+export interface IconInputProps {
   label?: string
   value: string
   onChange: (value: string) => void

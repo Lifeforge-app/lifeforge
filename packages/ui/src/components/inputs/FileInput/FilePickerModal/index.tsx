@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { usePromiseLoading } from '@lifeforge/shared'
 
-import { Button } from '@/components/inputs'
+import { Button, type FilePickerSourceConfig } from '@/components/inputs'
 import { Tabs } from '@/components/navigation'
 import { ModalHeader } from '@/components/overlays'
 import { Box, Flex } from '@/components/primitives'
@@ -14,22 +14,12 @@ import { LocalUpload } from './components/LocalUpload'
 import { Pixabay } from './components/Pixabay'
 
 export function FilePickerModal({
-  data: {
-    enablePixabay = false,
-    enableUrl = false,
-    enableAI = false,
-    defaultAIPrompt = '',
-    acceptedMimeTypes,
-    onSelect
-  },
+  data: { sources, mimeTypes, onSelect },
   onClose
 }: {
   data: {
-    enablePixabay?: boolean
-    enableUrl?: boolean
-    enableAI?: boolean
-    defaultAIPrompt?: string
-    acceptedMimeTypes?: Record<string, string[]>
+    sources: FilePickerSourceConfig
+    mimeTypes?: Record<string, string[]>
     onSelect: (file: string | File, preview: string | null) => Promise<void>
   }
   onClose: () => void
@@ -62,15 +52,11 @@ export function FilePickerModal({
         title="imagePicker.title"
         onClose={onClose}
       />
-      {(enablePixabay || enableUrl || enableAI) && (
+      {Object.values(sources).some(e => e) && (
         <Tabs
           currentTab={mode}
           enabled={(['local', 'url', 'pixabay', 'ai'] as const).filter(
-            name =>
-              name === 'local' ||
-              (name === 'pixabay' && enablePixabay) ||
-              (name === 'url' && enableUrl) ||
-              (name === 'ai' && enableAI)
+            name => name === 'local' || sources[name]
           )}
           items={[
             {
@@ -112,7 +98,7 @@ export function FilePickerModal({
             case 'local':
               return (
                 <LocalUpload
-                  acceptedMimeTypes={acceptedMimeTypes}
+                  acceptedMimeTypes={mimeTypes}
                   file={file}
                   preview={preview}
                   setFile={setFile}
@@ -138,7 +124,7 @@ export function FilePickerModal({
             case 'ai':
               return (
                 <AIImageGenerator
-                  defaultPrompt={defaultAIPrompt || ''}
+                  defaultPrompt={sources.ai ? sources.ai.defaultPrompt : ''}
                   file={file}
                   setFile={setFile}
                   setPreview={setPreview}

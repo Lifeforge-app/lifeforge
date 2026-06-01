@@ -4,11 +4,11 @@ import { Button } from '../Button'
 import { TextInput } from '../TextInput'
 import type { InputVariants } from '../shared/types'
 
-interface NumberInputProps {
+export interface NumberInputProps {
   /** The label text displayed above the number input field. Required for 'classic' style. */
-  label?: string
+  label: string
   /** The icon to display in the input field. Should be a valid icon name from Iconify. Required for 'classic' style. */
-  icon?: string
+  icon: string
   /** The current numeric value of the input. */
   value: number
   /** Callback function called when the input value changes. */

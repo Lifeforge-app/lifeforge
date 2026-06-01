@@ -35,8 +35,6 @@ interface ListboxInputProps<T> {
   customActive?: boolean
   /** The custom content to display in the listbox button. */
   renderContent?: (value: T) => React.ReactNode
-  /** Whether to show an action button inside the listbox. */
-  hasActionButton?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   namespace?: string
   /** The error message to display when the field is invalid. */

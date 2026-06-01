@@ -14,7 +14,7 @@ import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
 import { ColorPickerModal } from './ColorPickerModal'
 
-interface ColorInputProps {
+export interface ColorInputProps {
   /** The label text displayed above the color input field. Required for 'classic' style. */
   label?: string
   /** The current color value in hex format (e.g., "#FF0000"). */

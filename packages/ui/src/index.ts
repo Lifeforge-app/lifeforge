@@ -1,28 +1,6 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-if (Math.random() < 0) {
-  // @ts-ignore
-  import('./styles/index.css')
-}
+export * from './providers'
 
-export * from './components/primitives'
-
-export * from './components/auth'
-
-export * from './components/data-display'
-
-export * from './components/inputs'
-
-export * from './components/feedback'
-
-export * from './components/inputs'
-
-export * from './components/layout'
-
-export * from './components/navigation'
-
-export * from './components/overlays'
-
-export * from './components/utilities'
+export * from './components'
 
 export {
   TAILWIND_PALETTE,
@@ -37,5 +15,3 @@ export type {
   OpacityValue,
   ColorValue as ColorPropValue
 } from './system'
-
-export * from './providers'

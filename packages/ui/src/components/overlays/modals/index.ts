@@ -1,13 +1,9 @@
-export * from './features/FormModal'
+export * from './ModalHeader'
 
-export * from './features/ConfirmationModal'
+export * from './ModalWrapper'
 
-export * from './features/ViewImageModal'
+export * from './ModalManager'
 
-export * from './core/components/ModalHeader'
+export * from './ConfirmationModal'
 
-export * from './core/components/ModalWrapper'
-
-export * from './core/ModalManager'
-
-export * from './features/FormModal/formBuilder'
+export * from './ViewImageModal'
