@@ -79,7 +79,7 @@ export function SidebarItemContent({
                   <Text truncate>
                     {typeof label === 'string'
                       ? t(`common.sidebar:apps.${label}.title`)
-                      : label} 
+                      : label}
                   </Text>
                 </Box>
               </Flex>

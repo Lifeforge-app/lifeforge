@@ -142,11 +142,7 @@ export const WithAppendTitle: Story = {
 export const WithActionButton: Story = {
   args: {
     headerActions: (
-      <Button
-        icon="tabler:help"
-        variant="plain"
-        onClick={function () {}}
-      />
+      <Button icon="tabler:help" variant="plain" onClick={function () {}} />
     ),
     icon: 'tabler:file-export',
     onClose: function () {},
@@ -169,11 +165,7 @@ export const WithActionButton: Story = {
 export const WithActionButtonVariant: Story = {
   args: {
     headerActions: (
-      <Button
-        icon="tabler:eye"
-        variant="secondary"
-        onClick={function () {}}
-      >
+      <Button icon="tabler:eye" variant="secondary" onClick={function () {}}>
         Preview
       </Button>
     ),
@@ -197,11 +189,7 @@ export const WithActionButtonVariant: Story = {
 export const KitchenSink: Story = {
   args: {
     headerActions: (
-      <Button
-        icon="tabler:settings"
-        variant="plain"
-        onClick={function () {}}
-      />
+      <Button icon="tabler:settings" variant="plain" onClick={function () {}} />
     ),
     appendTitle: (
       <span

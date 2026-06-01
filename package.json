@@ -63,7 +63,7 @@
     "vite": "^7.1.9"
   },
   "dependencies": {
-    "@iconify/react": "^6.0.2",
+    "@hookform/resolvers": "^5.4.0",
     "@tanstack/react-query": "^5.90.2",
     "@uidotdev/usehooks": "^2.4.1",
     "@vanilla-extract/vite-plugin": "^5.1.4",
@@ -75,6 +75,7 @@
     "opentype.js": "^2.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.77.0",
     "react-i18next": "^16.5.1",
     "react-toastify": "^11.0.5",
     "tinycolor2": "^1.6.0",

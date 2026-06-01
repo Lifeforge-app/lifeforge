@@ -1,7 +1,6 @@
 import PocketBase from 'pocketbase'
 
 import { CleanedSchemas } from '../../utils/schemaUtils'
-
 import {
   AllPossibleFieldsForFilter,
   CollectionKey,

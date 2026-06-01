@@ -540,15 +540,15 @@ export const Tracking: Story = {
       {(['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'] as const).map(
         tracking => (
           <Flex key={tracking} align="baseline" gap="md">
-          <Box asChild flexShrink="0" width="5rem">
-            <Text
-              as="code"
-              color={{ base: 'bg-400', dark: 'bg-500' }}
-              size="sm"
-            >
-              {tracking}
-            </Text>
-          </Box>
+            <Box asChild flexShrink="0" width="5rem">
+              <Text
+                as="code"
+                color={{ base: 'bg-400', dark: 'bg-500' }}
+                size="sm"
+              >
+                {tracking}
+              </Text>
+            </Box>
             <Text size="lg" tracking={tracking}>
               The quick brown fox jumps over the lazy dog.
             </Text>

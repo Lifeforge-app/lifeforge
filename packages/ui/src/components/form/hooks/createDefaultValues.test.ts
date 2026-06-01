@@ -85,11 +85,13 @@ describe('createDefaultValues', () => {
     expect(createDefaultValues(schema)).toBe('')
   })
 
-  it('should resolve unsupported schemas to undefined', () => {
-    const schema1 = z.date()
-    const schema2 = z.enum(['active', 'inactive'])
+  it('should resolve enum schema to its first option', () => {
+    const schema = z.enum(['active', 'inactive'])
+    expect(createDefaultValues(schema)).toBe('active')
+  })
 
-    expect(createDefaultValues(schema1)).toBeUndefined()
-    expect(createDefaultValues(schema2)).toBeUndefined()
+  it('should resolve unsupported schemas to undefined', () => {
+    const schema = z.date()
+    expect(createDefaultValues(schema)).toBeUndefined()
   })
 })

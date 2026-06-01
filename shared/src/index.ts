@@ -54,7 +54,6 @@ export {
 } from './utils/encryption'
 export { default as fetchAPI } from './utils/fetchAPI'
 
-export { default as getFormFileFieldInitialData } from './utils/getFormFileFieldInitialData'
 export { default as getBrowserInfo } from './utils/getBrowserInfo'
 export { default as normalizeSubnamespace } from './utils/normalizeSubnamespace'
 export { default as parseCollectionName } from './utils/parseCollectionName'
@@ -65,6 +64,7 @@ export { packageJSONSchema } from './interfaces/module_config.types'
 export { default as createForgeProxy } from './api/core/createForgeProxy'
 export { default as ForgeEndpoint } from './api/core/forgeEndpoint'
 export type {
+  ProxyTree,
   InferClientControllerOutput as InferOutput,
   InferClientControllerInput as InferInput
 } from './api/typescript/forge_proxy.types'

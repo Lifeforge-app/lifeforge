@@ -1,5 +1,5 @@
-import type { ThemeConditionProp } from './theme-conditions'
 import type { ColorValue } from './colors'
+import type { ThemeConditionProp } from './theme-conditions'
 
 export type ColorPropName =
   | 'bg'

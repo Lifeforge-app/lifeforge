@@ -10,9 +10,11 @@ import { useTranslation } from 'react-i18next'
 import { Switch } from '@/components/inputs'
 import { Flex, Icon, Text } from '@/components/primitives'
 
+import { useNamespace } from '../FormModal'
+
 type CheckboxFieldProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
-  name: FieldPathByValue<TFieldValues, boolean>
+  name: FieldPathByValue<TFieldValues, boolean | null | undefined>
   label: string
   icon: string
   disabled?: boolean
@@ -32,7 +34,9 @@ export function CheckboxField<TFieldValues extends FieldValues>({
     name
   })
 
-  const { t } = useTranslation(namespace)
+  const contextNamespace = useNamespace()
+  const activeNamespace = namespace ?? contextNamespace
+  const { t } = useTranslation(activeNamespace)
 
   const labelText = t([
     ['inputs', _.camelCase(label), 'label'].filter(Boolean).join('.'),
@@ -48,9 +52,7 @@ export function CheckboxField<TFieldValues extends FieldValues>({
       <Flex align="center" justify="between" py="sm">
         <Flex align="center" gap="sm">
           <Icon icon={icon} size="1.5em" />
-          <Text size="lg">
-            {labelText}
-          </Text>
+          <Text size="lg">{labelText}</Text>
         </Flex>
         <Switch
           disabled={disabled}

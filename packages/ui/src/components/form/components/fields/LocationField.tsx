@@ -7,9 +7,11 @@ import {
 
 import { type Location, LocationInput } from '@/components/inputs'
 
+import { useNamespace } from '../FormModal'
+
 type LocationFieldProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
-  name: FieldPathByValue<TFieldValues, Location | null>
+  name: FieldPathByValue<TFieldValues, Location | null | undefined>
   icon?: string
   label: string
   required?: boolean
@@ -24,6 +26,7 @@ export function LocationField<TFieldValues extends FieldValues>({
   disabled = false,
   required = false,
   autoFocus = false,
+  namespace,
   ...rest
 }: LocationFieldProps<TFieldValues>) {
   const { field } = useController({
@@ -31,11 +34,15 @@ export function LocationField<TFieldValues extends FieldValues>({
     name
   })
 
+  const contextNamespace = useNamespace()
+  const activeNamespace = namespace ?? contextNamespace
+
   return (
     <LocationInput
       autoFocus={autoFocus}
       disabled={disabled}
       required={required}
+      namespace={activeNamespace}
       value={field.value ?? null}
       onChange={field.onChange}
       {...rest}

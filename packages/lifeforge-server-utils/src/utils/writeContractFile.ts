@@ -61,20 +61,21 @@ export function serializeRoutes(node: any): any {
               ? fixJSONSchemaRecord(val.schema.body.toJSONSchema())
               : undefined
         },
-        output: typeof val.output === 'string'
-          ? val.output
-          : val.output
-            ? Object.fromEntries(
-                Object.entries(val.output).map(([k, v]) => [
-                  k,
-                  v === true
-                    ? true
-                    : v && typeof (v as any).toJSONSchema === 'function'
-                      ? fixJSONSchemaRecord((v as any).toJSONSchema())
-                      : v
-                ])
-              )
-            : undefined
+        output:
+          typeof val.output === 'string'
+            ? val.output
+            : val.output
+              ? Object.fromEntries(
+                  Object.entries(val.output).map(([k, v]) => [
+                    k,
+                    v === true
+                      ? true
+                      : v && typeof (v as any).toJSONSchema === 'function'
+                        ? fixJSONSchemaRecord((v as any).toJSONSchema())
+                        : v
+                  ])
+                )
+              : undefined
       }
     }
 

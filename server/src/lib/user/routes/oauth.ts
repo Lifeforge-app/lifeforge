@@ -80,49 +80,53 @@ export const verify = forge
       BAD_REQUEST: z.string()
     }
   })
-  .callback(async ({ req, pb, body: { provider: providerName, code }, response }) => {
-    const providers = await pb.instance.collection('users').listAuthMethods()
+  .callback(
+    async ({ req, pb, body: { provider: providerName, code }, response }) => {
+      const providers = await pb.instance.collection('users').listAuthMethods()
 
-    const provider = providers.oauth2.providers.find(
-      item => item.name === providerName
-    )
+      const provider = providers.oauth2.providers.find(
+        item => item.name === providerName
+      )
 
-    if (!provider || !currentCodeVerifier) {
-      return response.badRequest('Invalid login attempt')
-    }
-
-    try {
-      const authData = await pb.instance
-        .collection('users')
-        .authWithOAuth2Code(
-          provider.name,
-          code,
-          currentCodeVerifier,
-          `${req.headers.origin}/auth`,
-          {
-            emailVisibility: false
-          }
-        )
-
-      if (authData) {
-        if (pb.instance.authStore.record?.twoFASecret) {
-          currentSession.token = pb.instance.authStore.token
-          currentSession.tokenExpireAt = dayjs().add(5, 'minutes').toISOString()
-          currentSession.tokenId = v4()
-
-          return response.ok({
-            state: '2fa_required',
-            tid: currentSession.tokenId
-          })
-        }
-
-        return response.ok(pb.instance.authStore.token)
-      } else {
-        return response.unauthorized()
+      if (!provider || !currentCodeVerifier) {
+        return response.badRequest('Invalid login attempt')
       }
-    } catch {
-      return response.unauthorized()
-    } finally {
-      currentCodeVerifier = null
+
+      try {
+        const authData = await pb.instance
+          .collection('users')
+          .authWithOAuth2Code(
+            provider.name,
+            code,
+            currentCodeVerifier,
+            `${req.headers.origin}/auth`,
+            {
+              emailVisibility: false
+            }
+          )
+
+        if (authData) {
+          if (pb.instance.authStore.record?.twoFASecret) {
+            currentSession.token = pb.instance.authStore.token
+            currentSession.tokenExpireAt = dayjs()
+              .add(5, 'minutes')
+              .toISOString()
+            currentSession.tokenId = v4()
+
+            return response.ok({
+              state: '2fa_required',
+              tid: currentSession.tokenId
+            })
+          }
+
+          return response.ok(pb.instance.authStore.token)
+        } else {
+          return response.unauthorized()
+        }
+      } catch {
+        return response.unauthorized()
+      } finally {
+        currentCodeVerifier = null
+      }
     }
-  })
+  )

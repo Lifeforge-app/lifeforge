@@ -1,7 +1,11 @@
 import { recipe } from '@vanilla-extract/recipes'
 import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
-import { RESPONSIVE_CONDITIONS, tokenizedSpacingProperties, vars } from '@/system'
+import {
+  RESPONSIVE_CONDITIONS,
+  tokenizedSpacingProperties,
+  vars
+} from '@/system'
 
 export const textBase = recipe({
   base: {}

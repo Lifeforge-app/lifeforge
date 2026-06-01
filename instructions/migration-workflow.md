@@ -6,4 +6,4 @@ Below are the steps to migrate the module into the new codebase architecture.
 4. Replace all occurrence of `shared` into `@lifeforge/shared`.
 5. Replace all occurrence of `lifeforge-ui` into `@lifeforge/ui`.
 6. Run `bun install` to create symlinks.
-7. 
+7.

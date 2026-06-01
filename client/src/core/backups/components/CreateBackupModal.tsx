@@ -1,10 +1,23 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import z from 'zod'
 
-import { FormModal, defineForm } from '@lifeforge/ui'
+import { FormModal, TextField, createDefaultValues } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
+
+const schema = z.object({
+  backupName: z
+    .string()
+    .regex(
+      /^[a-z0-9_-]+\.zip$/,
+      'Backup name must be a .zip file, using only lowercase letters, numbers, hyphens, and underscores'
+    )
+    .optional()
+})
 
 function CreateBackupModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.backups')
@@ -22,35 +35,36 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
     })
   )
 
-  const { formProps } = defineForm<any>({
-    icon: 'tabler:plus',
-    namespace: 'common.backups',
-    submitButton: {
-      children: 'Start Backup',
-      icon: 'tabler:arrow-right',
-      namespace: 'common.backups',
-      iconPosition: 'end'
-    },
-    title: 'Create Backup',
-    onClose
+  const form = useForm({
+    defaultValues: createDefaultValues(schema),
+    mode: 'all',
+    resolver: zodResolver(schema)
   })
-    .typesMap({
-      backupName: 'text'
-    })
-    .setupFields({
-      backupName: {
-        label: 'Backup Name',
-        icon: 'tabler:file-zip',
-        placeholder: t('inputs.backupName.placeholder')
-      }
-    })
-    .initialData({})
-    .onSubmit(async data => {
-      await mutation.mutateAsync(data)
-    })
-    .build()
 
-  return <FormModal {...formProps} />
+  return (
+    <FormModal
+      form={form}
+      submissionConfig={{
+        handler: mutation.mutateAsync,
+        icon: 'tabler:arrow-right',
+        label: 'Start Backup'
+      }}
+      uiConfig={{
+        icon: 'tabler:plus',
+        namespace: 'common.backups',
+        title: 'Create Backup',
+        onClose
+      }}
+    >
+      <TextField
+        control={form.control}
+        icon="tabler:file-zip"
+        label="Backup Name (must end with .zip)"
+        name="backupName"
+        placeholder={t('inputs.backupName.placeholder')}
+      />
+    </FormModal>
+  )
 }
 
 export default CreateBackupModal

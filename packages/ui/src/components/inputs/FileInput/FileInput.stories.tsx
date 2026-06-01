@@ -27,13 +27,7 @@ export const Default: Story = {
   render: function (args) {
     const [val, setVal] = useState<FileValue>({ type: 'empty' })
 
-    return (
-      <FileInput
-        {...args}
-        value={val}
-        onChange={setVal}
-      />
-    )
+    return <FileInput {...args} value={val} onChange={setVal} />
   }
 }
 
@@ -52,13 +46,26 @@ export const Disabled: Story = {
   render: function (args) {
     const [val, setVal] = useState<FileValue>({ type: 'empty' })
 
-    return (
-      <FileInput
-        {...args}
-        disabled
-        value={val}
-        onChange={setVal}
-      />
-    )
+    return <FileInput {...args} disabled value={val} onChange={setVal} />
+  }
+}
+
+export const WithError: Story = {
+  args: {
+    mimeTypes: {
+      application: ['pdf'],
+      image: ['jpeg', 'png']
+    },
+    value: { type: 'empty' },
+    icon: 'tabler:file',
+    label: 'Upload Image',
+    namespace: 'namespace',
+    errorMsg: 'File is required and must be an image',
+    onChange: function () {}
+  },
+  render: function (args) {
+    const [val, setVal] = useState<FileValue>({ type: 'empty' })
+
+    return <FileInput {...args} value={val} onChange={setVal} />
   }
 }

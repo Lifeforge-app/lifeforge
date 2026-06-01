@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { z } from 'zod'
 
 import { Flex, Icon, Text } from '@/components/primitives'
 import { useModalStore } from '@/providers'
@@ -15,24 +16,43 @@ export type FileValue =
       type: 'empty'
     }
   | {
-      type: 'file'
-      source: 'existing'
+      type: 'existing'
       id: string
       filename: string
       preview?: string
     }
   | {
-      type: 'file'
-      source: 'upload'
+      type: 'upload'
       file: File
       preview?: string
     }
   | {
-      type: 'file'
-      source: 'url'
+      type: 'url'
       url: string
       preview?: string
     }
+
+export const fileValueSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('empty')
+  }),
+  z.object({
+    type: z.literal('existing'),
+    id: z.string(),
+    filename: z.string(),
+    preview: z.string().optional()
+  }),
+  z.object({
+    type: z.literal('upload'),
+    file: z.instanceof(File),
+    preview: z.string().optional()
+  }),
+  z.object({
+    type: z.literal('url'),
+    url: z.string(),
+    preview: z.string().optional()
+  })
+])
 
 export interface FilePickerSourceConfig {
   pixabay?: boolean
@@ -59,7 +79,8 @@ export function FileInput({
     ai: false,
     url: false
   },
-  mimeTypes
+  mimeTypes,
+  errorMsg
 }: {
   icon: string
   label: string
@@ -72,6 +93,7 @@ export function FileInput({
   disabled?: boolean
   sources?: FilePickerSourceConfig
   mimeTypes?: Record<string, string[]>
+  errorMsg?: string
 }) {
   const { open } = useModalStore()
 
@@ -85,15 +107,13 @@ export function FileInput({
         onSelect: async function (file: string | File, preview: string | null) {
           if (file instanceof File) {
             onChange({
-              type: 'file',
-              source: 'upload',
+              type: 'upload',
               file,
               preview: preview ?? undefined
             })
           } else {
             onChange({
-              type: 'file',
-              source: 'url',
+              type: 'url',
               url: file,
               preview: preview ?? undefined
             })
@@ -104,63 +124,71 @@ export function FileInput({
     [sources, mimeTypes, onChange]
   )
 
-  const previewUrl = value.type === 'file' ? value.preview : undefined
+  const previewUrl = value.type !== 'empty' ? value.preview : undefined
 
   return (
-    <Flex
-      shadow
-      bg={{
-        base: colorWithOpacity('bg-200', '50%'),
-        dark: colorWithOpacity('bg-800', '70%')
-      }}
-      className="__file-input"
-      direction="column"
-      p="lg"
-      r="md"
-      style={{
-        opacity: disabled ? 0.5 : 1,
-        pointerEvents: disabled ? 'none' : 'auto'
-      }}
-      width="100%"
-    >
-      <Text asChild color="muted">
-        <Flex align="center" gap="sm">
-          <Icon icon={icon} size="1.5rem" />
-          <Text as="span" color="inherit" weight="medium">
-            {inputLabel}{' '}
-            {required === true && (
-              <Text as="span" color="dangerous">
-                *
-              </Text>
+    <Flex direction="column" gap="sm" width="100%">
+      <Flex
+        shadow
+        bg={{
+          base: colorWithOpacity('bg-200', '50%'),
+          dark: colorWithOpacity('bg-800', '70%')
+        }}
+        className="__file-input"
+        direction="column"
+        p="lg"
+        r="md"
+        style={{
+          opacity: disabled ? 0.5 : 1,
+          pointerEvents: disabled ? 'none' : 'auto',
+          outline: errorMsg ? '2px solid var(--color-dangerous)' : undefined
+        }}
+        width="100%"
+      >
+        <Text asChild color={errorMsg ? 'dangerous' : 'muted'}>
+          <Flex align="center" gap="sm">
+            <Icon icon={icon} size="1.5rem" />
+            <Text as="span" color="inherit" weight="medium">
+              {inputLabel}{' '}
+              {required === true && (
+                <Text as="span" color="dangerous">
+                  *
+                </Text>
+              )}
+            </Text>
+          </Flex>
+        </Text>
+        {value.type === 'empty' ? (
+          <EmptyFileInput
+            acceptedMimeTypes={mimeTypes}
+            reminderText={reminderText}
+            onSelect={handleFilePickerOpen}
+          />
+        ) : (
+          <>
+            {previewUrl &&
+            (previewUrl.startsWith('http') ||
+              previewUrl.startsWith('blob:') ||
+              previewUrl.startsWith('data:')) ? (
+              <PreviewFileDisplay
+                previewUrl={previewUrl}
+                onChange={onChange}
+                onImageRemoved={onImageRemoved}
+              />
+            ) : (
+              <CompactFileDisplay
+                value={value}
+                onChange={onChange}
+                onImageRemoved={onImageRemoved}
+              />
             )}
-          </Text>
-        </Flex>
-      </Text>
-      {value.type === 'empty' ? (
-        <EmptyFileInput
-          acceptedMimeTypes={mimeTypes}
-          reminderText={reminderText}
-          onSelect={handleFilePickerOpen}
-        />
-      ) : (
-        <>
-          {previewUrl &&
-          (previewUrl.startsWith('http') ||
-            previewUrl.startsWith('blob:') ||
-            previewUrl.startsWith('data:')) ? (
-            <PreviewFileDisplay
-              previewUrl={previewUrl}
-              onChange={onChange}
-              onImageRemoved={onImageRemoved}
-            />
-          ) : (
-            <CompactFileDisplay
-              value={value}
-              onChange={onChange}
-              onImageRemoved={onImageRemoved}
-            />
-          )}
-        </>
+          </>
+        )}
+      </Flex>
+      {errorMsg && (
+        <Text color="dangerous" display="block" px="md" size="sm">
+          {errorMsg}
+        </Text>
       )}
     </Flex>
   )

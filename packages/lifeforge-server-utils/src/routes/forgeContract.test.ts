@@ -1,5 +1,6 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import z from 'zod'
+
 import { createForgeContractBuilder } from './forgeContract'
 
 describe('createForgeContractBuilder Type Constraints', () => {
@@ -11,30 +12,32 @@ describe('createForgeContractBuilder Type Constraints', () => {
       }
     })
 
-    const contract = forge.query({
-      description: 'Test Query',
-      input: {
-        query: z.object({
-          id: z.string()
-        })
-      },
-      output: {
-        OK: z.object({
-          message: z.string()
-        }),
-        NOT_FOUND: true
-      },
-      existenceCheck: {
-        query: {
-          id: 'categories'
+    const contract = forge
+      .query({
+        description: 'Test Query',
+        input: {
+          query: z.object({
+            id: z.string()
+          })
+        },
+        output: {
+          OK: z.object({
+            message: z.string()
+          }),
+          NOT_FOUND: true
+        },
+        existenceCheck: {
+          query: {
+            id: 'categories'
+          }
         }
-      }
-    }).callback(async function ({ query, response }) {
-      if (query?.id === '404') {
-        return response.notFound()
-      }
-      return response.ok({ message: `Hello ${query?.id}` })
-    })
+      })
+      .callback(async function ({ query, response }) {
+        if (query?.id === '404') {
+          return response.notFound()
+        }
+        return response.ok({ message: `Hello ${query?.id}` })
+      })
 
     expect(contract.__isForgeContract).toBe(true)
     const val = contract.getValue()

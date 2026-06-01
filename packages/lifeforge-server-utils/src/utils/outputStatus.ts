@@ -17,7 +17,7 @@ export const Output = {
   UNAUTHORIZED: {
     $status: 401
   },
-  FORBIDDEN: {  
+  FORBIDDEN: {
     $status: 403
   },
   NOT_FOUND: {

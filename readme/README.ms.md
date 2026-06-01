@@ -22,10 +22,10 @@
 >
 > Aplikasi hos dan modul persekutuan masing-masing membungkus Tailwind CSS secara berasingan. Ini mewujudkan konflik lapisan kaskad CSS merentasi sempadan modul, mengakibatkan:
 >
-> * Penggantian gaya yang tidak dapat diramal
-> * Utiliti responsif rosak
-> * Gangguan gaya merentas modul
-> * Tingkah laku rendering tidak konsisten antara hos dan aplikasi jauh
+> - Penggantian gaya yang tidak dapat diramal
+> - Utiliti responsif rosak
+> - Gangguan gaya merentas modul
+> - Tingkah laku rendering tidak konsisten antara hos dan aplikasi jauh
 >
 > Apabila berbilang pakej Tailwind CSS wujud bersama dalam runtime yang sama, susunan lapisan kaskad menjadi sukar dikawal dengan pasti.
 >
@@ -44,24 +44,24 @@
 > PR #93 memperkenalkan reka bentuk semula lengkap pustaka UI dalaman dan seni bina gaya.
 >
 > Sistem baharu adalah:
-> 
-> * Berasaskan token
-> * Berkomponen
-> * Bebas sepenuhnya daripada Tailwind CSS
-> * Direka khusus untuk persekutuan modul
-> * Dibina di sekitar satu kontrak UI dikongsi
-> 
+>
+> - Berasaskan token
+> - Berkomponen
+> - Bebas sepenuhnya daripada Tailwind CSS
+> - Direka khusus untuk persekutuan modul
+> - Dibina di sekitar satu kontrak UI dikongsi
+>
 > Daripada membenarkan setiap modul menjana dan menghantar CSS sendiri, semua aplikasi kini menggunakan primitif UI, token dan tingkah laku gaya terus daripada `@lifeforge/ui`.
-> 
+>
 > Ini menetapkan `@lifeforge/ui` sebagai sumber kebenaran tunggal untuk persembahan visual merentasi keseluruhan platform.
-> 
+>
 > Hasilnya:
-> 
-> * Modul persekutuan tidak lagi membungkus sistem gaya mereka sendiri
-> * Tingkah laku visual kekal konsisten tanpa mengira susunan muatan modul
-> * Pemilikan gaya berpusat dan boleh diramal
-> * Konflik kaskad merentas modul dihapuskan secara reka bentuk
-> 
+>
+> - Modul persekutuan tidak lagi membungkus sistem gaya mereka sendiri
+> - Tingkah laku visual kekal konsisten tanpa mengira susunan muatan modul
+> - Pemilikan gaya berpusat dan boleh diramal
+> - Konflik kaskad merentas modul dihapuskan secara reka bentuk
+>
 > Migrasi ini memperkenalkan perubahan pecah dan memerlukan pengubahsuaian besar merentasi pangkalan kod, tetapi ia menyelesaikan secara kekal kelas masalah seni bina yang tidak dapat ditangani dengan pasti dalam model sebelumnya.
 
 > [!TIP]
@@ -70,8 +70,8 @@
 >
 > Pelaksanaan terakhir berasaskan Tailwind telah dipelihara dan kekal tersedia untuk rujukan.
 >
-> * Keluaran Legacy: https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
-> * Cawangan Legacy: https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
+> - Keluaran Legacy: https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
+> - Cawangan Legacy: https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
 >
 > Versi legacy tidak lagi dibangunkan secara aktif, tetapi ia mungkin masih berguna untuk rujukan sejarah, panduan migrasi, atau menyemak pelaksanaan sebelumnya.
 

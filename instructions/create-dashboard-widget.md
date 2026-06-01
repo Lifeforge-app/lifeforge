@@ -61,6 +61,7 @@ export const config: WidgetConfig = {
 
 > [!IMPORTANT]
 > **Import paths for module widgets require special handling.** Module widgets live under `apps/<module>/client/src/` and use different import paths than core:
+>
 > - `@lifeforge/ui` → `lifeforge-ui` (no `@` prefix)
 > - `@lifeforge/shared` → `shared`
 > - `@/forgeAPI` → `@/utils/forgeAPI` (or `@/forgeAPI` depending on module setup)
@@ -178,8 +179,8 @@ export const config: WidgetConfig = {
 Widgets receive `dimension` props to adapt their layout. Use `Card` as the root element for responsive widgets that don't need the `Widget` header wrapper:
 
 ```tsx
-import { Card, Flex, Text } from '@lifeforge/ui'
 import type { WidgetConfig } from '@lifeforge/shared'
+import { Card, Flex, Text } from '@lifeforge/ui'
 
 export default function ResponsiveWidget({
   dimension: { w, h }
@@ -322,16 +323,16 @@ interface WidgetConfig {
 
 The `Widget` component from `@lifeforge/ui` accepts:
 
-| Prop              | Type              | Description                                          |
-| ----------------- | ----------------- | ---------------------------------------------------- |
-| `icon`            | `string`          | Iconify icon name                                    |
-| `iconColor`       | `TokenizedColor`  | Optional custom icon color                           |
-| `title`           | `ReactNode`       | Widget title (auto-translated if namespace provided) |
-| `description`     | `ReactNode`       | Widget description                                   |
-| `namespace`       | `string \| false` | Translation namespace, `false` to disable            |
-| `actionComponent` | `ReactNode`       | Component beside title (e.g., navigation button)     |
-| `variant`         | `'default' \| 'large-icon'` | Visual variant                         |
-| `children`        | `ReactNode`       | Widget content                                       |
+| Prop              | Type                        | Description                                          |
+| ----------------- | --------------------------- | ---------------------------------------------------- |
+| `icon`            | `string`                    | Iconify icon name                                    |
+| `iconColor`       | `TokenizedColor`            | Optional custom icon color                           |
+| `title`           | `ReactNode`                 | Widget title (auto-translated if namespace provided) |
+| `description`     | `ReactNode`                 | Widget description                                   |
+| `namespace`       | `string \| false`           | Translation namespace, `false` to disable            |
+| `actionComponent` | `ReactNode`                 | Component beside title (e.g., navigation button)     |
+| `variant`         | `'default' \| 'large-icon'` | Visual variant                                       |
+| `children`        | `ReactNode`                 | Widget content                                       |
 
 ---
 
@@ -339,19 +340,19 @@ The `Widget` component from `@lifeforge/ui` accepts:
 
 Import from `lifeforge-ui` (modules) or `@lifeforge/ui` (core):
 
-| Component          | Usage                                        |
-| ------------------ | -------------------------------------------- |
-| `Widget`           | Container wrapper with title and icon        |
-| `Card`             | Card wrapper for dimension-responsive widgets|
-| `Flex`             | Flexbox layout container                     |
-| `Box`              | Generic layout primitive                     |
-| `Text`             | Typography (with spacing and style props)    |
-| `Icon`             | Icon display (uses `size` prop, not `width`/`height`) |
-| `WithQuery`        | Handles loading/error states for API queries |
-| `EmptyStateScreen` | Shows when no data exists                    |
-| `Scrollbar`        | Scrollable content wrapper                   |
-| `Button`           | Action buttons                               |
-| `LoadingScreen`    | Loading indicator                            |
+| Component          | Usage                                                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------- |
+| `Widget`           | Container wrapper with title and icon                                                                               |
+| `Card`             | Card wrapper for dimension-responsive widgets                                                                       |
+| `Flex`             | Flexbox layout container                                                                                            |
+| `Box`              | Generic layout primitive                                                                                            |
+| `Text`             | Typography (with spacing and style props)                                                                           |
+| `Icon`             | Icon display (uses `size` prop, not `width`/`height`)                                                               |
+| `WithQuery`        | Handles loading/error states for API queries                                                                        |
+| `EmptyStateScreen` | Shows when no data exists                                                                                           |
+| `Scrollbar`        | Scrollable content wrapper                                                                                          |
+| `Button`           | Action buttons                                                                                                      |
+| `LoadingScreen`    | Loading indicator                                                                                                   |
 | `surface`          | Pre-built bg presets (`surface.light`, `surface.lightInteractive`, `surface.default`, `surface.defaultInteractive`) |
 
 > [!WARNING]

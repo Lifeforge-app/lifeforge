@@ -67,6 +67,7 @@ function MyFormModal({ onClose }: { onClose: () => void }) {
       ...createDefaultValues(cuteFormSchema),
       color: '#FFFFFF'
     },
+    mode: 'all',
     resolver: zodResolver(cuteFormSchema)
   })
 

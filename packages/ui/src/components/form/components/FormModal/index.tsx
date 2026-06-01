@@ -1,8 +1,5 @@
-import {
-  type FieldValues,
-  type SubmitHandler,
-  type UseFormReturn
-} from 'react-hook-form'
+import { createContext, useContext } from 'react'
+import { type FieldValues, type UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { usePromiseLoading } from '@lifeforge/shared'
@@ -11,6 +8,12 @@ import { LoadingScreen } from '@/components/feedback'
 import { Button } from '@/components/inputs'
 import { ModalHeader } from '@/components/overlays'
 import { Flex, Stack } from '@/components/primitives'
+
+const NamespaceContext = createContext<string | undefined>(undefined)
+
+export function useNamespace() {
+  return useContext(NamespaceContext)
+}
 
 const SUBMISSION_CONFIG_TEMPLATE = {
   create: {
@@ -27,13 +30,13 @@ type SubmissionConfig<T extends FieldValues> =
   | {
       template: keyof typeof SUBMISSION_CONFIG_TEMPLATE
       disabled?: boolean
-      handler: SubmitHandler<T>
+      handler: (data: T) => Promise<unknown> | unknown
     }
   | {
       label: string
       icon: string
       disabled?: boolean
-      handler: SubmitHandler<T>
+      handler: (data: T) => Promise<unknown> | unknown
     }
 
 export function FormModal<T extends FieldValues>({
@@ -74,38 +77,41 @@ export function FormModal<T extends FieldValues>({
       : submissionConfig
 
   return (
-    <Stack gap="sm" minWidth="50vw">
-      <ModalHeader
-        headerActions={headerActions}
-        icon={icon}
-        namespace={namespace ? namespace : undefined}
-        title={title}
-        onClose={onClose}
-      />
-      {!loading ? (
-        <>
-          {children}
-          <Button
-            icon={finalSubmissionConfig.icon}
-            loading={submitButtonLoading}
-            mt="lg"
-            width="100%"
-            onClick={onSubmitButtonClick}
+    <NamespaceContext.Provider value={namespace}>
+      <Stack gap="sm" minWidth="50vw">
+        <ModalHeader
+          headerActions={headerActions}
+          icon={icon}
+          namespace={namespace ? namespace : undefined}
+          title={title}
+          onClose={onClose}
+        />
+        {!loading ? (
+          <>
+            {children}
+            <Button
+              disabled={submissionConfig.disabled}
+              icon={finalSubmissionConfig.icon}
+              loading={submitButtonLoading}
+              mt="lg"
+              width="100%"
+              onClick={onSubmitButtonClick}
+            >
+              {finalSubmissionConfig.label}
+            </Button>
+          </>
+        ) : (
+          <Flex
+            align="center"
+            direction="column"
+            flex="1"
+            justify="center"
+            minHeight="24em"
           >
-            {finalSubmissionConfig.label}
-          </Button>
-        </>
-      ) : (
-        <Flex
-          align="center"
-          direction="column"
-          flex="1"
-          justify="center"
-          minHeight="24em"
-        >
-          <LoadingScreen />
-        </Flex>
-      )}
-    </Stack>
+            <LoadingScreen />
+          </Flex>
+        )}
+      </Stack>
+    </NamespaceContext.Provider>
   )
 }

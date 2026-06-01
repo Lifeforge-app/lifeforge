@@ -228,10 +228,10 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
       <Box mt="md">
         <ListboxInput
           required
-          renderContent={() => <>{t(`recurring.freqs.${rruleParams.freq}`)}</>}
           icon="tabler:repeat"
           label="frequency"
           namespace="apps.calendar"
+          renderContent={() => <>{t(`recurring.freqs.${rruleParams.freq}`)}</>}
           value={rruleParams.freq}
           onChange={freq => {
             setRRuleParams(createRRuleParams(freq, rruleParams.end))
@@ -260,12 +260,12 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
         <Box flex="1">
           <ListboxInput
             required
-            renderContent={() => (
-              <>{t(`recurring.endTypes.${rruleParams.end.type}`)}</>
-            )}
             icon="tabler:calendar"
             label="endType"
             namespace="apps.calendar"
+            renderContent={() => (
+              <>{t(`recurring.endTypes.${rruleParams.end.type}`)}</>
+            )}
             value={rruleParams.end.type}
             onChange={type => {
               setRRuleParams({
@@ -356,11 +356,11 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
           <Box flex="1" minWidth="12rem">
             <ListboxInput
               required
+              icon="tabler:clock"
+              label={t('recurring.inputs.durationUnit')}
               renderContent={() => (
                 <>{t(`recurring.durationUnits.${duration.unit}`)}</>
               )}
-              icon="tabler:clock"
-              label={t('recurring.inputs.durationUnit')}
               value={duration.unit}
               onChange={unit => {
                 setDuration({

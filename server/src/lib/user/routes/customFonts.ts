@@ -132,12 +132,14 @@ export const upload = forge
       },
       response
     }) => {
-      if (file instanceof File) {
-        if (!isValidFontFile(file.name)) {
-          return response.badRequest(
-            'Invalid file type. Only TTF, OTF, WOFF, and WOFF2 files are allowed.'
-          )
-        }
+      if (!file || typeof file === 'string') {
+        return response.badRequest('A valid font file must be uploaded')
+      }
+
+      if (!isValidFontFile(file.filename)) {
+        return response.badRequest(
+          'Invalid file type. Only TTF, OTF, WOFF, and WOFF2 files are allowed.'
+        )
       }
 
       const record = id

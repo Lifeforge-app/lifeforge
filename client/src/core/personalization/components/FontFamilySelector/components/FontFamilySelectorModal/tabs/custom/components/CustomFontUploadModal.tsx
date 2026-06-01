@@ -1,13 +1,46 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
+import z from 'zod'
 
-import { getFormFileFieldInitialData } from '@lifeforge/shared'
-import { FormModal, defineForm } from '@lifeforge/ui'
+import {
+  FileField,
+  FormModal,
+  ListboxField,
+  TextField,
+  convertFormFileFieldData,
+  createDefaultValues,
+  fileValueSchema,
+  getFormFileFieldInitialData
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
 import type { CustomFont } from '..'
 import { detectFontMetadata } from '../../../../../utils/detectFontMetadata'
+
+const schema = z.object({
+  displayName: z.string().min(1, 'Display name is required'),
+  family: z.string().min(1, 'Font family is required'),
+  weight: z.number().int().gte(100).lte(900),
+  file: fileValueSchema.refine(
+    v => v.type === 'existing' || v.type === 'upload',
+    'A font file must be selected or already uploaded'
+  )
+})
+
+const WEIGHT_OPTIONS = [
+  { text: 'Thin (100)', value: 100 },
+  { text: 'Extra Light (200)', value: 200 },
+  { text: 'Light (300)', value: 300 },
+  { text: 'Regular (400)', value: 400 },
+  { text: 'Medium (500)', value: 500 },
+  { text: 'Semi-Bold (600)', value: 600 },
+  { text: 'Bold (700)', value: 700 },
+  { text: 'Extra Bold (800)', value: 800 },
+  { text: 'Black (900)', value: 900 }
+]
 
 function CustomFontUploadModal({
   onClose,
@@ -31,68 +64,87 @@ function CustomFontUploadModal({
           toast.success('Custom font uploaded successfully!')
           onClose()
         },
-        onError: () => {
-          toast.error('Failed to upload custom font')
+        onError: err => {
+          console.log(err)
+          toast.error(`Failed to upload custom font: ${err.message}`)
         }
       })
   )
 
-  const { formProps, formStateStore } = defineForm<{
-    displayName: string
-    family: string
-    weight: number
-    file: any
-  }>({
-    icon: openType === 'create' ? 'tabler:upload' : 'tabler:pencil',
-    title: `fontFamily.modals.customFonts.${openType === 'create' ? 'upload' : 'edit'}`,
-    namespace: 'common.personalization',
-    onClose,
-    submitButton: openType === 'create' ? 'create' : 'update'
+  const form = useForm({
+    defaultValues: {
+      ...createDefaultValues(schema),
+      ...initialData,
+      file: getFormFileFieldInitialData(
+        forgeAPI,
+        initialData,
+        initialData?.file
+      ),
+      weight: initialData?.weight ?? 400
+    },
+    mode: 'all',
+    resolver: zodResolver(schema)
   })
-    .typesMap({
-      file: 'file',
-      displayName: 'text',
-      family: 'text',
-      weight: 'listbox'
-    })
-    .setupFields({
-      file: {
-        optional: false,
-        icon: 'tabler:file-typography',
-        label: 'fontFamily.inputs.fontFile',
-        required: true,
-        acceptedMimeTypes: {
+
+  return (
+    <FormModal
+      form={form}
+      submissionConfig={{
+        handler: async formData => {
+          if (!formData.file) {
+            throw new Error('Please select a font file')
+          }
+
+          await uploadMutation.mutateAsync({
+            displayName: formData.displayName,
+            family: formData.family,
+            weight: formData.weight || 400,
+            file: convertFormFileFieldData(formData.file)
+          })
+        },
+        template: openType === 'create' ? 'create' : 'update'
+      }}
+      uiConfig={{
+        icon: openType === 'create' ? 'tabler:upload' : 'tabler:pencil',
+        namespace: 'common.personalization',
+        title: `fontFamily.modals.customFonts.${openType === 'create' ? 'upload' : 'edit'}`,
+        onClose
+      }}
+    >
+      <FileField
+        required
+        control={form.control}
+        icon="tabler:file-typography"
+        label="fontFamily.inputs.fontFile"
+        mimeTypes={{
           font: ['ttf', 'otf', 'woff', 'woff2']
-        }
-      },
-      displayName: {
-        icon: 'tabler:tag',
-        label: 'fontFamily.inputs.displayName',
-        placeholder: 'My Custom Font',
-        required: true,
-        actionButtonProps: {
+        }}
+        name="file"
+      />
+      <TextField
+        required
+        actionButtonProps={{
           icon: 'tabler:wand',
           onClick: async () => {
-            const currentState = formStateStore.getState()
+            const currentFile = form.getValues('file')
 
-            if (
-              !(currentState.file as any).file ||
-              !((currentState.file as any).file instanceof File)
-            ) {
+            if (currentFile.type !== 'upload') {
+              return
+            }
+
+            if (!currentFile?.file || !(currentFile.file instanceof File)) {
               toast.error('Please select a font file first')
 
               return
             }
 
             try {
-              const metadata = await detectFontMetadata(
-                (currentState.file as any).file
-              )
+              const metadata = await detectFontMetadata(currentFile.file)
 
-              formStateStore.setState({
-                family: metadata.family,
-                weight: metadata.weight,
-                displayName: metadata.family
+              form.setValue('family', metadata.family, { shouldValidate: true })
+              form.setValue('weight', metadata.weight, { shouldValidate: true })
+              form.setValue('displayName', metadata.family, {
+                shouldValidate: true
               })
 
               toast.success('Font metadata detected successfully!')
@@ -104,55 +156,30 @@ function CustomFontUploadModal({
               )
             }
           }
-        }
-      },
-      family: {
-        icon: 'tabler:typography',
-        label: 'fontFamily.inputs.fontFamily',
-        placeholder: 'MyFont-Regular',
-        required: true
-      },
-      weight: {
-        icon: 'tabler:bold',
-        label: 'fontFamily.inputs.fontWeight',
-        multiple: false,
-        options: [
-          { text: 'Thin (100)', value: 100 },
-          { text: 'Extra Light (200)', value: 200 },
-          { text: 'Light (300)', value: 300 },
-          { text: 'Regular (400)', value: 400 },
-          { text: 'Medium (500)', value: 500 },
-          { text: 'Semi-Bold (600)', value: 600 },
-          { text: 'Bold (700)', value: 700 },
-          { text: 'Extra Bold (800)', value: 800 },
-          { text: 'Black (900)', value: 900 }
-        ]
-      }
-    })
-    .initialData({
-      ...initialData,
-      file: getFormFileFieldInitialData(
-        forgeAPI,
-        initialData,
-        initialData?.file
-      ),
-      weight: initialData?.weight ?? 400
-    })
-    .onSubmit(async formData => {
-      if (!formData.file) {
-        throw new Error('Please select a font file')
-      }
-
-      await uploadMutation.mutateAsync({
-        displayName: formData.displayName,
-        family: formData.family,
-        weight: formData.weight || 400,
-        file: formData.file
-      })
-    })
-    .build()
-
-  return <FormModal {...formProps} />
+        }}
+        control={form.control}
+        icon="tabler:tag"
+        label="fontFamily.inputs.displayName"
+        name="displayName"
+        placeholder="My Custom Font"
+      />
+      <TextField
+        required
+        control={form.control}
+        icon="tabler:typography"
+        label="fontFamily.inputs.fontFamily"
+        name="family"
+        placeholder="MyFont-Regular"
+      />
+      <ListboxField
+        control={form.control}
+        icon="tabler:bold"
+        label="fontFamily.inputs.fontWeight"
+        name="weight"
+        options={WEIGHT_OPTIONS}
+      />
+    </FormModal>
+  )
 }
 
 export default CustomFontUploadModal
