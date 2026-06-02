@@ -261,7 +261,7 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Email                 | `z.email('Invalid email')` (top-level factory)                                                   |
 | URL                   | `z.url('Invalid URL')`                                                                           |
 | UUID                  | `z.uuid()` — any UUID version                                                                    |
-| Color hex             | `z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Color must be a valid hex color (e.g. #FF0000)')`                                           |
+| Color hex             | `z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Color must be a valid hex color (e.g. #FF0000)')`        |
 | Icon identifier       | `z.string().regex(/^[a-z]+:[a-z-]+$/)` — or just `z.string()` if you trust the icon picker       |
 | Lowercase / Uppercase | `z.string().lowercase()` / `z.string().uppercase()`                                              |
 | Trim whitespace       | `z.string().trim()` (overwrites value)                                                           |
@@ -332,9 +332,9 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 
 ##### Location Fields (`<LocationField>`)
 
-| Validation               | Zod Code                                                                                                                                       |
-| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| Required location object | `z.object({ name: z.string(), location: z.object({ latitude: z.number(), longitude: z.number() }), formattedAddress: z.string() })` |
+| Validation               | Zod Code                                                                                                                                    |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Required location object | `z.object({ name: z.string(), location: z.object({ latitude: z.number(), longitude: z.number() }), formattedAddress: z.string() })`         |
 | Optional location        | `z.object({...}).optional()` (use `.optional()` — NOT `.nullable()`, because react-hook-form uses `undefined` for unset fields, not `null`) |
 
 > **Important:** Location fields must use `.optional()`, not `.nullable()`. React-hook-form represents unset/empty fields as `undefined`, and using `.nullable()` (`| null`) creates a type mismatch with the form's `FieldValues` generic. Always use `.optional()` for optional locations. The default value should be `undefined` (or omit it from `defaultValues`) rather than `null`.
@@ -661,9 +661,11 @@ return (
 ```
 
 > ### 🚨 Direct handler rule
+>
 > If no preprocessing or transformation is needed before the API call, **always** pass the mutation function directly — `handler: mutation.mutateAsync`. This works because `mutation.mutateAsync` already accepts the form data as its argument and returns a promise. Only inline the handler if you need to transform the data first (e.g., `dayjs(date).format('YYYY-MM-DD')`, stripping tracking fields like `_type`, converting `FileValue` with `convertFormFileFieldData`, etc.).
 >
 > **✅ Correct (no transform needed):**
+>
 > ```tsx
 > submissionConfig={{
 >   template: 'create',
@@ -672,6 +674,7 @@ return (
 > ```
 >
 > **❌ Unnecessary wrapping (no transform needed):**
+>
 > ```tsx
 > submissionConfig={{
 >   template: 'create',
@@ -680,6 +683,7 @@ return (
 > ```
 >
 > **✅ Correct (transform needed):**
+>
 > ```tsx
 > submissionConfig={{
 >   handler: async formData => {
@@ -849,13 +853,13 @@ formStateStore.getState().type  // access type from any context
 
 In the new system, this is replaced by `react-hook-form`'s API:
 
-| Old Zustand pattern                                                           | New `react-hook-form` equivalent                                                    |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `formStateStore.getState()`                                                   | `form.getValues()`                                                                  |
-| `formStateStore.getState().fieldName`                                         | `form.getValues('fieldName')`                                                       |
-| `formStateStore.subscribe(callback)` | `useWatch({ control })` in render, or `form.watch((data) => {...})` for side-effects |
-| `setData(old => ({ ...old, key: val }))` | `form.setValue('key', val)` |
-| `formStateStore.getState().fieldName` in field's `actionButtonOption.onClick` | Just use JS closure — `form` is available in the component scope |
+| Old Zustand pattern                                                           | New `react-hook-form` equivalent                                                     |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `formStateStore.getState()`                                                   | `form.getValues()`                                                                   |
+| `formStateStore.getState().fieldName`                                         | `form.getValues('fieldName')`                                                        |
+| `formStateStore.subscribe(callback)`                                          | `useWatch({ control })` in render, or `form.watch((data) => {...})` for side-effects |
+| `setData(old => ({ ...old, key: val }))`                                      | `form.setValue('key', val)`                                                          |
+| `formStateStore.getState().fieldName` in field's `actionButtonOption.onClick` | Just use JS closure — `form` is available in the component scope                     |
 
 > **Important:** When using `form.setValue()` programmatically (not triggered by user input), pass `{ shouldValidate: true }` as the third argument to ensure the new value is validated immediately. Without this, the error state won't update until the next user interaction. Example: `form.setValue('family', metadata.family, { shouldValidate: true })`.
 
@@ -1273,6 +1277,7 @@ const overrideKey = useWatch({ control: form.control, name: 'overrideKey' })
 ```
 
 This applies everywhere you need to reactively read form values in the render path:
+
 - Conditional field visibility (Step 6)
 - Derived/computed listbox options (Step 7)
 - Any other render-time value reading from the form
