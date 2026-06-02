@@ -8,6 +8,7 @@ import forge from '../forge'
 import scanFederatedModules, {
   type ModuleManifestEntry
 } from '../utils/scanFederatedModules'
+import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
 
 const APPS_DIR = path.join(ROOT_DIR, 'apps')
 
@@ -193,4 +194,22 @@ export const uninstall = forge
 
       return response.ok({ success: false, error: message })
     }
+  })
+
+export const checkModuleAvailability = forge
+  .query({
+    description: 'Check if a module is available (installed)',
+    input: {
+      query: z.object({
+        moduleId: z.string().min(1)
+      })
+    },
+    output: {
+      OK: z.boolean()
+    }
+  })
+  .callback(async ({ query: { moduleId }, response }) => {
+    const available = await checkModulesAvailability(moduleId)
+
+    return response.ok(available)
   })

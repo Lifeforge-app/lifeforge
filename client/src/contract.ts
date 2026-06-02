@@ -2419,6 +2419,36 @@ export const contract = {
     }
   },
   "modules": {
+    "checkModuleAvailability": {
+      "method": "get",
+      "description": "Check if a module is available (installed)",
+      "noAuth": false,
+      "encrypted": true,
+      "isDownloadable": false,
+      "media": null,
+      "input": {
+        "query": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "moduleId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "moduleId"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "boolean"
+        }
+      }
+    },
     "list": {
       "method": "get",
       "description": "List installed modules with metadata",
