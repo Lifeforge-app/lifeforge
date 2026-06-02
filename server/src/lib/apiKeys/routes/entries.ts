@@ -16,8 +16,7 @@ const get = forge
       })
     },
     output: {
-      OK: z.string(),
-      NOT_FOUND: true,
+      OK: z.string().nullable(),
       FORBIDDEN: true
     }
   })
@@ -26,7 +25,7 @@ const get = forge
       .collection('entries')
       .filter([
         {
-          field: 'id',
+          field: 'keyId',
           operator: '=',
           value: keyId
         }
@@ -35,7 +34,7 @@ const get = forge
       .catch(() => null)
 
     if (!entry) {
-      return response.notFound()
+      return response.ok(null)
     }
 
     if (!entry.exposable) {
