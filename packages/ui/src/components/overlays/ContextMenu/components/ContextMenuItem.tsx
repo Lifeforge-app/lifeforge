@@ -70,6 +70,9 @@ export function ContextMenuItem({
       <DropdownMenuPrimitive.Item
         asChild
         disabled={disabled || loading}
+        style={{
+          userSelect: 'none'
+        }}
         onClick={e => {
           if (disabled || loading) {
             e.preventDefault()
