@@ -114,7 +114,6 @@ export function DateInput({
               placeholderText={`August 7, ${dayjs().year()}${
                 hasTime ? ' 08:07 AM' : ''
               }`}
-              popperClassName="-mx-13"
               popperPlacement="bottom-start"
               portalId="app"
               renderCustomHeader={(props: {
