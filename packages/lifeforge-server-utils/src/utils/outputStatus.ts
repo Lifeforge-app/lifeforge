@@ -7,6 +7,9 @@ export const Output = {
     $status: 201,
     hasPayload: true
   },
+  ACCEPTED: {
+    $status: 202
+  },
   NO_CONTENT: {
     $status: 204
   },
