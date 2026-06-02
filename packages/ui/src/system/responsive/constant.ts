@@ -6,7 +6,8 @@ export const RESPONSIVE_CONDITIONS = {
   md: { '@media': '(min-width: 768px)' },
   lg: { '@media': '(min-width: 1024px)' },
   xl: { '@media': '(min-width: 1280px)' },
-  '2xl': { '@media': '(min-width: 1536px)' }
+  '2xl': { '@media': '(min-width: 1536px)' },
+  print: { '@media': 'print' }
 } as const satisfies Record<Breakpoint, object>
 
 export const LAYOUT_PROP_DEFS = {

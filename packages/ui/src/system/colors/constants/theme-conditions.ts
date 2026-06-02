@@ -7,6 +7,7 @@ export type ThemeConditionPropName =
   | 'darkHasBgImage'
   | 'hasBgImageHover'
   | 'hasBgImageDarkHover'
+  | 'print'
 
 export type ThemeConditionProp<T> =
   | T
@@ -52,6 +53,12 @@ export const THEME_CONDITIONS = {
     suffix: '-has-bg-image-dark-hover',
     varSuffix: '-has-bg-image-dark-hover',
     selectorTemplate: '.dark .has-bg-image .{cls}:hover'
+  },
+  print: {
+    suffix: '-print',
+    varSuffix: '-print',
+    selectorTemplate: '.{cls}',
+    media: 'print'
   }
 } as const satisfies Record<
   ThemeConditionPropName,
@@ -59,5 +66,6 @@ export const THEME_CONDITIONS = {
     suffix: string
     varSuffix: string
     selectorTemplate: string
+    media?: string
   }
 >
