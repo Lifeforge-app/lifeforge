@@ -177,13 +177,12 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
     query: function <
       const TOutput extends OutputDefinition | 'custom',
       TQuery extends z.ZodTypeAny | undefined = undefined,
-      TBody extends z.ZodTypeAny | undefined = undefined,
       TMedia extends MediaConfig | null = null
     >(metadata: {
       description: string
       input?: {
         query?: TQuery
-        body?: TBody
+        body?: never
       }
       output: TOutput
       noAuth?: boolean
@@ -191,12 +190,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       isDownloadable?: boolean
       existenceCheck?: 'NOT_FOUND' extends keyof TOutput
         ? {
-            body?: Partial<
-              Record<
-                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
+            body?: never
             query?: Partial<
               Record<
                 TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
@@ -208,7 +202,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       media?: TMedia
       middlewares?: RequestHandler[]
     }) {
-      return buildRoute<'get', TOutput, TQuery, TBody, TMedia>('get', metadata)
+      return buildRoute<'get', TOutput, TQuery, never, TMedia>('get', metadata as any)
     },
 
     mutation: function <

@@ -95,9 +95,6 @@ export const contract = {
         "OK": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "object",
-          "propertyNames": {
-            "type": "string"
-          },
           "additionalProperties": {}
         },
         "NOT_FOUND": true
@@ -1394,16 +1391,10 @@ export const contract = {
                   },
                   "dashboardLayout": {
                     "type": "object",
-                    "propertyNames": {
-                      "type": "string"
-                    },
                     "additionalProperties": {}
                   },
                   "backdropFilters": {
                     "type": "object",
-                    "propertyNames": {
-                      "type": "string"
-                    },
                     "additionalProperties": {}
                   }
                 },
@@ -2545,9 +2536,6 @@ export const contract = {
                   },
                   "APIKeyAccess": {
                     "type": "object",
-                    "propertyNames": {
-                      "type": "string"
-                    },
                     "additionalProperties": {
                       "type": "object",
                       "properties": {
@@ -2666,9 +2654,6 @@ export const contract = {
             "anyOf": [
               {
                 "type": "object",
-                "propertyNames": {
-                  "type": "string"
-                },
                 "additionalProperties": {
                   "type": "string"
                 }
@@ -2692,14 +2677,8 @@ export const contract = {
           "OK": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "object",
-            "propertyNames": {
-              "type": "string"
-            },
             "additionalProperties": {
               "type": "object",
-              "propertyNames": {
-                "type": "string"
-              },
               "additionalProperties": {
                 "type": "string"
               }
@@ -2721,14 +2700,8 @@ export const contract = {
             "properties": {
               "data": {
                 "type": "object",
-                "propertyNames": {
-                  "type": "string"
-                },
                 "additionalProperties": {
                   "type": "object",
-                  "propertyNames": {
-                    "type": "string"
-                  },
                   "additionalProperties": {
                     "type": "string"
                   }
