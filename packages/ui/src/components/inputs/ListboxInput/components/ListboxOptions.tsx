@@ -40,6 +40,9 @@ export function ListboxOptions({
           transition
           anchor={portal ? 'bottom start' : undefined}
           portal={portal}
+          onMouseDown={e => {
+            e.stopPropagation()
+          }}
         >
           {children}
         </HeadlessListboxOptions>

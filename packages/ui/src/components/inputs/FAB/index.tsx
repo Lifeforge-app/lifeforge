@@ -28,7 +28,7 @@ export function FAB({
       }
       position="fixed"
       right="1.5em"
-      zIndex="9992"
+      zIndex="10"
     >
       <Button {...props} icon={icon} />
     </Flex>

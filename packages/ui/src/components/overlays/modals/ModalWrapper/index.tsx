@@ -69,6 +69,7 @@ export function ModalWrapper({
               sm: 'calc(100vw - 8rem)'
             }}
             minWidth="0"
+            overflowX="hidden"
             overflowY="auto"
             p="lg"
             position="absolute"
