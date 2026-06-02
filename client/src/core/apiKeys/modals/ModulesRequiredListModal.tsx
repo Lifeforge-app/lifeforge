@@ -10,7 +10,8 @@ import {
   Stack,
   TAILWIND_PALETTE,
   TagChip,
-  Text
+  Text,
+  colorWithOpacity
 } from '@lifeforge/ui'
 
 function ModulesRequiredListModal({
@@ -55,17 +56,27 @@ function ModulesRequiredListModal({
             direction="row"
             justify="between"
           >
-            <Box>
-              <Flex asChild centered gap="sm">
+            <Flex align="center" gap="md">
+              <Flex
+                centered
+                bg={colorWithOpacity('bg-500', '20%')}
+                height="3.2em"
+                r="md"
+                width="3.2em"
+              >
+                <Icon color="bg-500" icon={module.icon} size="1.75em" />
+              </Flex>
+
+              <Box>
                 <Text as="h3" size="lg" weight="medium">
-                  <Icon icon={module.icon} />
                   {module.name}
                 </Text>
-              </Flex>
-              <Text as="p" color="muted" mt="xs">
-                {module.APIKeyAccess?.[keyId].usage}
-              </Text>
-            </Box>
+                <Text as="p" color="muted" mt="xs">
+                  {module.APIKeyAccess?.[keyId].usage}
+                </Text>
+              </Box>
+            </Flex>
+
             {module.APIKeyAccess?.[keyId].required ? (
               <TagChip
                 color={TAILWIND_PALETTE.red['500']}
