@@ -91,6 +91,7 @@ Every route **must** declare an `output` object with at least one status key. Th
 | -------------- | ---- | --------------- |
 | `OK`           | 200  | ✅ `z.schema()` |
 | `CREATED`      | 201  | ✅ `z.schema()` |
+| `ACCEPTED`     | 202  | ❌ `true`       |
 | `NO_CONTENT`   | 204  | ❌ `true`       |
 | `BAD_REQUEST`  | 400  | ✅ `z.string()` |
 | `UNAUTHORIZED` | 401  | ❌ `true`       |
@@ -100,13 +101,17 @@ Every route **must** declare an `output` object with at least one status key. Th
 
 **Rules:**
 
-- If `hasPayload: true` → value must be a `z.ZodTypeAny` schema
+- If `hasPayload: true` → value must be a `z.ZodTypeAny` schema (NEVER `z.any()` or `.passthrough()`)
 - If `hasPayload` is absent → value must be `true`
 - `BAD_REQUEST` payload is `z.string()` (error message)
 
+When the return shape comes from an external API or complex join, define the zod schema explicitly inline or at the top of the file — do NOT fall back to `z.any()`.
+
 ### 3. Output data types must be serializable to JSON Schema
 
-Do NOT use `z.custom()`, `z.void()`, `z.undefined()`, or `z.unknown()` — these are not serializable to JSON Schema.
+Do NOT use `z.custom()`, `z.void()`, `z.undefined()`, `z.unknown()`, `z.any()`, or `z.object({}).passthrough()` — these are not serializable to JSON Schema.
+
+**`z.any()` and `.passthrough()` are ABSOLUTELY PROHIBITED in output schemas.** Every status key with a payload must have an explicitly defined zod schema that accurately describes the return shape.
 
 ```typescript
 // ❌ Bad — not serializable
@@ -141,6 +146,31 @@ output: {
   )
 }
 ```
+
+For nested external API responses, write the full zod schema matching every field:
+
+```typescript
+// ✅ Good — full explicit schema for external API response
+const ProjectDetailsSchema = z.object({
+  id: z.string(),
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  downloads: z.number(),
+  followers: z.number(),
+  icon_url: z.string(),
+  // ... every field explicitly typed
+})
+
+output: {
+  OK: ProjectDetailsSchema
+}
+
+// ❌ Bad — z.any() is NOT allowed
+output: {
+  OK: z.any()  // PROHIBITED
+}
+
 
 ### 4. Input schemas must be plain — no `.transform()` in zod
 
@@ -250,7 +280,38 @@ return response.badRequest('Something went wrong')
 
 Each `response.<status>()` corresponds to an output key declared in the config. If the status has a payload, pass the payload as an argument; otherwise call it with no arguments.
 
-### 7. Wrap return values in `response.ok(...)` / `response.created(...)`
+### 7. The response helper must match an output key
+
+Each `response.<method>()` call must correspond to a key declared in the `output` object. The method name determines which HTTP status code is returned:
+
+| Output key      | Response method          | HTTP code |
+| --------------- | ------------------------ | --------- |
+| `OK`            | `response.ok(payload)`   | 200       |
+| `CREATED`       | `response.created(payload)` | 201    |
+| `ACCEPTED`      | `response.accepted()`    | 202       |
+| `NO_CONTENT`    | `response.noContent()`   | 204       |
+| `BAD_REQUEST`   | `response.badRequest(msg)` | 400     |
+| `UNAUTHORIZED`  | `response.unauthorized()` | 401      |
+| `FORBIDDEN`     | `response.forbidden()`   | 403       |
+| `NOT_FOUND`     | `response.notFound()`    | 404       |
+| `CONFLICT`      | `response.conflict()`    | 409       |
+
+```typescript
+// ✅ Correct — NO_CONTENT in output, response.noContent() in callback
+output: { NO_CONTENT: true, NOT_FOUND: true }
+// ...
+return response.noContent()
+
+// ❌ Wrong — output has NO_CONTENT but callback uses response.ok()
+// This will cause a runtime error because the response type doesn't match
+output: { NO_CONTENT: true }
+// ...
+return response.ok(someValue)  // Error!
+```
+
+For statuses with a payload (OK, CREATED, BAD_REQUEST), pass the payload as an argument. For statuses without a payload (NO_CONTENT, NOT_FOUND, etc.), call with no arguments.
+
+### 8. Wrap return values in `response.ok(...)` / `response.created(...)`
 
 ```typescript
 // ❌ Old
@@ -296,7 +357,25 @@ output: {
 }
 ```
 
-### 10. Get `response` from context destructuring
+### 10. Callbacks that use `await` must be `async`
+
+If the callback body uses `await` (e.g. awaiting a PocketBase call), the callback itself must be declared `async`:
+
+```typescript
+// ❌ Bad — missing async/await
+.callback(({ pb, query: { id }, response }) =>
+  response.ok(pb.getOne.collection('calendars').id(id).execute())
+)
+
+// ✅ Good — async with await
+.callback(async ({ pb, query: { id }, response }) =>
+  response.ok(await pb.getOne.collection('calendars').id(id).execute())
+)
+```
+
+This includes one-liner arrow functions that perform async operations — they must use `async`/`await` just like any other async function.
+
+### 11. Get `response` from context destructuring
 
 The `response` helpers object is available in the callback context:
 
