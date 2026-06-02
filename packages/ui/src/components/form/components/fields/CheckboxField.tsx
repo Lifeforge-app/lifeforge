@@ -35,7 +35,9 @@ export function CheckboxField<TFieldValues extends FieldValues>({
   })
 
   const contextNamespace = useNamespace()
+
   const activeNamespace = namespace ?? contextNamespace
+
   const { t } = useTranslation(activeNamespace)
 
   const labelText = t([

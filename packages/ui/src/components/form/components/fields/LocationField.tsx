@@ -29,22 +29,35 @@ export function LocationField<TFieldValues extends FieldValues>({
   namespace,
   ...rest
 }: LocationFieldProps<TFieldValues>) {
-  const { field } = useController({
+  const { field, fieldState } = useController({
     control,
     name
   })
 
   const contextNamespace = useNamespace()
+
   const activeNamespace = namespace ?? contextNamespace
 
   return (
     <LocationInput
       autoFocus={autoFocus}
       disabled={disabled}
-      required={required}
+      errorMsg={fieldState.error?.message}
       namespace={activeNamespace}
-      value={field.value ?? null}
-      onChange={field.onChange}
+      required={required}
+      value={field.value}
+      onChange={val =>
+        field.onChange(
+          val ?? {
+            name: '',
+            formattedAddress: '',
+            location: {
+              latitude: 0,
+              longitude: 0
+            }
+          }
+        )
+      }
       {...rest}
     />
   )

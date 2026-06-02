@@ -27,6 +27,7 @@ export function DateField<TFieldValues extends FieldValues>({
   })
 
   const contextNamespace = useNamespace()
+
   const activeNamespace = namespace ?? contextNamespace
 
   const val = field.value as unknown
