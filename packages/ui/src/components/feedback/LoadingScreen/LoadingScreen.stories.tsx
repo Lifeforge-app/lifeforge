@@ -5,7 +5,8 @@ import { Box } from '@/components/primitives'
 import { LoadingScreen } from './index'
 
 const meta = {
-  component: LoadingScreen
+  component: LoadingScreen,
+  title: 'Feedback/LoadingScreen'
 } satisfies Meta<typeof LoadingScreen>
 
 export default meta

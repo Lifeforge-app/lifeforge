@@ -7,7 +7,8 @@ import { useModalStore } from '@/providers'
 import { QRCodeScanner as QrCodeScanner } from './index'
 
 const meta = {
-  component: QrCodeScanner
+  component: QrCodeScanner,
+  title: 'Inputs/QRCodeScanner'
 } satisfies Meta<typeof QrCodeScanner>
 
 export default meta

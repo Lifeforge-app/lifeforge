@@ -5,7 +5,8 @@ import { ModalWrapper } from '@/components/overlays'
 import { FlatUIColorsModal } from './index'
 
 const meta = {
-  component: FlatUIColorsModal
+  component: FlatUIColorsModal,
+  title: 'Inputs/ColorInput/FlatUIColorsModal'
 } satisfies Meta<typeof FlatUIColorsModal>
 
 export default meta

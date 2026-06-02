@@ -16,7 +16,8 @@ const meta = {
       control: false
     }
   },
-  component: ViewModeSelector
+  component: ViewModeSelector,
+  title: 'DataDisplay/ViewModeSelector'
 } satisfies Meta<typeof ViewModeSelector>
 
 export default meta

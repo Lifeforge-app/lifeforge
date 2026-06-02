@@ -10,7 +10,8 @@ const meta = {
       control: false
     }
   },
-  component: Alert
+  component: Alert,
+  title: 'Feedback/Alert'
 } satisfies Meta<typeof Alert>
 
 export default meta

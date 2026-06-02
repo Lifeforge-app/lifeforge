@@ -3,7 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { NumberInput } from './index'
 
 const meta = {
-  component: NumberInput
+  component: NumberInput,
+  title: 'Inputs/NumberInput'
 } satisfies Meta<typeof NumberInput>
 
 export default meta

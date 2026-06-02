@@ -7,7 +7,8 @@ import { useModalStore } from '@/providers'
 import { ConfirmationModal } from './index'
 
 const meta = {
-  component: ConfirmationModal
+  component: ConfirmationModal,
+  title: 'Overlays/ConfirmationModal'
 } satisfies Meta<typeof ConfirmationModal>
 
 export default meta

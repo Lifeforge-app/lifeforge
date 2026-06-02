@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { Switch } from './index'
 
 const meta = {
-  component: Switch
+  component: Switch,
+  title: 'Inputs/Switch'
 } satisfies Meta<typeof Switch>
 
 export default meta

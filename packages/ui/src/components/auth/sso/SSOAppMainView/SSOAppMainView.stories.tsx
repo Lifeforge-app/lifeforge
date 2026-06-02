@@ -5,7 +5,8 @@ import { Box } from '@/components/primitives'
 import { SSOAppMainView } from '.'
 
 const meta = {
-  component: SSOAppMainView
+  component: SSOAppMainView,
+  title: 'Auth/SSO/SSOAppMainView'
 } satisfies Meta<typeof SSOAppMainView>
 
 export default meta

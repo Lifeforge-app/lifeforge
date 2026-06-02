@@ -8,7 +8,8 @@ import { TAILWIND_PALETTE, type TokenizedColor } from '@/system'
 import { Widget } from './index'
 
 const meta = {
-  component: Widget
+  component: Widget,
+  title: 'DataDisplay/Widget'
 } satisfies Meta<typeof Widget>
 
 export default meta

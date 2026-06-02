@@ -4,7 +4,8 @@ import { ContextMenu } from '..'
 import { ContextMenuItem } from './ContextMenuItem'
 
 const meta = {
-  component: ContextMenuItem
+  component: ContextMenuItem,
+  title: 'Overlays/ContextMenu/ContextMenuItem'
 } satisfies Meta<typeof ContextMenuItem>
 
 export default meta

@@ -25,7 +25,8 @@ const meta = {
       options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
     }
   },
-  component: Bordered
+  component: Bordered,
+  title: 'Primitives/Bordered'
 } satisfies Meta<typeof Bordered>
 
 export default meta

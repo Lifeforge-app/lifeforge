@@ -8,7 +8,8 @@ import { WithQuery } from '@/components/utilities'
 import { SearchInput } from './index'
 
 const meta = {
-  component: SearchInput
+  component: SearchInput,
+  title: 'Inputs/SearchInput'
 } satisfies _Meta<typeof SearchInput>
 
 export default meta

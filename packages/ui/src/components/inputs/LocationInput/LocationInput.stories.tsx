@@ -12,7 +12,8 @@ const meta = {
       control: false
     }
   },
-  component: LocationInput
+  component: LocationInput,
+  title: 'Inputs/LocationInput'
 } satisfies Meta<typeof LocationInput>
 
 export default meta

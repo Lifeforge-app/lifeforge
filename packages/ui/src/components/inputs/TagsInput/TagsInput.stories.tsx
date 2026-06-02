@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { TagsInput } from './index'
 
 const meta = {
-  component: TagsInput
+  component: TagsInput,
+  title: 'Inputs/TagsInput'
 } satisfies Meta<typeof TagsInput>
 
 export default meta

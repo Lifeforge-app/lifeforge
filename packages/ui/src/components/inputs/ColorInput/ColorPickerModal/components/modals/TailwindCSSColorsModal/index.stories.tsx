@@ -5,7 +5,8 @@ import { ModalWrapper } from '@/components/overlays'
 import { TailwindCSSColorsModal } from './index'
 
 const meta = {
-  component: TailwindCSSColorsModal
+  component: TailwindCSSColorsModal,
+  title: 'Inputs/ColorInput/TailwindCSSColorsModal'
 } satisfies Meta<typeof TailwindCSSColorsModal>
 
 export default meta

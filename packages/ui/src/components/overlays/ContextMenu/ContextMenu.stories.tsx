@@ -12,7 +12,8 @@ const meta = {
       control: false
     }
   },
-  component: ContextMenu
+  component: ContextMenu,
+  title: 'Overlays/ContextMenu'
 } satisfies Meta<typeof ContextMenu>
 
 export default meta

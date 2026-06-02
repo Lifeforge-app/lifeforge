@@ -10,7 +10,8 @@ import { VariantContainer } from '@/storybook/VariantContainer'
 import { Button } from './index'
 
 const meta = {
-  component: Button
+  component: Button,
+  title: 'Inputs/Button'
 } satisfies Meta<typeof Button>
 
 export default meta

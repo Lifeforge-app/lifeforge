@@ -8,7 +8,8 @@ import { SidebarWrapper } from '../SidebarWrapper'
 import { SidebarDivider } from './index'
 
 const meta = {
-  component: SidebarDivider
+  component: SidebarDivider,
+  title: 'Navigation/Sidebar/SidebarDivider'
 } satisfies Meta<typeof SidebarDivider>
 
 export default meta

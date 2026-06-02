@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { Checkbox } from './index'
 
 const meta = {
-  component: Checkbox
+  component: Checkbox,
+  title: 'Inputs/Checkbox'
 } satisfies Meta<typeof Checkbox>
 
 export default meta

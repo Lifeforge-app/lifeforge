@@ -9,7 +9,8 @@ import { SidebarWrapper } from '../SidebarWrapper'
 import { SidebarTitle } from './index'
 
 const meta = {
-  component: SidebarTitle
+  component: SidebarTitle,
+  title: 'Navigation/Sidebar/SidebarTitle'
 } satisfies Meta<typeof SidebarTitle>
 
 export default meta

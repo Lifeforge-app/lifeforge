@@ -18,7 +18,8 @@ const meta = {
       control: 'boolean'
     }
   },
-  component: ErrorScreen
+  component: ErrorScreen,
+  title: 'Feedback/ErrorScreen'
 } satisfies Meta<typeof ErrorScreen>
 
 export default meta

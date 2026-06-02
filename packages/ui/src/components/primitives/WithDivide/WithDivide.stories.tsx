@@ -14,7 +14,8 @@ const meta = {
     children: { control: false },
     color: { control: 'color' }
   },
-  component: WithDivide
+  component: WithDivide,
+  title: 'Primitives/WithDivide'
 } satisfies Meta<typeof WithDivide>
 
 export default meta

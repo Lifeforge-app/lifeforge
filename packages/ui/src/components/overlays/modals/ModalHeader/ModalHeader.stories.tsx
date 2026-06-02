@@ -16,7 +16,8 @@ const meta = {
     onClose: { control: false },
     title: { control: 'text' }
   },
-  component: ModalHeader
+  component: ModalHeader,
+  title: 'Overlays/ModalHeader'
 } satisfies Meta<typeof ModalHeader>
 
 export default meta

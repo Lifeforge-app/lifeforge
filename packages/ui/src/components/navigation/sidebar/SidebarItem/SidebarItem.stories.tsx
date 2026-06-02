@@ -30,7 +30,8 @@ const meta = {
       }
     }
   },
-  component: SidebarItem
+  component: SidebarItem,
+  title: 'Navigation/Sidebar/SidebarItem'
 } satisfies Meta<typeof SidebarItem>
 
 export default meta

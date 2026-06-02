@@ -6,7 +6,8 @@ import { Bordered, Flex } from '@/components/primitives'
 import { OTPInputBox } from './index'
 
 const meta = {
-  component: OTPInputBox
+  component: OTPInputBox,
+  title: 'Auth/OTPInputBox'
 } satisfies Meta<typeof OTPInputBox>
 
 export default meta

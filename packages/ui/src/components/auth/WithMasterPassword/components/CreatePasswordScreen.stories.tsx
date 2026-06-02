@@ -6,7 +6,8 @@ import { mockController } from '../../../../storybook/mockController'
 import { CreatePasswordScreen } from './CreatePasswordScreen'
 
 const meta = {
-  component: CreatePasswordScreen
+  component: CreatePasswordScreen,
+  title: 'Auth/WithMasterPassword/CreatePasswordScreen'
 } satisfies Meta<typeof CreatePasswordScreen>
 
 export default meta

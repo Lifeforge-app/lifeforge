@@ -15,7 +15,8 @@ const meta = {
       control: { min: 1, step: 1, type: 'number' }
     }
   },
-  component: Pagination
+  component: Pagination,
+  title: 'Navigation/Pagination'
 } satisfies Meta<typeof Pagination>
 
 export default meta

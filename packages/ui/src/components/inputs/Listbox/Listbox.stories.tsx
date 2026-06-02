@@ -22,7 +22,8 @@ const meta = {
       control: false
     }
   },
-  component: Listbox
+  component: Listbox,
+  title: 'Inputs/Listbox'
 } satisfies Meta<typeof Listbox>
 
 export default meta

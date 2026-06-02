@@ -11,7 +11,8 @@ const meta = {
   argTypes: {
     children: { control: false }
   },
-  component: Slot
+  component: Slot,
+  title: 'Primitives/Slot'
 } satisfies Meta<typeof Slot>
 
 export default meta

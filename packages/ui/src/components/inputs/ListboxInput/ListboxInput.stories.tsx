@@ -9,7 +9,8 @@ import { ListboxOption } from './components/ListboxOption'
 import { ListboxInput } from './index'
 
 const meta = {
-  component: ListboxInput
+  component: ListboxInput,
+  title: 'Inputs/ListboxInput'
 } satisfies Meta<typeof ListboxInput>
 
 export default meta

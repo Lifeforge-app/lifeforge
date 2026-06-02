@@ -15,7 +15,8 @@ const meta = {
       }
     }
   },
-  component: TextInput
+  component: TextInput,
+  title: 'Inputs/TextInput'
 } satisfies Meta<typeof TextInput>
 
 export default meta

@@ -16,7 +16,8 @@ const meta = {
       control: false
     }
   },
-  component: OptionsColumn
+  component: OptionsColumn,
+  title: 'DataDisplay/OptionsColumn'
 } satisfies Meta<typeof OptionsColumn>
 
 export default meta
