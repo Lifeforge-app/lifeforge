@@ -19,15 +19,19 @@ export function ComboboxOptions({
         bg={{ base: 'bg-100', dark: 'bg-800' }}
         className={styles.options}
         overflowY="auto"
+        position="absolute"
         r="md"
         style={{
           // @ts-expect-error - headlessui CSS variable
           '--anchor-gap': '12px',
-          width: customWidth ?? 'var(--input-width)'
+          width:
+            customWidth ?? 'calc(var(--input-width) + var(--spacing) * 16)',
+          top: 'calc(var(--spacing) * 22)',
+          left: 0
         }}
         zIndex="9999"
       >
-        <HeadlessComboBoxOptions anchor="bottom start">
+        <HeadlessComboBoxOptions portal={false}>
           {children}
         </HeadlessComboBoxOptions>
       </Bordered>
