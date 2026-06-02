@@ -53,6 +53,14 @@ function fixJSONSchemaRecord(schema: any): any {
     result.additionalProperties = false
   }
 
+  if (
+    result.type === 'object' &&
+    result.propertyNames &&
+    !result.propertyNames.enum
+  ) {
+    delete result.propertyNames
+  }
+
   if (result.allOf && Array.isArray(result.allOf)) {
     result.allOf = result.allOf.map((sub: any) => {
       if (sub && typeof sub === 'object') {
