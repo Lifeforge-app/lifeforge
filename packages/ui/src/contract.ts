@@ -236,7 +236,126 @@ export const contract = {
         "input": {},
         "output": {
           "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema"
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "format": "email",
+                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+              },
+              "emailVisibility": {
+                "type": "boolean"
+              },
+              "verified": {
+                "type": "boolean"
+              },
+              "username": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "avatar": {
+                "type": "string"
+              },
+              "dateOfBirth": {
+                "type": "string"
+              },
+              "theme": {
+                "type": "string",
+                "enum": [
+                  "system",
+                  "light",
+                  "dark"
+                ]
+              },
+              "color": {
+                "type": "string"
+              },
+              "bgTemp": {
+                "type": "string"
+              },
+              "bgImage": {
+                "type": "string"
+              },
+              "backdropFilters": {},
+              "fontFamily": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "dashboardLayout": {},
+              "fontScale": {
+                "type": "number"
+              },
+              "pinnedFontFamilies": {},
+              "borderRadiusMultiplier": {
+                "type": "number"
+              },
+              "bordered": {
+                "type": "boolean"
+              },
+              "created": {
+                "type": "string"
+              },
+              "updated": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "collectionId": {
+                "type": "string"
+              },
+              "collectionName": {
+                "type": "string"
+              },
+              "hasMasterPassword": {
+                "type": "boolean"
+              },
+              "hasJournalMasterPassword": {
+                "type": "boolean"
+              },
+              "hasAPIKeysMasterPassword": {
+                "type": "boolean"
+              },
+              "twoFAEnabled": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "email",
+              "emailVisibility",
+              "verified",
+              "username",
+              "name",
+              "avatar",
+              "dateOfBirth",
+              "theme",
+              "color",
+              "bgTemp",
+              "bgImage",
+              "backdropFilters",
+              "fontFamily",
+              "language",
+              "dashboardLayout",
+              "fontScale",
+              "pinnedFontFamilies",
+              "borderRadiusMultiplier",
+              "bordered",
+              "created",
+              "updated",
+              "id",
+              "collectionId",
+              "collectionName",
+              "hasMasterPassword",
+              "hasJournalMasterPassword",
+              "hasAPIKeysMasterPassword",
+              "twoFAEnabled"
+            ],
+            "additionalProperties": false
           },
           "NOT_FOUND": true
         }
@@ -338,7 +457,8 @@ export const contract = {
         },
         "output": {
           "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema"
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "boolean"
           }
         }
       },
@@ -384,7 +504,41 @@ export const contract = {
         },
         "output": {
           "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema"
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "codeVerifier": {
+                "type": "string"
+              },
+              "codeChallenge": {
+                "type": "string"
+              },
+              "codeChallengeMethod": {
+                "type": "string"
+              },
+              "authURL": {
+                "type": "string"
+              },
+              "displayName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "state",
+              "codeVerifier",
+              "codeChallenge",
+              "codeChallengeMethod",
+              "authURL",
+              "displayName"
+            ],
+            "additionalProperties": false
           },
           "BAD_REQUEST": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -1662,7 +1816,53 @@ export const contract = {
         },
         "output": {
           "CREATED": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema"
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "keyId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string"
+              },
+              "key": {
+                "type": "string"
+              },
+              "exposable": {
+                "type": "boolean"
+              },
+              "created": {
+                "type": "string"
+              },
+              "updated": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "collectionId": {
+                "type": "string"
+              },
+              "collectionName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "keyId",
+              "name",
+              "icon",
+              "key",
+              "exposable",
+              "created",
+              "updated",
+              "id",
+              "collectionId",
+              "collectionName"
+            ],
+            "additionalProperties": false
           }
         }
       },
@@ -1723,7 +1923,53 @@ export const contract = {
         },
         "output": {
           "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema"
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "keyId": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string"
+              },
+              "key": {
+                "type": "string"
+              },
+              "exposable": {
+                "type": "boolean"
+              },
+              "created": {
+                "type": "string"
+              },
+              "updated": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "collectionId": {
+                "type": "string"
+              },
+              "collectionName": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "keyId",
+              "name",
+              "icon",
+              "key",
+              "exposable",
+              "created",
+              "updated",
+              "id",
+              "collectionId",
+              "collectionName"
+            ],
+            "additionalProperties": false
           },
           "NOT_FOUND": true
         }

@@ -36,7 +36,15 @@ export const getEndpoint = forge
       })
     },
     output: {
-      OK: z.any(),
+      OK: z.object({
+        name: z.string(),
+        state: z.string(),
+        codeVerifier: z.string(),
+        codeChallenge: z.string(),
+        codeChallengeMethod: z.string(),
+        authURL: z.string(),
+        displayName: z.string()
+      }),
       BAD_REQUEST: z.string()
     }
   })

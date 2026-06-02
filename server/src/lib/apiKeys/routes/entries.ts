@@ -112,7 +112,7 @@ const create = forge
       })
     },
     output: {
-      CREATED: z.any()
+      CREATED: schema.entries
     }
   })
   .callback(
@@ -158,7 +158,7 @@ const update = forge
       }
     },
     output: {
-      OK: z.any(),
+      OK: schema.entries,
       NOT_FOUND: true
     }
   })
