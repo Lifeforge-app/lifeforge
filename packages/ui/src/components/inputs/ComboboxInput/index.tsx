@@ -118,9 +118,7 @@ export function ComboboxInput<T>({
     >
       <Flex align="center" position="relative" width="100%">
         {variant === 'classic' && icon && (
-          <Box position="absolute">
-            <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
-          </Box>
+          <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
         )}
         {variant === 'classic' && label && (
           <Box
@@ -148,9 +146,6 @@ export function ComboboxInput<T>({
               asChild
               p={variant === 'plain' ? 'md' : undefined}
               pr="3xl"
-              style={
-                variant === 'classic' ? { paddingLeft: '3.5rem' } : undefined
-              }
               width="100%"
             >
               <HeadlessComboboxInput
@@ -158,6 +153,10 @@ export function ComboboxInput<T>({
                 displayValue={displayValue}
                 onChange={e => {
                   setQuery(e.target.value)
+
+                  if (e.target.value === '') {
+                    onChange(undefined as unknown as T)
+                  }
                 }}
               />
             </Box>
