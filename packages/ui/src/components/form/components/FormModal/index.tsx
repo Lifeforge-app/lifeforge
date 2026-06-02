@@ -77,7 +77,7 @@ export function FormModal<T extends FieldValues>({
       : submissionConfig
 
   return (
-    <NamespaceContext.Provider value={namespace}>
+    <NamespaceContext value={namespace}>
       <Stack gap="sm" minWidth="50vw">
         <ModalHeader
           headerActions={headerActions}
@@ -112,6 +112,6 @@ export function FormModal<T extends FieldValues>({
           </Flex>
         )}
       </Stack>
-    </NamespaceContext.Provider>
+    </NamespaceContext>
   )
 }
