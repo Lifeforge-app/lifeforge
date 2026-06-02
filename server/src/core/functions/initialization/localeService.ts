@@ -80,7 +80,7 @@ export class LocaleService {
 
     this.languagePacks = fs
       .readdirSync(LANGUAGE_PACK_PATH)
-      .filter(e => !['.gitkeep', 'package.json'].includes(e))
+      .filter(e => !['.gitkeep', 'package.json', '.DS_Store'].includes(e))
 
     if (!this.languagePacks.length) {
       localeLogger.error(

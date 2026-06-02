@@ -10,6 +10,7 @@ import z from 'zod'
 
 import { currentSession } from '..'
 import forge from '../forge'
+import userSchemas from '../schema'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
 
 export const validateOTP = forge
@@ -23,11 +24,11 @@ export const validateOTP = forge
       })
     },
     output: {
-      OK: z.any()
+      OK: z.boolean()
     }
   })
   .callback(async ({ pb, body, response }) =>
-    response.ok(_validateOTP(pb, body))
+    response.ok(await _validateOTP(pb, body))
   )
 
 export const generateOTP = forge
@@ -157,7 +158,16 @@ export const getUserData = forge
     description: 'Get current user data',
     input: {},
     output: {
-      OK: z.any(),
+      OK: userSchemas.users.omit({
+        masterPasswordHash: true,
+        APIKeysMasterPasswordHash: true,
+        twoFASecret: true
+      }).extend({
+        hasMasterPassword: z.boolean(),
+        hasJournalMasterPassword: z.boolean(),
+        hasAPIKeysMasterPassword: z.boolean(),
+        twoFAEnabled: z.boolean()
+      }),
       NOT_FOUND: true
     }
   })

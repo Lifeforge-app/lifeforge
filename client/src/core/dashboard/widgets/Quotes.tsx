@@ -67,7 +67,7 @@ export default function Quotes() {
             color={tinycolor(themeColor).isLight() ? 'bg-800' : 'bg-100'}
             size={{ base: 'lg', sm: 'xl' }}
           >
-            {quote.length ? (
+            {quote?.length ? (
               <>
                 {quote[0].q}
                 <br />
