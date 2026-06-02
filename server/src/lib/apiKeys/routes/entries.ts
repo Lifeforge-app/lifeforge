@@ -33,6 +33,8 @@ const get = forge
       .execute()
       .catch(() => null)
 
+    console.log(entry, keyId)
+
     if (!entry) {
       return response.ok(null)
     }
