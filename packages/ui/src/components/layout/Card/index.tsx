@@ -16,16 +16,19 @@ export function Card<T extends React.ElementType = 'div'>({
   return (
     <Flex
       shadow
-      bg={isInteractive ? surface.defaultInteractive : surface.default}
       direction="column"
       p="md"
       position="relative"
       r="lg"
+      {...(props as FlexProps<T>)}
+      bg={{
+        ...(isInteractive ? surface.defaultInteractive : surface.default),
+        ...props.bg
+      }}
       style={{
         ...(isInteractive ? { cursor: 'pointer', transition: 'all 0.2s' } : {}),
         ...style
       }}
-      {...(props as FlexProps<T>)}
     />
   )
 }
