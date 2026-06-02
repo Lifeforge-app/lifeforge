@@ -137,6 +137,7 @@ export function ListboxField<TFieldValues extends FieldValues, TOption>({
   })
 
   const contextNamespace = useNamespace()
+
   const activeNamespace = namespace ?? contextNamespace
 
   function handleListboxChange(val: unknown) {

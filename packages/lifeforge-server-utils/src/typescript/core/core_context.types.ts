@@ -2,6 +2,8 @@ import { Server } from 'socket.io'
 import { CleanedSchemas } from 'utils/schemaUtils'
 import z from 'zod'
 
+import type OpenAI from 'openai'
+
 import type { Logger } from '@lifeforge/log'
 
 import IPBService from '../pb/PBService.interface'
@@ -12,9 +14,9 @@ export type FetchAIFunc = <
   T extends z.ZodTypeAny | undefined = undefined
 >(params: {
   pb: IPBService<CleanedSchemas>
-  provider: 'groq' | 'openai'
+  provider: string
   model: string
-  messages: Record<string, unknown>[]
+  messages: OpenAI.ChatCompletionMessageParam[]
   structure?: T
 }) => Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null>
 
