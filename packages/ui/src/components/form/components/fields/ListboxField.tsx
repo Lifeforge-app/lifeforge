@@ -42,6 +42,8 @@ function OptionColorAndIcon({
   color?: string
   icon?: string
 }) {
+  if (!color && !icon) return null
+
   if (color && icon) {
     return <Icon icon={icon} style={{ color }} />
   }
