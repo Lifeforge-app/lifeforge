@@ -85,7 +85,7 @@ export function Tabs<
                     onTabChange(id as TKey)
                   }}
                 >
-                  {icon && <Icon icon={icon} size="1.25rem" />}
+                  {icon && <Icon icon={icon} />}
                   <Text
                     as="span"
                     display="block"
