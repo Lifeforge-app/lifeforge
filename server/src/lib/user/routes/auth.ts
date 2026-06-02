@@ -158,16 +158,18 @@ export const getUserData = forge
     description: 'Get current user data',
     input: {},
     output: {
-      OK: userSchemas.users.omit({
-        masterPasswordHash: true,
-        APIKeysMasterPasswordHash: true,
-        twoFASecret: true
-      }).extend({
-        hasMasterPassword: z.boolean(),
-        hasJournalMasterPassword: z.boolean(),
-        hasAPIKeysMasterPassword: z.boolean(),
-        twoFAEnabled: z.boolean()
-      }),
+      OK: userSchemas.users
+        .omit({
+          masterPasswordHash: true,
+          APIKeysMasterPasswordHash: true,
+          twoFASecret: true
+        })
+        .extend({
+          hasMasterPassword: z.boolean(),
+          hasJournalMasterPassword: z.boolean(),
+          hasAPIKeysMasterPassword: z.boolean(),
+          twoFAEnabled: z.boolean()
+        }),
       NOT_FOUND: true
     }
   })

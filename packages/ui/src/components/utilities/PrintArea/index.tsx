@@ -79,7 +79,7 @@ export function PrintArea({
           .lf-statement-print-wrapper {
             display: block !important;
           }
-          .lf-statement-content-flex {
+           .lf-statement-print-wrapper > * {
             height: auto !important;
           }
           * {

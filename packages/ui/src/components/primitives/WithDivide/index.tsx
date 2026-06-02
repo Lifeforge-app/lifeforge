@@ -21,7 +21,7 @@ interface WithDivideProps extends Omit<HTMLAttributes<HTMLElement>, 'color'> {
 export function WithDivide({
   ref,
   axis = 'y',
-color = { base: 'bg-200', dark: colorWithOpacity('bg-700', '50%') },
+  color = { base: 'bg-200', dark: colorWithOpacity('bg-700', '50%') },
   children,
   ...rest
 }: WithDivideProps) {
