@@ -10,7 +10,8 @@ const meta = {
       control: false
     }
   },
-  component: Tooltip
+  component: Tooltip,
+  title: 'Utilities/Tooltip'
 } satisfies Meta<typeof Tooltip>
 
 export default meta

@@ -13,7 +13,8 @@ const meta = {
     },
     size: { control: { type: 'text' } }
   },
-  component: Icon
+  component: Icon,
+  title: 'Primitives/Icon'
 } satisfies Meta<typeof Icon>
 
 export default meta

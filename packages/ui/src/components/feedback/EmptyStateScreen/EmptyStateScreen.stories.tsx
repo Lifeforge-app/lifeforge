@@ -32,7 +32,8 @@ const meta = {
       }
     }
   },
-  component: EmptyStateScreen
+  component: EmptyStateScreen,
+  title: 'Feedback/EmptyStateScreen'
 } satisfies Meta<typeof EmptyStateScreen>
 
 export default meta

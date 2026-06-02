@@ -15,7 +15,8 @@ const meta = {
       control: false
     }
   },
-  component: Tabs
+  component: Tabs,
+  title: 'Navigation/Tabs'
 } satisfies Meta<typeof Tabs>
 
 export default meta

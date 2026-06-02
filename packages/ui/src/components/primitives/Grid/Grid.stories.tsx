@@ -34,7 +34,8 @@ const meta = {
       options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
     }
   },
-  component: Grid
+  component: Grid,
+  title: 'Primitives/Grid'
 } satisfies Meta<typeof Grid>
 
 export default meta

@@ -5,7 +5,8 @@ import { Box } from '@/components/primitives'
 import { UnauthorizedScreen } from '.'
 
 const meta = {
-  component: UnauthorizedScreen
+  component: UnauthorizedScreen,
+  title: 'Auth/SSO/UnauthorizedScreen'
 } satisfies Meta<typeof UnauthorizedScreen>
 
 export default meta

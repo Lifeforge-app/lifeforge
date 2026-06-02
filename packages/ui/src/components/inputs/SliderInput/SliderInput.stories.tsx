@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { SliderInput } from './index'
 
 const meta = {
-  component: SliderInput
+  component: SliderInput,
+  title: 'Inputs/SliderInput'
 } satisfies Meta<typeof SliderInput>
 
 export default meta

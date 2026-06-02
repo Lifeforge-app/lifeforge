@@ -11,7 +11,8 @@ const meta = {
       control: false
     }
   },
-  component: Scrollbar
+  component: Scrollbar,
+  title: 'Utilities/Scrollbar'
 } satisfies Meta<typeof Scrollbar>
 
 export default meta

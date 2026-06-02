@@ -14,7 +14,8 @@ const meta = {
   argTypes: {
     children: { control: false }
   },
-  component: Transition
+  component: Transition,
+  title: 'Primitives/Transition'
 } satisfies Meta<typeof Transition>
 
 export default meta

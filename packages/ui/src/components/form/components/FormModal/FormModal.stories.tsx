@@ -14,7 +14,8 @@ const meta = {
   component: FormModal,
   parameters: {
     deepControls: { enabled: true }
-  }
+  },
+  title: 'Form/FormModal'
 } satisfies Meta<typeof FormModal>
 
 export default meta

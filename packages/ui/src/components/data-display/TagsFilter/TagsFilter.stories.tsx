@@ -29,7 +29,8 @@ const meta = {
       }
     }
   },
-  component: TagsFilter
+  component: TagsFilter,
+  title: 'DataDisplay/TagsFilter'
 } satisfies Meta<typeof TagsFilter>
 
 export default meta

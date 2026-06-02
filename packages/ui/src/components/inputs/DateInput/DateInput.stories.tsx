@@ -7,7 +7,8 @@ import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { DateInput } from './index'
 
 const meta = {
-  component: DateInput
+  component: DateInput,
+  title: 'Inputs/DateInput'
 } satisfies Meta<typeof DateInput>
 
 export default meta

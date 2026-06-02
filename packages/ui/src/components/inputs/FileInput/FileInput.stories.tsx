@@ -5,7 +5,8 @@ import { FileInput } from './index'
 import type { FileValue } from './index'
 
 const meta = {
-  component: FileInput
+  component: FileInput,
+  title: 'Inputs/FileInput'
 } satisfies Meta<typeof FileInput>
 
 export default meta

@@ -5,7 +5,8 @@ import { Box } from '@/components/primitives'
 import { NotFoundScreen } from './index'
 
 const meta = {
-  component: NotFoundScreen
+  component: NotFoundScreen,
+  title: 'Feedback/NotFoundScreen'
 } satisfies Meta<typeof NotFoundScreen>
 
 export default meta

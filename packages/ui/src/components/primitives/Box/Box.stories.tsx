@@ -27,7 +27,8 @@ const meta = {
       options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
     }
   },
-  component: BoxComponent
+  component: BoxComponent,
+  title: 'Primitives/Box'
 } satisfies Meta<typeof BoxComponent>
 
 export default meta

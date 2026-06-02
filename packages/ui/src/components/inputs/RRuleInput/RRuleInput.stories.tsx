@@ -7,7 +7,8 @@ import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { RRuleInput } from './index'
 
 const meta = {
-  component: RRuleInput
+  component: RRuleInput,
+  title: 'Inputs/RRuleInput'
 } satisfies Meta<typeof RRuleInput>
 
 export default meta

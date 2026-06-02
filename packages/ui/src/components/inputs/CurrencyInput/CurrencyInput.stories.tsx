@@ -3,7 +3,8 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CurrencyInput } from './index'
 
 const meta = {
-  component: CurrencyInput
+  component: CurrencyInput,
+  title: 'Inputs/CurrencyInput'
 } satisfies Meta<typeof CurrencyInput>
 
 export default meta

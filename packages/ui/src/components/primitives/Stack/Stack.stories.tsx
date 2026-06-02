@@ -5,7 +5,8 @@ import { Box, Grid, Text } from '@/components/primitives'
 import { Stack } from './index'
 
 const meta = {
-  component: Stack
+  component: Stack,
+  title: 'Primitives/Stack'
 } satisfies Meta<typeof Stack>
 
 export default meta

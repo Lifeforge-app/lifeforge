@@ -6,7 +6,8 @@ import { Box, Flex, Text } from '@/components/primitives'
 import { FAB as Fab } from './index'
 
 const meta = {
-  component: Fab
+  component: Fab,
+  title: 'Inputs/FAB'
 } satisfies Meta<typeof Fab>
 
 export default meta

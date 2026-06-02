@@ -11,7 +11,8 @@ const meta = {
   component: VirtualGrid,
   parameters: {
     layout: 'fullscreen'
-  }
+  },
+  title: 'DataDisplay/VirtualGrid'
 } satisfies Meta<typeof VirtualGrid>
 
 export default meta

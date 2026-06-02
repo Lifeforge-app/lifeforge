@@ -7,7 +7,8 @@ import { useModalStore } from '@/providers'
 import { ModalManager } from './index'
 
 const meta = {
-  component: ModalManager
+  component: ModalManager,
+  title: 'Overlays/ModalManager'
 } satisfies Meta<typeof ModalManager>
 
 export default meta

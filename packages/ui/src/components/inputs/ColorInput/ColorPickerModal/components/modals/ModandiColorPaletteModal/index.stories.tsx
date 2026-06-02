@@ -5,7 +5,8 @@ import { ModalWrapper } from '@/components/overlays'
 import { MorandiColorPaletteModal } from '.'
 
 const meta = {
-  component: MorandiColorPaletteModal
+  component: MorandiColorPaletteModal,
+  title: 'Inputs/ColorInput/MorandiColorPaletteModal'
 } satisfies Meta<typeof MorandiColorPaletteModal>
 
 export default meta

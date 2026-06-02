@@ -25,7 +25,8 @@ const meta = {
       options: ['none', 'sm', 'md', 'lg', 'xl', '2xl', '3xl', 'full']
     }
   },
-  component: Ring
+  component: Ring,
+  title: 'Primitives/Ring'
 } satisfies Meta<typeof Ring>
 
 export default meta

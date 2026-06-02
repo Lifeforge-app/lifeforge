@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { IconInput } from './index'
 
 const meta = {
-  component: IconInput
+  component: IconInput,
+  title: 'Inputs/IconInput'
 } satisfies Meta<typeof IconInput>
 
 export default meta

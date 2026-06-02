@@ -48,7 +48,8 @@ const meta = {
       options: ['nowrap', 'wrap', 'wrap-reverse']
     }
   },
-  component: Flex
+  component: Flex,
+  title: 'Primitives/Flex'
 } satisfies Meta<typeof Flex>
 
 export default meta

@@ -9,7 +9,8 @@ const meta = {
   argTypes: {
     children: { control: false }
   },
-  component: ModuleWrapper
+  component: ModuleWrapper,
+  title: 'Layout/ModuleWrapper'
 } satisfies Meta<typeof ModuleWrapper>
 
 export default meta

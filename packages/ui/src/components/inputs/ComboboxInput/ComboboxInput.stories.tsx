@@ -24,7 +24,8 @@ const meta = {
       control: false
     }
   },
-  component: ComboboxInput
+  component: ComboboxInput,
+  title: 'Inputs/ComboboxInput'
 } satisfies Meta<typeof ComboboxInput>
 
 export default meta

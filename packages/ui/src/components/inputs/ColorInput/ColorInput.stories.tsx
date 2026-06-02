@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { ColorInput } from './index'
 
 const meta = {
-  component: ColorInput
+  component: ColorInput,
+  title: 'Inputs/ColorInput'
 } satisfies Meta<typeof ColorInput>
 
 export default meta

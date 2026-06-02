@@ -24,7 +24,8 @@ const meta = {
       }
     }
   },
-  component: Card
+  component: Card,
+  title: 'Layout/Card'
 } satisfies Meta<typeof Card>
 
 export default meta

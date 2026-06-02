@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { TextAreaInput } from './index'
 
 const meta = {
-  component: TextAreaInput
+  component: TextAreaInput,
+  title: 'Inputs/TextAreaInput'
 } satisfies Meta<typeof TextAreaInput>
 
 export default meta

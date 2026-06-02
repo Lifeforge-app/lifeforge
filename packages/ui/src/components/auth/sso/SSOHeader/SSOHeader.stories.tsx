@@ -5,7 +5,8 @@ import { Box } from '@/components/primitives'
 import { SSOHeader } from '.'
 
 const meta = {
-  component: SSOHeader
+  component: SSOHeader,
+  title: 'Auth/SSO/SSOHeader'
 } satisfies Meta<typeof SSOHeader>
 
 export default meta

@@ -17,7 +17,8 @@ const meta = {
       }
     }
   },
-  component: TagChip
+  component: TagChip,
+  title: 'DataDisplay/TagChip'
 } satisfies Meta<typeof TagChip>
 
 export default meta

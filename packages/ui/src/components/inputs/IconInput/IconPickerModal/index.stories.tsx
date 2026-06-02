@@ -6,7 +6,8 @@ import { useModalStore } from '@/providers'
 import { IconPickerModal } from './index'
 
 const meta = {
-  component: IconPickerModal
+  component: IconPickerModal,
+  title: 'Inputs/IconInput/IconPickerModal'
 } satisfies Meta<typeof IconPickerModal>
 
 export default meta

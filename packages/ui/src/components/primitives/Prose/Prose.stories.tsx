@@ -5,7 +5,8 @@ import { ScrollableStory } from '@/storybook/ScrollableStory'
 import { Prose } from './index'
 
 const meta = {
-  component: Prose
+  component: Prose,
+  title: 'Primitives/Prose'
 } satisfies Meta<typeof Prose>
 
 export default meta

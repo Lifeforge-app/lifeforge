@@ -17,7 +17,8 @@ const meta = {
     title: { control: 'text' },
     totalItems: { control: 'number' }
   },
-  component: ModuleHeader
+  component: ModuleHeader,
+  title: 'Layout/ModuleHeader'
 } satisfies Meta<typeof ModuleHeader>
 
 export default meta

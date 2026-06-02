@@ -74,7 +74,8 @@ const meta = {
       options: ['wrap', 'nowrap', 'pretty', 'balance']
     }
   },
-  component: Text
+  component: Text,
+  title: 'Primitives/Text'
 } satisfies Meta<typeof Text>
 
 export default meta
