@@ -13,6 +13,7 @@ import {
   type ResponsiveProp,
   type ThemeConditionProp,
   type TokenizedCommonProps,
+  colorWithOpacity,
   normalizeResponsiveProp,
   resolveCommonSprinkleProps,
   resolveStyles
@@ -94,7 +95,7 @@ export function Bordered<T extends ElementType = 'div'>({
   ref,
   display,
   // Border props
-  borderColor = { base: 'bg-300', dark: 'bg-600' },
+  borderColor = { base: 'bg-300', dark: colorWithOpacity('bg-700', '50%') },
   borderStyle = 'solid',
   borderSide = 'all',
   borderWidth = '1px',
