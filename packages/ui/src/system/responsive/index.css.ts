@@ -72,7 +72,10 @@ for (const { className, property, customProp } of RESPONSIVE_PROPS) {
     globalStyle(`.${bpClassName}`, {
       '@media': {
         [mediaQuery]: {
-          [property]: bp === 'print' ? `var(${bpCustomProp}) !important` : `var(${bpCustomProp})`
+          [property]:
+            bp === 'print'
+              ? `var(${bpCustomProp}) !important`
+              : `var(${bpCustomProp})`
         }
       }
     })
