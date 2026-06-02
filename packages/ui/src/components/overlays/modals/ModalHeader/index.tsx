@@ -38,7 +38,7 @@ function _ModalHeader({
       align="center"
       className={className}
       justify="between"
-      mb="sm"
+      mb="md"
       style={{ gap: '0.75rem' }}
     >
       <Text asChild size="xl" weight="semibold">
