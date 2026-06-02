@@ -9,3 +9,5 @@ export * from './Tooltip'
 export * from './WithQuery'
 
 export * from './WithQueryData'
+
+export * from './PrintArea'
