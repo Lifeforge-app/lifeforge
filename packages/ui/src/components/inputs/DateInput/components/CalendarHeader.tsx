@@ -42,7 +42,15 @@ export function CalendarHeader({
 
   return (
     <Text asChild color={{ base: 'bg-800', dark: 'bg-100' }}>
-      <Flex align="center" justify="between" px="md" py="sm">
+      <Flex
+        align="center"
+        justify="between"
+        px="md"
+        py="sm"
+        onMouseDown={e => {
+          e.stopPropagation()
+        }}
+      >
         <Button
           disabled={prevMonthButtonDisabled}
           icon="tabler:chevron-left"
@@ -64,6 +72,7 @@ export function CalendarHeader({
             r="md"
             renderContent={value => <Text size="base">{value}</Text>}
             value={dayjs(date).year()}
+            width="min-content"
             onChange={changeYear}
           >
             {years.map(option => (
@@ -77,39 +86,17 @@ export function CalendarHeader({
               dark: colorWithOpacity('bg-700', '50%'),
               darkHover: 'bg-700'
             }}
-            display={{ base: 'none', sm: 'flex' }}
             pl="sm"
             pr="sm"
             py="sm"
             r="md"
             renderContent={value => <Text size="base">{value}</Text>}
             value={months[dayjs(date).month()]}
+            width="16em"
             onChange={value => changeMonth(months.indexOf(value))}
           >
             {months.map(option => (
               <ListboxOption key={option} label={option} value={option} />
-            ))}
-          </Listbox>
-          <Listbox<string>
-            display={{ base: 'flex', sm: 'none' }}
-            pr="xl"
-            py="sm"
-            r="md"
-            renderContent={value => (
-              <Text size="base" weight="medium">
-                {value.slice(0, 3)}
-              </Text>
-            )}
-            style={{ paddingLeft: '0.75rem' }}
-            value={months[dayjs(date).month()]}
-            onChange={value => changeMonth(months.indexOf(value))}
-          >
-            {months.map(option => (
-              <ListboxOption
-                key={option}
-                label={option.slice(0, 3)}
-                value={option}
-              />
             ))}
           </Listbox>
         </Flex>
