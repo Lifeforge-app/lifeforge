@@ -284,17 +284,17 @@ Each `response.<status>()` corresponds to an output key declared in the config. 
 
 Each `response.<method>()` call must correspond to a key declared in the `output` object. The method name determines which HTTP status code is returned:
 
-| Output key      | Response method          | HTTP code |
-| --------------- | ------------------------ | --------- |
-| `OK`            | `response.ok(payload)`   | 200       |
-| `CREATED`       | `response.created(payload)` | 201    |
-| `ACCEPTED`      | `response.accepted()`    | 202       |
-| `NO_CONTENT`    | `response.noContent()`   | 204       |
-| `BAD_REQUEST`   | `response.badRequest(msg)` | 400     |
-| `UNAUTHORIZED`  | `response.unauthorized()` | 401      |
-| `FORBIDDEN`     | `response.forbidden()`   | 403       |
-| `NOT_FOUND`     | `response.notFound()`    | 404       |
-| `CONFLICT`      | `response.conflict()`    | 409       |
+| Output key     | Response method             | HTTP code |
+| -------------- | --------------------------- | --------- |
+| `OK`           | `response.ok(payload)`      | 200       |
+| `CREATED`      | `response.created(payload)` | 201       |
+| `ACCEPTED`     | `response.accepted()`       | 202       |
+| `NO_CONTENT`   | `response.noContent()`      | 204       |
+| `BAD_REQUEST`  | `response.badRequest(msg)`  | 400       |
+| `UNAUTHORIZED` | `response.unauthorized()`   | 401       |
+| `FORBIDDEN`    | `response.forbidden()`      | 403       |
+| `NOT_FOUND`    | `response.notFound()`       | 404       |
+| `CONFLICT`     | `response.conflict()`       | 409       |
 
 ```typescript
 // ✅ Correct — NO_CONTENT in output, response.noContent() in callback

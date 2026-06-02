@@ -291,7 +291,7 @@ rbl?: ResponsiveProp<RadiusToken> // Bottom Left
 rbr?: ResponsiveProp<RadiusToken> // Bottom Right
 }
 
-````
+```
 
 #### Example:
 ```tsx
@@ -305,7 +305,7 @@ rbr?: ResponsiveProp<RadiusToken> // Bottom Right
 >
   Box Content
 </Box>
-````
+```
 
 ---
 
@@ -576,7 +576,11 @@ interface WithDivideProps {
 ```tsx
 <Stack gap="none">
   {items.map(item => (
-    <WithDivide key={item.id} axis="y" color={{ base: 'bg-300', dark: 'bg-800' }}>
+    <WithDivide
+      key={item.id}
+      axis="y"
+      color={{ base: 'bg-300', dark: 'bg-800' }}
+    >
       <Box p="md">{item.name}</Box>
     </WithDivide>
   ))}
