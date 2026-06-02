@@ -69,9 +69,13 @@ function EntryItem({ entry }: { entry: APIKeyEntry }) {
     try {
       const key = await forgeAPI.apiKeys.entries.get
         .input({
-          keyId: entry.id
+          keyId: entry.keyId
         })
         .query()
+
+      if (!key) {
+        throw new Error()
+      }
 
       copy(key)
       toast.success('Key copied to clipboard')
