@@ -1,4 +1,4 @@
-import { Flex } from '@/components/primitives'
+import { Flex, type FlexProps } from '@/components/primitives'
 import type { TokenizedColor } from '@/system'
 
 import { TitleAndDesc } from './components/TitleAndDesc'
@@ -44,7 +44,6 @@ export interface WidgetProps {
  * Especially useful for dashboard or panel interfaces.
  */
 export function Widget({
-  className = '',
   icon,
   iconColor,
   title,
@@ -53,21 +52,22 @@ export function Widget({
   actionComponent: componentBesideTitle,
   namespace = 'common.dashboard',
   variant = 'default',
-  ref
-}: WidgetProps) {
+  ref,
+  ...rest
+}: WidgetProps & FlexProps<'div'>) {
   return (
     <Flex
       ref={ref as React.Ref<HTMLElement>}
       shadow
       as="div"
       bg={{ base: 'bg-50', dark: 'bg-900' }}
-      className={className}
       direction="column"
       gap="lg"
       height="100%"
       p="md"
       r="lg"
       width="100%"
+      {...rest}
     >
       {title && (
         <Flex align="center" gap="2xl" justify="between">
