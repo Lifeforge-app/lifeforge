@@ -1678,9 +1678,15 @@ export const contract = {
         "output": {
           "OK": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
-          "NOT_FOUND": true,
           "FORBIDDEN": true
         }
       },
