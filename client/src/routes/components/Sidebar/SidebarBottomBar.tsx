@@ -47,6 +47,7 @@ function SidebarBottomBar() {
               direction="row"
               gap="xl"
               justify={sidebarExpanded ? 'between' : 'center'}
+              width="100%"
             >
               <Flex centered gap="sm" minWidth="0">
                 <Flex
