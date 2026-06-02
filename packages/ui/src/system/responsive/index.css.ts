@@ -45,7 +45,8 @@ const breakpointMediaQueries = {
   md: '(min-width: 768px)',
   lg: '(min-width: 1024px)',
   xl: '(min-width: 1280px)',
-  '2xl': '(min-width: 1536px)'
+  '2xl': '(min-width: 1536px)',
+  print: 'print'
 } as const
 
 // Generate base styles (no breakpoint = base/mobile)
@@ -71,7 +72,7 @@ for (const { className, property, customProp } of RESPONSIVE_PROPS) {
     globalStyle(`.${bpClassName}`, {
       '@media': {
         [mediaQuery]: {
-          [property]: `var(${bpCustomProp})`
+          [property]: bp === 'print' ? `var(${bpCustomProp}) !important` : `var(${bpCustomProp})`
         }
       }
     })

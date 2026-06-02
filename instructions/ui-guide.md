@@ -122,7 +122,7 @@ type ThemeConditionPropName =
   | 'darkHasBgImage' // Active in dark mode with a background image
   | 'hasBgImageHover'
   | 'hasBgImageDarkHover'
-```
+  | 'print' // Active under print media query
 
 ##### Example Usage:
 
@@ -132,9 +132,10 @@ type ThemeConditionPropName =
     base: 'bg-50',
     dark: 'bg-900',
     hover: 'bg-200',
-    darkHover: 'bg-800'
+    darkHover: 'bg-800',
+    print: 'transparent'
   }}
-  color={{ base: 'bg-950', dark: 'bg-50' }}
+  color={{ base: 'bg-950', dark: 'bg-50', print: 'black' }}
 />
 ```
 
@@ -211,6 +212,7 @@ Layout props support responsive values. Breakpoints are defined as:
 - `lg`: `@media (min-width: 1024px)`
 - `xl`: `@media (min-width: 1280px)`
 - `2xl`: `@media (min-width: 1536px)`
+- `print`: `@media print` (active under print mode)
 
 Any responsive property accepts a scalar or a responsive configuration object:
 
@@ -220,6 +222,9 @@ Any responsive property accepts a scalar or a responsive configuration object:
 
 // Responsive width
 <Box width={{ base: '100%', md: '50%', lg: '33.33%' }} />
+
+// Hide element during printing
+<Box display={{ base: 'block', print: 'none' }} />
 ```
 
 _How it works under the hood:_ The engine applies `.lf-w` and `.md:lf-w` classes while defining CSS variables (`--lf-w: 100%`, `--lf-w-md: 50%`) inline, keeping output stylesheet sizes extremely small.
@@ -564,16 +569,18 @@ interface WithDivideProps {
 }
 ```
 
+`WithDivide` must wrap **each individual item**, not a parent container. It adds a divider between adjacent `WithDivide` siblings.
+
 #### Example: List Group Dividers
 
 ```tsx
-<WithDivide axis="y" color={{ base: 'bg-300', dark: 'bg-800' }}>
-  <Stack gap="none">
-    <Box p="md">Item 1</Box>
-    <Box p="md">Item 2</Box>
-    <Box p="md">Item 3</Box>
-  </Stack>
-</WithDivide>
+<Stack gap="none">
+  {items.map(item => (
+    <WithDivide key={item.id} axis="y" color={{ base: 'bg-300', dark: 'bg-800' }}>
+      <Box p="md">{item.name}</Box>
+    </WithDivide>
+  ))}
+</Stack>
 ```
 
 ---
@@ -691,6 +698,27 @@ type ButtonProps<T extends ElementType = 'button'> = ButtonOwnProps &
 | **Inherited from Flex** | All `FlexProps` — `mt`, `width`, `position`, `top`, `gap`, and everything from `BoxProps` (`bg`, `p`, `r`, `shadow`, etc.) |
 
 Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop available on `Flex` or `Box` can be passed directly** — no wrapping `Box` needed. Only reach for `Box asChild` when you need a prop that Flex/Box doesn't support (e.g. CSS properties only available via inline `style`).
+
+> [!TIP]
+> **`Card` is already a `Flex` component.** Because `CardProps` extends `FlexProps`, you can pass `align`, `gap`, `justify`, `direction`, and all other layout props **directly to `Card`** — no need to wrap its children in a `<Flex>` container. The only prop `Card` adds beyond `Flex` is `isInteractive`.
+>
+> ```tsx
+> // ❌ Redundant: Card + inner Flex wrapper
+> <Card isInteractive>
+>   <Flex align="center" gap="md" justify="between">
+>     <Text>Label</Text>
+>     <ContextMenu>...</ContextMenu>
+>   </Flex>
+> </Card>
+>
+> // ✅ Correct: layout props on Card directly
+> <Card isInteractive align="center" direction="row" gap="md" justify="between">
+>   <Text>Label</Text>
+>   <ContextMenu>...</ContextMenu>
+> </Card>
+> ```
+>
+> `Card` defaults to `direction="column"`. Override it with `direction="row"` when you need a horizontal layout.
 
 #### Notable Engineering Features:
 
@@ -1116,5 +1144,6 @@ Before submitting a pull request, verify that you have adhered to all core desig
 - [ ] **Correct loaders:** Form/button loading states use the pre-animated `svg-spinners:ring-resize` icon and **never** use custom `animate-spin` utilities.
 - [ ] **Type safety:** Typescript `any` is never used. All prop overrides and custom handlers are explicitly typed.
 - [ ] **Datetime manipulation:** Standard JavaScript `Date` is never used. `day.js` is imported for any date calculations.
+- [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin — no need to define responsive sizes like `mb={{ base: '6rem', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
 - [ ] **Component organization:** Components are strictly separated into individual files under their respective `components/` folders instead of being grouped together.
 - [ ] **Conventional functions:** All React components use standard function declarations (`export function Component()`) and avoid arrow functions.
