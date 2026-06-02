@@ -6,7 +6,6 @@
       "name": "lifeforge-monorepo",
       "dependencies": {
         "@hookform/resolvers": "^5.4.0",
-        "@iconify/react": "^6.0.2",
         "@tanstack/react-query": "^5.90.2",
         "@uidotdev/usehooks": "^2.4.1",
         "@vanilla-extract/vite-plugin": "^5.1.4",
@@ -36,6 +35,7 @@
         "@types/tinycolor2": "^1.4.6",
         "@typescript-eslint/eslint-plugin": "^7.18.0",
         "@typescript-eslint/parser": "^7.18.0",
+        "@vanilla-extract/css": "^1.20.1",
         "@vitejs/plugin-react": "^4.4.1",
         "bun-types": "latest",
         "concurrently": "^9.1.2",
@@ -101,6 +101,7 @@
         "@types/node": "^24.7.2",
         "@types/react-virtualized": "^9.22.3",
         "@uidotdev/usehooks": "^2.4.1",
+        "@vanilla-extract/vite-plugin": "^5.2.2",
         "babel-plugin-react-compiler": "^19.1.0-rc.2",
         "clsx": "^2.1.1",
         "copy-to-clipboard": "^3.3.3",
@@ -249,7 +250,6 @@
       "version": "0.25.29-1",
       "dependencies": {
         "@headlessui/react": "^2.2.9",
-        "@hookform/resolvers": "^5.4.0",
         "@iconify/collections": "^1.0.690",
         "@iconify/react": "^6.0.2",
         "@iconify/tools": "^4.1.4",
@@ -287,7 +287,6 @@
         "react-datepicker": "^8.7.0",
         "react-dom": "^19.2.0",
         "react-dropzone": "^14.3.8",
-        "react-hook-form": "^7.77.0",
         "react-i18next": "^15.7.4",
         "react-medium-image-zoom": "^5.4.0",
         "react-number-format": "^5.4.5",
@@ -3727,8 +3726,6 @@
     "@joshwooding/vite-plugin-react-docgen-typescript/glob": ["glob@10.5.0", "", { "dependencies": { "foreground-child": "^3.1.0", "jackspeak": "^3.1.2", "minimatch": "^9.0.4", "minipass": "^7.1.2", "package-json-from-dist": "^1.0.0", "path-scurry": "^1.11.1" }, "bin": { "glob": "dist/esm/bin.mjs" } }, "sha512-DfXN8DfhJ7NH3Oe7cFmu3NCu1wKbkReJ8TorzSAFbSKrlNaQSKfIzqYqVY8zlbs2NLBbWpRiU52GX2PbaBVNkg=="],
 
     "@joshwooding/vite-plugin-react-docgen-typescript/magic-string": ["magic-string@0.30.21", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.5" } }, "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ=="],
-
-    "@lifeforge/client/@types/opentype.js": ["@types/opentype.js@1.3.9", "", {}, "sha512-KOGywvDPncA4/tTWV5xKNhjpsoSSAHIx3mHOhL5l3XX+c6Xu2dQnHvGs7mRNQsQRte1EqmQ0cPQQ8Z14lkv+yw=="],
 
     "@lifeforge/client/opentype.js": ["opentype.js@1.3.5", "", { "bin": { "ot": "bin/ot" } }, "sha512-thKDiELidAApOvXlncrpwDZKJCa9fXLEKM4+FoEWI+qTLDeNb+h7EkN+8a7KQODsB1GZ+Exz9KknkoPrEdXZDw=="],
 
