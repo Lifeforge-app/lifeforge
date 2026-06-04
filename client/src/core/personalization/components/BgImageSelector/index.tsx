@@ -74,10 +74,16 @@ function BgImageSelector() {
 
   const handleOpenImageSelector = useCallback(() => {
     open(FilePickerModal, {
-      enableUrl: true,
-      enablePixabay: true,
-      acceptedMimeTypes: {
+      mimeTypes: {
         image: ['png', 'jpg', 'jpeg', 'gif', 'webp']
+      },
+      sources: {
+        pixabay: true,
+        url: true,
+        ai: {
+          defaultPrompt:
+            'Generate a minimalistic dark-themed background image with a cyberpunk themed neon green colored cube at the middle, the aspect ratio should be 16:9.'
+        }
       },
       enableAI: true,
       onSelect: onSubmit
