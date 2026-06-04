@@ -109,10 +109,17 @@ function AvatarColumn() {
           variant={userData.avatar !== '' ? 'secondary' : 'primary'}
           onClick={() =>
             open(FilePickerModal, {
-              acceptedMimeTypes: {
+              mimeTypes: {
                 image: ['jpg', 'jpeg', 'png', 'gif']
               },
-              enablePixabay: true,
+              sources: {
+                pixabay: true,
+                url: true,
+                ai: {
+                  defaultPrompt:
+                    'Generate a cool profile picture of a cyberpunk themed neon green colored cube, the aspect ratio should be 1:1 (squared).'
+                }
+              },
               enableUrl: true,
               enableAI: true,
               onSelect: file => changeAvatar(file)

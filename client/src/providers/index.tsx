@@ -49,7 +49,8 @@ function Providers() {
         [APIEndpointProvider, { endpoint: import.meta.env.VITE_API_HOST }],
 
         // Provider that stores all the theming information
-        [PersonalizationProvider, { forgeAPI }],
+        // Explicitly casted to never due to type inference complexity of forgeAPI
+        [PersonalizationProvider, { forgeAPI }] as never,
 
         // Provider that checks if the API is online or not
         // A wrapper exported from @lifeforge/ui is used to avoid circular dependencies
