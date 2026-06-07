@@ -89,7 +89,7 @@ export function InputWrapper({
             shadow
             align="center"
             bg={{
-              base: colorWithOpacity('bg-200', '50%'),
+              base: colorWithOpacity('bg-200', '70%'),
               dark: colorWithOpacity('bg-800', '70%'),
               hover: 'bg-200',
               darkHover: 'bg-800'

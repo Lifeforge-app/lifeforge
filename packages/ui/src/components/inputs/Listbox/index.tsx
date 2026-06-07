@@ -2,6 +2,7 @@ import { Listbox as HeadlessListbox, ListboxButton } from '@headlessui/react'
 
 import { Icon } from '@/components/primitives'
 import { Flex, type FlexProps, Text, Transition } from '@/components/primitives'
+import { surface } from '@/system'
 
 import { ListboxOptions } from '../ListboxInput/components/ListboxOptions'
 
@@ -51,19 +52,14 @@ export function Listbox<T>({
           asChild
           shadow
           align="center"
-          bg={{
-            base: 'bg-50',
-            dark: 'bg-900',
-            hover: disabled ? undefined : 'bg-100',
-            darkHover: disabled ? undefined : 'bg-800'
-          }}
+          bg={rest.bg ?? surface.defaultInteractive}
           gap="lg"
+          height="4em"
           justify="between"
           minWidth="0"
-          p="md"
+          px="md"
           r="lg"
           style={disabled ? { opacity: 0.5 } : undefined}
-          width="100%"
           {...rest}
         >
           <ListboxButton

@@ -9,6 +9,7 @@ import { useDivSize } from '@lifeforge/shared'
 import { Card } from '@/components/layout'
 import { Icon } from '@/components/primitives'
 import { Box, Flex, type FlexProps, Transition } from '@/components/primitives'
+import { surface } from '@/system'
 
 import { Button } from '../Button'
 import { Placeholder } from '../shared/components/Placeholder'
@@ -188,15 +189,11 @@ export function SearchInput({
           shadow
           align="center"
           as="search"
-          bg={{
-            base: 'bg-50',
-            dark: 'bg-900',
-            hover: disabled ? undefined : 'bg-100',
-            darkHover: disabled ? undefined : 'bg-800'
-          }}
+          bg={props.bg ?? surface.defaultInteractive}
           className={className}
-          p="md"
+          height="4em"
           position="relative"
+          px="md"
           r="lg"
           style={
             disabled
