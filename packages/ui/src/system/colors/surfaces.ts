@@ -18,7 +18,7 @@ export const surface = {
   defaultInteractive: {
     base: 'bg-50',
     dark: 'bg-900',
-    hover: 'bg-100',
+    hover: colorWithOpacity('bg-50', '70%'),
     darkHover: 'bg-800'
   }
 } as const
