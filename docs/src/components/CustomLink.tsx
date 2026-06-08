@@ -1,15 +1,27 @@
-import { Icon } from '@iconify/react'
 import { Link } from 'react-router'
+
+import { Flex, Icon, Text, Transition } from '@lifeforge/ui'
 
 function CustomLink({ text, to }: { text: string; to: string }) {
   return (
-    <Link
-      className="text-custom-500 mt-4 flex items-center gap-2 text-lg font-medium hover:underline"
-      to={to}
-    >
-      {text}
-      <Icon className="-mb-1 h-5 w-5" icon="tabler:arrow-right" />
-    </Link>
+    <Transition>
+      <Text
+        asChild
+        color={{ base: 'primary', hover: 'custom-600' }}
+        size="lg"
+        weight="medium"
+      >
+        <Flex align="center" as={Link} gap="sm" mt="md" to={to}>
+          {text}
+          <Icon
+            icon="tabler:arrow-right"
+            style={{
+              marginBottom: '-0.25em'
+            }}
+          />
+        </Flex>
+      </Text>
+    </Transition>
   )
 }
 

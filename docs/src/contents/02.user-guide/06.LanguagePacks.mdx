@@ -66,7 +66,7 @@ For example, to install Japanese:
 bun forge locales add lifeforge--lang-ja
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
 Language packs are fetched from the official LifeForge registry. The package name follows the format `<owner>--lang-<code>`.
 </Alert>
 
@@ -76,7 +76,7 @@ Language packs are fetched from the official LifeForge registry. The package nam
 2. **Structure Validation** - The CLI verifies that `package.json` is valid
 3. **Database Update** - If this is the first language being installed, all users' language preferences are automatically set to this language
 
-<Alert className="mt-6" type="important">
+<Alert type="important">
 After installing a language pack, restart the server for the changes to take effect.
 </Alert>
 
@@ -102,11 +102,11 @@ bun forge locales remove melvinchia3636--lang-zh-CN
 1. **User Migration** - Any users with the removed language as their preference are automatically switched to the first remaining language
 2. **Directory Removal** - The language pack directory is deleted
 
-<Alert className="mt-6" type="caution">
+<Alert type="caution">
 You cannot remove the last remaining language pack. At least one language must always be installed.
 </Alert>
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
 The removal process requires database access. If PocketBase is not running, a temporary instance will be started automatically.
 </Alert>
 
@@ -126,7 +126,7 @@ The following official language packs are available:
 | `lifeforge--lang-tr` | Türkçe | [lifeforge-app/lang-tr](https://github.com/lifeforge-app/lang-tr) | <GithubUser username="tahabugracck" /> |
 | `TedMeadow--lang-ru` | Русский | [lifeforge-app/lang-ru](https://github.com/lifeforge-app/lang-ru) | <GithubUser username="TedMeadow" /> |
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
 Want to contribute a new language? See the [Creating Language Packs](/developer-guide/localization#creating-language-packs) section in the Developer Guide.
 </Alert>
 

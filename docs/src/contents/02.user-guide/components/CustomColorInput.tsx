@@ -1,23 +1,31 @@
-import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 
-import { Button, ColorInput, Switch, usePersonalization } from '@lifeforge/ui'
+import { usePersonalization } from '@lifeforge/ui'
+import {
+  Box,
+  Button,
+  ColorInput,
+  Flex,
+  Icon,
+  Switch,
+  Text
+} from '@lifeforge/ui'
 
 function CustomColorInput() {
   const [color, setColor] = useState('#a9d066')
   const { setRawThemeColor, rawThemeColor } = usePersonalization()
-  
-useEffect(() => {
+
+  useEffect(() => {
     setColor(rawThemeColor.toUpperCase())
   }, [rawThemeColor])
 
   return (
     <>
-      <div className="mt-8 flex items-center justify-between py-2">
-        <div className="flex items-center gap-2">
-          <Icon className="size-6" icon="tabler:palette" />
-          <span className="text-lg">Use custom color</span>
-        </div>
+      <Flex align="center" justify="between" mt="xl" py="sm">
+        <Flex align="center" gap="sm">
+          <Icon icon="tabler:palette" size="1.5rem" />
+          <Text size="lg">Use custom color</Text>
+        </Flex>
         <Switch
           value={rawThemeColor.startsWith('#')}
           onChange={() => {
@@ -28,20 +36,22 @@ useEffect(() => {
             }
           }}
         />
-      </div>
-      <ColorInput
-        className="mt-4"
-        disabled={!rawThemeColor.startsWith('#')}
-        label="Custom Color"
-        value={color.startsWith('#') ? color : '#A9D066'}
-        onChange={c => {
-          setColor(c)
-        }}
-      />
+      </Flex>
+      <Box asChild mt="md">
+        <ColorInput
+          disabled={!rawThemeColor.startsWith('#')}
+          label="Custom Color"
+          value={color.startsWith('#') ? color : '#A9D066'}
+          onChange={c => {
+            setColor(c)
+          }}
+        />
+      </Box>
       <Button
-        className="mt-4 w-full"
         disabled={!rawThemeColor.startsWith('#') || color === rawThemeColor}
         icon="tabler:check"
+        mt="md"
+        width="100%"
         onClick={() => {
           setRawThemeColor(color)
         }}

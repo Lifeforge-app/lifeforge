@@ -20,7 +20,7 @@ Before proceeding with the database initialization, there are a couple of enviro
 
 <EnvExample />
 
-For the client side, the one and only environment variable that needs to be set up is the `VITE_API_HOST`. This variable specifies the base URL for the API server. If you are running the system locally, you can set it to `http:\/\/localhost:3636` (or any other port that you are using). If you are deploying the system to a remote server, you can set it to the URL of your server.
+For the client side, the one and only environment variable that needs to be set up is the `VITE_API_HOST`. This variable specifies the base URL for the API server. If you are running the system locally, you can set it to `http://localhost:3636` (or any other port that you are using). If you are deploying the system to a remote server, you can set it to the URL of your server.
 
 For the server side, there are several environment variables that need to be set up:
 
@@ -31,7 +31,7 @@ For the server side, there are several environment variables that need to be set
   `database/`.
 - `PB_HOST`: The base URL for the Pocketbase instance. It will be
   displayed when you start your db instance. Default to
-  `http:\/\/localhost:8090`.
+  `http://localhost:8090`.
 - `PB_EMAIL`: The email of the admin user. Will be set automatically
   when you initialize the database.
 - `PB_PASSWORD`: The password of the admin user. Will be set
@@ -41,7 +41,7 @@ For the server side, there are several environment variables that need to be set
     - Use a strong and unique string that is hard to guess. 
     - Keep it secret and do not share it with anyone. 
 
-  <Alert className="mt-6" type="caution">
+  <Alert type="caution">
     **DO NOT LOSE THE MASTER KEY!** If you lose it, all the encrypted data stored in the
     database will be voided and you will not be able to recover it.
   </Alert>
@@ -50,6 +50,10 @@ For the server side, there are several environment variables that need to be set
 
 <section id="the-forge-cli">
 ## The Forge CLI
+
+<Alert type="warning">
+Due to the recent ongoing massive reworks towards LifeForge's codebase architecture and structure, a lot of scripts int he ForgeCLI are currently out-of-date. Those will only be updated when LifeForge reaches its next stable version.
+</Alert>
 
 The Forge CLI is a command-line interface tool that helps you manage and configure your LifeForge system. It provides a simple way to manage your system and modules. This tool doesn't require any installation, as it's included in the monorepo inside the `tools/` directory. You can run it using bun.
 
@@ -81,7 +85,7 @@ This initialization process will do quite a few things:
 - Run database migrations to set up the necessary collections and fields.
 - Initialize route and schema files from templates in the server codebase.
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   Make sure the database instance is not running when you run this command. The
   command will start the database instance automatically when needed.
 </Alert>
@@ -92,7 +96,7 @@ Now, you can start the Pocketbase instance using the following command:
 bun run forge dev db
 ```
 
-This will start the Pocketbase instance. You can access the admin dashboard at <a href="http://localhost:8090/_" target="_blank" rel="noopener noreferrer">http://localhost:8090/\_</a>. Enter the email and password you provided earlier to log in.
+This will start the Pocketbase instance. You can access the admin dashboard at <a href="http://localhost:8090/_" target="_blank" rel="noopener noreferrer">http://localhost:8090/_</a>. Enter the email and password you provided earlier to log in.
 
 After logging in, you should see the admin dashboard with the collections and fields set up, and a default user record created.
 
@@ -123,7 +127,7 @@ Once started, you should see an output similar to this:
 
 ![API Server Started](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/server-start.webp)
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   Make sure the Pocketbase instance is running before starting the API server.
   The API server needs to connect to the Pocketbase instance to function
   properly.
@@ -159,8 +163,11 @@ It will first build the UI and the shared library using Vite, and then start the
 
 If everything is set up correctly, you be able to see the login screen of your LifeForge system by navigating to <a href="http://localhost:5173" target="_blank" rel="noopener noreferrer">http://localhost:5173</a> (or whatever url Vite tells you to use).
 
-<Alert className="mt-6" type="note">
-If your server is up and running but the client application shows that the API is offline, make sure that your client url is added to the list of allowed origins in `server/src/core/routes/constants/corsAllowedOrigins.ts`. By default, only `http:\/\/localhost:5173` is allowed. You can add more origins as needed. If you are deploying the system to a remote server, make sure to add your custom domain to the list of allowed origins as well.
+<Alert type="note">
+If your server is up and running but the client application shows that the API is offline, make sure that your client url is added to the list of allowed origins in `server/src/core/routes/constants/corsAllowedOrigins.ts`. By default, only `http://localhost:5173` is allowed. You can add more origins as needed. If you are deploying the system to a remote server, make sure to add your custom domain to the list of allowed origins as well.
+</Alert>
+<Alert type="tip">
+Run `bun forge dev` to start the database, sever and client together.
 </Alert>
 </section>
 

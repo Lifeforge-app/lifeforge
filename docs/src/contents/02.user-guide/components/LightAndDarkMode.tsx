@@ -1,51 +1,94 @@
-import { Icon } from '@iconify/react'
-
 import { usePersonalization } from '@lifeforge/ui'
+import {
+  Box,
+  Card,
+  Flex,
+  Icon,
+  Text,
+  colorWithOpacity,
+  surface
+} from '@lifeforge/ui'
 
 function LightAndDarkMode() {
   const { derivedTheme, setTheme } = usePersonalization()
 
   return (
-    <div className="mt-6 flex w-full min-w-0">
-      <div className="component-bg dark:bg-bg-800/50 shadow-custom w-full rounded-md p-4">
-        <div className="flex flex-col items-center justify-between gap-3 md:flex-row">
-          <h3 className="flex w-full items-center gap-2 text-left text-xl font-semibold">
-            <Icon className="size-8" icon="tabler:sun-moon" />
+    <Card shadow bg={{ ...surface.light, base: 'bg-50' }} mt="lg">
+      <Flex
+        align="center"
+        direction={{ base: 'column', md: 'row' }}
+        gap="sm"
+        justify="between"
+      >
+        <Flex align="center" as="h3" gap="sm" width="100%">
+          <Icon icon="tabler:sun-moon" size="2rem" />
+          <Text as="span" size="xl" weight="semibold">
             Light/Dark Theme Preview
-          </h3>
-          <div className="bg-bg-100 dark:bg-bg-800 flex w-full gap-1 rounded-md p-2 md:w-auto">
-            <button
-              className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-2 pr-4 pl-3 font-medium ${
-                derivedTheme === 'light'
-                  ? 'bg-custom-500 text-bg-800'
-                  : 'bg-bg-800 text-bg-400'
-              }`}
+          </Text>
+        </Flex>
+        <Flex
+          shadow
+          bg={{
+            base: colorWithOpacity('bg-200', '50%'),
+            dark: colorWithOpacity('bg-700', '50%')
+          }}
+          gap="xs"
+          p="sm"
+          r="md"
+          width={{ base: '100%', md: 'auto' }}
+        >
+          <Flex
+            asChild
+            align="center"
+            bg={derivedTheme === 'light' ? 'custom-500' : 'transparent'}
+            gap="sm"
+            justify="center"
+            p="sm"
+            r="md"
+            width="50%"
+          >
+            <Text
+              as="button"
+              color={derivedTheme === 'light' ? 'bg-800' : 'muted'}
+              weight="medium"
               onClick={() => setTheme('light')}
             >
-              <Icon className="h-5 w-5" icon="uil:sun" />
+              <Icon icon="uil:sun" size="1.25rem" />
               Light
-            </button>
-            <button
-              className={`flex w-1/2 items-center justify-center gap-2 rounded-md p-2 pr-4 pl-3 font-medium ${
-                derivedTheme === 'dark'
-                  ? 'bg-custom-500 text-bg-800'
-                  : 'text-bg-400'
-              }`}
+            </Text>
+          </Flex>
+          <Flex
+            asChild
+            align="center"
+            bg={derivedTheme === 'dark' ? 'custom-500' : undefined}
+            gap="sm"
+            justify="center"
+            p="sm"
+            r="md"
+            width="50%"
+          >
+            <Text
+              as="button"
+              color={derivedTheme === 'dark' ? 'bg-800' : 'muted'}
+              weight="medium"
               onClick={() => setTheme('dark')}
             >
-              <Icon className="h-5 w-5" icon="uil:moon" />
+              <Icon icon="uil:moon" size="1.25rem" />
               Dark
-            </button>
-          </div>
-        </div>
-        <img
-          key={derivedTheme}
-          alt=""
-          className="mt-4 w-full rounded-md"
-          src={`https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/colors/${derivedTheme}.webp`}
-        />
-      </div>
-    </div>
+            </Text>
+          </Flex>
+        </Flex>
+      </Flex>
+      <Box
+        key={derivedTheme}
+        alt=""
+        as="img"
+        mt="md"
+        r="md"
+        src={`https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/colors/${derivedTheme}.webp`}
+        width="100%"
+      />
+    </Card>
   )
 }
 

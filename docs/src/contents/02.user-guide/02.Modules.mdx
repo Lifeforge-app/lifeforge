@@ -58,7 +58,7 @@ When you uninstall a module:
 2. Your data is kept safe (it won't be deleted)
 3. The module disappears from your sidebar
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   Don't worry about the technical details – the ForgeCLI tool handles everything for you automatically!
 </Alert>
 
@@ -87,7 +87,7 @@ These are modules created by community developers who want to share their creati
 - `melvinchia3636--invoice-maker` – Create and manage invoices
 - `melvinchia3636--modrinth` – Minecraft mod browser
 
-<Alert className="mt-6" type="caution">
+<Alert type="caution">
   **Community modules are NOT reviewed or verified by the LifeForge team before being published.** Install community modules at your own risk. They may contain bugs, security vulnerabilities, or malicious code. We strongly recommend:
   
   - Only installing modules from developers you trust
@@ -134,11 +134,11 @@ Every module has a **full module name** that you'll use for all CLI commands. Th
 - `lifeforge--idea-box` – The Idea Box module by the LifeForge team  
 - `melvinchia3636--invoice-maker` – The Invoice Maker module by melvinchia3636
 
-<Alert className="mt-6" type="important">
+<Alert type="important">
   **Always use the full module name** (including the author prefix) when running CLI commands. For example, use `lifeforge--calendar`, not just `calendar`.
 </Alert>
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   We're working on a built-in module marketplace that will let you browse and install modules directly from within LifeForge – stay tuned!
 </Alert>
 
@@ -155,7 +155,7 @@ Installing a module takes just a few simple steps. Before you begin, make sure:
 
 ### Step-by-Step Installation
 
-<Alert className="mt-6" type="important">
+<Alert type="important">
   Make sure you have finished [basic installation steps](/getting-started/installation) and [initialized the database](/getting-started/configuration) before continuing in this section! If not, you may come into Bun's out-of-memory issues or database migration failed during installations.
 </Alert>
 
@@ -189,7 +189,7 @@ You can install several modules in one command by listing them all:
 bun forge modules install lifeforge--calendar lifeforge--todo-list lifeforge--idea-box
 ```
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   **Important:** Always stop your LifeForge instance before installing or uninstalling modules. Running these commands while LifeForge is active may cause unexpected issues.
 </Alert>
 
@@ -253,7 +253,7 @@ bun forge modules upgrade
 
 When you run the upgrade command without specifying a module, it will check all your installed modules and show you which ones have updates available.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   It's a good practice to keep your modules updated to benefit from the latest improvements and security fixes.
 </Alert>
 
@@ -292,13 +292,13 @@ Just like installation, you can uninstall several modules at once:
 bun forge modules uninstall lifeforge--calendar lifeforge--todo-list lifeforge--idea-box
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   **Your data is safe!** Uninstalling a module only removes the module's code – it does **NOT** delete any data you've created with that module. This is intentional to prevent accidental data loss. 
   
   If you reinstall the module later, all your previous data will still be there!
 </Alert>
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   If you want to permanently delete a module's data, you'll need to do it manually through the PocketBase admin dashboard. Be very careful with this action as it cannot be undone.
 </Alert>
 
@@ -352,7 +352,7 @@ Some categories have fixed positions that cannot be changed:
 | **Alphabetically sorted** | Any other categories |
 | **Bottom of sidebar** | `Miscellaneous`, `Settings`, `SSO`, and modules with `<END>` category |
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   Most users won't need to customize category order – the default alphabetical sorting works well for most setups. This feature is mainly useful for power users who want fine-grained control over their sidebar organization.
 </Alert>
 
@@ -402,11 +402,11 @@ Here's a handy summary of all the module commands:
 | Update a specific module | `bun forge modules upgrade <author>--<module>` | `up`, `u` |
 | Check all modules for updates | `bun forge modules upgrade` | `up`, `u` |
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   Remember: `<author>--<module>` means the full module name like `lifeforge--calendar` or `melvinchia3636--invoice-maker`.
 </Alert>
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   **Pro tip:** Use aliases to save time! For example:
   - `bun forge modules i lifeforge--calendar` instead of `install`
   - `bun forge modules rm lifeforge--calendar` instead of `uninstall`
@@ -425,7 +425,7 @@ Now that you know how to manage modules, here are some things you might want to 
 - **Join the community** – Share feedback and discover new modules on [GitHub Discussions](https://github.com/LifeForge-app/lifeforge/discussions)
 - **Become a developer** – Interested in creating your own modules? Check out the [Developer Guide](/developer-guide/modules)
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   The LifeForge Module Registry is a community-driven platform. If you're a developer, consider publishing your own modules to help grow the ecosystem!
 </Alert>
 

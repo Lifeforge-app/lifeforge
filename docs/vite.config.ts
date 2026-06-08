@@ -1,6 +1,7 @@
 import mdx, { Options } from '@mdx-js/rollup'
-import react from '@vitejs/plugin-react'
 import federation from '@originjs/vite-plugin-federation'
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
+import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
@@ -15,6 +16,7 @@ const options: Options = {
 export default defineConfig({
   plugins: [
     react(),
+    vanillaExtractPlugin(),
     mdx(options),
     mdxListCountsPlugin(),
     federation({

@@ -13,7 +13,7 @@ import { Alert } from '@lifeforge/ui'
 
 To manage your API keys, head to the **API Keys** page, which is accessible from the sidebar under the **Settings** section. Here, you can add, edit, and delete API keys for different services. All the API keys you add will be encrypted and stored securely in the database.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   For an additional layer of security, accessing the vault requires an OTP
   (One-Time Password) that will be sent to your email. Therefore, **make sure
   you have the email settings properly configured in the database settings.**
@@ -23,7 +23,7 @@ Once the OTP is verified, you'll be prompted to create a master password for the
 
 ![Set New Password](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/user-api-keys/set-new-password.webp)
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   If you forget the master password, there is NO WAY to recover it, even if you
   access the database directly, since the password itself is stored in the
   database as a hash that can only be used for the purpose of verification.
@@ -65,7 +65,7 @@ LifeForge integrates with several Google Cloud services that enhance the system'
 
 To set up these services, head to the [Google Cloud Console](https://console.cloud.google.com/), initialize a project, enable the Google Fonts API and Places API, and create an API key. Then, add the API key to the vault with the key ID as `gcloud`.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   You can enable the Places API in the same project where you have enabled the
   Google Fonts API, and use the same API key for both services.
 
@@ -79,7 +79,7 @@ LifeForge provides an image picker modal that can be used in forms across variou
 
 Head to the [Pixabay API website](https://pixabay.com/service/about/api/), create an account, and generate an API key. Then, add the API key to the vault with the key ID as `pixabay`.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
 The API key is located in the documentation page of the Pixabay API website once you've created an account and logged in, in the green box shown below:
 
 ![Pixabay](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/user-api-keys/pixabay.webp)

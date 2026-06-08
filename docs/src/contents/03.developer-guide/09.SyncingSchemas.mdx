@@ -23,12 +23,12 @@ This command will connect to your PocketBase instance, retrieve the current data
 
 The collection metadata will also be saved alongside with the zod schemas, which is used to generate migration scripts that sync the database structure with the codebase.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   If the schema file for a module does not exist yet, running this command will
   create a new schema file with the generated schemas.
 </Alert>
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   ### Collection Naming Convention
   When generating schemas from the database, make sure that your collection name follows the naming convention as follows:
 
@@ -60,7 +60,7 @@ This command will read the collection metadata defined in the module's schema fi
 
 Don't worry, this script will be run automatically whenever you install or update a module using the ForgeCLI, so you don't have to run it manually every time.
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   ### Backup Your Database
   To prevent any potential data loss, it is highly recommended to back up your PocketBase database before running the migration command. LifeForge is utilizing the built-in migration system of PocketBase, which is (hopefully) generally safe, but it's always better to be cautious when making changes to your database structure.
 </Alert>

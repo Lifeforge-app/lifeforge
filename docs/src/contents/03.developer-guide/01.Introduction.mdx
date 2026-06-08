@@ -1,4 +1,5 @@
-import { Icon } from '@iconify/react'
+import TextWithIcon from "../../components/TextWithIcon"
+import { Alert } from "@lifeforge/ui"
 
 ###### Introduction
 
@@ -26,49 +27,24 @@ This guide is intended for developers who have decent experience with web develo
 
 For those who want to really dive deep into the codebase, here are some topics that will be beneficial to understand:
 
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="simple-icons:typescript" className="translate-y-1" />
-    **Advanced-level Typescript**
-  </div>
+- <TextWithIcon icon="simple-icons:typescript">**Advanced-level Typescript:**</TextWithIcon>
   Familiarity with advanced TypeScript features such as generics, decorators,
   and type inference will help you understand the type inference system used
   throughout the codebase.
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="tabler:files" className="translate-y-1" />
-    **Monorepo**
-  </div>
+- <TextWithIcon icon="tabler:files">**Monorepo:**</TextWithIcon>
   Understanding the concepts of monorepos, including package management and
   workspace organization, so you won't get lost in the project structure.
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="simple-icons:react" className="translate-y-1" />
-    **React**
-  </div>
+- <TextWithIcon icon="simple-icons:react">**React:**</TextWithIcon>
   A solid understanding of React concepts, including hooks, context, and
   component lifecycle, is essential for navigating the codebase effectively.
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="simple-icons:express" className="translate-y-1" />
-    **ExpressJS**
-  </div>
+- <TextWithIcon icon="simple-icons:express">**ExpressJS:**</TextWithIcon>
   The entire backend is built using ExpressJS. While handy wrappers are
   provided, it is still important to understand the underlying principles and
   patterns used in the framework.
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="simple-icons:tailwindcss" className="translate-y-1" />
-    **TailwindCSS**
-  </div>
-  Most of the modern web applications are built using TailwindCSS, so is
-  LifeForge. Familiarity with its utility-first classes and stuff are really
-  important.
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="simple-icons:storybook" className="translate-y-1" />
-    **Storybook**
-  </div>
+- <TextWithIcon icon="simple-icons:storybook">**Storybook:**</TextWithIcon>
   Understanding how to use Storybook for developing and testing UI components in
   isolation will be beneficial for working with the component library.
-- <div className="text-bg-800 dark:text-bg-100 flex items-center gap-2">
-    <Icon icon="simple-icons:pocketbase" className="translate-y-1" />
-    **Pocketbase**
-  </div>
+- <TextWithIcon icon="simple-icons:pocketbase">**Pocketbase:**</TextWithIcon>
   Familiarity with Pocketbase will be helpful for understanding the backend
   integration and data management aspects of the project.
 
@@ -80,6 +56,12 @@ With that being said, this guide is not suitable for:
 - Developers unfamiliar with modern JavaScript frameworks
 - Those who are not willing to learn and adapt to new technologies
 - Those who do not care about code quality and best practices
+
+<Alert type="note">
+#### Do you forget to mention *TailwindCSS*? 
+
+You might think our project can't live without Tailwind, the most widely used styling framework in the world. Indeed, LifeForge used to rely heavily on Tailwind, but we have decided to migrate away from it in favour of our own dedicated token-based UI library due to a fatal incompatibility between our use-cases and the underlying mechanism of Tailwind. Learn more about it [here](/progress/architectural-graveyard).
+</Alert>
 </section>
 
 <section id="what-to-expect">
