@@ -7,12 +7,8 @@ import {
   useState
 } from 'react'
 
-import { type WidgetConfig, useFederation } from '@lifeforge/shared'
+import { useFederation, widgetConfigSchema } from '@lifeforge/shared'
 import { LoadingScreen } from '@lifeforge/ui'
-
-import ClockWidget, { config as clockConfig } from '../widgets/Clock'
-import DateWidget, { config as dateConfig } from '../widgets/Date'
-import QuotesWidget, { config as quotesConfig } from '../widgets/Quotes'
 
 export interface WidgetEntry {
   component: React.FC<{ dimension: { w: number; h: number } }>
@@ -41,15 +37,6 @@ export function useWidgets(): WidgetContextValue {
   return useContext(WidgetContext)
 }
 
-const CORE_WIDGETS: Array<{
-  component: React.FC<{ dimension: { w: number; h: number } }>
-  config: WidgetConfig
-}> = [
-  { component: ClockWidget, config: clockConfig },
-  { component: DateWidget, config: dateConfig },
-  { component: QuotesWidget, config: quotesConfig }
-]
-
 function WidgetProvider({ children }: { children: React.ReactNode }) {
   const { modules } = useFederation()
 
@@ -58,25 +45,6 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
   >({})
 
   const [loading, setLoading] = useState(true)
-
-  // Core widgets (static, always available)
-  const coreWidgets = useMemo(() => {
-    const result: Record<string, WidgetEntry> = {}
-
-    for (const { component, config } of CORE_WIDGETS) {
-      result[config.id] = {
-        component,
-        namespace: config.namespace || null,
-        icon: config.icon,
-        minW: config.minW,
-        minH: config.minH,
-        maxW: config.maxW,
-        maxH: config.maxH
-      }
-    }
-
-    return result
-  }, [])
 
   // Load federated widgets asynchronously
   useEffect(() => {
@@ -93,9 +61,13 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
                 // Call the import function to get the module
                 const widgetModule = await widgetImportFn()
 
-                const config = widgetModule.config
+                const parsedConfig = widgetConfigSchema.safeParse(
+                  widgetModule.config
+                )
 
-                if (config?.id) {
+                if (parsedConfig.success) {
+                  const config = parsedConfig.data
+
                   // Wrap the component with lazy() for proper React Suspense support
                   const LazyComponent = lazy(widgetImportFn)
 
@@ -108,6 +80,11 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
                     maxW: config.maxW,
                     maxH: config.maxH
                   }
+                } else {
+                  console.warn(
+                    `Failed to validate widget config for module ${category.title}/${item.name}:`,
+                    parsedConfig.error.format()
+                  )
                 }
               } catch (e) {
                 console.warn('Failed to load widget:', e)
@@ -130,10 +107,10 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({
-      widgets: { ...coreWidgets, ...federatedWidgets },
+      widgets: federatedWidgets,
       loading
     }),
-    [coreWidgets, federatedWidgets, loading]
+    [federatedWidgets, loading]
   )
 
   if (loading) {

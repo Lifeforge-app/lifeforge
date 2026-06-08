@@ -79,4 +79,5 @@ export type {
   ModuleCategory
 } from './interfaces/module_config.types'
 export type { default as WidgetConfig } from './interfaces/widget_config.types'
+export { widgetConfigSchema } from './interfaces/widget_config.types'
 export { SYSTEM_CATEGORIES } from './providers/FederationProvider'

@@ -1,4 +1,5 @@
 import { ROOT_DIR } from '@constants'
+import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
@@ -8,7 +9,6 @@ import forge from '../forge'
 import scanFederatedModules, {
   type ModuleManifestEntry
 } from '../utils/scanFederatedModules'
-import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
 
 const APPS_DIR = path.join(ROOT_DIR, 'apps')
 
@@ -55,6 +55,7 @@ export const manifest = forge
     const internalAppsDir = path.join(ROOT_DIR, 'client', 'src', 'apps')
 
     scanFederatedModules(internalAppsDir, modules, true, '/internal-modules')
+
 
     return response.ok({ modules })
   })
