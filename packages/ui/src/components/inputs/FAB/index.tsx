@@ -1,5 +1,3 @@
-import { Flex } from '@/components/primitives'
-
 import { Button } from '../Button'
 
 /**
@@ -17,8 +15,7 @@ export function FAB({
   visibilityBreakpoint?: 'sm' | 'md' | 'lg' | 'xl' | false
 } & React.ComponentProps<typeof Button>) {
   return (
-    <Flex
-      asChild
+    <Button
       shadow
       bottom="1.5em"
       display={
@@ -29,8 +26,8 @@ export function FAB({
       position="fixed"
       right="1.5em"
       zIndex="10"
-    >
-      <Button {...props} icon={icon} />
-    </Flex>
+      {...props}
+      icon={icon}
+    />
   )
 }
