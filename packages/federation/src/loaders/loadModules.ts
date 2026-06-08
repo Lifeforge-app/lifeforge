@@ -1,5 +1,4 @@
-import type { ModuleCategory } from '@lifeforge/shared'
-
+import type { ModuleCategory, ModuleConfig } from '../interfaces/module_config.types'
 import {
   type CategoryOrder,
   fetchCategoryOrder,
@@ -21,7 +20,10 @@ function addToRoute(
   const categoryIndex = routes.findIndex(cat => cat.title === category)
 
   if (categoryIndex > -1) {
-    routes[categoryIndex].items.push(moduleConfig)
+    const cat = routes[categoryIndex]
+    if (cat) {
+      cat.items.push(moduleConfig)
+    }
   } else {
     routes.push({
       title: category,
@@ -35,7 +37,11 @@ function addToRoute(
  * Loads core modules (static) and federated modules (dynamic) from the server
  * Collects providers from module manifests
  */
-export default async function loadModules(): Promise<{
+export default async function loadModules(
+  forgeAPI: any,
+  coreModules: ModuleCategory['items'][number][] = [],
+  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>> = {}
+): Promise<{
   routes: ModuleCategory[]
   globalProviders: GlobalProviderComponent[]
   categoryTranslations: CategoryOrder
@@ -43,9 +49,6 @@ export default async function loadModules(): Promise<{
   const ROUTES: ModuleCategory[] = []
 
   const globalProviders: GlobalProviderComponent[] = []
-
-  // Load core modules (static imports)
-  const coreModules = loadCoreModules()
 
   for (const mod of coreModules) {
     addToRoute(ROUTES, mod.category, mod)
@@ -58,13 +61,13 @@ export default async function loadModules(): Promise<{
 
   // Fetch federated modules and category order (which includes translations)
   const [serverManifest, categoryOrder] = await Promise.all([
-    fetchModuleManifest(),
-    fetchCategoryOrder()
+    fetchModuleManifest(forgeAPI),
+    fetchCategoryOrder(forgeAPI)
   ])
 
   for (const mod of serverManifest) {
     try {
-      const moduleConfig = await loadModuleConfig(mod)
+      const moduleConfig = await loadModuleConfig(mod, devModeImports)
 
       addToRoute(ROUTES, mod.category, moduleConfig)
 

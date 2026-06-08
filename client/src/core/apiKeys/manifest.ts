@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 
-import type { ModuleCategory } from '@lifeforge/shared'
+import type { ModuleCategory } from '@lifeforge/federation'
 
 export default {
   routes: {

@@ -1,6 +1,6 @@
-import type { ModuleConfig } from '../../interfaces/module_config.types'
-import type { ProxyTree } from '../typescript/forge_proxy.types'
-import createForgeProxy from './createForgeProxy'
+import { createForgeProxy } from '@lifeforge/shared'
+import type { ProxyTree } from '@lifeforge/shared'
+import type { ModuleConfig } from '../interfaces/module_config.types'
 
 /**
  * Wraps a module configuration and automatically appends a type-safe `forgeAPI` proxy client

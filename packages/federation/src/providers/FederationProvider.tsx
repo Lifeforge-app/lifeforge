@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useRef, useState } from 'react'
 
-import type { ModuleCategory } from '..'
+import type { ModuleCategory } from '../interfaces/module_config.types'
 
 export const SYSTEM_CATEGORIES = [
   '<START>',

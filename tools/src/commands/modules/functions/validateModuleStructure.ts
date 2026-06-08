@@ -4,6 +4,8 @@ import z from 'zod'
 
 import logger from '@/utils/logger'
 
+import { packageJSONSchema } from './packageJSONSchema'
+
 const MODULE_STRUCTURE: Array<{
   type: 'folder' | 'file'
   name: string
@@ -35,8 +37,6 @@ const MODULE_STRUCTURE: Array<{
     required: true,
     validate: async (content: string) => {
       const json = JSON.parse(content)
-
-      const { packageJSONSchema } = await import('@lifeforge/shared')
 
       const result = z.safeParse(packageJSONSchema, json)
 

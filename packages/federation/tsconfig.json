@@ -1,21 +1,18 @@
 {
   "extends": "@lifeforge/configs/tsconfig/base.json",
   "compilerOptions": {
-    // Environment setup
     "lib": ["ESNext", "DOM"],
     "target": "ESNext",
     "module": "ESNext",
-    // Output configuration
     "declaration": true,
     "rootDir": "./src",
     "outDir": "./dist",
     "noEmit": false,
-    // Type checking
     "strict": true,
     "skipLibCheck": true,
-    // Additional checks
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "types": ["vite/client"]
   },
   "include": ["./src/**/*"],
   "exclude": ["dist", "node_modules"]

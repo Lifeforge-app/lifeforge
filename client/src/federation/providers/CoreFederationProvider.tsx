@@ -1,13 +1,36 @@
 import { useEffect } from 'react'
 
-import { useFederation } from '@lifeforge/shared'
+import {
+  type ModuleConfig,
+  loadModules,
+  useFederation
+} from '@lifeforge/federation'
 
-import loadModules from '../loaders/loadModules'
+import accountSettings from '@/core/accountSettings/manifest'
+import apiKeys from '@/core/apiKeys/manifest'
+import backups from '@/core/backups/manifest'
+import dashboard from '@/core/dashboard/manifest'
+import documentation from '@/core/documentation/manifest'
+import moduleManager from '@/core/moduleManager/manifest'
+import personalization from '@/core/personalization/manifest'
+import forgeAPI from '@/forgeAPI'
 
-// Force full reload instead of HMR to ensure clean state
-if (import.meta.hot) {
-  import.meta.hot.invalidate()
-}
+const coreModules = [
+  accountSettings,
+  apiKeys,
+  backups,
+  dashboard,
+  documentation,
+  personalization,
+  moduleManager
+]
+
+const devModeImports = import.meta.env.DEV
+  ? import.meta.glob<{ default: ModuleConfig }>(
+      '../../../../apps/*/client/manifest.ts',
+      { eager: false }
+    )
+  : {}
 
 export default function CoreFederationProvider({
   children
@@ -28,7 +51,7 @@ export default function CoreFederationProvider({
     setError(null)
 
     try {
-      const result = await loadModules()
+      const result = await loadModules(forgeAPI, coreModules, devModeImports)
 
       setModules(result.routes)
       setGlobalProviders(result.globalProviders)

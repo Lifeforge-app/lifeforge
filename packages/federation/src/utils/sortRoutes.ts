@@ -1,13 +1,12 @@
-import { type ModuleCategory, SYSTEM_CATEGORIES } from '@lifeforge/shared'
-
-import forgeAPI from '@/forgeAPI'
+import type { ModuleCategory } from '../interfaces/module_config.types'
+import { SYSTEM_CATEGORIES } from '../providers/FederationProvider'
 
 export type CategoryOrder = Record<string, Record<string, string>>
 
 /**
  * Fetches category order (with translations) from the server
  */
-export async function fetchCategoryOrder(): Promise<CategoryOrder> {
+export async function fetchCategoryOrder(forgeAPI: any): Promise<CategoryOrder> {
   try {
     return (await forgeAPI.modules.categories.list.query()) ?? {}
   } catch (e) {

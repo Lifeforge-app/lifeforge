@@ -21,7 +21,6 @@ export { useMainSidebarState as useMainSidebarState } from './providers/SidebarS
 export { useAuth } from './providers/AuthProvider'
 export { useModuleSidebarState } from './providers/ModuleSidebarStateProvider'
 export { useModuleHeaderState } from './providers/ModuleHeaderStateProvider'
-export { useFederation } from './providers/FederationProvider'
 export { default as AuthProvider } from './providers/AuthProvider'
 export { default as APIEndpointProvider } from './providers/APIEndpointProvider'
 export { default as PersonalizationProvider } from './providers/PersonalizationProvider'
@@ -34,7 +33,6 @@ export { default as NuqsProvider } from './providers/NuqsProvider'
 export { default as EncryptionProvider } from './providers/EncryptionProvider'
 export { default as ModuleSidebarStateProvider } from './providers/ModuleSidebarStateProvider'
 export { default as ModuleHeaderStateProvider } from './providers/ModuleHeaderStateProvider'
-export { default as FederationProvider } from './providers/FederationProvider'
 export { type SocketEvent, useSocketContext } from './providers/SocketProvider'
 
 // Useful hooks
@@ -57,12 +55,8 @@ export { default as fetchAPI } from './utils/fetchAPI'
 export { default as getBrowserInfo } from './utils/getBrowserInfo'
 export { default as normalizeSubnamespace } from './utils/normalizeSubnamespace'
 export { default as parseCollectionName } from './utils/parseCollectionName'
-
-export { packageJSONSchema } from './interfaces/module_config.types'
-
 // Forge API client and types
 export { default as createForgeProxy } from './api/core/createForgeProxy'
-export { default as createForgeModuleClient } from './api/core/createForgeModuleClient'
 export { default as ForgeEndpoint } from './api/core/forgeEndpoint'
 export type {
   ProxyTree,
@@ -75,12 +69,6 @@ export type {
   IDashboardLayout,
   IBackdropFilters
 } from './providers/PersonalizationProvider/interfaces/personalization_provider_interfaces'
-export type {
-  ModuleConfig,
-  ModuleCategory
-} from './interfaces/module_config.types'
-export { moduleConfigSchema } from './interfaces/module_config.types'
 export type { default as WidgetConfig } from './interfaces/widget_config.types'
 export { widgetConfigSchema } from './interfaces/widget_config.types'
 export { globalProxyRegistry } from './api/core/registry'
-export { SYSTEM_CATEGORIES } from './providers/FederationProvider'

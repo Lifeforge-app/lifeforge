@@ -6,13 +6,13 @@ import {
   APIOnlineStatusProvider,
   AuthProvider,
   EncryptionProvider,
-  FederationProvider,
   MainSidebarStateProvider,
   NuqsProvider,
   PersonalizationProvider,
   SocketProvider,
   ToastProvider
 } from '@lifeforge/shared'
+import { FederationProvider } from '@lifeforge/federation'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,

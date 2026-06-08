@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { useFederation } from '@lifeforge/shared'
+import { useFederation } from '@lifeforge/federation'
 import {
   Box,
   Card,
