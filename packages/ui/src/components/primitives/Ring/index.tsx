@@ -156,7 +156,7 @@ export function Ring<T extends ElementType = 'div'>({
       ringOffsetWidth: normalizeResponsiveProp(ringOffsetWidth)
     },
     colorProps: { ringColor },
-    className: clsx(ringBase(), shadow && shadowClass, className),
+    className: clsx('_ring', ringBase(), shadow && shadowClass, className),
     style
   })
 

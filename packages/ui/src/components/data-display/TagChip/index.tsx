@@ -1,19 +1,23 @@
-import { formatHex, parse } from 'culori'
+import { type ComponentPropsWithoutRef, type ElementType } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { anyColorToHex, usePersonalization } from '@lifeforge/shared'
 
-import { Icon } from '@/components/primitives'
 import {
   Bordered,
-  type BorderedProps,
+  type BorderedOwnProps,
   Box,
   Flex,
+  Icon,
   Text,
   Transition
 } from '@/components/primitives'
 
-interface TagChipProps extends Omit<BorderedProps, 'color'> {
+type TagChipProps<T extends ElementType> = Omit<
+  BorderedOwnProps,
+  'color' | 'as'
+> & {
+  as?: T
   /** The text label displayed on the tag chip. */
   label: string | React.ReactNode
   /** The icon to display alongside the label. Can be an Iconify icon name or custom HTML string prefixed with 'customHTML:'. */
@@ -31,14 +35,20 @@ interface TagChipProps extends Omit<BorderedProps, 'color'> {
   }
   /** Optional click handler for the entire tag chip. */
   onClick?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
-}
+} & Omit<
+    ComponentPropsWithoutRef<T>,
+    | keyof Omit<BorderedOwnProps, 'color' | 'as'>
+    | 'as'
+    | 'label'
+    | 'icon'
+    | 'color'
+    | 'size'
+    | 'variant'
+    | 'actionButtonProps'
+    | 'onClick'
+  >
 
-// fallback classes have been replaced by vanilla-extract styles
-
-/**
- * A tag chip component that displays a label with an optional icon and customizable color.
- */
-export function TagChip({
+export function TagChip<T extends ElementType = 'button'>({
   label,
   icon,
   color,
@@ -47,12 +57,10 @@ export function TagChip({
   actionButtonProps,
   onClick,
   ...rest
-}: TagChipProps) {
+}: TagChipProps<T>) {
   const { getMostReadableColor } = usePersonalization()
 
-  const convertedColor = color?.startsWith('oklch(')
-    ? formatHex(parse(color))
-    : color
+  const convertedColor = color ? anyColorToHex(color) : color
 
   const computedStyle: React.CSSProperties =
     convertedColor !== undefined
@@ -82,7 +90,7 @@ export function TagChip({
         }
       >
         <Bordered
-          as="button"
+          as={(rest.as ?? 'button') as ElementType}
           bg={
             color === undefined && variant === 'filled'
               ? { base: 'bg-200', dark: 'bg-800' }
@@ -97,13 +105,17 @@ export function TagChip({
                 }
           }
           borderWidth="1px"
+          display="inline-block"
           minWidth="0"
           px="sm"
           py="xs"
           r="full"
-          style={computedStyle}
           onClick={onClick}
-          {...rest}
+          {...(rest as Record<string, unknown>)}
+          style={{
+            ...rest.style,
+            ...computedStyle
+          }}
         >
           <Flex align="center" flexShrink="0" gap="xs" minWidth="0">
             {(() => {

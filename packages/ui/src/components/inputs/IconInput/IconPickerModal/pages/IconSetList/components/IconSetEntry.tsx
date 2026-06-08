@@ -56,7 +56,7 @@ function _IconSetEntry({
             <Text truncate as="h3" size="xl" weight="semibold">
               {iconSet.name}
             </Text>
-            <Text truncate as="p" color="custom-500" size="sm">
+            <Text truncate as="p" color="primary" size="sm">
               {iconSet.author.name}
             </Text>
             <Bordered

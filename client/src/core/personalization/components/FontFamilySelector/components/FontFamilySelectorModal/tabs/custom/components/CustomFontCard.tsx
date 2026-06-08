@@ -79,7 +79,7 @@ function CustomFontCard({
     <Ring
       key={font.id}
       asChild
-      ringColor="custom-500"
+      ringColor="primary"
       ringWidth={isSelected ? '2px' : '0px'}
     >
       <Card

@@ -65,7 +65,7 @@ export const RingColor: Story = {
   args: {},
   render: () => (
     <Stack gap="xl">
-      <Ring asChild p="md" r="lg" ringColor="custom-500">
+      <Ring asChild p="md" r="lg" ringColor="primary">
         <DemoBox label="custom-500 (flat)" />
       </Ring>
       <Ring
@@ -115,7 +115,7 @@ export const RingOffset: Story = {
       <Ring
         asChild
         r="lg"
-        ringColor="custom-500"
+        ringColor="primary"
         ringOffsetWidth="10px"
         ringWidth="4px"
       >

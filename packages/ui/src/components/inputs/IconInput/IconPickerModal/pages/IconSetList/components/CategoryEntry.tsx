@@ -25,7 +25,7 @@ function _CategoryEntry({
         <Text align="center" as="h2" size="3xl" weight="semibold">
           {category}
           <Bordered
-            borderColor="custom-500"
+            borderColor="primary"
             borderSide="bottom"
             borderWidth="4px"
             bottom="-0.5rem"

@@ -23,8 +23,7 @@ globalStyle(`.dark ${root} *`, {
 
 globalStyle(`${root}`, {
   fontSize: vars.fontSize.base,
-  lineHeight: vars.lineHeight.base,
-  maxWidth: '65ch'
+  lineHeight: vars.lineHeight.base
 })
 
 /* ---- Headings ---- */

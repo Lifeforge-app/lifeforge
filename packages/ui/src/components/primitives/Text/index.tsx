@@ -9,10 +9,14 @@ import {
 
 import {
   type ColorValue,
+  type OverflowValue,
+  type PositionValue,
   type ResponsiveProp,
   type ThemeConditionProp,
+  type TokenizedLayoutProps,
   type TokenizedSpacingProps,
   normalizeResponsiveProp,
+  resolveLayoutSprinklesProps,
   resolveSpacingSprinklesProps,
   resolveStyles
 } from '@/system'
@@ -63,9 +67,8 @@ type TextOverflowWrap = 'normal' | 'break-word' | 'anywhere'
 
 type TextTrim = 'normal' | 'start' | 'end' | 'both'
 
-interface TextOwnProps<
-  T extends ElementType = 'span'
-> extends TokenizedSpacingProps {
+interface TextOwnProps<T extends ElementType = 'span'>
+  extends TokenizedSpacingProps, TokenizedLayoutProps {
   as?: T
   asChild?: boolean
   ref?: Ref<HTMLElement>
@@ -94,6 +97,10 @@ interface TextOwnProps<
   lineClamp?: number
   tracking?: ResponsiveProp<TextTracking>
   leading?: ResponsiveProp<TextLeading>
+  overflow?: ResponsiveProp<OverflowValue>
+  overflowX?: ResponsiveProp<OverflowValue>
+  overflowY?: ResponsiveProp<OverflowValue>
+  position?: ResponsiveProp<PositionValue>
   className?: string
   children?: ReactNode
 }
@@ -145,6 +152,11 @@ export function Text<T extends ElementType = 'span'>({
   pr,
   pb,
   pl,
+  // Layout props
+  overflow,
+  overflowX,
+  overflowY,
+  position,
   className,
   style,
   children,
@@ -214,6 +226,12 @@ export function Text<T extends ElementType = 'span'>({
         mr,
         mb,
         ml
+      }),
+      ...resolveLayoutSprinklesProps({
+        overflow,
+        overflowX,
+        overflowY,
+        position
       })
     },
     colorProps: { color, bg },

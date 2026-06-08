@@ -47,7 +47,7 @@ export const ClickableTooltip: Story = {
         Visit{' '}
         <Text
           as="a"
-          color="custom-500"
+          color="primary"
           decoration="underline"
           href="https://docs.lifeforge.dev"
           rel="noreferrer"

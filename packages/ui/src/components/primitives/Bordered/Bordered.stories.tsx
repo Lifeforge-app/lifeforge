@@ -81,7 +81,7 @@ export const BorderColor: Story = {
         <DemoBox label="Default (bg-200 / bg-700)" />
       </Bordered>
 
-      <Bordered borderColor="custom-500" p="md" r="lg">
+      <Bordered borderColor="primary" p="md" r="lg">
         <DemoBox label="custom-500 (flat)" />
       </Bordered>
 
@@ -168,7 +168,7 @@ export const BorderSide: Story = {
           side => (
             <Bordered
               key={side}
-              borderColor="custom-500"
+              borderColor="primary"
               borderSide={side}
               borderWidth="2px"
               p="md"
@@ -219,7 +219,7 @@ export const WithBackground: Story = {
 
       <Bordered
         bg={{ base: 'custom-50', dark: 'custom-900' }}
-        borderColor="custom-500"
+        borderColor="primary"
         borderWidth="2px"
         p="lg"
         r="lg"
@@ -242,7 +242,7 @@ export const AccentBar: Story = {
     <ScrollableStory>
       <Bordered
         bg={{ base: 'bg-50', dark: 'bg-900' }}
-        borderColor="custom-500"
+        borderColor="primary"
         borderSide="left"
         borderWidth="4px"
         px="lg"
@@ -295,7 +295,7 @@ export const AsChild: Story = {
       </Alert>
       <Bordered
         asChild
-        borderColor="custom-500"
+        borderColor="primary"
         borderWidth="2px"
         p="lg"
         r="lg"
