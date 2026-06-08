@@ -38,7 +38,11 @@ export const alias: Alias[] = [
         importer?.includes('/client/') &&
         !importer?.includes('/client/src/')
 
-      if (importer?.endsWith('manifest.ts')) {
+      const isManifest = id === '@/manifest' || id === '@/manifest.ts'
+
+      if (isManifest) {
+        rootDir = importer?.split('/src/')[0] || ''
+      } else if (importer?.endsWith('manifest.ts')) {
         rootDir = importer.replace('manifest.ts', 'src/')
       } else if (isAppModule) {
         const clientMatch = importer?.match(/(.+\/client)\//)

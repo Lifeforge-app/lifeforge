@@ -5,10 +5,12 @@ import {
   // @ts-expect-error - Virtual federation methods
 } from 'virtual:__federation__'
 
-import type {
-  InferOutput,
-  ModuleCategory,
-  ModuleConfig
+import {
+  type InferOutput,
+  type ModuleCategory,
+  type ModuleConfig,
+  globalProxyRegistry,
+  moduleConfigSchema
 } from '@lifeforge/shared'
 
 import forgeAPI from '@/forgeAPI'
@@ -87,8 +89,17 @@ export async function loadModuleConfig(
     unwrapped = await loadFromFederation(mod)
   }
 
+  const validation = moduleConfigSchema.safeParse(unwrapped)
+
+  if (!validation.success) {
+    throw new Error(
+      `Module configuration validation failed for ${mod.name}: ${validation.error.message}`
+    )
+  }
+
   const moduleConfig: ModuleCategory['items'][number] = {
     name: mod.name,
+    moduleId: mod.moduleId,
     displayName: mod.displayName,
     version: mod.version,
     description: mod.description,
@@ -102,7 +113,15 @@ export async function loadModuleConfig(
     disabled: unwrapped.disabled,
     clearQueryOnUnmount: unwrapped.clearQueryOnUnmount,
     APIKeyAccess: mod.APIKeyAccess,
-    widgets: unwrapped.widgets
+    widgets: unwrapped.widgets,
+    contract: unwrapped.contract
+  }
+
+  if (unwrapped.contract) {
+    globalProxyRegistry.set(unwrapped.contract, {
+      moduleId: mod.moduleId,
+      apiHost: import.meta.env.VITE_API_HOST
+    })
   }
 
   return moduleConfig

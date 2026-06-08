@@ -11,6 +11,7 @@ import {
 import fetchAPI from '../../utils/fetchAPI'
 import type { InferInput, InferOutput } from '../typescript/forge_proxy.types'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
+import { globalProxyRegistry } from './registry'
 
 /**
  * ForgeEndpoint is a chainable API endpoint handler for making type-safe
@@ -50,8 +51,23 @@ export default class ForgeEndpoint<
   constructor(
     private _apiHost: string = '',
     private _route: string,
-    private _contract?: any
+    private _contract?: any,
+    private _rootContract?: any
   ) {}
+
+  private get _resolvedConfig() {
+    const ctx = this._rootContract ? globalProxyRegistry.get(this._rootContract) : null
+    if (ctx) {
+      return {
+        apiHost: ctx.apiHost,
+        prefix: ctx.moduleId ? `modules/${ctx.moduleId}` : ''
+      }
+    }
+    return {
+      apiHost: this._apiHost || (typeof window !== 'undefined' ? window.location.origin : ''),
+      prefix: ''
+    }
+  }
 
   /**
    * Returns Zod schemas derived from the contract's JSON schemas.
@@ -82,18 +98,19 @@ export default class ForgeEndpoint<
    * Returns the full endpoint URL (absolute), including query string if present.
    */
   get endpoint() {
-    const path = this._getPath()
+    const { apiHost, prefix } = this._resolvedConfig
+    const path = this._getPath(prefix)
 
     // Handle relative URLs (e.g., /api)
-    if (this._apiHost.startsWith('/')) {
+    if (apiHost.startsWith('/')) {
       const origin = typeof window !== 'undefined' ? window.location.origin : ''
 
       const normalizedPath = path.startsWith('/') ? path : `/${path}`
 
-      return `${origin}${this._apiHost}${normalizedPath}`
+      return `${origin}${apiHost}${normalizedPath}`
     }
 
-    return new URL(path, this._apiHost).toString()
+    return new URL(path, apiHost).toString()
   }
 
   /**
@@ -222,13 +239,16 @@ export default class ForgeEndpoint<
    * @returns Promise resolving to the decrypted API response
    */
   async query(): Promise<InferOutput<T>> {
+    const { apiHost, prefix } = this._resolvedConfig
+    const path = this._getPath(prefix)
+
     // Create encryption session (generates AES key and encrypts it with server's public key)
     const { encryptedKey, session } = await createEncryptionSession()
 
     // Send GET request with encrypted AES key in header
     const response = await fetchAPI<{ iv: string; data: string; tag: string }>(
-      this._apiHost,
-      this._getPath(),
+      apiHost,
+      path,
       {
         method: 'GET',
         headers: {
@@ -257,7 +277,9 @@ export default class ForgeEndpoint<
     raiseError?: boolean
     isExternal?: boolean
   }) {
-    return fetchAPI<InferOutput<T>>(this._apiHost, this._getPath(), {
+    const { apiHost, prefix } = this._resolvedConfig
+    const path = this._getPath(prefix)
+    return fetchAPI<InferOutput<T>>(apiHost, path, {
       method: 'GET',
       ...options
     })
@@ -272,9 +294,11 @@ export default class ForgeEndpoint<
    * @returns Promise resolving to the API response
    */
   mutateRaw(data: InferInput<T>['body'] | FormData) {
+    const { apiHost, prefix } = this._resolvedConfig
+    const path = this._getPath(prefix)
     const payloadData = data === undefined ? {} : data
 
-    return fetchAPI<InferOutput<T>>(this._apiHost, this._getPath(), {
+    return fetchAPI<InferOutput<T>>(apiHost, path, {
       method: 'POST',
       body:
         payloadData instanceof FormData
@@ -323,6 +347,8 @@ export default class ForgeEndpoint<
    * ```
    */
   async mutate(data: InferInput<T>['body']): Promise<InferOutput<T>> {
+    const { apiHost, prefix } = this._resolvedConfig
+    const path = this._getPath(prefix)
     const payloadData = data === undefined ? {} : data
 
     // If data contains files, fall back to raw mode (server also disables encryption for media endpoints)
@@ -339,8 +365,8 @@ export default class ForgeEndpoint<
 
     // Send encrypted payload
     const response = await fetchAPI<{ iv: string; data: string; tag: string }>(
-      this._apiHost,
-      this._getPath(),
+      apiHost,
+      path,
       {
         method: 'POST',
         body: payload as unknown as Record<string, unknown>
@@ -359,8 +385,8 @@ export default class ForgeEndpoint<
   /**
    * Constructs the endpoint path with query parameters if present.
    */
-  protected _getPath() {
-    let endpoint = `${this._route}`
+  protected _getPath(prefix?: string) {
+    let endpoint = prefix ? `${prefix}/${this._route}` : `${this._route}`
 
     if (this._input) {
       const queryString = Object.entries(this._input)

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import z from 'zod'
 
 import type WidgetConfig from './widget_config.types'
@@ -13,11 +14,45 @@ export interface ModuleConfig {
   hidden?: boolean
   disabled?: boolean | (() => Promise<boolean>)
   clearQueryOnUnmount?: boolean
+  contract?: any
   widgets?: (() => Promise<{
     default: React.ComponentType<any>
     config: WidgetConfig
   }>)[]
 }
+
+export const moduleConfigSchema: z.ZodType<ModuleConfig> = z.object({
+  provider: z.any().optional(),
+  routes: z.record(z.string(), z.any()),
+  subsection: z
+    .array(
+      z.object({
+        label: z.string(),
+        icon: z.string(),
+        path: z.string()
+      })
+    )
+    .optional(),
+  hidden: z.boolean().optional(),
+  disabled: z
+    .union([
+      z.boolean(),
+      z.custom<() => Promise<boolean>>(val => typeof val === 'function')
+    ])
+    .optional(),
+  clearQueryOnUnmount: z.boolean().optional(),
+  contract: z.any().optional(),
+  widgets: z
+    .array(
+      z.custom<
+        () => Promise<{
+          default: React.ComponentType<any>
+          config: WidgetConfig
+        }>
+      >(val => typeof val === 'function')
+    )
+    .optional()
+})
 
 export const packageJSONSchema = z.object({
   name: z.string(),
@@ -51,6 +86,7 @@ export interface ModuleCategory {
   title: string
   items: (ModuleConfig & {
     name: string
+    moduleId: string
     displayName: string
     version: string
     author: string

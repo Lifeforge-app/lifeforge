@@ -2467,6 +2467,9 @@ export const contract = {
               "name": {
                 "type": "string"
               },
+              "moduleId": {
+                "type": "string"
+              },
               "displayName": {
                 "type": "string"
               },
@@ -2500,6 +2503,7 @@ export const contract = {
             },
             "required": [
               "name",
+              "moduleId",
               "displayName",
               "version",
               "description",
@@ -2535,6 +2539,9 @@ export const contract = {
                 "type": "object",
                 "properties": {
                   "name": {
+                    "type": "string"
+                  },
+                  "moduleId": {
                     "type": "string"
                   },
                   "displayName": {
@@ -2586,6 +2593,7 @@ export const contract = {
                 },
                 "required": [
                   "name",
+                  "moduleId",
                   "displayName",
                   "version",
                   "description",

@@ -7,6 +7,7 @@ import ForgeEndpoint from './forgeEndpoint'
 import CORE_HELPERS from './helpers/config'
 import createCoreHelper from './helpers/createCoreHelper'
 import createGetMediaHelper from './helpers/getMediaHelper'
+import { globalProxyRegistry } from './registry'
 
 /**
  * Creates a type-safe, proxy-based API client that mirrors your route contract structure.
@@ -14,10 +15,13 @@ import createGetMediaHelper from './helpers/getMediaHelper'
  * Traverses the generated routes contract statically at type-level using json-schema-to-ts,
  * and dynamically at runtime using Proxy traps.
  */
-export default function createForgeProxy<T>(
+export default function createForgeProxy<T>(contract: T): ProxyTree<T> {
+  return createForgeProxyInternal(contract, [])
+}
+
+function createForgeProxyInternal<T>(
   contract: T,
-  apiHost?: string,
-  path: string[] | string = []
+  path: string[] | string
 ): ProxyTree<T> {
   const pathArray = Array.isArray(path) ? path : [path]
 
@@ -30,10 +34,13 @@ export default function createForgeProxy<T>(
     }
   }
 
+  const resolvedHost = (contract && globalProxyRegistry.get(contract)?.apiHost) || ''
+
   const endpoint = new ForgeEndpoint<any>(
-    apiHost,
+    resolvedHost,
     pathArray.join('/'),
-    currentContract
+    currentContract,
+    contract
   )
 
   return new Proxy(() => {}, {
@@ -58,17 +65,19 @@ export default function createForgeProxy<T>(
       if (prop === 'untyped') {
         return <TOutput = any, TBody = any, TQuery = any>(url: string) =>
           new ForgeEndpoint<UntypedEndpointType<TOutput, TBody, TQuery>>(
-            apiHost,
-            url
+            resolvedHost,
+            url,
+            undefined,
+            contract
           )
       }
 
       if (prop === 'getMedia') {
-        return createGetMediaHelper(apiHost)
+        return createGetMediaHelper(resolvedHost)
       }
 
       if (prop in CORE_HELPERS) {
-        return createCoreHelper(apiHost, prop as keyof typeof CORE_HELPERS)
+        return createCoreHelper(resolvedHost, prop as keyof typeof CORE_HELPERS)
       }
 
       if (prop in endpoint && typeof (endpoint as any)[prop] !== 'undefined') {
@@ -77,7 +86,7 @@ export default function createForgeProxy<T>(
         return typeof value === 'function' ? value.bind(endpoint) : value
       }
 
-      return createForgeProxy(contract, apiHost, [...pathArray, prop as string])
+      return createForgeProxyInternal(contract, [...pathArray, prop as string])
     },
 
     apply: () => {
