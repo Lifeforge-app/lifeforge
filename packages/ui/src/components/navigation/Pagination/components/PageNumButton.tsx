@@ -1,5 +1,5 @@
 import { Button } from '@/components/inputs'
-import { Box, Text } from '@/components/primitives'
+import { Text } from '@/components/primitives'
 
 export function PageNumButton({
   number,
@@ -11,29 +11,26 @@ export function PageNumButton({
   active?: boolean
 }) {
   return (
-    <Box
+    <Button
+      key={1}
       display={{
         base: 'none',
-        lg: 'block'
+        lg: 'flex'
       }}
+      style={{
+        width: '3em',
+        height: '3em'
+      }}
+      variant="plain"
+      onClick={onClick}
     >
-      <Button
-        key={1}
-        style={{
-          width: '3em',
-          height: '3em'
-        }}
-        variant="plain"
-        onClick={onClick}
+      <Text
+        color={active ? 'custom-500' : 'muted'}
+        size={active ? 'lg' : 'base'}
+        weight={active ? 'semibold' : 'normal'}
       >
-        <Text
-          color={active ? 'custom-500' : 'muted'}
-          size={active ? 'lg' : 'base'}
-          weight={active ? 'semibold' : 'normal'}
-        >
-          {number}
-        </Text>
-      </Button>
-    </Box>
+        {number}
+      </Text>
+    </Button>
   )
 }

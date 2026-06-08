@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Flex } from '@/components/primitives'
+import { Flex, Text } from '@/components/primitives'
 
 import { EllipsisIcon } from './EllipsisIcon'
 import { PageNumButton } from './PageNumButton'
@@ -70,8 +70,13 @@ export function PageNumbers({
   }
 
   return (
-    <Flex align="center" gap="xs">
-      {pageNumbers}
-    </Flex>
+    <>
+      <Flex align="center" display={{ base: 'none', lg: 'flex' }} gap="xs">
+        {pageNumbers}
+      </Flex>
+      <Text color="muted" display={{ base: 'block', lg: 'none' }}>
+        Page {page} / {totalPages}
+      </Text>
+    </>
   )
 }
