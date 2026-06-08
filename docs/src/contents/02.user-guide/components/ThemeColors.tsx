@@ -1,57 +1,83 @@
-import { Icon } from '@iconify/react'
+import {
+  Flex,
+  Grid,
+  Icon,
+  Ring,
+  Text,
+  Transition,
+  usePersonalization
+} from '@lifeforge/ui'
 
-import { usePersonalization } from '@lifeforge/ui'
+const COLORS = [
+  'red',
+  'pink',
+  'purple',
+  'deep-purple',
+  'indigo',
+  'blue',
+  'light-blue',
+  'cyan',
+  'teal',
+  'green',
+  'light-green',
+  'lime',
+  'yellow',
+  'amber',
+  'orange',
+  'deep-orange',
+  'brown',
+  'grey'
+] as const
 
 function ThemeColors() {
   const { setRawThemeColor, rawThemeColor } = usePersonalization()
 
   return (
-    <div className="mt-8 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-6">
-      {[
-        'red',
-        'pink',
-        'purple',
-        'deep-purple',
-        'indigo',
-        'blue',
-        'light-blue',
-        'cyan',
-        'teal',
-        'green',
-        'light-green',
-        'lime',
-        'yellow',
-        'amber',
-        'orange',
-        'deep-orange',
-        'brown',
-        'grey'
-      ].map((color, index) => (
-        <button
-          key={index}
-          className="flex flex-col items-center"
+    <Grid gap="lg" mt="xl" templateCols={{ base: 2, sm: 3, md: 6 }}>
+      {COLORS.map((color, index) => (
+        <Flex
+          key={`${color}-${index}`}
+          centered
+          as="button"
+          direction="column"
           onClick={() => {
             setRawThemeColor(`theme-${color}`)
           }}
         >
-          <div
-            className={`flex-center h-16 w-16 rounded-full theme-${color} bg-custom-500 transition-all ${
-              rawThemeColor === `theme-${color}`
-                ? 'ring-custom-500 ring-offset-bg-100 dark:ring-offset-bg-900 ring-3 ring-offset-3'
-                : ''
-            }`}
-          >
-            {rawThemeColor === `theme-${color}` ? (
-              <Icon
-                className="text-bg-100 dark:text-bg-900 size-8"
-                icon="tabler:check"
-              />
-            ) : null}
-          </div>
-          <span className="mt-2 text-sm text-gray-500">{color}</span>
-        </button>
+          <Transition>
+            <Ring
+              asChild
+              ringColor="custom-500"
+              ringOffsetWidth={
+                rawThemeColor === `theme-${color}` ? '3px' : '0px'
+              }
+              ringWidth={rawThemeColor === `theme-${color}` ? '2px' : '0px'}
+            >
+              <Flex
+                align="center"
+                bg="primary"
+                className={`theme-${color}`}
+                height="4rem"
+                justify="center"
+                r="full"
+                width="4rem"
+              >
+                {rawThemeColor === `theme-${color}` ? (
+                  <Icon
+                    color={{ base: 'bg-100', dark: 'bg-900' }}
+                    icon="tabler:check"
+                    size="2rem"
+                  />
+                ) : null}
+              </Flex>
+            </Ring>
+          </Transition>
+          <Text color="muted" mt="sm" size="sm">
+            {color}
+          </Text>
+        </Flex>
       ))}
-    </div>
+    </Grid>
   )
 }
 

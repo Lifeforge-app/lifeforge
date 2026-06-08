@@ -414,7 +414,6 @@
         "commander": "^14.0.2",
         "concurrently": "^9.2.1",
         "crypto-js": "^4.2.0",
-        "dayjs": "^1.11.18",
         "dotenv": "^17.2.3",
         "handlebars": "^4.7.8",
         "lodash": "^4.17.21",
@@ -424,7 +423,6 @@
         "prompts": "^2.4.2",
         "semver": "^7.7.3",
         "tar": "^7.5.2",
-        "zod": "4.3.5",
       },
       "devDependencies": {
         "@types/crypto-js": "^4.2.2",

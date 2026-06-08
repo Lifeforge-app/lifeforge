@@ -1,6 +1,8 @@
 /* eslint-disable react-compiler/react-compiler */
 import mdxListCounts from 'virtual:mdx-list-counts'
 
+import { Box, WithDivide } from '@lifeforge/ui'
+
 import { components } from '@/components/MdxComponents'
 
 import Version from './Version'
@@ -34,7 +36,7 @@ function ChangelogEntries() {
   let isFirst = true
 
   return (
-    <div className="divide-bg-500/20 divide-y-[1.5px]">
+    <Box>
       {entries.map(({ year, versions }) =>
         versions.map(({ week, Component, liCount }) => {
           const first = isFirst
@@ -42,19 +44,20 @@ function ChangelogEntries() {
           isFirst = false
 
           return (
-            <Version
-              key={`${year}-week-${week}`}
-              isLatest={first}
-              liCount={liCount}
-              week={week}
-              year={year}
-            >
-              <Component components={components} />
-            </Version>
+            <WithDivide key={`${year}-week-${week}`}>
+              <Version
+                isLatest={first}
+                liCount={liCount}
+                week={week}
+                year={year}
+              >
+                <Component components={components} />
+              </Version>
+            </WithDivide>
           )
         })
       )}
-    </div>
+    </Box>
   )
 }
 

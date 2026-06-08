@@ -2,6 +2,8 @@ import type { MDXComponents } from 'mdx/types'
 import Zoom from 'react-medium-image-zoom'
 import { Link } from 'react-router'
 
+import { Bordered, Box, Flex, Text } from '@lifeforge/ui'
+
 import Code from './Code'
 
 export const components: MDXComponents = {
@@ -10,65 +12,119 @@ export const components: MDXComponents = {
   },
   h6(properties) {
     return (
-      <h6 {...properties} className="text-custom-500 font-medium sm:text-lg" />
+      <Text
+        as="h6"
+        color="custom-500"
+        size={{ base: 'base', sm: 'lg' }}
+        weight="medium"
+        {...properties}
+      />
     )
   },
   h1(properties) {
-    return <h1 {...properties} className="my-2 text-4xl font-bold" />
+    return <Text as="h1" my="sm" size="4xl" weight="bold" {...properties} />
   },
   h2(properties) {
     return (
-      <h2
+      <Text
         {...properties}
-        className="mt-8 text-2xl font-semibold sm:mt-12 sm:text-3xl"
+        as="h2"
+        mt={{ base: 'xl', sm: '2xl' }}
+        size={{ base: '2xl', sm: '3xl' }}
+        weight="semibold"
       />
     )
   },
   h3(properties) {
     return (
-      <h3 {...properties} className="mt-10 text-xl font-semibold sm:text-2xl" />
+      <Text
+        {...properties}
+        as="h3"
+        mt="2xl"
+        size={{ base: 'xl', sm: '2xl' }}
+        weight="semibold"
+      />
     )
   },
   h4(properties) {
     return (
-      <h4 {...properties} className="mt-8 text-lg font-semibold sm:text-xl" />
+      <Text
+        {...properties}
+        as="h4"
+        mt="xl"
+        size={{ base: 'lg', sm: 'xl' }}
+        weight="semibold"
+      />
     )
   },
   p(properties) {
-    return <p {...properties} className="text-bg-600 dark:text-bg-400 mt-6" />
+    return (
+      <Text
+        {...properties}
+        as="p"
+        color={{ base: 'bg-600', dark: 'bg-400' }}
+        mt="lg"
+      />
+    )
   },
   hr(properties) {
     return (
-      <hr
+      <Bordered
         {...properties}
-        className="border-bg-200 dark:border-bg-800 mt-8 mb-4 border-t-[1.5px] sm:mt-12 sm:mb-8"
+        as="hr"
+        borderColor={{ base: 'bg-200', dark: 'bg-800' }}
+        borderSide="top"
+        borderWidth="1.5px"
+        mt={{ base: 'xl', sm: '2xl' }}
       />
     )
   },
   a(properties) {
     return (
-      <Link
-        className="text-custom-500 font-medium underline"
-        to={properties.href || ''}
-      >
-        {properties.children}
-      </Link>
+      <Text asChild color="custom-500" decoration="underline" weight="medium">
+        <Link to={properties.href || ''}>{properties.children}</Link>
+      </Text>
     )
   },
   ul(properties) {
-    return <ul {...properties} className="mt-4 list-disc space-y-3 pl-6" />
-  },
-  li(properties) {
-    return <li {...properties} className="dark:text-bg-400 text-bg-600" />
+    return (
+      <Box
+        {...properties}
+        as="ul"
+        mt="md"
+        pl="lg"
+        style={{ listStyleType: 'disc' }}
+      />
+    )
   },
   ol(properties) {
-    return <ol {...properties} className="mt-4 list-decimal space-y-3 pl-6" />
+    return (
+      <Box
+        {...properties}
+        as="ol"
+        mt="md"
+        pl="lg"
+        style={{ listStyleType: 'decimal' }}
+      />
+    )
+  },
+  li(properties) {
+    return (
+      <Text
+        as="li"
+        color={{ base: 'bg-600', dark: 'bg-400' }}
+        py="xs"
+        {...properties}
+      />
+    )
   },
   strong(properties) {
     return (
-      <strong
+      <Text
         {...properties}
-        className="text-bg-800 dark:text-bg-100 font-semibold"
+        as="strong"
+        color={{ base: 'bg-800', dark: 'bg-100' }}
+        weight="semibold"
       />
     )
   },
@@ -85,42 +141,63 @@ export const components: MDXComponents = {
   },
   table(properties) {
     return (
-      <table
+      <Bordered
         {...properties}
-        className="border-bg-200 dark:border-bg-800 mt-6 w-full border-collapse border-[1.5px]"
+        as="table"
+        borderColor={{ base: 'bg-200', dark: 'bg-800' }}
+        borderSide="all"
+        borderWidth="1.5px"
+        mt="lg"
+        style={{ borderCollapse: 'collapse' }}
+        width="100%"
       />
     )
   },
   th(properties) {
     return (
-      <th
-        {...properties}
-        className="border-bg-200 dark:border-bg-800 border-[1.5px] px-4 py-2 text-left"
-      />
+      <Bordered
+        asChild
+        bg={{ base: 'bg-200', dark: 'bg-800' }}
+        borderColor={{ base: 'bg-200', dark: 'bg-800' }}
+        borderSide="all"
+        borderWidth="1.5px"
+      >
+        <Text {...properties} align="left" as="th" px="md" py="sm" />
+      </Bordered>
     )
   },
   td(properties) {
     return (
-      <td
-        {...properties}
-        className="border-bg-200 dark:border-bg-800 border-[1.5px] px-4 py-2 text-left first:break-all"
-      />
+      <Bordered
+        asChild
+        borderColor={{ base: 'bg-200', dark: 'bg-800' }}
+        borderSide="all"
+        borderWidth="1.5px"
+      >
+        <Text {...properties} align="left" as="td" px="md" py="sm" />
+      </Bordered>
     )
   },
   img(properties) {
     return (
       <Zoom zoomImg={properties.src}>
-        <div className="flex-center w-full pt-2 pb-4">
-          <img {...properties} alt="" className="rounded-lg sm:w-[90%]" />
-        </div>
+        <Flex centered pb="md" pt="sm" width="100%">
+          <Box as="img" {...properties} alt="" r="lg" width={{ sm: '90%' }} />
+        </Flex>
       </Zoom>
     )
   },
   blockquote(properties) {
     return (
-      <blockquote
+      <Bordered
         {...properties}
-        className="border-bg-200 dark:border-bg-800 my-4 border-l-4 pl-4 italic"
+        as="blockquote"
+        borderColor={{ base: 'bg-200', dark: 'bg-800' }}
+        borderSide="left"
+        borderWidth="4px"
+        my="md"
+        pl="md"
+        style={{ fontStyle: 'italic' }}
       />
     )
   }

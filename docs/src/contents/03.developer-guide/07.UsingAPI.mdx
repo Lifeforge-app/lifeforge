@@ -45,8 +45,8 @@ forgeAPI.items.create
   })
 
 // Extract types for reuse
-type CreateItemInput = InferInput<typeof forgeAPI.items.create>['body']
-type Item = InferOutput<typeof forgeAPI.items.create>
+type CreateItemInput = InferInput<Alert typeof forgeAPI.items.create>['body']
+type Item = InferOutput<Alert typeof forgeAPI.items.create>
 ```
 
 ### Route Proxy System
@@ -70,7 +70,7 @@ forgeAPI.assets.list.query()
 
 This provides **full autocomplete** as you type – TypeScript knows exactly which routes exist and what methods are available at each level.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   The module's `forgeAPI` only provides access to its **own server routes**. For core routes or routes from other modules, use `forgeAPI.untyped()` – see [Accessing Untyped Endpoints](#accessing-untyped-endpoints).
 </Alert>
 
@@ -113,7 +113,7 @@ const forgeAPI = createForgeProxy<APIRoutes>(
 export default forgeAPI
 ```
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   Always use `import type` or `import { type ... }` when importing from `@server/*` in the client. This ensures TypeScript only uses the types for checking without bundling actual server code.
 </Alert>
 
@@ -330,7 +330,7 @@ function MyComponent() {
 }
 ```
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   Use `WithQueryData` for simple data fetching. Use `WithQuery` when you need access to the query object. Use raw `useQuery` only when you need complete control over rendering.
 </Alert>
 
@@ -481,7 +481,7 @@ import forgeAPI from '@/utils/forgeAPI'
 import type { InferOutput } from '@lifeforge/shared'
 
 // Infer the type of a single item from a list endpoint
-type Item = InferOutput<typeof forgeAPI.items.list>[number]
+type Item = InferOutput<Alert typeof forgeAPI.items.list>[number]
 
 // Use in your component
 function ItemCard({ item }: { item: Item }) {
@@ -495,8 +495,8 @@ function ItemCard({ item }: { item: Item }) {
 import type { InferInput } from '@lifeforge/shared'
 
 // Infer the body type for create/update endpoints
-type CreateItemBody = InferInput<typeof forgeAPI.items.create>['body']
-type UpdateItemBody = InferInput<typeof forgeAPI.items.update>['body']
+type CreateItemBody = InferInput<Alert typeof forgeAPI.items.create>['body']
+type UpdateItemBody = InferInput<Alert typeof forgeAPI.items.update>['body']
 
 // Dynamic type based on operation
 type ItemFormData = InferInput<
@@ -507,7 +507,7 @@ type ItemFormData = InferInput<
 ### Inferring Query Parameter Types
 
 ```typescript
-type QueryParams = InferInput<typeof forgeAPI.items.list>['query']
+type QueryParams = InferInput<Alert typeof forgeAPI.items.list>['query']
 ```
 
 </section>
@@ -667,7 +667,7 @@ mutation.mutate({
 })
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   File uploads automatically use unencrypted mode since FormData cannot be encrypted. This is handled transparently by the API client.
 </Alert>
 
@@ -707,7 +707,7 @@ const thumbnailUrl = forgeAPI.media
   .endpoint
 ```
 
-<Alert className="mt-6" type="important">
+<Alert type="important">
   Thumbnail sizes must be configured in the PocketBase file field settings. Go to your collection in the PocketBase admin dashboard, edit the file field, and add your desired thumbnail sizes (e.g., `200x200`, `100x100`) in the "Thumb sizes" option. Only configured sizes will work.
 </Alert>
 
@@ -725,7 +725,7 @@ import { useQuery } from '@tanstack/react-query'
 import { createContext, useContext } from 'react'
 import type { InferOutput } from '@lifeforge/shared'
 
-type Item = InferOutput<typeof forgeAPI.items.list>[number]
+type Item = InferOutput<Alert typeof forgeAPI.items.list>[number]
 
 interface MyModuleContextType {
   items: Item[]
@@ -778,7 +778,7 @@ import forgeAPI from '@/utils/forgeAPI'
 import { useQuery } from '@tanstack/react-query'
 import type { InferOutput } from '@lifeforge/shared'
 
-export type Item = InferOutput<typeof forgeAPI.items.list>[number]
+export type Item = InferOutput<Alert typeof forgeAPI.items.list>[number]
 
 export function useItems(options?: { enabled?: boolean }) {
   return useQuery(
@@ -867,7 +867,7 @@ const result = await forgeAPI
   .query()
 ```
 
-<Alert className="mt-6" type="caution">
+<Alert type="caution">
   Using `.untyped()` bypasses type checking. Prefer defining proper types on the server whenever possible.
 </Alert>
 
@@ -912,7 +912,7 @@ Don't manually type your data. Let TypeScript infer types from the API:
 
 ```typescript
 // ✅ Good
-type Item = InferOutput<typeof forgeAPI.items.list>[number]
+type Item = InferOutput<Alert typeof forgeAPI.items.list>[number]
 
 // ❌ Bad - manually duplicating types
 interface Item {

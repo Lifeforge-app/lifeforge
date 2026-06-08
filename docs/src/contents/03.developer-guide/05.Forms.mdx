@@ -162,7 +162,7 @@ Anyone who has worked with data submission understands the frustration of type m
 This enables powerful type inference:
 
 ```tsx
-defineForm<InferOutput<typeof forgeAPI.myApp.coolStuff.create>['body']>()
+defineForm<InferOutput<Alert typeof forgeAPI.myApp.coolStuff.create>['body']>()
 ```
 
 Subsequent form configuration becomes fully type-safe, as does the final data output. This guarantees that form data always aligns with expected structures, providing confidence in data validity and format.
@@ -238,7 +238,7 @@ interface FormData {
 Or a type inferred from ForgeAPI:
 
 ```typescript
-type FormData = InferOutput<typeof forgeAPI.myApp.coolStuff.create>['body']
+type FormData = InferOutput<Alert typeof forgeAPI.myApp.coolStuff.create>['body']
 ```
 
 Thanks to the powerful capabilities of TypeScript, even if the type interface is in the form of a complex union like this:
@@ -298,7 +298,7 @@ function MyForm({
 }
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   The `FormModal` component should be the only thing being returned
   by the modal component.
 </Alert>
@@ -307,20 +307,20 @@ function MyForm({
 
 In the argument object being passed into the `defineForm` function, you can specify various properties such as the form's title, icon, namespace, loading state, and submit button configuration. This allows you to customize the form's appearance and behavior right from the start. Detailed explanation of each property is listed below:
 
-- <div className="text-lg!">
-    <code className="text-lg!">icon</code> &{' '}
-    <code className="text-lg!">title</code>
+- <div>
+    <code>icon</code> &{' '}
+    <code>title</code>
   </div>
 
   These properties define the form's title and the icon displayed in the modal header, as shown in the figure below. The icon must be a valid icon identifier from Iconify in the form of `&lt;icon-set&gt;:&lt;icon-name&gt;`.
 
   ![form-header](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-forms/formHeader.webp)
 
-- <code className="text-lg!">onClose</code>
+- <code>onClose</code>
 
   This callback function is triggered when the close button is clicked. This should be the same `onClose` function being passed to the modal component, allowing the form to close itself when the user clicks the close button.
 
-- <code className="text-lg!">submitButton</code>
+- <code>submitButton</code>
 
   Can be either `"create"`, `"update"`, or an object containing the button's props if a custom button is needed. If either `"create"` or `"update"` is used, a predefined button will be rendered with the appropriate label and icon, as shown below:
 
@@ -328,19 +328,19 @@ In the argument object being passed into the `defineForm` function, you can spec
 
   ![form-btn-update](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-forms/btnUpdate.webp)
 
-- <code className="text-lg!">actionButton</code>
+- <code>actionButton</code>
 
   This button is displayed at the top right corner of the modal, next to the close button. It can be used to trigger additional actions related to the form.
 
   ![form-btn-action](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-forms/actionBtn.webp)
 
-- <code className="text-lg!">loading</code>
+- <code>loading</code>
 
   This boolean property controls the loading state of the form. When set to true, the form will display a loading indicator instead of the form fields. This is useful when the data required by the form (e.g. listbox options) is being fetched asynchronously.
 
   ![form-loading](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-forms/formLoading.webp)
 
-- <code className="text-lg!">namespace</code>
+- <code>namespace</code>
 
   This property defines the i18n namespace for the text and labels used in the form. For more information on i18n namespaces, see the [i18n documentation](/frontend/i18n).
 
@@ -367,7 +367,7 @@ Now, it's time to map the form fields to their corresponding input components. S
 
 Using this method is pretty straightforward, it accepts a mapping object where the keys are the field keys and the values are the corresponding input component types.
 
-  <Alert className="mt-6" type="note">
+  <Alert type="note">
   Available input component types can be found in the IntelliSense suggestions.
 
 ![types-map-intellisense](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-forms/typesMapIntellisense.webp)
@@ -397,7 +397,7 @@ const { formProps } = defineForm<FormData>().setupFields({
 }).build()
 ```
 
-  <Alert className="mt-6" type="note">
+  <Alert type="note">
   Available field configurations can be found in the IntelliSense suggestions.
 
 ![setup-fields-intellisense](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-forms/setupFields.webp)
@@ -427,7 +427,7 @@ For example, to autofocus the "name" field, you can do the following:
 const { formProps } = defineForm<FormData>().autoFocusField('name').build()
 ```
 
-  <Alert className="mt-6" type="note">
+  <Alert type="note">
   The options for this method is determined by your definition in the `.typesMap()` chain method, and only fields that are auto-focusable will be available. IntelliSense will help you identify these fields.
 
 ![auto-focus-field-intellisense](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-forms/autofocus.webp)
@@ -447,7 +447,7 @@ const { formProps } = defineForm<FormData>().initialData({
 }).build()
 ```
 
-  <Alert className="mt-6" type="note">
+  <Alert type="note">
   The data type of the argument of this method is the same as the form data type generic parameter, with all fields being optional. IntelliSense is available to help you construct the initial data object. Feel free to pass in the entire data record being passed into the parent component if it has the fields that the form requires, or you can make some slight modifications to it to match the form data type.
 
 ```tsx

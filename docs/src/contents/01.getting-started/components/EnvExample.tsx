@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { LoadingScreen } from '@lifeforge/ui'
+import { Box, LoadingScreen } from '@lifeforge/ui'
 
 import Code from '@/components/Code'
 
@@ -17,9 +17,9 @@ useEffect(() => {
   }, [])
 
   return !envContent ? (
-    <div className="mt-4">
+    <Box mt="md">
       <LoadingScreen />
-    </div>
+    </Box>
   ) : (
     <Code language="bash">{envContent}</Code>
   )
