@@ -22,6 +22,9 @@ export function ImageTypeFilter({
 
   return (
     <ListboxInput
+      icon="tabler:list"
+      label="imagePicker.inputs.imageType"
+      namespace="common.modals"
       renderContent={() => (
         <>
           <Icon
@@ -39,9 +42,6 @@ export function ImageTypeFilter({
           </Text>
         </>
       )}
-      icon="tabler:list"
-      label="imagePicker.inputs.imageType"
-      namespace="common.modals"
       value={imageType}
       onChange={value => {
         updateFilters({ type: 'SET_IMAGE_TYPE', payload: value })

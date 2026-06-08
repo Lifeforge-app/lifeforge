@@ -33,6 +33,9 @@ export function WeeklyForm({
       <ListboxInput
         multiple
         required
+        customActive={data.onDays.length > 0}
+        icon="tabler:calendar"
+        label={t('inputs.weekly.inputs.onDays')}
         renderContent={() => (
           <>
             {data.onDays
@@ -40,9 +43,6 @@ export function WeeklyForm({
               .join(', ')}
           </>
         )}
-        customActive={data.onDays.length > 0}
-        icon="tabler:calendar"
-        label={t('inputs.weekly.inputs.onDays')}
         value={data.onDays}
         onChange={onDays => setData({ ...data, onDays: onDays })}
       >

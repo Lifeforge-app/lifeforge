@@ -36,11 +36,14 @@ describe('createForgeContractBuilder Type Constraints', () => {
         if (query?.id === '404') {
           return response.notFound()
         }
+
         return response.ok({ message: `Hello ${query?.id}` })
       })
 
     expect(contract.__isForgeContract).toBe(true)
+
     const val = contract.getValue()
+
     expect(val.method).toBe('get')
     expect(val.description).toBe('Test Query')
     expect(val.existenceCheck).toEqual({

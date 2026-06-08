@@ -10,8 +10,8 @@ import {
 } from '../../utils/encryption'
 import fetchAPI from '../../utils/fetchAPI'
 import type { InferInput, InferOutput } from '../typescript/forge_proxy.types'
-import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 import { globalProxyRegistry } from './registry'
+import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
 /**
  * ForgeEndpoint is a chainable API endpoint handler for making type-safe
@@ -56,7 +56,9 @@ export default class ForgeEndpoint<
   ) {}
 
   private get _resolvedConfig() {
-    const ctx = this._rootContract ? globalProxyRegistry.get(this._rootContract) : null
+    const ctx = this._rootContract
+      ? globalProxyRegistry.get(this._rootContract)
+      : null
     if (ctx) {
       return {
         apiHost: ctx.apiHost,
@@ -64,7 +66,9 @@ export default class ForgeEndpoint<
       }
     }
     return {
-      apiHost: this._apiHost || (typeof window !== 'undefined' ? window.location.origin : ''),
+      apiHost:
+        this._apiHost ||
+        (typeof window !== 'undefined' ? window.location.origin : ''),
       prefix: ''
     }
   }

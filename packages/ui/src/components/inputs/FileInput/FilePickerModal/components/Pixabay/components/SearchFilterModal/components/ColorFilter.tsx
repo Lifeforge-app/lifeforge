@@ -15,6 +15,9 @@ interface ColorFilterProps {
 export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
   return (
     <ListboxInput
+      icon="tabler:color-swatch"
+      label="imagePicker.inputs.imageColor"
+      namespace="common.modals"
       renderContent={() => (
         <>
           <Bordered
@@ -38,9 +41,6 @@ export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
           </Text>
         </>
       )}
-      icon="tabler:color-swatch"
-      label="imagePicker.inputs.imageColor"
-      namespace="common.modals"
       value={colors}
       onChange={value => {
         updateFilters({ type: 'SET_COLORS', payload: value })

@@ -1,11 +1,10 @@
 import { ROOT_DIR } from '@constants'
+import { generateModuleId } from '@functions/modules/loadModuleRoutes'
 import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
-
-import { generateModuleId } from '@functions/modules/loadModuleRoutes'
 
 import forge from '../forge'
 import scanFederatedModules, {
@@ -58,7 +57,6 @@ export const manifest = forge
     const internalAppsDir = path.join(ROOT_DIR, 'client', 'src', 'apps')
 
     scanFederatedModules(internalAppsDir, modules, true, '/internal-modules')
-
 
     return response.ok({ modules })
   })

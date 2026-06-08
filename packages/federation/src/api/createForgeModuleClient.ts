@@ -1,5 +1,6 @@
 import { createForgeProxy } from '@lifeforge/shared'
 import type { ProxyTree } from '@lifeforge/shared'
+
 import type { ModuleConfig } from '../interfaces/module_config.types'
 
 /**
@@ -8,9 +9,15 @@ import type { ModuleConfig } from '../interfaces/module_config.types'
  */
 export default function createForgeModuleClient<T extends ModuleConfig>(
   config: T
-): T & { forgeAPI: T['contract'] extends undefined ? undefined : ProxyTree<T['contract']> } {
+): T & {
+  forgeAPI: T['contract'] extends undefined
+    ? undefined
+    : ProxyTree<T['contract']>
+} {
   return {
     ...config,
-    forgeAPI: config.contract ? (createForgeProxy(config.contract) as any) : undefined
+    forgeAPI: config.contract
+      ? (createForgeProxy(config.contract) as any)
+      : undefined
   } as any
 }

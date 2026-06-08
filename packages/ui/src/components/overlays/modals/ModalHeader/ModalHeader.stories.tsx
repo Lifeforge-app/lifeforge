@@ -7,10 +7,10 @@ import { ModalHeader } from '.'
 
 const meta = {
   argTypes: {
-    headerActions: { control: false },
     appendTitle: { control: false },
     className: { control: 'text' },
     hasAI: { control: 'boolean' },
+    headerActions: { control: false },
     icon: { control: 'text' },
     namespace: { control: 'text' },
     onClose: { control: false },
@@ -189,9 +189,6 @@ export const WithActionButtonVariant: Story = {
  */
 export const KitchenSink: Story = {
   args: {
-    headerActions: (
-      <Button icon="tabler:settings" variant="plain" onClick={function () {}} />
-    ),
     appendTitle: (
       <span
         style={{
@@ -209,6 +206,9 @@ export const KitchenSink: Story = {
       </span>
     ),
     hasAI: true,
+    headerActions: (
+      <Button icon="tabler:settings" variant="plain" onClick={function () {}} />
+    ),
     icon: 'tabler:sparkles',
     onClose: function () {},
     title: 'AI Content Generator'

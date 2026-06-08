@@ -6,7 +6,9 @@ export type CategoryOrder = Record<string, Record<string, string>>
 /**
  * Fetches category order (with translations) from the server
  */
-export async function fetchCategoryOrder(forgeAPI: any): Promise<CategoryOrder> {
+export async function fetchCategoryOrder(
+  forgeAPI: any
+): Promise<CategoryOrder> {
   try {
     return (await forgeAPI.modules.categories.list.query()) ?? {}
   } catch (e) {

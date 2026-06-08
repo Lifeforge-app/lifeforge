@@ -202,7 +202,10 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       media?: TMedia
       middlewares?: RequestHandler[]
     }) {
-      return buildRoute<'get', TOutput, TQuery, never, TMedia>('get', metadata as any)
+      return buildRoute<'get', TOutput, TQuery, never, TMedia>(
+        'get',
+        metadata as any
+      )
     },
 
     mutation: function <

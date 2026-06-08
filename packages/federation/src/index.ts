@@ -3,9 +3,7 @@ export type {
   ModuleCategory
 } from './interfaces/module_config.types'
 
-export {
-  moduleConfigSchema
-} from './interfaces/module_config.types'
+export { moduleConfigSchema } from './interfaces/module_config.types'
 
 export { default as createForgeModuleClient } from './api/createForgeModuleClient'
 
@@ -15,9 +13,7 @@ export {
   SYSTEM_CATEGORIES
 } from './providers/FederationProvider'
 
-export {
-  default as loadModules
-} from './loaders/loadModules'
+export { default as loadModules } from './loaders/loadModules'
 
 export {
   loadModuleConfig,
@@ -25,9 +21,7 @@ export {
   type FederatedModule
 } from './loaders/loadModuleConfig'
 
-export {
-  default as loadCoreModules
-} from './loaders/loadCoreModules'
+export { default as loadCoreModules } from './loaders/loadCoreModules'
 
 export {
   sortRoutes,

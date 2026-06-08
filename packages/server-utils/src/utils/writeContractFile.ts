@@ -47,6 +47,7 @@ function fixJSONSchemaRecord(schema: any): any {
     typeof result.additionalProperties === 'object'
   ) {
     result.properties = result.properties ?? {}
+
     for (const key of result.propertyNames.enum) {
       result.properties[key] = result.additionalProperties
     }
@@ -65,11 +66,14 @@ function fixJSONSchemaRecord(schema: any): any {
     result.allOf = result.allOf.map((sub: any) => {
       if (sub && typeof sub === 'object') {
         const cleanedSub = { ...sub }
+
         if ('additionalProperties' in cleanedSub) {
           delete cleanedSub.additionalProperties
         }
+
         return cleanAdditionalProperties(cleanedSub)
       }
+
       return sub
     })
   }
@@ -137,7 +141,7 @@ export function serializeRoutes(node: any): any {
 export function writeContractFileToClient(
   routes: any,
   serverRootDir: string,
-  clientDir: string = '../client/src'
+  clientDir: string = '../client'
 ): void {
   const serialized = serializeRoutes(routes)
 

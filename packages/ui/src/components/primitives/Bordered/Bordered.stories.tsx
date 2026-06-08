@@ -293,13 +293,7 @@ export const AsChild: Story = {
         Open the browser dev tools to inspect the DOM structure of the given
         examples.
       </Alert>
-      <Bordered
-        asChild
-        borderColor="primary"
-        borderWidth="2px"
-        p="lg"
-        r="lg"
-      >
+      <Bordered asChild borderColor="primary" borderWidth="2px" p="lg" r="lg">
         <Flex
           align="center"
           bg={{ base: 'bg-50', dark: 'bg-900' }}

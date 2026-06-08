@@ -7,8 +7,8 @@ import {
   useState
 } from 'react'
 
-import { widgetConfigSchema } from '@lifeforge/shared'
 import { useFederation } from '@lifeforge/federation'
+import { widgetConfigSchema } from '@lifeforge/shared'
 import { LoadingScreen } from '@lifeforge/ui'
 
 export interface WidgetEntry {

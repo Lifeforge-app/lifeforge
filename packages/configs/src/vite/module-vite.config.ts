@@ -1,6 +1,7 @@
 import federation from '@originjs/vite-plugin-federation'
-import react from '@vitejs/plugin-react'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
+import react from '@vitejs/plugin-react'
+import fs from 'node:fs'
 import path from 'node:path'
 import { type UserConfig, defineConfig, loadEnv, mergeConfig } from 'vite'
 
@@ -8,7 +9,7 @@ import { SHARED_PACKAGES } from '../constants/shared-packages'
 
 interface ModuleConfigOptions {
   dirname: string
-  pkg: {
+  pkg?: {
     name: string
     [key: string]: any
   }
@@ -19,12 +20,18 @@ interface ModuleConfigOptions {
  * Supports custom overrides via the second parameter.
  */
 export function defineModuleConfig(
-  { dirname, pkg }: ModuleConfigOptions,
+  { dirname, pkg: customPkg }: ModuleConfigOptions,
   overrides: UserConfig | ((env: any) => UserConfig) = {}
 ) {
   const isDocker = process.env.DOCKER_BUILD === 'true'
 
   const outDir = isDocker ? 'dist-docker' : 'dist'
+
+  const pkg =
+    customPkg ||
+    JSON.parse(
+      fs.readFileSync(path.resolve(dirname, '../package.json'), 'utf8')
+    )
 
   const moduleName = pkg.name.replace('@lifeforge/', '')
 

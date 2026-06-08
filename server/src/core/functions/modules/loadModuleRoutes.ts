@@ -1,6 +1,7 @@
 import { ROOT_DIR } from '@constants'
 import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
+import crypto from 'crypto'
 import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
@@ -8,8 +9,6 @@ import path from 'path'
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const logger = createServiceLogger('Route Loader')
-
-import crypto from 'crypto'
 
 export function generateModuleId(packageName: string): string {
   return crypto.createHash('sha256').update(packageName).digest('hex')
