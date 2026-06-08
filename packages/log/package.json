@@ -1,0 +1,34 @@
+{
+  "name": "@lifeforge/log",
+  "version": "0.1.0",
+  "description": "Unified logging package for LifeForge ecosystem",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./cli": {
+      "types": "./dist/loggers/cliLogger.d.ts",
+      "import": "./dist/loggers/cliLogger.js"
+    }
+  },
+  "scripts": {
+    "build": "bun build ./src/index.ts ./src/loggers/cliLogger.ts --outdir=dist --target=node && bun tsc --project tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "rotating-file-stream": "^3.2.7",
+    "chalk": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.6",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0"
+  }
+}

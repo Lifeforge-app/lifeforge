@@ -22,16 +22,18 @@
   ],
   "scripts": {
     "forge": "bun run tools/src/index.ts",
-    "build-logger": "bun --cwd=packages/lifeforge-log run build",
-    "build-server-utils": "bun --cwd=packages/lifeforge-server-utils run build",
+    "build-configs": "bun --cwd=packages/configs run build",
+    "build-logger": "bun --cwd=packages/log run build",
+    "build-server-utils": "bun --cwd=packages/server-utils run build",
     "build-shared": "bun --cwd=shared run build",
     "build-ui": "bun --cwd=packages/ui run build",
-    "postinstall": "bun build-logger && bun build-server-utils && bun build-shared && bun build-ui"
+    "postinstall": "bun build-configs && bun build-logger && bun build-server-utils && bun build-shared && bun build-ui"
   },
   "keywords": [
     "lifeforge"
   ],
   "devDependencies": {
+    "@lifeforge/configs": "workspace:*",
     "@eslint/js": "^9.26.0",
     "@originjs/vite-plugin-federation": "^1.4.1",
     "@trivago/prettier-plugin-sort-imports": "^5.2.2",

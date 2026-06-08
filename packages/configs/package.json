@@ -1,0 +1,20 @@
+{
+  "name": "@lifeforge/configs",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "vite build && tsc --emitDeclarationOnly"
+  },
+  "peerDependencies": {
+    "@originjs/vite-plugin-federation": "^1.4.1",
+    "@vitejs/plugin-react": "^4.4.1",
+    "vite": "^7.1.9"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

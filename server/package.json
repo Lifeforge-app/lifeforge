@@ -35,13 +35,10 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
-    "dayjs": "^1.11.19",
-    "dotenv": "^16.5.0",
     "express": "^4.21.2",
     "express-rate-limit": "^7.4.1",
     "groq-sdk": "^0.5.0",
     "helmet": "^7.2.0",
-    "lodash": "^4.17.21",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "node-cache": "^5.1.2",
@@ -52,8 +49,7 @@
     "socket.io": "^4.8.1",
     "speakeasy": "^2.0.0",
     "tesseract.js": "^6.0.1",
-    "uuid": "^9.0.1",
-    "zod": "4.3.5"
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
