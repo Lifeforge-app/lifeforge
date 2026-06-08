@@ -22,11 +22,20 @@ export function LoadingScreen({ message, loaderSize }: LoadingScreenProps) {
           color="muted"
           icon="svg-spinners:ring-resize"
           style={{
-            fontSize: loaderSize || '2rem',
-            marginBottom: '1em'
+            // Deliberately defined explicitly to prevent styling issue
+            fontSize: loaderSize || '2rem'
           }}
         />
-        {message}
+        {message && (
+          <Text
+            style={{
+              // Deliberately defined explicitly to prevent styling issue
+              marginTop: '1em'
+            }}
+          >
+            {message}
+          </Text>
+        )}
       </Flex>
     </Text>
   )

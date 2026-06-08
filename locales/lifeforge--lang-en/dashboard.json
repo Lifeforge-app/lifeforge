@@ -1,20 +1,7 @@
 {
   "title": "Dashboard",
   "description": "Your mission control center, making everything more exciting.",
-  "widgets": {
-    "date": {
-      "title": "Date",
-      "description": "A simple decorative widget showing today's date."
-    },
-    "clock": {
-      "title": "Clock",
-      "description": "A small clock to help you keep track of time."
-    },
-    "quotes": {
-      "description": "A random quote to inspire you through the day.",
-      "title": "Quotes"
-    }
-  },
+  "widgets": {},
   "modals": {
     "manageWidgets": "Manage Widgets"
   },
