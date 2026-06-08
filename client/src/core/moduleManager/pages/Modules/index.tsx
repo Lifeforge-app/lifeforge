@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { toast } from 'react-toastify'
 
-import { usePersonalization } from '@lifeforge/shared'
 import { useFederation } from '@lifeforge/federation'
+import { usePersonalization } from '@lifeforge/shared'
 import {
   EmptyStateScreen,
   Grid,

@@ -149,7 +149,7 @@ output: {
 
 For nested external API responses, write the full zod schema matching every field:
 
-```typescript
+````typescript
 // ✅ Good — full explicit schema for external API response
 const ProjectDetailsSchema = z.object({
   id: z.string(),
@@ -198,7 +198,7 @@ input: {
   const parsedMonth = parseInt(month)
   // ...
 }
-```
+````
 
 For optional fields:
 

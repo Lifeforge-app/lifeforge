@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
+import { FederationProvider } from '@lifeforge/federation'
 import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
@@ -12,7 +13,6 @@ import {
   SocketProvider,
   ToastProvider
 } from '@lifeforge/shared'
-import { FederationProvider } from '@lifeforge/federation'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,

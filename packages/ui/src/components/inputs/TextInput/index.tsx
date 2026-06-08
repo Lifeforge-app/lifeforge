@@ -64,6 +64,7 @@ export function _TextInput({
   const [showPassword, setShowPassword] = useState(false)
 
   const localInputRef = useRef<HTMLInputElement | null>(null)
+
   const inputRef = externalInputRef || localInputRef
 
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })

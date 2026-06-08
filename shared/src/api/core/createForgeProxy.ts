@@ -34,7 +34,8 @@ function createForgeProxyInternal<T>(
     }
   }
 
-  const resolvedHost = (contract && globalProxyRegistry.get(contract)?.apiHost) || ''
+  const resolvedHost =
+    (contract && globalProxyRegistry.get(contract)?.apiHost) || ''
 
   const endpoint = new ForgeEndpoint<any>(
     resolvedHost,

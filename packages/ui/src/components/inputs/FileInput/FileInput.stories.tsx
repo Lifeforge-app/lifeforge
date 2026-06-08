@@ -15,15 +15,15 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
+    icon: 'tabler:file',
+    label: 'Upload Image',
     mimeTypes: {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    value: { type: 'empty' },
-    icon: 'tabler:file',
-    label: 'Upload Image',
     namespace: 'namespace',
-    onChange: function () {}
+    onChange: function () {},
+    value: { type: 'empty' }
   },
   render: function (args) {
     const [val, setVal] = useState<FileValue>({ type: 'empty' })
@@ -34,15 +34,15 @@ export const Default: Story = {
 
 export const Disabled: Story = {
   args: {
+    icon: 'tabler:file',
+    label: 'Upload Image',
     mimeTypes: {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    value: { type: 'empty' },
-    icon: 'tabler:file',
-    label: 'Upload Image',
     namespace: 'namespace',
-    onChange: function () {}
+    onChange: function () {},
+    value: { type: 'empty' }
   },
   render: function (args) {
     const [val, setVal] = useState<FileValue>({ type: 'empty' })
@@ -53,16 +53,16 @@ export const Disabled: Story = {
 
 export const WithError: Story = {
   args: {
+    errorMsg: 'File is required and must be an image',
+    icon: 'tabler:file',
+    label: 'Upload Image',
     mimeTypes: {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    value: { type: 'empty' },
-    icon: 'tabler:file',
-    label: 'Upload Image',
     namespace: 'namespace',
-    errorMsg: 'File is required and must be an image',
-    onChange: function () {}
+    onChange: function () {},
+    value: { type: 'empty' }
   },
   render: function (args) {
     const [val, setVal] = useState<FileValue>({ type: 'empty' })

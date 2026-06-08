@@ -18,6 +18,9 @@ export function CategoryFilter({
 }: CategoryFilterProps) {
   return (
     <ListboxInput
+      icon="tabler:category"
+      label="imagePicker.inputs.imageCategory"
+      namespace="common.modals"
       renderContent={() => (
         <>
           <Icon
@@ -33,9 +36,6 @@ export function CategoryFilter({
           </Text>
         </>
       )}
-      icon="tabler:category"
-      label="imagePicker.inputs.imageCategory"
-      namespace="common.modals"
       value={category}
       onChange={value => {
         updateFilters({ type: 'SET_CATEGORY', payload: value })

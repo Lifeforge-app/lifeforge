@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 
-import type { RouteObject } from '@lifeforge/shared'
 import type { ModuleCategory, ModuleConfig } from '@lifeforge/federation'
+import type { RouteObject } from '@lifeforge/shared'
 import { LoadingScreen, ModalManager, ModuleWrapper } from '@lifeforge/ui'
 
 import APIKeyStatusProvider from '@/providers/features/APIKeyStatusProvider'

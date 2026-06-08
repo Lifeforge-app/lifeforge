@@ -1,8 +1,7 @@
+import type OpenAI from 'openai'
 import { Server } from 'socket.io'
 import { CleanedSchemas } from 'utils/schemaUtils'
 import z from 'zod'
-
-import type OpenAI from 'openai'
 
 import type { Logger } from '@lifeforge/log'
 

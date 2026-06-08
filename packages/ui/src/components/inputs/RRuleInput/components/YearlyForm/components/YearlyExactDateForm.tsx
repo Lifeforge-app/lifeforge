@@ -18,11 +18,11 @@ export function YearlyExactDateForm({
       <Box flex="1">
         <ListboxInput
           required
+          icon="tabler:calendar"
+          label={t('inputs.yearly.exactDate.inputs.month')}
           renderContent={() => (
             <>{t(`common.misc:dates.months.${data.month - 1}`)}</>
           )}
-          icon="tabler:calendar"
-          label={t('inputs.yearly.exactDate.inputs.month')}
           value={data.month}
           onChange={value => setData({ ...data, month: value })}
         >

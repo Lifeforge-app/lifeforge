@@ -1,10 +1,12 @@
-import type { ModuleCategory, ModuleConfig } from '../interfaces/module_config.types'
+import type {
+  ModuleCategory,
+  ModuleConfig
+} from '../interfaces/module_config.types'
 import {
   type CategoryOrder,
   fetchCategoryOrder,
   sortRoutes
 } from '../utils/sortRoutes'
-import loadCoreModules from './loadCoreModules'
 import { fetchModuleManifest, loadModuleConfig } from './loadModuleConfig'
 
 export type GlobalProviderComponent = React.FC<{ children: React.ReactNode }>
@@ -21,6 +23,7 @@ function addToRoute(
 
   if (categoryIndex > -1) {
     const cat = routes[categoryIndex]
+
     if (cat) {
       cat.items.push(moduleConfig)
     }

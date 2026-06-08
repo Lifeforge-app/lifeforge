@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import { useEffect } from 'react'
 
-import { useLocation } from '@lifeforge/shared'
 import { useFederation } from '@lifeforge/federation'
+import { useLocation } from '@lifeforge/shared'
 
 function useTitleEffect() {
   const { modules } = useFederation()

@@ -20,9 +20,9 @@ export function YearlyRelativeDayForm({
       <Box asChild flex="1" minWidth="6em">
         <ListboxInput
           required
-          renderContent={() => <>{t(`recurring.onThe.${data.onThe}`)}</>}
           icon="tabler:calendar"
           label={t('inputs.yearly.relativeDay.inputs.onThe')}
+          renderContent={() => <>{t(`recurring.onThe.${data.onThe}`)}</>}
           value={data.onThe}
           onChange={value => setData({ ...data, onThe: value })}
         >
@@ -38,6 +38,8 @@ export function YearlyRelativeDayForm({
       <Box asChild flex="1" minWidth="6em">
         <ListboxInput
           required
+          icon="tabler:calendar"
+          label={t('inputs.yearly.relativeDay.inputs.onTheDay')}
           renderContent={() => (
             <>
               {t(
@@ -47,8 +49,6 @@ export function YearlyRelativeDayForm({
               )}
             </>
           )}
-          icon="tabler:calendar"
-          label={t('inputs.yearly.relativeDay.inputs.onTheDay')}
           value={data.onTheDay}
           onChange={value => setData({ ...data, onTheDay: value })}
         >
@@ -68,11 +68,11 @@ export function YearlyRelativeDayForm({
       <Box asChild flex="1" minWidth="10em">
         <ListboxInput
           required
+          icon="tabler:calendar"
+          label={t('inputs.yearly.relativeDay.inputs.ofTheMonth')}
           renderContent={() => (
             <>{t(`common.misc:dates.months.${data.onTheDayOfMonth - 1}`)}</>
           )}
-          icon="tabler:calendar"
-          label={t('inputs.yearly.relativeDay.inputs.ofTheMonth')}
           value={data.onTheDayOfMonth}
           onChange={value => setData({ ...data, onTheDayOfMonth: value })}
         >

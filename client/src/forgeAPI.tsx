@@ -10,4 +10,3 @@ globalProxyRegistry.set(contract, {
 const forgeAPI = createForgeProxy(contract)
 
 export default forgeAPI
-

@@ -34,7 +34,10 @@ export const moduleConfigSchema: z.ZodType<ModuleConfig> = z.object({
     .optional(),
   hidden: z.boolean().optional(),
   disabled: z
-    .union([z.boolean(), z.custom<() => Promise<boolean>>(val => typeof val === 'function')])
+    .union([
+      z.boolean(),
+      z.custom<() => Promise<boolean>>(val => typeof val === 'function')
+    ])
     .optional(),
   clearQueryOnUnmount: z.boolean().optional(),
   contract: z.any().optional(),
@@ -49,7 +52,6 @@ export const moduleConfigSchema: z.ZodType<ModuleConfig> = z.object({
     )
     .optional()
 })
-
 
 export interface ModuleCategory {
   title: string

@@ -1,4 +1,5 @@
 import { globalProxyRegistry } from '@lifeforge/shared'
+
 import {
   type ModuleCategory,
   type ModuleConfig,
@@ -22,7 +23,9 @@ export interface FederatedModule {
 /**
  * Fetches module manifest from the server
  */
-export async function fetchModuleManifest(forgeAPI: any): Promise<FederatedModule[]> {
+export async function fetchModuleManifest(
+  forgeAPI: any
+): Promise<FederatedModule[]> {
   try {
     const { modules } = await forgeAPI.modules.manifest.query()
 
@@ -87,6 +90,7 @@ export async function loadModuleConfig(
   }
 
   const validation = moduleConfigSchema.safeParse(unwrapped)
+
   if (!validation.success) {
     throw new Error(
       `Module configuration validation failed for ${mod.name}: ${validation.error.message}`

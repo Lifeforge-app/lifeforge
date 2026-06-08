@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useAPIOnlineStatus } from '@lifeforge/shared'
 import { useFederation } from '@lifeforge/federation'
+import { useAPIOnlineStatus } from '@lifeforge/shared'
 import {
   Box,
   Card,

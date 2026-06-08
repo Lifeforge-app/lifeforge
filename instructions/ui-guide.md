@@ -116,7 +116,7 @@ Colors in LifeForge are resolved through an **arbitrary CSS variable architectur
 
 Any color prop can receive a static color value or a map of conditions representing interactive states:
 
-```typescript
+````typescript
 type ThemeConditionPropName =
   | 'base' // Default style
   | 'dark' // Dark mode
@@ -141,7 +141,7 @@ type ThemeConditionPropName =
   }}
   color={{ base: 'bg-950', dark: 'bg-50', print: 'black' }}
 />
-```
+````
 
 #### Pre-built Surface Presets (`surface`)
 
@@ -295,7 +295,7 @@ rbl?: ResponsiveProp<RadiusToken> // Bottom Left
 rbr?: ResponsiveProp<RadiusToken> // Bottom Right
 }
 
-```
+````
 
 #### Example:
 ```tsx
@@ -309,7 +309,7 @@ rbr?: ResponsiveProp<RadiusToken> // Bottom Right
 >
   Box Content
 </Box>
-```
+````
 
 ---
 
@@ -649,6 +649,7 @@ export function Prose({
 ```
 
 #### Supported Child Element Styling:
+
 - **Headings (`h1` - `h6`):** Automatically styled with appropriate sizing, weights, line-heights, and margins.
 - **Lists (`ul`, `ol`, `li`):** Renders margins, paddings, list-style-type (`disc`/`decimal`), and markers styled with the `bg-400` token.
 - **Code Blocks & Inline Code (`kbd`, `code`, `pre`):** Automatically styled with clean borders, background colors, custom SFMono fonts, rounded corners, and shadows.
@@ -657,10 +658,14 @@ export function Prose({
 - **Media (`img`, `video`, `picture`):** Automatically centered with `max-width: 100%` and rounded corners.
 
 #### Example:
+
 ```tsx
 <Prose>
   <h1>Guide Title</h1>
-  <p>Here is some text with <strong>bold</strong> styling and a <a href="#">link</a>.</p>
+  <p>
+    Here is some text with <strong>bold</strong> styling and a{' '}
+    <a href="#">link</a>.
+  </p>
   <ul>
     <li>Bullet item 1</li>
     <li>Bullet item 2</li>
@@ -746,11 +751,13 @@ type ButtonProps<T extends ElementType = 'button'> = ButtonOwnProps &
 Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop available on `Flex` or `Box` can be passed directly** — no wrapping `Box` needed. Only reach for `Box asChild` when you need a prop that Flex/Box doesn't support (e.g. CSS properties only available via inline `style`).
 
 #### Notable Engineering Features:
+
 1. **Dynamic Contrast Matching:** In `useButtonStyleProps`, when `variant="primary"` is set, the button fetches the user's active theme color (`derivedThemeColor`) and runs `getMostReadableColor()` to compute a text color with optimal contrast.
 2. **Smart i18n Translation:** If the children is a string, it automatically attempts to search for translations across various namespaces (e.g., `buttons.cancel`, `common.buttons:cancel`).
 3. **Loading Spinners:** Renders the pre-animated `svg-spinners:ring-resize` icon automatically.
 
 #### Example:
+
 ```tsx
 <Button
   variant="primary"
@@ -769,11 +776,13 @@ Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop
 ### B. Input Components & Infrastructure
 
 All raw input components share a unified visual style by extending components from the `inputs/shared` module:
+
 - `InputWrapper`: Creates the surrounding classic/plain background field, error display, and click handlers.
 - `InputLabel`: Coordinates labels, required asterisks, and floating positions.
 - `InputIcon`: Renders helper icons aligned within field paddings.
 
 #### Available Inputs in SDK:
+
 - **`TextInput`:** Controlled input box. Supports standard inputs, passwords with custom visibility toggles, and action buttons.
 - **`NumberInput` / `CurrencyInput`:** Custom formatted fields for numbers and currencies.
 - **`TextAreaInput`:** Multiline text input area.
@@ -793,6 +802,7 @@ All raw input components share a unified visual style by extending components fr
 LifeForge integrates forms via `react-hook-form` controllers to provide a type-safe form state and automated validation messaging.
 
 #### 1. FormModal
+
 A dialog wrapper that encapsulates form state management and submission configurations.
 
 ```typescript
@@ -815,6 +825,7 @@ type SubmissionConfig<T extends FieldValues> =
 - **Auto-Loading Submission Button:** Uses `usePromiseLoading` to display a spinner inside the button during async handler resolution.
 
 #### 2. Specialized Form Fields
+
 Form Fields (e.g. `TextField`, `CheckboxField`, `ListboxField`, `DateField`, `FileField`, etc.) wrap raw inputs inside `useController`, allowing binding via `control` and `name` props:
 
 ```tsx
@@ -827,7 +838,9 @@ Form Fields (e.g. `TextField`, `CheckboxField`, `ListboxField`, `DateField`, `Fi
   }}
   submissionConfig={{
     template: 'update',
-    handler: async (data) => { await updateProfile(data) }
+    handler: async data => {
+      await updateProfile(data)
+    }
   }}
 >
   <TextField
@@ -847,11 +860,13 @@ Form Fields (e.g. `TextField`, `CheckboxField`, `ListboxField`, `DateField`, `Fi
 ```
 
 #### 3. Zod Default Values Generator (`createDefaultValues`)
+
 Before initializing a form, use `createDefaultValues(schema)` to parse the Zod validation schema and return type-safe, empty defaults:
 
 ```typescript
-import { createDefaultValues } from '@lifeforge/ui'
 import { z } from 'zod'
+
+import { createDefaultValues } from '@lifeforge/ui'
 
 const userSchema = z.object({
   name: z.string(),
@@ -885,14 +900,11 @@ interface MenuProps {
 - **ContextMenuGroup:** Renders sub-sections inside the menu.
 
 #### Example:
+
 ```tsx
 <ContextMenu align="end">
   <ContextMenuGroup>
-    <ContextMenuItem
-      label="edit"
-      icon="tabler:pencil"
-      onClick={handleEdit}
-    />
+    <ContextMenuItem label="edit" icon="tabler:pencil" onClick={handleEdit} />
     <ContextMenuItem
       dangerous
       label="delete"
@@ -910,16 +922,21 @@ interface MenuProps {
 LifeForge features a robust, portal-based modal stack manager.
 
 #### 1. ModalProvider & useModalStore
+
 State store context that manages a stack of open modals. It provides hooks to interact programmatically:
+
 - `open(Component, data)`: Pushes a new modal onto the stack.
 - `close()`: Closes the topmost active modal.
 - `remove(index)`: Destroys a modal after exit animations finish.
 
 #### 2. ModalManager & ModalWrapper
+
 Renders the portal container at the application root level. Maps over the stack and places items inside a `ModalWrapper`, which manages scaling enter/leave transitions and overlays.
 
 #### 3. ConfirmationModal
+
 A pre-built confirmation dialog for destructive actions:
+
 - Supports a `confirmationPrompt` string where the user must type a specific word (e.g. "DELETE") to enable the primary button.
 - Handles loader spinners during confirmation hooks.
 
@@ -931,7 +948,9 @@ open(ConfirmationModal, {
   description: 'This action cannot be undone. Please type DELETE to confirm.',
   confirmationPrompt: 'DELETE',
   confirmationButton: 'delete',
-  onConfirm: async () => { await deleteRepository() }
+  onConfirm: async () => {
+    await deleteRepository()
+  }
 })
 ```
 
@@ -945,10 +964,11 @@ The basic block container for laying out groups of information.
 
 - **Inherits FlexProps:** Because `Card` extends `FlexProps`, any layout or alignment property can be passed directly to Card (e.g. `direction="row"`, `gap="md"`, `align="center"`).
 - **Interactive Preset:** Passing `isInteractive` automatically sets cursor styles, shadows, transitions, and configures background state presets:
+
   ```typescript
   // isInteractive = false
   bg={surface.default} // base: 'bg-50', dark: 'bg-900'
-  
+
   // isInteractive = true
   bg={surface.defaultInteractive} // base: 'bg-50', hover: 'bg-100', dark: 'bg-900', darkHover: 'bg-800'
   ```
@@ -1017,8 +1037,18 @@ Renders the top panel header block of a workspace module.
     label="Settings"
     icon="tabler:settings"
     subsection={[
-      { label: 'Profile', icon: 'tabler:user', onClick: goProfile, active: true },
-      { label: 'Security', icon: 'tabler:lock', onClick: goSecurity, active: false }
+      {
+        label: 'Profile',
+        icon: 'tabler:user',
+        onClick: goProfile,
+        active: true
+      },
+      {
+        label: 'Security',
+        icon: 'tabler:lock',
+        onClick: goSecurity,
+        active: false
+      }
     ]}
   />
   ```
@@ -1041,7 +1071,9 @@ Renders the top panel header block of a workspace module.
 
 - **`Alert`:** Custom callouts for notices. Types: `note` (blue), `warning` (yellow), `caution` (orange), `tip` (green), `important` (purple).
   ```tsx
-  <Alert type="warning">This action will permanently delete your records.</Alert>
+  <Alert type="warning">
+    This action will permanently delete your records.
+  </Alert>
   ```
 - **`EmptyStateScreen`:** Placeholders for empty search or blank records.
 - **`ErrorScreen`:** Centered error messages with reload retry hooks.
@@ -1181,7 +1213,8 @@ function UserCreationPage() {
   return (
     // 1. Center layout with responsive paddings and full width bounds
     <Flex centered direction="column" px="xl" width="100%">
-      // 2. Main title using asChild to combine structural Box with semantic Heading
+      // 2. Main title using asChild to combine structural Box with semantic
+      Heading
       <Flex asChild centered gap="sm" mb="xl">
         <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
           <Icon color="primary" icon="tabler:hammer" />
@@ -1193,7 +1226,8 @@ function UserCreationPage() {
           </div>
         </Text>
       </Flex>
-      // 3. Responsive typography heading (scales automatically on tablet/desktop)
+      // 3. Responsive typography heading (scales automatically on
+      tablet/desktop)
       <Text
         align="center"
         as="h2"
@@ -1407,7 +1441,7 @@ The standalone `Icon` from `@iconify/react` must never be imported directly. Alw
 | -------- | ---------------------------------------------------- | ---------------------------------------------------------- |
 | Import   | `import { Icon } from '@iconify/react'`              | `import { Icon } from '@lifeforge/ui'`                     |
 | Sizing   | `width` / `height` props (e.g. `width="1.5em"`)      | **`size`** prop (e.g. `size="1.5em"`)                      |
-| Color    | `className="text-custom-500"` (Tailwind)             | `color="primary"` (design token)                        |
+| Color    | `className="text-custom-500"` (Tailwind)             | `color="primary"` (design token)                           |
 | Layout   | `className="absolute right-1.5 bottom-2"` (Tailwind) | `Box asChild position="absolute" bottom="sm" right="sm"`   |
 | Inherits | —                                                    | All `Text` props (`ml`, `mr`, `display`, `truncate`, etc.) |
 
