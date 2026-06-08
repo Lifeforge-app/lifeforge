@@ -1,5 +1,6 @@
 import federation from '@originjs/vite-plugin-federation'
 import react from '@vitejs/plugin-react'
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import path from 'node:path'
 import { type UserConfig, defineConfig, loadEnv, mergeConfig } from 'vite'
 
@@ -47,11 +48,15 @@ export function defineModuleConfig(
       envDir,
       plugins: [
         react(),
+        vanillaExtractPlugin(),
         federation({
           name: moduleName,
           filename: 'remoteEntry.js',
           exposes: {
             './Manifest': './manifest.ts'
+          },
+          remotes: {
+            None: ''
           },
           shared: {
             react: { generate: false },
