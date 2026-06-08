@@ -18,6 +18,10 @@ The LifeForge UI library is built on a **zero-runtime CSS-in-JS** architecture p
 > **RULE 2: NO INLINE STYLES FOR CORE LAYOUT & DESIGN**  
 > Custom inline `style` objects must be avoided. If a style can be represented through component props or tokens, you **must** use those props. Inline styles are reserved solely for truly dynamic runtime calculations (e.g., coordinates from drag-and-drop events).
 
+> [!IMPORTANT]
+> **RULE 3: PRIMITIVES FIRST, INLINE STYLES AND CSS.TS LAST**  
+> Every style must first be attempted using UI primitives (`Box`, `Flex`, `Stack`, `Grid`, `Text`, `Icon`, `Bordered`, `Ring`, `Button`, `Card`, etc.) and their props. Only when a style **cannot** be expressed through any primitive prop — even with `asChild` composition — should you resort to inline `style` or a `.css.ts` vanilla-extract file. Acceptable exceptions: `fontFamily` for custom fonts, `listStyleType` for list markers, `wordBreak` for table cells. If a `.css.ts` file is created, it must contain ONLY the styles that cannot be achieved through primitives — nothing more.
+
 ### Design Tokens & Dynamic Scaling
 
 The design system defines global tokens under `vars` (compiled to CSS variables) that automatically scale with user personalisation settings:
@@ -196,7 +200,7 @@ _Supported Opacity Levels:_ `'5%'`, `'10%'`, `'20%'`, `'30%'`, `'40%'`, `'50%'`,
   p="md"
   r="md"
 >
-  <Icon color="custom-500" icon="tabler:box" />
+  <Icon color="primary" icon="tabler:box" />
 </Flex>
 ```
 
@@ -1036,7 +1040,7 @@ If you need custom background shades, use `Box` directly:
 For selected-state borders, use the `Ring` primitive to wrap the card instead of absolute-position hacks:
 
 ```tsx
-<Ring ringWidth="2px" ringColor="custom-500" r="lg">
+<Ring ringWidth="2px" ringColor="primary" r="lg">
   <Card isInteractive ...>
     ...
   </Card>
@@ -1063,7 +1067,7 @@ After:
 
 ```tsx
 <Box position="absolute" bottom="sm" right="sm">
-  <Icon color="custom-500" icon="tabler:check" size="1.5em" />
+  <Icon color="primary" icon="tabler:check" size="1.5em" />
 </Box>
 ```
 
@@ -1087,7 +1091,7 @@ The standalone `Icon` from `@iconify/react` must never be imported directly. Alw
 | -------- | ---------------------------------------------------- | ---------------------------------------------------------- |
 | Import   | `import { Icon } from '@iconify/react'`              | `import { Icon } from '@lifeforge/ui'`                     |
 | Sizing   | `width` / `height` props (e.g. `width="1.5em"`)      | **`size`** prop (e.g. `size="1.5em"`)                      |
-| Color    | `className="text-custom-500"` (Tailwind)             | `color="custom-500"` (design token)                        |
+| Color    | `className="text-custom-500"` (Tailwind)             | `color="primary"` (design token)                        |
 | Layout   | `className="absolute right-1.5 bottom-2"` (Tailwind) | `Box asChild position="absolute" bottom="sm" right="sm"`   |
 | Inherits | —                                                    | All `Text` props (`ml`, `mr`, `display`, `truncate`, etc.) |
 
@@ -1114,7 +1118,7 @@ After (positioned):
 import { Box, Icon } from '@lifeforge/ui'
 
 ;<Box asChild position="absolute" bottom="sm" right="sm">
-  <Icon color="custom-500" icon="tabler:check" size="1.5em" />
+  <Icon color="primary" icon="tabler:check" size="1.5em" />
 </Box>
 ```
 
@@ -1123,7 +1127,7 @@ After (inline — no positioning needed):
 ```tsx
 import { Icon } from '@lifeforge/ui'
 
-;<Icon color="custom-500" icon="tabler:check" />
+;<Icon color="primary" icon="tabler:check" />
 ```
 
 > `Box asChild` is only needed when the Icon needs layout props it doesn't inherit (`position`, `top`, `left`, etc.). For spacing (`ml`, `mr`) and display properties, pass them directly to `Icon` since it inherits all `Text` props.
@@ -1132,7 +1136,7 @@ import { Icon } from '@lifeforge/ui'
 
 1. Replace `import { Icon } from '@iconify/react'` with `import { Icon } from '@lifeforge/ui'` (or add `Icon` to the existing destructured import from `@lifeforge/ui`).
 2. Replace `width="..." height="..."` with a single `size="..."`.
-3. Replace `className="text-custom-500"` / `className="text-bg-500"` with `color="custom-500"` / `color="muted"`.
+3. Replace `className="text-custom-500"` / `className="text-bg-500"` with `color="primary"` / `color="muted"`.
 4. For positioned icons (`position`, `top`, `right`, `bottom`), wrap with `Box asChild`. For spacing and display, pass props directly to `Icon` (it inherits all `Text` props).
 5. Remove all remaining `className` props from `Icon` — they are not used anywhere in the codebase.
 
