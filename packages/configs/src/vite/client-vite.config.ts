@@ -3,44 +3,27 @@ import federation from '@originjs/vite-plugin-federation'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
-import { type UserConfig, defineConfig } from 'vite'
-import { customResolver } from './resolver'
+import { defineConfig } from 'vite'
 
-const ReactCompilerConfig = {
-  sources: () => {
-    return true
-  }
-}
-
-export const SHARED_PACKAGES = {
-  '@lifeforge/shared': {
-    aliasRegex: /^@lifeforge\/shared$/,
-    entryPoint: '../shared/src/index.ts'
-  },
-  '@lifeforge/federation': {
-    aliasRegex: /^@lifeforge\/federation$/,
-    entryPoint: '../packages/federation/src/index.ts'
-  },
-  '@lifeforge/ui': {
-    aliasRegex: /^@lifeforge\/ui$/,
-    entryPoint: '../packages/ui/src/index.ts'
-  }
-}
+import { SHARED_PACKAGES } from '../constants/shared-packages'
+import { aliasResolver } from '../resolvers/alias-resolver'
 
 /**
  * Creates the standard client/host Vite configuration for LifeForge.
  */
 export function defineClientConfig(dirname: string) {
   const aliasList = [
-    ...Object.entries(SHARED_PACKAGES).map(([, { aliasRegex, entryPoint }]) => ({
-      find: aliasRegex,
-      replacement: path.resolve(dirname, entryPoint)
-    })),
+    ...Object.entries(SHARED_PACKAGES).map(
+      ([, { aliasRegex, entryPoint }]) => ({
+        find: aliasRegex,
+        replacement: path.resolve(dirname, entryPoint)
+      })
+    ),
     { find: '@modules', replacement: path.resolve(dirname, '../apps') },
     {
       find: '@',
       replacement: '@',
-      customResolver
+      customResolver: aliasResolver
     }
   ]
 
@@ -61,7 +44,16 @@ export function defineClientConfig(dirname: string) {
         // MillionLint.vite({}),
         react({
           babel: {
-            plugins: [['babel-plugin-react-compiler', ReactCompilerConfig]]
+            plugins: [
+              [
+                'babel-plugin-react-compiler',
+                {
+                  sources: () => {
+                    return true
+                  }
+                }
+              ]
+            ]
           }
         }),
         vanillaExtractPlugin(),
