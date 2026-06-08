@@ -1,7 +1,7 @@
-import { Icon } from '@iconify/react'
+import { Alert } from "@lifeforge/ui"
 
 import CustomLink from '../../components/CustomLink'
-import { Alert } from "@lifeforge/ui"
+import FolderHeading from '../../components/FolderHeading'
 
 ###### Project Structure
 
@@ -14,37 +14,37 @@ LifeForge used to be a combination of multiple repositories, where everything is
 
 After cloning into the repository, you'll find the following folders lying in the root directory:
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-app" /><code className="text-xl!">apps/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-app">apps/</FolderHeading>
 
 This is where all the installable applications (or modules) live. Each folder represents a distinct application with its own set of features and functionality. When you install a module using the `ForgeCLI`, its code will be placed inside this directory.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-client">client/</FolderHeading>
 
 This is where the client-side application magic resides. The frontend code of all your installed modules lives here. It is the part of the repo where user interfaces are built and styled. When deploying to cloud service provider, this is where you assign your domain name to.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-server">server/</FolderHeading>
 
 This is where all the business logics of your application live. It is responsible for handling requests, processing data, interacting with databases, and performing any other server-side operations.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-database" /><code className="text-xl!">database/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-database">database/</FolderHeading>
 
 Contains Pocketbase database files, including the binary executable and data storage. This is where all your data is stored and managed.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-shared" /><code className="text-xl!">shared/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-shared">shared/</FolderHeading>
 
 Mainly contains providers that are shared across different applications in the ecosystem, and most importantly, `forgeAPIClient` - a type-safe API client that hugely inspired by tRPC, providing a seamless and integration between the client and server with absolute type safety.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-packages" /><code className="text-xl!">packages/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-packages">packages/</FolderHeading>
 
 Houses reusable packages that can be consumed by other parts of the monorepo. Currently contains:
 
 - **`lifeforge-ui/`** - The official LifeForge UI component library built with React and Tailwind CSS, providing consistent design components across all applications. <CustomLink text="Explore UI Library" to="/developer-guide/ui-library" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-docs" /><code className="text-xl!">docs/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-docs">docs/</FolderHeading>
 
 Contains the documentation site for LifeForge, built with React and MDX. This is where you can find guides, tutorials, and references to help you understand and use LifeForge effectively. <CustomLink text="Explore Documentation" to="/getting-started/introduction" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-tools" /><code className="text-xl!">tools/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-tools">tools/</FolderHeading>
 
 Contains standalone development tools that are part of the LifeForge ecosystem, some of them are publicly available, while some of them requires SSO authentication through the main LifeForge application:
 
@@ -53,19 +53,19 @@ Contains standalone development tools that are part of the LifeForge ecosystem, 
 - **`apiExplorer/`** - Visual explorer for browsing available API routes
 - **`localizationManager/`** - Management interface for handling translations and localization
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-scripts" /><code className="text-xl!">scripts/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-scripts">scripts/</FolderHeading>
 
 Contains various miscellaneous scripts for automating tasks such as deployment, database seeding, and other utilities.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-environment" /><code className="text-xl!">env/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-environment">env/</FolderHeading>
 
 Contains environment configuration files for both server and client applications. Inside will contain an example file for you to copy and create your own `.env` files.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-log" /><code className="text-xl!">logs/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-log">logs/</FolderHeading>
 
 This directory is used to store log files generated by the server application. It helps in monitoring and debugging the application by keeping track of various events and errors.
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:settings" /><code className="text-xl!">Configuration Files</code></div>
+### <FolderHeading icon="material-icon-theme:settings">Configuration Files</FolderHeading>
 
 The root directory also contains several important configuration files:
 

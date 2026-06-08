@@ -1,6 +1,7 @@
-import { Icon } from '@iconify/react'
 import mermaid from 'mermaid'
 import { useEffect, useId, useState } from 'react'
+
+import { Bordered, Flex, Icon, Text, colorWithOpacity } from '@lifeforge/ui'
 
 mermaid.initialize({
   startOnLoad: false,
@@ -40,20 +41,47 @@ useEffect(() => {
 
   if (error) {
     return (
-      <div className="mt-6 rounded-md border border-red-500/30 bg-red-500/10 p-4 text-red-400">
-        <div className="flex items-center gap-2">
-          <Icon icon="tabler:alert-triangle" />
-          <span>Mermaid Error: {error}</span>
-        </div>
-      </div>
+      <Bordered
+        asChild
+        bg={{
+          base: colorWithOpacity('red-500', '10%'),
+          dark: colorWithOpacity('red-500', '10%')
+        }}
+        borderColor={{
+          base: colorWithOpacity('red-500', '30%'),
+          dark: colorWithOpacity('red-500', '30%')
+        }}
+        mt="lg"
+        p="md"
+        r="md"
+      >
+        <Text asChild color="dangerous">
+          <Flex align="center" gap="sm">
+            <Icon icon="tabler:alert-triangle" />
+            <Text>Mermaid Error: {error}</Text>
+          </Flex>
+        </Text>
+      </Bordered>
     )
   }
 
   return (
-    <div
-      className="bg-bg-200/30 dark:bg-bg-800/50 border-bg-200 dark:border-bg-700/30 mt-6 flex justify-center rounded-md border p-6 shadow-sm"
-      dangerouslySetInnerHTML={{ __html: svg }}
-    />
+    <Flex asChild centered mt="lg" width="100%">
+      <Bordered
+        shadow
+        bg={{
+          base: colorWithOpacity('bg-200', '30%'),
+          dark: colorWithOpacity('bg-800', '50%')
+        }}
+        borderColor={{
+          base: 'bg-200',
+          dark: colorWithOpacity('bg-700', '30%')
+        }}
+        dangerouslySetInnerHTML={{ __html: svg }}
+        p="lg"
+        r="md"
+      />
+    </Flex>
   )
 }
 

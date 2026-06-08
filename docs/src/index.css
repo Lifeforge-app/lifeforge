@@ -18,48 +18,75 @@
 }
 
 .hljs {
-  @apply bg-transparent;
+  background: transparent;
 }
 
 code {
   font-family: 'JetBrains Mono', monospace !important;
-  @apply text-sm! break-all! whitespace-pre-wrap! sm:text-base!;
+  font-size: 0.875em !important;
+  word-break: break-all !important;
+  white-space: pre-wrap !important;
+}
+
+@media (min-width: 640px) {
+  code {
+    font-size: 1em !important;
+  }
 }
 
 pre code {
-  @apply text-bg-800! dark:text-bg-100!;
+  color: var(--color-bg-800) !important;
+}
+
+.dark pre code {
+  color: var(--color-bg-100) !important;
 }
 
 code:not(pre code, h3 code, .commit code) {
-  @apply text-bg-700 dark:text-bg-300;
+  color: var(--color-bg-700);
+}
+
+.dark code:not(pre code, h3 code, .commit code) {
+  color: var(--color-bg-300);
 }
 
 pre,
-pre * {
-  @apply bg-transparent!;
+pre > div *,
+code,
+pre code * {
+  background: transparent !important;
   text-shadow: none !important;
 }
 
 ::marker {
-  @apply text-bg-300;
+  color: var(--color-bg-300);
 }
 
 .dark ::marker {
-  @apply text-bg-600!;
+  color: var(--color-bg-600) !important;
 }
 
 li p:first-of-type {
-  @apply mt-2!;
+  margin-top: 0.5em !important;
 }
 
 hr + section > h2 {
-  @apply mt-4!;
+  margin-top: 1em !important;
 }
 
-.notes h4 {
-  @apply mt-6! text-xl;
+._alert {
+  margin-block: 1.5em;
+}
 
-  & + p {
-    @apply mt-4;
-  }
+._alert p h4 {
+  margin-top: 0.5em !important;
+  font-size: 1.25em;
+}
+
+._alert p h4 + p {
+  margin-top: 1em;
+}
+
+._alert p p:first-child {
+  margin-top: 0.5em !important;
 }

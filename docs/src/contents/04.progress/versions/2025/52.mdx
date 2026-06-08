@@ -48,7 +48,7 @@ import { Alert } from "@lifeforge/ui";
 
 - <PR number={57} />: Huge rework on the API key management. Master password is now removed from the API key management page since LifeForge API now supports end-to-end asymmetric encryption for every API call, so there is no need to encrypt the API key a second time using the master password.
 
-    <Alert type="important" className="mt-6">
+    <Alert type="important">
         As long as you keep your `MASTER_KEY` environment variable safe, your API keys are safe even if your database is compromised. So please, <strong>KEEP YOUR MASTER KEY SAFE!</strong>
     </Alert>
 

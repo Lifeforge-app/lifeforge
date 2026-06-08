@@ -72,7 +72,7 @@ Modules must declare which API keys they need in their `package.json`:
 | `usage` | string | Human-readable description shown to users when key is missing |
 | `required` | boolean | If `true`, module UI is blocked until key is configured |
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   Calling `core.api.getAPIKey()` without declaring the key in `APIKeyAccess` will throw an error at runtime. Always declare your required keys.
 </Alert>
 
@@ -93,7 +93,7 @@ Use `core.api.getAPIKey()` to retrieve a decrypted key for external SDKs:
 })
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   For AI calls, use `core.api.fetchAI()` instead – it handles key retrieval internally.
 </Alert>
 
@@ -205,7 +205,7 @@ Users manage API keys through the Settings > API Keys page (`/api-keys`):
 | `exposable: true` | ✅ Can retrieve | ✅ Can retrieve |
 | `exposable: false` | ❌ 403 Forbidden | ✅ Can retrieve |
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   Use `exposable: false` for sensitive paid API keys (OpenAI, etc.) that should never reach the browser. Use `exposable: true` only for keys needed client-side like analytics or map SDKs.
 </Alert>
 
@@ -224,7 +224,7 @@ These are standard key IDs used across LifeForge modules:
 | `pixabay` | Pixabay | Free stock images |
 | `unsplash` | Unsplash | High-quality stock photos |
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   You can define custom key IDs for any third-party service. The key ID is just a string identifier used to retrieve the correct key from the vault.
 </Alert>
 

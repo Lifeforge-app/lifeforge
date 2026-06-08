@@ -1,7 +1,7 @@
-import { Icon } from '@iconify/react'
+import { Alert } from "@lifeforge/ui"
 
 import CustomLink from '../../components/CustomLink'
-import { Alert } from "@lifeforge/ui"
+import FolderHeading from '../../components/FolderHeading'
 
 ###### Modules
 
@@ -53,13 +53,13 @@ apps/<author>--<module-name>/
     └── zh-TW.json
 ```
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">client/manifest.ts</code></div>
+### <FolderHeading icon="material-icon-theme:typescript">client/manifest.ts</FolderHeading>
 
 This file is the core configuration for your module. It defines routes, navigation, widgets, and behavior. Located inside the `client/` directory, it is exposed via Vite Module Federation.
 
 <CustomLink text="Learn More" to="#client-manifest" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:typescript" /><code className="text-xl!">client/vite.config.ts</code></div>
+### <FolderHeading icon="material-icon-theme:typescript">client/vite.config.ts</FolderHeading>
 
 The Vite configuration for building the module as a federated remote. It handles:
 - Module Federation setup with shared dependencies
@@ -68,7 +68,7 @@ The Vite configuration for building the module as a federated remote. It handles
 
 <CustomLink text="Learn More" to="#module-federation" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-client" /><code className="text-xl!">client/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-client">client/</FolderHeading>
 
 This directory contains the frontend code for the module. It is built using React and Tailwind CSS, the same technologies used in the main LifeForge client codebase. A UI library called `lifeforge-ui` is provided in the `packages/` directory to maintain a consistent design language.
 
@@ -88,7 +88,7 @@ The client's `tsconfig.json` provides helpful path aliases:
 
 <CustomLink text="Explore UI Library" to="https://ui.lifeforge.dev" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-server" /><code className="text-xl!">server/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-server">server/</FolderHeading>
 
 This directory contains the backend code for the module. It is built using ExpressJS with the powerful **Forge Controller** system for type-safe API construction with automatic validation, error handling, and response formatting.
 
@@ -100,7 +100,7 @@ This directory contains the backend code for the module. It is built using Expre
 
 <CustomLink text="Learn More" to="#server-integration" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:folder-i18n" /><code className="text-xl!">locales/</code></div>
+### <FolderHeading icon="material-icon-theme:folder-i18n">locales/</FolderHeading>
 
 This directory contains the localization files for the module. LifeForge features a **dynamic localization engine** powered by i18next with:
 
@@ -110,13 +110,13 @@ This directory contains the localization files for the module. LifeForge feature
 
 Create a JSON file for each language you want to support. Your module's translations will be automatically loaded when users have the corresponding language pack installed.
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   Provide translations for at least the languages bundled with LifeForge (English), but you can add support for any language.
 </Alert>
 
 <CustomLink text="Learn More" to="/developer-guide/localization" />
 
-### <div className="flex items-center gap-3"><Icon icon="material-icon-theme:nodejs" /><code className="text-xl!">package.json</code></div>
+### <FolderHeading icon="material-icon-theme:nodejs">package.json</FolderHeading>
 
 This file contains the module's metadata and dependencies. LifeForge's monorepo is managed using **bun**, which supports workspaces natively.
 
@@ -162,7 +162,7 @@ Examples:
 <section id="creating-modules">
 ## Creating Modules
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
   The `ForgeCLI` module creation wizard is currently a **work in progress**. For now, create modules manually by following the structure outlined in this guide.
 </Alert>
 
@@ -238,7 +238,7 @@ git commit -m "Initial commit"
 </section>
 
 <section id="packagejson-configuration">
-## Package.json Configuration
+## <code>Package.json</code> Configuration
 
 The `package.json` file is crucial for your module's configuration.
 
@@ -609,7 +609,7 @@ export default cleanSchemas(schemas)
 3. **Commit** – Track your schema in version control
 4. **Push (on install)** – `bun forge db push <module-name>` applies schema
 
-<Alert className="mt-6" type="caution">
+<Alert type="caution">
   **Do not manually edit `schema.ts` files.** Make changes through PocketBase, then pull.
 </Alert>
 
@@ -692,7 +692,7 @@ These packages are provided by the host and **must not** be bundled:
 | `@tanstack/react-query` | Data fetching |
 | `i18next` / `react-i18next` | Internationalization |
 
-<Alert className="mt-6" type="important">
+<Alert type="important">
   **React must be a singleton!** Libraries using React hooks must share the same React instance. If you see errors like `ReactSharedInternals.H is null`, check your federation shared config.
 </Alert>
 
@@ -700,7 +700,7 @@ These packages are provided by the host and **must not** be bundled:
 
 Libraries like `recharts`, `react-beautiful-dnd`, etc., that use React hooks internally need special handling:
 
-<Alert className="mt-6" type="caution">
+<Alert type="caution">
   **Do NOT add these libraries to federation `shared` config!** Let them bundle normally – the federation plugin rewrites React imports to use the shared instance.
 </Alert>
 
@@ -711,7 +711,7 @@ cd apps/myusername--my-module
 bun add recharts@^2.15.0
 ```
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
 #### Known Issues
 
 - `recharts@3.x` introduced breaking changes with ESM module loading. Stick to `recharts@^2.15.0` for best compatibility.
@@ -758,7 +758,7 @@ server/dist/
 └── index.js          # Bundled server code
 ```
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   During development, the server runs source TypeScript directly (Bun executes TS natively). Builds are only needed for production deployment.
 </Alert>
 
@@ -796,7 +796,7 @@ bun forge modules install lifeforge--calendar --dev
 - **Initializes Git repository** – Ready for version control
 - Ideal for contributing or customizing modules
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   Use `--dev` when you want to modify or contribute to a module. Use the default mode for clean production deployments.
 </Alert>
 
@@ -807,7 +807,7 @@ bun forge modules install lifeforge--calendar --dev
 
 Each module **should** maintain its own independent Git repository within the `apps/` directory.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   Git repositories are only initialized when installing with the `--dev` flag, or when creating modules manually.
 </Alert>
 
@@ -884,7 +884,7 @@ $ bun forge modules publish myusername--my-module
   ✔ Published myusername--my-module v0.0.2
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   #### Ownership-based access
   
   Only the module author (identified by the `<author>` prefix) can publish or unpublish their packages.
@@ -1003,7 +1003,7 @@ Category configuration is stored in `module_categories.json` on the server with 
 }
 ```
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   You can access the category management UI through the **Module Manager** in Settings. There, you can reorder categories, modify their translations, and perform AI auto-translate if you have the key configured in your key vault.
 </Alert>
 
@@ -1059,7 +1059,7 @@ cd apps/myusername--my-module
 bun add recharts zustand  # Module-specific packages
 ```
 
-<Alert className="mt-6" type="tip">
+<Alert type="tip">
   Check the root `package.json` before adding dependencies – if it's already there, you don't need to add it to your module.
 </Alert>
 

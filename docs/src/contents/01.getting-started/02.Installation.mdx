@@ -1,12 +1,17 @@
-import { Icon } from '@iconify/react'
+import { Text } from '@lifeforge/ui'
 
 import { Alert } from "@lifeforge/ui"
+import TextWithIcon from "../../components/TextWithIcon"
 
 ###### Installation
 
 # Getting Started with LifeForge.
 
 Back in the day, LifeForge used to be a collection of multiple repositories, where the frontend and backend are separated into different repositories. This made it hard for new users and developers to get started with the project, as they had to clone multiple repositories and set up the environment for each of them. To solve this problem, I decided to merge all the repositories into a single monorepo. This way, people only need to clone a single repository and set up the environment once.
+
+<Alert type="warning">
+Due to the recent ongoing massive reworks towards LifeForge's codebase architecture and structure, the Dockerfile and related configs are currently out-of-date. Those will only be updated when LifeForge reaches its next stable version, so for now, if you want to install, please proceed with manual installation.
+</Alert>
 
 ## Which installation method is right for me?
 
@@ -19,7 +24,7 @@ The installation process can be a bit tricky, especially for those who are not f
 - You don't want to worry about setting up dependencies manually.
 - You want more isolation between the LifeForge system and your host machine, to prevent potential issues with conflicts between dependencies and network ports.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
 #### Docker Installation Can be Trickier to Debug
 While Docker simplifies the installation process, it can be more difficult to debug issues that arise within the containerized environment. 
 
@@ -41,35 +46,20 @@ Docker is the easiest way to get LifeForge up and running. It handles all depend
 
 ### Prerequisites
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="simple-icons:docker" className="translate-y-1" />
-      **Docker & Docker Compose:**
-    </span>
-    <span>
-      Make sure you have [Docker](https://www.docker.com/get-started/) and Docker Compose installed on your system.
-    </span>
-  </div>
+- <Text>
+    <TextWithIcon icon="simple-icons:docker">**Docker & Docker Compose:**</TextWithIcon>
+    <Text display="inline"> Make sure you have [Docker](https://www.docker.com/get-started/) and Docker Compose installed on your system. </Text>
+  </Text>
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="tabler:brain" className="translate-y-1" />
-      **A functional brain:**
-    </span>
-    <span>
-      While Docker simplifies the installation process, you'll still need to understand basic command-line operations, and how to ~~prompt ai~~ debug if something goes wrong.
-    </span>
-  </div>
+- <Text>
+    <TextWithIcon icon="tabler:brain">**A functional brain:**</TextWithIcon>
+    <Text display="inline"> While Docker simplifies the installation process, you'll still need to understand basic command-line operations, and how to ~~prompt ai~~ debug if something goes wrong. </Text>
+  </Text>
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="uil:nerd" className="translate-y-1" />
-      **Nerdy knowledges:**
-    </span>
-    <span>
-      People who are using Docker are usually a bit nerdy already. So I assume you know your way around Docker and containers. :)
-    </span>
-  </div>
+- <Text>
+    <TextWithIcon icon="uil:nerd">**Nerdy knowledges:**</TextWithIcon>
+    <Text display="inline"> People who are using Docker are usually a bit nerdy already. So I assume you know your way around Docker and containers. :) </Text>
+  </Text>
 
 ### Setup
 
@@ -116,7 +106,7 @@ Once the containers are running, you can access LifeForge at:
 - **LifeForge API:** [http://localhost/api](http://localhost/api)
 - **PocketBase Dashboard:** The database is internal-only for security
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
 #### Container Architecture
 
 - **Client:** Nginx serving the frontend (port 80)
@@ -139,12 +129,6 @@ Your data will persist across container restarts. To reset the database, simply 
 
 </Alert>
 
-<Alert className="mt-6" type="warning">
-#### Avoid Concurrent Usage of PocketBase
-
-Do not run the PocketBase instance via Docker and the local instance simultaneously. Since they share the same SQL file, it will be locked, and unexpected behaviours and errors will happen.
-</Alert>
-
 </section>
 
 <section id="manual-installation">
@@ -156,71 +140,36 @@ If you are a developer, you must install and run LifeForge manually on your loca
 
 Before you start, make sure you have the following items on hand:
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="simple-icons:raspberrypi" className="translate-y-1" />
-      **A Raspberry Pi or any other computer in Unix-based systems:**
-    </span>
-    <span>
-      This is the hardware that will be used to host the LifeForge API and
-      database. You can use a Raspberry Pi, a virtual private server (VPS), or
-      any other computer that uses Linux or MacOS.
-    </span>
-  </div>
+- <Text>
+    <TextWithIcon icon="simple-icons:raspberrypi">**A Raspberry Pi or any other computer in Unix-based systems:**</TextWithIcon>
+    <Text display="inline"> This is the hardware that will be used to host the LifeForge API and database. You can use a Raspberry Pi, a virtual private server (VPS), or any other computer that uses Linux or MacOS. </Text>
+  </Text>
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="simple-icons:nodedotjs" className="translate-y-1" />
-      **Node.js (at least LTS)**
-    </span>
-    <span>**and**</span>
-    <span className="text-bg-800 dark:text-bg-100 mx-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="simple-icons:bun" className="translate-y-1" />
-    </span>
-    <span className="mr-2">**Bun:**</span>
-    <span>
-      LifeForge is a pure TypeScript project, while the cute little bun, is used
-      as the runtime environment. You can download and install bun from
-      [here](https://bun.sh/).
-    </span>
-  </div>
+- <Text>
+    <TextWithIcon icon="simple-icons:nodedotjs">**Node.js (at least LTS)**</TextWithIcon>
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="simple-icons:pocketbase" className="translate-y-1" />
-      **PocketBase:**
-    </span>
-    <span>
-      This is the database that will be used to store all your data. You can
-      download the latest version of PocketBase from
-      [here](https://pocketbase.io/), or use `bun forge db init` command to
-      automatically download and set it up for you.
-    </span>
-  </div>
+    <Text px="xs" display="inline">**and**</Text>
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="tabler:brain" className="translate-y-1" />
-      **A functional brain:**
-    </span>
-    <span>
-      You will need to have a basic understanding of how to use a terminal and
-      how to run a Node.js application.
-    </span>
-  </div>
+    <TextWithIcon icon="simple-icons:bun">**Bun:**</TextWithIcon>
+    <Text display="inline"> LifeForge is a pure TypeScript project, while the cute little bun, is used as the runtime environment. You can download and install bun from [here](https://bun.sh/). </Text>
+  </Text>
 
-- <div>
-    <span className="text-bg-800 dark:text-bg-100 mr-2 inline-flex -translate-y-0.5 items-center gap-2">
-      <Icon icon="tabler:coffee" className="translate-y-1" />
-      **A cup of coffee or tea:**
-    </span>
-    <span>
-      This is optional, but it's always nice to have a cup of coffee by your
-      side when you're coding.
-    </span>
-  </div>
+- <Text>
+    <TextWithIcon icon="simple-icons:pocketbase">**PocketBase:**</TextWithIcon>
+    <Text display="inline"> This is the database that will be used to store all your data. You can download the latest version of PocketBase from [here](https://pocketbase.io/), or use `bun forge db init` command to automatically download and set it up for you. </Text>
+  </Text>
 
-<Alert className="mt-6" type="warning">
+- <Text>
+    <TextWithIcon icon="tabler:brain">**A functional brain:**</TextWithIcon>
+    <Text display="inline"> You will need to have a basic understanding of how to use a terminal and how to run a Node.js application. </Text>
+  </Text>
+
+- <Text>
+    <TextWithIcon icon="tabler:coffee">**A cup of coffee or tea:**</TextWithIcon>
+    <Text display="inline"> This is optional, but it's always nice to have a cup of coffee by your side when you're coding. </Text>
+  </Text>
+
+<Alert type="warning">
 #### Please Don't Use Windows
 
 According to [this site](https://www.enterpriseappstoday.com/stats/linux-statistics.html#Linux_Usage_Statistics), as of 2024,
@@ -246,17 +195,10 @@ git clone https://github.com/lifeforge-app/lifeforge.git
 Then, install the dependencies by running the following command:
 
 ```bash
-cd lifeforge && bun install --linker isolated
+cd lifeforge && bun install
 ```
 
-<Alert className="mt-6" type="warning">
-#### Using `--linker isolated`
-
-By default, Bun uses a global cache for dependencies. However, in a monorepo setup like LifeForge, this can lead to issues with dependency resolution. To avoid these issues, we recommend using the `--linker isolated` flag when installing dependencies. This will ensure that each package in the monorepo has its own isolated set of dependencies to prevent phantom dependency issues.
-
-When doing deployment on a server, make sure to always use the `--linker isolated` flag when running `bun install`.
-
-</Alert>
+All the internal packages will be automatically built during post-installation, so you don't have to worry about those.
 
 ---
 

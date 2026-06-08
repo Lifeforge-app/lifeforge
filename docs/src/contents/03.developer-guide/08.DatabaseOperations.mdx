@@ -26,7 +26,7 @@ const action = forgeController.mutate
   })
 ```
 
-  <Alert className="mt-6" type="note">
+  <Alert type="note">
   ### Accessing Native PocketBase Instance
 
 You can access the native PocketBase instance by using the `pb.instance` property, which grants you access to the underlying SDK directly. This is useful when you need to perform operations that are not covered by the wrapper, like generating OTPs.
@@ -70,7 +70,7 @@ Available actions are the same as the native SDK:
 
 Other functionalities like filtering, sorting, and field selection, and data input can be chained after the collection has been specified and before `.execute()` as needed. The availability of these options will depend on the specific action being performed. IntelliSense in your code editor should provide you with autocompletion suggestions based on that. For more information, refer to the [PocketBase documentation](https://pocketbase.io/docs/api-records).
 
-  <Alert className="mt-6" type="note">
+  <Alert type="note">
   The available options for the `.collection()` method are derived from your `schema.ts` file. IntelliSense in your code editor should provide you with autocompletion suggestions based on that.
 
 ![Collection IntelliSense](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/developer-database-operations/collection-intellisense.webp)
@@ -91,14 +91,14 @@ const data = await pb.getFullList.collection("posts").expand({
 
 The resulting data will include an additional `expand` field for each record (if applicable) containing the expanded relations. For more information, refer to the [PocketBase documentation](https://pocketbase.io/docs/working-with-relations/).
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   The available options for both the keys and the values of the object being
   passed into the `.expand()` method are derived from your{' '}
   `schema.ts` file. IntelliSense in your code editor should provide
   you with autocompletion suggestions based on that.
 </Alert>
 
-<Alert className="mt-6" type="warning">
+<Alert type="warning">
 - This will only work when you have defined the appropriate relations for the fields in your PocketBase admin panel with appropriate access permissions.
 
 - Please call this method **before** filtering, sorting, and field selection, as it will affect the IntelliSense inference of these operations.
@@ -170,7 +170,7 @@ const data = await pb.getFullList.collection("my_collection").filter([
 
 This is especially useful for building filters based on search queries provided by the API consumers.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
 - IntelliSense in your code editor should provide you with autocompletion suggestions for the `field` field based on the available fields, including those from expanded relations.
 
 - Available comparison operations are the same as the native SDK. Please refer to the [PocketBase documentation](https://pocketbase.io/docs/api-records/#listsearch-records) for more information.
@@ -202,7 +202,7 @@ const data = await pb.getFullList.collection("posts").expand({
 ]).execute();
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
 IntelliSense in your code editor should provide you with autocompletion suggestions for the fields based on the available fields, including those from expanded relations.
 </Alert>
 
@@ -236,7 +236,7 @@ const data = await pb.getFullList.collection("posts").expand({
 }).execute();
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   IntelliSense in your code editor should provide you with autocompletion
   suggestions for the fields based on the available fields, including those from
   expanded relations.
@@ -252,7 +252,7 @@ Note that unlike sorting and filtering, you must prefix the expanded fields with
 
 You can create, update, and delete records using the `create`, `update`, and `delete` actions respectively.
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   When creating or updating records, ensure that you provide all required fields
   as per your collection schema. The power of TypeScript will help you catch any
   missing fields at compile time.
@@ -280,7 +280,7 @@ const updatedRecord = await pb.update.collection("my_collection").id("record_id"
 }).execute();
 ```
 
-<Alert className="mt-6" type="note">
+<Alert type="note">
   The object passed into the `.data()` method need not include all
   fields from the original record. You can specify only the fields you want to
   update.
