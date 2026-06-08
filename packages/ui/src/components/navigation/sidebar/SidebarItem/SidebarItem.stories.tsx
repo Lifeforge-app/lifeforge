@@ -333,7 +333,7 @@ export const WithReactElementLabel: Story = {
               <Flex align="center" style={{ gap: '0.5rem' }}>
                 <Text color={{ base: 'bg-800', dark: 'bg-50' }}>Custom</Text>
                 <Text
-                  color="custom-500"
+                  color="primary"
                   style={{
                     borderRadius: '0.25rem',
                     fontSize: '0.625rem',

@@ -132,7 +132,7 @@ export const WithText: Story = {
         <Text>hello@example.com</Text>
       </Flex>
       <Flex align="center" gap="sm">
-        <Icon color="custom-500" icon="tabler:bell" size="1.5em" />
+        <Icon color="primary" icon="tabler:bell" size="1.5em" />
         <Text color="primary" weight="semibold">
           Notifications
         </Text>

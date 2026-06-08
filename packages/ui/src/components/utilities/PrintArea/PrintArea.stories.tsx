@@ -52,7 +52,7 @@ export const Default: Story = {
                 <Text size="lg" weight="semibold">
                   INVOICE
                 </Text>
-                <Text color="custom-500" weight="semibold">
+                <Text color="primary" weight="semibold">
                   #LF-8924
                 </Text>
               </Flex>

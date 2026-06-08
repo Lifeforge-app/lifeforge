@@ -28,7 +28,7 @@ export function SSOHeader({
       width="100%"
     >
       <Flex align="center" gap="sm">
-        <Icon color="custom-500" icon={icon} size="2.25rem" />
+        <Icon color="primary" icon={icon} size="2.25rem" />
         <Box>
           <Text size="xl" weight="semibold">
             LifeForge

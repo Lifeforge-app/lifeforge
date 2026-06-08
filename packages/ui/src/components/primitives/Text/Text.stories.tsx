@@ -219,7 +219,7 @@ export const BackgroundColor: Story = {
   args: {},
   render: () => (
     <ScrollableStory>
-      <Text bg="custom-500" color="bg-50" p="xs" size="lg">
+      <Text bg="primary" color="bg-50" p="xs" size="lg">
         bg=&quot;custom-500&quot; (flat)
       </Text>
       <Text

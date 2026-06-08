@@ -37,7 +37,7 @@ export function LocationServiceStatusIndicator({
             {t('locationDisabled.description')}{' '}
             <Text
               as="a"
-              color="custom-500"
+              color="primary"
               decoration="underline"
               href="https://docs.lifeforge.melvinchia.dev/user-guide/api-keys#location"
               rel="noopener noreferrer"

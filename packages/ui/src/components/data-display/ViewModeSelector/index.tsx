@@ -31,6 +31,7 @@ export function ViewModeSelector<
       align="center"
       bg={{ base: 'bg-50', dark: 'bg-900' }}
       gap="xs"
+      height="4em"
       p={size === 'small' ? 'xs' : 'sm'}
       r="lg"
     >
@@ -60,11 +61,12 @@ export function ViewModeSelector<
                     }
                   : {
                       hover: 'bg-200',
-                      darkHover: 'bg-900'
+                      darkHover: 'bg-800'
                     }
               }
               flex="1"
               gap="sm"
+              height="100%"
               px={size === 'small' ? 'sm' : 'md'}
               py={size === 'small' ? 'xs' : 'sm'}
               r="md"

@@ -334,7 +334,7 @@ export const WithBackgroundAndShadow: Story = {
           r="md"
           width="3em"
         >
-          <Icon color="custom-500" icon="tabler:cube" size="1.5em" />
+          <Icon color="primary" icon="tabler:cube" size="1.5em" />
         </Flex>
         <Box>
           <Text weight="semibold">Card title</Text>

@@ -65,7 +65,7 @@ function FontListItem({
     <Transition duration="150ms" property="all">
       <Ring
         asChild
-        ringColor="custom-500"
+        ringColor="primary"
         ringWidth={selectedFont === font.family ? '2px' : '0px'}
       >
         <Card

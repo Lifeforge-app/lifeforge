@@ -99,7 +99,7 @@ function ResultShowcase({
               p="md"
               r="md"
             >
-              <Icon color="custom-500" icon="tabler:box" size="2em" />
+              <Icon color="primary" icon="tabler:box" size="2em" />
             </Flex>
             <Box>
               <Text as="h2" size="lg" weight="semibold">

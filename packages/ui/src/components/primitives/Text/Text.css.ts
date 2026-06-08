@@ -3,6 +3,7 @@ import { createSprinkles, defineProperties } from '@vanilla-extract/sprinkles'
 
 import {
   RESPONSIVE_CONDITIONS,
+  tokenizedLayoutProperties,
   tokenizedSpacingProperties,
   vars
 } from '@/system'
@@ -63,7 +64,8 @@ const textProperties = defineProperties({
 
 export const textSprinkles = createSprinkles(
   textProperties,
-  tokenizedSpacingProperties
+  tokenizedSpacingProperties,
+  tokenizedLayoutProperties
 )
 
 export type TextSprinkles = Parameters<typeof textSprinkles>[0]

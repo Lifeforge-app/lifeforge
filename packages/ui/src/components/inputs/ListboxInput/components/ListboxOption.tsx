@@ -146,7 +146,7 @@ export function ListboxOption({
                       </Flex>
                     </Text>
                     {finalSelected && (
-                      <Icon color="custom-500" icon="tabler:check" size="lg" />
+                      <Icon color="primary" icon="tabler:check" size="lg" />
                     )}
                   </>
                 )

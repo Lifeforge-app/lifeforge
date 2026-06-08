@@ -34,7 +34,7 @@ export type BorderSide = 'all' | 'top' | 'right' | 'bottom' | 'left' | 'x' | 'y'
 
 export type BorderStyleValue = 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
 
-interface BorderedOwnProps<T extends ElementType = 'div'>
+export interface BorderedOwnProps<T extends ElementType = 'div'>
   extends TokenizedCommonProps, ArbitraryProps {
   as?: T
   asChild?: boolean

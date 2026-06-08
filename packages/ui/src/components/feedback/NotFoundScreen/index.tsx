@@ -30,7 +30,7 @@ export function NotFoundScreen({
       width="100%"
     >
       <Text
-        color="custom-500"
+        color="primary"
         style={{ fontSize: '10rem', lineHeight: '13rem' }}
       >
         ;-;

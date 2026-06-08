@@ -87,7 +87,7 @@ export function ModuleHeader({
               sm: '4em'
             }}
           >
-            <Icon color="custom-500" icon={icon} size="2rem" />
+            <Icon color="primary" icon={icon} size="2rem" />
           </Flex>
         )}
         <Flex direction="column" gap="xs" minWidth="0" width="100%">

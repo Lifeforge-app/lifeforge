@@ -14,8 +14,8 @@
     cursor: not-allowed;
   }
 
-  &:focus,
-  &:focus-visible {
+  &:not(._ring):focus,
+  &:not(._ring):focus-visible {
     outline: none;
   }
 
@@ -23,10 +23,6 @@
     background-color: var(--color-custom-500);
     color: var(--lf-selection-bg);
   }
-}
-
-*:focus-visible {
-  outline: none !important;
 }
 
 input,

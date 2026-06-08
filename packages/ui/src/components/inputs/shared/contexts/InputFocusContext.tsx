@@ -40,9 +40,7 @@ export function InputFocusProvider({
       onBlur={handleBlur}
       onFocus={handleFocus}
     >
-      <InputFocusContext.Provider value={isFocused}>
-        {children}
-      </InputFocusContext.Provider>
+      <InputFocusContext value={isFocused}>{children}</InputFocusContext>
     </span>
   )
 }
