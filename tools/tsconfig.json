@@ -1,5 +1,5 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "@lifeforge/configs/tsconfig/base.json",
   "compilerOptions": {
     "rootDir": ".",
     "baseUrl": ".",

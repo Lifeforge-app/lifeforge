@@ -15,10 +15,10 @@ mkdir -p /lifeforge/node_modules/@lifeforge
 ln -sf /lifeforge/shared /lifeforge/node_modules/shared
 
 # Symlink @lifeforge/log (required by server-utils)
-ln -sf /lifeforge/packages/lifeforge-log /lifeforge/node_modules/@lifeforge/log
+ln -sf /lifeforge/packages/log /lifeforge/node_modules/@lifeforge/log
 
 # Symlink @lifeforge/server-utils (required by module bundles)
-ln -sf /lifeforge/packages/lifeforge-server-utils /lifeforge/node_modules/@lifeforge/server-utils
+ln -sf /lifeforge/packages/server-utils /lifeforge/node_modules/@lifeforge/server-utils
 
 # Check if modules are mounted
 if [ -d "/lifeforge/apps" ] && [ "$(ls -A /lifeforge/apps 2>/dev/null)" ]; then

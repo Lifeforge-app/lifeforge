@@ -6,10 +6,10 @@ import { validateMaintainerAccess } from '@/utils/github-cli'
 import logger from '@/utils/logger'
 import { checkAuth } from '@/utils/registry'
 
+import { packageJSONSchema } from './packageJSONSchema'
+
 export default async function validateModuleAuthor(modulePath: string) {
   const auth = await checkAuth()
-
-  const { packageJSONSchema } = await import('@lifeforge/shared')
 
   const packageJson = z.safeParse(
     packageJSONSchema,

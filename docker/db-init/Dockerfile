@@ -20,10 +20,10 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
     bun install --linker isolated
 
 # Build @lifeforge/log (required by tools)
-RUN cd /app/packages/lifeforge-log && bun run build
+RUN cd /app/packages/log && bun run build
 
 # Build @lifeforge/server-utils (required by schema files)
-RUN cd /app/packages/lifeforge-server-utils && bun run build
+RUN cd /app/packages/server-utils && bun run build
 
 # Build forge CLI
 RUN cd /app/tools && bun run build
@@ -53,13 +53,13 @@ COPY --from=builder /app/shared/dist ./shared/dist
 COPY --from=builder /app/shared/package.json ./shared/package.json
 
 # Copy @lifeforge/server-utils (required by schema files)
-COPY --from=builder /app/packages/lifeforge-server-utils/dist ./packages/lifeforge-server-utils/dist
-COPY --from=builder /app/packages/lifeforge-server-utils/package.json ./packages/lifeforge-server-utils/package.json
+COPY --from=builder /app/packages/server-utils/dist ./packages/server-utils/dist
+COPY --from=builder /app/packages/server-utils/package.json ./packages/server-utils/package.json
 
 # Create node_modules symlinks for package resolution
 RUN mkdir -p node_modules/@lifeforge && \
     ln -sf /app/shared node_modules/shared && \
-    ln -sf /app/packages/lifeforge-server-utils node_modules/@lifeforge/server-utils
+    ln -sf /app/packages/server-utils node_modules/@lifeforge/server-utils
 
 # Install minimal dependencies for schema evaluation
 RUN echo '{"dependencies":{"zod":"^4.0.0"}}' > package.json && bun install

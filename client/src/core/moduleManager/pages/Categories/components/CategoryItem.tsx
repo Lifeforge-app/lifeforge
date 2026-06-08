@@ -2,7 +2,7 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { toast } from 'react-toastify'
 
-import { useFederation } from '@lifeforge/shared'
+import { useFederation } from '@lifeforge/federation'
 import {
   Box,
   Button,

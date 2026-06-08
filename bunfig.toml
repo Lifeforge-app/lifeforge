@@ -1,3 +1,0 @@
-[install]
-[install.scopes]
-"@lifeforge" = "https://registry.lifeforge.dev/:_authToken=${FORGISTRY_TOKEN}"

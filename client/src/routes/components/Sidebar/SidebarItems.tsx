@@ -4,10 +4,10 @@ import { Fragment, useEffect, useMemo, useState } from 'react'
 import {
   normalizeSubnamespace,
   useAuth,
-  useFederation,
   useLocation,
   useMainSidebarState
 } from '@lifeforge/shared'
+import { useFederation } from '@lifeforge/federation'
 import {
   Box,
   EmptyStateScreen,

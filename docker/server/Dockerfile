@@ -20,10 +20,10 @@ RUN --mount=type=cache,target=/root/.bun/install/cache \
 RUN cd /lifeforge/shared && bun run build
 
 # Build @lifeforge/log package
-RUN cd /lifeforge/packages/lifeforge-log && bun run build
+RUN cd /lifeforge/packages/log && bun run build
 
 # Build lifeforge-server-utils package
-RUN cd /lifeforge/packages/lifeforge-server-utils && bun run build
+RUN cd /lifeforge/packages/server-utils && bun run build
 
 # Build server bundle
 RUN cd /lifeforge/server && bun run build
@@ -54,12 +54,12 @@ COPY --from=builder /lifeforge/shared/dist ./shared/dist
 COPY --from=builder /lifeforge/shared/package.json ./shared/package.json
 
 # Copy @lifeforge/log package
-COPY --from=builder /lifeforge/packages/lifeforge-log/dist ./packages/lifeforge-log/dist
-COPY --from=builder /lifeforge/packages/lifeforge-log/package.json ./packages/lifeforge-log/package.json
+COPY --from=builder /lifeforge/packages/log/dist ./packages/log/dist
+COPY --from=builder /lifeforge/packages/log/package.json ./packages/log/package.json
 
 # Copy lifeforge-server-utils package (required by module bundles at runtime)
-COPY --from=builder /lifeforge/packages/lifeforge-server-utils/dist ./packages/lifeforge-server-utils/dist
-COPY --from=builder /lifeforge/packages/lifeforge-server-utils/package.json ./packages/lifeforge-server-utils/package.json
+COPY --from=builder /lifeforge/packages/server-utils/dist ./packages/server-utils/dist
+COPY --from=builder /lifeforge/packages/server-utils/package.json ./packages/server-utils/package.json
 
 # Install server dependencies
 COPY --from=builder /lifeforge/server/package.docker.json ./package.json

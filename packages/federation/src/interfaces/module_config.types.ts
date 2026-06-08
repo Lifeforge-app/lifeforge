@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import z from 'zod'
+import { z } from 'zod'
 
-import type WidgetConfig from './widget_config.types'
+import type { WidgetConfig } from '@lifeforge/shared'
 
 export interface ModuleConfig {
   provider?: React.LazyExoticComponent<React.ComponentType<any>>
@@ -35,10 +34,7 @@ export const moduleConfigSchema: z.ZodType<ModuleConfig> = z.object({
     .optional(),
   hidden: z.boolean().optional(),
   disabled: z
-    .union([
-      z.boolean(),
-      z.custom<() => Promise<boolean>>(val => typeof val === 'function')
-    ])
+    .union([z.boolean(), z.custom<() => Promise<boolean>>(val => typeof val === 'function')])
     .optional(),
   clearQueryOnUnmount: z.boolean().optional(),
   contract: z.any().optional(),
@@ -54,39 +50,12 @@ export const moduleConfigSchema: z.ZodType<ModuleConfig> = z.object({
     .optional()
 })
 
-export const packageJSONSchema = z.object({
-  name: z.string(),
-  displayName: z.string(),
-  version: z.string(),
-  description: z.string(),
-  author: z.string(),
-  scripts: z
-    .object({
-      types: z.string()
-    })
-    .optional(),
-  dependencies: z.record(z.string(), z.string()).optional(),
-  devDependencies: z.record(z.string(), z.string()).optional(),
-  lifeforge: z.object({
-    icon: z.string(),
-    category: z.string(),
-    APIKeyAccess: z
-      .record(
-        z.string(),
-        z.object({
-          usage: z.string(),
-          required: z.boolean()
-        })
-      )
-      .optional()
-  })
-})
 
 export interface ModuleCategory {
   title: string
   items: (ModuleConfig & {
     name: string
-    moduleId: string
+    moduleId?: string
     displayName: string
     version: string
     author: string

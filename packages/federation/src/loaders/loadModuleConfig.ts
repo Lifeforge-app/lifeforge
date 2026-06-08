@@ -1,28 +1,28 @@
+import { globalProxyRegistry } from '@lifeforge/shared'
 import {
-  __federation_method_getRemote as getRemote,
-  __federation_method_setRemote as setRemote,
-  __federation_method_unwrapDefault as unwrapModule
-  // @ts-expect-error - Virtual federation methods
-} from 'virtual:__federation__'
-
-import {
-  type InferOutput,
   type ModuleCategory,
   type ModuleConfig,
-  globalProxyRegistry,
   moduleConfigSchema
-} from '@lifeforge/shared'
+} from '../interfaces/module_config.types'
 
-import forgeAPI from '@/forgeAPI'
-
-type FederatedModule = InferOutput<
-  typeof forgeAPI.modules.manifest
->['modules'][number]
+export interface FederatedModule {
+  name: string
+  displayName: string
+  version: string
+  description: string
+  author: string
+  icon: string
+  category: string
+  remoteEntryUrl: string
+  isDevMode: boolean
+  APIKeyAccess?: Record<string, { usage: string; required: boolean }>
+  moduleId: string
+}
 
 /**
  * Fetches module manifest from the server
  */
-export async function fetchModuleManifest(): Promise<FederatedModule[]> {
+export async function fetchModuleManifest(forgeAPI: any): Promise<FederatedModule[]> {
   try {
     const { modules } = await forgeAPI.modules.manifest.query()
 
@@ -38,16 +38,12 @@ export async function fetchModuleManifest(): Promise<FederatedModule[]> {
  * Maps module short name to import function for dev mode
  * Uses Vite's glob import for dynamic loading from apps directory
  */
-const devModeImports = import.meta.glob<{ default: ModuleConfig }>(
-  '../../../../apps/*/client/manifest.ts',
-  { eager: false }
-)
-
 /**
  * Gets the dev mode import function for a module
  */
 function getDevModeImport(
-  moduleName: string
+  moduleName: string,
+  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>>
 ): (() => Promise<{ default: ModuleConfig }>) | null {
   // Module names are like "lifeforge--music" or "jiahuiiiii--stock"
   // The glob path is "../../apps/lifeforge--music/client/manifest.ts"
@@ -66,13 +62,14 @@ function getDevModeImport(
  * Loads a module config - either from dev source or federation bundle
  */
 export async function loadModuleConfig(
-  mod: FederatedModule
+  mod: FederatedModule,
+  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>> = {}
 ): Promise<ModuleCategory['items'][number]> {
   let unwrapped: ModuleConfig
 
   // Dev mode: import directly from source for hot-reload
   if (import.meta.env.DEV && mod.isDevMode) {
-    const devImport = getDevModeImport(mod.name)
+    const devImport = getDevModeImport(mod.name, devModeImports)
 
     if (devImport) {
       const devModule = await devImport()
@@ -90,7 +87,6 @@ export async function loadModuleConfig(
   }
 
   const validation = moduleConfigSchema.safeParse(unwrapped)
-
   if (!validation.success) {
     throw new Error(
       `Module configuration validation failed for ${mod.name}: ${validation.error.message}`
@@ -132,6 +128,12 @@ export async function loadModuleConfig(
  */
 async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
   const remoteName = mod.name.replace(/-+/g, '_')
+
+  const {
+    __federation_method_setRemote: setRemote,
+    __federation_method_getRemote: getRemote,
+    __federation_method_unwrapDefault: unwrapModule
+  } = await import('virtual:__federation__')
 
   setRemote(remoteName, {
     url: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
