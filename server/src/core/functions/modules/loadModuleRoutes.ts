@@ -9,6 +9,12 @@ const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const logger = createServiceLogger('Route Loader')
 
+import crypto from 'crypto'
+
+export function generateModuleId(packageName: string): string {
+  return crypto.createHash('sha256').update(packageName).digest('hex')
+}
+
 /**
  * Dynamically loads module routes.
  * - In production: loads from pre-bundled dist/index.js
@@ -48,11 +54,12 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
     try {
       const mod = await import(modulePath)
 
-      const key = modDir.includes('--')
-        ? modDir.startsWith('lifeforge--')
-          ? _.camelCase(modDir.split('--')[1])
-          : `${modDir.split('--')[0]}$${_.camelCase(modDir.split('--')[1])}`
-        : _.camelCase(modDir)
+      const pkgPath = path.join(appsDir, modDir, 'package.json')
+      if (!fs.existsSync(pkgPath)) {
+        continue
+      }
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+      const key = generateModuleId(pkg.name)
 
       if (!mod.default) {
         logger.warn(`Module ${modDir} has no default export`)

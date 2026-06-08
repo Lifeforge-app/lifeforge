@@ -632,6 +632,44 @@ interface TransitionProps {
 
 ---
 
+### K. Prose
+
+A rich-text wrapper component that automatically styles standard HTML/Markdown elements cleanly according to the active theme. Useful for rendering documentation, wiki pages, or comments without manual style overrides.
+
+```typescript
+export function Prose({
+  className,
+  style,
+  children
+}: {
+  className?: string
+  style?: CSSProperties
+  children?: ReactNode
+})
+```
+
+#### Supported Child Element Styling:
+- **Headings (`h1` - `h6`):** Automatically styled with appropriate sizing, weights, line-heights, and margins.
+- **Lists (`ul`, `ol`, `li`):** Renders margins, paddings, list-style-type (`disc`/`decimal`), and markers styled with the `bg-400` token.
+- **Code Blocks & Inline Code (`kbd`, `code`, `pre`):** Automatically styled with clean borders, background colors, custom SFMono fonts, rounded corners, and shadows.
+- **Blockquotes:** Rendered with vertical accent borders, custom quotes, margins, and custom text colors matching light/dark modes.
+- **Tables:** Fully styled table layouts with borders, headers (`thead`), zebra-striping/row boundaries, and proper cell alignments.
+- **Media (`img`, `video`, `picture`):** Automatically centered with `max-width: 100%` and rounded corners.
+
+#### Example:
+```tsx
+<Prose>
+  <h1>Guide Title</h1>
+  <p>Here is some text with <strong>bold</strong> styling and a <a href="#">link</a>.</p>
+  <ul>
+    <li>Bullet item 1</li>
+    <li>Bullet item 2</li>
+  </ul>
+</Prose>
+```
+
+---
+
 ## 5. Composition & Chaining Rules
 
 Primitives are designed to be composed together using the `asChild` pattern. This merges the class names, styling resolvers, and custom variables of multiple layers onto a single DOM node.
@@ -707,6 +745,214 @@ type ButtonProps<T extends ElementType = 'button'> = ButtonOwnProps &
 
 Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop available on `Flex` or `Box` can be passed directly** — no wrapping `Box` needed. Only reach for `Box asChild` when you need a prop that Flex/Box doesn't support (e.g. CSS properties only available via inline `style`).
 
+#### Notable Engineering Features:
+1. **Dynamic Contrast Matching:** In `useButtonStyleProps`, when `variant="primary"` is set, the button fetches the user's active theme color (`derivedThemeColor`) and runs `getMostReadableColor()` to compute a text color with optimal contrast.
+2. **Smart i18n Translation:** If the children is a string, it automatically attempts to search for translations across various namespaces (e.g., `buttons.cancel`, `common.buttons:cancel`).
+3. **Loading Spinners:** Renders the pre-animated `svg-spinners:ring-resize` icon automatically.
+
+#### Example:
+```tsx
+<Button
+  variant="primary"
+  icon="tabler:send"
+  loading={isSubmitting}
+  mt="lg" // Inherited from Flex — no Box wrapper needed
+  width="100%" // Inherited from Flex
+  onClick={onSubmit}
+>
+  sendFeedback
+</Button>
+```
+
+---
+
+### B. Input Components & Infrastructure
+
+All raw input components share a unified visual style by extending components from the `inputs/shared` module:
+- `InputWrapper`: Creates the surrounding classic/plain background field, error display, and click handlers.
+- `InputLabel`: Coordinates labels, required asterisks, and floating positions.
+- `InputIcon`: Renders helper icons aligned within field paddings.
+
+#### Available Inputs in SDK:
+- **`TextInput`:** Controlled input box. Supports standard inputs, passwords with custom visibility toggles, and action buttons.
+- **`NumberInput` / `CurrencyInput`:** Custom formatted fields for numbers and currencies.
+- **`TextAreaInput`:** Multiline text input area.
+- **`Switch` / `Checkbox`:** Toggle switches and checkboxes.
+- **`FAB`:** Floating Action Button.
+- **`ColorInput` / `FileInput` / `IconInput`:** Advanced pickers that open specialized modals (`ColorPickerModal`, `FilePickerModal`, `IconPickerModal`).
+- **`TagsInput`:** Multi-tag editor.
+- **`LocationInput`:** Address/coordinates selector.
+- **`SliderInput`:** Range slider selector.
+- **`ListboxInput` / `ComboboxInput`:** Select/combobox dropdowns with search, options selection, and validation styling.
+- **`QRCodeScanner`:** Quick QR code input scanner dialog.
+
+---
+
+### C. React Hook Form Integration & FormModal
+
+LifeForge integrates forms via `react-hook-form` controllers to provide a type-safe form state and automated validation messaging.
+
+#### 1. FormModal
+A dialog wrapper that encapsulates form state management and submission configurations.
+
+```typescript
+type SubmissionConfig<T extends FieldValues> =
+  | {
+      template: 'create' | 'update'
+      disabled?: boolean
+      handler: (data: T) => Promise<unknown> | unknown
+    }
+  | {
+      label: string
+      icon: string
+      disabled?: boolean
+      handler: (data: T) => Promise<unknown> | unknown
+    }
+```
+
+- **i18n Namespace Context:** Automatically provides a namespace to nested fields via `useNamespace()`.
+- **Loading states:** Switches the form layout to a loading spinner during network requests.
+- **Auto-Loading Submission Button:** Uses `usePromiseLoading` to display a spinner inside the button during async handler resolution.
+
+#### 2. Specialized Form Fields
+Form Fields (e.g. `TextField`, `CheckboxField`, `ListboxField`, `DateField`, `FileField`, etc.) wrap raw inputs inside `useController`, allowing binding via `control` and `name` props:
+
+```tsx
+<FormModal
+  form={form}
+  uiConfig={{
+    title: 'Edit Profile',
+    icon: 'tabler:user',
+    onClose: close
+  }}
+  submissionConfig={{
+    template: 'update',
+    handler: async (data) => { await updateProfile(data) }
+  }}
+>
+  <TextField
+    control={form.control}
+    name="username"
+    label="Username"
+    icon="tabler:user"
+    required
+  />
+  <CheckboxField
+    control={form.control}
+    name="active"
+    label="Active Account"
+    icon="tabler:check"
+  />
+</FormModal>
+```
+
+#### 3. Zod Default Values Generator (`createDefaultValues`)
+Before initializing a form, use `createDefaultValues(schema)` to parse the Zod validation schema and return type-safe, empty defaults:
+
+```typescript
+import { createDefaultValues } from '@lifeforge/ui'
+import { z } from 'zod'
+
+const userSchema = z.object({
+  name: z.string(),
+  age: z.number().default(18),
+  roles: z.array(z.string())
+})
+
+const defaultValues = createDefaultValues(userSchema)
+// => { name: '', age: 18, roles: [] }
+```
+
+---
+
+## 7. Overlays, Modals & Context Menus
+
+### A. Context Menu
+
+A hover/click dropdown menu built on Radix UI's Dropdown Menu primitives.
+
+```typescript
+interface MenuProps {
+  children: React.ReactNode
+  customIcon?: string
+  buttonComponent?: React.ReactNode
+  align?: 'start' | 'center' | 'end'
+  side?: 'top' | 'right' | 'bottom' | 'left'
+}
+```
+
+- **ContextMenuItem:** Represents a single button in the dropdown menu. It is wrapped in `WithDivide` to automatically render separators. It supports `checked` (renders checkmark), `loading` (shows spinner), and `dangerous` (turns red) states.
+- **ContextMenuGroup:** Renders sub-sections inside the menu.
+
+#### Example:
+```tsx
+<ContextMenu align="end">
+  <ContextMenuGroup>
+    <ContextMenuItem
+      label="edit"
+      icon="tabler:pencil"
+      onClick={handleEdit}
+    />
+    <ContextMenuItem
+      dangerous
+      label="delete"
+      icon="tabler:trash"
+      onClick={handleDelete}
+    />
+  </ContextMenuGroup>
+</ContextMenu>
+```
+
+---
+
+### B. Modal System
+
+LifeForge features a robust, portal-based modal stack manager.
+
+#### 1. ModalProvider & useModalStore
+State store context that manages a stack of open modals. It provides hooks to interact programmatically:
+- `open(Component, data)`: Pushes a new modal onto the stack.
+- `close()`: Closes the topmost active modal.
+- `remove(index)`: Destroys a modal after exit animations finish.
+
+#### 2. ModalManager & ModalWrapper
+Renders the portal container at the application root level. Maps over the stack and places items inside a `ModalWrapper`, which manages scaling enter/leave transitions and overlays.
+
+#### 3. ConfirmationModal
+A pre-built confirmation dialog for destructive actions:
+- Supports a `confirmationPrompt` string where the user must type a specific word (e.g. "DELETE") to enable the primary button.
+- Handles loader spinners during confirmation hooks.
+
+```tsx
+const { open } = useModalStore()
+
+open(ConfirmationModal, {
+  title: 'Delete Repository',
+  description: 'This action cannot be undone. Please type DELETE to confirm.',
+  confirmationPrompt: 'DELETE',
+  confirmationButton: 'delete',
+  onConfirm: async () => { await deleteRepository() }
+})
+```
+
+---
+
+## 8. Layout, Header & Sidebar Infrastructure
+
+### A. Card
+
+The basic block container for laying out groups of information.
+
+- **Inherits FlexProps:** Because `Card` extends `FlexProps`, any layout or alignment property can be passed directly to Card (e.g. `direction="row"`, `gap="md"`, `align="center"`).
+- **Interactive Preset:** Passing `isInteractive` automatically sets cursor styles, shadows, transitions, and configures background state presets:
+  ```typescript
+  // isInteractive = false
+  bg={surface.default} // base: 'bg-50', dark: 'bg-900'
+  
+  // isInteractive = true
+  bg={surface.defaultInteractive} // base: 'bg-50', hover: 'bg-100', dark: 'bg-900', darkHover: 'bg-800'
+  ```
+
 > [!TIP]
 > **`Card` is already a `Flex` component.** Because `CardProps` extends `FlexProps`, you can pass `align`, `gap`, `justify`, `direction`, and all other layout props **directly to `Card`** — no need to wrap its children in a `<Flex>` container. The only prop `Card` adds beyond `Flex` is `isInteractive`.
 >
@@ -728,54 +974,128 @@ Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop
 >
 > `Card` defaults to `direction="column"`. Override it with `direction="row"` when you need a horizontal layout.
 
-#### Notable Engineering Features:
+---
 
-1. **Dynamic Contrast Matching:** In `useButtonStyleProps`, when `variant="primary"` is set, the button fetches the user's active theme color (`derivedThemeColor`) and runs `getMostReadableColor()` to compute a text color with optimal contrast.
-2. **Smart i18n Translation:** If the children is a string, it automatically attempts to search for translations across various namespaces (e.g., `buttons.cancel`, `common.buttons:cancel`).
-3. **Loading Spinners:** Renders the pre-animated `svg-spinners:ring-resize` icon automatically.
+### B. Layout Shells
 
-#### Example:
-
-```tsx
-<Button
-  variant="primary"
-  icon="tabler:send"
-  loading={isSubmitting}
-  mt="lg" // Inherited from Flex — no Box wrapper needed
-  width="100%" // Inherited from Flex
-  onClick={onSubmit}
->
-  sendFeedback
-</Button>
-```
+- **`LayoutWithSidebar`:** A flex row container that arranges sidebar layout columns and main views.
+- **`ContentWrapperWithSidebar`:** The scrollable inner content block of the viewport.
+- **`ModuleWrapper`:** Sets up `ModuleHeaderStateProvider` and `ModuleSidebarStateProvider` contexts, wraps layouts in scrollbars, and cleans up queries from React Query on unmount.
 
 ---
 
-### B. Form Input Infrastructure (`TextInput`)
+### C. ModuleHeader
 
-All inputs share a unified visual style by extending components from the `inputs/shared` module:
+Renders the top panel header block of a workspace module.
 
-- `InputWrapper`: Creates the surrounding classic/plain background field, error display, and click handlers.
-- `InputLabel`: Coordinates labels, required asterisks, and floating positions.
-- `InputIcon`: Renders helper icons aligned within field paddings.
-
-#### Example: Password Input with Visibility Toggles
+- **i18n Titles & Descriptions:** Automatically looks up translations based on the module's namespace and title.
+- **Item Badges:** Displays `totalItems` (e.g., `(142)`) with clean numeric formatting.
+- **Tips & Tricks:** Optional hover-based dropdown that displays contextual advice or instructions using a dropdown trigger.
+- **SSO & Header Actions:** Supports custom elements and action buttons on the right header margin.
 
 ```tsx
-<TextInput
-  isPassword
-  label="Password"
-  placeholder="••••••••"
-  value={password}
-  icon="tabler:lock"
-  errorMsg={errors.password}
-  onChange={setPassword}
+<ModuleHeader
+  title="tasks"
+  icon="tabler:checkbox"
+  totalItems={5}
+  tips={{
+    title: 'Tasks Guide',
+    content: <Text>Double click a task to mark it as complete.</Text>
+  }}
+  actionButton={<Button icon="tabler:plus">AddTask</Button>}
 />
 ```
 
 ---
 
-## 7. Real-world Codebase Walkthrough
+### D. Navigation Sidebar
+
+- **`SidebarWrapper`:** The container drawer that handles sliding animations (`sidebar-opening` / `sidebar-closing`), sizing, and scrollbars.
+- **`SidebarItem`:** Represents a clickable navigation node. Supports icons (URL/SVG/Iconify), active strips, amount badges, cancellation triggers, and subsection trees:
+  ```tsx
+  <SidebarItem
+    label="Settings"
+    icon="tabler:settings"
+    subsection={[
+      { label: 'Profile', icon: 'tabler:user', onClick: goProfile, active: true },
+      { label: 'Security', icon: 'tabler:lock', onClick: goSecurity, active: false }
+    ]}
+  />
+  ```
+- **`SidebarTitle` & `SidebarDivider`:** Section headers and dividers.
+- **`MainSidebarItem`:** Active-tracking item for routing nodes.
+
+---
+
+## 9. Navigation & Feedback UI
+
+### A. Navigation Controls
+
+- **`GoBackButton`:** A chevron plain button saying "Go Back".
+- **`Pagination`:** Nav buttons (next/prev) and numeric buttons for table pagination.
+- **`Tabs`:** Renders horizontal tab controls with active bottom borders, icons, amounts, and animated text transitions.
+
+---
+
+### B. Feedback Screens
+
+- **`Alert`:** Custom callouts for notices. Types: `note` (blue), `warning` (yellow), `caution` (orange), `tip` (green), `important` (purple).
+  ```tsx
+  <Alert type="warning">This action will permanently delete your records.</Alert>
+  ```
+- **`EmptyStateScreen`:** Placeholders for empty search or blank records.
+- **`ErrorScreen`:** Centered error messages with reload retry hooks.
+- **`LoadingScreen`:** Centers a pre-animated `svg-spinners:ring-resize` loader.
+- **`NotFoundScreen`:** Portrayal screen for 404 pages with a bug-reporting link.
+
+---
+
+## 10. Core Utilities & Wrappers
+
+### A. Helper Wrappers
+
+- **`APIOnlineStatusWrapper`:** Wraps page routes to verify API availability, showing a connection error screen if the server is offline.
+- **`EncryptionWrapper`:** Displays loader screens while E2E encryption initializes.
+- **`Tooltip`:** Trigger overlay utilizing `react-tooltip` and matching theme outlines.
+- **`PrintArea`:** Formats viewport sections for printing, copying global CSS variable scopes into a `@media print` style block.
+
+---
+
+### B. Data & Query Wrappers
+
+- **`WithQuery`:** Binds a TanStack Query result. Automatically returns `LoadingScreen` when loading, `ErrorScreen` when failed, or renders children on success:
+
+```tsx
+const query = useQuery(tasksQueryOptions)
+
+return (
+  <WithQuery query={query}>
+    {(tasks) => (
+      <Stack>
+        {tasks.map(t => <Text key={t.id}>{t.name}</Text>)}
+      </Stack>
+    )}
+  </WithQuery>
+)
+```
+
+- **`WithQueryData`:** Simplifies the process by resolving a LifeForge controller query directly:
+
+```tsx
+return (
+  <WithQueryData controller={forgeAPI.tasks.listAll}>
+    {(tasks) => (
+      <Stack>
+        {tasks.map(t => <Text key={t.id}>{t.name}</Text>)}
+      </Stack>
+    )}
+  </WithQueryData>
+)
+```
+
+---
+
+## 11. Real-world Codebase Walkthrough
 
 Here is a complete, real-world view page (`UserCreationPage.tsx`) utilizing the UI library. Observe how grid structures, text responsiveness, and inputs are combined without writing standard CSS or inline styles:
 
@@ -861,8 +1181,7 @@ function UserCreationPage() {
   return (
     // 1. Center layout with responsive paddings and full width bounds
     <Flex centered direction="column" px="xl" width="100%">
-      // 2. Main title using asChild to combine structural Box with semantic
-      Heading
+      // 2. Main title using asChild to combine structural Box with semantic Heading
       <Flex asChild centered gap="sm" mb="xl">
         <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
           <Icon color="primary" icon="tabler:hammer" />
@@ -874,8 +1193,7 @@ function UserCreationPage() {
           </div>
         </Text>
       </Flex>
-      // 3. Responsive typography heading (scales automatically on
-      tablet/desktop)
+      // 3. Responsive typography heading (scales automatically on tablet/desktop)
       <Text
         align="center"
         as="h2"
@@ -952,9 +1270,7 @@ export default UserCreationPage
 
 ---
 
----
-
-## 8. Migration Guide: Legacy `component-bg-*` Utility Classes
+## 12. Migration Guide: Legacy `component-bg-*` Utility Classes
 
 The legacy `component-bg-*` utility classes have been **removed** from the codebase. These were Tailwind-based utilities defined in `src/core/styles/themes/componentBG.css`. Every one of them must be replaced with the corresponding `bg` prop on UI primitives (`Box`, `Flex`, `Card`, etc.).
 
@@ -1081,7 +1397,7 @@ After:
 
 ---
 
-## 9. Migration Guide: `@iconify/react` → `@lifeforge/ui` Icon Primitive
+## 13. Migration Guide: `@iconify/react` → `@lifeforge/ui` Icon Primitive
 
 The standalone `Icon` from `@iconify/react` must never be imported directly. Always use the `Icon` primitive exported by `@lifeforge/ui`.
 
@@ -1142,7 +1458,7 @@ import { Icon } from '@lifeforge/ui'
 
 ---
 
-## 10. Developer Quick-Reference Checklist
+## 14. Developer Quick-Reference Checklist
 
 Before submitting a pull request, verify that you have adhered to all core design patterns:
 

@@ -5,6 +5,8 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
+import { generateModuleId } from '@functions/modules/loadModuleRoutes'
+
 import forge from '../forge'
 import scanFederatedModules, {
   type ModuleManifestEntry
@@ -21,6 +23,7 @@ export const manifest = forge
         modules: z.array(
           z.object({
             name: z.string(),
+            moduleId: z.string(),
             displayName: z.string(),
             version: z.string(),
             description: z.string(),
@@ -62,6 +65,7 @@ export const manifest = forge
 
 export interface InstalledModule {
   name: string
+  moduleId: string
   displayName: string
   version: string
   description: string
@@ -82,6 +86,7 @@ export const list = forge
       OK: z.array(
         z.object({
           name: z.string(),
+          moduleId: z.string(),
           displayName: z.string(),
           version: z.string(),
           description: z.string(),
@@ -142,6 +147,7 @@ export const list = forge
 
         modules.push({
           name: pkg.name,
+          moduleId: generateModuleId(pkg.name),
           displayName: pkg.displayName || pkg.name,
           version: pkg.version || '0.0.0',
           description: pkg.description || '',

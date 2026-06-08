@@ -41,8 +41,11 @@ const listRoutes = forge
   .callback(async ({ response }) => response.ok(traceRouteStack(router.stack)))
 
 const mainRoutes = forgeRouter({
-  ...appRoutes,
   ...coreRoutes,
+  modules: forgeRouter({
+    ...coreRoutes.modules,
+    ...appRoutes
+  }),
   listRoutes
 })
 

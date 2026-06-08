@@ -62,6 +62,7 @@ export { packageJSONSchema } from './interfaces/module_config.types'
 
 // Forge API client and types
 export { default as createForgeProxy } from './api/core/createForgeProxy'
+export { default as createForgeModuleClient } from './api/core/createForgeModuleClient'
 export { default as ForgeEndpoint } from './api/core/forgeEndpoint'
 export type {
   ProxyTree,
@@ -78,6 +79,8 @@ export type {
   ModuleConfig,
   ModuleCategory
 } from './interfaces/module_config.types'
+export { moduleConfigSchema } from './interfaces/module_config.types'
 export type { default as WidgetConfig } from './interfaces/widget_config.types'
 export { widgetConfigSchema } from './interfaces/widget_config.types'
+export { globalProxyRegistry } from './api/core/registry'
 export { SYSTEM_CATEGORIES } from './providers/FederationProvider'

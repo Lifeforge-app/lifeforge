@@ -3,11 +3,14 @@ import path from 'path'
 
 import { packageJSONSchema } from '@lifeforge/shared'
 
+import { generateModuleId } from '@functions/modules/loadModuleRoutes'
+
 /**
  * Module manifest entry for federated modules
  */
 export interface ModuleManifestEntry {
   name: string
+  moduleId: string
   displayName: string
   version: string
   description: string
@@ -83,6 +86,7 @@ export default function scanFederatedModules(
 
       modules.push({
         name: dir.name,
+        moduleId: generateModuleId(parsed.data.name),
         displayName: parsed.data.displayName,
         version: parsed.data.version,
         description: parsed.data.description,

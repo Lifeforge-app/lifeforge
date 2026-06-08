@@ -88,6 +88,34 @@
         "@lifeforge/ui": "workspace:*",
       },
     },
+    "apps/lifeforge-module-localIpWidget": {
+      "name": "@lifeforge/lifeforge--local-ip-widget",
+      "version": "0.0.1",
+      "dependencies": {
+        "@iconify/react": "^6.0.2",
+        "@lifeforge/shared": "workspace:*",
+        "@lifeforge/ui": "workspace:*",
+        "@tanstack/react-query": "^5.90.11",
+        "@uidotdev/usehooks": "^2.4.1",
+        "clsx": "^2.1.1",
+        "dayjs": "^1.11.18",
+        "react": "^19.2.0",
+        "react-i18next": "^15.1.1",
+        "react-toastify": "^11.0.5",
+        "vite": "^7.1.9",
+        "zod": "^4.1.12",
+      },
+      "devDependencies": {
+        "@types/react": "^19.2.0",
+        "@types/react-dom": "^19.2.0",
+        "vite": "^7.1.9",
+      },
+      "peerDependencies": {
+        "@lifeforge/server-utils": "workspace:*",
+        "@lifeforge/shared": "workspace:*",
+        "@lifeforge/ui": "workspace:*",
+      },
+    },
     "apps/melvinchia3636--modrinth": {
       "name": "@lifeforge/melvinchia3636--modrinth",
       "version": "0.0.5",
@@ -739,6 +767,8 @@
     "@lifeforge/lifeforge--achievements": ["@lifeforge/lifeforge--achievements@workspace:apps/lifeforge--achievements"],
 
     "@lifeforge/lifeforge--lang-en": ["@lifeforge/lifeforge--lang-en@workspace:locales/lifeforge--lang-en"],
+
+    "@lifeforge/lifeforge--local-ip-widget": ["@lifeforge/lifeforge--local-ip-widget@workspace:apps/lifeforge-module-localIpWidget"],
 
     "@lifeforge/lifeforge--wallet": ["@lifeforge/lifeforge--wallet@workspace:apps/lifeforge--wallet"],
 
@@ -3825,6 +3855,8 @@
     "@lifeforge/client/opentype.js": ["opentype.js@1.3.5", "", { "bin": { "ot": "bin/ot" } }, "sha512-thKDiELidAApOvXlncrpwDZKJCa9fXLEKM4+FoEWI+qTLDeNb+h7EkN+8a7KQODsB1GZ+Exz9KknkoPrEdXZDw=="],
 
     "@lifeforge/client/react-i18next": ["react-i18next@15.7.4", "", { "dependencies": { "@babel/runtime": "^7.27.6", "html-parse-stringify": "^3.0.1" }, "peerDependencies": { "i18next": ">= 23.4.0", "react": ">= 16.8.0", "react-dom": "*", "react-native": "*", "typescript": "^5" }, "optionalPeers": ["react-dom", "react-native", "typescript"] }, "sha512-nyU8iKNrI5uDJch0z9+Y5XEr34b0wkyYj3Rp+tfbahxtlswxSCjcUL9H0nqXo9IR3/t5Y5PKIA3fx3MfUyR9Xw=="],
+
+    "@lifeforge/lifeforge--local-ip-widget/react-i18next": ["react-i18next@15.7.4", "", { "dependencies": { "@babel/runtime": "^7.27.6", "html-parse-stringify": "^3.0.1" }, "peerDependencies": { "i18next": ">= 23.4.0", "react": ">= 16.8.0", "react-dom": "*", "react-native": "*", "typescript": "^5" }, "optionalPeers": ["react-dom", "react-native", "typescript"] }, "sha512-nyU8iKNrI5uDJch0z9+Y5XEr34b0wkyYj3Rp+tfbahxtlswxSCjcUL9H0nqXo9IR3/t5Y5PKIA3fx3MfUyR9Xw=="],
 
     "@lifeforge/log/@types/node": ["@types/node@25.9.1", "", { "dependencies": { "undici-types": ">=7.24.0 <7.24.7" } }, "sha512-xfrlY7UD5rMJk3ZVJP8BNzS28J36YJg+xp+LPXV1TdWxr8uMH5A860QNxYDGQe/ylDSgjxE52Q9VnO7p75tJxg=="],
 
