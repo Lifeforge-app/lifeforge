@@ -1,10 +1,10 @@
 import { type CSSProperties } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from '../../../../providers'
 import { anyColorToHex } from '@lifeforge/shared'
 
 import { type FlexProps } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 export function useButtonStyleProps({
   variant,

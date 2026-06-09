@@ -2,7 +2,7 @@ import { ToastContainer } from 'react-toastify'
 
 import { usePersonalization } from './PersonalizationProvider/index'
 
-function ToastProvider({ children }: { children: React.ReactNode }) {
+export function ToastProvider({ children }: { children: React.ReactNode }) {
   const { theme } = usePersonalization()
 
   return (
@@ -22,5 +22,3 @@ function ToastProvider({ children }: { children: React.ReactNode }) {
     </>
   )
 }
-
-export default ToastProvider

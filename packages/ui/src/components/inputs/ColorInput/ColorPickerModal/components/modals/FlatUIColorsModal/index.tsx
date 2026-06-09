@@ -1,8 +1,7 @@
-import { usePersonalization } from '../../../../../../../../providers'
-
 import { Card } from '@/components/layout'
 import { ModalHeader } from '@/components/overlays'
 import { Box, Flex, Grid, Icon, Text } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 import PALETTES from './constants/palettes.json'
 

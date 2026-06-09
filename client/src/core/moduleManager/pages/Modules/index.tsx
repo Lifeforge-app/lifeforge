@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { toast } from 'react-toastify'
 
 import { useFederation } from '@lifeforge/federation'
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '@lifeforge/ui'
 import {
   EmptyStateScreen,
   Grid,

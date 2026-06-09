@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Outlet } from '@lifeforge/shared'
+import { Outlet } from 'react-router'
 
 import Boilerplate from './Boilerplate'
 import Header from './Header'

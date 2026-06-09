@@ -1,8 +1,7 @@
 import { useCallback, useState } from 'react'
 
-import { useModuleSidebarState } from '../../../../providers'
-
 import { Box } from '@/components/primitives'
+import { useModuleSidebarState } from '@/providers'
 
 import { SidebarCancelButton } from './components/SidebarCancelButton'
 import { SidebarItemContent } from './components/SidebarItemContent'

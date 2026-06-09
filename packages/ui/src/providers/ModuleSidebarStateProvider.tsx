@@ -8,7 +8,7 @@ const ModuleSidebarStateContext = createContext<
   | undefined
 >(undefined)
 
-const ModuleSidebarStateProvider = ({
+export const ModuleSidebarStateProvider = ({
   children
 }: {
   children: React.ReactNode
@@ -27,7 +27,7 @@ const ModuleSidebarStateProvider = ({
   )
 }
 
-const useModuleSidebarState = () => {
+export const useModuleSidebarState = () => {
   const context = useContext(ModuleSidebarStateContext)
 
   if (!context) {
@@ -39,7 +39,3 @@ const useModuleSidebarState = () => {
 
   return context
 }
-
-export default ModuleSidebarStateProvider
-
-export { useModuleSidebarState }

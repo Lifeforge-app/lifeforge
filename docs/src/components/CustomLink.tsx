@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
-
-import { Link } from '@lifeforge/shared'
+import { Link } from 'react-router'
 
 function CustomLink({ text, to }: { text: string; to: string }) {
   return (

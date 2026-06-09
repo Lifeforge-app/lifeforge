@@ -2,8 +2,8 @@ import { memo } from 'react'
 
 import { Bordered, Box, Grid, Text } from '@/components/primitives'
 
-import type { IIconSet } from '../../../typescript/icon_selector_interfaces'
 import { IconSetEntry } from './IconSetEntry'
+import type { IIconSet } from '../../../typescript/icon_selector_interfaces'
 
 function _CategoryEntry({
   category,

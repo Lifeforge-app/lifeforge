@@ -23,11 +23,12 @@
   "scripts": {
     "forge": "bun run tools/src/index.ts",
     "build-configs": "bun --cwd=packages/configs run build",
+    "build-federation": "bun --cwd=packages/federation run build",
     "build-logger": "bun --cwd=packages/log run build",
     "build-server-utils": "bun --cwd=packages/server-utils run build",
     "build-shared": "bun --cwd=shared run build",
     "build-ui": "bun --cwd=packages/ui run build",
-    "postinstall": "bun build-configs && bun build-logger && bun build-server-utils && bun build-shared && bun build-ui"
+    "postinstall": "bun build-configs && bun build-federation && bun build-logger && bun build-server-utils && bun build-shared && bun build-ui"
   },
   "keywords": [
     "lifeforge"
@@ -75,11 +76,13 @@
     "dotenv": "^17.2.3",
     "i18next": "^25.7.4",
     "lodash": "^4.17.21",
+    "nuqs": "^2.7.1",
     "opentype.js": "^2.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.77.0",
     "react-i18next": "^16.5.1",
+    "react-router": "^7.9.4",
     "react-toastify": "^11.0.5",
     "tinycolor2": "^1.6.0",
     "zod": "4.3.5"

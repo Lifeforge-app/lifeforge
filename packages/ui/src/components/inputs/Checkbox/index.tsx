@@ -1,9 +1,8 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import clsx from 'clsx'
 
-import { usePersonalization } from '../../../providers'
-
 import { Bordered, Flex, Icon, Text, Transition } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 import { checkboxRootRecipe } from './Checkbox.css'
 

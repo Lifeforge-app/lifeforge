@@ -1,6 +1,5 @@
-import { useModuleSidebarState } from '../../../../../providers'
-
 import { Box, Icon, Text, Transition } from '@/components/primitives'
+import { useModuleSidebarState } from '@/providers'
 
 export function SidebarCancelButton({ onClick }: { onClick: () => void }) {
   const { setIsSidebarOpen } = useModuleSidebarState()

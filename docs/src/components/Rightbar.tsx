@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 
-import { useLocation } from '@lifeforge/shared'
+import { useLocation } from 'react-router'
 
 export const BLACKLISTED_PAGES = ['/progress/changelog']
 

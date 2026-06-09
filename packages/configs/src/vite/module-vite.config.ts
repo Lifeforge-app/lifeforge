@@ -71,6 +71,8 @@ export function defineModuleConfig(
             'react-i18next': { generate: false },
             i18next: { generate: false },
             '@tanstack/react-query': { generate: false },
+            'react-router': { generate: false },
+            'nuqs': { generate: false },
             ...Object.fromEntries(
               Object.keys(SHARED_PACKAGES).map(e => [e, { generate: false }])
             )

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 
-const ModuleHeaderStateContext = createContext<
+export const ModuleHeaderStateProvider = createContext<
   | {
       icon: string
       title: string
@@ -8,10 +8,8 @@ const ModuleHeaderStateContext = createContext<
   | undefined
 >(undefined)
 
-export default ModuleHeaderStateContext
-
 export const useModuleHeaderState = () => {
-  const context = useContext(ModuleHeaderStateContext)
+  const context = useContext(ModuleHeaderStateProvider)
 
   if (!context) {
     return {

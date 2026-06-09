@@ -1,6 +1,6 @@
 import type z from 'zod'
 
-import type { UntypedEndpointType } from '@/api/typescript/forge_proxy.types'
+import type { UntypedEndpointType } from '../../typescript/forge_proxy.types'
 
 import ForgeEndpoint from '../forgeEndpoint'
 import CORE_HELPERS, { type CoreHelperName } from './config'

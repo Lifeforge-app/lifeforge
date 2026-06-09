@@ -1,9 +1,9 @@
 import { ListboxInput, ListboxOption } from '@/components/inputs'
 import { Bordered, Text } from '@/components/primitives'
 
-import {
-  type IPixabaySearchFilter,
-  type PixabaySearchFilterAction
+import type {
+  IPixabaySearchFilter,
+  PixabaySearchFilterAction
 } from '../../../typescript/pixabay_interfaces'
 import { COLORS } from '../constants/filterOptions'
 

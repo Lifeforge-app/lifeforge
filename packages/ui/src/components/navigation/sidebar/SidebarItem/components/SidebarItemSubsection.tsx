@@ -1,6 +1,5 @@
-import { useMainSidebarState } from '@lifeforge/shared'
-
 import { Flex, Transition } from '@/components/primitives'
+import { useMainSidebarState } from '@/providers'
 
 import { SidebarSubsectionItemLink } from './SidebarSubsectionItemLink'
 import { SidebarSubsectionItemWithOnClick } from './SidebarSubsectionItemWithOnClick'

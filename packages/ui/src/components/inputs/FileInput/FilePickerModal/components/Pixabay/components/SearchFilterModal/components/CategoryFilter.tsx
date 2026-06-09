@@ -1,9 +1,9 @@
 import { ListboxInput, ListboxOption } from '@/components/inputs'
 import { Icon, Text } from '@/components/primitives'
 
-import {
-  type IPixabaySearchFilter,
-  type PixabaySearchFilterAction
+import type {
+  IPixabaySearchFilter,
+  PixabaySearchFilterAction
 } from '../../../typescript/pixabay_interfaces'
 import { CATEGORIES } from '../constants/filterOptions'
 

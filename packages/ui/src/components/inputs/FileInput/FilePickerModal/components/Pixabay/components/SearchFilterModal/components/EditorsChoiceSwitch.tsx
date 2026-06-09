@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Switch } from '@/components/inputs'
 import { Flex, Icon, Text } from '@/components/primitives'
 
-import { type PixabaySearchFilterAction } from '../../../typescript/pixabay_interfaces'
+import type { PixabaySearchFilterAction } from '../../../typescript/pixabay_interfaces'
 
 interface EditorsChoiceSwitchProps {
   isEditorsChoice: boolean

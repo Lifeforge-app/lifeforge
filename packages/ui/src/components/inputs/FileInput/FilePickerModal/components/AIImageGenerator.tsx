@@ -4,12 +4,10 @@ import { toast } from 'react-toastify'
 import { useAPIEndpoint, usePromiseLoading } from '@lifeforge/shared'
 
 import { EmptyStateScreen } from '@/components/feedback'
-import { Button } from '@/components/inputs'
+import { Button, TextAreaInput } from '@/components/inputs'
 import { Box, Flex } from '@/components/primitives'
 import { WithQueryData } from '@/components/utilities'
 import { forgeAPI } from '@/utils/forgeAPI'
-
-import { TextAreaInput } from '../../../TextAreaInput'
 
 export function AIImageGenerator({
   file,

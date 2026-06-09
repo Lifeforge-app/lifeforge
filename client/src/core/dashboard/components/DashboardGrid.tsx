@@ -2,13 +2,14 @@ import { useMemo } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
 
-import { useDivSize, usePersonalization } from '@lifeforge/shared'
+import { useDivSize } from '@lifeforge/shared'
 import {
   Box,
   EmptyStateScreen,
   Icon,
   LoadingScreen,
-  colorWithOpacity
+  colorWithOpacity,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'

@@ -1,11 +1,7 @@
 import { useEffect } from 'react'
 import { ErrorBoundary } from 'react-error-boundary'
 
-import {
-  Navigate,
-  RouterProvider,
-  createBrowserRouter
-} from '@lifeforge/shared'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router'
 import { ErrorScreen, NotFoundScreen } from '@lifeforge/ui'
 
 import ROUTES from './Router'

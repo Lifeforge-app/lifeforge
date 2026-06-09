@@ -3,9 +3,8 @@ import { useRef } from 'react'
 import DatePicker from 'react-datepicker'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from '../../../providers'
-
 import { Flex } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'

@@ -1,10 +1,11 @@
-import { type IDashboardLayout, usePersonalization } from '@lifeforge/shared'
 import {
   Button,
   ConfirmationModal,
   EmptyStateScreen,
+  type IDashboardLayout,
   Widget,
-  useModalStore
+  useModalStore,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'

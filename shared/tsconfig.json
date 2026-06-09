@@ -19,11 +19,6 @@
     // Additional checks
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
   },
   "include": [
     "./src/**/*"

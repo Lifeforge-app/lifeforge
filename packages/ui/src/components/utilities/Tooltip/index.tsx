@@ -2,9 +2,8 @@ import _ from 'lodash'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from '../../../providers'
-
 import { Box, Icon, Text } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 /**
  * A tooltip component that displays informational content when hovering over an icon.

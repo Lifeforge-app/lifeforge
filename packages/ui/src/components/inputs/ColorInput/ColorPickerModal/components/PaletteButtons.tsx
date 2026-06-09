@@ -1,9 +1,9 @@
 import { useCallback } from 'react'
 
+import { Button } from '@/components/inputs/Button'
+import { Box, Flex } from '@/components/primitives'
 import { useModalStore } from '@/providers'
 
-import { Button } from '../../../../..'
-import { Box, Flex } from '../../../../../components/primitives'
 import { useColorPickerModalStore } from '../stores/useColorPickerModalStore'
 import { FlatUIColorsModal } from './modals/FlatUIColorsModal'
 import { MorandiColorPaletteModal } from './modals/ModandiColorPaletteModal'

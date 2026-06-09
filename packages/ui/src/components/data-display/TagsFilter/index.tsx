@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { usePersonalization } from '../../../providers'
-
 import { Flex } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 import { TagChip } from '../TagChip'
 

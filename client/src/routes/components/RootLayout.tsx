@@ -1,6 +1,6 @@
 import { ErrorBoundary } from 'react-error-boundary'
+import { Outlet } from 'react-router'
 
-import { Outlet } from '@lifeforge/shared'
 import { ErrorScreen, Flex } from '@lifeforge/ui'
 
 import useTitleEffect from '../hooks/useTitleEffect'

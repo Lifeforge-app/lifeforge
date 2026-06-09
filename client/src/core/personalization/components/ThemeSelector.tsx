@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '@lifeforge/ui'
 import {
   Bordered,
   Box,
