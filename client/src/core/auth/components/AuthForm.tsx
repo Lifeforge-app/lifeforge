@@ -2,10 +2,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
-import { toast } from 'react-toastify'
 
 import { usePromiseLoading } from '@lifeforge/api'
-import { Stack, TextInput } from '@lifeforge/ui'
+import { Stack, TextInput, toast } from '@lifeforge/ui'
 
 import { useAuth } from '@/providers/AuthProvider'
 
@@ -82,7 +81,7 @@ function AuthForm({ providers }: { providers: string[] }) {
         }
       })
       .catch(() => {
-        toast.error(t(`messages.unknownError`))
+        toast.error(t('messages.invalidLoginAttempt'))
       })
       .finally(() => {
         setFormDisabled(false)

@@ -15,7 +15,7 @@ import {
 } from '@dnd-kit/sortable'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import { SYSTEM_CATEGORIES, useFederation } from '@lifeforge/federation'
 import {

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import { usePromiseLoading } from '@lifeforge/api'
 import {

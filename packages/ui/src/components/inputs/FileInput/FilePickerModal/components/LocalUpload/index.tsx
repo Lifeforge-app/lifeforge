@@ -1,7 +1,7 @@
 import { parse } from 'file-type-mime'
 import { useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { toast } from 'react-toastify'
+import { toast } from '@/providers'
 
 import { DnDContainer } from './components/DnDContainer'
 import { PreviewContainer } from './components/PreviewContainer'

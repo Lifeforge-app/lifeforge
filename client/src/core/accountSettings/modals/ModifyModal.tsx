@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import _ from 'lodash'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 import z from 'zod'
 
 import { useAuth, type UserData } from '@/providers/AuthProvider'

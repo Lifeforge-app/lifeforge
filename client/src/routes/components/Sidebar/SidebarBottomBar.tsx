@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@/providers/AuthProvider'
 import {

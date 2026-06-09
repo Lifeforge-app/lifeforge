@@ -64,7 +64,12 @@
     "react-virtualized": "^9.22.6",
     "rrule": "^2.8.1",
     "uuid": "^11.1.0",
+    "react-toastify": "^11.0.5",
     "zustand": "^5.0.8"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.3",

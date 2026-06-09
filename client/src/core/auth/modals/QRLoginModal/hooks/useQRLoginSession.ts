@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 import { Socket, io } from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
 

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import { type FieldValues, type UseFormReturn } from 'react-hook-form'
-import { toast } from 'react-toastify'
+import { toast } from '@/providers'
 
 import { usePromiseLoading } from '@lifeforge/api'
 

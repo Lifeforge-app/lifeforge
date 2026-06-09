@@ -9,7 +9,7 @@ import {
   useState
 } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import type { InferOutput } from '@lifeforge/api'
 import type forgeAPIInstance from '@/forgeAPI'
