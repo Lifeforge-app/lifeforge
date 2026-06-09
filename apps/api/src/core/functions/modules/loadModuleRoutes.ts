@@ -23,7 +23,7 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
     `Detected ${chalk.blue(process.env.NODE_ENV === 'production' ? 'production' : 'development')} environment, loading ${IS_PRODUCTION ? chalk.green('bundled') : chalk.yellow('source')} routes`
   )
 
-  const appsDir = path.join(ROOT_DIR, 'apps')
+  const appsDir = path.join(ROOT_DIR, 'modules')
 
   if (!fs.existsSync(appsDir)) {
     logger.warn('Apps directory not found, no module routes loaded')

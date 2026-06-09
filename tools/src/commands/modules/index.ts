@@ -74,7 +74,7 @@ export default function setup(program: Command): void {
   command
     .command('publish')
     .description('Publish a LifeFordge module to the registry')
-    .argument('<module>', 'Module to publish from apps/')
+    .argument('<module>', 'Module to publish from modules/')
     .option(
       '--official',
       'Publish as official module (requires maintainer access)'

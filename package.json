@@ -13,11 +13,11 @@
     "url": "https://github.com/LifeForge-app/lifeforge.git"
   },
   "workspaces": [
-    "./server",
-    "./client",
+    "./apps/api",
+    "./apps/web",
     "./docs",
     "./packages/*",
-    "./apps/*",
+    "./modules/*",
     "./locales/*",
     "./tools"
   ],

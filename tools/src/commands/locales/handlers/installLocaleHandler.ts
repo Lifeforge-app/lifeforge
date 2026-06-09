@@ -32,7 +32,7 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
   logger.info(`Installing ${chalk.blue(fullName)}...`)
 
   try {
-    installPackage(fullName, targetDir)
+    installPackage(fullName, targetDir, 'locales')
     initGitRepository(targetDir)
 
     await setFirstLangInDB(shortName)

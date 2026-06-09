@@ -35,7 +35,7 @@ services:
       - PB_HOST=http://0.0.0.0:8090
     volumes:
       - ./database/pb_data:/pb_data
-      - ./apps:/app/apps
+      - ./modules:/app/modules
       - ./locales:/app/locales
     depends_on:
       db:
@@ -56,7 +56,7 @@ services:
     expose:
       - '3636'
     volumes:
-      - ./apps:/lifeforge/apps
+      - ./modules:/lifeforge/modules
       - ./locales:/lifeforge/locales
     depends_on:
       db-init:

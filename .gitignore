@@ -9,8 +9,8 @@ coverage
 # production
 dist
 dist-docker
-apps/*/locales
-apps/*/package.json
+modules/*/locales
+modules/*/package.json
 build
 tsbuild
 storybook-static
@@ -23,7 +23,7 @@ pocketbase
 pb_*/
 medium
 .temp
-server/src/generated
+apps/api/src/generated
 .turbo
 
 # system files
@@ -59,7 +59,7 @@ env/*
 keys
 
 # user-generated files
-# apps
+# modules
 locales/*
-!apps/**/locales/*
+!modules/**/locales/*
 !locales/lifeforge--lang-en

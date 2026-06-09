@@ -50,7 +50,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   server: {
     command: async () => {
       const killedProcess = killExistingProcess(
-        'lifeforge/server/node_modules/.bin/tsx'
+        'lifeforge/apps/api/node_modules/.bin/tsx'
       )
 
       if (killedProcess) {
@@ -66,7 +66,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
 
       return 'bun run dev'
     },
-    cwd: 'server'
+    cwd: 'apps/api'
   },
   docs: {
     command: () => {
@@ -78,14 +78,15 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   },
   client: {
     command: () => {
-      killExistingProcess('lifeforge/client/node_modules/.bin/vite')
+      killExistingProcess('lifeforge/apps/web/node_modules/.bin/vite')
 
       if (!fs.existsSync('packages/ui/dist')) {
         executeCommand('bun forge build ui')
       }
 
-      return 'cd client && bun run dev'
-    }
+      return 'bun run dev'
+    },
+    cwd: 'apps/web'
   },
   ui: {
     command: () => {

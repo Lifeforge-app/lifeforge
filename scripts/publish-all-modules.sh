@@ -1,23 +1,23 @@
 #!/bin/bash
 
-# Publish all modules in the apps/ directory
+# Publish all modules in the modules/ directory
 # Usage: bash scripts/publish-all-modules.sh [--official]
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-APPS_DIR="$ROOT_DIR/apps"
+MODULES_DIR="$ROOT_DIR/modules"
 
 OFFICIAL_FLAG=""
 if [[ "$1" == "--official" ]]; then
   OFFICIAL_FLAG="--official"
 fi
 
-echo "📦 Publishing all modules from apps/..."
+echo "📦 Publishing all modules from modules/..."
 echo ""
 
 cd "$ROOT_DIR"
 
-for module_dir in "$APPS_DIR"/*/; do
+for module_dir in "$MODULES_DIR"/*/; do
   module_name=$(basename "$module_dir")
   
   # Skip hidden directories and non-module directories

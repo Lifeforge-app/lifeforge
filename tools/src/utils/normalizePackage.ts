@@ -7,7 +7,7 @@ type PackageType = 'module' | 'locale'
 
 const TYPE_CONFIG = {
   module: {
-    dir: 'apps'
+    dir: 'modules'
   },
   locale: {
     dir: 'locales'
@@ -30,7 +30,7 @@ const TYPE_CONFIG = {
  * @example
  * // Module example
  * normalizePackage('movies')
- * // { fullName: '@lifeforge/movies', shortName: 'movies', targetDir: '/path/to/apps/movies' }
+ * // { fullName: '@lifeforge/movies', shortName: 'movies', targetDir: '/path/to/modules/movies' }
  *
  * @example
  * // Locale example

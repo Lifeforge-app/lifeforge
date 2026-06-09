@@ -23,9 +23,9 @@ export default function getCallerModuleId():
 
   if (!projectRoot) return undefined
 
-  // Try external app module: /{projectRoot}/apps/{moduleId}/server/
+  // Try external app module: /{projectRoot}/modules/{moduleId}/server/
   const appMatch = filePath.match(
-    new RegExp(`${projectRoot}\\/apps\\/([^/]+)\\/server\\/`)
+    new RegExp(`${projectRoot}\\/modules\\/([^/]+)\\/server\\/`)
   )
 
   if (appMatch)
@@ -35,10 +35,10 @@ export default function getCallerModuleId():
     }
 
   // Try core module:
-  // - /{projectRoot}/server/src/lib/{coreModuleId}/
-  // - /{projectRoot}/server/src/core/{coreModuleId}/
+  // - /{projectRoot}/apps/api/src/lib/{coreModuleId}/
+  // - /{projectRoot}/apps/api/src/core/{coreModuleId}/
   const coreMatch = filePath.match(
-    new RegExp(`${projectRoot}\\/server\\/src\\/(?:lib|core)\\/([^/]+)\\/`)
+    new RegExp(`${projectRoot}\\/apps\\/api\\/src\\/(?:lib|core)\\/([^/]+)\\/`)
   )
 
   if (coreMatch)

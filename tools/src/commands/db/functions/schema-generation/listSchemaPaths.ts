@@ -9,7 +9,7 @@ import logger from '@/utils/logger'
  *
  * Scans two locations for `schema.ts` files:
  * 1. Core modules: `server/src/lib/**\/schema.ts` (built-in features like users, apiKeys)
- * 2. App modules: `apps\**\/server/schema.ts` (installed/created modules)
+ * 2. App modules: `modules/**\/server/schema.ts` (installed/created modules)
  *
  * Returns the parent directory of each schema file, which represents the module root.
  * For app modules, strips the trailing `/server` to get the actual module directory.
@@ -20,14 +20,14 @@ import logger from '@/utils/logger'
  * // Returns paths like:
  * // [
  * //   '/project/server/src/lib/user',
- * //   '/project/apps/lifeforge--calendar',
- * //   '/project/apps/melvinchia3636--invoice-maker'
+ * //   '/project/modules/lifeforge--calendar',
+ * //   '/project/modules/melvinchia3636--invoice-maker'
  * // ]
  */
 export function listSchemaPaths(): string[] {
   const modulesDirs = [
-    './server/src/lib/**/schema.ts',
-    './apps/**/server/schema.ts'
+    './apps/api/src/lib/**/schema.ts',
+    './modules/**/server/schema.ts'
   ]
 
   let allModules: string[] = []

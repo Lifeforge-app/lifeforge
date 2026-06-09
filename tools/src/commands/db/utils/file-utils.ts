@@ -49,8 +49,8 @@ function getModuleName(schemaPath: string): string | null {
  */
 export function getSchemaFiles(targetModule?: string): string[] {
   const allSchemas = [
-    ...fs.globSync(path.resolve(ROOT_DIR, './server/src/lib/**/schema.ts')),
-    ...fs.globSync(path.resolve(ROOT_DIR, './apps/**/server/schema.ts'))
+    ...fs.globSync(path.resolve(ROOT_DIR, './apps/api/src/lib/**/schema.ts')),
+    ...fs.globSync(path.resolve(ROOT_DIR, './modules/**/server/schema.ts'))
   ]
 
   const filteredSchemas = targetModule

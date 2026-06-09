@@ -16,7 +16,7 @@ export function aliasResolver(
 
   let rootDir: string
 
-  const clientMatch = importer.match(/(.+\/client)/)
+  const clientMatch = importer.match(/(.+\/(?:client|web))/)
 
   if (clientMatch) {
     const clientDir = clientMatch[1]

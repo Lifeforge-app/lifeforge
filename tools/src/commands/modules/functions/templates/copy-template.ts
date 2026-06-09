@@ -76,7 +76,7 @@ export function renameTsConfigFile(moduleDir: string): void {
 export function copyTemplateFiles(moduleMetadata: ModuleMetadata): void {
   const templateDir = `${ROOT_DIR}/tools/src/templates/${moduleMetadata.moduleType}`
 
-  const destinationDir = `${ROOT_DIR}/apps/${_.camelCase(moduleMetadata.moduleName.en)}`
+  const destinationDir = `${ROOT_DIR}/modules/${_.camelCase(moduleMetadata.moduleName.en)}`
 
   fs.mkdirSync(destinationDir)
 

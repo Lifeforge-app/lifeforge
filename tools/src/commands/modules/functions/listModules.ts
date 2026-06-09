@@ -24,7 +24,7 @@ interface ModuleBasicInfo {
 export default function listModules(
   exitIfNoModule = false
 ): Record<string, ModuleBasicInfo> {
-  const appsPackageJson = readPackageJson('apps')
+  const appsPackageJson = readPackageJson('modules')
 
   const allModules = Object.keys(appsPackageJson.dependencies ?? {})
     .filter(dep => dep.startsWith('@lifeforge/'))

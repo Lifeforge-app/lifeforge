@@ -57,10 +57,10 @@ function restoreGitignoreAfterPublish(modulePath: string): void {
  * 7. Reverts version on failure
  */
 export async function publishModuleHandler(moduleName: string): Promise<void> {
-  const modulePath = path.join(ROOT_DIR, 'apps', moduleName)
+  const modulePath = path.join(ROOT_DIR, 'modules', moduleName)
 
   if (!fs.existsSync(modulePath)) {
-    logger.error(`Module ${chalk.blue(moduleName)} not found in apps/`)
+    logger.error(`Module ${chalk.blue(moduleName)} not found in modules/`)
     process.exit(1)
   }
 

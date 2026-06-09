@@ -21,7 +21,7 @@ export async function validateCallerAccess(
 
   const packageJSONPath = path.resolve(
     ROOT_DIR,
-    'apps',
+    'modules',
     callerModule.id,
     'package.json'
   )

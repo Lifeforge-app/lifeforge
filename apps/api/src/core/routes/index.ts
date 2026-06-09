@@ -38,7 +38,7 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
 
   const moduleDistPath = path.join(
     ROOT_DIR,
-    'apps',
+    'modules',
     moduleName,
     'client',
     distDir

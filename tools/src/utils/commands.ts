@@ -105,12 +105,12 @@ export function bunInstall() {
  *
  * @param fullName - The full package name (e.g., `@lifeforge/lifeforge--calendar`)
  * @param targetDir - The absolute path to copy the package to
- * @param target - The package.json target to add the dependency to (defaults to 'apps')
+ * @param target - The package.json target to add the dependency to (defaults to 'modules')
  */
 export function installPackage(
   fullName: string,
   targetDir: string,
-  target: 'apps' | 'locales' = 'apps'
+  target: 'modules' | 'locales' = 'modules'
 ) {
   if (fs.existsSync(targetDir)) {
     fs.rmSync(targetDir, { recursive: true, force: true })

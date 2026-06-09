@@ -12,7 +12,7 @@ import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'locales')
 
-const appsDir = path.join(ROOT_DIR, 'apps')
+const appsDir = path.join(ROOT_DIR, 'modules')
 
 function getModulesWithLocales(): string[] {
   if (!fs.existsSync(appsDir)) return []

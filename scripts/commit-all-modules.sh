@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to loop through all modules in apps directory and commit changes
+# Script to loop through all modules in modules directory and commit changes
 # Usage: ./scripts/commit-all-modules.sh "Your commit message here"
 
 set -e  # Exit on any error
@@ -20,7 +20,7 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo -e "${YELLOW}Starting git operations for all modules in apps directory...${NC}"
+echo -e "${YELLOW}Starting git operations for all modules in modules directory...${NC}"
 echo -e "${YELLOW}Commit message: \"$COMMIT_MESSAGE\"${NC}"
 
 # Get the script directory and navigate to project root
@@ -34,7 +34,7 @@ successful_modules=0
 failed_modules=()
 
 # First, count total modules (excluding non-directories)
-for module_dir in apps/*/; do
+for module_dir in modules/*/; do
     if [ -d "$module_dir" ]; then
         ((total_modules++))
     fi
@@ -43,8 +43,8 @@ done
 echo -e "${YELLOW}Found $total_modules modules to process${NC}"
 echo ""
 
-# Loop through each directory in apps/
-for module_dir in apps/*/; do
+# Loop through each directory in modules/
+for module_dir in modules/*/; do
     if [ -d "$module_dir" ]; then
         module_name=$(basename "$module_dir")
         

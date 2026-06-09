@@ -48,11 +48,11 @@ function getDevModeImport(
   devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>>
 ): (() => Promise<{ default: ModuleConfig }>) | null {
   // Module names are like "lifeforge--music" or "jiahuiiiii--stock"
-  // The glob path is "../../apps/lifeforge--music/client/manifest.ts"
+  // The glob path is "../../modules/lifeforge--music/client/manifest.ts"
   const shortName = moduleName.replace('@lifeforge/', '')
 
   for (const [path, importFn] of Object.entries(devModeImports)) {
-    if (path.includes(`/apps/${shortName}/`)) {
+    if (path.includes(`/modules/${shortName}/`)) {
       return importFn as () => Promise<{ default: ModuleConfig }>
     }
   }

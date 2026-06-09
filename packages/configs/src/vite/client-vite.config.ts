@@ -16,10 +16,10 @@ export function defineClientConfig(dirname: string) {
     ...Object.entries(SHARED_PACKAGES).map(
       ([, { aliasRegex, entryPoint }]) => ({
         find: aliasRegex,
-        replacement: path.resolve(dirname, entryPoint)
+        replacement: path.resolve(dirname, '../', entryPoint)
       })
     ),
-    { find: '@modules', replacement: path.resolve(dirname, '../apps') },
+    { find: '@modules', replacement: path.resolve(dirname, '../../modules') },
     {
       find: '@',
       replacement: '@',
@@ -39,7 +39,7 @@ export function defineClientConfig(dirname: string) {
       : aliasList.filter(a => !sharedAliases.has(a.find.toString()))
 
     return {
-      envDir: path.resolve(dirname, '../env'),
+      envDir: path.resolve(dirname, '../../env'),
       plugins: [
         // MillionLint.vite({}),
         react({
