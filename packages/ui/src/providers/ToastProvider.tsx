@@ -1,6 +1,8 @@
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify'
 
 import { usePersonalization } from './PersonalizationProvider/index'
+
+export { toast }
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const { theme } = usePersonalization()

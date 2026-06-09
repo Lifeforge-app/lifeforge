@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 import z from 'zod'
 
 import {

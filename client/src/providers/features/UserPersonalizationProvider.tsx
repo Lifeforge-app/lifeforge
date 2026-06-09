@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@/providers/AuthProvider'
 import {

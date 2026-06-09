@@ -30,6 +30,7 @@ export default defineConfig({
         'react/jsx-runtime',
         '@lifeforge/api',
         '@tanstack/react-query',
+        'react-toastify',
         /^react-router/,
         /^react-i18next/,
         /^i18next/

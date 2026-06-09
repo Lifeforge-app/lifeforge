@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@/providers/AuthProvider'
 import { Button, OTPInputBox, Stack, Text, TextInput } from '@lifeforge/ui'

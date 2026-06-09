@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@/providers/AuthProvider'
 import { Button, Flex, ModalHeader } from '@lifeforge/ui'

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import {
   Box,

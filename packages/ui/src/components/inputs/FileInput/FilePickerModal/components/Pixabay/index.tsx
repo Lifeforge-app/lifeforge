@@ -1,5 +1,5 @@
 import { useReducer, useState } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from '@/providers'
 
 import { usePromiseLoading } from '@lifeforge/api'
 import { useAPIEndpoint } from '@lifeforge/api'

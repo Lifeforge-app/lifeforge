@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import prettyBytes from 'pretty-bytes'
 import { useCallback, useState } from 'react'
-import { toast } from 'react-toastify'
+import { toast } from '@lifeforge/ui'
 
 import {
   Box,
