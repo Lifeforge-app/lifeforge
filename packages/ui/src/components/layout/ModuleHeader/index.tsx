@@ -1,7 +1,8 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useMainSidebarState, useModuleHeaderState } from '@lifeforge/shared'
+import { useModuleHeaderState } from '../../../providers'
+import { useMainSidebarState } from '@lifeforge/shared'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'

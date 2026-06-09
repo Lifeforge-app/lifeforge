@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import DatePicker from 'react-datepicker'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../providers'
 
 import { Flex } from '@/components/primitives'
 

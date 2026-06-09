@@ -1,4 +1,5 @@
-import { BG_BLURS, usePersonalization } from '@lifeforge/shared'
+import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
+import { usePersonalization } from './PersonalizationProvider'
 
 import { Box, Flex } from '@/components/primitives'
 

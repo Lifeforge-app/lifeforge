@@ -1,7 +1,7 @@
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
 import clsx from 'clsx'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../providers'
 
 import { Bordered, Flex, Icon, Text, Transition } from '@/components/primitives'
 

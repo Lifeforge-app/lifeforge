@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useModuleSidebarState } from '@lifeforge/shared'
+import { useModuleSidebarState } from '../../../../../providers'
 
 import { Flex, Icon, Text, Transition } from '@/components/primitives'
 import { colorWithOpacity } from '@/system'

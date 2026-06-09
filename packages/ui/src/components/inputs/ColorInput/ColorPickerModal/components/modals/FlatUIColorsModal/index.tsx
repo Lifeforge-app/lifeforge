@@ -1,4 +1,4 @@
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../../../../../../providers'
 
 import { Card } from '@/components/layout'
 import { ModalHeader } from '@/components/overlays'

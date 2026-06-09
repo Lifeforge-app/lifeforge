@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../providers'
 
 import { Flex } from '@/components/primitives'
 

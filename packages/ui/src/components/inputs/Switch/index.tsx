@@ -1,6 +1,6 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../providers'
 
 import { Box, Flex, Transition } from '@/components/primitives'
 import { COLORS } from '@/system'

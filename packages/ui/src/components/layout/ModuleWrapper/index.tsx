@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 
 import {
   ModuleHeaderStateProvider,
-  ModuleSidebarStateProvider,
-  normalizeSubnamespace
-} from '@lifeforge/shared'
+  ModuleSidebarStateProvider
+} from '../../../providers'
+import { normalizeSubnamespace } from '@lifeforge/shared'
 
 import { Flex } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'

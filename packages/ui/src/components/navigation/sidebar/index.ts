@@ -8,4 +8,4 @@ export { SidebarWrapper } from './SidebarWrapper'
 
 export { MainSidebarItem } from './MainSidebarItem'
 
-export { useModuleSidebarState } from '@lifeforge/shared'
+export { useModuleSidebarState } from '../../../providers'

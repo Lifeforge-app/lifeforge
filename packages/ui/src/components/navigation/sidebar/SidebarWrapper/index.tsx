@@ -1,4 +1,4 @@
-import { useModuleSidebarState } from '@lifeforge/shared'
+import { useModuleSidebarState } from '../../../../providers'
 
 import { Box, Flex } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'
