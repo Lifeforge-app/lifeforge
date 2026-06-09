@@ -16,7 +16,7 @@
     }
   },
   "scripts": {
-    "build": "bun build ./src/index.ts ./src/loggers/cliLogger.ts --outdir=dist --target=node && bun tsc --project tsconfig.json",
+    "build": "bun build ./src/index.ts ./src/loggers/cliLogger.ts --outdir=dist --target=node && bun tsgo --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "@types/node": "^25.0.6",
-    "typescript": "^5.9.0",
     "vitest": "^4.0.0"
   }
 }

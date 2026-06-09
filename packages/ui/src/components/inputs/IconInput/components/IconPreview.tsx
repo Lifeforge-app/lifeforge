@@ -1,8 +1,8 @@
-import { Icon, loadIcon } from '@iconify/react'
+import { loadIcon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 
 import type { InputVariant } from '@/components/inputs/shared/types'
-import { Box } from '@/components/primitives'
+import { Box, Icon } from '@/components/primitives'
 
 import * as styles from '../IconInput.css'
 
@@ -52,10 +52,7 @@ export function IconPreview({
       >
         <Icon
           icon={value && iconExists ? value : 'tabler:question-mark'}
-          style={{
-            height: variant === 'plain' ? '1.5em' : '1em',
-            width: variant === 'plain' ? '1.5em' : '1em'
-          }}
+          size={variant === 'plain' ? '1.5em' : '1em'}
         />
       </span>
     </Box>

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from '@lifeforge/ui'
 import z from 'zod'
 
-import { useAuth, type UserData } from '@/providers/AuthProvider'
+import { useAuth, type UserData } from '@lifeforge/api'
 import {
   DateField,
   FormModal,

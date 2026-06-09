@@ -21,19 +21,16 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vite build && tsc --emitDeclarationOnly"
-  },
-  "dependencies": {
-    "zod": "4.3.5"
+    "build": "vite build && tsgo --emitDeclarationOnly"
   },
   "peerDependencies": {
     "@originjs/vite-plugin-federation": "^1.4.1",
     "@vitejs/plugin-react": "^4.4.1",
     "react": "^19.2.0",
-    "vite": "^7.1.9"
+    "vite": "^7.1.9",
+    "zod": "4.3.5"
   },
   "devDependencies": {
-    "@types/react": "^19.2.0",
-    "typescript": "^5.9.3"
+    "@types/react": "^19.2.0"
   }
 }

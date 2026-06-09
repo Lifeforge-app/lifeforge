@@ -14,6 +14,8 @@ export * from './providers/EncryptionProvider'
 
 export * from './providers/SocketProvider'
 
+export * from './providers/AuthProvider'
+
 export * from './utils/encryption'
 
 export * from './utils/fetchAPI'

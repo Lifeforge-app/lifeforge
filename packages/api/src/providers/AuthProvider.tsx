@@ -8,13 +8,14 @@ import {
   useRef,
   useState
 } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
-import type { InferOutput } from '@lifeforge/api'
-import type forgeAPIInstance from '@/forgeAPI'
+import { contract } from '../../contract'
+import { createForgeProxy } from '../core/createForgeProxy'
+import type { InferOutput, ProxyTree } from '../typescript/forge_proxy.types'
 
-export type UserData = InferOutput<typeof forgeAPIInstance.user.auth.getUserData>
+const _forgeAPI = createForgeProxy(contract)
+
+export type UserData = InferOutput<typeof _forgeAPI.user.auth.getUserData>
 
 interface AuthData {
   auth: boolean
@@ -54,17 +55,15 @@ interface Verify2FAResponse {
 
 export const AuthContext = createContext<AuthData | undefined>(undefined)
 
-export default function AuthProvider({
+export function AuthProvider({
   forgeAPI,
   onTwoFAModalOpen,
   children
 }: {
-  forgeAPI: typeof forgeAPIInstance
+  forgeAPI: ProxyTree<any>
   onTwoFAModalOpen: () => void
   children: React.ReactNode
 }) {
-  const { t } = useTranslation('common.auth')
-
   const [auth, _setAuth] = useState(false)
 
   const [userData, setUserData] = useState<UserData | null>(null)
@@ -84,8 +83,8 @@ export default function AuthProvider({
     async (
       session: string
     ): Promise<{
-      success: boolean;
-      userData: UserData | null;
+      success: boolean
+      userData: UserData | null
     }> => {
       try {
         const verifyRes = await fetch(
@@ -119,8 +118,8 @@ export default function AuthProvider({
       email,
       password
     }: {
-      email: string;
-      password: string;
+      email: string
+      password: string
     }): Promise<string | void> => {
       try {
         const data = await forgeAPI.user.auth.login.mutate({
@@ -163,8 +162,8 @@ export default function AuthProvider({
       otp,
       type
     }: {
-      otp: string;
-      type: 'email' | 'app';
+      otp: string
+      type: 'email' | 'app'
     }): Promise<string> => {
       try {
         const res = await fetch(forgeAPI.user['2fa'].verify.endpoint, {
@@ -237,8 +236,6 @@ export default function AuthProvider({
 
           localStorage.setItem('session', session)
 
-          toast.success(t('auth.welcome') + userData.username)
-
           return true
         } else {
           throw new Error('Invalid session')
@@ -247,7 +244,6 @@ export default function AuthProvider({
         setAuth(false)
         setUserData(null)
         setAuthLoading(false)
-        toast.error(t('messages.invalidLoginAttempt'))
 
         return false
       } finally {

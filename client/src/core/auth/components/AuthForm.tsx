@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router'
 import { usePromiseLoading } from '@lifeforge/api'
 import { Stack, TextInput, toast } from '@lifeforge/ui'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 
 import AuthSignInButton from './AuthSignInButtons'
 

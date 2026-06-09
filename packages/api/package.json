@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "dev": "tsc --watch",
-    "types": "tsc -b --noEmit",
-    "build": "tsc"
+    "dev": "vite build --watch",
+    "types": "tsgo -b --noEmit",
+    "build": "rm -rf dist && bun types && vite build"
   },
   "dependencies": {
     "axios": "^1.12.2",
@@ -18,8 +19,8 @@
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
-    "@types/react": "^19.2.0",
-    "typescript": "^5.9.3"
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite-plugin-dts": "^4.5.4"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.90.2",

@@ -10,14 +10,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@lifeforge/api": "workspace:*",
-    "zod": "4.3.5"
+    "@lifeforge/api": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19.2.0"
   },
   "devDependencies": {
-    "@types/react": "^19.2.0",
-    "typescript": "^5.9.3"
+    "@types/react": "^19.2.0"
   }
 }
