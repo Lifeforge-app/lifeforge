@@ -1,14 +1,15 @@
 // import * as webauthn from '@passwordless-id/webauthn'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useSearchParams } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { usePromiseLoading } from '@lifeforge/shared'
-import { useAuth } from '@/providers/AuthProvider'
+import { usePromiseLoading } from '@lifeforge/api'
 import { Stack, TextInput } from '@lifeforge/ui'
 
+import { useAuth } from '@/providers/AuthProvider'
+
 import AuthSignInButton from './AuthSignInButtons'
-import { useSearchParams } from 'react-router'
 
 function AuthForm({ providers }: { providers: string[] }) {
   const [emailOrUsername, setEmail] = useState('')

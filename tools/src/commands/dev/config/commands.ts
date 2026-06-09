@@ -80,10 +80,6 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
     command: () => {
       killExistingProcess('lifeforge/client/node_modules/.bin/vite')
 
-      if (!fs.existsSync('shared/dist')) {
-        executeCommand('bun forge build shared')
-      }
-
       if (!fs.existsSync('packages/ui/dist')) {
         executeCommand('bun forge build ui')
       }

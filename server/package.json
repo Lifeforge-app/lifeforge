@@ -15,7 +15,7 @@
   "main": "./dist/server.js",
   "scripts": {
     "types": "tsc -b",
-    "build": "bun --cwd ../shared build && bun types && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
+    "build": "bun types && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
     "start": "bun types && NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
     "start:prod": "NODE_ENV=production bun ./dist/server.js",
     "start:watch": "NODE_ENV=production bun --watch ./dist/server.js",
@@ -28,7 +28,6 @@
   "dependencies": {
     "@lifeforge/log": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",
-    "@lifeforge/shared": "workspace:*",
     "bcryptjs": "^3.0.2",
     "chalk": "^5.4.1",
     "commander": "^14.0.2",

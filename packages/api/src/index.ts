@@ -17,3 +17,5 @@ export * from './providers/SocketProvider'
 export * from './utils/encryption'
 
 export * from './utils/fetchAPI'
+
+export * from './utils/usePromiseLoading'

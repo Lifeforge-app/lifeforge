@@ -17,6 +17,10 @@ export {
   surface
 } from './system'
 
+export { default as anyColorToHex } from './utils/anyColorToHex'
+
+export { default as useDivSize } from './hooks/useDivSize'
+
 export type {
   ColorValue,
   OpacityValue,

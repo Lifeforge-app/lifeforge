@@ -15,6 +15,8 @@ export {
 
 export { default as getCallerModuleId } from './utils/getCallerModuleId'
 
+export { default as parseCollectionName } from './utils/parseCollectionName'
+
 export { Output, getStatusMessage } from './utils/outputStatus'
 
 export type {

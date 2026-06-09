@@ -1,9 +1,8 @@
 import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
+import { useLocation } from 'react-router'
 
 import { useFederation } from '@lifeforge/federation'
-import { normalizeSubnamespace } from '@lifeforge/shared'
-import { useAuth } from '@/providers/AuthProvider'
 import {
   Box,
   EmptyStateScreen,
@@ -14,8 +13,9 @@ import {
   useMainSidebarState
 } from '@lifeforge/ui'
 
+import { useAuth } from '@/providers/AuthProvider'
+
 import MainSidebarTitle from './MainSidebarTitle'
-import { useLocation } from 'react-router'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
@@ -97,7 +97,7 @@ function SidebarItems({ query }: { query: string }) {
                           key={_.kebabCase(subItem.name)}
                           active={location.pathname.startsWith(`/${link}`)}
                           icon={subItem.icon ?? ''}
-                          label={normalizeSubnamespace(subItem.name)}
+                          label={subItem.name}
                           link={`/${link}`}
                           sidebarExpanded={sidebarExpanded}
                           subsection={subItem.subsection}

@@ -44,7 +44,7 @@ export const updateTaskInPool: UpdateTaskInPoolFunc = (io, taskId, updates) => {
   })
 
   if (updates.status === 'failed') {
-    console.log(updates.error)
+    console.error(updates.error)
   }
 
   if (updates.status === 'completed' || updates.status === 'failed') {

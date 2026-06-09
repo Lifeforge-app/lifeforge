@@ -3,14 +3,14 @@ import { useMemo } from 'react'
 import { toast } from 'react-toastify'
 
 import { useFederation } from '@lifeforge/federation'
-import { usePersonalization } from '@lifeforge/ui'
 import {
   EmptyStateScreen,
   Grid,
   ModuleHeader,
   Stack,
   Text,
-  WithQuery
+  WithQuery,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
@@ -89,7 +89,7 @@ function Modules() {
     <>
       <ModuleHeader
         icon="tabler:apps"
-        namespace="common.moduleManager"
+        namespace="common.module-manager"
         title="modules"
         tKey="subsectionTitleAndDesc"
         totalItems={modulesQuery.data?.length}

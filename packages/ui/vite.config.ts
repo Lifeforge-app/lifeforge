@@ -28,7 +28,6 @@ export default defineConfig({
         'react',
         'react-dom',
         'react/jsx-runtime',
-        '@lifeforge/shared',
         '@lifeforge/api',
         '@tanstack/react-query',
         /^react-router/,

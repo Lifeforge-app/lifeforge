@@ -2,8 +2,6 @@ import { useQueryClient } from '@tanstack/react-query'
 import _ from 'lodash'
 import { useEffect } from 'react'
 
-import { normalizeSubnamespace } from '@lifeforge/shared'
-
 import { Flex } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'
 import {
@@ -39,9 +37,7 @@ export function ModuleWrapper({
   }, [queryClient, clearQueryOnUnmount, title])
 
   return (
-    <ModuleHeaderStateProvider
-      value={{ title: normalizeSubnamespace(title).replace('__', '$'), icon }}
-    >
+    <ModuleHeaderStateProvider value={{ title, icon }}>
       <ModuleSidebarStateProvider>
         <Flex asChild direction="column" minHeight="0">
           <Scrollbar className="no-overflow-x" usePaddingRight={false}>

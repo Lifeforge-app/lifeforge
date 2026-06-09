@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 
 import { Button, type FilePickerSourceConfig } from '@/components/inputs'
 import { Tabs } from '@/components/navigation'

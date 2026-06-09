@@ -65,7 +65,7 @@ function CustomFontUploadModal({
           onClose()
         },
         onError: err => {
-          console.log(err)
+          console.error(err)
           toast.error(`Failed to upload custom font: ${err.message}`)
         }
       })

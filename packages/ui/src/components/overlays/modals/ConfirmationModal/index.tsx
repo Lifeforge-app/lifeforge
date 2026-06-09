@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 
 import { Button, TextInput } from '@/components/inputs'
 import { Box, Flex, Text } from '@/components/primitives'

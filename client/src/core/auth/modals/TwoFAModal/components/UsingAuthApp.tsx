@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 import { OTPInputBox, Text } from '@lifeforge/ui'
 
 function UsingAuthApp({

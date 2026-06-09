@@ -51,7 +51,7 @@ export function aliasResolver(
     }
   }
 
-  console.log(`[vite] failed to resolve import "${id}" from "${importer}"`)
+  console.error(`[vite] failed to resolve import "${id}" from "${importer}"`)
 
   return null
 }

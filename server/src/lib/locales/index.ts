@@ -9,7 +9,6 @@ import path from 'path'
 import z from 'zod'
 
 import { createForge, forgeRouter } from '@lifeforge/server-utils'
-import { normalizeSubnamespace } from '@lifeforge/shared'
 
 const forge = createForge({}, 'locales')
 
@@ -77,8 +76,6 @@ const getLocale = forge
   .callback(async ({ query: { lang, namespace, subnamespace }, response }) => {
     const moduleApps = getModulesWithLocales()
 
-    subnamespace = normalizeSubnamespace(subnamespace)
-
     const finalLang = LocaleService.getAllowedLang().find(e =>
       e.includes(lang)
     )?.[0]
@@ -91,8 +88,7 @@ const getLocale = forge
 
     if (namespace === 'apps') {
       const target = moduleApps.find(
-        modulePath =>
-          normalizeSubnamespace(path.basename(modulePath)) === subnamespace
+        modulePath => path.basename(modulePath) === subnamespace
       )
 
       if (!target) {
@@ -133,9 +129,7 @@ const getLocale = forge
                 fs.readFileSync(localePath, 'utf-8')
               )
 
-              const moduleName = normalizeSubnamespace(
-                path.basename(modulePath)
-              )
+              const moduleName = path.basename(modulePath)
 
               return [
                 moduleName,
