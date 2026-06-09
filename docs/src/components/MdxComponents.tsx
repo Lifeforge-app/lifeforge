@@ -1,7 +1,6 @@
 import type { MDXComponents } from 'mdx/types'
 import Zoom from 'react-medium-image-zoom'
-
-import { Link } from '@lifeforge/shared'
+import { Link } from 'react-router'
 
 import Code from './Code'
 

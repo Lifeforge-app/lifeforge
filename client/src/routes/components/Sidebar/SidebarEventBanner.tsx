@@ -2,12 +2,15 @@ import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
+import { useAuth } from '@lifeforge/shared'
 import {
-  useAuth,
+  COLORS,
+  Flex,
+  Icon,
+  Text,
   useMainSidebarState,
   usePersonalization
-} from '@lifeforge/shared'
-import { COLORS, Flex, Icon, Text } from '@lifeforge/ui'
+} from '@lifeforge/ui'
 
 function addNumberSuffix(number: number): string {
   const suffixes = ['th', 'st', 'nd', 'rd']

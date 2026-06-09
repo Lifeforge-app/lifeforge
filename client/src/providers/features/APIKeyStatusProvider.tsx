@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router'
 
 import { type ModuleCategory } from '@lifeforge/federation'
-import { Link } from '@lifeforge/shared'
 import {
   Button,
   Card,

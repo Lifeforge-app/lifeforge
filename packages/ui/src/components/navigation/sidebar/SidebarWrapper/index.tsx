@@ -1,7 +1,6 @@
-import { useModuleSidebarState } from '../../../../providers'
-
 import { Box, Flex } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'
+import { useModuleSidebarState } from '@/providers'
 
 import { GoBackButton } from '../../GoBackButton'
 

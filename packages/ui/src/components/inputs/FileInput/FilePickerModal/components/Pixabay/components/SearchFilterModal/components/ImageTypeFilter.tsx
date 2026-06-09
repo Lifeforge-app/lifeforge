@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { ListboxInput, ListboxOption } from '@/components/inputs'
 import { Icon, Text } from '@/components/primitives'
 
-import {
-  type IPixabaySearchFilter,
-  type PixabaySearchFilterAction
+import type {
+  IPixabaySearchFilter,
+  PixabaySearchFilterAction
 } from '../../../typescript/pixabay_interfaces'
 import { IMAGE_TYPES } from '../constants/filterOptions'
 

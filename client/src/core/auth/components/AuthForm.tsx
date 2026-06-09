@@ -3,10 +3,11 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useAuth, usePromiseLoading, useSearchParams } from '@lifeforge/shared'
+import { useAuth, usePromiseLoading } from '@lifeforge/shared'
 import { Stack, TextInput } from '@lifeforge/ui'
 
 import AuthSignInButton from './AuthSignInButtons'
+import { useSearchParams } from 'react-router'
 
 function AuthForm({ providers }: { providers: string[] }) {
   const [emailOrUsername, setEmail] = useState('')

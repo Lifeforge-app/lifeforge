@@ -1,8 +1,7 @@
 import { Switch as HeadlessSwitch } from '@headlessui/react'
 
-import { usePersonalization } from '../../../providers'
-
 import { Box, Flex, Transition } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 import { COLORS } from '@/system'
 
 interface SwitchProps {

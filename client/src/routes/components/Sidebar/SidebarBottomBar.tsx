@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
+import { useNavigate } from 'react-router'
 import { toast } from 'react-toastify'
 
-import { useAuth, useMainSidebarState, useNavigate } from '@lifeforge/shared'
+import { useAuth } from '@lifeforge/shared'
 import {
   Box,
   Card,
@@ -11,7 +12,8 @@ import {
   Icon,
   Text,
   Transition,
-  surface
+  surface,
+  useMainSidebarState
 } from '@lifeforge/ui'
 
 function SidebarBottomBar() {

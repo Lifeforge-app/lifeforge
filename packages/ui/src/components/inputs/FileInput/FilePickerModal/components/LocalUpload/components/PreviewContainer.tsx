@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-
 import { FILE_ICONS } from '../../../constants/file_icons'
 
 export function PreviewContainer({

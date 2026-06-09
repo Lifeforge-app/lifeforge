@@ -7,16 +7,16 @@ import {
   APIOnlineStatusProvider,
   AuthProvider,
   EncryptionProvider,
-  MainSidebarStateProvider,
   NuqsProvider,
-  PersonalizationProvider,
-  SocketProvider,
-  ToastProvider
+  SocketProvider
 } from '@lifeforge/shared'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,
   EncryptionWrapper,
+  MainSidebarStateProvider,
+  PersonalizationProvider,
+  ToastProvider,
   useModalStore
 } from '@lifeforge/ui'
 

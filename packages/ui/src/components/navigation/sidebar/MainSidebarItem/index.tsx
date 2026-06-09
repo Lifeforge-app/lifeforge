@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react'
-
-import { useNavigate } from '@lifeforge/shared'
+import { useNavigate } from 'react-router'
 
 import { SidebarItemContent } from '../SidebarItem/components/SidebarItemContent'
 import { SidebarItemIcon } from '../SidebarItem/components/SidebarItemIcon'

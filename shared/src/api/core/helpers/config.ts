@@ -1,8 +1,7 @@
 import z from 'zod'
 
-import type { UntypedEndpointType } from '@/api/typescript/forge_proxy.types'
-import GetGoogleFontResponseSchema from '@/interfaces/google_fonts.types'
-
+import GetGoogleFontResponseSchema from '../../../interfaces/google_fonts.types'
+import type { UntypedEndpointType } from '../../typescript/forge_proxy.types'
 import type ForgeEndpoint from '../forgeEndpoint'
 
 /**

@@ -3,11 +3,11 @@ import { type CSSProperties, memo } from 'react'
 
 import { Flex, Icon, Text, Transition } from '@/components/primitives'
 
-import { useInputFocused } from '../../contexts/InputFocusContext'
 import {
   inputLabelActiveStyle,
   inputLabelInactiveStyle
 } from './InputLabel.css'
+import { useInputFocused } from '../../contexts/InputFocusContext'
 
 interface InputLabelProps {
   label: string

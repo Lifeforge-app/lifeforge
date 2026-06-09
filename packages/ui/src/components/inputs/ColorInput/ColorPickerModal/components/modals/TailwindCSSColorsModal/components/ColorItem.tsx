@@ -1,9 +1,8 @@
 import { converter, formatHex, parse } from 'culori'
 import { memo, useMemo } from 'react'
 
-import { usePersonalization } from '../../../../../../../../../providers'
-
 import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 function _ColorItem({
   name,

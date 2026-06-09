@@ -1,17 +1,18 @@
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { type IDashboardLayout, usePersonalization } from '@lifeforge/shared'
 import {
   Box,
   Card,
   Flex,
+  type IDashboardLayout,
   Icon,
   Stack,
   Switch,
   Text,
   Transition,
-  colorWithOpacity
+  colorWithOpacity,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'

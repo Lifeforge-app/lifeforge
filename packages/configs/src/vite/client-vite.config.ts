@@ -68,6 +68,8 @@ export function defineClientConfig(dirname: string) {
             '@tanstack/react-query',
             'i18next',
             'react-i18next',
+            'react-router',
+            'nuqs',
             ...Object.keys(SHARED_PACKAGES)
           ]
         })

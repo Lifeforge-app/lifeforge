@@ -2,14 +2,14 @@ import { useQueryClient } from '@tanstack/react-query'
 import _ from 'lodash'
 import { useEffect } from 'react'
 
-import {
-  ModuleHeaderStateProvider,
-  ModuleSidebarStateProvider
-} from '../../../providers'
 import { normalizeSubnamespace } from '@lifeforge/shared'
 
 import { Flex } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'
+import {
+  ModuleHeaderStateProvider,
+  ModuleSidebarStateProvider
+} from '@/providers'
 
 /**
  * The wrapper component for all modules in the app. It provides the layout and context for the module header and sidebar, as well as handling query cleanup on unmount if specified. If being used within LifeForge instance, it will be automatically wrapped around the module content. Therefore, no explicit usage is needed in most cases.

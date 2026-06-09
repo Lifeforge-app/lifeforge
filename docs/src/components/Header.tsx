@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
+import { Link } from 'react-router'
 
-import { Link } from '@lifeforge/shared'
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '@lifeforge/ui'
 
 import GithubStarCount from './GithubStarCount'
 

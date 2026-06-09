@@ -1,9 +1,8 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { usePersonalization } from '../../../../../providers'
-
 import { TagChip } from '@/components/data-display'
 import { Flex, Icon, Text, Transition } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 export function ChipSelector({
   options,

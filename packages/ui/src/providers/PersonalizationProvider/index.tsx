@@ -2,7 +2,8 @@ import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
 import tinycolor from 'tinycolor2'
 
-import type { ProxyTree } from '../../api/typescript/forge_proxy.types'
+import type { ProxyTree } from '@lifeforge/shared'
+
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
 import useBgTempEffect from './hooks/useBgTempEffect'
@@ -60,7 +61,7 @@ const PersonalizationContext = createContext<IPersonalizationData | undefined>(
   DEFAULT_VALUE
 )
 
-export default function PersonalizationProvider({
+export function PersonalizationProvider({
   forgeAPI,
   defaultValueOverride = {},
   children
@@ -245,3 +246,10 @@ export function usePersonalization(): IPersonalizationData {
 
   return context || DEFAULT_VALUE
 }
+
+export { BG_BLURS } from './constants/bg_blurs'
+
+export type {
+  IDashboardLayout,
+  IBackdropFilters
+} from './interfaces/personalization_provider_interfaces'

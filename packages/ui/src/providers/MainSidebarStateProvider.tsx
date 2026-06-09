@@ -14,7 +14,7 @@ interface ISidebarState {
 
 const SidebarStateContext = createContext<ISidebarState | undefined>(undefined)
 
-export default function MainSidebarStateProvider({
+export function MainSidebarStateProvider({
   children
 }: {
   children: React.ReactNode

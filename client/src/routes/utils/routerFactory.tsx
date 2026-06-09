@@ -1,6 +1,6 @@
+import { Navigate, type RouteObject } from 'react-router'
+
 import type { ModuleCategory } from '@lifeforge/federation'
-import { Navigate } from '@lifeforge/shared'
-import type { RouteObject } from '@lifeforge/shared'
 import { LoadingScreen, NotFoundScreen } from '@lifeforge/ui'
 
 import Auth from '@/core/auth'

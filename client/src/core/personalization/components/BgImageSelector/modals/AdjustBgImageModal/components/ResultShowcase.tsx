@@ -1,4 +1,4 @@
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '@lifeforge/ui'
 import {
   Box,
   Flex,

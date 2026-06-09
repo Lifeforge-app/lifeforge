@@ -1,10 +1,9 @@
 import clsx from 'clsx'
 import { sortFn } from 'color-sorter'
 
-import { usePersonalization } from '../../../../../../../../providers'
-
 import { ModalHeader } from '@/components/overlays'
 import { Box, Flex, Grid, Icon } from '@/components/primitives'
+import { usePersonalization } from '@/providers'
 
 import * as styles from './MorandiColorPaletteModal.css'
 import { MORANDI_COLORS } from './constants/morandi_colors'

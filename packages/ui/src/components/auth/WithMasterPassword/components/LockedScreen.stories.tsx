@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import { Box } from '@/components/primitives'
+import { mockController } from '@/storybook/mockController'
 
-import { mockController } from '../../../../storybook/mockController'
 import { LockedScreen } from './LockedScreen'
 
 const meta = {

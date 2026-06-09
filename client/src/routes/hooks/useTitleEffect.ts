@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { useEffect } from 'react'
 
 import { useFederation } from '@lifeforge/federation'
-import { useLocation } from '@lifeforge/shared'
+import { useLocation } from 'react-router'
 
 function useTitleEffect() {
   const { modules } = useFederation()

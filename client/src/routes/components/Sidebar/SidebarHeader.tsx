@@ -1,4 +1,4 @@
-import { useMainSidebarState } from '@lifeforge/shared'
+import { useMainSidebarState } from '@lifeforge/ui'
 import {
   Box,
   Button,

@@ -2,22 +2,19 @@ import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
 
 import { useFederation } from '@lifeforge/federation'
-import {
-  normalizeSubnamespace,
-  useAuth,
-  useLocation,
-  useMainSidebarState
-} from '@lifeforge/shared'
+import { normalizeSubnamespace, useAuth } from '@lifeforge/shared'
 import {
   Box,
   EmptyStateScreen,
   Flex,
   MainSidebarItem,
   Scrollbar,
-  SidebarDivider
+  SidebarDivider,
+  useMainSidebarState
 } from '@lifeforge/ui'
 
 import MainSidebarTitle from './MainSidebarTitle'
+import { useLocation } from 'react-router'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()

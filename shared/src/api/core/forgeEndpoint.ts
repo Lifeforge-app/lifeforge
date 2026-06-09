@@ -9,6 +9,7 @@ import {
   isEncryptedResponse
 } from '../../utils/encryption'
 import fetchAPI from '../../utils/fetchAPI'
+
 import type { InferInput, InferOutput } from '../typescript/forge_proxy.types'
 import { globalProxyRegistry } from './registry'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
