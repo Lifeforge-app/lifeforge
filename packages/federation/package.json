@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@lifeforge/shared": "workspace:*",
+    "@lifeforge/api": "workspace:*",
     "zod": "4.3.5"
   },
   "peerDependencies": {

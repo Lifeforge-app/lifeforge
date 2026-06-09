@@ -1,4 +1,4 @@
-import { useEncryption } from '@lifeforge/shared'
+import { useEncryption } from '@lifeforge/api'
 
 import { EmptyStateScreen, LoadingScreen } from '@/components/feedback'
 

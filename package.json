@@ -22,13 +22,14 @@
   ],
   "scripts": {
     "forge": "bun run tools/src/index.ts",
+    "build-api": "bun --cwd=packages/api run build",
     "build-configs": "bun --cwd=packages/configs run build",
     "build-federation": "bun --cwd=packages/federation run build",
     "build-logger": "bun --cwd=packages/log run build",
     "build-server-utils": "bun --cwd=packages/server-utils run build",
     "build-shared": "bun --cwd=shared run build",
     "build-ui": "bun --cwd=packages/ui run build",
-    "postinstall": "bun build-configs && bun build-federation && bun build-logger && bun build-server-utils && bun build-shared && bun build-ui"
+    "postinstall": "bun build-configs && bun build-api && bun build-logger && bun build-server-utils && bun build-shared && bun build-ui && bun build-federation"
   },
   "keywords": [
     "lifeforge"

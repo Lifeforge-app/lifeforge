@@ -1,7 +1,7 @@
-import { createForgeProxy } from '@lifeforge/shared'
-import type { ProxyTree } from '@lifeforge/shared'
+import { createForgeProxy } from '@lifeforge/api'
+import type { ProxyTree } from '@lifeforge/api'
 
-import type { ModuleConfig } from '../interfaces/module_config.types'
+import type { ModuleConfig } from '@lifeforge/configs'
 
 /**
  * Wraps a module configuration and automatically appends a type-safe `forgeAPI` proxy client

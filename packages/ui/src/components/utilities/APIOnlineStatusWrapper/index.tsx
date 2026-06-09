@@ -1,4 +1,4 @@
-import { useAPIOnlineStatus } from '@lifeforge/shared'
+import { useAPIOnlineStatus } from '@lifeforge/api'
 
 import { EmptyStateScreen, LoadingScreen } from '@/components/feedback'
 

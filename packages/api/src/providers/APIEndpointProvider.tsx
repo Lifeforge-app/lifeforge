@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 
 const APIEndpointContext = createContext<string | null>(null)
 
-export default function APIEndpointProvider({
+export function APIEndpointProvider({
   endpoint,
   children
 }: {

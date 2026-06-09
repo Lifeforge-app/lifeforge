@@ -3,7 +3,7 @@ import type { FromSchema } from 'json-schema-to-ts'
 import type z from 'zod'
 import type { ZodIntersection, ZodObject, ZodRawShape, ZodTypeAny } from 'zod'
 
-import type ForgeEndpoint from '../core/forgeEndpoint'
+import type { ForgeEndpoint } from '../core/forgeEndpoint'
 import type { CoreHelperReturnTypes } from '../core/helpers/config'
 
 type ZodObjectOrIntersection =
@@ -97,7 +97,7 @@ export type InferContractMedia<T> = 0 extends 1 & T
  * Infers the input TypeScript type from a Forge endpoint config object.
  * Uses embedded Zod schema definitions to produce a plain object type.
  */
-export type InferInput<T> = T extends {
+export type InferRawInput<T> = T extends {
   __isForgeContract: true
   __input: infer I
   __media: infer M
@@ -132,7 +132,7 @@ export type InferInput<T> = T extends {
 /**
  * Infers the output (response) TypeScript type from a Forge endpoint config object.
  */
-export type InferOutput<T> = T extends {
+export type InferRawOutput<T> = T extends {
   __isForgeContract: true
   __output: infer O
 }
@@ -142,7 +142,7 @@ export type InferOutput<T> = T extends {
 /**
  * Extracts the input schema type from a `ForgeEndpoint` instance.
  */
-export type InferClientControllerInput<T extends ForgeEndpoint<any>> =
+export type InferInput<T extends ForgeEndpoint<any>> =
   T['__type'] extends {
     __isForgeContract: true
     __input: infer I
@@ -175,7 +175,7 @@ export type InferClientControllerInput<T extends ForgeEndpoint<any>> =
 /**
  * Extracts the output (response) type from a `ForgeEndpoint` instance.
  */
-export type InferClientControllerOutput<T extends ForgeEndpoint<any>> =
+export type InferOutput<T extends ForgeEndpoint<any>> =
   T['__type'] extends {
     __isForgeContract: true
     __output: infer O

@@ -1,8 +1,8 @@
 import z from 'zod'
 
-import GetGoogleFontResponseSchema from '../../../interfaces/google_fonts.types'
+import { GetGoogleFontResponseSchema } from '../../interfaces/google_fonts.types'
 import type { UntypedEndpointType } from '../../typescript/forge_proxy.types'
-import type ForgeEndpoint from '../forgeEndpoint'
+import type { ForgeEndpoint } from '../forgeEndpoint'
 
 /**
  * Configuration map for core server helper methods.
@@ -12,7 +12,7 @@ import type ForgeEndpoint from '../forgeEndpoint'
  *
  * Available on all forgeAPI client instances regardless of the current path.
  */
-const CORE_HELPERS = {
+export const CORE_HELPERS = {
   checkAPIKeys: {
     path: 'apiKeys/entries/checkKeys',
     schema: {
@@ -78,4 +78,4 @@ export type CoreHelperReturnTypes = {
   >
 }
 
-export default CORE_HELPERS
+

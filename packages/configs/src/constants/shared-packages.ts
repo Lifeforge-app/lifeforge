@@ -1,4 +1,8 @@
 export const SHARED_PACKAGES = {
+  '@lifeforge/api': {
+    aliasRegex: /^@lifeforge\/api$/,
+    entryPoint: '../packages/api/src/index.ts'
+  },
   '@lifeforge/shared': {
     aliasRegex: /^@lifeforge\/shared$/,
     entryPoint: '../shared/src/index.ts'

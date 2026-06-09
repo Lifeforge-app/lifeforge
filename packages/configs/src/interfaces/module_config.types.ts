@@ -1,10 +1,10 @@
 import { z } from 'zod'
 
-import type { WidgetConfig } from '@lifeforge/shared'
+import type { WidgetConfig } from './widget_config.types'
 
 export interface ModuleConfig {
-  provider?: React.LazyExoticComponent<React.ComponentType<any>>
-  routes: Record<string, React.LazyExoticComponent<React.ComponentType<any>>>
+  provider?: React.LazyExoticComponent<React.ComponentType>
+  routes: Record<string, React.LazyExoticComponent<React.ComponentType>>
   subsection?: {
     label: string
     icon: string
@@ -15,7 +15,7 @@ export interface ModuleConfig {
   clearQueryOnUnmount?: boolean
   contract?: any
   widgets?: (() => Promise<{
-    default: React.ComponentType<any>
+    default: React.ComponentType
     config: WidgetConfig
   }>)[]
 }
@@ -45,7 +45,7 @@ export const moduleConfigSchema: z.ZodType<ModuleConfig> = z.object({
     .array(
       z.custom<
         () => Promise<{
-          default: React.ComponentType<any>
+          default: React.ComponentType
           config: WidgetConfig
         }>
       >(val => typeof val === 'function')

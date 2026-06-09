@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import { Button, Flex, OptionsColumn, Text, useModalStore } from '@lifeforge/ui'
 
 import ModifyModal from '../modals/ModifyModal'
@@ -46,17 +46,17 @@ function OrdinaryColumn({
             {(() => {
               if (!userData) return null
 
-              if (userData[id as keyof typeof userData] === '') {
+              if (userData[id] === '') {
                 return t('settings.empty')
               }
 
               if (type === 'datetime') {
-                return dayjs(userData[id as keyof typeof userData]).format(
+                return dayjs(userData[id]).format(
                   'DD MMM YYYY'
                 )
               }
 
-              return userData[id as keyof typeof userData]
+              return userData[id]
             })()}
           </Text>
           <Button

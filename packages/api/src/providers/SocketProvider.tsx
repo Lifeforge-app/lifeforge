@@ -18,7 +18,7 @@ export interface SocketEvent<
   progress?: P
 }
 
-export default function SocketProvider({
+export function SocketProvider({
   children
 }: {
   children: React.ReactNode

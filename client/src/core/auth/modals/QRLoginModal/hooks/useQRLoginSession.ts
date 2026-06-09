@@ -4,7 +4,9 @@ import { toast } from 'react-toastify'
 import { Socket, io } from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
 
-import { getBrowserInfo, useAPIEndpoint, useAuth } from '@lifeforge/shared'
+import { getBrowserInfo } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
+import { useAPIEndpoint } from '@lifeforge/api'
 
 import forgeAPI from '@/forgeAPI'
 

@@ -2,7 +2,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { ToastProvider } from '../providers'
-import { APIEndpointProvider } from '@lifeforge/shared'
+import { APIEndpointProvider } from '@lifeforge/api'
 
 import { ModalManager } from '@/components/overlays'
 import { Flex, Transition } from '@/components/primitives'

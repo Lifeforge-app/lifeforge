@@ -19,7 +19,7 @@
  * // => 'https://api.example.com/media?collectionId=users&recordId=abc123&fieldId=avatar&thumb=200x200'
  * ```
  */
-export default function createGetMediaHelper(apiHost: string | undefined) {
+export function createGetMediaHelper(apiHost: string | undefined) {
   return (params: {
     /** The PocketBase collection ID */
     collectionId: string

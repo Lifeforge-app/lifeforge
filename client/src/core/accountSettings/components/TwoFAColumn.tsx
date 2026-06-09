@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import { Flex, OptionsColumn, Switch, Text, useModalStore } from '@lifeforge/ui'
 
 import DisableTwoFAModal from '../modals/DisableTwoFAModal'

@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 import { useMemo } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import {
   COLORS,
   Flex,

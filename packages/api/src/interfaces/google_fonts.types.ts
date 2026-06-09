@@ -47,9 +47,7 @@ const FontFamilySchema = z.object({
 })
 
 // For getGoogleFont response
-const GetGoogleFontResponseSchema = z.object({
+export const GetGoogleFontResponseSchema = z.object({
   enabled: z.boolean(),
   items: z.array(FontFamilySchema).optional()
 })
-
-export default GetGoogleFontResponseSchema

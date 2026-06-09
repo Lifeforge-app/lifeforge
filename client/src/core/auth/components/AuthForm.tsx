@@ -3,7 +3,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useAuth, usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import { Stack, TextInput } from '@lifeforge/ui'
 
 import AuthSignInButton from './AuthSignInButtons'

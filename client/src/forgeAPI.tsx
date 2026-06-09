@@ -1,4 +1,4 @@
-import { createForgeProxy, globalProxyRegistry } from '@lifeforge/shared'
+import { createForgeProxy, globalProxyRegistry } from '@lifeforge/api'
 
 import contract from '../contract'
 

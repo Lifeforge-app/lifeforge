@@ -2,7 +2,8 @@ import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
 
 import { useFederation } from '@lifeforge/federation'
-import { normalizeSubnamespace, useAuth } from '@lifeforge/shared'
+import { normalizeSubnamespace } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import {
   Box,
   EmptyStateScreen,

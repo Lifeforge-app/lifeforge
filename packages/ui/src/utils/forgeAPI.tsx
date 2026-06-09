@@ -1,4 +1,4 @@
-import { createForgeProxy } from '@lifeforge/shared'
+import { createForgeProxy } from '@lifeforge/api'
 
 import contract from '@/contract'
 

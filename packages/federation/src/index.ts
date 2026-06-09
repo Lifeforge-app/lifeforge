@@ -1,9 +1,10 @@
 export type {
   ModuleConfig,
-  ModuleCategory
-} from './interfaces/module_config.types'
+  ModuleCategory,
+  WidgetConfig
+} from '@lifeforge/configs'
 
-export { moduleConfigSchema } from './interfaces/module_config.types'
+export { moduleConfigSchema, widgetConfigSchema } from '@lifeforge/configs'
 
 export { default as createForgeModuleClient } from './api/createForgeModuleClient'
 
@@ -28,3 +29,5 @@ export {
   fetchCategoryOrder,
   type CategoryOrder
 } from './utils/sortRoutes'
+
+

@@ -7,8 +7,7 @@ import {
   useState
 } from 'react'
 
-import { useFederation } from '@lifeforge/federation'
-import { widgetConfigSchema } from '@lifeforge/shared'
+import { useFederation, widgetConfigSchema } from '@lifeforge/federation'
 import { LoadingScreen } from '@lifeforge/ui'
 
 export interface WidgetEntry {
@@ -26,7 +25,6 @@ interface WidgetContextValue {
   loading: boolean
 }
 
-// Default value for HMR safety - prevents crashes when context is unavailable during hot reload
 const defaultValue: WidgetContextValue = {
   widgets: {},
   loading: true
@@ -47,7 +45,6 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
 
   const [loading, setLoading] = useState(true)
 
-  // Load federated widgets asynchronously
   useEffect(() => {
     async function loadFederatedWidgets() {
       setLoading(true)
@@ -59,7 +56,6 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
           if (item.widgets && item.widgets.length > 0) {
             for (const widgetImportFn of item.widgets) {
               try {
-                // Call the import function to get the module
                 const widgetModule = await widgetImportFn()
 
                 const parsedConfig = widgetConfigSchema.safeParse(
@@ -68,8 +64,6 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
 
                 if (parsedConfig.success) {
                   const config = parsedConfig.data
-
-                  // Wrap the component with lazy() for proper React Suspense support
                   const LazyComponent = lazy(widgetImportFn)
 
                   loadedWidgets[config.id] = {

@@ -49,7 +49,7 @@ const APIOnlineStatusContext = createContext<IAPIOnlineStatus | undefined>(
   undefined
 )
 
-export default function APIOnlineStatusProvider({
+export function APIOnlineStatusProvider({
   clientEnvironment,
   children
 }: {

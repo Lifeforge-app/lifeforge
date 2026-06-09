@@ -1,6 +1,6 @@
 import { createContext, useContext, useMemo, useRef, useState } from 'react'
 
-import type { ModuleCategory } from '../interfaces/module_config.types'
+import type { ModuleCategory } from '@lifeforge/configs'
 
 export const SYSTEM_CATEGORIES = [
   '<START>',

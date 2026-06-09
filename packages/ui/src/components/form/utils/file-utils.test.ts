@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { ProxyTree } from '@lifeforge/shared'
+import type { ProxyTree } from '@lifeforge/api'
 
 import {
   convertFormFileFieldData,

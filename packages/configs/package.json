@@ -6,15 +6,34 @@
   "type": "module",
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    },
+    "./vite": {
+      "types": "./dist/vite.d.ts",
+      "import": "./dist/vite.js",
+      "require": "./dist/vite.js"
+    },
+    "./tsconfig/*": "./tsconfig/*",
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "zod": "4.3.5"
   },
   "peerDependencies": {
     "@originjs/vite-plugin-federation": "^1.4.1",
     "@vitejs/plugin-react": "^4.4.1",
+    "react": "^19.2.0",
     "vite": "^7.1.9"
   },
   "devDependencies": {
+    "@types/react": "^19.2.0",
     "typescript": "^5.9.3"
   }
 }
