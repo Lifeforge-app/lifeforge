@@ -23,7 +23,7 @@ interface InstallOptions {
  * For each module:
  * 1. Validates it doesn't already exist locally
  * 2. Checks it exists in the registry
- * 3. Downloads and extracts to apps/
+ * 3. Downloads and extracts to modules/
  * 4. Initializes git repository (if --dev)
  * 5. Builds both dist and dist-docker bundles
  * 6. Removes source code (unless --dev is passed)
@@ -51,7 +51,7 @@ export async function installModuleHandler(
     }
 
     if (fs.existsSync(targetDir)) {
-      logger.error(`Module already exists at apps/${shortName}`)
+      logger.error(`Module already exists at modules/${shortName}`)
       continue
     }
 
@@ -62,7 +62,7 @@ export async function installModuleHandler(
 
     logger.debug(`Installing ${chalk.blue(fullName)}...`)
 
-    installPackage(fullName, targetDir, 'apps')
+    installPackage(fullName, targetDir, 'modules')
 
     // Restore gitignore to .gitignore (npm excludes .gitignore during publish)
     const gitignorePath = path.join(targetDir, 'gitignore')

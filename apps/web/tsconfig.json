@@ -19,10 +19,10 @@
     "noFallthroughCasesInSwitch": true,
     "verbatimModuleSyntax": true,
     "composite": true,
-    "rootDir": "../",
+    "rootDir": "../../",
     "paths": {
       "@/*": ["./src/*"],
-      "@core/*": ["../core/*"]
+      "@core/*": ["../../core/*"]
     }
   },
   "include": ["./src/**/*", "./vite.config.ts", "./contract.ts"]

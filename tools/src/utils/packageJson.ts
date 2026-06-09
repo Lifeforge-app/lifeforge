@@ -12,10 +12,10 @@ interface PackageJson {
   [key: string]: unknown
 }
 
-export type PackageJsonTarget = 'apps' | 'locales' | 'root'
+export type PackageJsonTarget = 'modules' | 'locales' | 'root'
 
 const PACKAGE_JSON_PATHS: Record<PackageJsonTarget, string> = {
-  apps: path.join(ROOT_DIR, 'apps', 'package.json'),
+  modules: path.join(ROOT_DIR, 'modules', 'package.json'),
   locales: path.join(ROOT_DIR, 'locales', 'package.json'),
   root: path.join(ROOT_DIR, 'package.json')
 }
@@ -24,8 +24,8 @@ const DEFAULT_PACKAGE_JSON: Record<
   Exclude<PackageJsonTarget, 'root'>,
   PackageJson
 > = {
-  apps: {
-    name: '@lifeforge/apps',
+  modules: {
+    name: '@lifeforge/modules',
     private: true,
     description: 'LifeForge modules',
     dependencies: {}
@@ -103,7 +103,7 @@ export function writePackageJson(
  */
 export function addDependency(
   packageName: string,
-  target: PackageJsonTarget = 'apps',
+  target: PackageJsonTarget = 'modules',
   version = 'workspace:*'
 ): void {
   logger.debug(`Adding dependency ${packageName} to ${target}`)
@@ -126,7 +126,7 @@ export function addDependency(
  */
 export function removeDependency(
   packageName: string,
-  target: PackageJsonTarget = 'apps'
+  target: PackageJsonTarget = 'modules'
 ): void {
   logger.debug(`Removing dependency ${packageName} from ${target}`)
 
@@ -145,7 +145,7 @@ export function removeDependency(
  */
 export function findPackageName(
   name: string,
-  target: PackageJsonTarget = 'apps'
+  target: PackageJsonTarget = 'modules'
 ): string | null {
   logger.debug(`Finding package ${name} in ${target}`)
 
@@ -171,7 +171,7 @@ export function findPackageName(
  */
 export function hasDependency(
   packageName: string,
-  target: PackageJsonTarget = 'apps'
+  target: PackageJsonTarget = 'modules'
 ): boolean {
   const packageJson = readPackageJson(target)
 
@@ -182,7 +182,7 @@ export function hasDependency(
  * Gets all dependencies from the specified package.json.
  */
 export function getDependencies(
-  target: PackageJsonTarget = 'apps'
+  target: PackageJsonTarget = 'modules'
 ): Record<string, string> {
   const packageJson = readPackageJson(target)
 

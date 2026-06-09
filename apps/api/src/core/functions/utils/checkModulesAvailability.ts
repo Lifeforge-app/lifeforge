@@ -3,7 +3,7 @@ import fs from 'fs'
 export async function checkModulesAvailability(
   moduleId: string
 ): Promise<boolean> {
-  const modulePath = `../apps/${moduleId}/`
+  const modulePath = `../modules/${moduleId}/`
 
   try {
     fs.accessSync(modulePath, fs.constants.R_OK)

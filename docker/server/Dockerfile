@@ -26,15 +26,15 @@ RUN cd /lifeforge/packages/log && bun run build
 RUN cd /lifeforge/packages/server-utils && bun run build
 
 # Build server bundle
-RUN cd /lifeforge/server && bun run build
+RUN cd /lifeforge/apps/api && bun run build
 
 # Create cleaned package.json without workspace deps for production install
-RUN bun -e "const pkg = require('./server/package.json'); \
+RUN bun -e "const pkg = require('./apps/api/package.json'); \
     delete pkg.dependencies.shared; \
     delete pkg.dependencies['@lifeforge/log']; \
     delete pkg.dependencies['@lifeforge/server-utils']; \
     delete pkg.devDependencies; \
-    require('fs').writeFileSync('./server/package.docker.json', JSON.stringify(pkg, null, 2))"
+    require('fs').writeFileSync('./apps/api/package.docker.json', JSON.stringify(pkg, null, 2))"
 
 # ============================================
 # Production stage - core server only (no modules)
@@ -47,7 +47,7 @@ RUN apk add --no-cache curl
 WORKDIR /lifeforge
 
 # Copy bundled server
-COPY --from=builder /lifeforge/server/dist ./server/dist
+COPY --from=builder /lifeforge/apps/api/dist ./apps/api/dist
 
 # Copy shared package
 COPY --from=builder /lifeforge/shared/dist ./shared/dist
@@ -62,11 +62,11 @@ COPY --from=builder /lifeforge/packages/server-utils/dist ./packages/server-util
 COPY --from=builder /lifeforge/packages/server-utils/package.json ./packages/server-utils/package.json
 
 # Install server dependencies
-COPY --from=builder /lifeforge/server/package.docker.json ./package.json
+COPY --from=builder /lifeforge/apps/api/package.docker.json ./package.json
 RUN bun install --production
 
 # Create apps directory for module mounting
-RUN mkdir -p /lifeforge/apps
+RUN mkdir -p /lifeforge/modules
 
 # Copy entrypoint
 COPY docker/server/entrypoint.sh /entrypoint.sh
@@ -79,8 +79,8 @@ EXPOSE 3636
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
     CMD curl -f http://localhost:3636/ || exit 1
 
-# Modules should be mounted to /lifeforge/apps at runtime:
-#   docker run -v /path/to/modules:/lifeforge/apps lifeforge-server
+# Modules should be mounted to /lifeforge/modules at runtime:
+#   docker run -v /path/to/modules:/lifeforge/modules lifeforge-server
 ENTRYPOINT ["/entrypoint.sh"]
 
 

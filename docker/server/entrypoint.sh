@@ -21,13 +21,13 @@ ln -sf /lifeforge/packages/log /lifeforge/node_modules/@lifeforge/log
 ln -sf /lifeforge/packages/server-utils /lifeforge/node_modules/@lifeforge/server-utils
 
 # Check if modules are mounted
-if [ -d "/lifeforge/apps" ] && [ "$(ls -A /lifeforge/apps 2>/dev/null)" ]; then
-    module_count=$(ls -d /lifeforge/apps/*/ 2>/dev/null | wc -l | tr -d ' ')
-    echo "Found $module_count module(s) mounted at /lifeforge/apps"
+if [ -d "/lifeforge/modules" ] && [ "$(ls -A /lifeforge/modules 2>/dev/null)" ]; then
+    module_count=$(ls -d /lifeforge/modules/*/ 2>/dev/null | wc -l | tr -d ' ')
+    echo "Found $module_count module(s) mounted at /lifeforge/modules"
 else
-    echo "No modules mounted. Mount modules to /lifeforge/apps to enable them."
+    echo "No modules mounted. Mount modules to /lifeforge/modules to enable them."
 fi
 
 echo "Starting server..."
-cd /lifeforge/server
+cd /lifeforge/apps/api
 exec bun dist/server.js

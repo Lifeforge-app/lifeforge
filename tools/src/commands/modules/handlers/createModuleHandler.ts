@@ -29,13 +29,13 @@ export async function createModuleHandler(moduleName?: string): Promise<void> {
   // }
   // const camelizedModuleName = _.camelCase(moduleMetadata.moduleName.en)
   // copyTemplateFiles(moduleMetadata)
-  // initializeGitRepository(`${process.cwd()}/apps/${camelizedModuleName}`)
-  // installDependencies(`${process.cwd()}/apps`)
+  // initializeGitRepository(`${process.cwd()}/modules/${camelizedModuleName}`)
+  // installDependencies(`${process.cwd()}/modules`)
   // // Regenerate registries to include the new module
   // generateModuleRegistries()
   // if (
   //   fs.existsSync(
-  //     `${process.cwd()}/apps/${camelizedModuleName}/server/schema.ts`
+  //     `${process.cwd()}/modules/${camelizedModuleName}/server/schema.ts`
   //   )
   // ) {
   //   runDatabaseMigrations()

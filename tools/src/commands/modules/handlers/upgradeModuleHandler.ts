@@ -107,7 +107,7 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
 
     if (!mod) {
       logger.error(
-        `Module ${chalk.blue(moduleName)} not found in apps/package.json`
+        `Module ${chalk.blue(moduleName)} not found in modules/package.json`
       )
       process.exit(1)
     }

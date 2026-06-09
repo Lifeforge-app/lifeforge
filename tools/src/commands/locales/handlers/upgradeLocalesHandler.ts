@@ -26,7 +26,8 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
     try {
       installPackage(
         upgrade.name,
-        normalizePackage(upgrade.name, 'locale').targetDir
+        normalizePackage(upgrade.name, 'locale').targetDir,
+        'locales'
       )
 
       logger.success(`Upgraded ${chalk.blue(upgrade.name)}`)

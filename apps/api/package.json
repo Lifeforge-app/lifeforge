@@ -16,10 +16,10 @@
   "scripts": {
     "types": "tsgo -b",
     "build": "bun types && bun build ./src/index.ts --target bun --minify --production --outfile=./dist/server.js",
-    "start": "bun types && NODE_ENV=production bun --env-file=../env/.env.local ./src/index.ts",
+    "start": "bun types && NODE_ENV=production bun --env-file=../../env/.env.local ./src/index.ts",
     "start:prod": "NODE_ENV=production bun ./dist/server.js",
     "start:watch": "NODE_ENV=production bun --watch ./dist/server.js",
-    "dev": "bun tsx watch --env-file=../env/.env.local ./src/index.ts",
+    "dev": "bun tsx watch --env-file=../../env/.env.local ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "vitest",
     "test:ui": "vitest --ui",

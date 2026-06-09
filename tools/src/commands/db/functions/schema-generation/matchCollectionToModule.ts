@@ -24,8 +24,8 @@ import logger from '@/utils/logger'
  * @returns Matching module directory path, or undefined if no match found
  *
  * @example
- * // Collection 'events' matches module at '/apps/lifeforge--calendar'
- * // Collection 'melvinchia3636___clients' matches '/apps/melvinchia3636--invoice-maker'
+ * // Collection 'events' matches module at '/modules/lifeforge--calendar'
+ * // Collection 'melvinchia3636___clients' matches '/modules/melvinchia3636--invoice-maker'
  */
 export async function matchCollectionToModule(
   modulesWithSchema: string[],
@@ -49,7 +49,7 @@ export async function matchCollectionToModule(
   const matchingModule = modulesWithSchema.find(module => {
     const { username, moduleName } = parsePackageName(
       path.basename(module),
-      path.dirname(module).endsWith('/server/src/lib')
+      path.dirname(module).endsWith('/apps/api/src/lib')
     )
 
     const expectedPrefix = username
@@ -73,7 +73,7 @@ export async function matchCollectionToModule(
     if (targetModule) {
       const schemaPath = path.resolve(
         ROOT_DIR,
-        'apps',
+        'modules',
         path.basename(targetModule),
         'server',
         'schema.ts'

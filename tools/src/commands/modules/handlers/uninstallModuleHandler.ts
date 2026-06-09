@@ -15,7 +15,7 @@ import { findPackageName, removeDependency } from '@/utils/packageJson'
  * For each module:
  * 1. Validates it exists in package.json
  * 2. Removes symlink from node_modules
- * 3. Removes module directory from apps/
+ * 3. Removes module directory from modules/
  * 4. Removes from package.json dependencies
  *
  * After uninstallation:
@@ -30,16 +30,16 @@ export async function uninstallModuleHandler(
   for (const moduleName of moduleNames) {
     const { targetDir, fullName } = normalizePackage(moduleName)
 
-    if (!findPackageName(fullName, 'apps')) {
+    if (!findPackageName(fullName, 'modules')) {
       logger.error(
-        `Module ${chalk.blue(fullName)} not found in apps/package.json`
+        `Module ${chalk.blue(fullName)} not found in modules/package.json`
       )
       continue
     }
 
     logger.debug(`Uninstalling ${chalk.blue(fullName)}...`)
 
-    removeDependency(fullName, 'apps')
+    removeDependency(fullName, 'modules')
 
     const symlinkPath = path.join(ROOT_DIR, 'node_modules', fullName)
 

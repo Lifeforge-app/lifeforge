@@ -18,6 +18,6 @@ export const PRETTIER_OPTIONS = {
  * Paths to scan for schema files
  */
 export const SCHEMA_PATTERNS = [
-  './server/src/lib/**/schema.ts',
-  './apps/**/server/schema.ts'
+  './apps/api/src/lib/**/schema.ts',
+  './modules/**/server/schema.ts'
 ]

@@ -11,7 +11,7 @@ import scanFederatedModules, {
   type ModuleManifestEntry
 } from '../utils/scanFederatedModules'
 
-const APPS_DIR = path.join(ROOT_DIR, 'apps')
+const APPS_DIR = path.join(ROOT_DIR, 'modules')
 
 export const manifest = forge
   .query({
@@ -54,7 +54,7 @@ export const manifest = forge
 
     scanFederatedModules(APPS_DIR, modules, false, '/modules', devModeModules)
 
-    const internalAppsDir = path.join(ROOT_DIR, 'client', 'src', 'apps')
+    const internalAppsDir = path.join(ROOT_DIR, 'apps', 'web', 'src', 'modules')
 
     scanFederatedModules(internalAppsDir, modules, true, '/internal-modules')
 

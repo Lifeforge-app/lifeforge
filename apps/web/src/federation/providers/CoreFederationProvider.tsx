@@ -27,7 +27,7 @@ const coreModules = [
 
 const devModeImports = import.meta.env.DEV
   ? import.meta.glob<{ default: ModuleConfig }>(
-      '../../../../apps/*/client/manifest.ts',
+      '../../../../modules/*/client/manifest.ts',
       { eager: false }
     )
   : {}

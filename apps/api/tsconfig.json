@@ -7,13 +7,13 @@
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false,
     "noUnusedLocals": true,
-    "rootDir": "../",
+    "rootDir": "../../",
     "paths": {
       "@constants": ["./src/core/constants"],
       "@functions/*": ["./src/core/functions/*"],
       "@schema": ["./src/core/schema"],
-      "@lib/*": ["./src/lib/*", "../apps/*"]
+      "@lib/*": ["./src/lib/*", "../../modules/*"]
     }
   },
-  "include": ["./src/**/*", "../apps/**/server/**/*"]
+  "include": ["./src/**/*", "../../modules/**/server/**/*"]
 }
