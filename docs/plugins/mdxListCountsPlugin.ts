@@ -3,11 +3,14 @@ import path from 'node:path'
 import type { Plugin } from 'vite'
 
 const VIRTUAL_MODULE_ID = 'virtual:mdx-list-counts'
+
 const RESOLVED_VIRTUAL_MODULE_ID = '\0' + VIRTUAL_MODULE_ID
 
 function countListItems(mdxSource: string): number {
   const listItemRegex = /^[\t ]*- /gm
+
   const matches = mdxSource.match(listItemRegex)
+
   return matches ? matches.length : 0
 }
 
@@ -25,6 +28,7 @@ function mdxListCountsPlugin(): Plugin {
           __dirname,
           '../src/contents/04.progress/versions'
         )
+
         const counts: Record<string, number> = {}
 
         // Read all MDX files recursively
@@ -33,13 +37,16 @@ function mdxListCountsPlugin(): Plugin {
 
           for (const entry of entries) {
             const fullPath = path.join(dir, entry.name)
+
             const relativePath = path.join(basePath, entry.name)
 
             if (entry.isDirectory()) {
               readMdxFiles(fullPath, relativePath)
             } else if (entry.name.endsWith('.mdx')) {
               const content = fs.readFileSync(fullPath, 'utf-8')
+
               const key = `../versions/${relativePath.replace(/\\/g, '/')}`
+
               counts[key] = countListItems(content)
             }
           }
@@ -56,8 +63,10 @@ function mdxListCountsPlugin(): Plugin {
         const module = server.moduleGraph.getModuleById(
           RESOLVED_VIRTUAL_MODULE_ID
         )
+
         if (module) {
           server.moduleGraph.invalidateModule(module)
+
           return [module]
         }
       }

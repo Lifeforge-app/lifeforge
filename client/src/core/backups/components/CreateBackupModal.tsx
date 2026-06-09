@@ -2,10 +2,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 import z from 'zod'
 
-import { FormModal, TextField, createDefaultValues } from '@lifeforge/ui'
+import { FormModal, TextField, createDefaultValues, toast } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

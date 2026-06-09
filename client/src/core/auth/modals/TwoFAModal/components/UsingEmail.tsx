@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@lifeforge/api'
-import { Button, OTPInputBox, Stack, Text, TextInput } from '@lifeforge/ui'
+import {
+  Button,
+  OTPInputBox,
+  Stack,
+  Text,
+  TextInput,
+  toast
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

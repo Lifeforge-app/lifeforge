@@ -1,7 +1,11 @@
 import { useState } from 'react'
 
-import { useMainSidebarState } from '@lifeforge/ui'
-import { Flex, SidebarItem, Transition } from '@lifeforge/ui'
+import {
+  Flex,
+  SidebarItem,
+  Transition,
+  useMainSidebarState
+} from '@lifeforge/ui'
 
 import SidebarBottomBar from './SidebarBottomBar'
 import SidebarEventBanner from './SidebarEventBanner'

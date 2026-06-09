@@ -29,5 +29,3 @@ export {
   fetchCategoryOrder,
   type CategoryOrder
 } from './utils/sortRoutes'
-
-

@@ -1,4 +1,3 @@
-import { useMainSidebarState } from '@lifeforge/ui'
 import {
   Box,
   Button,
@@ -6,7 +5,8 @@ import {
   Icon,
   SearchInput,
   Text,
-  surface
+  surface,
+  useMainSidebarState
 } from '@lifeforge/ui'
 
 function SidebarHeader({

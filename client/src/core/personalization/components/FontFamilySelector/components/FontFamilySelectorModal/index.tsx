@@ -1,9 +1,14 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
-import { usePersonalization } from '@lifeforge/ui'
-import { Button, ModalHeader, Stack, Tabs } from '@lifeforge/ui'
+import {
+  Button,
+  ModalHeader,
+  Stack,
+  Tabs,
+  toast,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 

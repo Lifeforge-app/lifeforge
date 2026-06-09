@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@lifeforge/api'
-import { ConfirmationModal } from '@lifeforge/ui'
+import { ConfirmationModal, toast } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

@@ -142,46 +142,44 @@ export type InferRawOutput<T> = T extends {
 /**
  * Extracts the input schema type from a `ForgeEndpoint` instance.
  */
-export type InferInput<T extends ForgeEndpoint<any>> =
-  T['__type'] extends {
-    __isForgeContract: true
-    __input: infer I
-    __media: infer M
-  }
-    ? I extends {
-        body?: infer B
-        query?: infer Q
-      }
-      ? {
-          body: M extends null
-            ? B extends ZodObjectOrIntersection
+export type InferInput<T extends ForgeEndpoint<any>> = T['__type'] extends {
+  __isForgeContract: true
+  __input: infer I
+  __media: infer M
+}
+  ? I extends {
+      body?: infer B
+      query?: infer Q
+    }
+    ? {
+        body: M extends null
+          ? B extends ZodObjectOrIntersection
+            ? z.input<B>
+            : B
+          : (B extends ZodObjectOrIntersection
               ? z.input<B>
-              : B
-            : (B extends ZodObjectOrIntersection
-                ? z.input<B>
-                : B extends undefined
-                  ? {}
-                  : B) & {
-                [K in keyof M]: {
-                  __type: 'media'
-                  config: M[K]
-                }
+              : B extends undefined
+                ? {}
+                : B) & {
+              [K in keyof M]: {
+                __type: 'media'
+                config: M[K]
               }
-          query: Q extends ZodObjectOrIntersection ? z.input<Q> : Q
-        }
-      : never
+            }
+        query: Q extends ZodObjectOrIntersection ? z.input<Q> : Q
+      }
     : never
+  : never
 
 /**
  * Extracts the output (response) type from a `ForgeEndpoint` instance.
  */
-export type InferOutput<T extends ForgeEndpoint<any>> =
-  T['__type'] extends {
-    __isForgeContract: true
-    __output: infer O
-  }
-    ? O
-    : never
+export type InferOutput<T extends ForgeEndpoint<any>> = T['__type'] extends {
+  __isForgeContract: true
+  __output: infer O
+}
+  ? O
+  : never
 
 /**
  * Constructs a deeply-nested proxy tree from a server route schema.

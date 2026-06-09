@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@/providers'
 
 import { encrypt } from '@lifeforge/api'
 import type { ForgeEndpoint } from '@lifeforge/api'
@@ -9,7 +8,7 @@ import type { ForgeEndpoint } from '@lifeforge/api'
 import { Button, TextInput } from '@/components/inputs'
 import { ConfirmationModal } from '@/components/overlays'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-import { useModalStore } from '@/providers'
+import { toast, useModalStore } from '@/providers'
 
 export function CreatePasswordScreen({
   controller,

@@ -1,9 +1,16 @@
 import { useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
-import { Button, Flex, Icon, Stack, Text, TextInput } from '@lifeforge/ui'
+import {
+  Button,
+  Flex,
+  Icon,
+  Stack,
+  Text,
+  TextInput,
+  toast
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

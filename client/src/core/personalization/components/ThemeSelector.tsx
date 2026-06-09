@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/ui'
 import {
   Bordered,
   Box,
@@ -9,7 +8,8 @@ import {
   Icon,
   OptionsColumn,
   Text,
-  Transition
+  Transition,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'

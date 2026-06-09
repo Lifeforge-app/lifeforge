@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type ReactNode, useMemo } from 'react'
 
-import { PersonalizationProvider } from '../providers'
-
 import { forgeAPI } from '@/utils/forgeAPI'
 
+import { PersonalizationProvider } from '../providers'
 import { useSBTheme } from './useSBTheme'
 
 function deriveFinalValue(value: any, fallback: any) {

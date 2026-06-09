@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { Scrollbars } from 'react-custom-scrollbars'
-
 import { Link, useLocation } from 'react-router'
 
 import ROUTES from '../Router'

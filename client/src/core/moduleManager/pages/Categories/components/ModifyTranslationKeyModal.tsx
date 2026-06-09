@@ -1,9 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { toast } from '@lifeforge/ui'
 import z from 'zod'
 
-import { FormModal, TextField, createDefaultValues } from '@lifeforge/ui'
+import { FormModal, TextField, createDefaultValues, toast } from '@lifeforge/ui'
 
 const schema = z.object({
   key: z

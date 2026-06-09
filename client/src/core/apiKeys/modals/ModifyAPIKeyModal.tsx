@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm, useWatch } from 'react-hook-form'
-import { toast } from '@lifeforge/ui'
 import z from 'zod'
 
 import {
@@ -9,7 +8,8 @@ import {
   FormModal,
   IconField,
   TextField,
-  createDefaultValues
+  createDefaultValues,
+  toast
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'

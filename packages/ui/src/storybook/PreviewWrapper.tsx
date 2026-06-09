@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { ToastProvider } from '../providers'
 import { APIEndpointProvider } from '@lifeforge/api'
 
 import { ModalManager } from '@/components/overlays'
 import { Flex, Transition } from '@/components/primitives'
 import { ModalProvider } from '@/providers'
 
+import { ToastProvider } from '../providers'
 import { SBThemeProvider } from './SBThemeProvider'
 
 export const queryClient = new QueryClient()

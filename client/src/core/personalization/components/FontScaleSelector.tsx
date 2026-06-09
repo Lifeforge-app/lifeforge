@@ -1,8 +1,14 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/ui'
-import { Box, Button, Flex, OptionsColumn, SliderInput } from '@lifeforge/ui'
+import {
+  Box,
+  Button,
+  Flex,
+  OptionsColumn,
+  SliderInput,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 

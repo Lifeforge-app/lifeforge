@@ -64,6 +64,7 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
 
                 if (parsedConfig.success) {
                   const config = parsedConfig.data
+
                   const LazyComponent = lazy(widgetImportFn)
 
                   loadedWidgets[config.id] = {

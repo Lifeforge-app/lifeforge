@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/ui'
-import { OptionsColumn, Switch } from '@lifeforge/ui'
+import { OptionsColumn, Switch, usePersonalization } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'
 

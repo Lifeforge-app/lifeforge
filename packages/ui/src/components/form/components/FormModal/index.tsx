@@ -1,6 +1,5 @@
 import { createContext, useContext } from 'react'
 import { type FieldValues, type UseFormReturn } from 'react-hook-form'
-import { toast } from '@/providers'
 
 import { usePromiseLoading } from '@lifeforge/api'
 
@@ -8,6 +7,7 @@ import { LoadingScreen } from '@/components/feedback'
 import { Button } from '@/components/inputs'
 import { ModalHeader } from '@/components/overlays'
 import { Flex, Stack } from '@/components/primitives'
+import { toast } from '@/providers'
 
 const NamespaceContext = createContext<string | undefined>(undefined)
 

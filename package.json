@@ -1,6 +1,8 @@
 {
   "name": "lifeforge-monorepo",
   "private": true,
+  "type": "module",
+  "packageManager": "bun@1.3.14",
   "description": "A comprehensive self-hosted all-in-one personal management system",
   "version": "0.0.0",
   "license": "CC BY-NC-SA 4.0",
@@ -21,13 +23,12 @@
   ],
   "scripts": {
     "forge": "bun run tools/src/index.ts",
-    "build-api": "bun --cwd=packages/api run build",
-    "build-configs": "bun --cwd=packages/configs run build",
-    "build-federation": "bun --cwd=packages/federation run build",
-    "build-logger": "bun --cwd=packages/log run build",
-    "build-server-utils": "bun --cwd=packages/server-utils run build",
-    "build-ui": "bun --cwd=packages/ui run build",
-    "postinstall": "bun build-configs && bun build-api && bun build-logger && bun build-server-utils && bun build-ui && bun build-federation"
+    "build": "turbo build",
+    "types": "turbo types",
+    "lint": "eslint . && prettier --check .",
+    "fix": "eslint . --fix && prettier --write .",
+    "test": "turbo test",
+    "postinstall": "turbo build --filter=\"./packages/*\""
   },
   "keywords": [
     "lifeforge"
@@ -61,6 +62,7 @@
     "eslint-plugin-unused-imports": "^4.2.0",
     "globals": "^16.5.0",
     "prettier": "^3.8.0",
+    "turbo": "^2.0.4",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.31.1",
     "vite": "^7.1.9"

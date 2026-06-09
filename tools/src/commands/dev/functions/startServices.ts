@@ -37,10 +37,12 @@ export async function startSingleService(
 
     // Add --host and --port flags for client service if provided
     const finalExtraArgs = [...extraArgs]
+
     if (service === 'client') {
       if (host) {
         finalExtraArgs.push('--host')
       }
+
       if (port) {
         finalExtraArgs.push('--port', port)
       }

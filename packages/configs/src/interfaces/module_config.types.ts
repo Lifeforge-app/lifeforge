@@ -1,7 +1,7 @@
+import type React from 'react'
 import { z } from 'zod'
 
 import type { WidgetConfig } from './widget_config.types'
-import type React from 'react';
 
 export interface ModuleConfig {
   provider?: React.LazyExoticComponent<

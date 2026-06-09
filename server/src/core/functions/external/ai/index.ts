@@ -6,7 +6,6 @@ import OpenAI from 'openai'
 import z from 'zod'
 
 import {
-  CleanedSchemas,
   ClientError,
   FetchAIFunc,
   IPBService,
@@ -33,7 +32,7 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
   messages,
   structure
 }: {
-  pb: IPBService<CleanedSchemas>
+  pb: IPBService<any>
   provider: 'groq' | 'openai' | 'ollama' | 'deepseek'
   model: string
   messages: OpenAI.ChatCompletionMessageParam[]
