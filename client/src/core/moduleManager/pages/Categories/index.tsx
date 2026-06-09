@@ -165,7 +165,7 @@ function Categories() {
           </Button>
         }
         icon="tabler:category"
-        namespace="common.moduleManager"
+        namespace="common.module-manager"
         title="categories"
         tKey="subsectionTitleAndDesc"
         totalItems={items.length}

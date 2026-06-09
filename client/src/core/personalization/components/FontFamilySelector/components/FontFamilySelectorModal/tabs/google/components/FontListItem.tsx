@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 import {
   Box,
   Button,

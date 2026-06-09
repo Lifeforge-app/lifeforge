@@ -1,8 +1,6 @@
 import { type ComponentPropsWithoutRef, type ElementType } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { anyColorToHex } from '@lifeforge/shared'
-
 import {
   Bordered,
   type BorderedOwnProps,
@@ -13,6 +11,7 @@ import {
   Transition
 } from '@/components/primitives'
 import { usePersonalization } from '@/providers'
+import anyColorToHex from '@/utils/anyColorToHex'
 
 type TagChipProps<T extends ElementType> = Omit<
   BorderedOwnProps,

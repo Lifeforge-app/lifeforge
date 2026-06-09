@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTranslation } from 'react-i18next'
 
-import { useDivSize } from '@lifeforge/shared'
-
 import { Card } from '@/components/layout'
 import { Icon } from '@/components/primitives'
 import { Box, Flex, type FlexProps, Transition } from '@/components/primitives'
+import useDivSize from '@/hooks/useDivSize'
 import { surface } from '@/system'
 
 import { Button } from '../Button'

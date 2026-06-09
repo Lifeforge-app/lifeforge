@@ -4,7 +4,7 @@
   "description": "Command line interface for managing LifeForge projects",
   "main": "src/index.ts",
   "scripts": {
-    "build": "bun --cwd ../shared build && bun build src/index.ts --outfile=dist/forge.js --target=bun --minify",
+    "build": "bun build src/index.ts --outfile=dist/forge.js --target=bun --minify",
     "types": "tsc --noEmit --skipLibCheck"
   },
   "dependencies": {
@@ -22,7 +22,6 @@
     "prettier": "^3.7.4",
     "prompts": "^2.4.2",
     "semver": "^7.7.3",
-    "@lifeforge/shared": "workspace:*",
     "zod": "4.3.5",
     "@lifeforge/log": "workspace:*"
   },

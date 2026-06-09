@@ -1,7 +1,7 @@
 import { useReducer, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 import { useAPIEndpoint } from '@lifeforge/api'
 
 import {

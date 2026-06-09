@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 import { type FieldValues, type UseFormReturn } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
-import { usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/api'
 
 import { LoadingScreen } from '@/components/feedback'
 import { Button } from '@/components/inputs'

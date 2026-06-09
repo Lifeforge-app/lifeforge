@@ -1,5 +1,4 @@
 export const PROJECTS = {
-  shared: 'shared',
   ui: 'packages/ui',
   client: 'client',
   server: 'server',

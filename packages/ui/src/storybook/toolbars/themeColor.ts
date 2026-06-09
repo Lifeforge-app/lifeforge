@@ -1,6 +1,5 @@
-import { anyColorToHex } from '@lifeforge/shared'
-
 import { TAILWIND_PALETTE } from '@/system/colors/constants/tailwind-palette'
+import anyColorToHex from '@/utils/anyColorToHex'
 
 const PALETTE_NAMES: Record<string, string> = {
   slate: '🩶 Slate',

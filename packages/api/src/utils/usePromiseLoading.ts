@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useState } from 'react'
 
-export default function usePromiseLoading<T extends any[]>(
+export function usePromiseLoading<T extends any[]>(
   callback: (...args: T) => Promise<any>,
   onError?: (error: unknown) => void
 ): [boolean, (...args: T) => Promise<void>] {
@@ -14,7 +14,7 @@ export default function usePromiseLoading<T extends any[]>(
       try {
         await callback(...args)
       } catch (error) {
-        console.error('Error during confirmation:', error)
+        console.error(error)
         onError?.(error)
       } finally {
         setIsLoading(false)
