@@ -1,4 +1,4 @@
-import z from 'zod'
+import { z } from 'zod'
 
 export const widgetConfigSchema = z.object({
   namespace: z.string().optional(),
@@ -10,6 +10,4 @@ export const widgetConfigSchema = z.object({
   maxH: z.number().int().positive().optional()
 })
 
-type WidgetConfig = z.infer<typeof widgetConfigSchema>
-
-export type { WidgetConfig as default }
+export type WidgetConfig = z.infer<typeof widgetConfigSchema>

@@ -23,6 +23,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@iconify/react": "^6.0.2",
     "@lifeforge/shared": "workspace:*",
+    "@lifeforge/api": "workspace:*",
     "@lifeforge/federation": "workspace:*",
     "@lifeforge/ui": "workspace:*",
     "@types/node": "^24.7.2",

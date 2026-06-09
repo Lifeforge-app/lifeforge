@@ -81,7 +81,7 @@ async function handleAxiosResponse<T>(
   throw new Error('Unexpected API response format')
 }
 
-export default async function fetchAPI<T>(
+export async function fetchAPI<T>(
   apiHost: string,
   endpoint: string,
   {

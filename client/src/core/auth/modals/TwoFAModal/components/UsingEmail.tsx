@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import { Button, OTPInputBox, Stack, Text, TextInput } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'

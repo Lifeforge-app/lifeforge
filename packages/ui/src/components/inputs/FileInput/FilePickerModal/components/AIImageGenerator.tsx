@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
-import { useAPIEndpoint, usePromiseLoading } from '@lifeforge/shared'
+import { usePromiseLoading } from '@lifeforge/shared'
+import { useAPIEndpoint } from '@lifeforge/api'
 
 import { EmptyStateScreen } from '@/components/feedback'
 import { Button, TextAreaInput } from '@/components/inputs'

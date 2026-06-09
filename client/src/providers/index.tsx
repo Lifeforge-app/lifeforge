@@ -1,15 +1,15 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { NuqsAdapter } from 'nuqs/adapters/react'
 import { useMemo } from 'react'
 
-import { FederationProvider } from '@lifeforge/federation'
 import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
-  AuthProvider,
   EncryptionProvider,
-  NuqsProvider,
   SocketProvider
-} from '@lifeforge/shared'
+} from '@lifeforge/api'
+import { FederationProvider } from '@lifeforge/federation'
+import AuthProvider from '@/providers/AuthProvider'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,
@@ -41,7 +41,7 @@ function Providers() {
       // From top to bottom, they are nested inside one another in that order.
       defineProviders([
         // Providers from external packages
-        [NuqsProvider],
+        [NuqsAdapter],
         [QueryClientProvider, { client: queryClient }],
         [ToastProvider],
 

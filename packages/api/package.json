@@ -1,0 +1,29 @@
+{
+  "name": "@lifeforge/api",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "dev": "tsc --watch",
+    "types": "tsc -b --noEmit",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "crypto-js": "^4.2.0",
+    "json-schema-to-ts": "^3.1.1",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.2.2",
+    "@types/react": "^19.2.0",
+    "typescript": "^5.9.3"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.90.2",
+    "react": "^19.2.0",
+    "zod": "^4.3.5"
+  }
+}

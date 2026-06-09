@@ -1,4 +1,4 @@
-import type { ModuleCategory } from '../interfaces/module_config.types'
+import type { ModuleCategory } from '@lifeforge/configs'
 
 /**
  * Loads core modules statically

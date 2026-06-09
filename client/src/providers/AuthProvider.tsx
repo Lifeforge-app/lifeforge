@@ -11,9 +11,10 @@ import {
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-type UserData = {
-  [key: string]: any
-}
+import type { InferOutput } from '@lifeforge/api'
+import type forgeAPIInstance from '@/forgeAPI'
+
+export type UserData = InferOutput<typeof forgeAPIInstance.user.auth.getUserData>
 
 interface AuthData {
   auth: boolean
@@ -26,11 +27,12 @@ interface AuthData {
     password: string
   }) => Promise<string | void>
   authenticateWith2FA: ({
-    otp
+    otp,
+    type
   }: {
     otp: string
     type: 'email' | 'app'
-  }) => Promise<string | void>
+  }) => Promise<string>
   verifySession: (
     session: string
   ) => Promise<{ success: boolean; userData: UserData | null }>
@@ -43,6 +45,13 @@ interface AuthData {
   tid: RefObject<string>
 }
 
+interface Verify2FAResponse {
+  state: string
+  data: {
+    session: string
+  }
+}
+
 export const AuthContext = createContext<AuthData | undefined>(undefined)
 
 export default function AuthProvider({
@@ -50,7 +59,7 @@ export default function AuthProvider({
   onTwoFAModalOpen,
   children
 }: {
-  forgeAPI: any
+  forgeAPI: typeof forgeAPIInstance
   onTwoFAModalOpen: () => void
   children: React.ReactNode
 }) {
@@ -75,11 +84,10 @@ export default function AuthProvider({
     async (
       session: string
     ): Promise<{
-      success: boolean
-      userData: UserData | null
+      success: boolean;
+      userData: UserData | null;
     }> => {
       try {
-        // Step 1: Verify session token (unencrypted endpoint)
         const verifyRes = await fetch(
           forgeAPI.user.auth.verifySessionToken.endpoint,
           {
@@ -96,7 +104,6 @@ export default function AuthProvider({
           return { success: false, userData: null }
         }
 
-        // Step 2: Fetch user data (encrypted endpoint)
         const userData = await forgeAPI.user.auth.getUserData.query()
 
         return { success: true, userData }
@@ -112,8 +119,8 @@ export default function AuthProvider({
       email,
       password
     }: {
-      email: string
-      password: string
+      email: string;
+      password: string;
     }): Promise<string | void> => {
       try {
         const data = await forgeAPI.user.auth.login.mutate({
@@ -124,7 +131,6 @@ export default function AuthProvider({
         if (data.state === 'success') {
           localStorage.setItem('session', data.session)
 
-          // Fetch user data separately via encrypted endpoint
           const userData = await forgeAPI.user.auth.getUserData.query()
 
           setUserData(userData)
@@ -157,9 +163,9 @@ export default function AuthProvider({
       otp,
       type
     }: {
-      otp: string
-      type: 'email' | 'app'
-    }): Promise<void> => {
+      otp: string;
+      type: 'email' | 'app';
+    }): Promise<string> => {
       try {
         const res = await fetch(forgeAPI.user['2fa'].verify.endpoint, {
           method: 'POST',
@@ -169,12 +175,11 @@ export default function AuthProvider({
           body: JSON.stringify({ otp, tid: tid.current, type })
         })
 
-        const data: any = await res.json()
+        const data = (await res.json()) as Verify2FAResponse
 
         if (res.ok && data.state === 'success') {
           localStorage.setItem('session', data.data.session)
 
-          // Fetch user data separately via encrypted endpoint
           const userData = await forgeAPI.user.auth.getUserData.query()
 
           setUserData(userData)
@@ -226,13 +231,13 @@ export default function AuthProvider({
 
         const { success, userData } = await verifySession(session)
 
-        if (success) {
+        if (success && userData) {
           setUserData(userData)
           setAuth(true)
 
           localStorage.setItem('session', session)
 
-          toast.success(t('auth.welcome') + userData?.username)
+          toast.success(t('auth.welcome') + userData.username)
 
           return true
         } else {

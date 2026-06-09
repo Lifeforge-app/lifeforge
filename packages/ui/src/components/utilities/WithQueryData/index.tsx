@@ -1,6 +1,6 @@
 import { type UseQueryOptions, useQuery } from '@tanstack/react-query'
 
-import type { ForgeEndpoint, InferOutput } from '@lifeforge/shared'
+import type { ForgeEndpoint, InferOutput } from '@lifeforge/api'
 
 import { ErrorScreen, LoadingScreen } from '@/components/feedback'
 

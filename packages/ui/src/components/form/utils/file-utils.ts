@@ -1,4 +1,4 @@
-import type { ProxyTree } from '@lifeforge/shared'
+import type { ProxyTree } from '@lifeforge/api'
 
 import type { FileValue } from '@/components/inputs'
 

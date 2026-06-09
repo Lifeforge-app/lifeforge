@@ -2,8 +2,8 @@ import type z from 'zod'
 
 import type { UntypedEndpointType } from '../../typescript/forge_proxy.types'
 
-import ForgeEndpoint from '../forgeEndpoint'
-import CORE_HELPERS, { type CoreHelperName } from './config'
+import { ForgeEndpoint } from '../forgeEndpoint'
+import { CORE_HELPERS, type CoreHelperName } from './config'
 
 /**
  * Factory function that creates a core helper method for a given helper name.
@@ -18,7 +18,7 @@ import CORE_HELPERS, { type CoreHelperName } from './config'
  *
  * @internal Used by createForgeProxy to provide core helper methods
  */
-export default function createCoreHelper<T extends CoreHelperName>(
+export function createCoreHelper<T extends CoreHelperName>(
   apiHost: string | undefined,
   name: T
 ) {

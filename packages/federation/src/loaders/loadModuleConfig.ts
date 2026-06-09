@@ -1,10 +1,10 @@
-import { globalProxyRegistry } from '@lifeforge/shared'
+import { globalProxyRegistry } from '@lifeforge/api'
 
 import {
   type ModuleCategory,
   type ModuleConfig,
   moduleConfigSchema
-} from '../interfaces/module_config.types'
+} from '@lifeforge/configs'
 
 export interface FederatedModule {
   name: string
@@ -119,8 +119,7 @@ export async function loadModuleConfig(
 
   if (unwrapped.contract) {
     globalProxyRegistry.set(unwrapped.contract, {
-      moduleId: mod.moduleId,
-      apiHost: import.meta.env.VITE_API_HOST
+      moduleId: mod.moduleId
     })
   }
 

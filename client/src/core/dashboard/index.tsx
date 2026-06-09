@@ -24,7 +24,7 @@ function DashboardContent() {
 
   const handleManageWidget = useCallback(() => {
     open(ManageWidgetsModal, { widgets })
-  }, [widgets])
+  }, [widgets, open])
 
   return (
     <Flex ref={wrapperRef} direction="column" flex="1" mb="2xl">

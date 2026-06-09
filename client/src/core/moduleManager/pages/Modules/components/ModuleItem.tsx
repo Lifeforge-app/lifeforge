@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { useFederation } from '@lifeforge/federation'
-import { useAPIOnlineStatus } from '@lifeforge/shared'
+import { useAPIOnlineStatus } from '@lifeforge/api'
 import {
   Box,
   Card,

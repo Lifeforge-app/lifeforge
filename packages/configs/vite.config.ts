@@ -4,9 +4,12 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      entry: {
+        index: path.resolve(__dirname, 'src/index.ts'),
+        vite: path.resolve(__dirname, 'src/vite.ts')
+      },
       formats: ['es'],
-      fileName: 'index'
+      fileName: '[name]'
     },
     rollupOptions: {
       external: [
@@ -15,7 +18,9 @@ export default defineConfig({
         'vite',
         '@originjs/vite-plugin-federation',
         '@vitejs/plugin-react',
-        '@vanilla-extract/vite-plugin'
+        '@vanilla-extract/vite-plugin',
+        'zod',
+        'react'
       ]
     },
     outDir: 'dist',

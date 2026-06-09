@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import type { ForgeEndpoint } from '@lifeforge/shared'
+import type { ForgeEndpoint } from '@lifeforge/api'
 
 import { CreatePasswordScreen } from './components/CreatePasswordScreen'
 import { LockedScreen } from './components/LockedScreen'

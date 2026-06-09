@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
 import tinycolor from 'tinycolor2'
 
-import type { ProxyTree } from '@lifeforge/shared'
+import type { ProxyTree } from '@lifeforge/api'
 
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'

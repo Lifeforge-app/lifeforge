@@ -7,10 +7,10 @@ import {
   decryptResponse,
   encryptRequest,
   isEncryptedResponse
-} from '../../utils/encryption'
-import fetchAPI from '../../utils/fetchAPI'
+} from '../utils/encryption'
+import { fetchAPI } from '../utils/fetchAPI'
 
-import type { InferInput, InferOutput } from '../typescript/forge_proxy.types'
+import type { InferRawInput, InferRawOutput } from '../typescript/forge_proxy.types'
 import { globalProxyRegistry } from './registry'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
@@ -34,7 +34,7 @@ import { getFormData, hasFile, joinObjectsRecursively } from './utils'
  * const users = await forgeAPI.users.list.input({ page: 1 }).query()
  * ```
  */
-export default class ForgeEndpoint<
+export class ForgeEndpoint<
   T extends { __isForgeContract: true } = any
 > {
   /** Internal type marker for type inference */
@@ -141,7 +141,7 @@ export default class ForgeEndpoint<
    * forgeAPI.users.list.input({ page: 1, limit: 10 }).query()
    * ```
    */
-  input(data: InferInput<T>['query']) {
+  input(data: InferRawInput<T>['query']) {
     this._input = joinObjectsRecursively(
       this._input || {},
       data as Record<string, any>
@@ -160,7 +160,7 @@ export default class ForgeEndpoint<
     options: Omit<UseQueryOptions<any>, 'queryFn' | 'queryKey'> & {
       queryKey?: unknown[]
     } = {}
-  ): UseQueryOptions<InferOutput<T>> {
+  ): UseQueryOptions<InferRawOutput<T>> {
     return {
       ...options,
       refetchOnWindowFocus: false,
@@ -180,7 +180,7 @@ export default class ForgeEndpoint<
     options: Omit<UseQueryOptions<any>, 'queryFn' | 'queryKey'> & {
       queryKey?: unknown[]
     } = {}
-  ): UseQueryOptions<InferOutput<T>> {
+  ): UseQueryOptions<InferRawOutput<T>> {
     return {
       ...options,
       refetchOnWindowFocus: false,
@@ -200,14 +200,14 @@ export default class ForgeEndpoint<
    */
   mutationOptions(
     options: Omit<
-      UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']>,
+      UseMutationOptions<InferRawOutput<T>, any, InferRawInput<T>['body']>,
       'mutationKey' | 'mutationFn'
     > = {}
-  ): UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']> {
+  ): UseMutationOptions<InferRawOutput<T>, any, InferRawInput<T>['body']> {
     return {
       ...options,
       mutationKey: this.key,
-      mutationFn: (data: InferInput<T>['body']) => {
+      mutationFn: (data: InferRawInput<T>['body']) => {
         return this.mutate(data)
       }
     }
@@ -221,10 +221,10 @@ export default class ForgeEndpoint<
    */
   rawMutationOptions(
     options: Omit<
-      UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']>,
+      UseMutationOptions<InferRawOutput<T>, any, InferRawInput<T>['body']>,
       'mutationKey' | 'mutationFn'
     > = {}
-  ): UseMutationOptions<InferOutput<T>, any, InferInput<T>['body']> {
+  ): UseMutationOptions<InferRawOutput<T>, any, InferRawInput<T>['body']> {
     return {
       ...options,
       mutationKey: [...this.key, 'raw'],
@@ -243,7 +243,7 @@ export default class ForgeEndpoint<
    *
    * @returns Promise resolving to the decrypted API response
    */
-  async query(): Promise<InferOutput<T>> {
+  async query(): Promise<InferRawOutput<T>> {
     const { apiHost, prefix } = this._resolvedConfig
     const path = this._getPath(prefix)
 
@@ -264,11 +264,11 @@ export default class ForgeEndpoint<
 
     // Check if response is encrypted and decrypt it
     if (isEncryptedResponse(response)) {
-      return await decryptResponse<InferOutput<T>>(response, session)
+      return await decryptResponse<InferRawOutput<T>>(response, session)
     }
 
     // If not encrypted (shouldn't happen with encrypted endpoints), return as-is
-    return response as unknown as InferOutput<T>
+    return response as unknown as InferRawOutput<T>
   }
 
   /**
@@ -284,7 +284,7 @@ export default class ForgeEndpoint<
   }) {
     const { apiHost, prefix } = this._resolvedConfig
     const path = this._getPath(prefix)
-    return fetchAPI<InferOutput<T>>(apiHost, path, {
+    return fetchAPI<InferRawOutput<T>>(apiHost, path, {
       method: 'GET',
       ...options
     })
@@ -298,12 +298,12 @@ export default class ForgeEndpoint<
    * @param data The body data for the request
    * @returns Promise resolving to the API response
    */
-  mutateRaw(data: InferInput<T>['body'] | FormData) {
+  mutateRaw(data: InferRawInput<T>['body'] | FormData) {
     const { apiHost, prefix } = this._resolvedConfig
     const path = this._getPath(prefix)
     const payloadData = data === undefined ? {} : data
 
-    return fetchAPI<InferOutput<T>>(apiHost, path, {
+    return fetchAPI<InferRawOutput<T>>(apiHost, path, {
       method: 'POST',
       body:
         payloadData instanceof FormData
@@ -351,7 +351,7 @@ export default class ForgeEndpoint<
    * })
    * ```
    */
-  async mutate(data: InferInput<T>['body']): Promise<InferOutput<T>> {
+  async mutate(data: InferRawInput<T>['body']): Promise<InferRawOutput<T>> {
     const { apiHost, prefix } = this._resolvedConfig
     const path = this._getPath(prefix)
     const payloadData = data === undefined ? {} : data
@@ -380,11 +380,11 @@ export default class ForgeEndpoint<
 
     // Check if response is encrypted and decrypt it
     if (isEncryptedResponse(response)) {
-      return await decryptResponse<InferOutput<T>>(response, session)
+      return await decryptResponse<InferRawOutput<T>>(response, session)
     }
 
     // If not encrypted (shouldn't happen with encrypted endpoints), return as-is
-    return response as unknown as InferOutput<T>
+    return response as unknown as InferRawOutput<T>
   }
 
   /**

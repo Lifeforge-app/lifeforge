@@ -19,7 +19,7 @@ const EncryptionStatusContext = createContext<
  * Provider that initializes end-to-end encryption by fetching the server's public key.
  * Must be rendered after APIEndpointProvider and before any components that make API calls.
  */
-export default function EncryptionProvider({
+export function EncryptionProvider({
   apiHost,
   children
 }: EncryptionProviderProps) {

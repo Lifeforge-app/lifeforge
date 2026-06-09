@@ -1,7 +1,7 @@
 import type {
   ModuleCategory,
   ModuleConfig
-} from '../interfaces/module_config.types'
+} from '@lifeforge/configs'
 import {
   type CategoryOrder,
   fetchCategoryOrder,

@@ -3,10 +3,10 @@ import type {
   ProxyTree,
   UntypedEndpointType
 } from '../typescript/forge_proxy.types'
-import ForgeEndpoint from './forgeEndpoint'
-import CORE_HELPERS from './helpers/config'
-import createCoreHelper from './helpers/createCoreHelper'
-import createGetMediaHelper from './helpers/getMediaHelper'
+import { ForgeEndpoint } from './forgeEndpoint'
+import { CORE_HELPERS } from './helpers/config'
+import { createCoreHelper } from './helpers/createCoreHelper'
+import { createGetMediaHelper } from './helpers/getMediaHelper'
 import { globalProxyRegistry } from './registry'
 
 /**
@@ -15,7 +15,7 @@ import { globalProxyRegistry } from './registry'
  * Traverses the generated routes contract statically at type-level using json-schema-to-ts,
  * and dynamically at runtime using Proxy traps.
  */
-export default function createForgeProxy<T>(contract: T): ProxyTree<T> {
+export function createForgeProxy<T>(contract: T): ProxyTree<T> {
   return createForgeProxyInternal(contract, [])
 }
 
@@ -34,11 +34,12 @@ function createForgeProxyInternal<T>(
     }
   }
 
-  const resolvedHost =
-    (contract && globalProxyRegistry.get(contract)?.apiHost) || ''
+  function getResolvedHost() {
+    return (contract && globalProxyRegistry.get(contract)?.apiHost) || globalProxyRegistry.apiHost || ''
+  }
 
   const endpoint = new ForgeEndpoint<any>(
-    resolvedHost,
+    getResolvedHost(),
     pathArray.join('/'),
     currentContract,
     contract
@@ -66,7 +67,7 @@ function createForgeProxyInternal<T>(
       if (prop === 'untyped') {
         return <TOutput = any, TBody = any, TQuery = any>(url: string) =>
           new ForgeEndpoint<UntypedEndpointType<TOutput, TBody, TQuery>>(
-            resolvedHost,
+            getResolvedHost(),
             url,
             undefined,
             contract
@@ -74,11 +75,11 @@ function createForgeProxyInternal<T>(
       }
 
       if (prop === 'getMedia') {
-        return createGetMediaHelper(resolvedHost)
+        return createGetMediaHelper(getResolvedHost())
       }
 
       if (prop in CORE_HELPERS) {
-        return createCoreHelper(resolvedHost, prop as keyof typeof CORE_HELPERS)
+        return createCoreHelper(getResolvedHost(), prop as keyof typeof CORE_HELPERS)
       }
 
       if (prop in endpoint && typeof (endpoint as any)[prop] !== 'undefined') {

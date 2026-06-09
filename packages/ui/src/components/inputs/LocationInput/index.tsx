@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useDebounce } from '@uidotdev/usehooks'
 import { useState } from 'react'
 
-import { useAPIEndpoint } from '@lifeforge/shared'
+import { useAPIEndpoint } from '@lifeforge/api'
 
 import { ComboboxInput, ComboboxOption } from '@/components/inputs'
 import type { InputVariants } from '@/components/inputs/shared/types'

@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import { Button } from '@lifeforge/ui'
 
 function SignInButton({

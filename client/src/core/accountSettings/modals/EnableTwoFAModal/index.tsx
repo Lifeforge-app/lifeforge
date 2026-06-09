@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import { Box, ModalHeader } from '@lifeforge/ui'
 
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'

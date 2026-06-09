@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 import z from 'zod'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth, type UserData } from '@/providers/AuthProvider'
 import {
   DateField,
   FormModal,
@@ -46,7 +46,10 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
         if (id === 'email') {
           toast.info('A verification email has been sent to your new email.')
         } else {
-          setUserData(oldData => ({ ...oldData, ...newData.data }))
+          setUserData(oldData => {
+            if (!oldData) return null
+            return { ...oldData, ...newData.data } as UserData
+          })
         }
         toast.success('Profile updated successfully')
       },

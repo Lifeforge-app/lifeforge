@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from 'react-toastify'
 
-import { useAuth } from '@lifeforge/shared'
+import { useAuth } from '@/providers/AuthProvider'
 import {
   type IBackdropFilters,
   type IDashboardLayout,
@@ -127,7 +127,7 @@ function UserPersonalizationProvider({
     }
 
     if (userData?.backdropFilters) {
-      setBackdropFilters(userData.backdropFilters)
+      setBackdropFilters(userData.backdropFilters as IBackdropFilters)
     }
 
     if (userData?.bgImage !== '') {
@@ -145,7 +145,7 @@ function UserPersonalizationProvider({
     }
 
     if (userData?.dashboardLayout !== '') {
-      setDashboardLayout(userData.dashboardLayout)
+      setDashboardLayout(userData.dashboardLayout as IDashboardLayout)
     }
 
     if (userData?.fontFamily !== undefined) {
