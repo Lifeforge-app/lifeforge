@@ -132,7 +132,12 @@ writeContractFileToClient(
 )
 writeContractFileToClient(
   coreRoutes,
-  path.resolve(import.meta.dirname, '../../../../packages/ui/src'),
+  path.resolve(import.meta.dirname, '../../../../packages/ui'),
+  '.'
+)
+writeContractFileToClient(
+  coreRoutes,
+  path.resolve(import.meta.dirname, '../../../../packages/api'),
   '.'
 )
 

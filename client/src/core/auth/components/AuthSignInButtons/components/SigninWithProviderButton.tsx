@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { memo, useCallback } from 'react'
 import { toast } from '@lifeforge/ui'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 import { Button } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'

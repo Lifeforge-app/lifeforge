@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from '@lifeforge/ui'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 import {
   Box,
   Button,

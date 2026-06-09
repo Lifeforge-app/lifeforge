@@ -23,8 +23,8 @@
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "types": "tsc -b",
-    "build": "tsc -b && rm -rf dist && vite build",
+    "types": "tsgo -b",
+    "build": "tsgo -b && rm -rf dist && vite build",
     "build-storybook": "cd ../../api && bun run build && cd ../packages/ui && storybook build"
   },
   "dependencies": {

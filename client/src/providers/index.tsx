@@ -9,7 +9,7 @@ import {
   SocketProvider
 } from '@lifeforge/api'
 import { FederationProvider } from '@lifeforge/federation'
-import AuthProvider from '@/providers/AuthProvider'
+import { AuthProvider } from '@lifeforge/api'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,

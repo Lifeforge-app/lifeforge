@@ -1,5 +1,4 @@
 import { globalProxyRegistry } from '@lifeforge/api'
-
 import {
   type ModuleCategory,
   type ModuleConfig,

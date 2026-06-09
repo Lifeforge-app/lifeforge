@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSearchParams } from 'react-router'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 import { ModalManager, Stack, WithQueryData } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'

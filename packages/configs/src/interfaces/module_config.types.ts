@@ -1,9 +1,12 @@
 import { z } from 'zod'
 
 import type { WidgetConfig } from './widget_config.types'
+import type React from 'react';
 
 export interface ModuleConfig {
-  provider?: React.LazyExoticComponent<React.ComponentType>
+  provider?: React.LazyExoticComponent<
+    React.ComponentType<{ children: React.ReactNode }>
+  >
   routes: Record<string, React.LazyExoticComponent<React.ComponentType>>
   subsection?: {
     label: string

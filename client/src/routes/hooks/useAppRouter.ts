@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { type DataRouter, createBrowserRouter } from 'react-router'
 
 import { useFederation } from '@lifeforge/federation'
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 
 import {
   createAuthLoadingConfig,

@@ -13,7 +13,7 @@ import {
   useMainSidebarState
 } from '@lifeforge/ui'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 
 import MainSidebarTitle from './MainSidebarTitle'
 

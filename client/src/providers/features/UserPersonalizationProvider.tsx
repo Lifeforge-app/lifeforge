@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect } from 'react'
 import { toast } from '@lifeforge/ui'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 import {
   type IBackdropFilters,
   type IDashboardLayout,

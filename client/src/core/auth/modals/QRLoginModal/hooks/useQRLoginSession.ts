@@ -4,7 +4,7 @@ import { toast } from '@lifeforge/ui'
 import { Socket, io } from 'socket.io-client'
 import { v4 as uuidv4 } from 'uuid'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 import { useAPIEndpoint } from '@lifeforge/api'
 
 import forgeAPI from '@/forgeAPI'

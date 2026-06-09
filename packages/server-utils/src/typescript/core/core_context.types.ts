@@ -1,10 +1,10 @@
 import type OpenAI from 'openai'
 import { Server } from 'socket.io'
-import { CleanedSchemas } from 'utils/schemaUtils'
 import z from 'zod'
 
 import type { Logger } from '@lifeforge/log'
 
+import { CleanedSchemas } from '../../utils/schemaUtils'
 import IPBService from '../pb/PBService.interface'
 import { CollectionKey } from '../pb/pb_service.types'
 import { ITempFileManagerConstructor } from './tempfile_manager.types'

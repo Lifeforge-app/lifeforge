@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { useAuth } from '@/providers/AuthProvider'
+import { useAuth } from '@lifeforge/api'
 import { Button, Flex, OptionsColumn, Text, useModalStore } from '@lifeforge/ui'
 
 import ModifyModal from '../modals/ModifyModal'

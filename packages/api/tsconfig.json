@@ -1,11 +1,13 @@
 {
   "extends": "@lifeforge/configs/tsconfig/base.json",
   "compilerOptions": {
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "target": "ESNext",
     "module": "ESNext",
     "declaration": true,
-    "rootDir": "./src",
     "outDir": "./dist",
     "noEmit": false,
     "strict": true,
@@ -13,6 +15,12 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true
   },
-  "include": ["./src/**/*"],
-  "exclude": ["dist", "node_modules"]
+  "include": [
+    "./src/**/*",
+    "./contract.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }
