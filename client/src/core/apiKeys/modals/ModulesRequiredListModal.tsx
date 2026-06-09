@@ -23,7 +23,7 @@ function ModulesRequiredListModal({
     keyId: string
   }
 }) {
-  const { t } = useTranslation('common.apiKeys')
+  const { t } = useTranslation('common.api-keys')
 
   const { modules } = useFederation()
 
@@ -35,7 +35,7 @@ function ModulesRequiredListModal({
     <Box minWidth="40vw">
       <ModalHeader
         icon="tabler:cube"
-        namespace="common.apiKeys"
+        namespace="common.api-keys"
         title="modulesRequired.title"
         onClose={onClose}
       />

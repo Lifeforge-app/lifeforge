@@ -130,7 +130,7 @@ function Modules() {
               icon="tabler:apps-off"
               message={{
                 id: 'modules',
-                namespace: 'common.moduleManager'
+                namespace: 'common.module-manager'
               }}
             />
           )

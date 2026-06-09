@@ -1,11 +1,7 @@
 import ReactDOM from 'react-dom/client'
 
-import {
-  APIEndpointProvider,
-  PersonalizationProvider,
-  createForgeProxy
-} from '@lifeforge/shared'
-import { ModalProvider } from '@lifeforge/ui'
+import { APIEndpointProvider, createForgeProxy } from '@lifeforge/api'
+import { ModalProvider, PersonalizationProvider } from '@lifeforge/ui'
 
 import App from './App'
 import './index.css'

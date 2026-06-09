@@ -28,6 +28,7 @@
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.18",
     "i18next": "^25.6.0",
+    "@lifeforge/api": "workspace:*",
     "@lifeforge/ui": "workspace:*",
     "lodash": "^4.17.21",
     "mermaid": "^11.12.2",
@@ -39,7 +40,6 @@
     "react-medium-image-zoom": "^5.3.0",
     "react-syntax-highlighter": "^15.6.1",
     "remark-gfm": "^4.0.1",
-    "@lifeforge/shared": "workspace:*",
     "vite-plugin-mdx": "^3.6.1"
   },
   "devDependencies": {

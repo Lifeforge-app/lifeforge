@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
-import { useFederation } from '@lifeforge/federation'
 import { useAPIOnlineStatus } from '@lifeforge/api'
+import { useFederation } from '@lifeforge/federation'
 import {
   Box,
   Card,
@@ -37,7 +37,7 @@ function ModuleItem({
   // Module name format: @lifeforge/lifeforge--wallet -> lifeforge--wallet
   const moduleKey = module.name.replace('@lifeforge/', '')
 
-  const { t } = useTranslation([`apps.${moduleKey}`, 'common.moduleManager'])
+  const { t } = useTranslation([`apps.${moduleKey}`, 'common.module-manager'])
 
   const translatedTitle = t([`apps.${moduleKey}:title`, module.displayName])
 
@@ -56,10 +56,10 @@ function ModuleItem({
     onSuccess: () => {
       toast.success(
         !module.isDevMode
-          ? t('common.moduleManager:devMode.enabled', {
+          ? t('common.module-manager:devMode.enabled', {
               module: translatedTitle
             })
-          : t('common.moduleManager:devMode.disabled', {
+          : t('common.module-manager:devMode.disabled', {
               module: translatedTitle
             })
       )
@@ -74,10 +74,10 @@ function ModuleItem({
 
   function handleUninstall() {
     open(ConfirmationModal, {
-      title: t('common.moduleManager:modals.uninstall.title', {
+      title: t('common.module-manager:modals.uninstall.title', {
         module: translatedTitle
       }),
-      description: t('common.moduleManager:modals.uninstall.description', {
+      description: t('common.module-manager:modals.uninstall.description', {
         module: translatedTitle
       }),
       onConfirm: async () => {
@@ -91,11 +91,11 @@ function ModuleItem({
 
     open(ConfirmationModal, {
       title: isEnabling
-        ? t('common.moduleManager:modals.devMode.enable.title')
-        : t('common.moduleManager:modals.devMode.disable.title'),
+        ? t('common.module-manager:modals.devMode.enable.title')
+        : t('common.module-manager:modals.devMode.disable.title'),
       description: isEnabling
-        ? t('common.moduleManager:modals.devMode.enable.description')
-        : t('common.moduleManager:modals.devMode.disable.description'),
+        ? t('common.module-manager:modals.devMode.enable.description')
+        : t('common.module-manager:modals.devMode.disable.description'),
       onConfirm: async () => {
         await devModeMutation.mutateAsync()
       }
@@ -127,7 +127,7 @@ function ModuleItem({
                   color={TAILWIND_PALETTE.yellow[500]}
                   flexShrink="0"
                   icon="tabler:code"
-                  label={t('common.moduleManager:devMode.label')}
+                  label={t('common.module-manager:devMode.label')}
                   size="sm"
                   variant="outlined"
                 />
@@ -137,7 +137,7 @@ function ModuleItem({
                   color={TAILWIND_PALETTE.red[500]}
                   flexShrink="0"
                   icon="tabler:alert-triangle"
-                  label={t('common.moduleManager:notBuilt.label')}
+                  label={t('common.module-manager:notBuilt.label')}
                   size="sm"
                   variant="outlined"
                 />
@@ -153,7 +153,7 @@ function ModuleItem({
                 disabled={!(module.hasSource && module.hasDist)}
                 icon={module.isDevMode ? 'tabler:code-off' : 'tabler:code'}
                 label={module.isDevMode ? 'devMode.disable' : 'devMode.enable'}
-                namespace="common.moduleManager"
+                namespace="common.module-manager"
                 onClick={handleDevModeToggle}
               />
             )}
@@ -161,7 +161,7 @@ function ModuleItem({
               dangerous
               icon="tabler:trash"
               label="uninstall"
-              namespace="common.moduleManager"
+              namespace="common.module-manager"
               onClick={handleUninstall}
             />
           </ContextMenu>
