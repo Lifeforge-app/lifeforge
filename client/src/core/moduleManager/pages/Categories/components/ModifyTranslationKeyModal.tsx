@@ -51,7 +51,7 @@ function ModifyTranslationKeyModal({
       }}
       uiConfig={{
         icon: 'tabler:plus',
-        namespace: 'common.moduleManager',
+        namespace: 'common.module-manager',
         title: `translationKey.${openType}`,
         onClose
       }}

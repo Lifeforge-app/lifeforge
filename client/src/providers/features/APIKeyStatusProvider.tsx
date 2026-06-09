@@ -21,7 +21,7 @@ function APIKeyStatusProvider({
   APIKeyAccess: ModuleCategory['items'][number]['APIKeyAccess']
   children: React.ReactNode
 }) {
-  const { t } = useTranslation('common.apiKeys')
+  const { t } = useTranslation('common.api-keys')
 
   const requiredAPIKeys = Object.entries(APIKeyAccess ?? {})
     .filter(([_, value]) => value.required)
@@ -82,7 +82,7 @@ function APIKeyStatusProvider({
                         as={Link}
                         icon="tabler:arrow-right"
                         iconPosition="end"
-                        namespace="common.apiKeys"
+                        namespace="common.api-keys"
                         to="/api-keys"
                         width="100%"
                       >

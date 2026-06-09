@@ -31,7 +31,7 @@ import ModulesRequiredListModal from '../modals/ModulesRequiredListModal'
 dayjs.extend(relativeTime)
 
 function EntryItem({ entry }: { entry: APIKeyEntry }) {
-  const { t } = useTranslation('common.apiKeys')
+  const { t } = useTranslation('common.api-keys')
 
   const { modules } = useFederation()
 

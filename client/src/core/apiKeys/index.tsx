@@ -24,7 +24,7 @@ export type APIKeyEntry = InferOutput<
 function APIKeys() {
   const { open } = useModalStore()
 
-  const { t } = useTranslation('common.apiKeys')
+  const { t } = useTranslation('common.api-keys')
 
   const entriesQuery = useQuery(forgeAPI.apiKeys.entries.list.queryOptions())
 
@@ -42,7 +42,7 @@ function APIKeys() {
             display={{ base: 'none', lg: 'flex' }}
             icon="tabler:plus"
             tProps={{
-              item: t('common.apiKeys:items.apiKey')
+              item: t('common.api-keys:items.apiKey')
             }}
             onClick={handleCreateAPIKey}
           >
@@ -60,7 +60,7 @@ function APIKeys() {
                 icon="tabler:key-off"
                 message={{
                   id: 'apiKeys',
-                  namespace: 'common.apiKeys'
+                  namespace: 'common.api-keys'
                 }}
               />
             )}

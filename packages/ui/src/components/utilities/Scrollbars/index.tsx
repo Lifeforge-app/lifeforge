@@ -499,6 +499,7 @@ export class Scrollbars extends Component<ScrollbarsProps, ScrollbarsState> {
   }
 
   setupDragging(): void {
+    // @ts-ignore
     css(document.body, disableSelectStyle)
     document.addEventListener('mousemove', this.handleDrag)
     document.addEventListener('mouseup', this.handleDragEnd)

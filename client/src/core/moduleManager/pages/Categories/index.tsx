@@ -34,7 +34,7 @@ import CategoryItem from './components/CategoryItem'
 import ModifyCategoryModal from './components/ModifyCategoryModal'
 
 function Categories() {
-  const { t } = useTranslation('common.moduleManager')
+  const { t } = useTranslation('common.module-manager')
 
   const { open } = useModalStore()
 
@@ -210,7 +210,7 @@ function Categories() {
           icon="tabler:apps-off"
           message={{
             id: 'category',
-            namespace: 'common.moduleManager'
+            namespace: 'common.module-manager'
           }}
         />
       )}

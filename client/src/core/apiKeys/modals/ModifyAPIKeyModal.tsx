@@ -100,7 +100,7 @@ function ModifyAPIKeyModal({
       }}
       uiConfig={{
         icon: type === 'create' ? 'tabler:plus' : 'tabler:pencil',
-        namespace: 'common.apiKeys',
+        namespace: 'common.api-keys',
         title: `apiKey.${type}`,
         onClose
       }}
