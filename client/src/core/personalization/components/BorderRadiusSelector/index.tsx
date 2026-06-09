@@ -1,13 +1,13 @@
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/ui'
 import {
   Flex,
   Listbox,
   ListboxOption,
   OptionsColumn,
   Text,
-  surface
+  surface,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/providers/features/UserPersonalizationProvider'

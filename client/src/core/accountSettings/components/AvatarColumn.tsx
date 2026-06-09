@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query'
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@lifeforge/api'
 import {
@@ -12,6 +11,7 @@ import {
   Flex,
   Icon,
   OptionsColumn,
+  toast,
   useModalStore
 } from '@lifeforge/ui'
 

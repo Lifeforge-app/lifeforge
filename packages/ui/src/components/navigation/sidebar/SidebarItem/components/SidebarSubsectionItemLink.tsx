@@ -1,12 +1,11 @@
 import _ from 'lodash'
 import { useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-
+import { Link, useLocation } from 'react-router'
 
 import { Flex, Icon, Text, Transition } from '@/components/primitives'
 import { useMainSidebarState } from '@/providers'
 import { colorWithOpacity } from '@/system/colors/color-with-opacity'
-import { Link, useLocation } from 'react-router'
 
 export function SidebarSubsectionItemLink({
   subsectionLabel,

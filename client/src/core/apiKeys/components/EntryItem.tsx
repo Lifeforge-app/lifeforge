@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime.js'
 import { useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import { useFederation } from '@lifeforge/federation'
 import {
@@ -19,6 +18,7 @@ import {
   TAILWIND_PALETTE,
   TagChip,
   Text,
+  toast,
   useModalStore
 } from '@lifeforge/ui'
 

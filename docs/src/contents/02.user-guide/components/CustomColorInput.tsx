@@ -1,8 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 
-import { usePersonalization } from '@lifeforge/ui'
-import { Button, ColorInput, Switch } from '@lifeforge/ui'
+import { Button, ColorInput, Switch, usePersonalization } from '@lifeforge/ui'
 
 function CustomColorInput() {
   const [color, setColor] = useState('#a9d066')

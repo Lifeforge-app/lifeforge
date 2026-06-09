@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import { usePromiseLoading } from '@lifeforge/api'
-import { Button, OptionsColumn } from '@lifeforge/ui'
+import { Button, OptionsColumn, toast } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

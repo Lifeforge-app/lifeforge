@@ -1,7 +1,7 @@
-import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
-import { usePersonalization } from './PersonalizationProvider'
-
 import { Box, Flex } from '@/components/primitives'
+
+import { usePersonalization } from './PersonalizationProvider'
+import { BG_BLURS } from './PersonalizationProvider/constants/bg_blurs'
 
 export function BackgroundProvider({
   children

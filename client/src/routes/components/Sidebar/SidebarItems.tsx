@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { useLocation } from 'react-router'
 
+import { useAuth } from '@lifeforge/api'
 import { useFederation } from '@lifeforge/federation'
 import {
   Box,
@@ -12,8 +13,6 @@ import {
   SidebarDivider,
   useMainSidebarState
 } from '@lifeforge/ui'
-
-import { useAuth } from '@lifeforge/api'
 
 import MainSidebarTitle from './MainSidebarTitle'
 

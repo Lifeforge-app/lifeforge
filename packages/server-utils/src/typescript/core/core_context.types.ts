@@ -12,7 +12,7 @@ import { ITempFileManagerConstructor } from './tempfile_manager.types'
 export type FetchAIFunc = <
   T extends z.ZodTypeAny | undefined = undefined
 >(params: {
-  pb: IPBService<CleanedSchemas>
+  pb: IPBService<any>
   provider: string
   model: string
   messages: OpenAI.ChatCompletionMessageParam[]
@@ -38,7 +38,7 @@ type CheckExistenceFunc = <TSchemas extends CleanedSchemas>(
 
 type GetAPIKeyFunc = (
   id: string,
-  pb: IPBService<CleanedSchemas>
+  pb: IPBService<any>
 ) => Promise<string>
 
 type CheckModulesAvailabilityFunc = (moduleIds: string) => Promise<boolean>
@@ -92,7 +92,7 @@ export type EncryptFunc = (data: Buffer, key: string) => Buffer
 export type Encrypt2Func = (data: string, key: string) => string
 
 export type ValidateOTPFunc = (
-  pb: IPBService<CleanedSchemas>,
+  pb: IPBService<any>,
   {
     otp,
     otpId

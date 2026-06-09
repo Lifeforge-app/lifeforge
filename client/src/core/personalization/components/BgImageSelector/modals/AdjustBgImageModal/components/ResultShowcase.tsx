@@ -1,4 +1,3 @@
-import { usePersonalization } from '@lifeforge/ui'
 import {
   Box,
   Flex,
@@ -6,7 +5,8 @@ import {
   Stack,
   Text,
   colorWithOpacity,
-  surface
+  surface,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import { BG_BLURS } from '../constants/bg_blurs'

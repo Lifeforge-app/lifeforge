@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useMemo } from 'react'
-import { toast } from '@lifeforge/ui'
 
 import { useFederation } from '@lifeforge/federation'
 import {
@@ -10,6 +9,7 @@ import {
   Stack,
   Text,
   WithQuery,
+  toast,
   usePersonalization
 } from '@lifeforge/ui'
 

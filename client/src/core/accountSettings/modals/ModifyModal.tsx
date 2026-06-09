@@ -2,15 +2,15 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import _ from 'lodash'
 import { useForm } from 'react-hook-form'
-import { toast } from '@lifeforge/ui'
 import z from 'zod'
 
-import { useAuth, type UserData } from '@lifeforge/api'
+import { type UserData, useAuth } from '@lifeforge/api'
 import {
   DateField,
   FormModal,
   TextField,
-  createDefaultValues
+  createDefaultValues,
+  toast
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
@@ -48,6 +48,7 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
         } else {
           setUserData(oldData => {
             if (!oldData) return null
+
             return { ...oldData, ...newData.data } as UserData
           })
         }

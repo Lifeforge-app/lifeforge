@@ -1,9 +1,14 @@
 import { QRCodeSVG } from 'qrcode.react'
 import { useEffect, useState } from 'react'
-import { toast } from '@lifeforge/ui'
 
 import { decrypt } from '@lifeforge/api'
-import { Box, Flex, LoadingScreen, usePersonalization } from '@lifeforge/ui'
+import {
+  Box,
+  Flex,
+  LoadingScreen,
+  toast,
+  usePersonalization
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 

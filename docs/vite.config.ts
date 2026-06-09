@@ -36,6 +36,7 @@ export default defineConfig({
               .toString()
           } else if (id.endsWith('.mdx')) {
             const mdxPath = id.toString().split('src/')[1]
+
             return `mdx-${mdxPath.replace(/\//g, '-').replace('.mdx', '')}`
           }
         }

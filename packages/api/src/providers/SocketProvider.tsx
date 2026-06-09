@@ -18,11 +18,7 @@ export interface SocketEvent<
   progress?: P
 }
 
-export function SocketProvider({
-  children
-}: {
-  children: React.ReactNode
-}) {
+export function SocketProvider({ children }: { children: React.ReactNode }) {
   const apiHost = useAPIEndpoint()
 
   const [socket, setSocket] = useState<Socket | null>(null)

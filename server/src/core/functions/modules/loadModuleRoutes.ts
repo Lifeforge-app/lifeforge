@@ -3,7 +3,6 @@ import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
 import crypto from 'crypto'
 import fs from 'fs'
-import _ from 'lodash'
 import path from 'path'
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
@@ -54,10 +53,13 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
       const mod = await import(modulePath)
 
       const pkgPath = path.join(appsDir, modDir, 'package.json')
+
       if (!fs.existsSync(pkgPath)) {
         continue
       }
+
       const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+
       const key = generateModuleId(pkg.name)
 
       if (!mod.default) {

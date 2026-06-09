@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import { useAPIOnlineStatus } from '@lifeforge/api'
 import { useFederation } from '@lifeforge/federation'
@@ -16,6 +15,7 @@ import {
   TagChip,
   Text,
   colorWithOpacity,
+  toast,
   useModalStore
 } from '@lifeforge/ui'
 

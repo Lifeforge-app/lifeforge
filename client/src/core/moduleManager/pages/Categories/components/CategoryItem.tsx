@@ -1,6 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { toast } from '@lifeforge/ui'
 
 import { useFederation } from '@lifeforge/federation'
 import {
@@ -13,6 +12,7 @@ import {
   Flex,
   Text,
   WithDivide,
+  toast,
   useModalStore
 } from '@lifeforge/ui'
 

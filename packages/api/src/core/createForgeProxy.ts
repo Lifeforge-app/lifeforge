@@ -35,7 +35,11 @@ function createForgeProxyInternal<T>(
   }
 
   function getResolvedHost() {
-    return (contract && globalProxyRegistry.get(contract)?.apiHost) || globalProxyRegistry.apiHost || ''
+    return (
+      (contract && globalProxyRegistry.get(contract)?.apiHost) ||
+      globalProxyRegistry.apiHost ||
+      ''
+    )
   }
 
   const endpoint = new ForgeEndpoint<any>(
@@ -79,7 +83,10 @@ function createForgeProxyInternal<T>(
       }
 
       if (prop in CORE_HELPERS) {
-        return createCoreHelper(getResolvedHost(), prop as keyof typeof CORE_HELPERS)
+        return createCoreHelper(
+          getResolvedHost(),
+          prop as keyof typeof CORE_HELPERS
+        )
       }
 
       if (prop in endpoint && typeof (endpoint as any)[prop] !== 'undefined') {

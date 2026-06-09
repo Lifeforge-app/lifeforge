@@ -1,4 +1,5 @@
 import type { ModuleCategory } from '@lifeforge/configs'
+
 import { SYSTEM_CATEGORIES } from '../providers/FederationProvider'
 
 export type CategoryOrder = Record<string, Record<string, string>>

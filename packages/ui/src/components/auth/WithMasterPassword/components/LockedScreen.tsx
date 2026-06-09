@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@/providers'
 
-import { usePromiseLoading } from '@lifeforge/api'
-import { encrypt } from '@lifeforge/api'
+import { encrypt, usePromiseLoading } from '@lifeforge/api'
 import type { ForgeEndpoint } from '@lifeforge/api'
 
 import { Button, TextInput } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { toast } from '@/providers'
 
 export function LockedScreen({
   challengeController,

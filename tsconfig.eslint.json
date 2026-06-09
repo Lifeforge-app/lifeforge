@@ -9,9 +9,5 @@
     "scripts/**/*",
     "tools/**/*"
   ],
-  "exclude": [
-    "**/node_modules",
-    "**/dist",
-    "**/dist-docker"
-  ]
+  "exclude": ["**/node_modules", "**/dist", "**/dist-docker"]
 }

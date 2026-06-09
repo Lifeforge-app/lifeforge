@@ -1,6 +1,5 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
-import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@lifeforge/api'
 import {
@@ -13,6 +12,7 @@ import {
   Text,
   Transition,
   surface,
+  toast,
   useMainSidebarState
 } from '@lifeforge/ui'
 

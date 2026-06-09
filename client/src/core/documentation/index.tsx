@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
-import { toast } from '@lifeforge/ui'
 
+import { toast } from '@lifeforge/ui'
 
 function index() {
   const navigate = useNavigate()

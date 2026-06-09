@@ -13,6 +13,9 @@ apps/*/locales
 apps/*/package.json
 build
 tsbuild
+storybook-static
+**/storybook-static
+
 *.js
 !eslint.config.js
 *.tsbuildinfo
@@ -21,6 +24,7 @@ pb_*/
 medium
 .temp
 server/src/generated
+.turbo
 
 # system files
 Thumbs.db

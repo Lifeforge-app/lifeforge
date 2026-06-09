@@ -1,7 +1,5 @@
-import type {
-  ModuleCategory,
-  ModuleConfig
-} from '@lifeforge/configs'
+import type { ModuleCategory, ModuleConfig } from '@lifeforge/configs'
+
 import {
   type CategoryOrder,
   fetchCategoryOrder,

@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
-import { usePersonalization } from '@lifeforge/ui'
 import {
   Box,
   Card,
@@ -15,7 +13,9 @@ import {
   Text,
   colorWithOpacity,
   surface,
-  useModalStore
+  toast,
+  useModalStore,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'

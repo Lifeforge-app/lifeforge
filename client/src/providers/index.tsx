@@ -5,11 +5,11 @@ import { useMemo } from 'react'
 import {
   APIEndpointProvider,
   APIOnlineStatusProvider,
+  AuthProvider,
   EncryptionProvider,
   SocketProvider
 } from '@lifeforge/api'
 import { FederationProvider } from '@lifeforge/federation'
-import { AuthProvider } from '@lifeforge/api'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,
@@ -72,6 +72,7 @@ function Providers() {
         [EncryptionWrapper],
 
         // Provider that handles authentication, very obviously
+        // Explicitly casted to never due to type inference complexity of forgeAPI
         [
           AuthProvider,
           {
@@ -80,7 +81,7 @@ function Providers() {
               open(TwoFAModal, {})
             }
           }
-        ],
+        ] as never,
         // Provider that manages the main sidebar state (not the module sidebars, the main one)
         [MainSidebarStateProvider],
         // Provider that synchronizes user personalization data with the backend

@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
-import { usePersonalization } from '@lifeforge/ui'
 import {
   Flex,
   Icon,
@@ -10,7 +9,8 @@ import {
   OptionsColumn,
   Text,
   WithQuery,
-  surface
+  surface,
+  usePersonalization
 } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'

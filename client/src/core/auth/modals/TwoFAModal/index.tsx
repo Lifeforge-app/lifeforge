@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import { useAuth } from '@lifeforge/api'
-import { Button, Flex, ModalHeader } from '@lifeforge/ui'
+import { Button, Flex, ModalHeader, toast } from '@lifeforge/ui'
 
 import OrAuthWithDivider from '../../components/OrAuthWithDivider'
 import UsingAuthApp from './components/UsingAuthApp'

@@ -1,13 +1,12 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 
-import { useMainSidebarState } from '../../../providers'
-
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
 import { useModuleHeaderState } from '@/providers'
 import { colorWithOpacity } from '@/system'
 
+import { useMainSidebarState } from '../../../providers'
 import { ContextMenu } from '../../overlays/ContextMenu'
 
 interface ModuleHeaderProps {

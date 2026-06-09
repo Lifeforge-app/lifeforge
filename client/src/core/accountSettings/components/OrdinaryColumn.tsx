@@ -51,9 +51,7 @@ function OrdinaryColumn({
               }
 
               if (type === 'datetime') {
-                return dayjs(userData[id]).format(
-                  'DD MMM YYYY'
-                )
+                return dayjs(userData[id]).format('DD MMM YYYY')
               }
 
               return userData[id]

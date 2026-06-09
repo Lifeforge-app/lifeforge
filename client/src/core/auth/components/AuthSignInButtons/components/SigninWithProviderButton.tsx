@@ -1,12 +1,11 @@
 import _ from 'lodash'
 import { memo, useCallback } from 'react'
-import { toast } from '@lifeforge/ui'
+import { useSearchParams } from 'react-router'
 
 import { useAuth } from '@lifeforge/api'
-import { Button } from '@lifeforge/ui'
+import { Button, toast } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
-import { useSearchParams } from 'react-router'
 
 function SigninWithProviderButton({
   provider,

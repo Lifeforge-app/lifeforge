@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { toast } from '@lifeforge/ui'
 
 import {
   Button,
   OptionsColumn,
   QRCodeScanner,
+  toast,
   useModalStore
 } from '@lifeforge/ui'
 

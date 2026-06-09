@@ -1,8 +1,6 @@
 import { useReducer, useState } from 'react'
-import { toast } from '@/providers'
 
-import { usePromiseLoading } from '@lifeforge/api'
-import { useAPIEndpoint } from '@lifeforge/api'
+import { useAPIEndpoint, usePromiseLoading } from '@lifeforge/api'
 
 import {
   EmptyStateScreen,
@@ -12,6 +10,7 @@ import {
 import { Button, SearchInput } from '@/components/inputs'
 import { Flex } from '@/components/primitives'
 import { WithQueryData } from '@/components/utilities'
+import { toast } from '@/providers'
 import { forgeAPI } from '@/utils/forgeAPI'
 
 import { SearchFilterModal } from './components/SearchFilterModal'
