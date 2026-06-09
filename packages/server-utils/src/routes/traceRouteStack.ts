@@ -1,6 +1,6 @@
 import z from 'zod'
 
-type Route = {
+export type Route = {
   method: string
   path: string
   description: string
@@ -12,13 +12,29 @@ type Route = {
   }
 }
 
+export interface RouteStackLayer {
+  regexp: {
+    toString(): string
+  }
+  route?: {
+    path?: string
+    methods?: Record<string, boolean>
+    stack?: RouteStackLayer[]
+  }
+  handle?: unknown
+}
+
 export default function traceRouteStack(
-  stack: any,
-  path = '',
+  stack: RouteStackLayer[],
+  path: string = '',
   routes: Route[] = []
-) {
+): Route[] {
   for (const layer of stack) {
-    if (layer.handle?.stack && Array.isArray(layer.handle.stack)) {
+    const handle = layer.handle as
+      | { stack?: RouteStackLayer[]; meta?: Route }
+      | undefined
+
+    if (handle?.stack && Array.isArray(handle.stack)) {
       const pathName =
         layer.regexp
           .toString()
@@ -27,7 +43,7 @@ export default function traceRouteStack(
 
       const fullPath = [path, pathName].filter(Boolean).join('/')
 
-      traceRouteStack(layer.handle.stack, fullPath, routes)
+      traceRouteStack(handle.stack, fullPath, routes)
     }
 
     // Check for route dispatch by looking for .route property
@@ -55,8 +71,11 @@ export default function traceRouteStack(
 
       const routeStack = layer.route.stack || []
 
-      const controllerLayerMeta =
-        routeStack[routeStack.length - 1]?.handle?.meta
+      const controllerLayerMeta = (
+        routeStack[routeStack.length - 1]?.handle as
+          | { meta?: Route }
+          | undefined
+      )?.meta
 
       if (!controllerLayerMeta) {
         continue

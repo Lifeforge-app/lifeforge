@@ -1,16 +1,13 @@
 import { ROOT_DIR } from '@constants'
-import traceRouteStack from '@functions/initialization/traceRouteStack'
 import { loadModuleRoutes } from '@functions/modules/loadModuleRoutes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 import express from 'express'
 import path from 'path'
-import z from 'zod'
 
 import { forgeRouter } from '@lifeforge/server-utils'
 
 import coreRoutes from './core.routes'
-import forge from './forge'
 
 const router = express.Router()
 
@@ -18,35 +15,12 @@ const router = express.Router()
 // Type assertion ensures TypeScript uses generated types for inference
 const appRoutes = await loadModuleRoutes()
 
-const listRoutes = forge
-  .query({
-    description: 'List all available API routes',
-    input: {},
-    output: {
-      OK: z.array(
-        z.object({
-          method: z.string(),
-          path: z.string(),
-          description: z.string(),
-          schema: z.object({
-            response: z.unknown(),
-            params: z.unknown().optional(),
-            body: z.unknown().optional(),
-            query: z.unknown().optional()
-          })
-        })
-      )
-    }
-  })
-  .callback(async ({ response }) => response.ok(traceRouteStack(router.stack)))
-
 const mainRoutes = forgeRouter({
   ...coreRoutes,
   modules: forgeRouter({
     ...coreRoutes.modules,
     ...appRoutes
-  }),
-  listRoutes
+  })
 })
 
 router.get('/hello', (_, res) => {

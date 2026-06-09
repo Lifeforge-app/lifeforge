@@ -38,6 +38,7 @@
         "@types/tinycolor2": "^1.4.6",
         "@typescript-eslint/eslint-plugin": "^7.18.0",
         "@typescript-eslint/parser": "^7.18.0",
+        "@typescript/native-preview": "^7.0.0-dev.20260609.1",
         "@vitejs/plugin-react": "^4.4.1",
         "bun-types": "latest",
         "concurrently": "^9.1.2",
@@ -61,6 +62,17 @@
     "apps/lifeforge--achievements": {
       "name": "@lifeforge/lifeforge--achievements",
       "version": "0.0.11",
+      "peerDependencies": {
+        "@lifeforge/api": "workspace:*",
+        "@lifeforge/configs": "workspace:*",
+        "@lifeforge/federation": "workspace:*",
+        "@lifeforge/server-utils": "workspace:*",
+        "@lifeforge/ui": "workspace:*",
+      },
+    },
+    "apps/lifeforge--api--endpoint-explorer": {
+      "name": "@lifeforge/lifeforge--api-endpoint-explorer",
+      "version": "0.0.5",
       "peerDependencies": {
         "@lifeforge/api": "workspace:*",
         "@lifeforge/configs": "workspace:*",
@@ -137,7 +149,6 @@
         "@dnd-kit/core": "^6.3.1",
         "@dnd-kit/sortable": "^10.0.0",
         "@dnd-kit/utilities": "^3.2.2",
-        "@iconify/react": "^6.0.2",
         "@lifeforge/api": "workspace:*",
         "@lifeforge/federation": "workspace:*",
         "@lifeforge/ui": "workspace:*",
@@ -161,7 +172,6 @@
         "react-virtualized": "^9.22.6",
         "recharts": "^2.15.0",
         "socket.io-client": "^4.8.1",
-        "typescript": "^5.9.3",
         "uuid": "^13.0.0",
       },
       "devDependencies": {
@@ -236,8 +246,8 @@
       },
       "devDependencies": {
         "@types/crypto-js": "^4.2.2",
-        "@types/react": "^19.2.0",
-        "typescript": "^5.9.3",
+        "@vitejs/plugin-react": "^4.7.0",
+        "vite-plugin-dts": "^4.5.4",
       },
       "peerDependencies": {
         "@tanstack/react-query": "^5.90.2",
@@ -248,18 +258,15 @@
     "packages/configs": {
       "name": "@lifeforge/configs",
       "version": "0.0.1",
-      "dependencies": {
-        "zod": "4.3.5",
-      },
       "devDependencies": {
         "@types/react": "^19.2.0",
-        "typescript": "^5.9.3",
       },
       "peerDependencies": {
         "@originjs/vite-plugin-federation": "^1.4.1",
         "@vitejs/plugin-react": "^4.4.1",
         "react": "^19.2.0",
         "vite": "^7.1.9",
+        "zod": "4.3.5",
       },
     },
     "packages/federation": {
@@ -267,11 +274,9 @@
       "version": "0.0.1",
       "dependencies": {
         "@lifeforge/api": "workspace:*",
-        "zod": "4.3.5",
       },
       "devDependencies": {
         "@types/react": "^19.2.0",
-        "typescript": "^5.9.3",
       },
       "peerDependencies": {
         "react": "^19.2.0",
@@ -288,7 +293,6 @@
       },
       "devDependencies": {
         "@types/node": "^25.0.6",
-        "typescript": "^5.9.0",
         "vitest": "^4.0.0",
       },
     },
@@ -310,7 +314,6 @@
         "socket.io": "^4.8.3",
         "tesseract.js": "^5.1.1",
         "uuid": "^11.1.0",
-        "zod": "4.3.5",
       },
       "devDependencies": {
         "@types/crypto-js": "^4.2.2",
@@ -318,7 +321,6 @@
         "@types/express-serve-static-core": "4",
         "@types/lodash": "^4.17.21",
         "@types/multer": "^1.4.13",
-        "typescript": "^5.8.3",
         "vitest": "^4.1.7",
       },
       "peerDependencies": {
@@ -759,6 +761,8 @@
     "@lifeforge/federation": ["@lifeforge/federation@workspace:packages/federation"],
 
     "@lifeforge/lifeforge--achievements": ["@lifeforge/lifeforge--achievements@workspace:apps/lifeforge--achievements"],
+
+    "@lifeforge/lifeforge--api-endpoint-explorer": ["@lifeforge/lifeforge--api-endpoint-explorer@workspace:apps/lifeforge--api--endpoint-explorer"],
 
     "@lifeforge/lifeforge--lang-en": ["@lifeforge/lifeforge--lang-en@workspace:locales/lifeforge--lang-en"],
 
@@ -1300,21 +1304,21 @@
 
     "@typescript-eslint/visitor-keys": ["@typescript-eslint/visitor-keys@7.18.0", "", { "dependencies": { "@typescript-eslint/types": "7.18.0", "eslint-visitor-keys": "^3.4.3" } }, "sha512-cDF0/Gf81QpY3xYyJKDV14Zwdmid5+uuENhjH2EqFaF0ni+yAyq/LzMaIJdhNJXZI7uLzwIlA+V7oWoyn6Curg=="],
 
-    "@typescript/native-preview": ["@typescript/native-preview@7.0.0-dev.20260608.1", "", { "optionalDependencies": { "@typescript/native-preview-darwin-arm64": "7.0.0-dev.20260608.1", "@typescript/native-preview-darwin-x64": "7.0.0-dev.20260608.1", "@typescript/native-preview-linux-arm": "7.0.0-dev.20260608.1", "@typescript/native-preview-linux-arm64": "7.0.0-dev.20260608.1", "@typescript/native-preview-linux-x64": "7.0.0-dev.20260608.1", "@typescript/native-preview-win32-arm64": "7.0.0-dev.20260608.1", "@typescript/native-preview-win32-x64": "7.0.0-dev.20260608.1" }, "bin": { "tsgo": "bin/tsgo.js" } }, "sha512-nJyuPQwFn/VlP7JvFA0jPHJMMHaDy5vWM5xRYUwjZZd3dcY7LldfZ1EkdPOLc+GW0trXcmvRemQ4XCsBkOGOUQ=="],
+    "@typescript/native-preview": ["@typescript/native-preview@7.0.0-dev.20260609.1", "", { "optionalDependencies": { "@typescript/native-preview-darwin-arm64": "7.0.0-dev.20260609.1", "@typescript/native-preview-darwin-x64": "7.0.0-dev.20260609.1", "@typescript/native-preview-linux-arm": "7.0.0-dev.20260609.1", "@typescript/native-preview-linux-arm64": "7.0.0-dev.20260609.1", "@typescript/native-preview-linux-x64": "7.0.0-dev.20260609.1", "@typescript/native-preview-win32-arm64": "7.0.0-dev.20260609.1", "@typescript/native-preview-win32-x64": "7.0.0-dev.20260609.1" }, "bin": { "tsgo": "bin/tsgo.js" } }, "sha512-1HOuH/u/451O3hx4Z9fesNqarpeit6UfkgwK96sCVWi5p69F0N3v+6bI969lLIjF7K9dbYQNiWUaZ6Wik87iKg=="],
 
-    "@typescript/native-preview-darwin-arm64": ["@typescript/native-preview-darwin-arm64@7.0.0-dev.20260608.1", "", { "os": "darwin", "cpu": "arm64" }, "sha512-ZGs+yhsPWFDkSHydJyF8I3d4witpXiD69auWZtSotNWG3gBR5Ne291m38rvxoLFDRlFHwAQpPT7q3yStp+cQSQ=="],
+    "@typescript/native-preview-darwin-arm64": ["@typescript/native-preview-darwin-arm64@7.0.0-dev.20260609.1", "", { "os": "darwin", "cpu": "arm64" }, "sha512-Yf/zHEadP/yUiWUdM/mZVfEVFJuGMf6nhRSFif0vp+FwtfGU4jmlpNF7BTJJdOHrrcWkwEJKzAoMCtEtyxhuyQ=="],
 
-    "@typescript/native-preview-darwin-x64": ["@typescript/native-preview-darwin-x64@7.0.0-dev.20260608.1", "", { "os": "darwin", "cpu": "x64" }, "sha512-cxmBCl1+fvGgom2vwPTbZ43bW68rfjDIU1ZDQGtjXvj1bpW9fEozskJqgZdNNHu8WQIl17zj4Ke+noENwgGu9w=="],
+    "@typescript/native-preview-darwin-x64": ["@typescript/native-preview-darwin-x64@7.0.0-dev.20260609.1", "", { "os": "darwin", "cpu": "x64" }, "sha512-z4dYWI57CPHs0wV/FWFth8fWmqYH7iOm7THOfZ5Fv0jo/SWK6kE1kEUIqIAExqo7ueRNqSrCw0I8U1J4TJszAw=="],
 
-    "@typescript/native-preview-linux-arm": ["@typescript/native-preview-linux-arm@7.0.0-dev.20260608.1", "", { "os": "linux", "cpu": "arm" }, "sha512-tWFLuzAWg8XnOkN7f94MAW8qLTMG7Q74IXHSG18cVmftuBxwvn1Lov+0Rnd9rsH7VAuSIu00Co6G3/PbGvGrxA=="],
+    "@typescript/native-preview-linux-arm": ["@typescript/native-preview-linux-arm@7.0.0-dev.20260609.1", "", { "os": "linux", "cpu": "arm" }, "sha512-mEtN8BbAgVtBu/5MVomYquXNvgok2C0KG6V0D4SV1jfBJNtlcqbp0WuIqT0bnM9DA4TgzcHvnFMpwGSK/dqI5A=="],
 
-    "@typescript/native-preview-linux-arm64": ["@typescript/native-preview-linux-arm64@7.0.0-dev.20260608.1", "", { "os": "linux", "cpu": "arm64" }, "sha512-/JPrQqa36CSMdXeEXhZ0mYUmufehIL8ujagXvU8z/3/b/CeWjgoZLJCuy76k9NLZCG7wGvcFWFK5kgOEKyDQdw=="],
+    "@typescript/native-preview-linux-arm64": ["@typescript/native-preview-linux-arm64@7.0.0-dev.20260609.1", "", { "os": "linux", "cpu": "arm64" }, "sha512-OxNVWH9IhrMAzNlDyDit1dPO64GFIDPOUKoruIkJ9A1ZEONfIHXG5f+V3si9jtuNmuomiz9FjpbzOqLsgaxt+w=="],
 
-    "@typescript/native-preview-linux-x64": ["@typescript/native-preview-linux-x64@7.0.0-dev.20260608.1", "", { "os": "linux", "cpu": "x64" }, "sha512-QfVLSH1NMAOa+N6Ey9cFHWppLFISOeCG3c0nJER3LXrDwkE4WtsVGHQ4IRDpIYT3Q2iC7QWUFWwrHayNKlrGYA=="],
+    "@typescript/native-preview-linux-x64": ["@typescript/native-preview-linux-x64@7.0.0-dev.20260609.1", "", { "os": "linux", "cpu": "x64" }, "sha512-KO8WO1gBIC09T3255RlTY42TGu8en5mEkLPQu2wkMn+dX2T8KYL64zXrCeLeUWa0NvmVdJUeyWu3pFOn3zKemw=="],
 
-    "@typescript/native-preview-win32-arm64": ["@typescript/native-preview-win32-arm64@7.0.0-dev.20260608.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-DvpbX0aPCWCe4bJEP0cOky4cCwF+5QJZHsLoGV4gYd+0EFEkarTOxZG0CezP30E/iX6u1RUOrtTeMZOQthqDpQ=="],
+    "@typescript/native-preview-win32-arm64": ["@typescript/native-preview-win32-arm64@7.0.0-dev.20260609.1", "", { "os": "win32", "cpu": "arm64" }, "sha512-+8q19LWjnMKK6SF3PLeMEalbfWDYWHs0AU8kSFCBCke/RLoDG4FjQzVtLgUo+KWhsmZMosiEyqEnZmSlED2tIQ=="],
 
-    "@typescript/native-preview-win32-x64": ["@typescript/native-preview-win32-x64@7.0.0-dev.20260608.1", "", { "os": "win32", "cpu": "x64" }, "sha512-J9nQB87sU+YJE3fq3XKwQvgLNWVXiEWyOP1L/FuyOlHb77UkFXmpaUbFTJ1w7rfd91nlKb2EECfsdTxbELUT0Q=="],
+    "@typescript/native-preview-win32-x64": ["@typescript/native-preview-win32-x64@7.0.0-dev.20260609.1", "", { "os": "win32", "cpu": "x64" }, "sha512-qNPcss+6yRoNFfFIKQbPwJWYxDfOZwyL8JBJh4J+yMLOad/+/AOjsO4EtZsIpv5PMCjpnD75coBoDkw+5NkItw=="],
 
     "@uidotdev/usehooks": ["@uidotdev/usehooks@2.4.1", "", { "peerDependencies": { "react": ">=18.0.0", "react-dom": ">=18.0.0" } }, "sha512-1I+RwWyS+kdv3Mv0Vmc+p0dPYH0DTRAo04HLyXReYBL9AeseDWUJyi4THuksBJcu9F0Pih69Ak150VDnqbVnXg=="],
 
