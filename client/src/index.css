@@ -3,12 +3,6 @@
 
 @import 'react-grid-layout/css/styles.css';
 @import '@lifeforge/ui/dist/index.css';
-@import './core/dashboard/index.css';
-
-@source '../../apps/*/client/src';
-@source '../../apps/*/client/dist';
-@source '../../apps/*/client/dist-docker';
-@source '../../apps/**/*';
 
 main#app {
   background-color: color-mix(in srgb, var(--color-bg-200) 50%, transparent);

@@ -2,6 +2,10 @@
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 import { z } from 'zod'
 
+import type {
+  InferRawInput,
+  InferRawOutput
+} from '../typescript/forge_proxy.types'
 import {
   createEncryptionSession,
   decryptResponse,
@@ -9,8 +13,6 @@ import {
   isEncryptedResponse
 } from '../utils/encryption'
 import { fetchAPI } from '../utils/fetchAPI'
-
-import type { InferRawInput, InferRawOutput } from '../typescript/forge_proxy.types'
 import { globalProxyRegistry } from './registry'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
@@ -34,9 +36,7 @@ import { getFormData, hasFile, joinObjectsRecursively } from './utils'
  * const users = await forgeAPI.users.list.input({ page: 1 }).query()
  * ```
  */
-export class ForgeEndpoint<
-  T extends { __isForgeContract: true } = any
-> {
+export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
   /** Internal type marker for type inference */
   public __type!: T
 
@@ -60,12 +60,14 @@ export class ForgeEndpoint<
     const ctx = this._rootContract
       ? globalProxyRegistry.get(this._rootContract)
       : null
+
     if (ctx) {
       return {
         apiHost: ctx.apiHost,
         prefix: ctx.moduleId ? `modules/${ctx.moduleId}` : ''
       }
     }
+
     return {
       apiHost:
         this._apiHost ||
@@ -93,7 +95,12 @@ export class ForgeEndpoint<
    * Useful for React Query's `queryKey`.
    */
   get key() {
+    const { prefix } = this._resolvedConfig
+
+    const prefixParts = prefix ? prefix.split('/').filter(Boolean) : []
+
     return [
+      ...prefixParts,
       ...this._route.split('/').filter(Boolean),
       this._input ?? null
     ].filter(Boolean)
@@ -104,6 +111,7 @@ export class ForgeEndpoint<
    */
   get endpoint() {
     const { apiHost, prefix } = this._resolvedConfig
+
     const path = this._getPath(prefix)
 
     // Handle relative URLs (e.g., /api)
@@ -229,7 +237,11 @@ export class ForgeEndpoint<
       ...options,
       mutationKey: [...this.key, 'raw'],
       mutationFn: (data: Partial<T>) => {
-        return fetchAPI(this._apiHost, this._getPath(), {
+        const { apiHost, prefix } = this._resolvedConfig
+
+        const path = this._getPath(prefix)
+
+        return fetchAPI(apiHost, path, {
           method: 'POST',
           body: hasFile(data) ? getFormData(data) : data
         })
@@ -245,6 +257,7 @@ export class ForgeEndpoint<
    */
   async query(): Promise<InferRawOutput<T>> {
     const { apiHost, prefix } = this._resolvedConfig
+
     const path = this._getPath(prefix)
 
     // Create encryption session (generates AES key and encrypts it with server's public key)
@@ -283,7 +296,9 @@ export class ForgeEndpoint<
     isExternal?: boolean
   }) {
     const { apiHost, prefix } = this._resolvedConfig
+
     const path = this._getPath(prefix)
+
     return fetchAPI<InferRawOutput<T>>(apiHost, path, {
       method: 'GET',
       ...options
@@ -300,7 +315,9 @@ export class ForgeEndpoint<
    */
   mutateRaw(data: InferRawInput<T>['body'] | FormData) {
     const { apiHost, prefix } = this._resolvedConfig
+
     const path = this._getPath(prefix)
+
     const payloadData = data === undefined ? {} : data
 
     return fetchAPI<InferRawOutput<T>>(apiHost, path, {
@@ -353,7 +370,9 @@ export class ForgeEndpoint<
    */
   async mutate(data: InferRawInput<T>['body']): Promise<InferRawOutput<T>> {
     const { apiHost, prefix } = this._resolvedConfig
+
     const path = this._getPath(prefix)
+
     const payloadData = data === undefined ? {} : data
 
     // If data contains files, fall back to raw mode (server also disables encryption for media endpoints)

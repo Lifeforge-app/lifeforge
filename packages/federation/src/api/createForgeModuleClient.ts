@@ -1,6 +1,5 @@
 import { createForgeProxy } from '@lifeforge/api'
 import type { ProxyTree } from '@lifeforge/api'
-
 import type { ModuleConfig } from '@lifeforge/configs'
 
 /**
