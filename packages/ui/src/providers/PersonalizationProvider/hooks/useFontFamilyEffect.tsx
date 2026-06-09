@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-import fetchAPI from '../../../utils/fetchAPI'
-import { useAPIEndpoint } from '../../APIEndpointProvider'
+import { fetchAPI, useAPIEndpoint } from '@lifeforge/shared'
 
 interface CustomFontData {
   id: string

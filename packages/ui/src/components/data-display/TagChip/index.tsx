@@ -1,7 +1,8 @@
 import { type ComponentPropsWithoutRef, type ElementType } from 'react'
 import tinycolor from 'tinycolor2'
 
-import { anyColorToHex, usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../providers'
+import { anyColorToHex } from '@lifeforge/shared'
 
 import {
   Bordered,

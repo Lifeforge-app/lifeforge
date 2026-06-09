@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import tinycolor from 'tinycolor2'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../providers'
 
 import { Box, Icon, Text } from '@/components/primitives'
 

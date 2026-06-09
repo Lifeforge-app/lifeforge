@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../../../providers'
 
 import { TagChip } from '@/components/data-display'
 import { Flex, Icon, Text, Transition } from '@/components/primitives'

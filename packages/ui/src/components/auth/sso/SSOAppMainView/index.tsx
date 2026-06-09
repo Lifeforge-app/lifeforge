@@ -1,12 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import React from 'react'
 
+import { PersonalizationProvider, ToastProvider } from '../../../../providers'
 import {
   APIEndpointProvider,
   EncryptionProvider,
-  PersonalizationProvider,
-  SSOAuthProvider,
-  ToastProvider
+  SSOAuthProvider
 } from '@lifeforge/shared'
 
 import { LoadingScreen } from '@/components/feedback'

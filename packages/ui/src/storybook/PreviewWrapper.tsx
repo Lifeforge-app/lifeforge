@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-import { APIEndpointProvider, ToastProvider } from '@lifeforge/shared'
+import { ToastProvider } from '../providers'
+import { APIEndpointProvider } from '@lifeforge/shared'
 
 import { ModalManager } from '@/components/overlays'
 import { Flex, Transition } from '@/components/primitives'

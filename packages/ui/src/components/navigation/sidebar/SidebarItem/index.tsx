@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { useModuleSidebarState } from '@lifeforge/shared'
+import { useModuleSidebarState } from '../../../../providers'
 
 import { Box } from '@/components/primitives'
 

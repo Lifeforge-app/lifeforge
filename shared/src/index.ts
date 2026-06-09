@@ -15,24 +15,15 @@ export {
 export { useEncryption } from './providers/EncryptionProvider'
 export { useAPIEndpoint } from './providers/APIEndpointProvider'
 export { useAPIOnlineStatus } from './providers/APIOnlineStatusProvider'
-export { usePersonalization } from './providers/PersonalizationProvider'
-export { BG_BLURS } from './providers/PersonalizationProvider/constants/bg_blurs'
 export { useMainSidebarState as useMainSidebarState } from './providers/SidebarStateProvider'
 export { useAuth } from './providers/AuthProvider'
-export { useModuleSidebarState } from './providers/ModuleSidebarStateProvider'
-export { useModuleHeaderState } from './providers/ModuleHeaderStateProvider'
 export { default as AuthProvider } from './providers/AuthProvider'
 export { default as APIEndpointProvider } from './providers/APIEndpointProvider'
-export { default as PersonalizationProvider } from './providers/PersonalizationProvider'
 export { default as APIOnlineStatusProvider } from './providers/APIOnlineStatusProvider'
 export { default as MainSidebarStateProvider } from './providers/SidebarStateProvider'
-export { default as ToastProvider } from './providers/ToastProvider'
-export { default as SSOAuthProvider } from './providers/SSOAuthProvider'
 export { default as SocketProvider } from './providers/SocketProvider'
 export { default as NuqsProvider } from './providers/NuqsProvider'
 export { default as EncryptionProvider } from './providers/EncryptionProvider'
-export { default as ModuleSidebarStateProvider } from './providers/ModuleSidebarStateProvider'
-export { default as ModuleHeaderStateProvider } from './providers/ModuleHeaderStateProvider'
 export { type SocketEvent, useSocketContext } from './providers/SocketProvider'
 
 // Useful hooks
@@ -65,10 +56,6 @@ export type {
 } from './api/typescript/forge_proxy.types'
 
 // Some shared types
-export type {
-  IDashboardLayout,
-  IBackdropFilters
-} from './providers/PersonalizationProvider/interfaces/personalization_provider_interfaces'
 export type { default as WidgetConfig } from './interfaces/widget_config.types'
 export { widgetConfigSchema } from './interfaces/widget_config.types'
 export { globalProxyRegistry } from './api/core/registry'

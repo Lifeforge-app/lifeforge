@@ -1,4 +1,4 @@
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../providers'
 
 function getBodyStyles(): Record<string, string> {
   if (typeof document === 'undefined') return {}

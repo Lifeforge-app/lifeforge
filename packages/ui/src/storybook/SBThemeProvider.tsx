@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { type ReactNode, useMemo } from 'react'
 
-import { PersonalizationProvider } from '@lifeforge/shared'
+import { PersonalizationProvider } from '../providers'
 
 import { forgeAPI } from '@/utils/forgeAPI'
 

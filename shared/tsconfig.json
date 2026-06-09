@@ -2,7 +2,10 @@
   "extends": "@lifeforge/configs/tsconfig/base.json",
   "compilerOptions": {
     // Environment setup
-    "lib": ["ESNext", "DOM"],
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
     "target": "ESNext",
     "module": "ESNext",
     // Output configuration
@@ -15,8 +18,18 @@
     "skipLibCheck": true,
     // Additional checks
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true
+    "noUncheckedIndexedAccess": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
   },
-  "include": ["./src/**/*"],
-  "exclude": ["dist", "node_modules"]
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

@@ -1,4 +1,4 @@
-import { useModuleSidebarState } from '@lifeforge/shared'
+import { useModuleSidebarState } from '../../../../../providers'
 
 import { Box, Icon, Text, Transition } from '@/components/primitives'
 import { colorWithOpacity } from '@/system'

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { sortFn } from 'color-sorter'
 
-import { usePersonalization } from '@lifeforge/shared'
+import { usePersonalization } from '../../../../../../../../providers'
 
 import { ModalHeader } from '@/components/overlays'
 import { Box, Flex, Grid, Icon } from '@/components/primitives'
