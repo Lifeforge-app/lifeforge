@@ -110,3 +110,10 @@ export {
   serializeRoutes,
   writeContractFileToClient
 } from './utils/writeContractFile'
+
+export {
+  default as traceRouteStack,
+  type Route,
+  type RouteStackLayer
+} from './routes/traceRouteStack'
+
