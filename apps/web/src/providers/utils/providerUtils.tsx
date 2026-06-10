@@ -2,9 +2,7 @@ type ValidateProvider<T> = T extends readonly [infer C, infer P]
   ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
     C extends React.ComponentType<any>
     ? P extends Omit<React.ComponentProps<C>, 'children'>
-      ? Omit<React.ComponentProps<C>, 'children'> extends P
-        ? T
-        : never
+      ? T
       : never
     : never
   : T extends readonly [infer C]

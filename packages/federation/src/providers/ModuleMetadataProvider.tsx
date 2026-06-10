@@ -1,18 +1,20 @@
 import { createContext, useContext } from 'react'
 
-export const ModuleHeaderStateProvider = createContext<
+export const ModuleMetadataProvider = createContext<
   | {
+      name?: string
       icon: string
       title: string
     }
   | undefined
 >(undefined)
 
-export const useModuleHeaderState = () => {
-  const context = useContext(ModuleHeaderStateProvider)
+export function useModuleMetadata() {
+  const context = useContext(ModuleMetadataProvider)
 
   if (!context) {
     return {
+      name: '',
       icon: 'tabler:cube',
       title: 'Untitled Module'
     }

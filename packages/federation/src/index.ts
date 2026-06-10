@@ -29,3 +29,8 @@ export {
   fetchCategoryOrder,
   type CategoryOrder
 } from './utils/sortRoutes'
+
+export {
+  ModuleMetadataProvider,
+  useModuleMetadata
+} from './providers/ModuleMetadataProvider'

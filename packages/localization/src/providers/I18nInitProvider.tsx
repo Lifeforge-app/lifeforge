@@ -1,36 +1,36 @@
 import { useEffect, useState } from 'react'
 
-import { ErrorScreen, LoadingScreen } from '@lifeforge/ui'
-
-import { initI18n } from '@/i18n'
-
-export default function I18nInitProvider({
-  children
+export function I18nInitProvider({
+  children,
+  init,
+  loadingFallback,
+  errorFallback
 }: {
   children: React.ReactNode
+  init: () => Promise<unknown>
+  loadingFallback: React.ReactNode
+  errorFallback: React.ReactNode
 }) {
   const [initialized, setInitialized] = useState<boolean | 'error'>(false)
 
   useEffect(() => {
-    initI18n()
+    init()
       .then(() => {
         setInitialized(true)
       })
-      .catch(err => {
+      .catch((err: unknown) => {
         console.error('Failed to initialize i18n:', err)
 
         setInitialized('error')
       })
-  }, [])
+  }, [init])
 
   if (!initialized) {
-    return <LoadingScreen message="Initializing localization..." />
+    return loadingFallback
   }
 
   if (initialized === 'error') {
-    return (
-      <ErrorScreen message="Failed to initialized localization service. Please check your i18n config." />
-    )
+    return errorFallback
   }
 
   return children

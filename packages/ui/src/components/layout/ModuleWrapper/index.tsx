@@ -2,22 +2,22 @@ import { useQueryClient } from '@tanstack/react-query'
 import _ from 'lodash'
 import { useEffect } from 'react'
 
+import { ModuleMetadataProvider } from '@lifeforge/federation'
+
 import { Flex } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'
-import {
-  ModuleHeaderStateProvider,
-  ModuleSidebarStateProvider
-} from '@/providers'
+import { ModuleSidebarStateProvider } from '@/providers'
 
 /**
  * The wrapper component for all modules in the app. It provides the layout and context for the module header and sidebar, as well as handling query cleanup on unmount if specified. If being used within LifeForge instance, it will be automatically wrapped around the module content. Therefore, no explicit usage is needed in most cases.
  */
 export function ModuleWrapper({
   children,
-  config: { title, icon, clearQueryOnUnmount = true }
+  config: { name, title, icon, clearQueryOnUnmount = true }
 }: {
   children: React.ReactNode
   config: {
+    name: string
     title: string
     displayName?: string
     icon: string
@@ -37,7 +37,7 @@ export function ModuleWrapper({
   }, [queryClient, clearQueryOnUnmount, title])
 
   return (
-    <ModuleHeaderStateProvider value={{ title, icon }}>
+    <ModuleMetadataProvider value={{ name, title, icon }}>
       <ModuleSidebarStateProvider>
         <Flex asChild direction="column" minHeight="0">
           <Scrollbar className="no-overflow-x" usePaddingRight={false}>
@@ -54,6 +54,6 @@ export function ModuleWrapper({
           </Scrollbar>
         </Flex>
       </ModuleSidebarStateProvider>
-    </ModuleHeaderStateProvider>
+    </ModuleMetadataProvider>
   )
 }

@@ -29,6 +29,8 @@ export default defineConfig({
         'react-dom',
         'react/jsx-runtime',
         '@lifeforge/api',
+        '@lifeforge/federation',
+        '@lifeforge/localization',
         '@tanstack/react-query',
         'react-toastify',
         /^react-router/,

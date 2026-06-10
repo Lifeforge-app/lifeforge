@@ -10,10 +10,13 @@ import {
   SocketProvider
 } from '@lifeforge/api'
 import { FederationProvider } from '@lifeforge/federation'
+import { I18nInitProvider } from '@lifeforge/localization'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,
   EncryptionWrapper,
+  ErrorScreen,
+  LoadingScreen,
   MainSidebarStateProvider,
   PersonalizationProvider,
   ToastProvider,
@@ -23,10 +26,10 @@ import {
 import TwoFAModal from '@/core/auth/modals/TwoFAModal'
 import CoreFederationProvider from '@/federation/providers/CoreFederationProvider'
 import forgeAPI from '@/forgeAPI'
+import { initI18n } from '@/i18n'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 
 import ExternalModuleProviders from './features/ExternalModuleProviders'
-import I18nInitProvider from './features/I18nInitProvider'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
 
@@ -49,8 +52,7 @@ function Providers() {
         [APIEndpointProvider, { endpoint: import.meta.env.VITE_API_HOST }],
 
         // Provider that stores all the theming information
-        // Explicitly casted to never due to type inference complexity of forgeAPI
-        [PersonalizationProvider, { forgeAPI }] as never,
+        [PersonalizationProvider, { forgeAPI }],
 
         // Provider that checks if the API is online or not
         // A wrapper exported from @lifeforge/ui is used to avoid circular dependencies
@@ -64,15 +66,26 @@ function Providers() {
         ],
         [APIOnlineStatusWrapper],
 
-        // All subsequent providers are gated behind the API status check!
-        [I18nInitProvider],
+        // Provider that makes sure the localization service is properly instantiated
+        [
+          I18nInitProvider,
+          {
+            errorFallback: (
+              <ErrorScreen message="Failed to initialized localization service. Please check your i18n config." />
+            ),
+
+            init: initI18n,
+            loadingFallback: (
+              <LoadingScreen message="Initializing localization..." />
+            )
+          }
+        ],
 
         // Provider that initializes end-to-end encryption (fetches server public key)
         [EncryptionProvider, { apiHost: import.meta.env.VITE_API_HOST }],
         [EncryptionWrapper],
 
         // Provider that handles authentication, very obviously
-        // Explicitly casted to never due to type inference complexity of forgeAPI
         [
           AuthProvider,
           {
@@ -81,7 +94,7 @@ function Providers() {
               open(TwoFAModal, {})
             }
           }
-        ] as never,
+        ],
         // Provider that manages the main sidebar state (not the module sidebars, the main one)
         [MainSidebarStateProvider],
         // Provider that synchronizes user personalization data with the backend

@@ -8,6 +8,4 @@ export * from './ToastProvider'
 
 export * from './ModuleSidebarStateProvider'
 
-export * from './ModuleHeaderStateProvider'
-
 export * from './MainSidebarStateProvider'
