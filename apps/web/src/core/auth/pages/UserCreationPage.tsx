@@ -16,7 +16,6 @@ import forgeAPI from '@/forgeAPI'
 
 function UserCreationPage() {
   const { t } = useTranslation('common.auth')
-
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -24,9 +23,7 @@ function UserCreationPage() {
     password: '',
     confirmPassword: ''
   })
-
   const [errors, setErrors] = useState<Record<string, string>>({})
-
   const createUserMutation = useMutation(
     forgeAPI.user.auth.createFirstUser.mutationOptions({
       onSuccess: () => {

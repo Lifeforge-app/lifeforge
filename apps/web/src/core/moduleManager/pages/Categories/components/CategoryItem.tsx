@@ -33,9 +33,7 @@ function CategoryItem({
   ) => void
 }) {
   const { open } = useModalStore()
-
   const { categoryTranslations, refetch } = useFederation()
-
   const {
     attributes,
     listeners,

@@ -14,11 +14,8 @@ import { useUserPersonalization } from '@/providers/features/UserPersonalization
 
 function FontScaleSelector() {
   const { fontScale } = usePersonalization()
-
   const { changeFontScale } = useUserPersonalization()
-
   const { t } = useTranslation('common.personalization')
-
   const [selectedFontScale, setSelectedFontScale] = useState(fontScale)
 
   return (

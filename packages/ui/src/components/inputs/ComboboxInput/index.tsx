@@ -65,7 +65,6 @@ export function ComboboxInput<T>({
   errorMsg
 }: ComboboxInputProps<T> & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
       return customActive
@@ -81,7 +80,6 @@ export function ComboboxInput<T>({
 
     return !!value
   }, [value, customActive])
-
   const focusInput = useCallback((e: React.MouseEvent | React.FocusEvent) => {
     if ((e.target as HTMLElement).tagName === 'BUTTON') {
       return
@@ -95,7 +93,6 @@ export function ComboboxInput<T>({
       inputInside.focus()
     }
   }, [])
-
   const handleChange = useCallback(
     (value: T | null) => {
       if (value !== null) {

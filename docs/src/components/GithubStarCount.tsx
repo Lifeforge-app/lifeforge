@@ -5,7 +5,6 @@ import { TagChip } from '@lifeforge/ui'
 
 function GithubStarCount() {
   const [stars, setStars] = useState<number | null>(null)
-
   useEffect(() => {
     fetch('https://api.github.com/repos/LifeForge-app/lifeforge')
       .then(res => res.json())

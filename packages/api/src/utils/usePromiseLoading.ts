@@ -6,7 +6,6 @@ export function usePromiseLoading<T extends any[]>(
   onError?: (error: unknown) => void
 ): [boolean, (...args: T) => Promise<void>] {
   const [isLoading, setIsLoading] = useState(false)
-
   const onClick = useCallback(
     async (...args: T) => {
       setIsLoading(true)

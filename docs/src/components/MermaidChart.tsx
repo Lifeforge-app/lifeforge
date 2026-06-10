@@ -19,9 +19,7 @@ function MermaidChart({ chart }: { chart: string }) {
   const id = useId().replace(/:/g, '')
 
   const [svg, setSvg] = useState<string>('')
-
   const [error, setError] = useState<string>('')
-
   useEffect(() => {
     const renderChart = async () => {
       try {

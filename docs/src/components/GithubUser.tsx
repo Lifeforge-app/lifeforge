@@ -5,7 +5,6 @@ function GithubUser({ username }: { username: string }) {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
     localStorage.getItem(`github_avatar_${username}`)
   )
-
   useEffect(() => {
     async function fetchAvatar() {
       try {

@@ -10,9 +10,7 @@ import UsingEmail from './components/UsingEmail'
 
 function TwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.auth')
-
   const { authenticateWith2FA } = useAuth()
-
   const [authMethod, setAuthMethod] = useState<'app' | 'email'>('app')
 
   async function verifyOTP(otp: string) {

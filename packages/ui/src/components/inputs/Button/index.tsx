@@ -82,7 +82,6 @@ export function Button<T extends ElementType = 'button'>({
     style,
     props: props as any
   })
-
   const { t } = useTranslation(namespace)
 
   return (

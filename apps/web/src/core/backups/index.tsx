@@ -18,9 +18,7 @@ import CreateBackupModal from './components/CreateBackupModal'
 
 function Backups() {
   const { t } = useTranslation('common.backups')
-
   const { open } = useModalStore()
-
   const backupsQuery = useQuery(forgeAPI.backups.list.queryOptions())
 
   return (

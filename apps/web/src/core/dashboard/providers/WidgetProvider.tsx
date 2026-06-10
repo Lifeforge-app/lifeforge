@@ -38,13 +38,10 @@ export function useWidgets(): WidgetContextValue {
 
 function WidgetProvider({ children }: { children: React.ReactNode }) {
   const { modules } = useFederation()
-
   const [federatedWidgets, setFederatedWidgets] = useState<
     Record<string, WidgetEntry>
   >({})
-
   const [loading, setLoading] = useState(true)
-
   useEffect(() => {
     async function loadFederatedWidgets() {
       setLoading(true)
@@ -100,7 +97,6 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
       setLoading(false)
     }
   }, [modules])
-
   const value = useMemo(
     () => ({
       widgets: federatedWidgets,

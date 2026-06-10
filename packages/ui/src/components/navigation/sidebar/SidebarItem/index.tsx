@@ -84,9 +84,7 @@ export function SidebarItem({
   subsection
 }: SidebarItemProps) {
   const { setIsSidebarOpen } = useModuleSidebarState()
-
   const [subsectionExpanded, setSubsectionExpanded] = useState(active ?? false)
-
   const handleNavigation = useCallback(() => {
     if (onClick === 'expand' && subsection?.length) {
       setSubsectionExpanded(!subsectionExpanded)
@@ -99,7 +97,6 @@ export function SidebarItem({
       onClick()
     }
   }, [onClick, setIsSidebarOpen, subsection, subsectionExpanded])
-
   const handleToggleSubsection = useCallback(() => {
     if (subsection !== undefined) {
       setSubsectionExpanded(!subsectionExpanded)

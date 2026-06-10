@@ -7,7 +7,6 @@ import forgeAPI from '@/forgeAPI'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.accountSettings')
-
   const { setUserData } = useAuth()
 
   async function handleConfirm() {

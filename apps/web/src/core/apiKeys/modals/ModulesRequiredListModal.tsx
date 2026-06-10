@@ -24,7 +24,6 @@ function ModulesRequiredListModal({
   }
 }) {
   const { t } = useTranslation('common.api-keys')
-
   const { modules } = useFederation()
 
   const modulesRequired = modules

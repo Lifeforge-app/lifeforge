@@ -31,25 +31,15 @@ export default function useQRLoginSession({
   onSuccess
 }: UseQRLoginSessionOptions) {
   const { t } = useTranslation('common.auth')
-
   const apiHost = useAPIEndpoint()
-
   const { verifySession, setAuth, setUserData } = useAuth()
-
   const [status, setStatus] = useState<QRStatus>('loading')
-
   const [qrData, setQrData] = useState<string>('')
-
   const [expiresAt, setExpiresAt] = useState<string>('')
-
   const [timeLeft, setTimeLeft] = useState<number>(0)
-
   const sessionIdRef = useRef<string>('')
-
   const socketRef = useRef<Socket | null>(null)
-
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null)
-
   /**
    * Fallback polling for WebSocket connection issues
    */
@@ -98,7 +88,6 @@ export default function useQRLoginSession({
     },
     [verifySession, setAuth, setUserData, t, onSuccess]
   )
-
   /**
    * Connect to WebSocket for a given session ID
    */
@@ -173,7 +162,6 @@ export default function useQRLoginSession({
       startPolling
     ]
   )
-
   /**
    * Initialize QR session - check for existing session first
    */
@@ -249,7 +237,6 @@ export default function useQRLoginSession({
     },
     [t, connectWebSocket]
   )
-
   /**
    * Force create a new session (for refresh button)
    */
@@ -257,7 +244,6 @@ export default function useQRLoginSession({
     clearStoredSession()
     initializeSession(true)
   }, [initializeSession])
-
   /**
    * Update countdown timer
    */
@@ -285,7 +271,6 @@ export default function useQRLoginSession({
 
     return () => clearInterval(interval)
   }, [expiresAt, status])
-
   /**
    * Initialize on mount
    */

@@ -15,13 +15,9 @@ import WidgetProvider, { useWidgets } from './providers/WidgetProvider'
 
 function DashboardContent() {
   const { open } = useModalStore()
-
   const { widgets } = useWidgets()
-
   const wrapperRef = useRef<HTMLDivElement>(null)
-
   const [canLayoutChange, setCanLayoutChange] = useState(false)
-
   const handleManageWidget = useCallback(() => {
     open(ManageWidgetsModal, { widgets })
   }, [widgets, open])

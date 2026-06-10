@@ -52,7 +52,6 @@ export function LocalUpload({
       })
       .catch(console.error)
   }, [])
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: acceptedMimeTypes

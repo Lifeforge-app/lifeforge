@@ -50,21 +50,15 @@ export function useFederation(): FederationContextValue {
 
 function FederationProvider({ children }: { children: React.ReactNode }) {
   const [modules, setModules] = useState<ModuleCategory[]>([])
-
   const [globalProviders, setGlobalProviders] = useState<
     React.FC<{ children: React.ReactNode }>[]
   >([])
-
   const [categoryTranslations, setCategoryTranslations] = useState<
     Record<string, Record<string, string>>
   >({})
-
   const [loading, setLoading] = useState(true)
-
   const [error, setError] = useState<Error | null>(null)
-
   const refetch = useRef<() => Promise<void>>(async () => {})
-
   const value = useMemo(
     () => ({
       modules,

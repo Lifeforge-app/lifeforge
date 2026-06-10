@@ -23,9 +23,7 @@ export type APIKeyEntry = InferOutput<
 
 function APIKeys() {
   const { open } = useModalStore()
-
   const { t } = useTranslation('common.api-keys')
-
   const entriesQuery = useQuery(forgeAPI.apiKeys.entries.list.queryOptions())
 
   const handleCreateAPIKey = () => {

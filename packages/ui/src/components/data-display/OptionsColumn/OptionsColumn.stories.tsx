@@ -111,9 +111,7 @@ export const MultipleColumns: Story = {
   },
   render: () => {
     const [notifications, setNotifications] = useState(true)
-
     const [autoSave, setAutoSave] = useState(false)
-
     const [darkMode, setDarkMode] = useState(true)
 
     return (

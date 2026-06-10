@@ -63,7 +63,6 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
       }
     })
   )
-
   const form = useForm({
     defaultValues: {
       ...createDefaultValues(schema),

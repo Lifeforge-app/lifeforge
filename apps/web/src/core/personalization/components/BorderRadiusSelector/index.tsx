@@ -25,9 +25,7 @@ const BORDER_RADIUS_OPTIONS = [
 
 function BorderRadiusSelector() {
   const { borderRadiusMultiplier } = usePersonalization()
-
   const { changeBorderRadiusMultiplier } = useUserPersonalization()
-
   const { t } = useTranslation('common.personalization')
 
   return (

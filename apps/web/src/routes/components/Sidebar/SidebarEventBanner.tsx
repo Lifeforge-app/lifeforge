@@ -65,11 +65,8 @@ const getEventIcon = (eventType: string) => {
 
 export default function SidebarEventBanner() {
   const { sidebarExpanded } = useMainSidebarState()
-
   const { derivedThemeColor: themeColor } = usePersonalization()
-
   const { userData } = useAuth()
-
   const eventType = useMemo(
     () => getEventType(userData?.dateOfBirth),
     [userData?.dateOfBirth]

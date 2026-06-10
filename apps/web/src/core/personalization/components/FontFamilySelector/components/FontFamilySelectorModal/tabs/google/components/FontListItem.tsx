@@ -35,7 +35,6 @@ function FontListItem({
   setSelectedFont: (font: string) => void
 }) {
   const queryClient = useQueryClient()
-
   const togglePinMutation = useMutation(
     forgeAPI.user.personalization.toggleGoogleFontsPin.mutationOptions({
       onSuccess: () => {
@@ -48,11 +47,9 @@ function FontListItem({
       }
     })
   )
-
   const [loadingPin, handleTogglePin] = usePromiseLoading(async () => {
     await togglePinMutation.mutateAsync({ family: font.family })
   })
-
   useEffect(() => {
     addFontToStylesheet(font)
 

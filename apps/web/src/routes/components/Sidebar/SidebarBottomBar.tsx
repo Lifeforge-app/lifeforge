@@ -18,18 +18,14 @@ import {
 
 function SidebarBottomBar() {
   const navigate = useNavigate()
-
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
-
   const { userData, getAvatarURL, logout } = useAuth()
-
   const handleNavigateToAccountSettings = useCallback(() => {
     if (window.innerWidth < 1024) {
       toggleSidebar()
     }
     navigate('/account-settings')
   }, [navigate, toggleSidebar])
-
   const handleLoggingOut = useCallback(() => {
     logout()
     toast.warning('Logged out successfully!')

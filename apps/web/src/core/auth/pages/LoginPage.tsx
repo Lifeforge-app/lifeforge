@@ -13,9 +13,7 @@ import AuthSideImage from '../components/AuthSideImage'
 
 function LoginPage() {
   const { verifyOAuth } = useAuth()
-
   const [searchParams, setSearchParams] = useSearchParams()
-
   useEffect(() => {
     const code = searchParams.get('code')
 

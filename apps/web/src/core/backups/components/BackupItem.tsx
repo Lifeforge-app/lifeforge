@@ -28,11 +28,8 @@ function BackupItem({
   }
 }) {
   const queryClient = useQueryClient()
-
   const { open } = useModalStore()
-
   const [downloadLoading, setDownloadLoading] = useState(false)
-
   const deleteMutation = useMutation(
     forgeAPI.backups.remove
       .input({
@@ -47,7 +44,6 @@ function BackupItem({
         }
       })
   )
-
   const handleDownloadBackup = useCallback(async () => {
     setDownloadLoading(true)
 
@@ -78,7 +74,6 @@ function BackupItem({
     URL.revokeObjectURL(url)
     setDownloadLoading(false)
   }, [backup.key])
-
   const handleDeleteBackup = useCallback(() => {
     open(ConfirmationModal, {
       title: 'Delete Backup',

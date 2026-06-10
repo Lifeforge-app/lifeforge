@@ -14,7 +14,6 @@ import forgeAPI from '@/forgeAPI'
 
 function QRCodeDisplay() {
   const { bgTempPalette, derivedTheme } = usePersonalization()
-
   const [link, setLink] = useState('')
 
   async function fetchLink() {

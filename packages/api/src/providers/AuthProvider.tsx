@@ -65,20 +65,15 @@ export function AuthProvider({
   children: React.ReactNode
 }) {
   const [auth, _setAuth] = useState(false)
-
   const [userData, setUserData] = useState<UserData | null>(null)
-
   const [authLoading, setAuthLoading] = useState(true)
-
   const tid = useRef('')
-
   const setAuth = useCallback(
     (value: boolean) => {
       _setAuth(value)
     },
     [_setAuth]
   )
-
   const verifySession = useCallback(
     async (
       session: string
@@ -112,7 +107,6 @@ export function AuthProvider({
     },
     []
   )
-
   const authenticate = useCallback(
     async ({
       email,
@@ -156,7 +150,6 @@ export function AuthProvider({
     },
     []
   )
-
   const authenticateWith2FA = useCallback(
     async ({
       otp,
@@ -194,7 +187,6 @@ export function AuthProvider({
     },
     []
   )
-
   const verifyOAuth = useCallback(
     async (code: string, state: string): Promise<boolean> => {
       try {
@@ -252,13 +244,11 @@ export function AuthProvider({
     },
     [verifySession]
   )
-
   const logout = useCallback(() => {
     setAuth(false)
     localStorage.removeItem('session')
     setUserData(null)
   }, [])
-
   const getAvatarURL = useCallback((): string => {
     if (userData) {
       return forgeAPI.getMedia({
@@ -271,7 +261,6 @@ export function AuthProvider({
 
     return ''
   }, [userData])
-
   const doUseEffect = useCallback(() => {
     setAuthLoading(true)
 
@@ -293,11 +282,9 @@ export function AuthProvider({
       setAuthLoading(false)
     }
   }, [])
-
   useEffect(() => {
     doUseEffect()
   }, [])
-
   const value = useMemo(
     () => ({
       auth,

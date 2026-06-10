@@ -47,9 +47,7 @@ function ModuleItem({
   ])
 
   const { open } = useModalStore()
-
   const { refetch: refetchFederation } = useFederation()
-
   const devModeMutation = useMutation({
     mutationFn: () =>
       forgeAPI.modules.devMode.toggle.mutate({ moduleName: module.name }),

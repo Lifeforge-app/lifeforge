@@ -259,7 +259,6 @@ function SearchWithSuggestions() {
   },
   render: args => {
     const [value, onChange] = useState('')
-
     // Replace with actual API call for search suggestions
     const productQuery = useQuery({
       enabled: value.length > 0,

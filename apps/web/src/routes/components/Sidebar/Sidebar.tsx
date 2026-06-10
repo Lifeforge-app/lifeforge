@@ -14,7 +14,6 @@ import SidebarItems from './SidebarItems'
 
 function Sidebar() {
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
-
   const [searchQuery, setSearchQuery] = useState('')
 
   return (

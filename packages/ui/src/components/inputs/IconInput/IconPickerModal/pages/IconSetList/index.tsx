@@ -36,11 +36,8 @@ export function IconSetList({
   >
 }) {
   const [searchQuery, setSearchQuery] = useState('')
-
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-
   const [iconFilterTerm, setIconFilterTerm] = useState('')
-
   const filteredCollections = useMemo(() => {
     const normalizedFilter = iconFilterTerm.trim().toLowerCase()
 

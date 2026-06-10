@@ -33,7 +33,6 @@ export function SBThemeProvider({
       }
     }
   }, [context])
-
   useSBTheme(derivedContext)
 
   return (

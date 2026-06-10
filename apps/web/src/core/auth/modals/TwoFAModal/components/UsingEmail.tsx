@@ -21,19 +21,12 @@ function UsingEmail({
   callback: (otp: string) => Promise<void>
 }) {
   const { tid } = useAuth()
-
   const { t } = useTranslation('common.auth')
-
   const [otp, setOTP] = useState('')
-
   const [email, setEmail] = useState('')
-
   const [sendOtpLoading, setSendOtpLoading] = useState(false)
-
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
-
   const [otpSent, setOtpSent] = useState(false)
-
   const [otpCooldown, setOtpCooldown] = useState(
     localStorage.getItem(`otpCooldown:2fa`)
       ? Math.floor(

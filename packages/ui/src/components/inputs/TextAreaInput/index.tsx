@@ -51,9 +51,7 @@ export function TextAreaInput({
   errorMsg
 }: TextAreaInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const ref = useRef<HTMLTextAreaElement>(null)
-
   useEffect(() => {
     if (!ref.current) return
 

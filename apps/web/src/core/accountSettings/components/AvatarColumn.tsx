@@ -19,9 +19,7 @@ import forgeAPI from '@/forgeAPI'
 
 function AvatarColumn() {
   const { open } = useModalStore()
-
   const { t } = useTranslation('common.accountSettings')
-
   const { getAvatarURL, userData, setUserData } = useAuth()
 
   async function changeAvatar(file: File | string | null) {
@@ -55,7 +53,6 @@ function AvatarColumn() {
       }
     })
   )
-
   const handleDeleteAvatar = useCallback(() => {
     open(ConfirmationModal, {
       title: 'Delete Avatar',

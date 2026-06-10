@@ -13,23 +13,17 @@ import {
 
 export function useAppRouter() {
   const { t } = useTranslation('common.misc')
-
   const { auth, authLoading } = useAuth()
-
   const { modules, loading: modulesLoading } = useFederation()
-
   const [appRouter, setAppRouter] = useState<DataRouter | null>(null)
-
   const loadingRouter = useMemo(
     () => createBrowserRouter(createAuthLoadingConfig()),
     []
   )
-
   const authRouter = useMemo(
     () => createBrowserRouter(createAuthRouterConfig()),
     []
   )
-
   useEffect(() => {
     if (authLoading || !auth || modulesLoading) {
       return
@@ -50,7 +44,6 @@ export function useAppRouter() {
       cancelled = true
     }
   }, [auth, t, authLoading, modules, modulesLoading])
-
   const router = useMemo(() => {
     if (authLoading || modulesLoading) {
       return loadingRouter
@@ -62,7 +55,6 @@ export function useAppRouter() {
 
     return appRouter ?? loadingRouter
   }, [auth, authLoading, modulesLoading, appRouter, loadingRouter, authRouter])
-
   const routerKey = useMemo(() => {
     if (authLoading || modulesLoading) {
       return 'loading'

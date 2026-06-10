@@ -19,17 +19,12 @@ import AdjustBgImageModal from './modals/AdjustBgImageModal'
 
 function BgImageSelector() {
   const { open } = useModalStore()
-
   const { t } = useTranslation('common.personalization')
-
   const { bgImage } = usePersonalization()
-
   const { setBgImage, setBackdropFilters } = usePersonalization()
-
   const handleAdjustBgImage = useCallback(() => {
     open(AdjustBgImageModal, {})
   }, [])
-
   const deleteMutation = useMutation(
     forgeAPI.user.personalization.deleteBgImage.mutationOptions({
       onSuccess: () => {
@@ -47,7 +42,6 @@ function BgImageSelector() {
       }
     })
   )
-
   const handleDeleteBgImage = useCallback(() => {
     open(ConfirmationModal, {
       title: 'Delete Background Image',

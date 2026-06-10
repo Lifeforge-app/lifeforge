@@ -19,16 +19,12 @@ export function SidebarSubsectionItemLink({
   path: string
 }) {
   const location = useLocation()
-
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
-
   const { t } = useTranslation('common.sidebar')
-
   const isActive = useMemo(
     () => location.pathname === path,
     [path, location.pathname]
   )
-
   const handleClick = useCallback(() => {
     if (window.innerWidth < 1024) {
       toggleSidebar?.()

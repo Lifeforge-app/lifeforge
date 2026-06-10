@@ -6,9 +6,7 @@ import { toast } from '@lifeforge/ui'
 
 function index() {
   const navigate = useNavigate()
-
   const { t } = useTranslation('common.fetch')
-
   useEffect(() => {
     const a = document.createElement('a')
 

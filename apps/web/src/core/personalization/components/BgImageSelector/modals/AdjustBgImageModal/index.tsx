@@ -11,23 +11,16 @@ import { BG_BLURS } from './constants/bg_blurs'
 
 function AdjustBgImageModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.personalization')
-
   const { backdropFilters } = usePersonalization()
-
   const { changeBackdropFilters } = useUserPersonalization()
-
   const [bgBlur, setBgBlur] = useState<keyof typeof BG_BLURS>(
     backdropFilters.blur
   )
-
   const [bgBrightness, setBgBrightness] = useState(backdropFilters.brightness)
-
   const [overlayOpacity, setOverlayOpacity] = useState(
     backdropFilters.overlayOpacity
   )
-
   const [bgContrast, setBgContrast] = useState(backdropFilters.contrast)
-
   const [bgSaturation, setBgSaturation] = useState(backdropFilters.saturation)
 
   const ADJUSTMENTS_COLUMNS = [

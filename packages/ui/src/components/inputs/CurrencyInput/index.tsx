@@ -54,15 +54,11 @@ export function CurrencyInput({
   errorMsg
 }: CurrencyInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const [innerValue, setInnerValue] = useState(
     value.toString() === '0' ? '' : value.toString()
   )
-
   const [focused, setFocused] = useState(false)
-
   const inputRef = useRef<HTMLInputElement>(null)
-
   useEffect(() => {
     setInnerValue(value.toString() === '0' ? '' : value.toString())
   }, [value])

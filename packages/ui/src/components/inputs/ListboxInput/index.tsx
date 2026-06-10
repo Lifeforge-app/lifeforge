@@ -62,7 +62,6 @@ export function ListboxInput<T>({
   errorMsg
 }: ListboxInputPropsWithVariants<T>) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
       return customActive
@@ -78,7 +77,6 @@ export function ListboxInput<T>({
 
     return !!value
   }, [value, customActive])
-
   const focusInput = useCallback((e: React.MouseEvent | React.FocusEvent) => {
     if ((e.target as HTMLElement).tagName === 'BUTTON') {
       return

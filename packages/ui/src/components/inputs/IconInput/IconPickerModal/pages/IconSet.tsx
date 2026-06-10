@@ -38,11 +38,8 @@ export function IconSet({
   onIconSelected: (icon: string) => void
 }) {
   const [searchTerm, setSearchTerm] = useState('')
-
   const [currentTag, setCurrentTag] = useState<string | null>(null)
-
   const [iconData, setIconData] = useState<IIconSetData | null>(null)
-
   const filteredIconList = useMemo(() => {
     if (!iconData) return []
 
@@ -61,7 +58,6 @@ export function IconSet({
       icon.toLowerCase().includes(searchTerm.toLowerCase())
     )
   }, [searchTerm, currentTag, iconData])
-
   useEffect(() => {
     getIconSet(iconSet)
       .then(data => {

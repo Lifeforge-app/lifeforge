@@ -14,9 +14,7 @@ export function ChipSelector({
   onChange: React.Dispatch<React.SetStateAction<string | null>>
 }) {
   const [expanded, setExpanded] = useState(false)
-
   const { derivedThemeColor } = usePersonalization()
-
   const sortedOptions = useMemo(
     () =>
       [...options].sort((a, b) => {
@@ -26,7 +24,6 @@ export function ChipSelector({
       }),
     [options]
   )
-
   const handleChipClick = useCallback(
     (option: string) => {
       onChange(value === option ? null : option)

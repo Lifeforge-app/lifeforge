@@ -16,13 +16,10 @@ export function InputFocusProvider({
   children: React.ReactNode
 }) {
   const [isFocused, setIsFocused] = useState(false)
-
   const containerRef = useRef<FocusableElement>(null)
-
   const handleFocus = useCallback(() => {
     setIsFocused(true)
   }, [])
-
   const handleBlur = useCallback((e: React.FocusEvent) => {
     if (
       containerRef.current?.contains

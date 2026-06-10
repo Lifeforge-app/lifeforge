@@ -10,19 +10,12 @@ import AuthSignInButton from './AuthSignInButtons'
 
 function AuthForm({ providers }: { providers: string[] }) {
   const [emailOrUsername, setEmail] = useState('')
-
   const [password, setPassword] = useState('')
-
   const emailOrUsernameRef = useRef(emailOrUsername)
-
   const passwordRef = useRef(password)
-
   const [formDisabled, setFormDisabled] = useState(false)
-
   const [searchParams] = useSearchParams()
-
   const { t } = useTranslation('common.auth')
-
   const { authenticate } = useAuth()
 
   const INPUT_FIELDS = [
@@ -85,9 +78,7 @@ function AuthForm({ providers }: { providers: string[] }) {
         setFormDisabled(false)
       })
   }, [authenticate, t])
-
   const [loading, onSubmit] = usePromiseLoading(signIn)
-
   const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
@@ -96,11 +87,9 @@ function AuthForm({ providers }: { providers: string[] }) {
     },
     [onSubmit]
   )
-
   useEffect(() => {
     emailOrUsernameRef.current = emailOrUsername
   }, [emailOrUsername])
-
   useEffect(() => {
     passwordRef.current = password
   }, [password])

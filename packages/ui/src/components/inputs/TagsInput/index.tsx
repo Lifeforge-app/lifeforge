@@ -76,9 +76,7 @@ export function TagsInput({
   errorMsg
 }: TagsInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const [currentTag, setCurrentTag] = useState<string>('')
-
   const inputRef = useRef<HTMLInputElement | null>(null)
 
   const addTag = (): void => {

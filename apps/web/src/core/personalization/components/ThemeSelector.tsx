@@ -16,9 +16,7 @@ import { useUserPersonalization } from '@/providers/features/UserPersonalization
 
 function ThemeSelector() {
   const { theme } = usePersonalization()
-
   const { t } = useTranslation('common.personalization')
-
   const { changeTheme } = useUserPersonalization()
 
   return (

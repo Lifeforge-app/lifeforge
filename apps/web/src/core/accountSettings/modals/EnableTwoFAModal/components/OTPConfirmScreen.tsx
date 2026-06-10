@@ -8,9 +8,7 @@ import forgeAPI from '@/forgeAPI'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('common.accountSettings')
-
   const [otp, setOtp] = useState('')
-
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
 
   async function verifyOTP() {
