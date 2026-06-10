@@ -6,9 +6,7 @@ import { useFederation } from '@lifeforge/federation'
 
 function useTitleEffect() {
   const { modules } = useFederation()
-
   const location = useLocation()
-
   useEffect(() => {
     const target =
       modules

@@ -15,9 +15,7 @@ function SigninWithProviderButton({
   loading: boolean
 }) {
   const { auth } = useAuth()
-
   const [searchParams] = useSearchParams()
-
   const signInWithProvider = useCallback(async () => {
     const providerInstance = await fetch(
       forgeAPI.user.oauth.getEndpoint.input({

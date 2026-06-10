@@ -45,13 +45,9 @@ export function LocationInput({
   variant = 'classic'
 }: LocationInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const apiHost = useAPIEndpoint()
-
   const [query, setQuery] = useState('')
-
   const debouncedQuery = useDebounce(query, 500)
-
   const enabledQuery = useQuery(
     forgeAPI
       .checkAPIKeys({

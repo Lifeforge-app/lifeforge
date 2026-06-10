@@ -42,7 +42,6 @@ function DefaultThemeColorSelector({
   customThemeColor: string
 }) {
   const { t } = useTranslation('common.personalization')
-
   const { changeThemeColor } = useUserPersonalization()
 
   return (

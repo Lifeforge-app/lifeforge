@@ -33,13 +33,9 @@ export interface InstalledModule {
 
 function Modules() {
   const { refetch: refetchFederation, categoryTranslations } = useFederation()
-
   const { language } = usePersonalization()
-
   const queryClient = useQueryClient()
-
   const modulesQuery = useQuery(forgeAPI.modules.list.queryOptions())
-
   const uninstallMutation = useMutation({
     mutationFn: (moduleName: string) =>
       forgeAPI.modules.uninstall.mutate({ moduleName }),
@@ -56,7 +52,6 @@ function Modules() {
       toast.error('Failed to uninstall module')
     }
   })
-
   const groupedModules = useMemo(() => {
     if (!modulesQuery.data) return {}
 

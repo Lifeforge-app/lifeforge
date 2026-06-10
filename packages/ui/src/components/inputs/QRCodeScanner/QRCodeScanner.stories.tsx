@@ -94,7 +94,6 @@ export const QRCodeScanner: Story = {
   },
   render: args => {
     const { open } = useModalStore()
-
     const [value, setValue] = useState('')
 
     return (

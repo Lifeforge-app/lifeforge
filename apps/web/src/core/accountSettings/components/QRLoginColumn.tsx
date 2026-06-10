@@ -13,9 +13,7 @@ import QRLoginApprovalModal from '../modals/QRLoginScannerModal'
 
 function QRLoginColumn() {
   const { open } = useModalStore()
-
   const { t } = useTranslation('common.auth')
-
   const handleOpenScanner = useCallback(() => {
     open(QRCodeScanner, {
       onScanned: (scannedData: string) => {

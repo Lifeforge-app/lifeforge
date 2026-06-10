@@ -32,15 +32,10 @@ dayjs.extend(relativeTime)
 
 function EntryItem({ entry }: { entry: APIKeyEntry }) {
   const { t } = useTranslation('common.api-keys')
-
   const { modules } = useFederation()
-
   const queryClient = useQueryClient()
-
   const { open } = useModalStore()
-
   const [isCopying, setIsCopying] = useState(false)
-
   const deleteMutation = useMutation(
     forgeAPI.apiKeys.entries.remove
       .input({

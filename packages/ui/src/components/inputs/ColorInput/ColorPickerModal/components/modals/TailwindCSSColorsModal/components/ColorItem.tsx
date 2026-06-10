@@ -16,7 +16,6 @@ function _ColorItem({
   onSelect: (color: string) => void
 }) {
   const { getMostReadableColor } = usePersonalization()
-
   const colorHex = useMemo(
     () => formatHex(converter('rgb')(parse(value))) || '',
     [value]

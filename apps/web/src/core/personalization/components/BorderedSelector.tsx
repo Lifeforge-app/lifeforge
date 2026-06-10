@@ -6,9 +6,7 @@ import { useUserPersonalization } from '@/providers/features/UserPersonalization
 
 function BorderedSelector() {
   const { bordered } = usePersonalization()
-
   const { changeBordered } = useUserPersonalization()
-
   const { t } = useTranslation('common.personalization')
 
   return (

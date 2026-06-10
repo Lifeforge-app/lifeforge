@@ -20,17 +20,14 @@ export function MainSidebarStateProvider({
   children: React.ReactNode
 }) {
   const [sidebarExpanded, setSidebarExpanded] = useState(true)
-
   const toggleSidebar = useCallback(() => {
     setSidebarExpanded(prev => !prev)
   }, [])
-
   useEffect(() => {
     if (window.innerWidth < 1024) {
       setSidebarExpanded(false)
     }
   }, [])
-
   const memoizedValue = useMemo(
     () => ({
       sidebarExpanded,

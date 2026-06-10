@@ -22,7 +22,6 @@ export function DnDContainer({
   acceptedMimeTypes: Record<string, string[]>
 }) {
   const { t } = useTranslation('common.misc')
-
   const acceptedMimeTypesFlattened = useMemo(() => {
     return Object.entries(acceptedMimeTypes)
       .flatMap(([type, exts]) => exts.map(ext => `${type}/${ext}`))

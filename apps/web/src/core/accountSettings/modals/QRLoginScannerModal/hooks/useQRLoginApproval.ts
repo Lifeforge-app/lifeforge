@@ -16,11 +16,8 @@ type ModalStep = 'confirm' | 'success' | 'error'
 
 function useQRLoginApproval(scannedData: string) {
   const { t } = useTranslation('common.auth')
-
   const [step, setStep] = useState<ModalStep>('confirm')
-
   const [browserInfo, setBrowserInfo] = useState<string>('')
-
   const [errorMessage, setErrorMessage] = useState<string>('')
 
   const parseSessionData = (): QRSessionData | null => {

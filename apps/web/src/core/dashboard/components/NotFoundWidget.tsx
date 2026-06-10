@@ -18,9 +18,7 @@ function NotFoundWidget({
   dimension: { w: number; h: number }
 }) {
   const { open } = useModalStore()
-
   const { dashboardLayout: enabledWidgets } = usePersonalization()
-
   const { changeDashboardLayout: setDashboardLayout } = useUserPersonalization()
 
   async function removeWidget() {

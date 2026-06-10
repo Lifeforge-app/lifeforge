@@ -150,7 +150,6 @@ export const MultipleFilters: Story = {
   },
   render: args => {
     const [category, setCategory] = useState<string | null>('work')
-
     const [status, setStatus] = useState<string | null>('active')
 
     return (

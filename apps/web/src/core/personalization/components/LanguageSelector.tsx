@@ -18,11 +18,8 @@ import { useUserPersonalization } from '@/providers/features/UserPersonalization
 
 function LanguageSelector() {
   const { language } = usePersonalization()
-
   const { changeLanguage } = useUserPersonalization()
-
   const { t } = useTranslation('common.personalization')
-
   const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
 
   return (

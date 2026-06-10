@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 function useDivSize(ref: React.RefObject<HTMLDivElement | null>) {
   const [width, setWidth] = useState(0)
-
   const [height, setHeight] = useState(0)
 
   function handleResize() {

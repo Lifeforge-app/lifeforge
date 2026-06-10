@@ -20,9 +20,7 @@ const schema = z.object({
 
 function CreateBackupModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.backups')
-
   const queryClient = useQueryClient()
-
   const mutation = useMutation(
     forgeAPI.backups.create.mutationOptions({
       onSuccess: () => {
@@ -33,7 +31,6 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
       }
     })
   )
-
   const form = useForm({
     defaultValues: createDefaultValues(schema),
     mode: 'all',

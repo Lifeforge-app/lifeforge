@@ -25,7 +25,6 @@ export function ModuleWrapper({
   }
 }) {
   const queryClient = useQueryClient()
-
   useEffect(() => {
     return () => {
       if (!clearQueryOnUnmount) return

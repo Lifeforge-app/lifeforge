@@ -21,7 +21,6 @@ export function IconPickerModal({
     iconSet?: string
     search?: string
   } | null>(null)
-
   const handleIconSelected = useCallback((icon: string) => {
     setSelectedIcon(icon)
     onClose()

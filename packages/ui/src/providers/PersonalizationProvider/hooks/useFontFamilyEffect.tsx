@@ -13,9 +13,7 @@ interface CustomFontData {
 
 function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
   const apiEndpoint = useAPIEndpoint()
-
   const abortControllerRef = useRef<AbortController | null>(null)
-
   useEffect(() => {
     const styleTagId = 'dynamic-font-style'
 
@@ -148,7 +146,6 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
       // Don't remove style tag on cleanup to avoid flicker during re-renders
     }
   }, [fontFamily, forgeAPI, apiEndpoint])
-
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--custom-font-scale',

@@ -18,15 +18,10 @@ import MainSidebarTitle from './MainSidebarTitle'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
-
   const { modules } = useFederation()
-
   const location = useLocation()
-
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
-
   const [resolvedRoutes, setResolvedRoutes] = useState(modules)
-
   const filteredRoutes = useMemo(
     () =>
       resolvedRoutes.filter(

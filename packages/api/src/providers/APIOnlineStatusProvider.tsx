@@ -57,13 +57,10 @@ export function APIOnlineStatusProvider({
   children: React.ReactNode
 }) {
   const apiEndpoint = useAPIEndpoint()
-
   const [isOnline, setIsOnline] = useState<boolean | 'loading'>('loading')
-
   const [environment, setEnvironment] = useState<
     'production' | 'development' | null
   >(null)
-
   const handleRetry = useCallback(() => {
     setIsOnline('loading')
     checkAPIStatus(apiEndpoint)
@@ -76,7 +73,6 @@ export function APIOnlineStatusProvider({
         setIsOnline(false)
       })
   }, [apiEndpoint])
-
   useEffect(() => {
     handleRetry()
   }, [])

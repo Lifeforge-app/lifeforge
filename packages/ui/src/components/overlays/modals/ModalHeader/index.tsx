@@ -26,11 +26,9 @@ function _ModalHeader({
   headerActions?: React.ReactNode
 }) {
   const { t } = useTranslation(namespace)
-
   // Add some delay to prevent the title and icon to become empty
   // when the modal is transitioned
   const innerTitle = useDebounce(title, 100)
-
   const innerIcon = useDebounce(icon, 100)
 
   return (

@@ -96,9 +96,7 @@ export function FileInput({
   errorMsg?: string
 }) {
   const { open } = useModalStore()
-
   const inputLabel = useInputLabel({ namespace, label })
-
   const handleFilePickerOpen = useCallback(
     function () {
       open(FilePickerModal, {

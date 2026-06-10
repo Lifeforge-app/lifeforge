@@ -54,7 +54,6 @@ function ModifyAPIKeyModal({
   onClose: () => void
 }) {
   const queryClient = useQueryClient()
-
   const mutation = useMutation(
     (type === 'create'
       ? forgeAPI.apiKeys.entries.create
@@ -70,7 +69,6 @@ function ModifyAPIKeyModal({
       }
     })
   )
-
   const form = useForm({
     defaultValues: {
       ...createDefaultValues(schema),
@@ -84,7 +82,6 @@ function ModifyAPIKeyModal({
     mode: 'all',
     resolver: zodResolver(schema)
   })
-
   const overrideKey = useWatch({ control: form.control, name: 'overrideKey' })
 
   return (

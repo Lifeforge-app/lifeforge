@@ -32,7 +32,6 @@ export function ConfirmationModal({
   }
 }) {
   const { t } = useTranslation(['common.modals', 'common.buttons'])
-
   const [confirmationTextState, setConfirmationTextState] = useState('')
 
   const handleClick = async () => {

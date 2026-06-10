@@ -36,16 +36,12 @@ function ModifyCategoryModal({
   }
 }) {
   const { t } = useTranslation('common.module-manager')
-
   const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
-
   const { open } = useModalStore()
-
   const [data, setData] = useState({
     key: category?.key || '',
     value: Object.entries(category?.value || {})
   })
-
   const [aiLoading, setAiLoading] = useState(false)
 
   function handleSubmit() {

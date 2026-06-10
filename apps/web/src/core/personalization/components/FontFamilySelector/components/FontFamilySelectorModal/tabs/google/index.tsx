@@ -21,7 +21,6 @@ function GoogleFontSelectorContent() {
       })
       .queryOptions()
   )
-
   const { pinnedFontsQuery, fontsQuery } = useGoogleFont()
 
   return (

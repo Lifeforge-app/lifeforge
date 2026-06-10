@@ -45,7 +45,6 @@ function _Header({
     ],
     []
   )
-
   const handleSearchKeyUp = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter' && searchQuery !== '') {
@@ -54,7 +53,6 @@ function _Header({
     },
     [searchQuery, setCurrentIconSet]
   )
-
   const handleSearchButtonClick = useCallback(() => {
     if (searchQuery !== '') setCurrentIconSet({ search: searchQuery })
   }, [searchQuery, setCurrentIconSet])

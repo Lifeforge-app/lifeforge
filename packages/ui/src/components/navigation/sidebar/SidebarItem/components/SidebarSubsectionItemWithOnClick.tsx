@@ -24,7 +24,6 @@ export function SidebarSubsectionItemWithOnClick({
   namespace?: string | false
 }) {
   const { setIsSidebarOpen } = useModuleSidebarState()
-
   const { t } = useTranslation(
     namespace
       ? [namespace, 'common.sidebar']
@@ -32,7 +31,6 @@ export function SidebarSubsectionItemWithOnClick({
         ? []
         : 'common.sidebar'
   )
-
   const handleClick = useCallback(() => {
     setIsSidebarOpen(false)
     onClick()

@@ -8,7 +8,6 @@ import NavigationBar from './components/NavigationBar'
 
 function Boilerplate({ children }: { children: React.ReactNode }) {
   const location = useLocation()
-
   useEffect(() => {
     const hash = location.hash
 

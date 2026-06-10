@@ -11,9 +11,7 @@ import { TailwindCSSColorsModal } from './modals/TailwindCSSColorsModal'
 
 export function PaletteButtons() {
   const { open } = useModalStore()
-
   const { innerColor, setInnerColor } = useColorPickerModalStore()
-
   const handleColorPaletteModalOpen = useCallback(
     (type: 'morandi' | 'tailwind' | 'flatUiColors') => () =>
       open(

@@ -53,7 +53,6 @@ export function InputWrapper({
     },
     [inputRef, onFocus]
   )
-
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter') {

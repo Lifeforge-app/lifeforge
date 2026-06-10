@@ -50,7 +50,6 @@ function CustomFontUploadModal({
   data: { openType: 'create' | 'edit'; initialData?: CustomFont }
 }) {
   const queryClient = useQueryClient()
-
   const uploadMutation = useMutation(
     forgeAPI.user.customFonts.upload
       .input({
@@ -70,7 +69,6 @@ function CustomFontUploadModal({
         }
       })
   )
-
   const form = useForm({
     defaultValues: {
       ...createDefaultValues(schema),

@@ -39,9 +39,7 @@ function DashboardGrid({
   canLayoutChange: boolean
 }) {
   const { t } = useTranslation('common.dashboard')
-
   const { widgets } = useWidgets()
-
   const COMPONENTS = useMemo(
     () =>
       Object.fromEntries(
@@ -49,11 +47,8 @@ function DashboardGrid({
       ),
     [widgets]
   )
-
   const { width, height } = useDivSize(wrapperRef)
-
   const { dashboardLayout: enabledWidgets } = usePersonalization()
-
   const { changeDashboardLayout } = useUserPersonalization()
 
   if (width === 0) {

@@ -65,9 +65,7 @@ export function DateInput({
   errorMsg
 }: DateInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const { derivedThemeColor } = usePersonalization()
-
   const ref = useRef<DatePicker | null>(null)
 
   return (

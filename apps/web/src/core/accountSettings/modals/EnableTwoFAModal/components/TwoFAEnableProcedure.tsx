@@ -8,7 +8,6 @@ import QRCodeDisplay from './QRCodeDisplay'
 
 function TwoFAEnableProcedure({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('common.accountSettings')
-
   const [proceeded, setProceeded] = useState(false)
 
   return proceeded ? (

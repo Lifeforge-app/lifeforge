@@ -48,11 +48,8 @@ export function ColorInput({
   errorMsg
 }: ColorInputProps & InputVariants) {
   const { open } = useModalStore()
-
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const ref = useRef<HTMLInputElement | null>(null)
-
   const [focused, setFocused] = useState(false)
 
   return (

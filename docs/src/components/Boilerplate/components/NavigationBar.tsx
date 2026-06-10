@@ -7,17 +7,14 @@ import ROUTES from '../../../Router'
 
 function NavigationBar() {
   const location = useLocation()
-
   const currentGroup = useMemo(
     () => location.pathname.split('/')[1],
     [location]
   )
-
   const currentSection = useMemo(
     () => location.pathname.split('/')[2],
     [location]
   )
-
   const nextSection = useMemo(() => {
     const sectionLinkCase = Object.fromEntries(
       ROUTES.map(({ path, children }) => {
@@ -56,7 +53,6 @@ function NavigationBar() {
       section: sectionLinkCase[currentGroup][currentSectionIndex + 1]
     }
   }, [currentGroup, currentSection])
-
   const lastSection = useMemo(() => {
     const sectionLinkCase = Object.fromEntries(
       ROUTES.map(({ path, children }) => {

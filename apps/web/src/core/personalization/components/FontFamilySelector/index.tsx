@@ -19,11 +19,8 @@ import FontFamilySelectorModal from './components/FontFamilySelectorModal'
 
 function FontFamilySelector() {
   const { t } = useTranslation('common.personalization')
-
   const { open } = useModalStore()
-
   const { fontFamily } = usePersonalization()
-
   const customFontQuery = useQuery(
     forgeAPI.user.customFonts.get
       .input({

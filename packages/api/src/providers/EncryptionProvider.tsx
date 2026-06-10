@@ -24,9 +24,7 @@ export function EncryptionProvider({
   children
 }: EncryptionProviderProps) {
   const [ready, setReady] = useState(hasServerPublicKey())
-
   const [error, setError] = useState<string | null>(null)
-
   useEffect(() => {
     if (ready) return
 

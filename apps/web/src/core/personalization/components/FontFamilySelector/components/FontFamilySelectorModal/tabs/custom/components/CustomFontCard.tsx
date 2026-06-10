@@ -33,11 +33,8 @@ function CustomFontCard({
   setSelectedFont: (font: string | null) => void
 }) {
   const { t } = useTranslation('common.personalization')
-
   const queryClient = useQueryClient()
-
   const { open } = useModalStore()
-
   const { fontFamily } = usePersonalization()
 
   const isSelected = selectedFont?.replace(/^custom:/, '') === font.id

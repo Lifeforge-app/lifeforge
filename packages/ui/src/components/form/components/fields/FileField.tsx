@@ -39,7 +39,6 @@ export function FileField<TFieldValues extends FieldValues>({
     control,
     name
   })
-
   const contextNamespace = useNamespace()
 
   const activeNamespace = namespace ?? contextNamespace

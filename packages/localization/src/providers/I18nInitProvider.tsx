@@ -12,7 +12,6 @@ export function I18nInitProvider({
   errorFallback: React.ReactNode
 }) {
   const [initialized, setInitialized] = useState<boolean | 'error'>(false)
-
   useEffect(() => {
     init()
       .then(() => {

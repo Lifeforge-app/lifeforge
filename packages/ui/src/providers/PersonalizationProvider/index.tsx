@@ -80,21 +80,15 @@ export function PersonalizationProvider({
   const rootElement = defaultValue.rootElement || document.body
 
   const [fontFamily, setFontFamily] = useState<string>(defaultValue.fontFamily)
-
   const [fontScale, setFontScale] = useState<number>(defaultValue.fontScale)
-
   const [borderRadiusMultiplier, setBorderRadiusMultiplier] = useState<number>(
     defaultValue.borderRadiusMultiplier
   )
-
   const [bordered, setBordered] = useState<boolean>(defaultValue.bordered)
-
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>(
     defaultValue.theme
   )
-
   const [rawThemeColor, setRawThemeColor] = useState(defaultValue.rawThemeColor)
-
   const [bgTemp, setBgTemp] = useState<
     | 'bg-slate'
     | 'bg-gray'
@@ -107,19 +101,14 @@ export function PersonalizationProvider({
     | 'bg-taupe'
     | string
   >(defaultValue.bgTemp)
-
   const [bgImage, setBgImage] = useState(defaultValue.bgImage)
-
   const [language, setLanguage] = useState(defaultValue.language)
-
   const [dashboardLayout, setDashboardLayout] = useState<IDashboardLayout>(
     defaultValue.dashboardLayout
   )
-
   const [backdropFilters, setBackdropFilters] = useState<IBackdropFilters>(
     defaultValue.backdropFilters
   )
-
   const derivedTheme = useMemo(() => {
     if (theme === 'system') {
       return window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -129,7 +118,6 @@ export function PersonalizationProvider({
 
     return theme
   }, [theme])
-
   const themeColor = useMemo(
     () =>
       !rawThemeColor.startsWith('#')
@@ -141,13 +129,11 @@ export function PersonalizationProvider({
         : rawThemeColor,
     [rawThemeColor]
   )
-
   const bgTempPalette = useMemo(() => {
     return !bgTemp.startsWith('#')
       ? BG_THEME[bgTemp.replace('bg-', '') as keyof typeof BG_THEME]
       : getColorPalette(bgTemp, 'bg', derivedTheme)
   }, [bgTemp])
-
   const getMostReadableColor = useMemo(
     () =>
       (bg?: string): string =>
@@ -159,7 +145,6 @@ export function PersonalizationProvider({
           .toHexString(),
     [themeColor, bgTempPalette]
   )
-
   useFontFamily(fontFamily, fontScale, forgeAPI)
   useThemeEffect(rootElement, derivedTheme, rawThemeColor, bgTemp)
   useBgTempEffect(rootElement, bgTemp, derivedTheme)
@@ -171,7 +156,6 @@ export function PersonalizationProvider({
   useMetaEffect(themeColor)
   useBorderRadiusEffect(borderRadiusMultiplier)
   useBorderedEffect(rootElement, bordered)
-
   const value = useMemo<IPersonalizationData>(
     () => ({
       rootElement,

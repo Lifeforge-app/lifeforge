@@ -34,7 +34,6 @@ export function VirtualGrid<T>({
   defaultRowHeight = 320
 }: VirtualGridProps<T>) {
   const listRef = useRef<List>(null)
-
   const cache = useMemo(
     () =>
       new CellMeasurerCache({
@@ -43,7 +42,6 @@ export function VirtualGrid<T>({
       }),
     [defaultRowHeight]
   )
-
   // Clear cache, recompute row positions, and scroll to top when items change
   useEffect(() => {
     cache.clearAll()

@@ -59,7 +59,6 @@ export const Default: Story = {
   },
   render: args => {
     const [value, onChange] = useState(COUNTRIES[0])
-
     const [query, setQuery] = useState('')
 
     const filteredCountries =
@@ -109,7 +108,6 @@ export const Required: Story = {
   },
   render: args => {
     const [value, onChange] = useState<(typeof COUNTRIES)[0] | null>(null)
-
     const [query, setQuery] = useState('')
 
     const filteredCountries =
@@ -165,7 +163,6 @@ export const OptionsWithColorDot: Story = {
   },
   render: args => {
     const [value, onChange] = useState(PRIORITY_LEVELS[0])
-
     const [query, setQuery] = useState('')
 
     const filtered =
@@ -213,7 +210,6 @@ export const LargeOptionList: Story = {
   },
   render: args => {
     const [value, onChange] = useState(ALL_TIMEZONES[0])
-
     const [query, setQuery] = useState('')
 
     const filtered =
@@ -255,7 +251,6 @@ export const Disabled: Story = {
   },
   render: args => {
     const [value, onChange] = useState(COUNTRIES[0])
-
     const [, setQuery] = useState('')
 
     return (
@@ -296,7 +291,6 @@ export const WithErrorMessage: Story = {
 
   render: args => {
     const [value, onChange] = useState(COUNTRIES[0])
-
     const [query, setQuery] = useState('')
 
     const filteredCountries =
@@ -344,7 +338,6 @@ export const DisabledWithErrorMessage: Story = {
   },
   render: args => {
     const [value, onChange] = useState(COUNTRIES[0])
-
     const [query, setQuery] = useState('')
 
     const filteredCountries =
@@ -392,7 +385,6 @@ export const PlainVariant: Story = {
   },
   render: args => {
     const [value, onChange] = useState(COUNTRIES[0])
-
     const [query, setQuery] = useState('')
 
     const filteredCountries =
@@ -441,7 +433,6 @@ export const PlainVariantWithErrorMessage: Story = {
 
   render: args => {
     const [value, onChange] = useState(COUNTRIES[0])
-
     const [query, setQuery] = useState('')
 
     const filteredCountries =

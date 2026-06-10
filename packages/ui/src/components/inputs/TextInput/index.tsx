@@ -62,13 +62,11 @@ export function _TextInput({
   ...inputProps
 }: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
-
   const localInputRef = useRef<HTMLInputElement | null>(null)
 
   const inputRef = externalInputRef || localInputRef
 
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-
   const [actionButtonLoading, handleClick] = usePromiseLoading(
     (actionButtonProps?.onClick as () => Promise<void>) ||
       (async (): Promise<void> => {})

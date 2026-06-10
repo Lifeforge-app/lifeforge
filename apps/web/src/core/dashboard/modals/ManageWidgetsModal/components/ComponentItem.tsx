@@ -35,14 +35,11 @@ function ComponentListItem({
   namespace?: string
 }) {
   const { t } = useTranslation([namespace ?? 'common.dashboard'])
-
   const {
     dashboardLayout: enabledWidgets,
     setDashboardLayout: setEnabledWidgets
   } = usePersonalization()
-
   const { changeDashboardLayout: setDashboardLayout } = useUserPersonalization()
-
   const isEnabled = useMemo(() => {
     return Object.values(
       JSON.stringify(enabledWidgets) !== '{}' ? enabledWidgets : { a: [] }

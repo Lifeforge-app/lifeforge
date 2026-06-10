@@ -18,13 +18,9 @@ export function CreatePasswordScreen({
   challengeController: ForgeEndpoint
 }) {
   const { open } = useModalStore()
-
   const { t } = useTranslation('common.vault')
-
   const [newPassword, setNewPassword] = useState<string>('')
-
   const [confirmPassword, setConfirmPassword] = useState<string>('')
-
   const createPasswordMutation = useMutation(
     controller.mutationOptions({
       onSuccess: () => {

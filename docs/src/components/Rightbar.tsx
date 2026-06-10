@@ -7,15 +7,10 @@ export const BLACKLISTED_PAGES = ['/progress/changelog']
 
 function Rightbar() {
   const [allSections, setAllSections] = useState<string[]>([])
-
   const [activeSection, setActiveSection] = useState<string>('')
-
   const location = useLocation()
-
   const userClickedRef = useRef(false)
-
   const userClickTimeoutRef = useRef<number | null>(null)
-
   // Apply aria-current attribute whenever activeSection changes
   useEffect(() => {
     if (activeSection) {
@@ -30,7 +25,6 @@ function Rightbar() {
       }
     }
   }, [activeSection])
-
   useEffect(() => {
     const sections = document.querySelectorAll('article section')
 

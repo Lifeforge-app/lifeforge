@@ -35,15 +35,11 @@ import ModifyCategoryModal from './components/ModifyCategoryModal'
 
 function Categories() {
   const { t } = useTranslation('common.module-manager')
-
   const { open } = useModalStore()
-
   const { categoryTranslations, modules, refetch } = useFederation()
-
   const [items, setItems] = useState<
     Array<{ key: string; value: Record<string, string> }>
   >([])
-
   const missingKeys = useMemo(() => {
     const allKeys = [
       ...new Set([
@@ -61,14 +57,12 @@ function Categories() {
 
     return allKeys.filter(key => !categoryTranslations[key])
   }, [categoryTranslations, modules])
-
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates
     })
   )
-
   useEffect(() => {
     setItems(
       Object.entries(categoryTranslations).map(([key, value]) => ({
