@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
@@ -40,8 +40,10 @@ export function EmptyStateScreen({
   icon,
   smaller = false
 }: EmptyStateScreenProps) {
-  const { t } = useTranslation(
-    'namespace' in message ? message.namespace : undefined
+  const { t } = useModuleTranslation(
+    'namespace' in message && message.namespace
+      ? [message.namespace]
+      : undefined
   )
 
   return (

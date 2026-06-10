@@ -5,5 +5,5 @@ import { useModuleMetadata } from '@lifeforge/federation'
 export function useModuleTranslation(extraKeys: string[] = []) {
   const { name } = useModuleMetadata()
 
-  return useTranslation([`apps.${name ?? ''}`, ...extraKeys])
+  return useTranslation(name ? [`apps.${name}`, ...extraKeys] : extraKeys)
 }

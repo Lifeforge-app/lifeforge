@@ -33,8 +33,8 @@ export function SBThemeProvider({
       }
     }
   }, [context])
-  
-useSBTheme(derivedContext)
+
+  useSBTheme(derivedContext)
 
   return (
     <PersonalizationProvider

@@ -15,7 +15,11 @@ interface ClientI18nConfigOptions {
       }
     }
   }
-  getAvailableLanguages: () => { name: string; alternative?: string[]; icon: string }[]
+  getAvailableLanguages: () => {
+    name: string
+    alternative?: string[]
+    icon: string
+  }[]
 }
 
 export function clientI18nConfig({
@@ -39,14 +43,21 @@ export function clientI18nConfig({
     interpolation: {
       escapeValue: false
     },
-    returnedObjectHandler(key: string, value: string, options: Record<string, unknown>): string {
+    returnedObjectHandler(
+      key: string,
+      value: string,
+      options: Record<string, unknown>
+    ): string {
       return JSON.stringify({ key, value, options })
     },
     fallbackNS: false,
     defaultNS: false,
     saveMissing: true,
     missingKeyHandler: async (_, namespace, key) => {
-      if (!namespace || !['apps', 'common'].includes(namespace.split('.')[0] ?? '')) {
+      if (
+        !namespace ||
+        !['apps', 'common'].includes(namespace.split('.')[0] ?? '')
+      ) {
         return
       }
 

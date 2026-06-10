@@ -7,8 +7,8 @@ import { toast } from '@lifeforge/ui'
 function index() {
   const navigate = useNavigate()
   const { t } = useTranslation('common.fetch')
-  
-useEffect(() => {
+
+  useEffect(() => {
     const a = document.createElement('a')
 
     a.href = 'https://docs.lifeforge.dev'

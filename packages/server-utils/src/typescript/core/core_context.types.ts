@@ -36,10 +36,7 @@ type CheckExistenceFunc = <TSchemas extends CleanedSchemas>(
   id: string
 ) => Promise<boolean>
 
-type GetAPIKeyFunc = (
-  id: string,
-  pb: IPBService<any>
-) => Promise<string>
+type GetAPIKeyFunc = (id: string, pb: IPBService<any>) => Promise<string>
 
 type CheckModulesAvailabilityFunc = (moduleIds: string) => Promise<boolean>
 

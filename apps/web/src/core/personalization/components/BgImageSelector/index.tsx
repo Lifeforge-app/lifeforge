@@ -22,8 +22,8 @@ function BgImageSelector() {
   const { t } = useTranslation('common.personalization')
   const { bgImage } = usePersonalization()
   const { setBgImage, setBackdropFilters } = usePersonalization()
-  
-const handleAdjustBgImage = useCallback(() => {
+
+  const handleAdjustBgImage = useCallback(() => {
     open(AdjustBgImageModal, {})
   }, [])
   const deleteMutation = useMutation(

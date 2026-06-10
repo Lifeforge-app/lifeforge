@@ -16,18 +16,18 @@ import forgeAPI from '@/forgeAPI'
 
 function UserCreationPage() {
   const { t } = useTranslation('common.auth')
-  
-const [formData, setFormData] = useState({
+
+  const [formData, setFormData] = useState({
     email: '',
     username: '',
     name: '',
     password: '',
     confirmPassword: ''
   })
-  
-const [errors, setErrors] = useState<Record<string, string>>({})
-  
-const createUserMutation = useMutation(
+
+  const [errors, setErrors] = useState<Record<string, string>>({})
+
+  const createUserMutation = useMutation(
     forgeAPI.user.auth.createFirstUser.mutationOptions({
       onSuccess: () => {
         toast.success(t('messages.userCreated'))

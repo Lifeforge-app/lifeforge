@@ -28,8 +28,8 @@ export function FilePickerModal({
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
   const [mode, setMode] = useState<'local' | 'url' | 'pixabay' | 'ai'>('local')
-  
-const [loading, onClick] = usePromiseLoading(() =>
+
+  const [loading, onClick] = usePromiseLoading(() =>
     onSelect(file as string | File, preview)
       .catch(console.error)
       .finally(() => {

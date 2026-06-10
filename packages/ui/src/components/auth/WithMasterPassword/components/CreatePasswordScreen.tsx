@@ -21,8 +21,8 @@ export function CreatePasswordScreen({
   const { t } = useTranslation('common.vault')
   const [newPassword, setNewPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
-  
-const createPasswordMutation = useMutation(
+
+  const createPasswordMutation = useMutation(
     controller.mutationOptions({
       onSuccess: () => {
         window.location.reload()

@@ -29,13 +29,13 @@ export function TextField<TFieldValues extends FieldValues>({
   ...rest
 }: TextFieldProps<TFieldValues>) {
   const { open } = useModalStore()
-  
-const { field, fieldState } = useController({
+
+  const { field, fieldState } = useController({
     control,
     name
   })
-  
-const contextNamespace = useNamespace()
+
+  const contextNamespace = useNamespace()
 
   const activeNamespace = namespace ?? contextNamespace
 

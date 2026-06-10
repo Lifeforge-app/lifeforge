@@ -36,8 +36,8 @@ function Modules() {
   const { language } = usePersonalization()
   const queryClient = useQueryClient()
   const modulesQuery = useQuery(forgeAPI.modules.list.queryOptions())
-  
-const uninstallMutation = useMutation({
+
+  const uninstallMutation = useMutation({
     mutationFn: (moduleName: string) =>
       forgeAPI.modules.uninstall.mutate({ moduleName }),
     onSuccess: (data, moduleName) => {

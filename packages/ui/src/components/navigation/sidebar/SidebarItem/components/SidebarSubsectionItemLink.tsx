@@ -21,8 +21,8 @@ export function SidebarSubsectionItemLink({
   const location = useLocation()
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
   const { t } = useTranslation('common.sidebar')
-  
-const isActive = useMemo(
+
+  const isActive = useMemo(
     () => location.pathname === path,
     [path, location.pathname]
   )

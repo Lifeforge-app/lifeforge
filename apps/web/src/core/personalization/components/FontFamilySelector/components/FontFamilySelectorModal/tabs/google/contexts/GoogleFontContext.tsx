@@ -48,21 +48,21 @@ function GoogleFontProvider({
   setSelectedFont: (font: string | null) => void
 }) {
   const { fontFamily } = usePersonalization()
-  
-const fontsQuery = useQuery<{
+
+  const fontsQuery = useQuery<{
     enabled: boolean
     items: FontFamily[]
   }>(forgeAPI.user.personalization.listGoogleFonts.queryOptions())
   const pinnedFontsQuery = useQuery<string[]>(
     forgeAPI.user.personalization.listGoogleFontsPin.queryOptions()
   )
-  
-const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [page, setPage] = useState(1)
   const scrollableRef = useRef<any>(null)
-  
-const categories = useMemo(
+
+  const categories = useMemo(
     () => [...new Set(fontsQuery.data?.items.map(font => font.category))],
     [fontsQuery.data?.items]
   )

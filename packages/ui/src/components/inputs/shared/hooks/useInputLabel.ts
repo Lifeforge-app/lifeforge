@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 export function useInputLabel({
   namespace,
@@ -8,7 +9,7 @@ export function useInputLabel({
   namespace?: string
   label: string
 }) {
-  const { t } = useTranslation(namespace)
+  const { t } = useModuleTranslation(namespace ? [namespace] : undefined)
 
   if (!namespace) return label
 

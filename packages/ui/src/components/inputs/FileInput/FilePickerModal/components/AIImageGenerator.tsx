@@ -22,8 +22,8 @@ export function AIImageGenerator({
 }) {
   const apiHost = useAPIEndpoint()
   const [prompt, setPrompt] = useState('')
-  
-const [loading, onSubmit] = usePromiseLoading(async () => {
+
+  const [loading, onSubmit] = usePromiseLoading(async () => {
     if (prompt === '') {
       toast.error('Please enter a prompt')
 

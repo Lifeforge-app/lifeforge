@@ -48,8 +48,8 @@ export function LocationInput({
   const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
-  
-const enabledQuery = useQuery(
+
+  const enabledQuery = useQuery(
     forgeAPI
       .checkAPIKeys({
         keys: 'gcloud'

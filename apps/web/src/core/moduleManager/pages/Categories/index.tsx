@@ -37,8 +37,8 @@ function Categories() {
   const { t } = useTranslation('common.module-manager')
   const { open } = useModalStore()
   const { categoryTranslations, modules, refetch } = useFederation()
-  
-const [items, setItems] = useState<
+
+  const [items, setItems] = useState<
     Array<{ key: string; value: Record<string, string> }>
   >([])
   const missingKeys = useMemo(() => {

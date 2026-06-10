@@ -26,8 +26,8 @@ function StackModal({ index }: { index: number }) {
   const { isClosing } = item || {}
 
   const [localOpen, setLocalOpen] = useState(false)
-  
-useEffect(() => {
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       setLocalOpen(true)
     }, 10)

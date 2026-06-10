@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Box, Text } from '@/components/primitives'
 
@@ -14,7 +15,7 @@ export function TitleAndDesc({
   namespace?: string | false
   variant?: 'default' | 'large-icon'
 }) {
-  const { t } = useTranslation(namespace === false ? [] : [namespace])
+  const { t } = useModuleTranslation(namespace === false ? [] : [namespace])
 
   return (
     <Box minWidth="0">

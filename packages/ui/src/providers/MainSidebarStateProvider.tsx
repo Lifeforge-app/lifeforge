@@ -20,8 +20,8 @@ export function MainSidebarStateProvider({
   children: React.ReactNode
 }) {
   const [sidebarExpanded, setSidebarExpanded] = useState(true)
-  
-const toggleSidebar = useCallback(() => {
+
+  const toggleSidebar = useCallback(() => {
     setSidebarExpanded(prev => !prev)
   }, [])
   useEffect(() => {

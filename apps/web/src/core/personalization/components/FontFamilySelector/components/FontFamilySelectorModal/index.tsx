@@ -21,12 +21,12 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.personalization')
   const { fontFamily } = usePersonalization()
   const { changeFontFamily } = useUserPersonalization()
-  
-const [activeTab, setActiveTab] = useState<TabType>(
+
+  const [activeTab, setActiveTab] = useState<TabType>(
     fontFamily.startsWith('custom:') ? 'custom' : 'google'
   )
-  
-const [selectedFont, setSelectedFont] = useState<string | null>(fontFamily)
+
+  const [selectedFont, setSelectedFont] = useState<string | null>(fontFamily)
 
   return (
     <Stack gap="md" height="100%" minHeight="80vh" minWidth="60vw">

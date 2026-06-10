@@ -57,16 +57,16 @@ export function Pixabay({
 }) {
   const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
-  
-const [results, setResults] = useState<'error' | IPixabaySearchResult | null>(
+
+  const [results, setResults] = useState<'error' | IPixabaySearchResult | null>(
     null
   )
-  
-const [page, setPage] = useState(1)
+
+  const [page, setPage] = useState(1)
   const [filters, updateFilters] = useReducer(reducer, initialFilter)
   const [isSearchFilterModalOpen, setIsSearchFilterModalOpen] = useState(false)
-  
-const [loading, onSearch] = usePromiseLoading(async (page: number) => {
+
+  const [loading, onSearch] = usePromiseLoading(async (page: number) => {
     if (loading) return
 
     if (query === '') {

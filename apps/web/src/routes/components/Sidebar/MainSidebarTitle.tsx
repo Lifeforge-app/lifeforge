@@ -6,8 +6,8 @@ import { SidebarTitle, usePersonalization } from '@lifeforge/ui'
 function MainSidebarTitle({ title }: { title: string }) {
   const { categoryTranslations } = useFederation()
   const { language } = usePersonalization()
-  
-const translatedTitle = useMemo(() => {
+
+  const translatedTitle = useMemo(() => {
     const key = title.toLowerCase()
 
     const translations = categoryTranslations[key]
@@ -19,7 +19,7 @@ const translatedTitle = useMemo(() => {
     return title
   }, [categoryTranslations, language])
 
-  return <SidebarTitle label={translatedTitle} />
+  return <SidebarTitle label={translatedTitle} namespace={false} />
 }
 
 export default MainSidebarTitle

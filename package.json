@@ -25,8 +25,8 @@
     "forge": "bun run tools/src/index.ts",
     "build": "turbo build",
     "types": "turbo types",
-    "lint": "eslint . && prettier --check .",
-    "fix": "eslint . --fix && prettier --write .",
+    "lint": "prettier --check . && eslint .",
+    "fix": "bun prettier --write ./ && eslint . --fix",
     "test": "turbo test",
     "postinstall": "turbo build --filter=\"./packages/*\""
   },

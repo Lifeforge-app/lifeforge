@@ -16,8 +16,8 @@ export function useAppRouter() {
   const { auth, authLoading } = useAuth()
   const { modules, loading: modulesLoading } = useFederation()
   const [appRouter, setAppRouter] = useState<DataRouter | null>(null)
-  
-const loadingRouter = useMemo(
+
+  const loadingRouter = useMemo(
     () => createBrowserRouter(createAuthLoadingConfig()),
     []
   )

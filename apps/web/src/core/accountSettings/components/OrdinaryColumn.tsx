@@ -22,8 +22,8 @@ function OrdinaryColumn({
   const { open } = useModalStore()
   const { userData } = useAuth()
   const { t } = useTranslation('common.accountSettings')
-  
-const handleOpenModifyModal = useCallback(() => {
+
+  const handleOpenModifyModal = useCallback(() => {
     open(ModifyModal, {
       type,
       title,
