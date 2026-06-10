@@ -30,7 +30,8 @@ function BackupItem({
   const queryClient = useQueryClient()
   const { open } = useModalStore()
   const [downloadLoading, setDownloadLoading] = useState(false)
-  const deleteMutation = useMutation(
+  
+const deleteMutation = useMutation(
     forgeAPI.backups.remove
       .input({
         key: backup.key

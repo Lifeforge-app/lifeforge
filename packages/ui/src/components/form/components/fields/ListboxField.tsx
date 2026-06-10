@@ -137,7 +137,8 @@ export function ListboxField<TFieldValues extends FieldValues, TOption>({
     control,
     name
   })
-  const contextNamespace = useNamespace()
+  
+const contextNamespace = useNamespace()
 
   const activeNamespace = namespace ?? contextNamespace
 

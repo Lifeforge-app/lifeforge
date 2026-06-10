@@ -35,7 +35,8 @@ function FontListItem({
   setSelectedFont: (font: string) => void
 }) {
   const queryClient = useQueryClient()
-  const togglePinMutation = useMutation(
+  
+const togglePinMutation = useMutation(
     forgeAPI.user.personalization.toggleGoogleFontsPin.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({

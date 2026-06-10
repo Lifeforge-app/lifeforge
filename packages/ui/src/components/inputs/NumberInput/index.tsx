@@ -40,7 +40,8 @@ function NumberTextInputAdapter(props: any) {
   const { onChange, getInputRef, ...rest } = props
 
   const localRef = useRef<HTMLInputElement | null>(null)
-  useEffect(function () {
+  
+useEffect(function () {
     if (getInputRef) {
       if (typeof getInputRef === 'function') {
         getInputRef(localRef.current)

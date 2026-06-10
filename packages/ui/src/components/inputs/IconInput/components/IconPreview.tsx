@@ -14,7 +14,8 @@ export function IconPreview({
   variant: InputVariant
 }) {
   const [iconExists, setIconExists] = useState(false)
-  useEffect(() => {
+  
+useEffect(() => {
     let active = true
 
     if (!value) {

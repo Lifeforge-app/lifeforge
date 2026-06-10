@@ -24,7 +24,8 @@ export function SidebarSubsectionItemWithOnClick({
   namespace?: string | false
 }) {
   const { setIsSidebarOpen } = useModuleSidebarState()
-  const { t } = useTranslation(
+  
+const { t } = useTranslation(
     namespace
       ? [namespace, 'common.sidebar']
       : namespace === false

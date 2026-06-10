@@ -21,7 +21,8 @@ function GoogleFontSelectorContent() {
       })
       .queryOptions()
   )
-  const { pinnedFontsQuery, fontsQuery } = useGoogleFont()
+  
+const { pinnedFontsQuery, fontsQuery } = useGoogleFont()
 
   return (
     <WithQuery query={apiKeyAvailable}>

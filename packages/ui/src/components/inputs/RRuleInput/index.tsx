@@ -108,7 +108,8 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
 }) {
   const { t } = useTranslation(['apps.calendar', 'common.misc'])
   const valueParsed = useMemo(() => fromRRULEString(value), [value])
-  const [start, setStart] = useState<Date | null>(
+  
+const [start, setStart] = useState<Date | null>(
     valueParsed ? valueParsed.start : null
   )
   const [duration, setDuration] = useState<{

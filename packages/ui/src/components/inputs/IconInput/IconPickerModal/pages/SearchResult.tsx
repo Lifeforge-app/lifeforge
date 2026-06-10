@@ -81,7 +81,8 @@ export function SearchResult({
   const [currentIconSet, setCurrentIconSet] = useState<string | null>(null)
   const [iconData, setIconData] = useState<IIconSearchResult | null>(null)
   const [searchQuery, setSearchQuery] = useState(searchTerm ?? '')
-  const filteredIconList = useMemo(() => {
+  
+const filteredIconList = useMemo(() => {
     if (iconData === null) return []
 
     if (currentIconSet !== null) {

@@ -14,7 +14,8 @@ import QRLoginApprovalModal from '../modals/QRLoginScannerModal'
 function QRLoginColumn() {
   const { open } = useModalStore()
   const { t } = useTranslation('common.auth')
-  const handleOpenScanner = useCallback(() => {
+  
+const handleOpenScanner = useCallback(() => {
     open(QRCodeScanner, {
       onScanned: (scannedData: string) => {
         // Validate that this is a LifeForge QR login code

@@ -75,13 +75,15 @@ export function SearchInput({
     ...(namespace ? [namespace] : [])
   ])
   // Internal state for immediate input feedback when debouncing
-  const [internalValue, setInternalValue] = useState(value)
+  
+const [internalValue, setInternalValue] = useState(value)
   const [isFocused, setIsFocused] = useState(false)
   const debouncedValue = useDebounce(internalValue, debounceMs ?? 0)
   // Track if we have a pending debounce to avoid syncing back from parent
   const isPendingDebounce = useRef(false)
   // Sync internal value when external value changes (only if not pending our own debounce)
-  useEffect(() => {
+  
+useEffect(() => {
     if (!isPendingDebounce.current) {
       setInternalValue(value)
     }
@@ -131,7 +133,8 @@ export function SearchInput({
   const childrenRef = useRef<HTMLDivElement>(null)
   const { height: childrenHeight } = useDivSize(childrenRef)
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
-  useEffect(() => {
+  
+useEffect(() => {
     const updatePosition = () => {
       if (!containerRef.current || !shouldShowChildren) return
 

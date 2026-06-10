@@ -36,7 +36,8 @@ function EntryItem({ entry }: { entry: APIKeyEntry }) {
   const queryClient = useQueryClient()
   const { open } = useModalStore()
   const [isCopying, setIsCopying] = useState(false)
-  const deleteMutation = useMutation(
+  
+const deleteMutation = useMutation(
     forgeAPI.apiKeys.entries.remove
       .input({
         id: entry.id
