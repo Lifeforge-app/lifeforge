@@ -31,7 +31,9 @@ function UserCreationPage() {
     forgeAPI.user.auth.createFirstUser.mutationOptions({
       onSuccess: () => {
         toast.success(t('messages.userCreated'))
-        window.location.reload()
+        setTimeout(() => {
+          window.location.reload()
+        }, 1000)
       },
       onError: (error: Error) => {
         toast.error(error.message)

@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 
 @import '@lifeforge/ui/dist/index.css';
-@source '../../packages/lifeforge-ui/dist';
 
 @import 'react-medium-image-zoom/dist/styles.css';
 

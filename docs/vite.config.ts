@@ -1,5 +1,6 @@
 import mdx, { Options } from '@mdx-js/rollup'
 import react from '@vitejs/plugin-react'
+import federation from '@originjs/vite-plugin-federation'
 import path from 'node:path'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
@@ -12,7 +13,18 @@ const options: Options = {
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), mdx(options), mdxListCountsPlugin()],
+  plugins: [
+    react(),
+    mdx(options),
+    mdxListCountsPlugin(),
+    federation({
+      name: 'docs-host',
+      remotes: {
+        None: ''
+      },
+      shared: ['react', 'react-dom']
+    })
+  ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')

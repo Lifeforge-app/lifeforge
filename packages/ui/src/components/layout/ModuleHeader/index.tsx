@@ -1,9 +1,10 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleMetadata } from '@lifeforge/federation'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
-import { useModuleHeaderState } from '@/providers'
 import { colorWithOpacity } from '@/system'
 
 import { useMainSidebarState } from '../../../providers'
@@ -37,13 +38,12 @@ export function ModuleHeader({
   namespace,
   tKey
 }: ModuleHeaderProps) {
-  const { title: innerTitle, icon: innerIcon } = useModuleHeaderState()
+  const { title: innerTitle, icon: innerIcon } = useModuleMetadata()
 
   title = title ?? innerTitle
   icon = icon ?? innerIcon
 
-  const { t } = useTranslation([
-    `apps.${title}`,
+  const { t } = useModuleTranslation([
     `common.${title}`,
     'common.misc',
     namespace ?? ''

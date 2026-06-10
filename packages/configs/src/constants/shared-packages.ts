@@ -7,6 +7,10 @@ export const SHARED_PACKAGES = {
     aliasRegex: /^@lifeforge\/federation$/,
     entryPoint: '../packages/federation/src/index.ts'
   },
+  '@lifeforge/localization': {
+    aliasRegex: /^@lifeforge\/localization$/,
+    entryPoint: '../packages/localization/src/index.ts'
+  },
   '@lifeforge/ui': {
     aliasRegex: /^@lifeforge\/ui$/,
     entryPoint: '../packages/ui/src/index.ts'

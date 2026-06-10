@@ -12,6 +12,7 @@ interface RouteBuilderOptions {
   isNested?: boolean
   APIKeyAccess?: Record<string, { usage: string; required: boolean }>
   config: {
+    name: string
     title: string
     displayName: string
     icon: string
@@ -63,6 +64,7 @@ export function createModuleRoute(
     routes: item.routes,
     APIKeyAccess: item.APIKeyAccess,
     config: {
+      name: item.name || '',
       title: item.name,
       displayName: item.displayName,
       icon: item.icon,

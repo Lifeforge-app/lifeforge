@@ -58,6 +58,7 @@ export const Default: Story = {
     config: {
       clearQueryOnUnmount: false,
       icon: 'tabler:cube',
+      name: '',
       title: 'Demo Module'
     }
   },

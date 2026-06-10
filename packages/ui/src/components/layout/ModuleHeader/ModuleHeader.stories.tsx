@@ -29,7 +29,7 @@ type Story = StoryObj<typeof meta>
 
 /**
  * Every story must be nested inside ModuleWrapper so that
- * ModuleHeaderStateProvider is available for the title/icon context.
+ * ModuleMetadataProvider is available for the title/icon context.
  */
 function StoryShell({ children }: { children: React.ReactNode }) {
   return (
@@ -38,6 +38,7 @@ function StoryShell({ children }: { children: React.ReactNode }) {
         config={{
           clearQueryOnUnmount: false,
           icon: 'tabler:cube',
+          name: '',
           title: 'Demo Module'
         }}
       >
