@@ -65,7 +65,8 @@ export function ComboboxInput<T>({
   errorMsg
 }: ComboboxInputProps<T> & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-  const isActive = useMemo(() => {
+  
+const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
       return customActive
     }

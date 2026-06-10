@@ -51,7 +51,8 @@ export function MainSidebarItem({
 }: MainSidebarItemProps) {
   const navigate = useNavigate()
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
-  const handleNavigation = useCallback(() => {
+  
+const handleNavigation = useCallback(() => {
     setSubsectionExpanded(!subsectionExpanded)
 
     if (subsection?.length) {

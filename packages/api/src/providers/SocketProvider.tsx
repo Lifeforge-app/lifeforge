@@ -21,7 +21,8 @@ export interface SocketEvent<
 export function SocketProvider({ children }: { children: React.ReactNode }) {
   const apiHost = useAPIEndpoint()
   const [socket, setSocket] = useState<Socket | null>(null)
-  useEffect(() => {
+  
+useEffect(() => {
     const newSocket = io(apiHost, {
       auth: {
         token: localStorage.getItem('session')

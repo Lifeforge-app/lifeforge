@@ -40,14 +40,16 @@ function DashboardGrid({
 }) {
   const { t } = useTranslation('common.dashboard')
   const { widgets } = useWidgets()
-  const COMPONENTS = useMemo(
+  
+const COMPONENTS = useMemo(
     () =>
       Object.fromEntries(
         Object.entries(widgets).map(([key, value]) => [key, value.component])
       ),
     [widgets]
   )
-  const { width, height } = useDivSize(wrapperRef)
+  
+const { width, height } = useDivSize(wrapperRef)
   const { dashboardLayout: enabledWidgets } = usePersonalization()
   const { changeDashboardLayout } = useUserPersonalization()
 

@@ -43,7 +43,8 @@ export default function useQRLoginSession({
   /**
    * Fallback polling for WebSocket connection issues
    */
-  const startPolling = useCallback(
+  
+const startPolling = useCallback(
     (sessionId: string) => {
       if (pollingIntervalRef.current) return
 

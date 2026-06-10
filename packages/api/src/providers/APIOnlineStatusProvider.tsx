@@ -58,7 +58,8 @@ export function APIOnlineStatusProvider({
 }) {
   const apiEndpoint = useAPIEndpoint()
   const [isOnline, setIsOnline] = useState<boolean | 'loading'>('loading')
-  const [environment, setEnvironment] = useState<
+  
+const [environment, setEnvironment] = useState<
     'production' | 'development' | null
   >(null)
   const handleRetry = useCallback(() => {

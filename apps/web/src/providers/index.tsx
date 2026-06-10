@@ -37,7 +37,8 @@ const queryClient = new QueryClient()
 
 function Providers() {
   const { open } = useModalStore()
-  const providers = useMemo(
+  
+const providers = useMemo(
     () =>
       // IMPORTANT: The order of these providers matters!
       // From top to bottom, they are nested inside one another in that order.

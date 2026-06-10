@@ -20,7 +20,8 @@ function MermaidChart({ chart }: { chart: string }) {
 
   const [svg, setSvg] = useState<string>('')
   const [error, setError] = useState<string>('')
-  useEffect(() => {
+  
+useEffect(() => {
     const renderChart = async () => {
       try {
         const { svg } = await mermaid.render(`mermaid-${id}`, chart)

@@ -13,7 +13,8 @@ import { useEffect, useRef } from 'react'
  */
 export function useListboxBlurOnClose() {
   const containerRef = useRef<HTMLDivElement>(null)
-  useEffect(() => {
+  
+useEffect(() => {
     const el = containerRef.current
 
     if (!el) return

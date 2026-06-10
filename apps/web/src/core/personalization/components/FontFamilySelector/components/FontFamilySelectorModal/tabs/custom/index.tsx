@@ -35,7 +35,8 @@ function CustomFontSelector({
 }) {
   const { t } = useTranslation('common.personalization')
   const { open } = useModalStore()
-  const customFontsQuery = useQuery(
+  
+const customFontsQuery = useQuery(
     forgeAPI.user.customFonts.list.queryOptions()
   )
 

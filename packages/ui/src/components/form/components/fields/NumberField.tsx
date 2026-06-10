@@ -24,7 +24,8 @@ export function NumberField<TFieldValues extends FieldValues>({
     control,
     name
   })
-  const contextNamespace = useNamespace()
+  
+const contextNamespace = useNamespace()
 
   const activeNamespace = namespace ?? contextNamespace
 

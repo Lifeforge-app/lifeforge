@@ -15,7 +15,8 @@ export function ChipSelector({
 }) {
   const [expanded, setExpanded] = useState(false)
   const { derivedThemeColor } = usePersonalization()
-  const sortedOptions = useMemo(
+  
+const sortedOptions = useMemo(
     () =>
       [...options].sort((a, b) => {
         if (a[0] === b[0]) return a.length - b.length

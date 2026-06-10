@@ -20,7 +20,8 @@ function SidebarBottomBar() {
   const navigate = useNavigate()
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
   const { userData, getAvatarURL, logout } = useAuth()
-  const handleNavigateToAccountSettings = useCallback(() => {
+  
+const handleNavigateToAccountSettings = useCallback(() => {
     if (window.innerWidth < 1024) {
       toggleSidebar()
     }

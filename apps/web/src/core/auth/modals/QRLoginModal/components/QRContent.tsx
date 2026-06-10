@@ -41,7 +41,8 @@ const getStyle = (status: QRStatus) => {
 
 function QRContent({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.auth')
-  const { status, qrData, timeLeft, refreshSession } = useQRLoginSession({
+  
+const { status, qrData, timeLeft, refreshSession } = useQRLoginSession({
     onSuccess: onClose
   })
 

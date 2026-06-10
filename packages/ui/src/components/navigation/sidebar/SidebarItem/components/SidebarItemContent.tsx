@@ -37,7 +37,8 @@ export function SidebarItemContent({
   const { t } = useTranslation(
     namespace === false ? [] : [namespace, 'common.sidebar']
   )
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  
+const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <>

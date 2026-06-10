@@ -121,7 +121,8 @@ export const BesideSearchBar: Story = {
     const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
       'list'
     )
-    const [searchValue, setSearchValue] = useState('')
+    
+const [searchValue, setSearchValue] = useState('')
 
     return (
       <Flex align="center" gap="md" width="100%">

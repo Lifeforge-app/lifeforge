@@ -6,7 +6,8 @@ import { Button, ColorInput, Switch, usePersonalization } from '@lifeforge/ui'
 function CustomColorInput() {
   const [color, setColor] = useState('#a9d066')
   const { setRawThemeColor, rawThemeColor } = usePersonalization()
-  useEffect(() => {
+  
+useEffect(() => {
     setColor(rawThemeColor.toUpperCase())
   }, [rawThemeColor])
 

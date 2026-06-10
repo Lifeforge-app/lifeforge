@@ -17,7 +17,8 @@ export function InputFocusProvider({
 }) {
   const [isFocused, setIsFocused] = useState(false)
   const containerRef = useRef<FocusableElement>(null)
-  const handleFocus = useCallback(() => {
+  
+const handleFocus = useCallback(() => {
     setIsFocused(true)
   }, [])
   const handleBlur = useCallback((e: React.FocusEvent) => {

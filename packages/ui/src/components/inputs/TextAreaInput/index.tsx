@@ -52,7 +52,8 @@ export function TextAreaInput({
 }: TextAreaInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const ref = useRef<HTMLTextAreaElement>(null)
-  useEffect(() => {
+  
+useEffect(() => {
     if (!ref.current) return
 
     ref.current.style.height = 'auto'

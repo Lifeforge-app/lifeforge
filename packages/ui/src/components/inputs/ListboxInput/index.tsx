@@ -62,7 +62,8 @@ export function ListboxInput<T>({
   errorMsg
 }: ListboxInputPropsWithVariants<T>) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-  const isActive = useMemo(() => {
+  
+const isActive = useMemo(() => {
     if (typeof customActive === 'boolean') {
       return customActive
     }

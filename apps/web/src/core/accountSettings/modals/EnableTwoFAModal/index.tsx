@@ -9,7 +9,8 @@ import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.accountSettings')
   const { setUserData } = useAuth()
-  const handleSuccess = useCallback(() => {
+  
+const handleSuccess = useCallback(() => {
     setUserData(userData =>
       userData ? { ...userData, twoFAEnabled: true } : null
     )
