@@ -7,7 +7,9 @@
     "apps/api/**/*",
     "docs/**/*",
     "scripts/**/*",
-    "tools/**/*"
+    "tools/**/*",
+    "eslint.config.ts",
+    "eslint/**/*.ts"
   ],
   "exclude": ["**/node_modules", "**/dist", "**/dist-docker"]
 }

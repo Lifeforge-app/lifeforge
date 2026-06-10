@@ -1,0 +1,6 @@
+export { default as importsConfig } from './imports'
+export { default as reactConfig } from './react'
+export { default as sonarConfig } from './sonar'
+export { default as storiesConfig } from './stories'
+export { default as styleConfig } from './style'
+export { default as testsConfig } from './tests'
