@@ -2,7 +2,8 @@ import { useDebounce } from '@uidotdev/usehooks'
 import _ from 'lodash'
 import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Card } from '@/components/layout'
 import { Icon } from '@/components/primitives'
@@ -70,20 +71,20 @@ export function SearchInput({
   children,
   ...props
 }: SearchInputProps) {
-  const { t } = useTranslation([
+  const { t } = useModuleTranslation([
     'common.misc',
     ...(namespace ? [namespace] : [])
   ])
   // Internal state for immediate input feedback when debouncing
-  
-const [internalValue, setInternalValue] = useState(value)
+
+  const [internalValue, setInternalValue] = useState(value)
   const [isFocused, setIsFocused] = useState(false)
   const debouncedValue = useDebounce(internalValue, debounceMs ?? 0)
   // Track if we have a pending debounce to avoid syncing back from parent
   const isPendingDebounce = useRef(false)
   // Sync internal value when external value changes (only if not pending our own debounce)
-  
-useEffect(() => {
+
+  useEffect(() => {
     if (!isPendingDebounce.current) {
       setInternalValue(value)
     }
@@ -133,8 +134,8 @@ useEffect(() => {
   const childrenRef = useRef<HTMLDivElement>(null)
   const { height: childrenHeight } = useDivSize(childrenRef)
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({})
-  
-useEffect(() => {
+
+  useEffect(() => {
     const updatePosition = () => {
       if (!containerRef.current || !shouldShowChildren) return
 

@@ -40,8 +40,8 @@ export function IconInput({
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const ref = useRef<HTMLInputElement>(null)
-  
-const handleIconSelectorOpen = useCallback(() => {
+
+  const handleIconSelectorOpen = useCallback(() => {
     open(IconPickerModal, { setSelectedIcon: onChange })
   }, [open, onChange])
 

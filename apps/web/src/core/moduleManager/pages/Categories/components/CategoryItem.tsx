@@ -34,8 +34,8 @@ function CategoryItem({
 }) {
   const { open } = useModalStore()
   const { categoryTranslations, refetch } = useFederation()
-  
-const {
+
+  const {
     attributes,
     listeners,
     setNodeRef,

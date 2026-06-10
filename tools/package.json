@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "bun build src/index.ts --outfile=dist/forge.js --target=bun --minify",
-    "types": "tsc --noEmit --skipLibCheck"
+    "types": "tsgo --noEmit --skipLibCheck"
   },
   "dependencies": {
     "tar": "^7.5.2",
@@ -13,7 +13,6 @@
     "commander": "^14.0.2",
     "concurrently": "^9.2.1",
     "crypto-js": "^4.2.0",
-    "dayjs": "^1.11.18",
     "dotenv": "^17.2.3",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21",
@@ -22,7 +21,6 @@
     "prettier": "^3.7.4",
     "prompts": "^2.4.2",
     "semver": "^7.7.3",
-    "zod": "4.3.5",
     "@lifeforge/log": "workspace:*",
     "@lifeforge/server-utils": "workspace:*"
   },

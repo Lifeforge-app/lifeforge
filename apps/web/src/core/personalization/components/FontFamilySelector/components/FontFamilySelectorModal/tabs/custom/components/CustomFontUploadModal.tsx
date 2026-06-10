@@ -50,8 +50,8 @@ function CustomFontUploadModal({
   data: { openType: 'create' | 'edit'; initialData?: CustomFont }
 }) {
   const queryClient = useQueryClient()
-  
-const uploadMutation = useMutation(
+
+  const uploadMutation = useMutation(
     forgeAPI.user.customFonts.upload
       .input({
         id: openType === 'edit' && initialData ? initialData.id : undefined

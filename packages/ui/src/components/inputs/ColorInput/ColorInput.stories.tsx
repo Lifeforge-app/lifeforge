@@ -15,7 +15,6 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Cube Color',
-    namespace: 'namespace',
     onChange: () => {},
     value: ''
   },
@@ -29,7 +28,6 @@ export const Default: Story = {
 export const Required: Story = {
   args: {
     label: 'Cube Color',
-    namespace: 'namespace',
     onChange: () => {},
     required: true,
     value: ''
@@ -46,7 +44,6 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     label: 'Cube Color',
-    namespace: 'namespace',
     onChange: () => {},
     value: ''
   },
@@ -62,7 +59,6 @@ export const WithErrorMessage: Story = {
   args: {
     errorMsg: 'Invalid color hex provided',
     label: 'Cube Color',
-    namespace: 'namespace',
     onChange: () => {},
     value: ''
   },
@@ -79,7 +75,6 @@ export const DisabledWithErrorMessage: Story = {
     disabled: true,
     errorMsg: 'Invalid color hex provided',
     label: 'Cube Color',
-    namespace: 'namespace',
     onChange: () => {},
     value: ''
   },
@@ -94,7 +89,6 @@ export const DisabledWithErrorMessage: Story = {
 export const PlainVariant: Story = {
   args: {
     label: 'Cube Color',
-    namespace: 'namespace',
     onChange: () => {},
     value: '',
     variant: 'plain'
@@ -111,7 +105,6 @@ export const PlainVariantWithErrorMessage: Story = {
   args: {
     errorMsg: 'Invalid color hex provided',
     label: 'Cube Color',
-    namespace: 'namespace',
     onChange: () => {},
     value: '',
     variant: 'plain'

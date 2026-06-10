@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { ContextMenu } from '@/components/overlays'
 import { Box, Flex, Text } from '@/components/primitives'
@@ -34,11 +35,15 @@ export function SidebarItemContent({
   }
   hasSubsection: boolean
 }) {
-  const { t } = useTranslation(
-    namespace === false ? [] : [namespace, 'common.sidebar']
+  const { t } = useModuleTranslation(
+    namespace === false
+      ? []
+      : namespace
+        ? [namespace, 'common.sidebar']
+        : ['common.sidebar']
   )
-  
-const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
     <>

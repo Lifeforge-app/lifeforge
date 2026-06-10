@@ -21,7 +21,7 @@ export const Default: Story = {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    namespace: 'namespace',
+
     onChange: function () {},
     value: { type: 'empty' }
   },
@@ -40,7 +40,7 @@ export const Disabled: Story = {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    namespace: 'namespace',
+
     onChange: function () {},
     value: { type: 'empty' }
   },
@@ -60,7 +60,7 @@ export const WithError: Story = {
       application: ['pdf'],
       image: ['jpeg', 'png']
     },
-    namespace: 'namespace',
+
     onChange: function () {},
     value: { type: 'empty' }
   },

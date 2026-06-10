@@ -50,8 +50,8 @@ function UserPersonalizationProvider({
   children: React.ReactNode
 }) {
   const { userData, setUserData } = useAuth()
-  
-const {
+
+  const {
     setFontFamily,
     setTheme,
     setRawThemeColor,

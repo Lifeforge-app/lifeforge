@@ -27,8 +27,8 @@ function UsingEmail({
   const [sendOtpLoading, setSendOtpLoading] = useState(false)
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
   const [otpSent, setOtpSent] = useState(false)
-  
-const [otpCooldown, setOtpCooldown] = useState(
+
+  const [otpCooldown, setOtpCooldown] = useState(
     localStorage.getItem(`otpCooldown:2fa`)
       ? Math.floor(
           (Number(localStorage.getItem(`otpCooldown:2fa`)) -

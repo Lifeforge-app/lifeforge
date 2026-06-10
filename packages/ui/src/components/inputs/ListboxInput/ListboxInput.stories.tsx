@@ -62,7 +62,7 @@ export const Default: Story = {
     children: <></>,
     icon: 'tabler:category',
     label: 'Category',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },
@@ -98,7 +98,7 @@ export const Required: Story = {
     children: <></>,
     icon: 'tabler:category',
     label: 'Category',
-    namespace: 'namespace',
+
     onChange: () => {},
     required: true,
     value: ''
@@ -136,7 +136,7 @@ export const Disabled: Story = {
     disabled: true,
     icon: 'tabler:category',
     label: 'Category',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: 'Option 1'
   },
@@ -173,7 +173,7 @@ export const WithErrorMessage: Story = {
     errorMsg: 'Please select a category',
     icon: 'tabler:category',
     label: 'Category',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },
@@ -208,7 +208,7 @@ export const DisabledWithErrorMessage: Story = {
     errorMsg: 'Please select a category',
     icon: 'tabler:category',
     label: 'Category',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },
@@ -316,7 +316,7 @@ export const MultipleSelection: Story = {
     icon: 'tabler:category',
     label: 'Category',
     multiple: true,
-    namespace: 'namespace',
+
     onChange: () => {},
     value: []
   },
@@ -385,7 +385,7 @@ export const WithNullOption: Story = {
     children: <></>,
     icon: 'tabler:category',
     label: 'Category',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },

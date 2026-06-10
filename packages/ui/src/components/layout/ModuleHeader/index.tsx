@@ -48,8 +48,8 @@ export function ModuleHeader({
     'common.misc',
     namespace ?? ''
   ])
-  
-const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
+
+  const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
 
   return (
     <Flex

@@ -19,8 +19,8 @@ export function LockedScreen({
 }) {
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
-  
-const { t } = useTranslation('common.vault')
+
+  const { t } = useTranslation('common.vault')
 
   async function handleSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {

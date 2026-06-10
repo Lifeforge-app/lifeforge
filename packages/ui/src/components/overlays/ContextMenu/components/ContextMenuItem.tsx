@@ -1,6 +1,7 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import {
   Flex,
@@ -63,7 +64,7 @@ export function ContextMenuItem({
   tProps,
   onClick
 }: ContextMenuItemProps) {
-  const { t } = useTranslation(namespace)
+  const { t } = useModuleTranslation(namespace ? [namespace] : undefined)
 
   return (
     <WithDivide>

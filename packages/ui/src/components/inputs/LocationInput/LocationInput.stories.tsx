@@ -24,7 +24,7 @@ export const Default: Story = {
   args: {
     icon: 'tabler:map-pin',
     label: 'Location',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: null
   },
@@ -39,7 +39,7 @@ export const Required: Story = {
   args: {
     icon: 'tabler:map-pin',
     label: 'Location',
-    namespace: 'namespace',
+
     onChange: () => {},
     required: true,
     value: null
@@ -56,7 +56,7 @@ export const Disabled: Story = {
     disabled: true,
     icon: 'tabler:map-pin',
     label: 'Location',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: null
   },
@@ -72,7 +72,7 @@ export const WithErrorMessage: Story = {
     errorMsg: 'Invalid location',
     icon: 'tabler:map-pin',
     label: 'Location',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: null
   },
@@ -89,7 +89,7 @@ export const DisabledWithErrorMessage: Story = {
     errorMsg: 'Invalid location',
     icon: 'tabler:map-pin',
     label: 'Location',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: null
   },

@@ -2,7 +2,8 @@
 import clsx from 'clsx'
 import _ from 'lodash'
 import React, { type CSSProperties, type ElementType } from 'react'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import {
   Box,
@@ -82,8 +83,8 @@ export function Button<T extends ElementType = 'button'>({
     style,
     props: props as any
   })
-  
-const { t } = useTranslation(namespace)
+
+  const { t } = useModuleTranslation([namespace])
 
   return (
     <Transition>

@@ -40,8 +40,8 @@ export function IconSet({
   const [searchTerm, setSearchTerm] = useState('')
   const [currentTag, setCurrentTag] = useState<string | null>(null)
   const [iconData, setIconData] = useState<IIconSetData | null>(null)
-  
-const filteredIconList = useMemo(() => {
+
+  const filteredIconList = useMemo(() => {
     if (!iconData) return []
 
     const allIcons = [

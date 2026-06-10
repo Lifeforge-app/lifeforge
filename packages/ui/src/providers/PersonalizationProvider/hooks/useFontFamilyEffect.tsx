@@ -14,8 +14,8 @@ interface CustomFontData {
 function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
   const apiEndpoint = useAPIEndpoint()
   const abortControllerRef = useRef<AbortController | null>(null)
-  
-useEffect(() => {
+
+  useEffect(() => {
     const styleTagId = 'dynamic-font-style'
 
     // Get or create the style tag (don't remove existing one to avoid flicker)

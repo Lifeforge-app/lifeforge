@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {
     label: 'Icon of Something',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },
@@ -29,7 +29,7 @@ export const Default: Story = {
 export const Required: Story = {
   args: {
     label: 'Icon of Something',
-    namespace: 'namespace',
+
     onChange: () => {},
     required: true,
     value: 'tabler:cube'
@@ -46,7 +46,7 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     label: 'Icon of Something',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },
@@ -63,7 +63,7 @@ export const WithErrorMessage: Story = {
     errorMsg:
       'Invalid icon identifier provided. It should be a valid icon identifier format from Iconify. ',
     label: 'Icon of Something',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },
@@ -81,7 +81,7 @@ export const DisabledWithErrorMessage: Story = {
     errorMsg:
       'Invalid icon identifier provided. It should be a valid icon identifier format from Iconify. ',
     label: 'Icon of Something',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: ''
   },
@@ -96,7 +96,7 @@ export const DisabledWithErrorMessage: Story = {
 export const PlainVariant: Story = {
   args: {
     label: 'Icon of Something',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: '',
     variant: 'plain'
@@ -114,7 +114,7 @@ export const PlainVariantWithErrorMessage: Story = {
     errorMsg:
       'Invalid icon identifier provided. It should be a valid icon identifier format from Iconify. ',
     label: 'Icon of Something',
-    namespace: 'namespace',
+
     onChange: () => {},
     value: '',
     variant: 'plain'

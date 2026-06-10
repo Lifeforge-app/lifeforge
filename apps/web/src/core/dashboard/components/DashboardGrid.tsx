@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
 
+import { ModuleMetadataProvider } from '@lifeforge/federation'
 import {
   Box,
   EmptyStateScreen,
@@ -40,16 +41,22 @@ function DashboardGrid({
 }) {
   const { t } = useTranslation('common.dashboard')
   const { widgets } = useWidgets()
-  
-const COMPONENTS = useMemo(
+
+  const COMPONENTS = useMemo(
     () =>
       Object.fromEntries(
-        Object.entries(widgets).map(([key, value]) => [key, value.component])
+        Object.entries(widgets).map(([key, value]) => [
+          key,
+          {
+            component: value.component,
+            name: value.moduleName
+          }
+        ])
       ),
     [widgets]
   )
-  
-const { width, height } = useDivSize(wrapperRef)
+
+  const { width, height } = useDivSize(wrapperRef)
   const { dashboardLayout: enabledWidgets } = usePersonalization()
   const { changeDashboardLayout } = useUserPersonalization()
 
@@ -70,6 +77,8 @@ const { width, height } = useDivSize(wrapperRef)
       </Box>
     )
   }
+
+  console.log(enabledWidgets)
 
   return (
     <Box asChild style={canLayoutChange ? { marginBottom: '16em' } : undefined}>
@@ -113,9 +122,10 @@ const { width, height } = useDivSize(wrapperRef)
                 return null
               }
 
-              const Component = (COMPONENTS[
-                widgetId as keyof typeof COMPONENTS
-              ] ?? NotFoundWidget) as React.FC<{
+              const target = COMPONENTS[widgetId as keyof typeof COMPONENTS]
+
+              const Component = (target?.component ||
+                NotFoundWidget) as React.FC<{
                 dimension: { w: number; h: number }
                 widgetId?: string
               }>
@@ -125,13 +135,21 @@ const { width, height } = useDivSize(wrapperRef)
               ).find(l => l.i === widgetId)
 
               return (
-                <Component
-                  dimension={{
-                    w: dimension?.w ?? 0,
-                    h: dimension?.h ?? 0
+                <ModuleMetadataProvider
+                  value={{
+                    icon: '',
+                    title: '',
+                    name: target?.name
                   }}
-                  widgetId={widgetId}
-                />
+                >
+                  <Component
+                    dimension={{
+                      w: dimension?.w ?? 0,
+                      h: dimension?.h ?? 0
+                    }}
+                    widgetId={widgetId}
+                  />
+                </ModuleMetadataProvider>
               )
             })()}
             {canLayoutChange && (

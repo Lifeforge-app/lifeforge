@@ -7,8 +7,8 @@ import { useFederation } from '@lifeforge/federation'
 function useTitleEffect() {
   const { modules } = useFederation()
   const location = useLocation()
-  
-useEffect(() => {
+
+  useEffect(() => {
     const target =
       modules
         .flatMap(e => e.items)

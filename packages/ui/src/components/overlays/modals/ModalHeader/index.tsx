@@ -1,7 +1,8 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import _ from 'lodash'
 import { memo } from 'react'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
@@ -25,7 +26,7 @@ function _ModalHeader({
   namespace?: string
   headerActions?: React.ReactNode
 }) {
-  const { t } = useTranslation(namespace)
+  const { t } = useModuleTranslation([namespace])
   // Add some delay to prevent the title and icon to become empty
   // when the modal is transitioned
   const innerTitle = useDebounce(title, 100)

@@ -1,4 +1,5 @@
 import type { Linter } from 'eslint'
+
 import localPlugin from './local-plugin'
 
 const config: Linter.Config[] = [

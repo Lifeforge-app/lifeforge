@@ -97,8 +97,8 @@ export function FileInput({
 }) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label })
-  
-const handleFilePickerOpen = useCallback(
+
+  const handleFilePickerOpen = useCallback(
     function () {
       open(FilePickerModal, {
         sources,

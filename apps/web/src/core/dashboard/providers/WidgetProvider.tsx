@@ -12,7 +12,7 @@ import { LoadingScreen } from '@lifeforge/ui'
 
 export interface WidgetEntry {
   component: React.FC<{ dimension: { w: number; h: number } }>
-  namespace: string | null
+  moduleName: string
   icon: string
   minW?: number
   minH?: number
@@ -38,14 +38,14 @@ export function useWidgets(): WidgetContextValue {
 
 function WidgetProvider({ children }: { children: React.ReactNode }) {
   const { modules } = useFederation()
-  
-const [federatedWidgets, setFederatedWidgets] = useState<
+
+  const [federatedWidgets, setFederatedWidgets] = useState<
     Record<string, WidgetEntry>
   >({})
-  
-const [loading, setLoading] = useState(true)
-  
-useEffect(() => {
+
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
     async function loadFederatedWidgets() {
       setLoading(true)
 
@@ -68,8 +68,8 @@ useEffect(() => {
                   const LazyComponent = lazy(widgetImportFn)
 
                   loadedWidgets[config.id] = {
+                    moduleName: item.name,
                     component: LazyComponent,
-                    namespace: config.namespace || null,
                     icon: config.icon,
                     minW: config.minW,
                     minH: config.minH,

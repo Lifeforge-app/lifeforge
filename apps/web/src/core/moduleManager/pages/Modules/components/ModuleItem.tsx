@@ -37,19 +37,19 @@ function ModuleItem({
   // Module name format: @lifeforge/lifeforge--wallet -> lifeforge--wallet
   const moduleKey = module.name.replace('@lifeforge/', '')
 
-  const { t } = useTranslation([`apps.${moduleKey}`, 'common.module-manager'])
-
-  const translatedTitle = t([`apps.${moduleKey}:title`, module.displayName])
-
-  const translatedDescription = t([
-    `apps.${moduleKey}:description`,
-    module.description || ''
+  const { t, i18n } = useTranslation([
+    `apps.${moduleKey}`,
+    'common.module-manager'
   ])
+
+  const translatedTitle = i18n.exists(`apps.${moduleKey}:title`)
+    ? t(`apps.${moduleKey}:title`)
+    : module.displayName
 
   const { open } = useModalStore()
   const { refetch: refetchFederation } = useFederation()
-  
-const devModeMutation = useMutation({
+
+  const devModeMutation = useMutation({
     mutationFn: () =>
       forgeAPI.modules.devMode.toggle.mutate({ moduleName: module.name }),
     onSuccess: () => {
@@ -152,7 +152,6 @@ const devModeMutation = useMutation({
                 disabled={!(module.hasSource && module.hasDist)}
                 icon={module.isDevMode ? 'tabler:code-off' : 'tabler:code'}
                 label={module.isDevMode ? 'devMode.disable' : 'devMode.enable'}
-                namespace="common.module-manager"
                 onClick={handleDevModeToggle}
               />
             )}
@@ -160,17 +159,16 @@ const devModeMutation = useMutation({
               dangerous
               icon="tabler:trash"
               label="uninstall"
-              namespace="common.module-manager"
               onClick={handleUninstall}
             />
           </ContextMenu>
         </Flex>
       </Flex>
-      {translatedDescription && (
-        <Text as="p" color="muted" leading="relaxed" lineClamp={2}>
-          {translatedDescription}
-        </Text>
-      )}
+      <Text as="p" color="muted" leading="relaxed" lineClamp={2}>
+        {i18n.exists(`apps.${moduleKey}:description`)
+          ? t([`apps.${moduleKey}:description`])
+          : module.description}
+      </Text>
       <Box style={{ marginTop: 'auto' }}>
         {module.author && (
           <Flex asChild align="center" gap="sm">

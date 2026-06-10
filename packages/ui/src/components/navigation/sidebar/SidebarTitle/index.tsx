@@ -1,5 +1,6 @@
 import _ from 'lodash'
-import { useTranslation } from 'react-i18next'
+
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
 import { Flex, Text, Transition } from '@/components/primitives'
@@ -17,7 +18,7 @@ type SidebarTitleProps = {
         onClick: () => void
       }
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
-  namespace?: string
+  namespace?: string | false
 }
 
 /** A title for a section in the sidebar navigation. */
@@ -27,7 +28,13 @@ export function SidebarTitle({
   actionButton,
   namespace
 }: SidebarTitleProps) {
-  const { t } = useTranslation([namespace, 'common.sidebar'])
+  const { t } = useModuleTranslation(
+    namespace === false
+      ? []
+      : namespace
+        ? [namespace, 'common.sidebar']
+        : ['common.sidebar']
+  )
 
   return (
     <Transition>

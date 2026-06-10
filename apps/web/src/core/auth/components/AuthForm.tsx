@@ -78,10 +78,10 @@ function AuthForm({ providers }: { providers: string[] }) {
         setFormDisabled(false)
       })
   }, [authenticate, t])
-  
-const [loading, onSubmit] = usePromiseLoading(signIn)
-  
-const onInputKeyDown = useCallback(
+
+  const [loading, onSubmit] = usePromiseLoading(signIn)
+
+  const onInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         onSubmit()

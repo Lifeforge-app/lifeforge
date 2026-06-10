@@ -68,8 +68,8 @@ export function AuthProvider({
   const [userData, setUserData] = useState<UserData | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
   const tid = useRef('')
-  
-const setAuth = useCallback(
+
+  const setAuth = useCallback(
     (value: boolean) => {
       _setAuth(value)
     },

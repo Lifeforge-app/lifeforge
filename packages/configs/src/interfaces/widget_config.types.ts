@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 export const widgetConfigSchema = z.object({
-  namespace: z.string().optional(),
   id: z.string(),
   icon: z.string(),
   minW: z.number().int().positive().optional(),

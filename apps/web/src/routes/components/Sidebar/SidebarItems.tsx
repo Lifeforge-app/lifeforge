@@ -22,8 +22,8 @@ function SidebarItems({ query }: { query: string }) {
   const location = useLocation()
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
   const [resolvedRoutes, setResolvedRoutes] = useState(modules)
-  
-const filteredRoutes = useMemo(
+
+  const filteredRoutes = useMemo(
     () =>
       resolvedRoutes.filter(
         e =>

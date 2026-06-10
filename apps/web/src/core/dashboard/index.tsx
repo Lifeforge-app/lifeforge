@@ -18,8 +18,8 @@ function DashboardContent() {
   const { widgets } = useWidgets()
   const wrapperRef = useRef<HTMLDivElement>(null)
   const [canLayoutChange, setCanLayoutChange] = useState(false)
-  
-const handleManageWidget = useCallback(() => {
+
+  const handleManageWidget = useCallback(() => {
     open(ManageWidgetsModal, { widgets })
   }, [widgets, open])
 
