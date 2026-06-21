@@ -5,6 +5,8 @@ import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 
+import { registerModule } from './moduleRegistry'
+
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const logger = createServiceLogger('Route Loader')
@@ -68,6 +70,7 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
       }
 
       modules[key] = mod.default
+      registerModule(key, pkg.name)
     } catch (error) {
       logger.error(`Failed to load routes from ${modDir}: ${error}`)
     }
