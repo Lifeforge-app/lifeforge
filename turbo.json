@@ -3,7 +3,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "client/dist/**", "server/dist/**"]
+      "outputs": ["dist/**", "client/dist/**", "server/dist/**"],
+      "env": ["VITE_API_HOST"]
     },
     "dev": {
       "cache": false,

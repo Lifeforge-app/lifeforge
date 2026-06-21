@@ -20,7 +20,7 @@ function ManageWidgetsModal({
       />
       <Stack as="ul">
         {Object.entries(widgets).map(
-          ([key, { icon, minW, minH, maxW, maxH, namespace }]) => (
+          ([key, { icon, minW, minH, maxW, maxH, moduleName }]) => (
             <ComponentListItem
               key={key}
               icon={icon}
@@ -29,7 +29,7 @@ function ManageWidgetsModal({
               maxW={maxW}
               minH={minH}
               minW={minW}
-              namespace={namespace ?? undefined}
+              moduleName={moduleName ?? undefined}
             />
           )
         )}

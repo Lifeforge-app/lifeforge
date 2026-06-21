@@ -24,7 +24,7 @@ function ComponentListItem({
   minH,
   maxW,
   maxH,
-  namespace
+  moduleName
 }: {
   id: string
   icon: string
@@ -32,9 +32,9 @@ function ComponentListItem({
   minH?: number
   maxW?: number
   maxH?: number
-  namespace?: string
+  moduleName?: string
 }) {
-  const { t } = useTranslation([namespace ?? 'common.dashboard'])
+  const { t } = useTranslation([moduleName ?? 'common.dashboard'])
 
   const {
     dashboardLayout: enabledWidgets,
@@ -155,19 +155,10 @@ function ComponentListItem({
       <Flex align="center" gap="md" justify="between" width="100%">
         <Stack gap="none">
           <Text as="h3" weight="semibold">
-            {t([
-              `widgets.${namespace}.${id}.title`,
-              `widgets.${id}.title`,
-              `widgets.${namespace}.${id}`,
-              `widgets.${id}`,
-              id
-            ])}
+            {t([`widgets.${id}.title`, `widgets.${id}`, id])}
           </Text>
           <Text color="muted" size="sm">
-            {t([
-              `widgets.${namespace}.${id}.description`,
-              `widgets.${id}.description`
-            ])}
+            {t([`widgets.${id}.description`])}
           </Text>
         </Stack>
         <Box
