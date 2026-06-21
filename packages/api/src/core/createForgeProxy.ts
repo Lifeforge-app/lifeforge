@@ -68,7 +68,7 @@ function createForgeProxyInternal<T>(
         return () => `[ForgeProxy: ${pathArray.join('/')}]`
       }
 
-      if (prop === 'untyped') {
+      if (pathArray.length === 0 && prop === 'untyped') {
         return <TOutput = any, TBody = any, TQuery = any>(url: string) =>
           new ForgeEndpoint<UntypedEndpointType<TOutput, TBody, TQuery>>(
             getResolvedHost(),
@@ -82,7 +82,7 @@ function createForgeProxyInternal<T>(
         return createGetMediaHelper(getResolvedHost())
       }
 
-      if (prop in CORE_HELPERS) {
+      if (pathArray.length === 0 && prop in CORE_HELPERS) {
         return createCoreHelper(
           getResolvedHost(),
           prop as keyof typeof CORE_HELPERS

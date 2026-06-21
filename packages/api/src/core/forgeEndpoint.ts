@@ -2,10 +2,7 @@
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 import { z } from 'zod'
 
-import type {
-  InferRawInput,
-  InferRawOutput
-} from '../typescript/forge_proxy.types'
+import type { InferRawInput, InferRawOutput } from '../typescript'
 import {
   createEncryptionSession,
   decryptResponse,

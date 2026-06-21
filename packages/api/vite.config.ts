@@ -7,7 +7,9 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
-      rollupTypes: true
+      rollupTypes: false,
+      entryRoot: resolve(__dirname, 'src'),
+      outDir: resolve(__dirname, 'dist')
     })
   ],
   resolve: {

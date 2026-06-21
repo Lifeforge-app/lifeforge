@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   type RefObject,
   createContext,
@@ -11,7 +12,7 @@ import {
 
 import { contract } from '../../contract'
 import { createForgeProxy } from '../core/createForgeProxy'
-import type { InferOutput, ProxyTree } from '../typescript/forge_proxy.types'
+import type { InferOutput, ProxyTree } from '../typescript'
 
 const _forgeAPI = createForgeProxy(contract)
 
