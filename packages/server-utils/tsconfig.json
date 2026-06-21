@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": false,
     "emitDeclarationOnly": true,
-    "types": ["Multer"]
+    "types": ["multer"]
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
