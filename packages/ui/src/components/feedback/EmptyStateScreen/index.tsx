@@ -78,9 +78,14 @@ export function EmptyStateScreen({
         >
           {'id' in message
             ? t(
-                [message.tKey, 'empty', message.id, 'title']
+                `${message.namespace ? `${message.namespace}:` : ''}${[
+                  message.tKey,
+                  'empty',
+                  message.id,
+                  'title'
+                ]
                   .filter(e => e)
-                  .join('.')
+                  .join('.')}`
               )
             : message.title}
         </Text>
@@ -118,9 +123,14 @@ export function EmptyStateScreen({
               whiteSpace="pre-wrap"
             >
               {t(
-                [message.tKey, 'empty', message.id, 'description']
+                `${message.namespace ? `${message.namespace}:` : ''}${[
+                  message.tKey,
+                  'empty',
+                  message.id,
+                  'description'
+                ]
                   .filter(e => e)
-                  .join('.')
+                  .join('.')}`
               )}
             </Text>
           )

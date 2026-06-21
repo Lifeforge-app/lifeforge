@@ -29,7 +29,6 @@ export function Icon({ icon, size = '1.25em', color, ...rest }: IconProps) {
         {...rest}
         asChild
         className={clsx(resolvedSize?.className, rest.className)}
-        display="inline-block"
         style={{ ...resolvedSize?.style, ...rest.style }}
       >
         <IconifyIcon icon={icon} />
