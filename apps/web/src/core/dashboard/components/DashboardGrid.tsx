@@ -78,8 +78,6 @@ function DashboardGrid({
     )
   }
 
-  console.log(enabledWidgets)
-
   return (
     <Box asChild style={canLayoutChange ? { marginBottom: '16em' } : undefined}>
       <ResponsiveGridLayout

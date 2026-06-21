@@ -44,9 +44,9 @@ export function buildChildRoutes({
           >
             <ModuleWrapper config={config}>
               <Component />
+              <ModalManager />
             </ModuleWrapper>
           </Suspense>
-          <ModalManager />
         </APIKeyStatusProvider>
       )
     }

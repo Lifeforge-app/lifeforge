@@ -56,7 +56,7 @@
     - [3. `createDefaultValues` does not handle custom types](#3-createdefaultvalues-does-not-handle-custom-types)
     - [3. Conditional fields + Zod validation conflict](#3-conditional-fields--zod-validation-conflict)
     - [4. `ListboxField` value type mismatch](#4-listboxfield-value-type-mismatch)
-    - [5. `form.watch()` performance](#5-formwatch-performance)
+    - [5. Always use `useWatch` instead of `form.watch()`](#5-always-use-usewatch-instead-of-formwatch)
     - [6. `FileField` now supports errors natively](#6-filefield-now-supports-errors-natively)
     - [7. `headerActions` replaces `actionButton`](#7-headeractions-replaces-actionbutton)
     - [8. `submitButton` disabled state](#8-submitbutton-disabled-state)
@@ -422,7 +422,6 @@ return (
 | Catch errors (replace invalid) | `z.string().catch('fallback')` — replaces parse failures with `'fallback'`  |
 | Transform value                | `z.string().transform(s => s.toUpperCase())`                                |
 | Pipe/chain schemas             | `z.pipe(z.string(), z.number().int())` — parse string, then validate as int |
-| Coerce (convert input type)    | `z.coerce.number()` — e.g., accepts `"123"` and converts to `123`           |
 
 ---
 
@@ -431,7 +430,7 @@ return (
 ```tsx
 const transactionSchema = z.object({
   type: z.enum(['income', 'expenses', 'transfer']),
-  date: z.coerce.date({ error: 'Invalid date' }),
+  date: z.date({ error: 'Invalid date' }),
   amount: z.number().positive('Amount must be positive').finite(),
   from: z.string().min(1, 'Source asset is required'),
   to: z.string().min(1, 'Destination asset is required'),
@@ -1190,7 +1189,7 @@ const transactionSchema = z.object({
   type: z.enum(['income', 'expenses', 'transfer']) as z.ZodType<
     TransactionBody['type']
   >,
-  date: z.coerce.date(),
+  date: z.date(),
   amount: z.number().positive()
   // ... every field must match TransactionBody
 })
