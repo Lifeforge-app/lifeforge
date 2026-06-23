@@ -1,0 +1,456 @@
+{
+  "buttons": {
+    "create": "Create",
+    "update": "Update",
+    "edit": "Edit",
+    "rename": "Rename",
+    "select": "Select",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "save": "Save",
+    "copy": "Copy",
+    "copied": "Copied",
+    "previous": "Prev",
+    "next": "Next",
+    "print": "Print",
+    "remove": "Remove",
+    "upload": "Upload",
+    "import": "Import",
+    "submit": "Submit",
+    "new": "New {{item}}",
+    "proceed": "Proceed",
+    "applyFilters": "Apply Filters",
+    "retry": "Retry",
+    "refresh": "Refresh",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "search": "Search",
+    "favourite": "Favourite",
+    "unfavourite": "Unfavourite",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "download": "Download",
+    "stop": "Stop",
+    "record": "Record",
+    "overwrite": "Overwrite",
+    "adjust": "Adjust",
+    "downloading": "Downloading ...",
+    "generate": "Generate",
+    "regenerate": "Regenerate",
+    "confirm": "Confirm",
+    "goBack": "Go Back"
+  },
+  "modals": {
+    "deleteConfirmation": {
+      "title": "Are you sure you want to delete {{itemName}}?",
+      "desc": "This will delete {{itemName}} and all its related content. This action is irreversible!",
+      "inputs": {
+        "confirmation": {
+          "placeholder": "Please type \"{{text}}\" to confirm deletion",
+          "label": "Confirm Deletion"
+        }
+      },
+      "error": "Error deleting the item. Please try again."
+    },
+    "searchFilters": "Search Filters",
+    "iconPicker": {
+      "title": "Select Icon",
+      "items": {
+        "icon": "Icon",
+        "iconSet": "Icon set"
+      },
+      "empty": {
+        "icon": {
+          "title": "No icons",
+          "description": "No icons found, please try other keywords."
+        }
+      }
+    },
+    "imagePicker": {
+      "title": "Select File",
+      "local": "Upload local image",
+      "url": "Image URL",
+      "pixabay": "Download from Pixabay",
+      "orPasteLink": "Or paste image link",
+      "inputs": {
+        "imageLink": "Image link",
+        "imageType": "Image type",
+        "imageCategory": "Image category",
+        "imageColor": "Image color",
+        "editorsChoice": "Editor's choice",
+        "prompt": "AI Prompt Text"
+      },
+      "imageType": {
+        "all": "All",
+        "photo": "Photo",
+        "vector": "Vector",
+        "illustration": "Illustration"
+      },
+      "items": {
+        "pixabay": "Pixabay"
+      },
+      "empty": {
+        "result": {
+          "title": "No results",
+          "description": "No images found, please try other keywords."
+        },
+        "pixabay": {
+          "title": "Provided by Pixabay",
+          "description": "Search over 13 million high-quality free images."
+        },
+        "noAPIKey": {
+          "title": "Pixabay API Key not configured",
+          "description": "Please set up your Pixabay API key in the API Key vault to use this feature."
+        },
+        "noOpenAIKey": {
+          "title": "OpenAI API Key not configured",
+          "description": "Please set up your OpenAI API key in the API Key vault to use this feature."
+        }
+      },
+      "ai": "AI Image Generation"
+    },
+    "colorPicker": {
+      "title": "Choose Color",
+      "modals": {
+        "morandiColorPalette": "Morandi Color Palette",
+        "tailwindCssColorPalette": "Tailwind CSS Color Palette",
+        "flatUiColors": "Flat UI Colors"
+      },
+      "buttons": {
+        "morandiColorPalette": "Morandi Color Palette",
+        "tailwindCssColorPalette": "Tailwind CSS Color Palette",
+        "flatUiColors": "Flat UI Colors"
+      }
+    },
+    "imagePreview": "Image Preview",
+    "qrCodeScanner": "QR Code Scanner",
+    "viewImage": "View Image"
+  },
+  "misc": {
+    "search": "Search {{item}}...",
+    "notFound": {
+      "title": "Oops! There's nothing here",
+      "description": "The page you are looking for cannot be found. Please check the URL and try again."
+    },
+    "tipsAndTricks": "Tips and Tricks",
+    "loadingModule": "Loading module...",
+    "deprecated": "No longer supported",
+    "imageUpload": {
+      "local": "Upload local image",
+      "url": "Image URL",
+      "pixabay": "Download from Pixabay",
+      "orPasteLink": "Or paste image link",
+      "inputs": {
+        "imageLink": "Image link",
+        "imageType": "Image type",
+        "imageCategory": "Image category",
+        "imageColor": "Image color",
+        "editorsChoice": "Editor's choice"
+      },
+      "imageType": {
+        "all": "All",
+        "photo": "Photo",
+        "vector": "Vector",
+        "illustration": "Illustration"
+      },
+      "items": {
+        "pixabay": "Pixabay"
+      },
+      "empty": {
+        "result": {
+          "title": "No results",
+          "description": "No images found. Please try a different search term."
+        },
+        "pixabay": {
+          "title": "Provided by Pixabay",
+          "description": "Search over 13 million high-quality free images."
+        }
+      }
+    },
+    "dnd": {
+      "dropHere": "Drop items here",
+      "dragAndDropToUpload": "Drag and drop or click to upload",
+      "or": "or",
+      "buttons": {
+        "pasteFromClipboard": "Paste from Clipboard"
+      }
+    },
+    "buttons": {
+      "goBack": "Go back",
+      "reportBug": "Report bug"
+    },
+    "colorPicker": {
+      "title": "Choose Color",
+      "modals": {
+        "morandiColorPalette": "Morandi Color Palette",
+        "tailwindCssColorPalette": "Tailwind CSS Color Palette"
+      },
+      "buttons": {
+        "morandiColorPalette": "Morandi Color Palette",
+        "tailwindCssColorPalette": "Tailwind CSS Color Palette"
+      }
+    },
+    "empty": {
+      "apiStatus": {
+        "title": "Cannot connect to API",
+        "description": "Please check your network connection and try again. If you are a developer, please check if the server is running properly."
+      }
+    },
+    "iconPicker": {
+      "items": {
+        "icon": "Icon",
+        "iconSet": "Icon set"
+      },
+      "empty": {
+        "icon": {
+          "title": "No icons",
+          "description": "No icons found. Please try a different search term."
+        }
+      }
+    },
+    "locationDisabled": {
+      "description": "Location input is currently disabled. Please add a properly configured Google Cloud API key to enable this feature. For further information, refer to",
+      "title": "N/A"
+    },
+    "dates": {
+      "months": {
+        "0": "January",
+        "1": "February",
+        "2": "March",
+        "3": "April",
+        "4": "May",
+        "5": "June",
+        "6": "July",
+        "7": "August",
+        "8": "September",
+        "9": "October",
+        "10": "November",
+        "11": "December"
+      },
+      "days": {
+        "0": "Monday",
+        "1": "Tuesday",
+        "2": "Wednesday",
+        "3": "Thursday",
+        "4": "Friday",
+        "5": "Saturday",
+        "6": "Sunday"
+      }
+    },
+    "fieldRequired": "This field is required.",
+    "invalidField": "Invalid field.",
+    "invalidColor": "Invalid color. Please enter a valid hex value in the format #RRGGBB.",
+    "invalidIcon": "Invalid icon. It must be a valid icon identifier from Iconify in the format of <icon-set>:<icon-name>.",
+    "loadingUserData": "Loading user data...",
+    "invalidSelection": "Invalid selection. Please choose a valid option from the list.",
+    "fileInputSupportedFormat": "Supported format: {{format}}"
+  },
+  "sidebar": {
+    "categories": {
+      "productivity": "Productivity",
+      "storage": "Storage",
+      "study": "Study",
+      "finance": "Finance",
+      "confidential": "Confidential",
+      "settings": "Settings",
+      "technologies": "Technologies",
+      "utilities": "Utilities",
+      "information": "Information",
+      "sso": "Single Sign-On",
+      "references": "References",
+      "lifestyle": "Lifestyle",
+      "externalManagement": "External Management",
+      "healthFitness": "Health & Fitness"
+    },
+    "buttons": {
+      "signOut": "Sign Out",
+      "accountSettings": "Account Settings"
+    },
+    "items": {
+      "module": "Module"
+    },
+    "empty": {
+      "modules": {
+        "title": "No modules found",
+        "description": "Try adjusting your search for modules."
+      }
+    }
+  },
+  "fetch": {
+    "error": "Failed to fetch data from server",
+    "success": "Yay! Successfully {{action}} item!",
+    "failure": "Oh no... Failed to {{action}} item. Please try again.",
+    "action": {
+      "create": "created",
+      "update": "updated",
+      "delete": "deleted",
+      "rename": "renamed",
+      "pin": "pinned",
+      "unpin": "unpinned",
+      "archive": "archived",
+      "unarchive": "unarchived",
+      "remove": "removed",
+      "add": "added",
+      "save": "saved",
+      "public": "made public",
+      "private": "made private",
+      "replace": "replaced",
+      "clearMedium": "cleared",
+      "thumbnail": "updated thumbnail for",
+      "generate": "generated",
+      "cleanedup": "cleaned up",
+      "summarized": "summarized",
+      "unlock": "unlocked",
+      "download": "downloaded",
+      "NASFilesReady": " files are ready for download. Go to your NAS.",
+      "addedToFavourites": "added to favourites",
+      "removedFromFavourites": "removed from favourites"
+    },
+    "redirected": "Redirected",
+    "redirecting": "Redirecting...",
+    "unlock": "Unlock"
+  },
+  "auth": {
+    "header": "Welcome Back",
+    "desc": "Sign in to continue recording your life journey.",
+    "welcome": {
+      "header": "Welcome!",
+      "desc": "Create your account to start forging a better life."
+    },
+    "sideImageDesc": {
+      "part1": "One day you will leave this world behind",
+      "part2": "so live a life you will remember"
+    },
+    "or": "or",
+    "buttons": {
+      "signIn": "Sign In",
+      "proceed": "Proceed"
+    },
+    "inputs": {
+      "emailOrUsername": {
+        "label": "Email or Username",
+        "placeholder": "johndoe@gmail.com"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "johndoe@gmail.com"
+      },
+      "username": {
+        "label": "Username",
+        "placeholder": "johndoe"
+      },
+      "name": {
+        "label": "Display Name",
+        "placeholder": "John Doe"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "placeholder": "Re-enter your password"
+      }
+    },
+    "validation": {
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email address",
+      "usernameRequired": "Username is required",
+      "usernameTooShort": "Username must be at least 3 characters",
+      "usernameInvalid": "Username can only contain letters, numbers, and underscores",
+      "nameRequired": "Name is required",
+      "passwordRequired": "Password is required",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "passwordMismatch": "Passwords do not match"
+    },
+    "modals": {
+      "twoFA": {
+        "title": "Two-Factor Authentication",
+        "description": "Please enter the OTP provided by your authenticator app that you registered earlier.",
+        "buttons": {
+          "useEmailOtp": "Use Email OTP",
+          "useAuthApp": "Use Authenticator App"
+        },
+        "emailDescription": "Please enter the email address associated with your account.",
+        "inputs": {
+          "email": "Email Address"
+        }
+      }
+    },
+    "orAuthenticateWith": "Or authenticate with",
+    "messages": {
+      "otpSent": "A one-time password has been sent to your email address, if it is associated with any accounts.",
+      "welcomeBack": "Welcome back, {{name}}!",
+      "userCreated": "Account created successfully! Welcome to LifeForge.",
+      "invalidCredentials": "Invalid email or password. Please try again.",
+      "invalidFields": "Invalid fields. Please fill in a valid email address and password.",
+      "quotaExceeded": "Maximum amount of tries reached. Please try again later.",
+      "unknownError": "Unknown error. Please try again later.",
+      "invalidLoginAttempt": "Invalid login attempt. Please try again."
+    },
+    "qrLogin": {
+      "title": "Scan to Login",
+      "description": "Login to your account using your other device.",
+      "expired": "QR code expired",
+      "clickToRefresh": "Click to refresh",
+      "approved": "Login approved! Redirecting...",
+      "waiting": "Waiting for approval...",
+      "approvalTitle": "Approve Login",
+      "approvalDescription": "A device is requesting to log in to your account",
+      "browserInfo": "Device Info",
+      "approve": "Approve Login",
+      "deny": "Deny",
+      "success": "Login approved successfully",
+      "scanQRCode": "Scan QR Code to Login",
+      "invalidQR": "Invalid QR code",
+      "sessionNotFound": "Session not found or expired",
+      "alreadyApproved": "Session already approved"
+    }
+  },
+  "vault": {
+    "vault": {
+      "lockedMessage": "Your vault is locked",
+      "passwordRequired": "Master password is required to decrypt your vault.",
+      "unlocked": "Vault is unlocked",
+      "failedToUnlock": "Failed to unlock vault",
+      "buttons": {
+        "unlock": "Unlock"
+      },
+      "createPassword": {
+        "title": "Set Master Password",
+        "desc": "Please set a master password to protect your vault."
+      },
+      "inputs": {
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "masterPassword": "Master Password"
+      },
+      "confirmSetNewPassword": {
+        "title": "Make sure you remember your master password!",
+        "desc": "This master password is unchangeable (for now)! If you accidentally forget the password, you lose everything. This password is hashed and stored in your user profile, and it is not decryptable. It will be used to encrypt and decrypt the data you store in your vault."
+      }
+    },
+    "otp": {
+      "buttons": {
+        "request": "Request OTP",
+        "resend": "Resend OTP",
+        "verify": "Verify OTP",
+        "authByQR": "Authenticate by QR Code"
+      },
+      "messages": {
+        "success": "OTP sent! Please check your email.",
+        "failed": "Failed to request OTP",
+        "invalid": "OTP must be a 6-digit number",
+        "cooldown": "Request too frequent, please try again later",
+        "required": {
+          "title": "OTP Required to Unlock",
+          "desc": "For added security, an OTP is required to unlock this module. Please click the button below to request an OTP."
+        },
+        "verify": {
+          "success": "OTP verification successful",
+          "failed": "OTP verification failed"
+        }
+      }
+    }
+  }
+}

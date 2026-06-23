@@ -62,4 +62,4 @@ keys
 # modules
 locales/*
 !modules/**/locales/*
-!locales/lifeforge--lang-en
+!locales/lang-en
