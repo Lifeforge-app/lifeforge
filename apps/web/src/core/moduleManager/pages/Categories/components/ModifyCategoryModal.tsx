@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
+  Bordered,
   Box,
   Button,
   Flex,
@@ -21,9 +22,14 @@ import forgeAPI from '@/forgeAPI'
 
 import ModifyTranslationKeyModal from './ModifyTranslationKeyModal'
 
+type CategoryEntry = {
+  key: string
+  value: [string, string][]
+}
+
 function ModifyCategoryModal({
   onClose,
-  data: { openType, category, onSubmit }
+  data: { openType, category, initialKeys, onSubmit }
 }: {
   onClose: () => void
   data: {
@@ -32,42 +38,74 @@ function ModifyCategoryModal({
       key: string
       value: Record<string, string>
     }
-    onSubmit: (category: { key: string; value: Record<string, string> }) => void
+    initialKeys?: string[]
+    onSubmit: (
+      categories: Array<{ key: string; value: Record<string, string> }>
+    ) => void
   }
 }) {
   const { t } = useTranslation('common.module-manager')
   const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
   const { open } = useModalStore()
 
-  const [data, setData] = useState({
-    key: category?.key || '',
-    value: Object.entries(category?.value || {})
-  })
+  const [categories, setCategories] = useState<CategoryEntry[]>([
+    {
+      key: category?.key || '',
+      value: Object.entries(category?.value || {})
+    }
+  ])
 
   const [aiLoading, setAiLoading] = useState(false)
 
-  function handleSubmit() {
-    if (!data.key.trim() || data.value.some(([_, v]) => !v.trim())) {
-      toast.error('Please fill in all fields')
+  function updateCategory(
+    index: number,
+    updater: (cat: CategoryEntry) => CategoryEntry
+  ) {
+    setCategories(prev =>
+      prev.map((cat, i) => (i === index ? updater(cat) : cat))
+    )
+  }
 
-      return
+  function addCategory() {
+    setCategories(prev => [
+      ...prev,
+      {
+        key: '',
+        value: languagesQuery.data?.map(({ name }) => [name, '']) || []
+      }
+    ])
+  }
+
+  function removeCategory(index: number) {
+    setCategories(prev => prev.filter((_, i) => i !== index))
+  }
+
+  function handleSubmit() {
+    for (const cat of categories) {
+      if (!cat.key.trim() || cat.value.some(([_, v]) => !v.trim())) {
+        toast.error('Please fill in all fields')
+
+        return
+      }
     }
 
     try {
-      const newCategory = {
-        key: data.key,
-        value: Object.fromEntries(data.value)
-      }
+      const newCategories = categories.map(cat => ({
+        key: cat.key,
+        value: Object.fromEntries(cat.value)
+      }))
 
-      onSubmit(newCategory)
+      onSubmit(newCategories)
       onClose()
     } catch (e) {
       toast.error(e instanceof Error ? e.message : 'Something went wrong')
     }
   }
 
-  async function handleAiTranslate() {
-    if (!data.key.trim()) {
+  async function handleAiTranslate(catIndex: number) {
+    const cat = categories[catIndex]
+
+    if (!cat.key.trim()) {
       toast.error('Please fill in the category key')
 
       return
@@ -76,10 +114,10 @@ function ModifyCategoryModal({
     setAiLoading(true)
 
     try {
-      const languages = data.value.map(([key]) => key)
+      const languages = cat.value.map(([key]) => key)
 
       const result = await forgeAPI.modules.categories.aiTranslate.mutate({
-        key: data.key,
+        key: cat.key,
         languages
       })
 
@@ -87,10 +125,10 @@ function ModifyCategoryModal({
         throw new Error('Something went wrong')
       }
 
-      setData({
-        ...data,
+      updateCategory(catIndex, c => ({
+        ...c,
         value: Object.entries(result)
-      })
+      }))
     } catch (e) {
       toast.error(e instanceof Error ? e.message : 'Something went wrong')
     } finally {
@@ -102,10 +140,21 @@ function ModifyCategoryModal({
     if (!languagesQuery.data) return
 
     if (openType === 'create') {
-      setData({
-        key: '',
-        value: languagesQuery.data.map(({ name }) => [name, ''])
-      })
+      if (initialKeys && initialKeys.length > 0) {
+        setCategories(
+          initialKeys.map(key => ({
+            key,
+            value: languagesQuery.data!.map(({ name }) => [name, ''])
+          }))
+        )
+      } else if (!category) {
+        setCategories([
+          {
+            key: '',
+            value: languagesQuery.data.map(({ name }) => [name, ''])
+          }
+        ])
+      }
     }
   }, [languagesQuery.data])
 
@@ -126,105 +175,154 @@ function ModifyCategoryModal({
           <WithQuery query={languagesQuery}>
             {() => (
               <>
-                <TextInput
-                  required
-                  actionButtonProps={
-                    keyAvailable
-                      ? {
-                          icon: 'mage:stars-c',
-                          onClick: handleAiTranslate,
-                          loading: aiLoading
-                        }
-                      : undefined
-                  }
-                  icon="tabler:category"
-                  label="Category Key"
-                  namespace="common.module-manager"
-                  placeholder="e.g. productivity, finance, information, etc."
-                  value={data.key}
-                  onChange={value => setData({ ...data, key: value })}
-                />
-                <Text asChild color="muted" weight="medium">
-                  <Flex align="center" gap="sm" mt="xl">
-                    <Icon icon="mingcute:translate-line" />
-                    {t('misc.translations')}
-                  </Flex>
-                </Text>
-                <Stack mt="md">
-                  {data.value.map(([key, value], index) => (
-                    <Flex key={index} align="center" gap="md">
+                <Stack gap="xl">
+                  {categories.map((cat, catIndex) => (
+                    <Box key={catIndex}>
+                      {catIndex > 0 && (
+                        <Bordered
+                          borderColor={{
+                            base: 'bg-200',
+                            dark: 'bg-800'
+                          }}
+                          borderSide="bottom"
+                          mb="xl"
+                        />
+                      )}
+                      {categories.length > 1 && (
+                        <Flex align="center" gap="sm" justify="between" mb="sm">
+                          <Text size="lg" weight="semibold">
+                            Category {catIndex + 1}
+                          </Text>
+                          <Button
+                            dangerous
+                            icon="tabler:trash"
+                            p="sm"
+                            variant="plain"
+                            onClick={() => removeCategory(catIndex)}
+                          />
+                        </Flex>
+                      )}
                       <TextInput
                         required
-                        actionButtonProps={{
-                          icon: 'tabler:pencil',
-                          onClick: () => {
-                            open(ModifyTranslationKeyModal, {
-                              openType: 'update',
-                              key,
-                              onSubmit: key => {
-                                setData({
-                                  ...data,
-                                  value: data.value.map(([k, v], i) =>
-                                    i === index ? [key, v] : [k, v]
-                                  )
-                                })
+                        actionButtonProps={
+                          keyAvailable
+                            ? {
+                                icon: 'mage:stars-c',
+                                onClick: () => handleAiTranslate(catIndex),
+                                loading: aiLoading
                               }
-                            })
-                          }
-                        }}
-                        icon="tabler:language"
-                        label={key}
-                        placeholder="e.g. Productivity, Produktiviti, 生产力, 生產力, etc."
-                        value={value}
-                        onChange={value => {
-                          setData({
-                            ...data,
-                            value: data.value.map(([k, v], i) =>
-                              i === index ? [k, value] : [k, v]
-                            )
-                          })
-                        }}
+                            : undefined
+                        }
+                        icon="tabler:category"
+                        label="Category Key"
+                        namespace="common.module-manager"
+                        placeholder="e.g. productivity, finance, information, etc."
+                        value={cat.key}
+                        onChange={key =>
+                          updateCategory(catIndex, c => ({ ...c, key }))
+                        }
                       />
+                      <Text asChild color="muted" weight="medium">
+                        <Flex align="center" gap="sm" mt="xl">
+                          <Icon icon="mingcute:translate-line" />
+                          {t('misc.translations')}
+                        </Flex>
+                      </Text>
+                      <Stack mt="md">
+                        {cat.value.map(([key, value], langIndex) => (
+                          <Flex key={key} align="center" gap="md">
+                            <TextInput
+                              required
+                              actionButtonProps={{
+                                icon: 'tabler:pencil',
+                                onClick: () => {
+                                  open(ModifyTranslationKeyModal, {
+                                    openType: 'update',
+                                    key,
+                                    onSubmit: newKey => {
+                                      updateCategory(catIndex, c => ({
+                                        ...c,
+                                        value: c.value.map(([k, v], i) =>
+                                          i === langIndex ? [newKey, v] : [k, v]
+                                        )
+                                      }))
+                                    }
+                                  })
+                                }
+                              }}
+                              icon="tabler:language"
+                              label={key}
+                              namespace={false}
+                              placeholder="e.g. Productivity, Produktiviti, 生产力, 生產力, etc."
+                              value={value}
+                              onChange={val =>
+                                updateCategory(catIndex, c => ({
+                                  ...c,
+                                  value: c.value.map(([k, v], i) =>
+                                    i === langIndex ? [k, val] : [k, v]
+                                  )
+                                }))
+                              }
+                            />
+                            <Button
+                              dangerous
+                              icon="tabler:trash"
+                              variant="plain"
+                              onClick={() => {
+                                updateCategory(catIndex, c => ({
+                                  ...c,
+                                  value: c.value.filter(
+                                    (_, i) => i !== langIndex
+                                  )
+                                }))
+                              }}
+                            />
+                          </Flex>
+                        ))}
+                      </Stack>
                       <Button
-                        dangerous
-                        icon="tabler:trash"
+                        icon="tabler:plus"
+                        mt="lg"
+                        namespace="common.module-manager"
                         variant="plain"
+                        width="100%"
                         onClick={() => {
-                          setData({
-                            ...data,
-                            value: data.value.filter((_, i) => i !== index)
+                          open(ModifyTranslationKeyModal, {
+                            openType: 'create',
+                            onSubmit: key => {
+                              if (cat.value.some(([k]) => k === key))
+                                throw new Error(
+                                  'Translation key already exists'
+                                )
+
+                              updateCategory(catIndex, c => ({
+                                ...c,
+                                value: [...c.value, [key, '']]
+                              }))
+                            }
                           })
                         }}
-                      />
-                    </Flex>
+                      >
+                        Add Translation
+                      </Button>
+                    </Box>
                   ))}
                 </Stack>
-                <Button
-                  icon="tabler:plus"
-                  mt="lg"
-                  namespace="common.module-manager"
-                  variant="plain"
-                  width="100%"
-                  onClick={() => {
-                    open(ModifyTranslationKeyModal, {
-                      openType: 'create',
-                      onSubmit: key => {
-                        if (data.value.some(([k]) => k === key))
-                          throw new Error('Translation key already exists')
-
-                        setData({
-                          ...data,
-                          value: [...data.value, [key, '']]
-                        })
-                      }
-                    })
-                  }}
-                >
-                  Add Translation
-                </Button>
+                {openType === 'create' && (
+                  <Button
+                    icon="tabler:plus"
+                    mt="lg"
+                    namespace="common.module-manager"
+                    variant="plain"
+                    width="100%"
+                    onClick={addCategory}
+                  >
+                    Add Category
+                  </Button>
+                )}
                 <Button
                   icon={openType === 'create' ? 'tabler:plus' : 'tabler:pencil'}
-                  mt="xl"
+                  mt="sm"
                   width="100%"
                   onClick={handleSubmit}
                 >

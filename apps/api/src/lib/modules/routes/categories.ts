@@ -61,8 +61,8 @@ export const aiTranslate = forge
       response.ok(
         await fetchAI({
           pb,
-          provider: 'openai',
-          model: 'gpt-5-nano',
+          provider: 'deepseek',
+          model: 'deepseek-v4-flash',
           messages: [
             {
               role: 'system',

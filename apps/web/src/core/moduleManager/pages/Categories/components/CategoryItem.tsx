@@ -28,7 +28,7 @@ function CategoryItem({
   id: string
   item: { key: string; value: Record<string, string> }
   onModify: (
-    newData: { key: string; value: Record<string, string> },
+    newData: Array<{ key: string; value: Record<string, string> }>,
     oldKey?: string
   ) => void
 }) {

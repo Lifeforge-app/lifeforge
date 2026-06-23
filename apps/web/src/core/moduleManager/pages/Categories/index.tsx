@@ -74,10 +74,7 @@ function Categories() {
   }, [categoryTranslations])
 
   const handleModify = async (
-    newData: {
-      key: string
-      value: Record<string, string>
-    },
+    categories: Array<{ key: string; value: Record<string, string> }>,
     oldKey?: string
   ) => {
     try {
@@ -87,7 +84,9 @@ function Categories() {
 
       if (oldKey) delete newCategoryTranslations[oldKey]
 
-      newCategoryTranslations[newData.key] = newData.value
+      for (const { key, value } of categories) {
+        newCategoryTranslations[key] = value
+      }
 
       await forgeAPI.modules.categories.update.mutate({
         data: newCategoryTranslations
@@ -167,7 +166,9 @@ function Categories() {
       />
       {missingKeys.length > 0 && (
         <Alert mb="md" type="warning">
-          {missingKeys.length} categories are missing translations:{' '}
+          {t('messages.categoriesMissingTranslations', {
+            count: missingKeys.length
+          })}{' '}
           {missingKeys.map((key, idx) => (
             <>
               <Text key={key} as="code">
@@ -176,6 +177,21 @@ function Categories() {
               {idx < missingKeys.length - 1 && ', '}
             </>
           ))}
+          <Button
+            icon="tabler:plus"
+            mt="md"
+            variant="secondary"
+            width="100%"
+            onClick={() => {
+              open(ModifyCategoryModal, {
+                openType: 'create',
+                initialKeys: missingKeys,
+                onSubmit: handleModify
+              })
+            }}
+          >
+            Create All
+          </Button>
         </Alert>
       )}
       {items.length > 0 ? (
