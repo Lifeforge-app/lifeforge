@@ -12,10 +12,12 @@ import { toast, useModalStore } from '@/providers'
 
 export function CreatePasswordScreen({
   controller,
-  challengeController
+  challengeController,
+  onCreate
 }: {
   controller: ForgeEndpoint
   challengeController: ForgeEndpoint
+  onCreate?: (data: any) => void
 }) {
   const { open } = useModalStore()
   const { t } = useTranslation('common.vault')
@@ -24,7 +26,8 @@ export function CreatePasswordScreen({
 
   const createPasswordMutation = useMutation(
     controller.mutationOptions({
-      onSuccess: () => {
+      onSuccess: data => {
+        onCreate?.(data)
         window.location.reload()
       },
       onError: () => {

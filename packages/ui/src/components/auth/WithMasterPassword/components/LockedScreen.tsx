@@ -11,10 +11,12 @@ import { toast } from '@/providers'
 export function LockedScreen({
   challengeController,
   verifyController,
+  onRecoveryRequested,
   setMasterPassword
 }: {
   challengeController: ForgeEndpoint
   verifyController: ForgeEndpoint
+  onRecoveryRequested?: () => void
   setMasterPassword: React.Dispatch<React.SetStateAction<string>>
 }) {
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
@@ -108,6 +110,18 @@ export function LockedScreen({
         >
           vault.buttons.unlock
         </Button>
+        {onRecoveryRequested && (
+          <Button
+            icon="tabler:lock-open"
+            mt="sm"
+            namespace="common.vault"
+            variant="plain"
+            width="100%"
+            onClick={onRecoveryRequested}
+          >
+            vault.buttons.recoverAccount
+          </Button>
+        )}
       </Box>
     </Flex>
   )

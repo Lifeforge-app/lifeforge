@@ -5,17 +5,24 @@ import type { ForgeEndpoint } from '@lifeforge/api'
 import { CreatePasswordScreen } from './components/CreatePasswordScreen'
 import { LockedScreen } from './components/LockedScreen'
 
-export function WithMasterPassword({
+export function WithMasterPassword<TCreationOutput>({
   controllers,
   hasMasterPassword,
+  onCreate,
+  onRecoveryRequested,
   children
 }: {
   controllers: {
-    createPassword: ForgeEndpoint
+    createPassword: ForgeEndpoint<{
+      __isForgeContract: true
+      __output: TCreationOutput
+    }>
     getChallenge: ForgeEndpoint
     verifyPassword: ForgeEndpoint
   }
   hasMasterPassword: boolean
+  onCreate?: (data: TCreationOutput) => void
+  onRecoveryRequested?: () => void
   children: (masterPassword: string) => React.ReactNode
 }) {
   const [masterPassword, setMasterPassword] = useState('')
@@ -25,6 +32,7 @@ export function WithMasterPassword({
       <CreatePasswordScreen
         challengeController={controllers.getChallenge}
         controller={controllers.createPassword}
+        onCreate={onCreate}
       />
     )
   }
@@ -33,6 +41,7 @@ export function WithMasterPassword({
     return (
       <LockedScreen
         challengeController={controllers.getChallenge}
+        onRecoveryRequested={onRecoveryRequested}
         setMasterPassword={setMasterPassword}
         verifyController={controllers.verifyPassword}
       />
