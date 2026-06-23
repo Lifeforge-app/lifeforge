@@ -35,10 +35,7 @@ i18n
           return
         }
 
-        if (
-          !['en', 'zh', 'zh-TW', 'zh-CN', 'ms'].includes(langs[0]) ||
-          !namespaces.filter(e => e && e !== 'undefined').length
-        ) {
+        if (!namespaces.filter(e => e && e !== 'undefined').length) {
           return
         }
 
@@ -51,7 +48,7 @@ i18n
         return forgeAPI.locales.getLocale
           .setHost(import.meta.env.VITE_API_HOST)
           .input({
-            lang: langs[0] as 'en' | 'zh' | 'zh-TW' | 'zh-CN' | 'ms',
+            lang: langs[0],
             namespace: namespace as 'apps' | 'common',
             subnamespace: subnamespace
           }).endpoint

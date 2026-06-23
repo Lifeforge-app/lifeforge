@@ -40,13 +40,13 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
 
   const mutation = useMutation(
     forgeAPI.user.settings.updateProfile.mutationOptions({
-      onSuccess: (_: never, newData: UserData) => {
+      onSuccess: (_, newData) => {
         if (!userData) return
 
         if (id === 'email') {
           toast.info('A verification email has been sent to your new email.')
         } else {
-          setUserData((oldData: UserData) => {
+          setUserData(oldData => {
             if (!oldData) return null
 
             return { ...oldData, ...newData.data } as UserData
