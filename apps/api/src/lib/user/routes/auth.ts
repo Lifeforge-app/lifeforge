@@ -160,12 +160,10 @@ export const getUserData = forge
     output: {
       OK: userSchemas.users
         .omit({
-          masterPasswordHash: true,
           APIKeysMasterPasswordHash: true,
           twoFASecret: true
         })
         .extend({
-          hasMasterPassword: z.boolean(),
           hasJournalMasterPassword: z.boolean(),
           hasAPIKeysMasterPassword: z.boolean(),
           twoFAEnabled: z.boolean()

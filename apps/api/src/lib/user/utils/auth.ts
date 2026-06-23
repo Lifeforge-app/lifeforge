@@ -9,7 +9,6 @@ import schema from '../schema'
 export function removeSensitiveData(userData: Record<string, any>) {
   const newUserData = _.cloneDeep(userData)
 
-  newUserData.hasMasterPassword = Boolean(userData.masterPasswordHash)
   newUserData.hasJournalMasterPassword = Boolean(
     userData.journalMasterPasswordHash
   )
@@ -17,7 +16,6 @@ export function removeSensitiveData(userData: Record<string, any>) {
     userData.APIKeysMasterPasswordHash
   )
   newUserData.twoFAEnabled = Boolean(userData.twoFASecret)
-  delete newUserData['masterPasswordHash']
   delete newUserData['journalMasterPasswordHash']
   delete newUserData['APIKeysMasterPasswordHash']
   delete newUserData['twoFASecret']
@@ -25,16 +23,11 @@ export function removeSensitiveData(userData: Record<string, any>) {
   return newUserData as SchemaWithPB<
     Omit<
       z.infer<(typeof schema)['users']>,
-      | 'masterPasswordHash'
-      | 'journalMasterPasswordHash'
-      | 'APIKeysMasterPasswordHash'
-      | 'twoFASecret'
+      'journalMasterPasswordHash' | 'APIKeysMasterPasswordHash' | 'twoFASecret'
     > & {
-      hasMasterPassword: boolean
       hasJournalMasterPassword: boolean
       hasAPIKeysMasterPassword: boolean
       twoFAEnabled: boolean
-      masterPasswordHash?: string
       journalMasterPasswordHash?: string
       APIKeysMasterPasswordHash?: string
       twoFASecret?: string

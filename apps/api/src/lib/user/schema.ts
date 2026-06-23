@@ -1,5 +1,4 @@
 import z from 'zod'
-
 import { cleanSchemas } from '@lifeforge/server-utils'
 
 export const schemas = {
@@ -18,15 +17,14 @@ export const schemas = {
       bgImage: z.string(),
       backdropFilters: z.any(),
       fontFamily: z.string(),
-      language: z.string(),
       dashboardLayout: z.any(),
-      masterPasswordHash: z.string(),
       APIKeysMasterPasswordHash: z.string(),
       twoFASecret: z.string(),
       fontScale: z.number(),
       pinnedFontFamilies: z.any(),
       borderRadiusMultiplier: z.number(),
       bordered: z.boolean(),
+      language: z.string(),
       created: z.string(),
       updated: z.string()
     }),
@@ -230,19 +228,6 @@ export const schemas = {
           type: 'text'
         },
         {
-          autogeneratePattern: '',
-          hidden: false,
-          max: 0,
-          min: 0,
-          name: 'language',
-          pattern: '',
-          presentable: false,
-          primaryKey: false,
-          required: false,
-          system: false,
-          type: 'text'
-        },
-        {
           hidden: false,
           maxSize: 2000000,
           name: 'dashboardLayout',
@@ -250,19 +235,6 @@ export const schemas = {
           required: false,
           system: false,
           type: 'json'
-        },
-        {
-          autogeneratePattern: '',
-          hidden: false,
-          max: 0,
-          min: 0,
-          name: 'masterPasswordHash',
-          pattern: '',
-          presentable: false,
-          primaryKey: false,
-          required: false,
-          system: false,
-          type: 'text'
         },
         {
           autogeneratePattern: '',
@@ -328,6 +300,19 @@ export const schemas = {
           required: false,
           system: false,
           type: 'bool'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          max: 0,
+          min: 0,
+          name: 'language',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: true,
+          system: false,
+          type: 'text'
         },
         {
           hidden: false,
