@@ -11,16 +11,18 @@ export function useInputLabel({
 }) {
   const { t } = useModuleTranslation(namespace ? [namespace] : undefined)
 
-  const nameKey = _.camelCase(label)
-
   return t(
     [
-      `inputs.${nameKey}.label`,
-      `inputs.${nameKey}`,
+      `inputs.${_.camelCase(label)}.label`,
+      `inputs.${_.camelCase(label)}`,
+      `inputs.${label}.label`,
+      `inputs.${label}`,
       ...(namespace
         ? [
-            `${namespace}:inputs.${nameKey}.label`,
-            `${namespace}:inputs.${nameKey}`
+            `${namespace}:inputs.${_.camelCase(label)}.label`,
+            `${namespace}:inputs.${_.camelCase(label)}`,
+            `${namespace}:inputs.${label}.label`,
+            `${namespace}:inputs.${label}`
           ]
         : [])
     ],
