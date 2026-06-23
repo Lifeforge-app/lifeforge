@@ -92,26 +92,36 @@ export function SidebarItemContent({
           )
         })()}
         {number !== undefined && !hasSubsection && (
-          <Text
-            as="span"
-            className={
-              !isMenuOpen &&
-              !(onCancelButtonClick !== undefined && active) &&
-              contextMenuItems !== undefined
-                ? styles.numberBadgeGroupHoverHide
-                : undefined
-            }
-            size="sm"
+          <Box
+            asChild
+            position="absolute"
+            right="1em"
             style={{
-              display:
-                isMenuOpen || (onCancelButtonClick !== undefined && active)
-                  ? 'none'
-                  : undefined,
-              paddingRight: '0.5rem'
+              transform: 'translateY(-50%)'
             }}
+            top="50%"
           >
-            {number.toLocaleString()}
-          </Text>
+            <Text
+              as="span"
+              className={
+                !isMenuOpen &&
+                !(onCancelButtonClick !== undefined && active) &&
+                contextMenuItems !== undefined
+                  ? styles.numberBadgeGroupHoverHide
+                  : undefined
+              }
+              size="sm"
+              style={{
+                display:
+                  isMenuOpen || (onCancelButtonClick !== undefined && active)
+                    ? 'none'
+                    : undefined,
+                paddingRight: '0.5rem'
+              }}
+            >
+              {number.toLocaleString()}
+            </Text>
+          </Box>
         )}
       </Flex>
       {actionButtonProps && (
