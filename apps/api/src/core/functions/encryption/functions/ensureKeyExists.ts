@@ -10,7 +10,7 @@ import {
 } from '../constants'
 
 /**
- * Ensures the RSA keypair exists, generating if needed.
+ * Generates a fresh RSA keypair on every server restart.
  * Should be called during server startup.
  */
 export default function ensureKeysExist(): void {
@@ -18,23 +18,21 @@ export default function ensureKeysExist(): void {
     fs.mkdirSync(KEYS_DIR, { recursive: true })
   }
 
-  if (!fs.existsSync(PRIVATE_KEY_PATH) || !fs.existsSync(PUBLIC_KEY_PATH)) {
-    logger.debug('Generating new RSA keypair...')
+  logger.debug('Generating new RSA keypair...')
 
-    const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
-      modulusLength: RSA_KEY_SIZE,
-      publicKeyEncoding: {
-        type: 'spki',
-        format: 'pem'
-      },
-      privateKeyEncoding: {
-        type: 'pkcs8',
-        format: 'pem'
-      }
-    })
+  const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+    modulusLength: RSA_KEY_SIZE,
+    publicKeyEncoding: {
+      type: 'spki',
+      format: 'pem'
+    },
+    privateKeyEncoding: {
+      type: 'pkcs8',
+      format: 'pem'
+    }
+  })
 
-    fs.writeFileSync(PUBLIC_KEY_PATH, publicKey)
-    fs.writeFileSync(PRIVATE_KEY_PATH, privateKey, { mode: 0o600 })
-    logger.info('RSA keypair generated successfully')
-  }
+  fs.writeFileSync(PUBLIC_KEY_PATH, publicKey)
+  fs.writeFileSync(PRIVATE_KEY_PATH, privateKey, { mode: 0o600 })
+  logger.info('RSA keypair generated successfully')
 }
