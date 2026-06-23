@@ -121,10 +121,6 @@ export function clearServerPublicKey(): void {
  * @throws Error if the public key cannot be fetched
  */
 export async function initializeEncryption(apiHost: string): Promise<void> {
-  if (cachedServerPublicKey) {
-    return // Already initialized
-  }
-
   try {
     const response = await fetch(`${apiHost}/encryptionPublicKey`, {
       method: 'GET',

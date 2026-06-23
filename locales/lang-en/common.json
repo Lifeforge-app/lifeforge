@@ -127,6 +127,13 @@
     "viewImage": "View Image"
   },
   "misc": {
+    "alert": {
+      "note": "Note",
+      "warning": "Warning",
+      "caution": "Caution",
+      "tip": "Tip",
+      "important": "Important"
+    },
     "search": "Search {{item}}...",
     "notFound": {
       "title": "Oops! There's nothing here",
@@ -246,22 +253,6 @@
     "fileInputSupportedFormat": "Supported format: {{format}}"
   },
   "sidebar": {
-    "categories": {
-      "productivity": "Productivity",
-      "storage": "Storage",
-      "study": "Study",
-      "finance": "Finance",
-      "confidential": "Confidential",
-      "settings": "Settings",
-      "technologies": "Technologies",
-      "utilities": "Utilities",
-      "information": "Information",
-      "sso": "Single Sign-On",
-      "references": "References",
-      "lifestyle": "Lifestyle",
-      "externalManagement": "External Management",
-      "healthFitness": "Health & Fitness"
-    },
     "buttons": {
       "signOut": "Sign Out",
       "accountSettings": "Account Settings"
@@ -414,7 +405,8 @@
       "unlocked": "Vault is unlocked",
       "failedToUnlock": "Failed to unlock vault",
       "buttons": {
-        "unlock": "Unlock"
+        "unlock": "Unlock",
+        "recoverAccount": "Recover Account"
       },
       "createPassword": {
         "title": "Set Master Password",
