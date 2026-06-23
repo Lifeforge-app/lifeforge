@@ -8,7 +8,9 @@
   },
   "buttons": {
     "uninstall": "Uninstall",
-    "addTranslation": "Add Translation"
+    "addTranslation": "Add Translation",
+    "addCategory": "Add Category",
+    "add category": "Add Category"
   },
   "subsectionTitleAndDesc": {
     "modules": {
@@ -73,5 +75,8 @@
   },
   "misc": {
     "translations": "Translations"
+  },
+  "messages": {
+    "categoriesMissingTranslations": "{{count}} categories are missing translations:"
   }
 }

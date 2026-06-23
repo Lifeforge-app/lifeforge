@@ -9,43 +9,46 @@ export default function getCallerModuleId():
 
   const lines = obj.stack?.split('\n') || []
 
-  const callerLine = lines[3]
+  for (let i = 2; i < lines.length; i++) {
+    const line = lines[i]
 
-  const pathMatch =
-    callerLine?.match(/\((.+):\d+:\d+\)/) ||
-    callerLine?.match(/at (.+):\d+:\d+/)
-
-  const filePath = pathMatch?.[1]
-
-  if (!filePath) return undefined
-
-  const projectRoot = getProjectRootDir(filePath)
-
-  if (!projectRoot) return undefined
-
-  // Try external app module: /{projectRoot}/modules/{moduleId}/server/
-  const appMatch = filePath.match(
-    new RegExp(`${projectRoot}\\/modules\\/([^/]+)\\/server\\/`)
-  )
-
-  if (appMatch)
-    return {
-      source: 'app',
-      id: appMatch[1]
+    if (
+      !line.includes('/apps/api/src/lib/') &&
+      !line.includes('/apps/api/src/core/') &&
+      !line.includes('/modules/')
+    ) {
+      continue
     }
 
-  // Try core module:
-  // - /{projectRoot}/apps/api/src/lib/{coreModuleId}/
-  // - /{projectRoot}/apps/api/src/core/{coreModuleId}/
-  const coreMatch = filePath.match(
-    new RegExp(`${projectRoot}\\/apps\\/api\\/src\\/(?:lib|core)\\/([^/]+)\\/`)
-  )
+    const pathMatch =
+      line.match(/\((.+):\d+:\d+\)/) || line.match(/at (.+):\d+:\d+/)
 
-  if (coreMatch)
-    return {
-      source: 'core',
-      id: coreMatch[1]
+    const filePath = pathMatch?.[1]
+
+    if (!filePath) continue
+
+    const projectRoot = getProjectRootDir(filePath)
+
+    if (!projectRoot) continue
+
+    const appMatch = filePath.match(
+      new RegExp(`${projectRoot}\\/modules\\/([^/]+)\\/server\\/`)
+    )
+
+    if (appMatch) {
+      return { source: 'app', id: appMatch[1] }
     }
+
+    const coreMatch = filePath.match(
+      new RegExp(
+        `${projectRoot}\\/apps\\/api\\/src\\/(?:lib|core)\\/([^/]+)(?:\\/|$)`
+      )
+    )
+
+    if (coreMatch) {
+      return { source: 'core', id: coreMatch[1] }
+    }
+  }
 
   return undefined
 }

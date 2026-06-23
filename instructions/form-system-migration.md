@@ -697,7 +697,7 @@ return (
 | Old `defineForm` arg | New `uiConfig` prop         | Notes                                                                                 |
 | -------------------- | --------------------------- | ------------------------------------------------------------------------------------- |
 | `icon`               | `icon`                      | Same                                                                                  |
-| `title`              | `title`                     | Same (string or ReactNode)                                                            |
+| `title`              | `title`                     | `modals.` prefix is **auto-prepended** by `FormModal` — do NOT include `modals.` in the title string. E.g. use `title: 'category.create'` (not `'modals.category.create'`). Final locale key resolved to `modals.category.create`. |
 | `namespace`          | `namespace`                 | Same                                                                                  |
 | `loading`            | `loading`                   | Same                                                                                  |
 | `onClose`            | `onClose`                   | Same                                                                                  |

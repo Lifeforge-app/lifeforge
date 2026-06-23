@@ -100,36 +100,6 @@ export const contract = {
         "NOT_FOUND": true
       }
     },
-    "notifyMissing": {
-      "method": "post",
-      "description": "Report missing localization keys",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "namespace": {
-              "type": "string"
-            },
-            "missingKey": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "namespace",
-            "missingKey"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "NO_CONTENT": true
-      }
-    },
     "listUnsupportedModules": {
       "method": "get",
       "description": "List modules that do not support the user's currently selected language",
@@ -299,9 +269,6 @@ export const contract = {
               "fontFamily": {
                 "type": "string"
               },
-              "language": {
-                "type": "string"
-              },
               "dashboardLayout": {},
               "fontScale": {
                 "type": "number"
@@ -312,6 +279,9 @@ export const contract = {
               },
               "bordered": {
                 "type": "boolean"
+              },
+              "language": {
+                "type": "string"
               },
               "created": {
                 "type": "string"
@@ -327,9 +297,6 @@ export const contract = {
               },
               "collectionName": {
                 "type": "string"
-              },
-              "hasMasterPassword": {
-                "type": "boolean"
               },
               "hasJournalMasterPassword": {
                 "type": "boolean"
@@ -355,18 +322,17 @@ export const contract = {
               "bgImage",
               "backdropFilters",
               "fontFamily",
-              "language",
               "dashboardLayout",
               "fontScale",
               "pinnedFontFamilies",
               "borderRadiusMultiplier",
               "bordered",
+              "language",
               "created",
               "updated",
               "id",
               "collectionId",
               "collectionName",
-              "hasMasterPassword",
               "hasJournalMasterPassword",
               "hasAPIKeysMasterPassword",
               "twoFAEnabled"
