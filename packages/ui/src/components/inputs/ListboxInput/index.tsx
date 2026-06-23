@@ -36,7 +36,7 @@ interface ListboxInputProps<T> {
   /** The custom content to display in the listbox button. */
   renderContent?: (value: T) => React.ReactNode
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
-  namespace?: string
+  namespace?: string | false
   /** The error message to display when the field is invalid. */
   errorMsg?: string
 }

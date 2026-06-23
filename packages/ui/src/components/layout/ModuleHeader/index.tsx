@@ -23,7 +23,7 @@ interface ModuleHeaderProps {
   contextMenuProps?: React.ComponentProps<typeof ContextMenu>
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
-  namespace?: string
+  namespace?: string | false
   tKey?: string
 }
 
@@ -43,11 +43,11 @@ export function ModuleHeader({
   title = title ?? innerTitle
   icon = icon ?? innerIcon
 
-  const { t } = useModuleTranslation([
-    `common.${title}`,
-    'common.misc',
-    namespace ?? ''
-  ])
+  const { t } = useModuleTranslation(
+    namespace === false
+      ? []
+      : [`common.${title}`, 'common.misc', namespace ?? '']
+  )
 
   const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
 
@@ -105,15 +105,17 @@ export function ModuleHeader({
               width="100%"
             >
               <Text truncate display="block">
-                {t([
-                  `${namespace}:${tKey}.${title}.title`,
-                  `${namespace}:${title}.title`,
-                  `apps.${title}:title`,
-                  `common.${title}:title`,
-                  'common.misc:title',
-                  'title',
-                  title?.toString() ?? ''
-                ])}
+                {namespace === false
+                  ? (title?.toString() ?? '')
+                  : t([
+                      `${namespace}:${tKey}.${title}.title`,
+                      `${namespace}:${title}.title`,
+                      `apps.${title}:title`,
+                      `common.${title}:title`,
+                      'common.misc:title',
+                      'title',
+                      title?.toString() ?? ''
+                    ])}
               </Text>
               <Box asChild minWidth="0">
                 <Text
@@ -135,15 +137,17 @@ export function ModuleHeader({
               size={{ base: 'sm', sm: 'base' }}
               whiteSpace="nowrap"
             >
-              {t([
-                `${namespace}:${tKey}.${title}.description`,
-                `${namespace}:${title}.description`,
-                `apps.${title}:description`,
-                `common.${title}:description`,
-                'common.misc:description',
-                'description',
-                `Description for ${title?.toString() ?? ''}`
-              ])}
+              {namespace === false
+                ? `Description for ${title?.toString() ?? ''}`
+                : t([
+                    `${namespace}:${tKey}.${title}.description`,
+                    `${namespace}:${title}.description`,
+                    `apps.${title}:description`,
+                    `common.${title}:description`,
+                    'common.misc:description',
+                    'description',
+                    `Description for ${title?.toString() ?? ''}`
+                  ])}
             </Text>
           </Box>
         </Flex>

@@ -12,7 +12,7 @@ import { useNamespace } from '../FormModal'
 type SliderFieldProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
   name: FieldPathByValue<TFieldValues, number | null | undefined>
-  namespace?: string
+  namespace?: string | false
 } & Omit<SliderInputProps, 'value' | 'onChange'>
 
 export function SliderField<TFieldValues extends FieldValues>({

@@ -89,7 +89,7 @@ export function FileInput({
   onChange: (value: FileValue) => void
   onImageRemoved?: () => void
   required?: boolean
-  namespace?: string
+  namespace?: string | false
   disabled?: boolean
   sources?: FilePickerSourceConfig
   mimeTypes?: Record<string, string[]>

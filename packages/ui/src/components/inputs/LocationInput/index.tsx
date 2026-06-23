@@ -27,7 +27,7 @@ interface LocationInputProps {
   disabled?: boolean
   autoFocus?: boolean
   className?: string
-  namespace?: string
+  namespace?: string | false
   errorMsg?: string
 }
 

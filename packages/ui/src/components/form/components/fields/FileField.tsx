@@ -21,7 +21,7 @@ type FileFieldProps<TFieldValues extends FieldValues> = {
   reminderText?: string
   onImageRemoved?: () => void
   required?: boolean
-  namespace?: string
+  namespace?: string | false
   disabled?: boolean
   sources?: FilePickerSourceConfig
   mimeTypes?: Record<string, string[]>

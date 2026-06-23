@@ -33,7 +33,7 @@ export type CurrencyInputProps = {
   /** Additional CSS class names to apply to the currency input component. */
   className?: string
   /** The i18n namespace for internationalization. Use false to disable translation. */
-  namespace?: string
+  namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
 } & InputVariants

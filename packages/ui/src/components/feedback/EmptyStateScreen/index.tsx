@@ -17,7 +17,7 @@ interface EmptyStateScreenProps {
   message:
     | {
         id: string
-        namespace?: string
+        namespace?: string | false
         tKey?: string
       }
     | {
@@ -77,16 +77,18 @@ export function EmptyStateScreen({
           weight="semibold"
         >
           {'id' in message
-            ? t(
-                `${message.namespace ? `${message.namespace}:` : ''}${[
-                  message.tKey,
-                  'empty',
-                  message.id,
-                  'title'
-                ]
-                  .filter(e => e)
-                  .join('.')}`
-              )
+            ? message.namespace === false
+              ? message.id
+              : t(
+                  `${message.namespace ? `${message.namespace}:` : ''}${[
+                    message.tKey,
+                    'empty',
+                    message.id,
+                    'title'
+                  ]
+                    .filter(e => e)
+                    .join('.')}`
+                )
             : message.title}
         </Text>
         {(() => {
@@ -122,16 +124,18 @@ export function EmptyStateScreen({
               }}
               whiteSpace="pre-wrap"
             >
-              {t(
-                `${message.namespace ? `${message.namespace}:` : ''}${[
-                  message.tKey,
-                  'empty',
-                  message.id,
-                  'description'
-                ]
-                  .filter(e => e)
-                  .join('.')}`
-              )}
+              {message.namespace === false
+                ? ''
+                : t(
+                    `${message.namespace ? `${message.namespace}:` : ''}${[
+                      message.tKey,
+                      'empty',
+                      message.id,
+                      'description'
+                    ]
+                      .filter(e => e)
+                      .join('.')}`
+                  )}
             </Text>
           )
         })()}

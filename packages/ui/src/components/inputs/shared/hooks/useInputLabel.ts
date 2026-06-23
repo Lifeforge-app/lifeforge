@@ -6,10 +6,14 @@ export function useInputLabel({
   namespace,
   label
 }: {
-  namespace?: string
+  namespace?: string | false
   label: string
 }) {
   const { t } = useModuleTranslation(namespace ? [namespace] : undefined)
+
+  if (namespace === false) {
+    return label
+  }
 
   return t(
     [

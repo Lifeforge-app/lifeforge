@@ -9,7 +9,7 @@ import { ModalHeader } from '@/components/overlays'
 import { Flex, Stack } from '@/components/primitives'
 import { toast } from '@/providers'
 
-const NamespaceContext = createContext<string | undefined>(undefined)
+const NamespaceContext = createContext<string | false | undefined>(undefined)
 
 export function useNamespace() {
   return useContext(NamespaceContext)
@@ -50,7 +50,7 @@ export function FormModal<T extends FieldValues>({
     title: string | React.ReactNode
     icon: string
     onClose: () => void
-    namespace?: string
+    namespace?: string | false
     loading?: boolean
     headerActions?: React.ReactNode
   }
@@ -82,7 +82,7 @@ export function FormModal<T extends FieldValues>({
         <ModalHeader
           headerActions={headerActions}
           icon={icon}
-          namespace={namespace ? namespace : undefined}
+          namespace={namespace}
           title={title}
           onClose={onClose}
         />

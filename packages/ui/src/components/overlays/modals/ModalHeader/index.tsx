@@ -16,7 +16,7 @@ function getLocaleKeys(innerTitle: string, namespace?: string) {
     `${innerTitle}.title`,
     `${innerTitle}`,
     `modals.${innerTitle}.title`,
-    `modals.${innerTitle}`,
+    `modals.${innerTitle}`
   ].map(e => (namespace ? `${namespace}:${e}` : e))
 }
 
@@ -36,7 +36,7 @@ function _ModalHeader({
   hasAI?: boolean
   className?: string
   appendTitle?: React.ReactElement
-  namespace?: string
+  namespace?: string | false
   headerActions?: React.ReactNode
 }) {
   const { t } = useModuleTranslation(namespace ? [namespace] : [])
@@ -65,16 +65,20 @@ function _ModalHeader({
           {typeof innerTitle === 'string' ? (
             <>
               <Text truncate as="span" style={{ minWidth: 0 }}>
-                {t(
-                  [
-                    ...getLocaleKeys(innerTitle),
-                    ...(namespace ? getLocaleKeys(innerTitle, namespace) : []),
-                    ...getLocaleKeys(innerTitle, 'common.modals')
-                  ],
-                  {
-                    defaultValue: innerTitle
-                  }
-                )}
+                {namespace === false
+                  ? innerTitle
+                  : t(
+                      [
+                        ...getLocaleKeys(innerTitle),
+                        ...(namespace
+                          ? getLocaleKeys(innerTitle, namespace)
+                          : []),
+                        ...getLocaleKeys(innerTitle, 'common.modals')
+                      ],
+                      {
+                        defaultValue: innerTitle
+                      }
+                    )}
               </Text>
               {appendTitle}
               {hasAI && (

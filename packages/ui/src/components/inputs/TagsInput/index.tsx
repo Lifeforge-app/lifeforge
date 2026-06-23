@@ -50,7 +50,7 @@ interface TagsInputProps {
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>
   }
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
-  namespace?: string
+  namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
 }

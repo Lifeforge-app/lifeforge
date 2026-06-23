@@ -25,7 +25,7 @@ type ListboxFieldProps<TFieldValues extends FieldValues, TOption> = {
   label: string
   multiple?: boolean
   disabled?: boolean
-  namespace?: string
+  namespace?: string | false
   required?: boolean
   options: ListboxOptionType<TOption>[]
   actionButtonOption?: {

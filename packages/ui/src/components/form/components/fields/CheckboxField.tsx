@@ -18,7 +18,7 @@ type CheckboxFieldProps<TFieldValues extends FieldValues> = {
   label: string
   icon: string
   disabled?: boolean
-  namespace?: string
+  namespace?: string | false
 }
 
 export function CheckboxField<TFieldValues extends FieldValues>({
@@ -38,12 +38,17 @@ export function CheckboxField<TFieldValues extends FieldValues>({
 
   const activeNamespace = namespace ?? contextNamespace
 
-  const { t } = useTranslation(activeNamespace)
+  const { t } = useTranslation(
+    activeNamespace === false ? undefined : activeNamespace
+  )
 
-  const labelText = t([
-    ['inputs', _.camelCase(label), 'label'].filter(Boolean).join('.'),
-    ['inputs', _.camelCase(label)].filter(Boolean).join('.')
-  ])
+  const labelText =
+    activeNamespace === false
+      ? label
+      : t([
+          ['inputs', _.camelCase(label), 'label'].filter(Boolean).join('.'),
+          ['inputs', _.camelCase(label)].filter(Boolean).join('.')
+        ])
 
   function handleSwitchChange() {
     field.onChange(!field.value)

@@ -34,7 +34,7 @@ export type TextInputProps = {
     | 'search'
   actionButtonProps?: React.ComponentProps<typeof Button>
   className?: string
-  namespace?: string
+  namespace?: string | false
   errorMsg?: string
   inputRef?: React.RefObject<HTMLInputElement | null>
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> &

@@ -20,7 +20,7 @@ export interface SliderInputProps extends Omit<
   max?: number
   step?: number
   className?: string
-  namespace?: string
+  namespace?: string | false
 }
 
 export function SliderInput({

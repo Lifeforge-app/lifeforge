@@ -17,7 +17,7 @@ type LocationFieldProps<TFieldValues extends FieldValues> = {
   required?: boolean
   disabled?: boolean
   autoFocus?: boolean
-  namespace?: string
+  namespace?: string | false
 }
 
 export function LocationField<TFieldValues extends FieldValues>({

@@ -42,7 +42,7 @@ export interface DateInputProps {
   /** Whether the date input includes time selection. */
   hasTime?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
-  namespace?: string
+  namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
 }

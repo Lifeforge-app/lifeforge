@@ -57,11 +57,13 @@ export function SidebarTitle({
           weight="semibold"
           whiteSpace="nowrap"
         >
-          {t([
-            `sidebar.${_.camelCase(label)}`,
-            `common.sidebar:categories.${_.camelCase(label)}`,
-            label
-          ])}
+          {namespace === false
+            ? label
+            : t([
+                `sidebar.${_.camelCase(label)}`,
+                `common.sidebar:categories.${_.camelCase(label)}`,
+                label
+              ])}
         </Text>
         {actionButton && 'icon' in actionButton ? (
           <Text

@@ -44,7 +44,7 @@ interface ContextMenuItemProps {
   /** Additional CSS class names to apply to the menu item. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
-  namespace?: string
+  namespace?: string | false
   /** Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   tProps?: Record<string, unknown>
   /** Callback function called when the menu item is clicked. */
@@ -64,7 +64,9 @@ export function ContextMenuItem({
   tProps,
   onClick
 }: ContextMenuItemProps) {
-  const { t } = useModuleTranslation(namespace ? [namespace] : undefined)
+  const { t } = useModuleTranslation(
+    namespace ? [namespace] : undefined
+  )
 
   return (
     <WithDivide>
@@ -130,7 +132,10 @@ export function ContextMenuItem({
                       [
                         _.camelCase(label),
                         `buttons.${_.camelCase(label)}`,
-                        label
+                        label,
+                        `${namespace}:${_.camelCase(label)}`,
+                        `${namespace}:buttons.${_.camelCase(label)}`,
+                        `${namespace}:${label}`
                       ],
                       tProps
                     )

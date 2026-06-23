@@ -22,7 +22,7 @@ export interface IconInputProps {
   required?: boolean
   disabled?: boolean
   autoFocus?: boolean
-  namespace?: string
+  namespace?: string | false
   errorMsg?: string
 }
 

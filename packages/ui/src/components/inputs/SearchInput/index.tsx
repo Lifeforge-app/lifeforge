@@ -33,7 +33,7 @@ interface SearchInputProps extends Omit<FlexProps<'search'>, 'onChange'> {
   /** Additional CSS class names to apply to the search input container. */
   className?: string
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
-  namespace?: string
+  namespace?: string | false
   /** Optional debounce delay in milliseconds. When set, the onChange callback will be debounced by this amount. */
   debounceMs?: number
   /** Policy for showing children components.
@@ -71,10 +71,11 @@ export function SearchInput({
   children,
   ...props
 }: SearchInputProps) {
-  const { t } = useModuleTranslation([
-    'common.misc',
-    ...(namespace ? [namespace] : [])
-  ])
+  const { t } = useModuleTranslation(
+    namespace === false
+      ? []
+      : ['common.misc', ...(namespace ? [namespace] : [])]
+  )
   // Internal state for immediate input feedback when debouncing
 
   const [internalValue, setInternalValue] = useState(value)
@@ -214,27 +215,31 @@ export function SearchInput({
               data-form-type="other"
               data-lpignore="true"
               disabled={disabled}
-              placeholder={t([`common.misc:search`, `Search ${searchTarget}`], {
-                item: t(
-                  [
-                    `items.${_.camelCase(searchTarget)}`,
-                    `items.${searchTarget}`,
-                    `${_.camelCase(searchTarget)}`,
-                    `${searchTarget}`,
-                    `${namespace}:items.${_.camelCase(searchTarget)}`,
-                    `${namespace}:items.${searchTarget}`,
-                    `${namespace}:${_.camelCase(searchTarget)}`,
-                    `${namespace}:${searchTarget}`,
-                    `common.misc:items.${_.camelCase(searchTarget)}`,
-                    `common.misc:items.${searchTarget}`,
-                    `common.misc:${_.camelCase(searchTarget)}`,
-                    `common.misc:${searchTarget}`
-                  ],
-                  {
-                    defaultValue: searchTarget
-                  }
-                )
-              })}
+              placeholder={
+                namespace === false
+                  ? `Search ${searchTarget}`
+                  : t([`common.misc:search`, `Search ${searchTarget}`], {
+                      item: t(
+                        [
+                          `items.${_.camelCase(searchTarget)}`,
+                          `items.${searchTarget}`,
+                          `${_.camelCase(searchTarget)}`,
+                          `${searchTarget}`,
+                          `${namespace}:items.${_.camelCase(searchTarget)}`,
+                          `${namespace}:items.${searchTarget}`,
+                          `${namespace}:${_.camelCase(searchTarget)}`,
+                          `${namespace}:${searchTarget}`,
+                          `common.misc:items.${_.camelCase(searchTarget)}`,
+                          `common.misc:items.${searchTarget}`,
+                          `common.misc:${_.camelCase(searchTarget)}`,
+                          `common.misc:${searchTarget}`
+                        ],
+                        {
+                          defaultValue: searchTarget
+                        }
+                      )
+                    })
+              }
               style={{ paddingRight: actionButtonProps ? '5rem' : '2.5rem' }}
               type="text"
               value={displayValue}

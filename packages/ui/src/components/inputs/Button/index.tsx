@@ -39,7 +39,7 @@ type ButtonOwnProps = {
   /** Whether the button should be styled as dangerous/destructive with a red background. */
   dangerous?: boolean
   /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
-  namespace?: string
+  namespace?: string | false
   /** Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
   tProps?: Record<string, unknown>
   style?: CSSProperties
@@ -84,7 +84,7 @@ export function Button<T extends ElementType = 'button'>({
     props: props as any
   })
 
-  const { t } = useModuleTranslation([namespace])
+  const { t } = useModuleTranslation(namespace === false ? [] : [namespace])
 
   return (
     <Transition>
@@ -124,18 +124,22 @@ export function Button<T extends ElementType = 'button'>({
           {children && typeof children === 'string' ? (
             <Box asChild minWidth="0">
               <Text truncate>
-                {t(
-                  [
-                    `buttons.${_.camelCase(children)}`,
-                    `${_.camelCase(children)}`,
-                    children,
-                    `${namespace}:buttons.${_.camelCase(children)}`,
-                    `${namespace}:${_.camelCase(children)}`,
-                    `${namespace}:${children}`,
-                    `common.buttons:${_.camelCase(children)}`
-                  ],
-                  { ...tProps, defaultValue: children }
-                )}
+                {namespace === false
+                  ? children
+                  : t(
+                      [
+                        `buttons.${_.camelCase(children)}`,
+                        `${_.camelCase(children)}`,
+                        children,
+                        `${namespace}:buttons.${_.camelCase(children)}`,
+                        `${namespace}:${_.camelCase(children)}`,
+                        `${namespace}:${children}`,
+                        `common.buttons:buttons.${_.camelCase(children)}`,
+                        `common.buttons:${_.camelCase(children)}`,
+                        `common.buttons:${children}`
+                      ],
+                      { ...tProps, defaultValue: children }
+                    )}
               </Text>
             </Box>
           ) : (

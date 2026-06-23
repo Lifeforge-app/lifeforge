@@ -11,7 +11,7 @@ export function SliderHeader({
 }: {
   icon?: string
   label?: string
-  namespace?: string
+  namespace?: string | false
   value: number
   required?: boolean
   max?: number
