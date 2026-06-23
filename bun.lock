@@ -199,11 +199,11 @@
         "vite": "^7.0.5",
       },
     },
-    "locales/lifeforge--lang-en": {
+    "locales/lang-en": {
       "name": "@lifeforge/lifeforge--lang-en",
       "version": "0.0.1",
     },
-    "locales/lifeforge--lang-zh-cn": {
+    "locales/lang-zh-cn": {
       "name": "@lifeforge/melvinchia3636--lang-zh-CN",
       "version": "0.0.9",
     },
@@ -1237,7 +1237,7 @@
 
     "@lifeforge/lifeforge--idea-box": ["@lifeforge/lifeforge--idea-box@workspace:modules/lifeforge--idea-box"],
 
-    "@lifeforge/lifeforge--lang-en": ["@lifeforge/lifeforge--lang-en@workspace:locales/lifeforge--lang-en"],
+    "@lifeforge/lifeforge--lang-en": ["@lifeforge/lifeforge--lang-en@workspace:locales/lang-en"],
 
     "@lifeforge/lifeforge--moment-vault": ["@lifeforge/lifeforge--moment-vault@workspace:modules/lifeforge--moment-vault"],
 
@@ -1269,7 +1269,7 @@
 
     "@lifeforge/melvinchia3636--invoice-maker": ["@lifeforge/melvinchia3636--invoice-maker@workspace:modules/melvinchia3636--invoice-maker"],
 
-    "@lifeforge/melvinchia3636--lang-zh-CN": ["@lifeforge/melvinchia3636--lang-zh-CN@workspace:locales/lifeforge--lang-zh-cn"],
+    "@lifeforge/melvinchia3636--lang-zh-CN": ["@lifeforge/melvinchia3636--lang-zh-CN@workspace:locales/lang-zh-cn"],
 
     "@lifeforge/melvinchia3636--modrinth": ["@lifeforge/melvinchia3636--modrinth@workspace:modules/melvinchia3636--modrinth"],
 

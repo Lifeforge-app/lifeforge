@@ -214,9 +214,13 @@ export function SearchInput({
               data-form-type="other"
               data-lpignore="true"
               disabled={disabled}
-              placeholder={t([`search`, `Search ${searchTarget}`], {
+              placeholder={t([`common.misc:search`, `Search ${searchTarget}`], {
                 item: t(
                   [
+                    `items.${_.camelCase(searchTarget)}`,
+                    `items.${searchTarget}`,
+                    `${_.camelCase(searchTarget)}`,
+                    `${searchTarget}`,
                     `${namespace}:items.${_.camelCase(searchTarget)}`,
                     `${namespace}:items.${searchTarget}`,
                     `${namespace}:${_.camelCase(searchTarget)}`,

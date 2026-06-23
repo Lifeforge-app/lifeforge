@@ -71,6 +71,8 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
 router.use('/', registerRoutes(mainRoutes))
 
 router.get('*', (_, res) => {
+  res.set('Cache-Control', 'no-store')
+
   return clientError({
     res,
     message: 'The requested endpoint does not exist',
