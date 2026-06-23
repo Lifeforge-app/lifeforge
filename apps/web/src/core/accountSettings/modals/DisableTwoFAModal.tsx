@@ -6,7 +6,7 @@ import { ConfirmationModal, toast } from '@lifeforge/ui'
 import forgeAPI from '@/forgeAPI'
 
 function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation('common.accountSettings')
+  const { t } = useTranslation('common.account-settings')
   const { setUserData } = useAuth()
 
   async function handleConfirm() {

@@ -9,7 +9,7 @@ import EnableTwoFAModal from '../modals/EnableTwoFAModal'
 
 function TwoFAColumn() {
   const { open } = useModalStore()
-  const { t } = useTranslation('common.accountSettings')
+  const { t } = useTranslation('common.account-settings')
   const { userData } = useAuth()
 
   if (!userData) return null

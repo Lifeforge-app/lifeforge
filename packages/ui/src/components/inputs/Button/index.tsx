@@ -126,12 +126,15 @@ export function Button<T extends ElementType = 'button'>({
               <Text truncate>
                 {t(
                   [
-                    `${_.camelCase(children)}`,
                     `buttons.${_.camelCase(children)}`,
-                    `common.buttons:${_.camelCase(children)}`,
-                    children
+                    `${_.camelCase(children)}`,
+                    children,
+                    `${namespace}:buttons.${_.camelCase(children)}`,
+                    `${namespace}:${_.camelCase(children)}`,
+                    `${namespace}:${children}`,
+                    `common.buttons:${_.camelCase(children)}`
                   ],
-                  tProps
+                  { ...tProps, defaultValue: children }
                 )}
               </Text>
             </Box>

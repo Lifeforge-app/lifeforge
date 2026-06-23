@@ -15,6 +15,41 @@ export function generateModuleId(packageName: string): string {
   return crypto.createHash('sha256').update(packageName).digest('hex')
 }
 
+function registerModuleMetadata(
+  appsDir: string,
+  modDir: string
+): { key: string; name: string } | null {
+  const pkgPath = path.join(appsDir, modDir, 'package.json')
+
+  if (!fs.existsSync(pkgPath)) {
+    return null
+  }
+
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+    const key = generateModuleId(pkg.name)
+
+    const localesPath = path.join(appsDir, modDir, 'locales')
+
+    let supportedLangs: string[] = []
+
+    if (fs.existsSync(localesPath) && fs.statSync(localesPath).isDirectory()) {
+      supportedLangs = fs
+        .readdirSync(localesPath)
+        .filter(file => file.endsWith('.json'))
+        .map(file => file.substring(0, file.length - 5))
+    }
+
+    registerModule(key, pkg.name, supportedLangs)
+
+    return { key, name: pkg.name }
+  } catch (error) {
+    logger.error(`Failed to process module ${modDir}: ${error}`)
+
+    return null
+  }
+}
+
 /**
  * Dynamically loads module routes.
  * - In production: loads from pre-bundled dist/index.js
@@ -36,9 +71,16 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
   const modules: Record<string, unknown> = {}
 
   for (const modDir of fs.readdirSync(appsDir)) {
+    const metadata = registerModuleMetadata(appsDir, modDir)
+
+    if (!metadata) {
+      continue
+    }
+
+    const { key } = metadata
+
     // In production, load from bundled dist; in dev, load from source
     const distPath = path.join(appsDir, modDir, 'server', 'dist', 'index.js')
-
     const sourcePath = path.join(appsDir, modDir, 'server', 'index.ts')
 
     // Load from dist if in production or if source code does not exist
@@ -47,32 +89,18 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
         ? distPath
         : sourcePath
 
-    if (!fs.existsSync(modulePath)) {
-      continue
-    }
+    if (fs.existsSync(modulePath)) {
+      try {
+        const mod = await import(modulePath)
 
-    try {
-      const mod = await import(modulePath)
-
-      const pkgPath = path.join(appsDir, modDir, 'package.json')
-
-      if (!fs.existsSync(pkgPath)) {
-        continue
+        if (mod.default) {
+          modules[key] = mod.default
+        } else {
+          logger.warn(`Module ${modDir} has no default export`)
+        }
+      } catch (importError) {
+        logger.error(`Failed to load routes from ${modDir}: ${importError}`)
       }
-
-      const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-
-      const key = generateModuleId(pkg.name)
-
-      if (!mod.default) {
-        logger.warn(`Module ${modDir} has no default export`)
-        continue
-      }
-
-      modules[key] = mod.default
-      registerModule(key, pkg.name)
-    } catch (error) {
-      logger.error(`Failed to load routes from ${modDir}: ${error}`)
     }
   }
 

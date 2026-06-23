@@ -7,7 +7,7 @@ import { Flex, OTPInputBox, Text, toast } from '@lifeforge/ui'
 import forgeAPI from '@/forgeAPI'
 
 function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
-  const { t } = useTranslation('common.accountSettings')
+  const { t } = useTranslation('common.account-settings')
   const [otp, setOtp] = useState('')
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
 

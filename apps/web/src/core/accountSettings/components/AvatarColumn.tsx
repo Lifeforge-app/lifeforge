@@ -19,7 +19,7 @@ import forgeAPI from '@/forgeAPI'
 
 function AvatarColumn() {
   const { open } = useModalStore()
-  const { t } = useTranslation('common.accountSettings')
+  const { t } = useTranslation('common.account-settings')
   const { getAvatarURL, userData, setUserData } = useAuth()
 
   async function changeAvatar(file: File | string | null) {

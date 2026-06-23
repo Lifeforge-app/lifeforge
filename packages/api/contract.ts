@@ -102,7 +102,7 @@ export const contract = {
     },
     "notifyMissing": {
       "method": "post",
-      "description": "Report missing localization key",
+      "description": "Report missing localization keys",
       "noAuth": false,
       "encrypted": true,
       "isDownloadable": false,
@@ -115,19 +115,38 @@ export const contract = {
             "namespace": {
               "type": "string"
             },
-            "key": {
+            "missingKey": {
               "type": "string"
             }
           },
           "required": [
             "namespace",
-            "key"
+            "missingKey"
           ],
           "additionalProperties": false
         }
       },
       "output": {
         "NO_CONTENT": true
+      }
+    },
+    "listUnsupportedModules": {
+      "method": "get",
+      "description": "List modules that do not support the user's currently selected language",
+      "noAuth": false,
+      "encrypted": true,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "NOT_FOUND": true
       }
     }
   },

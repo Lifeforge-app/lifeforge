@@ -40,13 +40,13 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
 
   const mutation = useMutation(
     forgeAPI.user.settings.updateProfile.mutationOptions({
-      onSuccess: (_, newData) => {
+      onSuccess: (_: never, newData: UserData) => {
         if (!userData) return
 
         if (id === 'email') {
           toast.info('A verification email has been sent to your new email.')
         } else {
-          setUserData(oldData => {
+          setUserData((oldData: UserData) => {
             if (!oldData) return null
 
             return { ...oldData, ...newData.data } as UserData
@@ -77,13 +77,13 @@ function ModifyModal<TType extends 'datetime' | 'text'>({
       form={form}
       submissionConfig={{
         handler: async data => {
-          await mutation.mutateAsync({ data: { [id]: data[id] } })
+          await mutation.mutateAsync({ data: { [id]: data[id] } } as never)
         },
         template: 'update'
       }}
       uiConfig={{
         icon: 'tabler:pencil',
-        namespace: 'common.accountSettings',
+        namespace: 'common.account-settings',
         title: `${_.camelCase(title)}.update`,
         onClose
       }}

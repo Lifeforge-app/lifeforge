@@ -215,17 +215,21 @@ export function SearchInput({
               data-lpignore="true"
               disabled={disabled}
               placeholder={t([`search`, `Search ${searchTarget}`], {
-                item: t([
-                  `${namespace}:items.${_.camelCase(searchTarget)}`,
-                  `${namespace}:items.${searchTarget}`,
-                  `${namespace}:${_.camelCase(searchTarget)}`,
-                  `${namespace}:${searchTarget}`,
-                  `common.misc:items.${_.camelCase(searchTarget)}`,
-                  `common.misc:items.${searchTarget}`,
-                  `common.misc:${_.camelCase(searchTarget)}`,
-                  `common.misc:${searchTarget}`,
-                  searchTarget
-                ])
+                item: t(
+                  [
+                    `${namespace}:items.${_.camelCase(searchTarget)}`,
+                    `${namespace}:items.${searchTarget}`,
+                    `${namespace}:${_.camelCase(searchTarget)}`,
+                    `${namespace}:${searchTarget}`,
+                    `common.misc:items.${_.camelCase(searchTarget)}`,
+                    `common.misc:items.${searchTarget}`,
+                    `common.misc:${_.camelCase(searchTarget)}`,
+                    `common.misc:${searchTarget}`
+                  ],
+                  {
+                    defaultValue: searchTarget
+                  }
+                )
               })}
               style={{ paddingRight: actionButtonProps ? '5rem' : '2.5rem' }}
               type="text"

@@ -13,7 +13,19 @@ export function useInputLabel({
 
   const nameKey = _.camelCase(label)
 
-  return t([`inputs.${nameKey}.label`, `inputs.${nameKey}`], {
-    defaultValue: label
-  })
+  return t(
+    [
+      `inputs.${nameKey}.label`,
+      `inputs.${nameKey}`,
+      ...(namespace
+        ? [
+            `${namespace}:inputs.${nameKey}.label`,
+            `${namespace}:inputs.${nameKey}`
+          ]
+        : [])
+    ],
+    {
+      defaultValue: label
+    }
+  )
 }

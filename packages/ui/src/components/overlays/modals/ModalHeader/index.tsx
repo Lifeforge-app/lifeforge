@@ -7,6 +7,19 @@ import { useModuleTranslation } from '@lifeforge/localization'
 import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 
+function getLocaleKeys(innerTitle: string, namespace?: string) {
+  return [
+    `modals.${_.camelCase(innerTitle)}.title`,
+    `modals.${_.camelCase(innerTitle)}`,
+    `${_.camelCase(innerTitle)}.title`,
+    `${_.camelCase(innerTitle)}`,
+    `${innerTitle}.title`,
+    `${innerTitle}`,
+    `modals.${innerTitle}.title`,
+    `modals.${innerTitle}`,
+  ].map(e => (namespace ? `${namespace}:${e}` : e))
+}
+
 function _ModalHeader({
   title,
   icon,
@@ -52,17 +65,16 @@ function _ModalHeader({
           {typeof innerTitle === 'string' ? (
             <>
               <Text truncate as="span" style={{ minWidth: 0 }}>
-                {t([
-                  `modals.${_.camelCase(innerTitle)}.title`,
-                  `modals.${_.camelCase(innerTitle)}`,
-                  `${_.camelCase(innerTitle)}.title`,
-                  `${_.camelCase(innerTitle)}`,
-                  `${innerTitle}.title`,
-                  `${innerTitle}`,
-                  `modals.${innerTitle}.title`,
-                  `modals.${innerTitle}`,
-                  innerTitle
-                ])}
+                {t(
+                  [
+                    ...getLocaleKeys(innerTitle),
+                    ...(namespace ? getLocaleKeys(innerTitle, namespace) : []),
+                    ...getLocaleKeys(innerTitle, 'common.modals')
+                  ],
+                  {
+                    defaultValue: innerTitle
+                  }
+                )}
               </Text>
               {appendTitle}
               {hasAI && (

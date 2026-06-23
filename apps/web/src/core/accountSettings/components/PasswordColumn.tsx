@@ -6,7 +6,7 @@ import { Button, OptionsColumn, toast } from '@lifeforge/ui'
 import forgeAPI from '@/forgeAPI'
 
 function PasswordColumn() {
-  const { t } = useTranslation('common.accountSettings')
+  const { t } = useTranslation('common.account-settings')
 
   async function handlePasswordChange() {
     try {
@@ -29,7 +29,7 @@ function PasswordColumn() {
       <Button
         icon="tabler:key"
         loading={loading}
-        namespace="common.accountSettings"
+        namespace="common.account-settings"
         variant="secondary"
         width={{ base: '100%', md: 'auto' }}
         onClick={onSubmit}

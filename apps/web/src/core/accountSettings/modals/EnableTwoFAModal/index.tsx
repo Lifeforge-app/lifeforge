@@ -7,7 +7,7 @@ import { Box, ModalHeader, toast } from '@lifeforge/ui'
 import TwoFAEnableProcedure from './components/TwoFAEnableProcedure'
 
 function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation('common.accountSettings')
+  const { t } = useTranslation('common.account-settings')
   const { setUserData } = useAuth()
 
   const handleSuccess = useCallback(() => {
@@ -22,7 +22,7 @@ function EnableTwoFAModal({ onClose }: { onClose: () => void }) {
     <Box maxWidth={{ lg: '30em' }}>
       <ModalHeader
         icon="tabler:lock-access"
-        namespace="common.accountSettings"
+        namespace="common.account-settings"
         title="enable2FA"
         onClose={onClose}
       />

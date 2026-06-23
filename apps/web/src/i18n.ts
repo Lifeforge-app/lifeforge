@@ -40,6 +40,7 @@ export async function initI18n() {
 
   await i18n.init(
     clientI18nConfig({
+      i18n,
       forgeAPI,
       getAvailableLanguages: () => AVAILABLE_LANG
     })

@@ -3,6 +3,7 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
+import { getRegisteredModules } from '@functions/modules/moduleRegistry'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -103,15 +104,31 @@ const getLocale = forge
 
       data = JSON.parse(fs.readFileSync(localePath, 'utf-8'))
     } else {
-      if (!LocaleService.getSystemLocales()[finalLang][subnamespace]) {
-        return response.ok({})
-      }
+      const systemLocales = LocaleService.getSystemLocales()[finalLang]
+      const directData = systemLocales?.[subnamespace]
 
-      data = LocaleService.getSystemLocales()[finalLang][subnamespace]
+      if (directData) {
+        data = directData
+      } else {
+        const commonData = subnamespace
+          ? systemLocales?.['common']?.[subnamespace]
+          : systemLocales?.['common']
+
+        if (commonData) {
+          data = commonData
+        } else {
+          return response.ok({})
+        }
+      }
     }
 
-    if (namespace === 'common' && subnamespace === 'sidebar') {
-      data.apps = {
+    if (
+      namespace === 'common' &&
+      (!subnamespace || subnamespace === 'sidebar')
+    ) {
+      const targetToBeInjected = subnamespace ? data : data.sidebar
+
+      targetToBeInjected.apps = {
         ...Object.fromEntries(
           moduleApps
             .map(modulePath => {
@@ -157,11 +174,11 @@ const getLocale = forge
 
 const notifyMissing = forge
   .mutation({
-    description: 'Report missing localization key',
+    description: 'Report missing localization keys',
     input: {
       body: z.object({
         namespace: z.string(),
-        key: z.string()
+        missingKey: z.string()
       })
     },
     output: {
@@ -169,15 +186,56 @@ const notifyMissing = forge
     }
   })
   .callback(
-    async ({ body: { namespace, key }, core: { logging }, response }) => {
-      logging.warn(`Missing locale ${chalk.red(`${namespace}:${key}`)}`)
+    async ({
+      body: { namespace, missingKey },
+      core: { logging },
+      response
+    }) => {
+      logging.warn(`Missing locales ${chalk.red(`${namespace}:${missingKey}`)}`)
 
       return response.noContent()
     }
   )
 
+const listUnsupportedModules = forge
+  .query({
+    description:
+      "List modules that do not support the user's currently selected language",
+    output: {
+      OK: z.array(z.string()),
+      NOT_FOUND: true
+    }
+  })
+  .callback(async ({ pb, response }) => {
+    const userLanguage = pb.instance.authStore.record?.language
+
+    if (!userLanguage) {
+      return response.notFound()
+    }
+
+    const finalLang = LocaleService.getAllowedLang().find(e =>
+      e.includes(userLanguage)
+    )?.[0]
+
+    if (!finalLang) {
+      return response.notFound()
+    }
+
+    const normalizedSelected = finalLang.toLowerCase()
+
+
+    const unsupported = getRegisteredModules()
+      .filter(
+        m => !m.supportedLangs.some(l => l.toLowerCase() === normalizedSelected)
+      )
+      .map(m => m.fullName)
+
+    return response.ok(unsupported)
+  })
+
 export default forgeRouter({
   listLanguages,
   getLocale,
-  notifyMissing
+  notifyMissing,
+  listUnsupportedModules
 })

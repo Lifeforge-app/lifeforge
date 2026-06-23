@@ -2,12 +2,14 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
 import {
+  Box,
   Flex,
   Icon,
   Listbox,
   ListboxOption,
   OptionsColumn,
   Text,
+  Tooltip,
   WithQuery,
   surface,
   usePersonalization
@@ -22,6 +24,12 @@ function LanguageSelector() {
   const { t } = useTranslation('common.personalization')
   const languagesQuery = useQuery(forgeAPI.locales.listLanguages.queryOptions())
 
+  const unsupportedQuery = useQuery(
+    forgeAPI.locales.listUnsupportedModules.queryOptions({
+      queryKey: [...forgeAPI.locales.listUnsupportedModules.key, language]
+    })
+  )
+
   return (
     <OptionsColumn
       breakpoint="md"
@@ -31,33 +39,58 @@ function LanguageSelector() {
     >
       <WithQuery loaderSize="1.5em" query={languagesQuery}>
         {langs => (
-          <Listbox
-            bg={surface.lightInteractive}
-            minWidth="16em"
-            renderContent={() => (
-              <Flex align="center" gap="sm" maxWidth="16em" minWidth="0">
-                <Icon
-                  icon={langs.find(({ name }) => name === language)?.icon ?? ''}
+          <Flex align="center" gap="sm">
+            <Listbox
+              bg={surface.lightInteractive}
+              minWidth="16em"
+              mr="sm"
+              renderContent={() => (
+                <Flex align="center" gap="sm" maxWidth="16em" minWidth="0">
+                  <Icon
+                    icon={
+                      langs.find(({ name }) => name === language)?.icon ?? ''
+                    }
+                  />
+                  <Text truncate>
+                    {langs.find(({ name }) => name === language)?.displayName}
+                  </Text>
+                </Flex>
+              )}
+              value={language}
+              onChange={language => {
+                changeLanguage(language)
+              }}
+            >
+              {langs.map(({ displayName, icon, name }) => (
+                <ListboxOption
+                  key={displayName}
+                  icon={icon}
+                  label={displayName}
+                  value={name}
                 />
-                <Text truncate>
-                  {langs.find(({ name }) => name === language)?.displayName}
-                </Text>
-              </Flex>
+              ))}
+            </Listbox>
+            {unsupportedQuery.data && unsupportedQuery.data.length > 0 && (
+              <Tooltip icon="tabler:alert-triangle" id="unsupported-modules">
+                {t(
+                  'unsupportedModulesWarning',
+                  'The following modules do not support the selected language:'
+                )}
+                <Box
+                  as="ul"
+                  mt="sm"
+                  pl="md"
+                  style={{
+                    listStyleType: 'disc'
+                  }}
+                >
+                  {unsupportedQuery.data.map(name => (
+                    <li key={name}>{name}</li>
+                  ))}
+                </Box>
+              </Tooltip>
             )}
-            value={language}
-            onChange={language => {
-              changeLanguage(language)
-            }}
-          >
-            {langs.map(({ displayName, icon, name }) => (
-              <ListboxOption
-                key={displayName}
-                icon={icon}
-                label={displayName}
-                value={name}
-              />
-            ))}
-          </Listbox>
+          </Flex>
         )}
       </WithQuery>
     </OptionsColumn>
