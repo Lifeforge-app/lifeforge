@@ -25,30 +25,6 @@ export function clientI18nConfig({
   forgeAPI,
   getAvailableLanguages
 }: ClientI18nConfigOptions): InitOptions {
-  i18n.on('loaded', () => {
-    const loadedLangs = i18n.languages || ['en']
-
-    for (const lang of loadedLangs) {
-      const commonBundle = i18n.getResourceBundle(lang, 'common') as
-        | Record<string, unknown>
-        | undefined
-
-      if (commonBundle) {
-        const subnamespaces = Object.keys(commonBundle)
-
-        for (const sub of subnamespaces) {
-          i18n.addResourceBundle(
-            lang,
-            `common.${sub}`,
-            (commonBundle[sub] as Record<string, unknown>) || {},
-            true,
-            true
-          )
-        }
-      }
-    }
-  })
-
   return {
     lng: 'en',
     fallbackLng: 'en',
@@ -67,8 +43,6 @@ export function clientI18nConfig({
       return JSON.stringify({ key, value, options })
     },
     fallbackNS: false,
-    defaultNS: 'common',
-    ns: ['common'],
     saveMissing: false,
     parseMissingKeyHandler: (key: string) => `[MISSING LOCALE] ${key}`,
     backend: {
