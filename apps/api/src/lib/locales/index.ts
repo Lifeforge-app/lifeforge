@@ -4,7 +4,6 @@ import {
   LocaleService
 } from '@functions/initialization/localeService'
 import { getRegisteredModules } from '@functions/modules/moduleRegistry'
-import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
@@ -172,31 +171,6 @@ const getLocale = forge
     return response.ok(data)
   })
 
-const notifyMissing = forge
-  .mutation({
-    description: 'Report missing localization keys',
-    input: {
-      body: z.object({
-        namespace: z.string(),
-        missingKey: z.string()
-      })
-    },
-    output: {
-      NO_CONTENT: true
-    }
-  })
-  .callback(
-    async ({
-      body: { namespace, missingKey },
-      core: { logging },
-      response
-    }) => {
-      logging.warn(`Missing locales ${chalk.red(`${namespace}:${missingKey}`)}`)
-
-      return response.noContent()
-    }
-  )
-
 const listUnsupportedModules = forge
   .query({
     description:
@@ -223,7 +197,6 @@ const listUnsupportedModules = forge
 
     const normalizedSelected = finalLang.toLowerCase()
 
-
     const unsupported = getRegisteredModules()
       .filter(
         m => !m.supportedLangs.some(l => l.toLowerCase() === normalizedSelected)
@@ -236,6 +209,5 @@ const listUnsupportedModules = forge
 export default forgeRouter({
   listLanguages,
   getLocale,
-  notifyMissing,
   listUnsupportedModules
 })
