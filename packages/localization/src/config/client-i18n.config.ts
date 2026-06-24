@@ -29,7 +29,6 @@ export function clientI18nConfig({
     cache: { enabled: true },
     initImmediate: true,
     maxRetries: 1,
-    react: { useSuspense: false, bindI18n: 'languageChanged loaded' },
     cleanCode: true,
     debug: false,
     interpolation: { escapeValue: false },
@@ -40,6 +39,7 @@ export function clientI18nConfig({
     ): string {
       return JSON.stringify({ key, value, options })
     },
+    ns: ['common'],
     fallbackNS: false,
     saveMissing: false,
     parseMissingKeyHandler: (key: string) => `[MISSING LOCALE] ${key}`,
