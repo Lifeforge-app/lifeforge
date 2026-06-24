@@ -3,6 +3,7 @@ import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@functions/database/dbUtils'
+import { coreLogger } from '@functions/logging'
 import dayjs from 'dayjs'
 import PocketBase from 'pocketbase'
 import { v4 } from 'uuid'
@@ -12,6 +13,8 @@ import { currentSession } from '..'
 import forge from '../forge'
 import userSchemas from '../schema'
 import { removeSensitiveData, updateNullData } from '../utils/auth'
+
+let failedLoginAttempts = 0
 
 export const validateOTP = forge
   .mutation({
@@ -87,6 +90,8 @@ export const login = forge
       })
 
     if (pb.authStore.isValid && !failed) {
+      failedLoginAttempts = 0
+
       const userData = pb.authStore.record
 
       if (!userData) {
@@ -113,6 +118,15 @@ export const login = forge
         session: pb.authStore.token
       })
     } else {
+      failedLoginAttempts++
+
+      if (failedLoginAttempts >= 5) {
+        coreLogger.error(
+          `${failedLoginAttempts} failed login attempts detected. Shutting down server.`
+        )
+        process.exit(1)
+      }
+
       return response.unauthorized()
     }
   })
