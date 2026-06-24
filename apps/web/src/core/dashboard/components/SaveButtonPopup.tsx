@@ -1,6 +1,7 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { Button, Flex, Text } from '@lifeforge/ui'
+import { Button, Flex, Icon, Stack, Text } from '@lifeforge/ui'
 
 function SaveButtonPopup({
   canChange,
@@ -9,14 +10,17 @@ function SaveButtonPopup({
   canChange: boolean
   setCanChange: React.Dispatch<React.SetStateAction<boolean>>
 }) {
+  const { t } = useTranslation('common.dashboard')
+
   if (!canChange) return null
 
   return (
     <Flex
       centered
       shadow
-      bg={{ base: 'bg-100', dark: 'bg-900' }}
+      bg={{ base: 'bg-50', dark: 'bg-800' }}
       bottom="1.5em"
+      direction={{ base: 'column', sm: 'row' }}
       gap="md"
       left="50%"
       p="md"
@@ -28,10 +32,22 @@ function SaveButtonPopup({
       width={{ base: '90%', sm: 'auto' }}
       zIndex="50"
     >
-      <Text as="p" weight="medium" whiteSpace="nowrap">
-        You are editing dashboard layout
-      </Text>
-      <Button icon="tabler:device-floppy" onClick={() => setCanChange(false)}>
+      <Flex align="center" gap="md">
+        <Icon color="muted" icon="tabler:pencil" size="2em" />
+        <Stack>
+          <Text as="p" weight="medium" whiteSpace="nowrap">
+            {t('messages.editingLayout')}
+          </Text>
+          <Text as="p" color="muted" pr="lg" size="sm">
+            {t('messages.editingLayoutHint')}
+          </Text>
+        </Stack>
+      </Flex>
+      <Button
+        icon="tabler:device-floppy"
+        width={{ base: '100%', sm: 'auto' }}
+        onClick={() => setCanChange(false)}
+      >
         Save
       </Button>
     </Flex>

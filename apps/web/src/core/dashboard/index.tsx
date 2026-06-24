@@ -9,8 +9,8 @@ import {
 
 import DashboardGrid from './components/DashboardGrid'
 import SaveButtonPopup from './components/SaveButtonPopup'
+import ManageWidgetsModal from './components/modals/ManageWidgetsModal'
 import './index.css'
-import ManageWidgetsModal from './modals/ManageWidgetsModal'
 import WidgetProvider, { useWidgets } from './providers/WidgetProvider'
 
 function DashboardContent() {
@@ -31,7 +31,7 @@ function DashboardContent() {
             <>
               <ContextMenuItem
                 icon="tabler:pencil"
-                label={'Edit Layout'}
+                label={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
                 namespace="common.dashboard"
                 onClick={() => {
                   setCanLayoutChange(!canLayoutChange)

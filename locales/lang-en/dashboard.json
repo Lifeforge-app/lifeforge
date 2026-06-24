@@ -11,6 +11,10 @@
     "manageWidgets": "Manage Widgets",
     "lockLayout": "Lock Layout"
   },
+  "messages": {
+    "editingLayout": "You are editing dashboard layout",
+    "editingLayoutHint": "Adjust the widget arrangement by dragging the widgets around or adjust the widget size by dragging the small triangle at the bottom right corner of each widget"
+  },
   "empty": {
     "welcome": {
       "title": "Welcome to LifeForge!",

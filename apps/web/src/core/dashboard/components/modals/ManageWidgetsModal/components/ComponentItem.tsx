@@ -12,6 +12,7 @@ import {
   Text,
   Transition,
   colorWithOpacity,
+  surface,
   usePersonalization
 } from '@lifeforge/ui'
 
@@ -34,7 +35,7 @@ function ComponentListItem({
   maxH?: number
   moduleName?: string
 }) {
-  const { t } = useTranslation([moduleName ?? 'common.dashboard'])
+  const { t } = useTranslation(`apps.${moduleName}`)
 
   const {
     dashboardLayout: enabledWidgets,
@@ -120,10 +121,7 @@ function ComponentListItem({
       shadow
       align={{ base: 'start', sm: 'center' }}
       as="li"
-      bg={{
-        base: 'bg-50',
-        dark: colorWithOpacity('bg-800', '50%')
-      }}
+      bg={surface.light}
       direction={{ base: 'column', sm: 'row' }}
       gap="md"
       justify="between"
