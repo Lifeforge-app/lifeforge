@@ -12,8 +12,6 @@ export let AVAILABLE_LANG: {
   icon: string
 }[] = [{ name: 'en', icon: 'circle-flags:gb' }]
 
-i18n.use(I18NextHttpBackend).use(initReactI18next)
-
 export async function initI18n() {
   if (i18n.isInitialized) {
     return i18n
@@ -38,12 +36,15 @@ export async function initI18n() {
     )
   }
 
-  await i18n.init(
-    clientI18nConfig({
-      forgeAPI,
-      getAvailableLanguages: () => AVAILABLE_LANG
-    })
-  )
+  await i18n
+    .use(I18NextHttpBackend)
+    .use(initReactI18next)
+    .init(
+      clientI18nConfig({
+        forgeAPI,
+        getAvailableLanguages: () => AVAILABLE_LANG
+      })
+    )
 
   i18n.on('loaded', () => {
     const loadedLangs = i18n.languages || ['en']
