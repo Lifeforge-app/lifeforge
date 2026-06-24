@@ -13,10 +13,6 @@ export let AVAILABLE_LANG: {
 }[] = [{ name: 'en', icon: 'circle-flags:gb' }]
 
 export async function initI18n() {
-  if (i18n.isInitialized) {
-    return i18n
-  }
-
   try {
     const langRes = await fetch(
       `${import.meta.env.VITE_API_HOST}/locales/listLanguages`
@@ -45,34 +41,6 @@ export async function initI18n() {
         getAvailableLanguages: () => AVAILABLE_LANG
       })
     )
-
-  i18n.on('loaded', () => {
-    const loadedLangs = i18n.languages || ['en']
-
-    for (const lang of loadedLangs) {
-      const commonBundle = i18n.getResourceBundle(lang, 'common') as
-        | Record<string, unknown>
-        | undefined
-
-      if (commonBundle) {
-        const subnamespaces = Object.keys(commonBundle)
-
-        for (const sub of subnamespaces) {
-          if (i18n.hasResourceBundle(lang, `common.${sub}`)) {
-            return
-          }
-
-          i18n.addResourceBundle(
-            lang,
-            `common.${sub}`,
-            (commonBundle[sub] as Record<string, unknown>) || {},
-            true,
-            true
-          )
-        }
-      }
-    }
-  })
 
   setI18n(i18n)
 

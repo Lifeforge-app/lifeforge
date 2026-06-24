@@ -10,6 +10,7 @@ import {
   SocketProvider
 } from '@lifeforge/api'
 import { FederationProvider } from '@lifeforge/federation'
+import { I18nInitProvider } from '@lifeforge/localization'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,
@@ -29,9 +30,9 @@ import { initI18n } from '@/i18n'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 
 import ExternalModuleProviders from './features/ExternalModuleProviders'
+import I18nCommonNameSpacePreloadProvider from './features/I18nCommonNameSpacePreloadProvider'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
-import { I18nInitProvider } from '@lifeforge/localization';
 
 const queryClient = new QueryClient()
 
@@ -99,6 +100,8 @@ function Providers() {
         [MainSidebarStateProvider],
         // Provider that synchronizes user personalization data with the backend
         [UserPersonalizationProvider],
+        // Post-processing for preloaded common namesapce, splitting into multiple subnamespaces
+        [I18nCommonNameSpacePreloadProvider],
         // Provider that manages background images styling
         [BackgroundProvider],
         // Provider that exposes a socket.io client instance to the app
