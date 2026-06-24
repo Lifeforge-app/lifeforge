@@ -51,7 +51,12 @@ export function SidebarItemContent({
         {(() => {
           if (!isMainSidebarItem) {
             return (
-              <Box asChild minWidth="0" width="100%">
+              <Box
+                asChild
+                minWidth="0"
+                pr={number !== undefined && !hasSubsection ? '2xl' : 'none'}
+                width="100%"
+              >
                 <Text truncate as="div">
                   {typeof label === 'string' && namespace !== false
                     ? t([
@@ -63,7 +68,10 @@ export function SidebarItemContent({
                   {number !== undefined && hasSubsection && (
                     <Text
                       as="span"
-                      color={{ base: 'bg-400', dark: 'bg-600' }}
+                      color={{
+                        base: 'bg-400',
+                        dark: 'bg-600'
+                      }}
                       size="sm"
                     >
                       ({number})
@@ -114,13 +122,13 @@ export function SidebarItemContent({
                   ? styles.numberBadgeGroupHoverHide
                   : undefined
               }
+              pr="sm"
               size="sm"
               style={{
                 display:
                   isMenuOpen || (onCancelButtonClick !== undefined && active)
                     ? 'none'
-                    : undefined,
-                paddingRight: '0.5rem'
+                    : undefined
               }}
             >
               {number.toLocaleString()}
