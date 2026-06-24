@@ -56,6 +56,7 @@ function SigninWithProviderButton({
         (searchParams.get('code') !== null &&
           searchParams.get('state') !== null)
       }
+      namespace={false}
       variant="secondary"
       width="100%"
       onClick={signInWithProvider}

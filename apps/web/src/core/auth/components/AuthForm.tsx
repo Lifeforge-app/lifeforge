@@ -20,7 +20,7 @@ function AuthForm({ providers }: { providers: string[] }) {
 
   const INPUT_FIELDS = [
     {
-      label: t('inputs.emailOrUsername.label'),
+      label: 'emailOrUsername',
       placeholder: t('common.auth:inputs.emailOrUsername.placeholder'),
       icon: 'tabler:user',
       value: emailOrUsername,
@@ -28,7 +28,7 @@ function AuthForm({ providers }: { providers: string[] }) {
       inputMode: 'email'
     },
     {
-      label: t('inputs.password.label'),
+      label: 'password',
       placeholder: '••••••••••••••••',
       icon: 'tabler:key',
       value: password,
@@ -101,6 +101,7 @@ function AuthForm({ providers }: { providers: string[] }) {
       {INPUT_FIELDS.map((input, index) => (
         <TextInput
           key={index}
+          namespace="common.auth"
           {...input}
           disabled={
             formDisabled ||
