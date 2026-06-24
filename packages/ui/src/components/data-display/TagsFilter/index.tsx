@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Flex } from '@/components/primitives'
+import { Flex, type FlexProps } from '@/components/primitives'
 import { usePersonalization } from '@/providers'
 
 import { TagChip } from '../TagChip'
 
 interface HeaderFilterProps<
   T extends Record<string, string | string[] | null>
-> {
+> extends Omit<FlexProps<'div'>, 'onChange'> {
   /** The filterable items available for selection. */
   availableFilters: Record<
     keyof T,
@@ -51,7 +51,8 @@ interface HeaderFilterProps<
 export function TagsFilter<T extends Record<string, string | string[] | null>>({
   availableFilters: items,
   values,
-  onChange
+  onChange,
+  ...rest
 }: HeaderFilterProps<T>) {
   const { derivedThemeColor } = usePersonalization()
 
@@ -60,7 +61,7 @@ export function TagsFilter<T extends Record<string, string | string[] | null>>({
   }
 
   return (
-    <Flex align="center" gap="sm" wrap="wrap">
+    <Flex align="center" gap="sm" wrap="wrap" {...rest}>
       {Object.entries(items).map(
         ([query, { data, isColored }]) =>
           values[query] &&

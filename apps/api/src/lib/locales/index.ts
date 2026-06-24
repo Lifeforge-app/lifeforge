@@ -65,7 +65,7 @@ const getLocale = forge
       query: z.object({
         lang: z.string(),
         namespace: z.enum(ALLOWED_NAMESPACE),
-        subnamespace: z.string()
+        subnamespace: z.string().regex(/^[a-zA-Z][a-zA-Z0-9-]*$/)
       })
     },
     output: {

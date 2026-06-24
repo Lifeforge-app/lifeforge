@@ -80,7 +80,8 @@ export const contract = {
               ]
             },
             "subnamespace": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9-]*$"
             }
           },
           "required": [

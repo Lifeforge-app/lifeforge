@@ -89,6 +89,7 @@ function _Header({
             dark: 'bg-800',
             darkHover: 'bg-700'
           }}
+          flex="1"
           renderContent={value => value || 'All Categories'}
           value={selectedCategory}
           onChange={value => setSelectedCategory(value)}

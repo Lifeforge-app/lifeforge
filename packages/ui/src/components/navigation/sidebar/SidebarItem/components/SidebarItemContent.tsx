@@ -54,7 +54,11 @@ export function SidebarItemContent({
               <Box asChild minWidth="0" width="100%">
                 <Text truncate as="div">
                   {typeof label === 'string' && namespace !== false
-                    ? t([`${namespace}:sidebar.${_.camelCase(label)}`, label])
+                    ? t([
+                        `${namespace}:sidebar.${_.camelCase(label)}`,
+                        `sidebar.${_.camelCase(label)}`,
+                        label
+                      ])
                     : label}{' '}
                   {number !== undefined && hasSubsection && (
                     <Text
