@@ -81,7 +81,7 @@ export const contract = {
             },
             "subnamespace": {
               "type": "string",
-              "pattern": "^[a-zA-Z][a-zA-Z0-9-]*$"
+              "pattern": "^$|^[a-zA-Z][a-zA-Z0-9-]*$"
             }
           },
           "required": [
@@ -1732,7 +1732,7 @@ export const contract = {
       },
       "checkKeys": {
         "method": "get",
-        "description": "Verify if API keys exist",
+        "description": "Verify if API keys exist.",
         "noAuth": false,
         "encrypted": true,
         "isDownloadable": false,

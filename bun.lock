@@ -515,6 +515,8 @@
         "pdf-page-counter": "^1.0.3",
         "pdf-thumbnail": "^1.0.6",
         "pdfkit": "^0.17.2",
+        "react-dnd": "^16.0.1",
+        "react-dnd-html5-backend": "^16.0.1",
         "sharp": "^0.34.5",
         "socket.io": "^4.8.1",
       },

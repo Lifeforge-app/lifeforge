@@ -78,7 +78,7 @@ const list = forge
 
 const checkKeys = forge
   .query({
-    description: 'Verify if API keys exist',
+    description: 'Verify if API keys exist.',
     input: {
       query: z.object({
         keys: z.string()
@@ -88,14 +88,16 @@ const checkKeys = forge
       OK: z.boolean()
     }
   })
-  .callback(async ({ pb, query: { keys }, response }) => {
-    const allEntries = await pb.getFullList.collection('entries').execute()
+  .callback(async ({ pb, query: { keys }, core: { api }, response }) => {
+    for (const key of keys.split(',')) {
+      try {
+        await api.getAPIKey(key, pb)
+      } catch {
+        return response.ok(false)
+      }
+    }
 
-    return response.ok(
-      keys
-        .split(',')
-        .every(key => allEntries.some(entry => entry.keyId === key))
-    )
+    return response.ok(true)
   })
 
 const create = forge

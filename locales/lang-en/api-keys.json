@@ -15,7 +15,9 @@
     },
     "modulesRequired": {
       "title": "Modules Required",
-      "totalModulesRequire": "A total of {{count}} modules require this API Key."
+      "totalModulesRequire": "A total of {{count}} modules require this API Key.",
+      "required": "Required",
+      "optional": "Optional"
     }
   },
   "buttons": {

@@ -1,6 +1,5 @@
 import chalk from 'chalk'
 import { Response } from 'express'
-import fs from 'fs'
 
 import { createLogger } from '@lifeforge/log'
 import { BaseResponse } from '@lifeforge/server-utils'
