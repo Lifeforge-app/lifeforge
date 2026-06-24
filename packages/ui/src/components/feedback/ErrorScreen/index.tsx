@@ -28,6 +28,7 @@ export function ErrorScreen({ message, showRetryButton }: ErrorScreenProps) {
       {showRetryButton && (
         <Button
           icon="tabler:refresh"
+          namespace={false}
           variant="secondary"
           onClick={() => window.location.reload()}
         >

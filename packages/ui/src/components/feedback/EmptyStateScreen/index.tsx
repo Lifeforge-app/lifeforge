@@ -58,13 +58,7 @@ export function EmptyStateScreen({
       >
         {icon !== undefined &&
           (typeof icon === 'string' ? (
-            <Icon
-              icon={icon}
-              style={{
-                width: smaller ? '4.5rem' : '8rem',
-                height: smaller ? '4.5rem' : '8rem'
-              }}
-            />
+            <Icon icon={icon} size={smaller ? '4rem' : '8rem'} />
           ) : (
             icon
           ))}
@@ -72,7 +66,7 @@ export function EmptyStateScreen({
           align="center"
           as="h2"
           color={{ base: 'bg-800', dark: 'bg-100' }}
-          size={smaller ? '2xl' : '3xl'}
+          size={smaller ? 'xl' : '3xl'}
           style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
           weight="semibold"
         >
@@ -97,12 +91,8 @@ export function EmptyStateScreen({
               <Text
                 align="center"
                 as="p"
-                size={smaller ? 'base' : 'lg'}
-                style={{
-                  marginTop: '-0.5rem',
-                  paddingLeft: '1.5rem',
-                  paddingRight: '1.5rem'
-                }}
+                px="lg"
+                size={smaller ? 'sm' : 'lg'}
                 whiteSpace="pre-wrap"
               >
                 {message.description}
@@ -116,12 +106,8 @@ export function EmptyStateScreen({
             <Text
               align="center"
               as="p"
-              size={smaller ? 'base' : 'lg'}
-              style={{
-                marginTop: '-0.5rem',
-                paddingLeft: '1.5rem',
-                paddingRight: '1.5rem'
-              }}
+              px="lg"
+              size={smaller ? 'sm' : 'lg'}
               whiteSpace="pre-wrap"
             >
               {message.namespace === false

@@ -18,14 +18,6 @@ export function clientError({
 }) {
   const logger = createLogger({ name: moduleName || 'unknown-module' })
 
-  fs.readdirSync('medium').forEach(file => {
-    if (fs.statSync('medium/' + file).isFile()) {
-      fs.unlinkSync('medium/' + file)
-    } else {
-      fs.rmdirSync('medium/' + file, { recursive: true })
-    }
-  })
-
   try {
     logger.error(
       chalk.red(typeof message === 'string' ? message : JSON.stringify(message))
@@ -42,14 +34,6 @@ export function clientError({
 
 export function serverError(res: Response, err?: string, moduleName?: string) {
   const logger = createLogger({ name: moduleName || 'unknown-module' })
-
-  fs.readdirSync('medium').forEach(file => {
-    if (fs.statSync('medium/' + file).isFile()) {
-      fs.unlinkSync('medium/' + file)
-    } else {
-      fs.rmdirSync('medium/' + file, { recursive: true })
-    }
-  })
 
   try {
     logger.error(chalk.red(err))

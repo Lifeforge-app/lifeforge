@@ -1,9 +1,15 @@
-import { Flex, Icon, Text, Transition } from '@/components/primitives'
+import {
+  Flex,
+  type FlexProps,
+  Icon,
+  Text,
+  Transition
+} from '@/components/primitives'
 
 interface ViewModeSelectorProps<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
   TKey = T[number]['value']
-> {
+> extends FlexProps<'div'> {
   /** The current selected mode */
   currentMode: TKey
   size?: 'small' | 'default'
@@ -23,7 +29,8 @@ export function ViewModeSelector<
   currentMode,
   size = 'default',
   onModeChange,
-  options
+  options,
+  ...rest
 }: ViewModeSelectorProps<T, TKey>) {
   return (
     <Flex
@@ -34,6 +41,7 @@ export function ViewModeSelector<
       height="4em"
       p={size === 'small' ? 'xs' : 'sm'}
       r="lg"
+      {...rest}
     >
       {options.map(({ value, icon, text }) => (
         <Transition key={value}>

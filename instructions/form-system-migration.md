@@ -724,11 +724,35 @@ For each field in `.setupFields({...})`, render the corresponding new field comp
 | `amount: { ... }` with type `currency` | `<CurrencyField name="amount" .../>` | Same as key       |
 | `amount: { ... }` with type `number`   | `<NumberField name="amount" .../>`   | Same as key       |
 
-**Old field config property → new field prop mapping:**
+**Localization Convention for Field Labels:**
 
-| Old `.setupFields` property | New prop                                                     | Remarks                                                                                                                         |
-| --------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `label`                     | `label`                                                      | Same — still passed through i18n translation                                                                                    |
+Field `label` props are **auto-translated** through the module's i18n namespace (provided by `FormModal`'s `namespace` prop). The locale keys follow this convention:
+
+```json
+{
+  "inputs": {
+    "modifyCollection": {
+      "name": "Collection Name"
+    },
+    "modifyType": {
+      "name": "Category Name",
+      "icon": "Category Icon"
+    },
+    "modifyEntry": {
+      "name": "Music Name",
+      "author": "Author",
+      "type": "Score Type",
+      "collection": "Collection"
+    }
+  }
+}
+```
+
+The label prop references the key **after** `inputs.` — e.g. `label="modifyEntry.name"` resolves to `inputs.modifyEntry.name` in the locale file. There is no `inputs.` prefix needed in the label prop — the `FieldWrapper` component auto-prepends the `inputs.` namespace segment.
+
+> 💡 **Why this convention?** The `inputs.` grouping in the locale file keeps all form field labels organized under one section, while the label prop stays short and focused on the modal-specific key. Each modal gets its own sub-object under `inputs` (e.g. `modifyCollection`, `modifyEntry`, `modifyType`), avoiding flat naming collisions.
+
+**Old field config property → new field prop mapping:**
 | `icon`                      | `icon`                                                       | Same                                                                                                                            |
 | `required`                  | `required`                                                   | Same                                                                                                                            |
 | `placeholder`               | `placeholder`                                                | Same                                                                                                                            |

@@ -89,6 +89,25 @@ Typography values scale with `--custom-font-scale`:
 - `semibold`: `'600'`
 - `bold`: `'700'`
 
+### D. Category/Tag Chips
+
+For dynamic category labels or tag chips that need background colors based on data (not theme tokens), use **inline `style` with `backgroundColor`** set directly from the data source. Do NOT create `.css.ts` files for one-off dynamic colors — inline styles are the correct pattern here because the color value is computed at runtime from external data.
+
+✅ **Correct (dynamic colors from data):**
+```tsx
+<span
+  style={{
+    backgroundColor: category.color + '20',
+    color: category.color
+  }}
+>
+  {category.name}
+</span>
+```
+
+> [!TIP]
+> **Dynamic category colors are the exception to Rule 2.** If the background/color pair comes from database or API data (e.g. `bg-green-500/20 text-green-500`), use inline `style` with hex color + opacity. Do not create token mappings or CSS files for dynamic data-driven colors.
+
 ---
 
 ## 3. Style Resolution & The Styling Engine
@@ -111,6 +130,7 @@ Colors in LifeForge are resolved through an **arbitrary CSS variable architectur
 1. **Base Palette:** `transparent`, `dangerous` (`#ef4444`), `muted` (mid-gray), `primary` (user-accented), `inherit`, `custom-50` to `custom-900` (accent shades), and `bg-50` to `bg-950` (system background shades).
 2. **Tailwind Palette Names:** Colors like `red-500`, `blue-600`, `emerald-400` map directly to tailwind shades.
 3. **Color with Opacity:** Zero-runtime opacity can be added using the `colorWithOpacity(token, opacityValue)` utility.
+4. **No `white` or `black` color tokens.** Use `bg-50` for white and `bg-950` for black. The `green-*`, `red-*`, `yellow-*`, and other Tailwind palette names are available for semantic colors (e.g. `red-500` for destructive states, `green-600` for success).
 
 #### Theme & State Specific Variants
 
@@ -190,7 +210,24 @@ const semiTransparentPrimary = colorWithOpacity('primary', '30%')
 
 _Supported Opacity Levels:_ `'5%'`, `'10%'`, `'20%'`, `'30%'`, `'40%'`, `'50%'`, `'60%'`, `'70%'`, `'80%'`, `'90%'`.
 
-`colorWithOpacity` can be used **directly in the `bg` prop** — no inline `style` needed:
+`colorWithOpacity` can be used **directly in the `bg` prop** — no inline `style` needed. It also works in vanilla-extract `.css.ts` files at build time via `.toString()`:
+
+```typescript
+// In a .css.ts file (build-time evaluation)
+import { colorWithOpacity } from '@lifeforge/ui'
+
+const bg200Opacity30 = colorWithOpacity('bg-200', '30%').toString()
+
+export const stripe = style({
+  selectors: {
+    '&:nth-child(odd)': {
+      backgroundColor: bg200Opacity30
+    }
+  }
+})
+```
+
+> **Important:** `colorWithOpacity` with `'80%'` opacity is the correct replacement for Tailwind's `/80` opacity syntax (e.g. `bg-500/80`). Do not use inline `style` for opacity.
 
 ```tsx
 <Flex
@@ -279,7 +316,18 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
   minHeight?: ResponsiveProp<string>; maxHeight?: ResponsiveProp<string>
   inset?: ResponsiveProp<string>; top?: ResponsiveProp<string>; bottom?: ResponsiveProp<string>
   left?: ResponsiveProp<string>; right?: ResponsiveProp<string>; zIndex?: ResponsiveProp<string>
+
+  // Arbitrary CSS Props (responsive strings)
+  aspectRatio?: ResponsiveProp<string>
+  flex?: ResponsiveProp<string>; flexBasis?: ResponsiveProp<string>
+  flexGrow?: ResponsiveProp<string>; flexShrink?: ResponsiveProp<string>
+  overflow?: ResponsiveProp<'visible' | 'hidden' | 'scroll' | 'auto'>
+  overflowX?: ResponsiveProp<'visible' | 'hidden' | 'scroll' | 'auto'>
+  overflowY?: ResponsiveProp<'visible' | 'hidden' | 'scroll' | 'auto'>
 ```
+
+> [!TIP]
+> **`aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis` are available as props on all primitives** — no inline `style` needed. Always check if a CSS property exists in the `ArbitraryProps` type before resorting to inline styles.
 
 > [!WARNING]
 > **`top`, `right`, `bottom`, `left`, and `inset` accept raw CSS strings** (e.g. `"0.5rem"`, `"8px"`, `"50%"`), not `SpaceToken` values like `sm`, `md`, `lg`.  
@@ -1502,6 +1550,9 @@ Before submitting a pull request, verify that you have adhered to all core desig
 - [ ] **Correct loaders:** Form/button loading states use the pre-animated `svg-spinners:ring-resize` icon and **never** use custom `animate-spin` utilities.
 - [ ] **Type safety:** Typescript `any` is never used. All prop overrides and custom handlers are explicitly typed.
 - [ ] **Datetime manipulation:** Standard JavaScript `Date` is never used. `day.js` is imported for any date calculations.
+- [ ] **Check ArbitraryProps first:** Before reaching for inline `style` or `.css.ts`, check if the CSS property is available via `ArbitraryProps` (e.g. `aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`).
+- [ ] **Component deconstruction:** If a component's JSX grows beyond a single conceptual block, extract sub-sections into their own component files under a `components/` subdirectory.
+- [ ] **Hooks co-location:** Hooks that are only consumed by a child component should live inside that child component, not in the parent.
 - [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin — no need to define responsive sizes like `mb={{ base: '6rem', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
 - [ ] **Component organization:** Components are strictly separated into individual files under their respective `components/` folders instead of being grouped together.
 - [ ] **Conventional functions:** All React components use standard function declarations (`export function Component()`) and avoid arrow functions.

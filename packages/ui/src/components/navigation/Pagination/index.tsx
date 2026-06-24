@@ -1,13 +1,13 @@
-import { Flex } from '@/components/primitives'
+import { Flex, type FlexProps } from '@/components/primitives'
 
 import { NavButton } from './components/NavButton'
 import { PageNumbers } from './components/PageNumbers'
 
-interface PaginationProps {
+interface PaginationProps extends FlexProps<'div'> {
   /** Current active page */
   page: number
   /** Callback function when the page is changed */
-  onPageChange: (page: number | ((prevPage: number) => number)) => void
+  onPageChange: (page: number) => void
   /** Total number of pages */
   totalPages: number
   /** Additional class names for the pagination container */
@@ -18,30 +18,18 @@ export function Pagination({
   page,
   onPageChange,
   totalPages,
-  className = ''
+  ...rest
 }: PaginationProps): React.ReactElement {
   const previousPage = () => {
-    onPageChange(prevPage => {
-      if (prevPage > 1) {
-        return prevPage - 1
-      }
-
-      return prevPage
-    })
+    onPageChange(Math.max(1, page - 1))
   }
 
   const nextPage = () => {
-    onPageChange(prevPage => {
-      if (prevPage < totalPages) {
-        return prevPage + 1
-      }
-
-      return prevPage
-    })
+    onPageChange(Math.min(totalPages, page + 1))
   }
 
   return (
-    <Flex align="center" className={className} gap="sm" justify="between">
+    <Flex align="center" gap="sm" justify="between" {...rest}>
       <NavButton
         direction="previous"
         hidden={page === 1}

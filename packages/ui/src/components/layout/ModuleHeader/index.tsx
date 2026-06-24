@@ -162,7 +162,6 @@ export function ModuleHeader({
             position="relative"
             r="md"
             style={{ zIndex: 50 }}
-            width="24em"
           >
             <Menu as="div">
               <Transition>
