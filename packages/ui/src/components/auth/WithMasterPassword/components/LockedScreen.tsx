@@ -22,7 +22,7 @@ export function LockedScreen({
   const [masterPassWordInputContent, setMasterPassWordInputContent] =
     useState<string>('')
 
-  const { t } = useTranslation('common.vault')
+  const { t } = useTranslation(['common.vault', 'common.fetch'])
 
   async function handleSubmit(): Promise<void> {
     if (masterPassWordInputContent.trim() === '') {
@@ -39,24 +39,24 @@ export function LockedScreen({
       } as never)
 
       if (data === true) {
-        toast.info(
-          t('fetch.success', {
-            action: t('fetch.unlock')
+        toast.success(
+          t('common.fetch:success', {
+            action: t('common.fetch:unlock')
           })
         )
         setMasterPassword(masterPassWordInputContent)
         setMasterPassWordInputContent('')
       } else {
         toast.error(
-          t('fetch.failure', {
-            action: t('fetch.unlock')
+          t('common.fetch:failure', {
+            action: t('common.fetch:unlock')
           })
         )
       }
     } catch {
       toast.error(
-        t('fetch.failure', {
-          action: t('fetch.unlock')
+        t('common.fetch:failure', {
+          action: t('common.fetch:unlock')
         })
       )
     }

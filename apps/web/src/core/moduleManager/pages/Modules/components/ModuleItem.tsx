@@ -152,6 +152,7 @@ function ModuleItem({
                 disabled={!(module.hasSource && module.hasDist)}
                 icon={module.isDevMode ? 'tabler:code-off' : 'tabler:code'}
                 label={module.isDevMode ? 'devMode.disable' : 'devMode.enable'}
+                namespace="common.module-manager"
                 onClick={handleDevModeToggle}
               />
             )}
@@ -159,6 +160,7 @@ function ModuleItem({
               dangerous
               icon="tabler:trash"
               label="uninstall"
+              namespace="common.module-manager"
               onClick={handleUninstall}
             />
           </ContextMenu>

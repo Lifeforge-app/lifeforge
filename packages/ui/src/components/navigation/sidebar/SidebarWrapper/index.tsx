@@ -22,15 +22,14 @@ export function SidebarWrapper({ children }: { children: React.ReactNode }) {
       r="lg"
       top="0"
       width={{ base: '100%', xl: '25%' }}
-      zIndex={isSidebarOpen ? '9990' : '0'}
+      zIndex={isSidebarOpen ? '250' : '0'}
     >
       <Scrollbar usePaddingRight={false}>
         <Flex
           align="center"
           display={{ base: 'flex', xl: 'none' }}
           justify="between"
-          px="2xl"
-          py="md"
+          p="md"
         >
           <GoBackButton onClick={() => setIsSidebarOpen(false)} />
         </Flex>

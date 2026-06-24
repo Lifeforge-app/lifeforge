@@ -18,6 +18,7 @@ export function APIOnlineStatusWrapper({
       <EmptyStateScreen
         CTAButtonProps={{
           children: 'Retry',
+          namespace: false,
           onClick: retry,
           icon: 'tabler:refresh'
         }}
