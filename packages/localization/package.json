@@ -11,15 +11,5 @@
   },
   "dependencies": {
     "@lifeforge/federation": "workspace:*"
-  },
-  "peerDependencies": {
-    "react": "^19.2.0",
-    "react-i18next": "^16.5.1",
-    "i18next": "^25.7.4"
-  },
-  "devDependencies": {
-    "@types/react": "^19.2.0",
-    "react-i18next": "^16.5.1",
-    "i18next": "^25.7.4"
   }
 }

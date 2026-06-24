@@ -6,11 +6,12 @@ import type { ProxyTree } from '@lifeforge/api'
 
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
+import { useLanguageEffect } from '@lifeforge/localization'
+
 import useBgTempEffect from './hooks/useBgTempEffect'
 import useBorderRadiusEffect from './hooks/useBorderRadiusEffect'
 import useBorderedEffect from './hooks/useBorderedEffect'
 import useFontFamily from './hooks/useFontFamilyEffect'
-import useLanguageEffect from './hooks/useLanguageEffect'
 import useMetaEffect from './hooks/useMetaEffect'
 import useRawThemeColorEffect from './hooks/useRawThemeColorEffect'
 import useThemeEffect from './hooks/useThemeEffect'

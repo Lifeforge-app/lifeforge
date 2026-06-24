@@ -2,7 +2,7 @@ import i18n from 'i18next'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-import { clientI18nConfig } from '@lifeforge/localization'
+import { clientI18nConfig, setI18n } from '@lifeforge/localization'
 
 import forgeAPI from './forgeAPI'
 
@@ -40,11 +40,12 @@ export async function initI18n() {
 
   await i18n.init(
     clientI18nConfig({
-      i18n,
       forgeAPI,
       getAvailableLanguages: () => AVAILABLE_LANG
     })
   )
+
+  setI18n(i18n)
 
   return i18n
 }

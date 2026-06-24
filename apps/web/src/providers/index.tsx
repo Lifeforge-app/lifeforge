@@ -10,7 +10,6 @@ import {
   SocketProvider
 } from '@lifeforge/api'
 import { FederationProvider } from '@lifeforge/federation'
-import { I18nInitProvider } from '@lifeforge/localization'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,
@@ -32,6 +31,7 @@ import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 import ExternalModuleProviders from './features/ExternalModuleProviders'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
+import { I18nInitProvider } from '@lifeforge/localization';
 
 const queryClient = new QueryClient()
 

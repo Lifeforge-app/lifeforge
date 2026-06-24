@@ -1,7 +1,6 @@
 import type { InitOptions, i18n } from 'i18next'
 
 interface ClientI18nConfigOptions {
-  i18n: i18n
   forgeAPI: {
     locales: {
       getLocale: {
@@ -21,7 +20,6 @@ interface ClientI18nConfigOptions {
 }
 
 export function clientI18nConfig({
-  i18n,
   forgeAPI,
   getAvailableLanguages
 }: ClientI18nConfigOptions): InitOptions {

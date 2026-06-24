@@ -27,7 +27,6 @@
     "autoprefixer": "^10.4.21",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.18",
-    "i18next": "^25.6.0",
     "@lifeforge/api": "workspace:*",
     "@lifeforge/ui": "workspace:*",
     "lodash": "^4.17.21",
