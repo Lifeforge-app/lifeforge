@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from 'fs'
 import path from 'path'
 
@@ -129,7 +130,11 @@ export function serializeRoutes(node: any): any {
     const result: any = {}
 
     for (const [key, value] of Object.entries(node)) {
-      result[key] = serializeRoutes(value)
+      const serialized = serializeRoutes(value)
+
+      if (serialized !== null && typeof serialized === 'object' && !Array.isArray(serialized)) {
+        result[key] = serialized
+      }
     }
 
     return result
