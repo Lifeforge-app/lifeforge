@@ -1,20 +1,16 @@
 import { clsx } from 'clsx'
-import { type CSSProperties, type ReactNode } from 'react'
 
+import { Box, type BoxProps } from '../Box'
 import * as styles from './Prose.css'
 
 export function Prose({
   className,
-  style,
-  children
-}: {
-  className?: string
-  style?: CSSProperties
-  children?: ReactNode
-}) {
+  children,
+  ...rest
+}: BoxProps<'div'>) {
   return (
-    <div className={clsx(styles.root, className)} style={style}>
+    <Box {...rest} className={clsx(styles.root, className)} >
       {children}
-    </div>
+    </Box>
   )
 }

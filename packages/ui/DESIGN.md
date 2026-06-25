@@ -12,7 +12,7 @@ The LifeForge UI library is built on a **zero-runtime CSS-in-JS** architecture p
 
 > [!IMPORTANT]
 > **RULE 1: NO TAILWINDCSS AT ALL**  
-> Tailwind classes must never be written in frontend component code. All layout, spacing, typography, and styling must be declared using the custom primitives and high-level components supplied by this library.
+> Tailwind utility classes, `@apply` directives, `@reference`, `@layer`, and `theme()` are **forbidden** in all files — `.tsx`, `.css`, `.css.ts`, everywhere. All layout, spacing, typography, and styling must use the custom primitives or standard CSS custom properties. Third-party library overrides in `.css` files must use plain CSS with `var(--color-*)` custom properties — never `@apply`, `@layer`, or Tailwind classes. External library CSS should be imported with plain `@import` (no `layer()`).
 
 > [!IMPORTANT]
 > **RULE 2: NO INLINE STYLES FOR CORE LAYOUT & DESIGN**  
@@ -1544,7 +1544,7 @@ import { Icon } from '@lifeforge/ui'
 
 Before submitting a pull request, verify that you have adhered to all core design patterns:
 
-- [ ] **No Tailwind classes:** There is not a single `className="flex..."` or similar Tailwind class in your components.
+- [ ] **No Tailwind classes or `@apply`:** No `className="flex..."` in `.tsx`, no `@apply` in `.css`, no `@reference` in `.css`. All styles use primitives or plain CSS custom properties.
 - [ ] **No arbitrary inline styles:** Inline `style` is only used for properties computed at runtime (e.g. coordinates or scales). Standard layouts use `p`, `m`, `width`, `height`, etc.
 - [ ] **Strict font-sizing rules:** Prohibited `text-xs` is never used. Default size is `text-base` (omit size prop), and titles use sizes `>= text-lg`.
 - [ ] **Correct loaders:** Form/button loading states use the pre-animated `svg-spinners:ring-resize` icon and **never** use custom `animate-spin` utilities.

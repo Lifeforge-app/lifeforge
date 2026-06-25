@@ -9,7 +9,6 @@ import type { InputVariants } from '@/components/inputs/shared/types'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 import { forgeAPI } from '@/utils/forgeAPI'
 
-import { useInputLabel } from '../shared/hooks/useInputLabel'
 import { LocationServiceStatusIndicator } from './components/LocationServiceStatusIndicator'
 
 export type Location = {
@@ -44,7 +43,6 @@ export function LocationInput({
   errorMsg,
   variant = 'classic'
 }: LocationInputProps & InputVariants) {
-  const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
   const debouncedQuery = useDebounce(query, 500)
@@ -87,7 +85,7 @@ export function LocationInput({
           errorMsg={errorMsg}
           forcedActiveWhen={(value?.name?.length || 0) > 0}
           icon={icon}
-          label={inputLabel}
+          label={label}
           namespace={namespace}
           required={required}
           value={value}
