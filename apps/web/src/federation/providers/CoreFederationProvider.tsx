@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import { useAuth } from '@lifeforge/api'
 import {
   type ModuleConfig,
   loadModules,
@@ -37,6 +38,7 @@ export default function CoreFederationProvider({
 }: {
   children: React.ReactNode
 }) {
+  const { auth } = useAuth()
   const {
     setModules,
     setGlobalProviders,
@@ -66,7 +68,7 @@ export default function CoreFederationProvider({
   useEffect(() => {
     fetchModules()
     refetch.current = fetchModules
-  }, [])
+  }, [auth])
 
   return children
 }
