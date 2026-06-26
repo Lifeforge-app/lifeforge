@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 import tinycolor from 'tinycolor2'
 
-import { Box, Icon, Text } from '@/components/primitives'
+import { Box, Icon, type IconProps, Text } from '@/components/primitives'
 import { usePersonalization } from '@/providers'
 
 /**
@@ -12,7 +12,7 @@ import { usePersonalization } from '@/providers'
 export function Tooltip({
   id,
   icon,
-  iconClassName,
+  iconProps,
   children,
   ...tooltipProps
 }: {
@@ -21,7 +21,7 @@ export function Tooltip({
   /** The icon to display as the tooltip trigger. Should be a valid icon name from Iconify. */
   icon: string
   /** Optional additional class name(s) to apply to the icon element. */
-  iconClassName?: string
+  iconProps?: Omit<IconProps, 'icon'>
   /** The content to display inside the tooltip when triggered. */
   children: React.ReactNode
   /** Additional properties to pass to the underlying ReactTooltip component. */
@@ -31,7 +31,7 @@ export function Tooltip({
   return (
     <>
       <span data-tooltip-id={`tooltip-${_.kebabCase(id)}`}>
-        <Icon className={iconClassName ?? ''} color="muted" icon={icon} />
+        <Icon color="muted" icon={icon} {...iconProps} />
       </span>
       <Box
         asChild

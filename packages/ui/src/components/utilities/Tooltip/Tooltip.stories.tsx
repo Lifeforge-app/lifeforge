@@ -143,7 +143,9 @@ export const ErrorTooltip: Story = {
       </>
     ),
     icon: 'tabler:alert-circle',
-    iconClassName: 'text-red-500',
+    iconProps: {
+      color: 'red-500'
+    },
     id: 'error-tooltip'
   },
   render: args => (
