@@ -57,6 +57,20 @@ async function getAPIKey(
 
     await validateCallerAccess(callerModule, id)
 
+    const rawPb = pb.instance as unknown as {
+      _apiKeyCache?: Map<string, string>
+    }
+
+    if (!rawPb._apiKeyCache) {
+      rawPb._apiKeyCache = new Map<string, string>()
+    }
+
+    const cachedKey = rawPb._apiKeyCache.get(id)
+
+    if (cachedKey !== undefined) {
+      return cachedKey
+    }
+
     const { key } = await pb.instance
       .collection('api_keys__entries')
       .getFirstListItem(`keyId = "${id}"`)
@@ -69,7 +83,10 @@ async function getAPIKey(
         `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`
       )
 
-      return decrypt2(key, process.env.MASTER_KEY!)
+      const decrypted = decrypt2(key, process.env.MASTER_KEY!)
+      rawPb._apiKeyCache.set(id, decrypted)
+
+      return decrypted
     } catch {
       throw new Error(`Failed to decrypt API key for ${id}.`)
     }
