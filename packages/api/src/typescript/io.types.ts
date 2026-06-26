@@ -82,10 +82,13 @@ export type InferInput<T extends ForgeEndpoint<any>> = T['__type'] extends {
               : B extends undefined
                 ? {}
                 : B) & {
-              [K in keyof M]: {
-                __type: 'media'
-                config: M[K]
-              }
+              [K in keyof M]: M[K] extends { multiple: true }
+                ? M[K] extends { optional: true }
+                  ? File[] | undefined
+                  : File[]
+                : M[K] extends { optional: true }
+                  ? File | string | undefined
+                  : File | string
             }
         query: Q extends ZodObjectOrIntersection ? z.input<Q> : Q
       }

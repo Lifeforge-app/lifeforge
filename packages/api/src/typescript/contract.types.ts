@@ -2,30 +2,34 @@
 import type { FromSchema } from "json-schema-to-ts";
 import type { ZodTypeAny } from "zod";
 
-type KnownKeys<T> = {
-  [K in keyof T]: string extends K
-    ? never
-    : number extends K
-      ? never
-      : symbol extends K
-        ? never
-        : K
-}[keyof T]
-
 export type OmitIndexSignature<T> = T extends object
   ? T extends Array<any>
     ? T
-    : [KnownKeys<T>] extends [never]
-      ? { [K in keyof T]: OmitIndexSignature<T[K]> }
-      : {
-          [K in keyof T as string extends K
-            ? never
-            : number extends K
+    : string extends keyof T
+      ? unknown extends T[string]
+        ? {
+            [K in keyof T as string extends K
               ? never
-              : symbol extends K
+              : number extends K
                 ? never
-                : K]: OmitIndexSignature<T[K]>
-        }
+                : symbol extends K
+                  ? never
+                  : K]: OmitIndexSignature<T[K]>
+          }
+        : { [K in keyof T]: OmitIndexSignature<T[K]> }
+      : number extends keyof T
+        ? unknown extends T[number]
+          ? {
+              [K in keyof T as string extends K
+                ? never
+                : number extends K
+                  ? never
+                  : symbol extends K
+                    ? never
+                    : K]: OmitIndexSignature<T[K]>
+            }
+          : { [K in keyof T]: OmitIndexSignature<T[K]> }
+        : { [K in keyof T]: OmitIndexSignature<T[K]> }
   : T
 
 export type InferFromJSONSchema<T> = 0 extends 1 & T

@@ -7,7 +7,8 @@ import {
   APIOnlineStatusProvider,
   AuthProvider,
   EncryptionProvider,
-  SocketProvider
+  SocketProvider,
+  setForgeMutationErrorHandler
 } from '@lifeforge/api'
 import { FederationProvider } from '@lifeforge/federation'
 import { I18nInitProvider } from '@lifeforge/localization'
@@ -20,6 +21,7 @@ import {
   MainSidebarStateProvider,
   PersonalizationProvider,
   ToastProvider,
+  toast,
   useModalStore
 } from '@lifeforge/ui'
 
@@ -35,6 +37,8 @@ import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
 
 const queryClient = new QueryClient()
+
+setForgeMutationErrorHandler(msg => toast.error(msg))
 
 function Providers() {
   const { open } = useModalStore()
