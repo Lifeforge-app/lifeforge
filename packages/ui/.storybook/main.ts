@@ -6,6 +6,26 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 const require = createRequire(import.meta.url)
 
+const federationStubPlugin = {
+  name: 'storybook-federation-stub',
+  resolveId(id: string) {
+    if (id === 'virtual:__federation__') {
+      return '\0virtual:__federation__'
+    }
+    return null
+  },
+  load(id: string) {
+    if (id === '\0virtual:__federation__') {
+      return `
+        export const __federation_method_setRemote = () => {}
+        export const __federation_method_getRemote = () => Promise.resolve(null)
+        export const __federation_method_unwrapDefault = (m) => m?.default ?? m
+      `
+    }
+    return null
+  }
+}
+
 const config: StorybookConfig = {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
@@ -31,7 +51,19 @@ const config: StorybookConfig = {
     skipCompiler: true
   },
   viteFinal: async config => {
-    config.plugins = [...(config.plugins ?? []), tsconfigPaths()]
+    config.plugins = [
+      ...(config.plugins ?? []).filter(p => {
+        if (p && typeof p === 'object' && 'name' in p) {
+          return p.name !== 'vite:dts'
+        }
+        return true
+      }),
+      federationStubPlugin,
+      tsconfigPaths()
+    ]
+    config.build = {
+      ...config.build
+    }
     return {
       ...config
     }
