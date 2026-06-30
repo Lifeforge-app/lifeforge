@@ -39,6 +39,7 @@ export default function CoreFederationProvider({
   children: React.ReactNode
 }) {
   const { auth } = useAuth()
+
   const {
     setModules,
     setGlobalProviders,

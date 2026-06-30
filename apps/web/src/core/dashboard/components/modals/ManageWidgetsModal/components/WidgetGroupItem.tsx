@@ -13,8 +13,6 @@ function WidgetGroupItem({
   moduleName: string
   items: Array<[string, WidgetEntry]>
 }) {
-  console.log(moduleName)
-
   const { t } = useTranslation(`apps.${moduleName}`)
 
   return (
