@@ -31,9 +31,10 @@ export function useForgeMutation<T extends { __isForgeContract: true }>(
   const queryClient = useQueryClient()
   const { t, i18n } = useTranslation(['common.fetch'])
 
-  const actionFormatted = i18n.exists(`common.fetch:action.${options.action}`)
-    ? t(`common.fetch:action.${options.action}`)
-    : options.action
+  const actionFormatted =
+    'exists' in i18n && i18n.exists(`common.fetch:action.${options.action}`)
+      ? t(`common.fetch:action.${options.action}`)
+      : options.action
 
   return useMutation(
     endpoint.mutationOptions({
