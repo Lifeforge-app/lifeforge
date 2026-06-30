@@ -44,7 +44,7 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
       submissionConfig={{
         handler: mutation.mutateAsync,
         icon: 'tabler:arrow-right',
-        label: 'Start Backup'
+        label: 'Proceed'
       }}
       uiConfig={{
         icon: 'tabler:plus',
@@ -56,7 +56,7 @@ function CreateBackupModal({ onClose }: { onClose: () => void }) {
       <TextField
         control={form.control}
         icon="tabler:file-zip"
-        label="Backup Name (must end with .zip)"
+        label="Backup Name"
         name="backupName"
         placeholder={t('inputs.backupName.placeholder')}
       />
