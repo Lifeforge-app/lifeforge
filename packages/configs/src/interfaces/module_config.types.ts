@@ -18,7 +18,7 @@ export interface ModuleConfig {
   clearQueryOnUnmount?: boolean
   contract?: any
   widgets?: (() => Promise<{
-    default: React.ComponentType
+    default: React.ComponentType<any>
     config: WidgetConfig
   }>)[]
 }

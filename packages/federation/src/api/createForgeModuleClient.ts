@@ -16,7 +16,7 @@ export default function createForgeModuleClient<T extends ModuleConfig>(
   return {
     ...config,
     forgeAPI: config.contract
-      ? (createForgeProxy(config.contract) as any)
+      ? (createForgeProxy(config.contract))
       : undefined
   } as any
 }
