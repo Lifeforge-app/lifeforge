@@ -3,16 +3,6 @@
   "description": "UI-based module manager for your LifeForge instance",
   "category": "Category",
   "subsections": {
-    "modules": "Modules",
-    "categories": "Categories"
-  },
-  "buttons": {
-    "uninstall": "Uninstall",
-    "addTranslation": "Add Translation",
-    "addCategory": "Add Category",
-    "add category": "Add Category"
-  },
-  "subsectionTitleAndDesc": {
     "modules": {
       "title": "Modules",
       "description": "Install, update, and remove modules from your LifeForge instance"
@@ -21,6 +11,12 @@
       "title": "Categories",
       "description": "Organize and reorder sidebar categories to customize your navigation"
     }
+  },
+  "buttons": {
+    "uninstall": "Uninstall",
+    "addTranslation": "Add Translation",
+    "addCategory": "Add Category",
+    "add category": "Add Category"
   },
   "items": {
     "category": "Category"

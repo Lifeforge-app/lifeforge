@@ -1,4 +1,5 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react'
+import _ from 'lodash'
 
 import { useModuleMetadata } from '@lifeforge/federation'
 import { useModuleTranslation } from '@lifeforge/localization'
@@ -9,6 +10,27 @@ import { colorWithOpacity } from '@/system'
 
 import { useMainSidebarState } from '../../../providers'
 import { ContextMenu } from '../../overlays/ContextMenu'
+
+function getTKeys(
+  namespace: string | undefined,
+  title: string,
+  target: string
+) {
+  const withPrefix = (middle: string) => [
+    `${middle}${_.camelCase(title)}.${target}`,
+    `${middle}${title}.${target}`,
+    ...(namespace
+      ? [
+          `${namespace}:${middle}${_.camelCase(title)}.${target}`,
+          `${namespace}:${middle}${title}.${target}`
+        ]
+      : [])
+  ]
+
+  console.log(namespace, title, target)
+
+  return [...withPrefix('subsections.'), ...withPrefix(''), target]
+}
 
 interface ModuleHeaderProps {
   icon?: string
@@ -24,7 +46,6 @@ interface ModuleHeaderProps {
   actionButton?: React.ReactNode
   customElement?: React.ReactNode
   namespace?: string | false
-  tKey?: string
 }
 
 export function ModuleHeader({
@@ -35,8 +56,7 @@ export function ModuleHeader({
   contextMenuProps,
   actionButton,
   customElement,
-  namespace,
-  tKey
+  namespace
 }: ModuleHeaderProps) {
   const { title: innerTitle, icon: innerIcon } = useModuleMetadata()
 
@@ -44,9 +64,7 @@ export function ModuleHeader({
   icon = icon ?? innerIcon
 
   const { t } = useModuleTranslation(
-    namespace === false
-      ? []
-      : [`common.${title}`, 'common.misc', namespace ?? '']
+    namespace === false ? [] : [`common.${title}`, namespace ?? '']
   )
 
   const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
@@ -107,15 +125,7 @@ export function ModuleHeader({
               <Text truncate display="block">
                 {namespace === false
                   ? (title?.toString() ?? '')
-                  : t([
-                      `${namespace}:${tKey}.${title}.title`,
-                      `${namespace}:${title}.title`,
-                      `apps.${title}:title`,
-                      `common.${title}:title`,
-                      'common.misc:title',
-                      'title',
-                      title?.toString() ?? ''
-                    ])}
+                  : t(getTKeys(namespace, title, 'title'))}
               </Text>
               <Box asChild minWidth="0">
                 <Text
@@ -139,15 +149,7 @@ export function ModuleHeader({
             >
               {namespace === false
                 ? `Description for ${title?.toString() ?? ''}`
-                : t([
-                    `${namespace}:${tKey}.${title}.description`,
-                    `${namespace}:${title}.description`,
-                    `apps.${title}:description`,
-                    `common.${title}:description`,
-                    'common.misc:description',
-                    'description',
-                    `Description for ${title?.toString() ?? ''}`
-                  ])}
+                : t(getTKeys(namespace, title, 'description'))}
             </Text>
           </Box>
         </Flex>

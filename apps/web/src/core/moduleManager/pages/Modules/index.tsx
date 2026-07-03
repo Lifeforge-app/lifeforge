@@ -87,7 +87,6 @@ function Modules() {
         icon="tabler:apps"
         namespace="common.module-manager"
         title="modules"
-        tKey="subsectionTitleAndDesc"
         totalItems={modulesQuery.data?.length}
       />
       <WithQuery query={modulesQuery}>

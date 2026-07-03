@@ -161,7 +161,6 @@ function Categories() {
         icon="tabler:category"
         namespace="common.module-manager"
         title="categories"
-        tKey="subsectionTitleAndDesc"
         totalItems={items.length}
       />
       {missingKeys.length > 0 && (
