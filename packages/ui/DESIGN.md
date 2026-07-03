@@ -334,6 +334,8 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
 > Spacing tokens only work with padding (`p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`) and margin (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`) props.  
 > ❌ `top="sm"` — will not resolve  
 > ✅ `top="0.5rem"` — correct
+>
+> **`top`, `right`, `bottom`, `left`, and `inset` are NOT tokenized.** They do not accept spacing tokens (`sm`, `md`, `lg`) — only raw CSS values. These properties are used for absolute/fixed positioning, which is inherently pixel/length-based and does not benefit from the token system's font-scaling.
 
 // Border Radius (Uses RadiusTokens)
 r?: ResponsiveProp<RadiusToken> // All corners
@@ -546,11 +548,13 @@ type IconProps = Omit<TextProps, 'size'> & {
 }
 ```
 
+> The default size of `Icon` is **`1.25em`**, which works well alongside `Text size="base"`. Only pass `size` explicitly when you need a different size (e.g. `size="1.5em"` for larger decorative icons). Do NOT redundantly specify `size="1.25em"` — it is the default.
+
 #### Example:
 
 ```tsx
 <Flex align="center" gap="sm">
-  <Icon color="primary" icon="tabler:settings" size="1.5em" />
+  <Icon color="primary" icon="tabler:settings" />   {/* Size defaults to 1.25em */}
   <Text>Settings</Text>
 </Flex>
 ```
