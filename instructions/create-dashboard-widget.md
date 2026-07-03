@@ -140,7 +140,7 @@ export default function MyDataWidget() {
                       r="md"
                       width="2.5rem"
                     >
-                      <Icon color="muted" icon={item.icon} size="1.25em" />
+                      <Icon color="muted" icon={item.icon}  />
                     </Flex>
                     <Box>
                       <Text weight="medium">{item.name}</Text>

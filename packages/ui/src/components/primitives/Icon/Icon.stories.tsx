@@ -138,7 +138,7 @@ export const WithText: Story = {
         </Text>
       </Flex>
       <Flex align="center" gap="sm">
-        <Icon color="bg-400" icon="tabler:clock" size="1.25em" />
+        <Icon color="bg-400" icon="tabler:clock" />
         <Text color="muted">Last updated 2 hours ago</Text>
       </Flex>
     </Flex>
