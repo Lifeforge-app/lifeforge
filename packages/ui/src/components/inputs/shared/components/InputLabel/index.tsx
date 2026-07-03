@@ -40,9 +40,11 @@ function _InputLabel({
         left="0"
         minWidth="0"
         position="absolute"
+        pr="lg"
         style={{
           pointerEvents: 'none',
           transform: 'translateY(-50%)',
+
           ...style
         }}
         width="100%"

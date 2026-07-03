@@ -3,7 +3,7 @@ import { useRef } from 'react'
 import DatePicker from 'react-datepicker'
 import tinycolor from 'tinycolor2'
 
-import { Flex } from '@/components/primitives'
+import { Box, Flex } from '@/components/primitives'
 import { usePersonalization } from '@/providers'
 
 import { InputActionButton } from '../shared/components/InputActionButton'
@@ -81,12 +81,14 @@ export function DateInput({
       )}
       <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
-          <InputLabel
-            active={!!value}
-            hasError={!!errorMsg}
-            label={inputLabel}
-            required={required === true}
-          />
+          <Box asChild pr="3xl">
+            <InputLabel
+              active={!!value}
+              hasError={!!errorMsg}
+              label={inputLabel}
+              required={required === true}
+            />
+          </Box>
         )}
 
         <InputInnerWrapper hasActionButton={!!value} variant={variant}>

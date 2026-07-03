@@ -57,12 +57,14 @@ export function IconInput({
       )}
       <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
-          <InputLabel
-            active={!!value}
-            hasError={!!errorMsg}
-            label={inputLabel}
-            required={required}
-          />
+          <Box asChild pr="3xl">
+            <InputLabel
+              active={!!value}
+              hasError={!!errorMsg}
+              label={inputLabel}
+              required={required}
+            />
+          </Box>
         )}
         <InputInnerWrapper
           hasActionButton
