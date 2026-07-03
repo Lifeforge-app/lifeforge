@@ -83,12 +83,11 @@ export function SidebarSubsectionItemWithOnClick({
           </Flex>
           <Text truncate style={{ paddingRight: '1rem', width: '100%' }}>
             {namespace !== false
-              ? t([
+              ? t(
                   `apps.${_.camelCase(label.toString())}.subsections.${_.camelCase(
                     subsectionLabel
-                  )}`,
-                  subsectionLabel
-                ])
+                  )}.title`
+                )
               : subsectionLabel}
           </Text>
           {amount !== undefined && (

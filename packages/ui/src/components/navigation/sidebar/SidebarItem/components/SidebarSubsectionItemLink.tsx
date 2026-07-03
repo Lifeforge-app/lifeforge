@@ -72,7 +72,9 @@ export function SidebarSubsectionItemLink({
 
           {sidebarExpanded && (
             <Text truncate style={{ paddingRight: '1rem', width: '100%' }}>
-              {t(`apps.${label}.subsections.${_.camelCase(subsectionLabel)}`)}
+              {t(
+                `apps.${label}.subsections.${_.camelCase(subsectionLabel)}.title`
+              )}
             </Text>
           )}
         </Flex>
