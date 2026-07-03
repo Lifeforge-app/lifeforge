@@ -121,8 +121,9 @@ export function ComboboxInput<T>({
         {variant === 'classic' && label && (
           <Box
             asChild
+            pr="3xl"
             style={{
-              marginLeft: 'calc(var(--spacing) * 14)'
+              paddingLeft: 'calc(var(--spacing) * 14)'
             }}
           >
             <InputLabel
