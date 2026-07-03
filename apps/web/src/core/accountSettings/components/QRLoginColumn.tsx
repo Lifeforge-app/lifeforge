@@ -28,9 +28,7 @@ function QRLoginColumn() {
             return
           }
 
-          setTimeout(() => {
-            open(QRLoginApprovalModal, { scannedData })
-          }, 500)
+          open(QRLoginApprovalModal, { scannedData })
         } catch {
           toast.error(t('qrLogin.invalidQR'))
         }

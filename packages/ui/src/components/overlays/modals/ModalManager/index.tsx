@@ -1,29 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useModalStore } from '@/providers'
+import type { ModalInstance } from '@/providers/ModalProvider'
 
 import { ModalWrapper } from '../ModalWrapper'
 
-function FinalElement({ index }: { index: number }) {
-  const { stack, close } = useModalStore()
+function FinalElement({
+  item,
+  onClose
+}: {
+  item: ModalInstance
+  onClose: () => void
+}) {
+  const { data, component: ModalComponent } = item
 
-  const item = stack[index]
-
-  const { data, component: ModalComponent } = item || {}
-
-  if (!ModalComponent) {
-    return null
-  }
-
-  return <ModalComponent data={data} onClose={close} />
+  return <ModalComponent data={data} onClose={onClose} />
 }
 
-function StackModal({ index }: { index: number }) {
-  const { stack, remove } = useModalStore()
+function StackModal({ item }: { item: ModalInstance }) {
+  const { stack, close, remove } = useModalStore()
 
-  const item = stack[index]
-
-  const { isClosing } = item || {}
+  const { id, isClosing } = item
 
   const [localOpen, setLocalOpen] = useState(false)
 
@@ -35,21 +32,32 @@ function StackModal({ index }: { index: number }) {
     return () => clearTimeout(timer)
   }, [])
 
-  // Check if this modal is the topmost (last non-closing modal in stack)
-  const isTopmost = stack.findLastIndex(modal => !modal.isClosing) === index
+  const isTopmost = useMemo(() => {
+    const topmostIndex = stack.findLastIndex(modal => !modal.isClosing)
+
+    return topmostIndex !== -1 && stack[topmostIndex].id === id
+  }, [stack, id])
+
+  const zIndex = useMemo(() => {
+    const index = stack.findIndex(modal => modal.id === id)
+
+    return (index === -1 ? 0 : index) * 10 + 500
+  }, [stack, id])
+
+  const onClose = () => close(id)
 
   return (
     <ModalWrapper
       isOpen={localOpen && !isClosing}
       isTopmost={isTopmost}
-      zIndex={index * 10 + 500}
+      zIndex={zIndex}
       onExited={() => {
         if (isClosing) {
-          remove(index)
+          remove(id)
         }
       }}
     >
-      <FinalElement index={index} />
+      <FinalElement item={item} onClose={onClose} />
     </ModalWrapper>
   )
 }
@@ -59,8 +67,8 @@ export function ModalManager() {
 
   return (
     <>
-      {stack.map((_, index) => (
-        <StackModal key={`modal-${index}`} index={index} />
+      {stack.map(item => (
+        <StackModal key={item.id} item={item} />
       ))}
     </>
   )
