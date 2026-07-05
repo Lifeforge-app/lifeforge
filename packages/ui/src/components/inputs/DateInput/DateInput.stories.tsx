@@ -183,3 +183,24 @@ export const PlainVariantWithErrorMessage: Story = {
     )
   }
 }
+
+export const WithDateRange: Story = {
+  args: {
+    endDate: new Date('2026-07-20'),
+    icon: 'tabler:calendar',
+    label: 'Date',
+    onChange: () => {},
+    startDate: new Date('2026-07-03'),
+    value: new Date('2026-07-15')
+  },
+
+  render: args => {
+    const [date, setDate] = useState(args.value)
+
+    return (
+      <ScrollableStory>
+        <DateInput {...args} value={date} onChange={setDate} />
+      </ScrollableStory>
+    )
+  }
+}
