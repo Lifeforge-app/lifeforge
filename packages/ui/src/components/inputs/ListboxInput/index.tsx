@@ -1,7 +1,7 @@
 import { ListboxButton } from '@headlessui/react'
 import { useCallback, useMemo } from 'react'
 
-import { Box, Flex } from '@/components/primitives'
+import { Box, Flex, Text } from '@/components/primitives'
 
 import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
@@ -141,11 +141,13 @@ export function ListboxInput<T>({
               </Box>
             )}
             <InputInnerWrapper hasActionButton variant={variant}>
-              <Box minHeight="1.5em">
-                {variant === 'classic'
-                  ? isActive && renderContent?.(value)
-                  : renderContent?.(value)}
-              </Box>
+              <Text asChild align="left">
+                <Box minHeight="1.5em" minWidth="0" width="100%">
+                  {variant === 'classic'
+                    ? isActive && renderContent?.(value)
+                    : renderContent?.(value)}
+                </Box>
+              </Text>
             </InputInnerWrapper>
           </Flex>
           <Box asChild mr="sm" position="absolute" right="0">
