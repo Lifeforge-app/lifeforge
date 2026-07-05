@@ -64,9 +64,7 @@ export function ContextMenuItem({
   tProps,
   onClick
 }: ContextMenuItemProps) {
-  const { t } = useModuleTranslation(
-    namespace ? [namespace] : undefined
-  )
+  const { t } = useModuleTranslation(namespace ? [namespace] : undefined)
 
   return (
     <WithDivide>
