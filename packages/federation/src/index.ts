@@ -22,8 +22,6 @@ export {
   type FederatedModule
 } from './loaders/loadModuleConfig'
 
-export { default as loadCoreModules } from './loaders/loadCoreModules'
-
 export {
   sortRoutes,
   fetchCategoryOrder,
