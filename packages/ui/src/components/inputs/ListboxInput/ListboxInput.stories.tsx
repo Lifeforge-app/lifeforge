@@ -308,6 +308,65 @@ export const PlainVariantSmall: Story = {
 }
 
 /**
+ * ListboxInput with colored options using the `color` prop.
+ */
+export const ColorOptions: Story = {
+  args: {
+    children: <></>,
+    icon: 'tabler:palette',
+    label: 'Color',
+    onChange: () => {},
+    value: ''
+  },
+
+  render: args => {
+    const [value, onChange] = useState('red')
+
+    const colors = [
+      { color: TAILWIND_PALETTE.red[500], text: 'Red', value: 'red' },
+      { color: TAILWIND_PALETTE.orange[500], text: 'Orange', value: 'orange' },
+      { color: TAILWIND_PALETTE.yellow[500], text: 'Yellow', value: 'yellow' },
+      { color: TAILWIND_PALETTE.green[500], text: 'Green', value: 'green' },
+      { color: TAILWIND_PALETTE.blue[500], text: 'Blue', value: 'blue' },
+      {
+        color: TAILWIND_PALETTE.purple[500],
+        text: 'Purple',
+        value: 'purple'
+      }
+    ]
+
+    return (
+      <ListboxInput
+        {...args}
+        renderContent={() => {
+          const selected = colors.find(c => c.value === value)
+
+          return (
+            <Flex align="center" gap="sm">
+              <Box
+                r="full"
+                style={{
+                  backgroundColor: selected?.color ?? 'gray',
+                  height: '1em',
+                  width: '1em'
+                }}
+              />
+              <Text truncate>{selected?.text ?? 'Select a color'}</Text>
+            </Flex>
+          )
+        }}
+        value={value}
+        onChange={onChange}
+      >
+        {colors.map(({ color, text, value }) => (
+          <ListboxOption key={value} color={color} label={text} value={value} />
+        ))}
+      </ListboxInput>
+    )
+  }
+}
+
+/**
  * Allows selecting multiple options at once. Shows selected count in the button.
  */
 export const MultipleSelection: Story = {
