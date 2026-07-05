@@ -27,9 +27,12 @@ function getTKeys(
       : [])
   ]
 
-  console.log(namespace, title, target)
-
-  return [...withPrefix('subsections.'), ...withPrefix(''), target]
+  return [
+    ...withPrefix('subsections.'),
+    ...withPrefix(''),
+    `common.${title}:${target}`,
+    target
+  ]
 }
 
 interface ModuleHeaderProps {
