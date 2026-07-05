@@ -55,36 +55,45 @@ async function getAPIKey(
       )
     }
 
-    await validateCallerAccess(callerModule, id)
-
     const rawPb = pb.instance as unknown as {
-      _apiKeyCache?: Map<string, string>
+      _apiKeyCache?: Map<string, { key: string; exposable: boolean }>
     }
 
     if (!rawPb._apiKeyCache) {
-      rawPb._apiKeyCache = new Map<string, string>()
+      rawPb._apiKeyCache = new Map()
     }
 
-    const cachedKey = rawPb._apiKeyCache.get(id)
+    const cached = rawPb._apiKeyCache.get(id)
 
-    if (cachedKey !== undefined) {
-      return cachedKey
+    if (cached !== undefined) {
+      if (!cached.exposable) {
+        await validateCallerAccess(callerModule, id)
+      }
+
+      return cached.key
     }
 
-    const { key } = await pb.instance
+    const record = await pb.instance
       .collection('api_keys__entries')
       .getFirstListItem(`keyId = "${id}"`)
       .catch(err => {
         throw new Error(`Failed to retrieve API key for ${id}: ${err.message}`)
       })
 
+    if (!record.exposable) {
+      await validateCallerAccess(callerModule, id)
+    }
+
     try {
       logger.info(
         `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`
       )
 
-      const decrypted = decrypt2(key, process.env.MASTER_KEY!)
-      rawPb._apiKeyCache.set(id, decrypted)
+      const decrypted = decrypt2(record.key, process.env.MASTER_KEY!)
+      rawPb._apiKeyCache.set(id, {
+        key: decrypted,
+        exposable: record.exposable
+      })
 
       return decrypted
     } catch {
