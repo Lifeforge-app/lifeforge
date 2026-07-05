@@ -3,9 +3,9 @@ import { Scrollbar } from '@/components/utilities'
 
 export function ScrollableStory({ children }: { children: React.ReactNode }) {
   return (
-    <Box asChild height="100%" minHeight="0" py="3xl" width="100%">
+    <Box asChild height="100%" minHeight="24rem" width="100%">
       <Scrollbar>
-        <Flex direction="column" gap="md">
+        <Flex direction="column" gap="md" py="3xl">
           {children}
         </Flex>
       </Scrollbar>
