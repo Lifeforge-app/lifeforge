@@ -45,6 +45,10 @@ export interface DateInputProps {
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
+  /** The earliest selectable date. */
+  startDate?: Date
+  /** The latest selectable date. */
+  endDate?: Date
 }
 
 /**
@@ -62,7 +66,9 @@ export function DateInput({
   className,
   hasTime = false,
   namespace,
-  errorMsg
+  errorMsg,
+  startDate,
+  endDate
 }: DateInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const { derivedThemeColor } = usePersonalization()
@@ -110,6 +116,8 @@ export function DateInput({
               formatWeekDay={(date: string) => {
                 return date.slice(0, 3)
               }}
+              maxDate={endDate ?? undefined}
+              minDate={startDate ?? undefined}
               placeholderText={`August 7, ${dayjs().year()}${
                 hasTime ? ' 08:07 AM' : ''
               }`}

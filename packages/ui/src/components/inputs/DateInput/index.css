@@ -206,3 +206,15 @@
 .react-datepicker-popper {
   z-index: 9999 !important;
 }
+
+.react-datepicker__day--disabled {
+  color: var(--color-bg-200) !important;
+}
+
+.dark .react-datepicker__day--disabled {
+  color: var(--color-bg-700) !important;
+}
+
+.react-datepicker__day--disabled:hover {
+  background-color: transparent !important;
+}
