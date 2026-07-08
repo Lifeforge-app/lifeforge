@@ -66,8 +66,17 @@ export function createOutputHelpers<
 
 export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
   _schemas: TSchemas,
-  callerModule?: string
+  callerModuleOrOptions?: string | { modulePathAlias?: string }
 ) {
+  const callerModule =
+    typeof callerModuleOrOptions === 'string'
+      ? callerModuleOrOptions
+      : undefined
+  const modulePathAlias =
+    typeof callerModuleOrOptions === 'object'
+      ? callerModuleOrOptions.modulePathAlias
+      : undefined
+
   function buildRoute<
     TMethod extends 'get' | 'post',
     const TOutput extends OutputDefinition | 'custom',
@@ -123,6 +132,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
 
         return {
           __isForgeContract: true as const,
+          modulePathAlias,
           getValue() {
             const callbackWrapper = async function (
               ctx: ForgeExpressContext

@@ -26,6 +26,16 @@ function isForgeController(value: unknown): value is ForgeContract {
   )
 }
 
+function extractAlias(routes: RouterInput): string | undefined {
+  for (const value of Object.values(routes)) {
+    if (isForgeController(value) && value.modulePathAlias) {
+      return value.modulePathAlias
+    }
+  }
+
+  return undefined
+}
+
 /**
  * Registers routes from a ForgeRouter configuration into an Express Router.
  *
@@ -55,12 +65,25 @@ function registerRoutes<T extends RouterInput>(
   forgeRouter: ForgeRouter<T>
 ): Router {
   const expressRouter = Router()
+  const registeredAliases = new Set<string>()
 
   function registerRoutesRecursive(
     routes: RouterInput,
     router: Router,
     parentPath = ''
   ): void {
+    const alias = extractAlias(routes)
+
+    if (alias && !registeredAliases.has(alias)) {
+      registeredAliases.add(alias)
+
+      const aliasRouter = Router()
+
+      registerRoutesRecursive(routes, aliasRouter, `/${alias}`)
+
+      expressRouter.use(`/${alias}`, aliasRouter)
+    }
+
     for (const [route, controller] of Object.entries(routes)) {
       const finalRoute = route.replace(/\$/g, '--')
 
