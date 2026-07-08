@@ -26,6 +26,7 @@ export interface ForgeExpressContext<
 
 export interface ForgeContract {
   readonly __isForgeContract: true
+  readonly modulePathAlias?: string
   getValue(): {
     method: 'get' | 'post'
     middlewares: RequestHandler[]
