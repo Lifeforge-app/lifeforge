@@ -13,6 +13,8 @@ import { usePersonalization } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
+import { useFontFamilySelector } from '../../../contexts/FontFamilySelectorContext'
+
 import type { FontFamily } from '../index'
 
 interface GoogleFontContextValue {
@@ -38,16 +40,9 @@ interface GoogleFontContextValue {
 
 const GoogleFontContext = createContext<GoogleFontContextValue | null>(null)
 
-function GoogleFontProvider({
-  children,
-  selectedFont,
-  setSelectedFont
-}: {
-  children: ReactNode
-  selectedFont: string | null
-  setSelectedFont: (font: string | null) => void
-}) {
+function GoogleFontProvider({ children }: { children: ReactNode }) {
   const { fontFamily } = usePersonalization()
+  const { selectedFont, setSelectedFont } = useFontFamilySelector()
 
   const fontsQuery = useQuery<{
     enabled: boolean

@@ -20,22 +20,17 @@ import {
 
 import forgeAPI from '@/forgeAPI'
 
+import { useFontFamilySelector } from '../../../contexts/FontFamilySelectorContext'
+
 import type { CustomFont } from '..'
 import CustomFontUploadModal from './CustomFontUploadModal'
 
-function CustomFontCard({
-  font,
-  selectedFont,
-  setSelectedFont
-}: {
-  font: CustomFont
-  selectedFont: string | null
-  setSelectedFont: (font: string | null) => void
-}) {
+function CustomFontCard({ font }: { font: CustomFont }) {
   const { t } = useTranslation('common.personalization')
   const queryClient = useQueryClient()
   const { open } = useModalStore()
   const { fontFamily } = usePersonalization()
+  const { selectedFont, setSelectedFont } = useFontFamilySelector()
 
   const isSelected = selectedFont?.replace(/^custom:/, '') === font.id
 
