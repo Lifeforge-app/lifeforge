@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 
 import { Button } from '@/components/inputs'
+import { FILE_ICONS } from '@/components/inputs/FileInput/constants/file_icons'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 
-import { FILE_ICONS } from '../../../constants/file_icons'
 import { useFilePicker } from '../../../contexts/FilePickerContext'
 
 export function PreviewContainer({

@@ -90,7 +90,7 @@ export function Pixabay() {
 
   return (
     <WithQueryData
-      controller={forgeAPI.checkAPIKeys({ keys: 'pixabay' }).setHost(apiHost)}
+      contract={forgeAPI.checkAPIKeys({ keys: 'pixabay' }).setHost(apiHost)}
     >
       {exists =>
         exists ? (

@@ -30,7 +30,7 @@ function LoginPage() {
   }, [searchParams])
 
   return (
-    <WithQueryData controller={forgeAPI.user.oauth.listProviders}>
+    <WithQueryData contract={forgeAPI.user.oauth.listProviders}>
       {providers => (
         <>
           <Stack

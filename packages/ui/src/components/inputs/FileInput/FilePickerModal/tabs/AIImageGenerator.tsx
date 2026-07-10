@@ -44,7 +44,7 @@ export function AIImageGenerator() {
 
   return (
     <WithQueryData
-      controller={forgeAPI.checkAPIKeys({ keys: 'openai' }).setHost(apiHost)}
+      contract={forgeAPI.checkAPIKeys({ keys: 'openai' }).setHost(apiHost)}
     >
       {keyExists =>
         keyExists ? (

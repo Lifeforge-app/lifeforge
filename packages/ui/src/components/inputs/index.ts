@@ -44,12 +44,6 @@ export * from './ComboboxInput'
 
 export * from './ComboboxInput/components/ComboboxOption'
 
-export * from './FileInput/FilePickerModal'
-
-export * from './ColorInput/ColorPickerModal'
-
-export * from './IconInput/IconPickerModal'
-
 export * from './shared/components/InputWrapper'
 
 export * from './shared/components/InputIcon'
@@ -57,9 +51,5 @@ export * from './shared/components/InputIcon'
 export * from './shared/components/InputLabel'
 
 export * from './QRCodeScanner'
-
-export * from './FileInput/FilePickerModal/components/LocalUpload/components/DnDContainer'
-
-export * from './FileInput/FilePickerModal/components/LocalUpload/components/PreviewContainer'
 
 export * from './Listbox'

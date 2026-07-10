@@ -1,6 +1,5 @@
-import { createTabbedView } from '@/components'
+import { type FilePickerSourceConfig, createTabbedView } from '@/components'
 
-import type { FilePickerSourceConfig } from '../..'
 import { AIImageGenerator } from './AIImageGenerator'
 import { ImageURL } from './ImageURL'
 import { LocalUpload } from './LocalUpload'

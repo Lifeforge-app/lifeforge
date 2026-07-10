@@ -5,14 +5,14 @@ import type { ForgeEndpoint, InferOutput } from '@lifeforge/api'
 import { ErrorScreen, LoadingScreen } from '@/components/feedback'
 
 export function WithQueryData<T extends ForgeEndpoint>({
-  controller,
+  contract,
   queryOptions,
   children,
   showLoading = true,
   showRetryButton = true,
   loaderSize
 }: {
-  controller: T
+  contract: T
   queryOptions?: Omit<UseQueryOptions, 'queryKey' | 'queryFn'> & {
     queryKey?: unknown[]
   }
@@ -22,7 +22,7 @@ export function WithQueryData<T extends ForgeEndpoint>({
   loaderSize?: string
 }) {
   const query = useQuery(
-    controller.queryOptions({
+    contract.queryOptions({
       retry: false,
       ...queryOptions
     })

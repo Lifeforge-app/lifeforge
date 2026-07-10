@@ -215,7 +215,7 @@ import { WithQueryData } from '@lifeforge/ui'
 
 function ItemList() {
   return (
-    <WithQueryData controller={forgeAPI.items.list}>
+    <WithQueryData contract={forgeAPI.items.list}>
       {items => (
         <ul>
           {items.map(item => (
@@ -818,7 +818,7 @@ function MyComponent() {
 The `WithQueryData` and `WithQuery` components handle errors automatically by displaying an `ErrorScreen` with a retry button:
 
 ```tsx
-<WithQueryData controller={forgeAPI.items.list}>
+<WithQueryData contract={forgeAPI.items.list}>
   {items => /* This only renders when data is available */}
 </WithQueryData>
 // Error screen is shown automatically if the query fails
@@ -952,7 +952,7 @@ Always prefer the wrapper components over manual loading/error handling:
 
 ```tsx
 // ✅ Good - automatic loading and error states
-<WithQueryData controller={forgeAPI.items.list}>
+<WithQueryData contract={forgeAPI.items.list}>
   {items => <ItemList items={items} />}
 </WithQueryData>
 
