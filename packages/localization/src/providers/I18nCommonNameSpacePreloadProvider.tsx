@@ -1,7 +1,7 @@
 import type React from 'react'
 import { getI18n } from 'react-i18next'
 
-function I18nCommonNameSpacePreloadProvider({
+export function I18nCommonNameSpacePreloadProvider({
   children
 }: {
   children: React.ReactNode
@@ -38,5 +38,3 @@ function I18nCommonNameSpacePreloadProvider({
 
   return children
 }
-
-export default I18nCommonNameSpacePreloadProvider

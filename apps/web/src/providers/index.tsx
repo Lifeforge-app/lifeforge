@@ -11,7 +11,10 @@ import {
   setForgeMutationErrorHandler
 } from '@lifeforge/api'
 import { FederationProvider } from '@lifeforge/federation'
-import { I18nInitProvider } from '@lifeforge/localization'
+import {
+  I18nCommonNameSpacePreloadProvider,
+  I18nInitProvider
+} from '@lifeforge/localization'
 import {
   APIOnlineStatusWrapper,
   BackgroundProvider,
@@ -32,7 +35,6 @@ import { initI18n } from '@/i18n'
 import AppRoutesProvider from '@/routes/providers/AppRoutesProvider'
 
 import ExternalModuleProviders from './features/ExternalModuleProviders'
-import I18nCommonNameSpacePreloadProvider from './features/I18nCommonNameSpacePreloadProvider'
 import UserPersonalizationProvider from './features/UserPersonalizationProvider'
 import { constructComponentTree, defineProviders } from './utils/providerUtils'
 

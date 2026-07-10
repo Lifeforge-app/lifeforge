@@ -2,8 +2,6 @@ import i18n from 'i18next'
 import I18NextHttpBackend from 'i18next-http-backend'
 import { initReactI18next } from 'react-i18next'
 
-import { forgeAPI } from '../src/utils/forgeAPI'
-
 i18n
   .use(I18NextHttpBackend)
   .use(initReactI18next)
@@ -23,38 +21,19 @@ i18n
     interpolation: {
       escapeValue: false
     },
+    ns: ['common'],
     returnedObjectHandler: (key, value, options) => {
       return JSON.stringify({ key, value, options })
     },
     backend: {
       loadPath: (langs: string[], namespaces: string[]) => {
-        if (!import.meta.env.VITE_API_HOST) {
-          console.error(
-            'VITE_API_HOST is not defined. Please check your .env file in packages/ui/.env'
-          )
-          return
-        }
+        const namespace = namespaces[0]?.split('.')[0]
+        if (!namespace) return
 
-        if (!namespaces.filter(e => e && e !== 'undefined').length) {
-          return
-        }
+        const lang = langs.find(l => l !== 'dev')
+        if (!lang) return
 
-        const [namespace, subnamespace] = namespaces[0].split('.')
-
-        if (!['apps', 'common'].includes(namespace)) {
-          return
-        }
-
-        return forgeAPI.locales.getLocale
-          .setHost(import.meta.env.VITE_API_HOST)
-          .input({
-            lang: langs[0],
-            namespace: namespace as 'apps' | 'common',
-            subnamespace: subnamespace
-          }).endpoint
-      },
-      parse: (data: string) => {
-        return JSON.parse(data).data
+        return `https://raw.githubusercontent.com/Lifeforge-app/lifeforge/main/locales/lang-${lang}/${namespace}.json`
       }
     }
   })

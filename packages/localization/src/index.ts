@@ -7,3 +7,5 @@ export { useLanguageEffect } from './hooks/useLanguageEffect'
 export { useModuleTranslation } from './hooks/useModuleTranslation'
 
 export { I18nInitProvider } from './providers/I18nInitProvider'
+
+export { I18nCommonNameSpacePreloadProvider } from './providers/I18nCommonNameSpacePreloadProvider'

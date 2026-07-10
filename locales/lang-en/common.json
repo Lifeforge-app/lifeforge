@@ -250,7 +250,8 @@
     "invalidIcon": "Invalid icon. It must be a valid icon identifier from Iconify in the format of <icon-set>:<icon-name>.",
     "loadingUserData": "Loading user data...",
     "invalidSelection": "Invalid selection. Please choose a valid option from the list.",
-    "fileInputSupportedFormat": "Supported format: {{format}}"
+    "fileInputSupportedFormat": "Supported format: {{format}}",
+    "viewMode": "View as"
   },
   "sidebar": {
     "buttons": {
