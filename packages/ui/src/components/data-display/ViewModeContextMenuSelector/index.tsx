@@ -23,12 +23,12 @@ export function ViewModeContextMenuSelector<
 
   return (
     <ContextMenuGroup icon="tabler:eye" label={t('common.misc:viewMode')}>
-      {modes.map(({ value, icon }) => (
+      {modes.map(({ value, icon, text }) => (
         <ContextMenuItem
           key={value}
           checked={currentMode === value}
           icon={icon}
-          label={`viewModes.${value}`}
+          label={text || icon || 'Unnamed View Mode'}
           onClick={() => {
             onModeChange(value as TKey)
           }}

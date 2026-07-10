@@ -8,9 +8,6 @@ import { ViewModeContextMenuSelector } from './index'
 
 const meta = {
   argTypes: {
-    menuProps: {
-      control: false
-    },
     modes: {
       control: false
     },

@@ -8,6 +8,6 @@ export * from './ModuleHeader'
 
 export * from './ModuleWrapper'
 
-export * from './WithViewMode'
+export * from './ViewMode'
 
-export * from './WithTab'
+export * from './TabbedView'

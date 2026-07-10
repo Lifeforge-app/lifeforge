@@ -5,25 +5,22 @@ import { Pagination } from '@/components/navigation'
 import { Box, Ring, Transition } from '@/components/primitives'
 import { Scrollbar } from '@/components/utilities'
 
+import { useFilePicker } from '../../../contexts/FilePickerContext'
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'
 
 export function SearchResults({
   results,
   page,
   setPage,
-  file,
-  setFile,
-  setPreview,
   onSearch
 }: {
   results: IPixabaySearchResult
   page: number
   setPage: React.Dispatch<React.SetStateAction<number>>
-  file: string | File | null
-  setFile: React.Dispatch<React.SetStateAction<string | File | null>>
-  setPreview: React.Dispatch<React.SetStateAction<string | null>>
   onSearch: (page: number) => Promise<void>
 }) {
+  const { file, setFile, setPreview } = useFilePicker()
+
   function handlePageChange(newPage: SetStateAction<number>) {
     setPage(prev => {
       const updatedPage =

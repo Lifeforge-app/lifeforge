@@ -17,14 +17,10 @@ function useNuqsOrBasicState<TValue extends string>({
 }) {
   const parser = useMemo(
     () => parseAsStringEnum(options).withDefault(defaultValue || options[0]),
-    [defaultValue, ...options]
+    [defaultValue, options]
   )
 
-  const [nuqsState, setNuqsState] = useQueryState(
-    useNuqs || '',
-    parser
-  )
-
+  const [nuqsState, setNuqsState] = useQueryState(useNuqs || '', parser)
   const [basicState, setBasicState] = useState(defaultValue || options[0])
 
   const finalValue =
@@ -34,12 +30,23 @@ function useNuqsOrBasicState<TValue extends string>({
         ? nuqsState
         : basicState
 
-  const finalSetValue =
-    controlled.setValue !== null
-      ? controlled.setValue
-      : useNuqs !== false
-        ? (value: TValue) => setNuqsState(value)
-        : setBasicState
+  const finalSetValue = (() => {
+    const internalSetter =
+      useNuqs !== false ? (value: TValue) => setNuqsState(value) : setBasicState
+
+    return (value: TValue) => {
+      if (controlled.setValue !== null) {
+        if (controlled.value === null) {
+          internalSetter(value)
+          controlled.setValue(value)
+        } else {
+          controlled.setValue(value)
+        }
+      }
+
+      return internalSetter(value)
+    }
+  })()
 
   return [finalValue, finalSetValue] as [TValue, (value: TValue) => void]
 }

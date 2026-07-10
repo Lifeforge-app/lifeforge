@@ -9,19 +9,14 @@ import { WithQueryData } from '@/components/utilities'
 import { toast } from '@/providers'
 import { forgeAPI } from '@/utils/forgeAPI'
 
-export function AIImageGenerator({
-  file,
-  setFile,
-  setPreview,
-  defaultPrompt
-}: {
-  file: string | File | null
-  setFile: React.Dispatch<React.SetStateAction<string | File | null>>
-  setPreview: React.Dispatch<React.SetStateAction<string | null>>
-  defaultPrompt: string
-}) {
+import { useFilePicker } from '../contexts/FilePickerContext'
+
+export function AIImageGenerator() {
   const apiHost = useAPIEndpoint()
   const [prompt, setPrompt] = useState('')
+  const { file, setFile, setPreview, sources } = useFilePicker()
+
+  const defaultPrompt = sources.ai ? sources.ai.defaultPrompt : ''
 
   const [loading, onSubmit] = usePromiseLoading(async () => {
     if (prompt === '') {

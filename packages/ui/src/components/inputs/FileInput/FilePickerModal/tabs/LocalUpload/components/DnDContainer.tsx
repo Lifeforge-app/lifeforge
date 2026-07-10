@@ -6,25 +6,22 @@ import { Button } from '@/components/inputs'
 import { Bordered, Flex, Icon, Text, Transition } from '@/components/primitives'
 import { colorWithOpacity } from '@/system'
 
+import { useFilePicker } from '../../../contexts/FilePickerContext'
+
 export function DnDContainer({
   getRootProps,
   getInputProps,
-  isDragActive,
-  setPreview,
-  setFile,
-  acceptedMimeTypes
+  isDragActive
 }: {
   getRootProps: (props?: DropzoneRootProps) => DropzoneRootProps
   getInputProps: (props?: DropzoneInputProps) => DropzoneInputProps
   isDragActive: boolean
-  setPreview: (preview: string | null) => void
-  setFile: (file: File | string | null) => void
-  acceptedMimeTypes: Record<string, string[]>
 }) {
   const { t } = useTranslation('common.misc')
+  const { acceptedMimeTypes, setFile, setPreview } = useFilePicker()
 
   const acceptedMimeTypesFlattened = useMemo(() => {
-    return Object.entries(acceptedMimeTypes)
+    return Object.entries(acceptedMimeTypes ?? {})
       .flatMap(([type, exts]) => exts.map(ext => `${type}/${ext}`))
       .join(', ')
   }, [acceptedMimeTypes])

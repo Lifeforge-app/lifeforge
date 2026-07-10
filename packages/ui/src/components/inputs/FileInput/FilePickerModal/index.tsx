@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 
 import { usePromiseLoading } from '@lifeforge/api'
 
 import { Button, type FilePickerSourceConfig } from '@/components/inputs'
-import { Tabs } from '@/components/navigation'
 import { ModalHeader } from '@/components/overlays'
 import { Box, Flex } from '@/components/primitives'
 
-import { AIImageGenerator } from './components/AIImageGenerator'
-import { ImageURL } from './components/ImageURL'
-import { LocalUpload } from './components/LocalUpload'
-import { Pixabay } from './components/Pixabay'
+import { FilePickerContext } from './contexts/FilePickerContext'
+import { FILE_PICKET_TABS, useTabbedView } from './tabs'
 
 export function FilePickerModal({
   data: { sources, mimeTypes, onSelect },
@@ -24,10 +20,9 @@ export function FilePickerModal({
   }
   onClose: () => void
 }) {
-  const { t } = useTranslation('common.modals')
   const [file, setFile] = useState<File | string | null>(null)
   const [preview, setPreview] = useState<string | null>(null)
-  const [mode, setMode] = useState<'local' | 'url' | 'pixabay' | 'ai'>('local')
+  const TabbedView = useTabbedView(sources)
 
   const [loading, onClick] = usePromiseLoading(() =>
     onSelect(file as string | File, preview)
@@ -36,10 +31,6 @@ export function FilePickerModal({
         onClose()
       })
   )
-  useEffect(() => {
-    setFile(null)
-    setMode('local')
-  }, [])
 
   return (
     <Box minWidth="70vw">
@@ -49,86 +40,39 @@ export function FilePickerModal({
         onClose={onClose}
       />
       {Object.values(sources).some(e => e) && (
-        <Tabs
-          currentTab={mode}
-          enabled={(['local', 'url', 'pixabay', 'ai'] as const).filter(
-            name => name === 'local' || sources[name]
-          )}
-          items={[
-            {
-              name: t('imagePicker.local'),
-              icon: 'tabler:upload',
-              id: 'local'
-            },
-            {
-              name: t('imagePicker.url'),
-              icon: 'tabler:link',
-              id: 'url'
-            },
-            {
-              name: t('imagePicker.pixabay'),
-              icon: 'simple-icons:pixabay',
-              id: 'pixabay'
-            },
-            {
-              name: t('imagePicker.ai'),
-              icon: 'tabler:robot',
-              id: 'ai'
-            }
-          ]}
-          onTabChange={(id: 'local' | 'url' | 'pixabay' | 'ai') => {
-            setMode(id)
-            setFile(null)
+        <FilePickerContext.Provider
+          value={{
+            acceptedMimeTypes: mimeTypes,
+            file,
+            preview,
+            setFile,
+            setPreview,
+            sources
           }}
-        />
+        >
+          <TabbedView.Root onTabChange={() => setFile(null)}>
+            <TabbedView.Selector />
+            <Flex
+              direction="column"
+              height="100%"
+              my="lg"
+              style={{ minHeight: 0 }}
+              width="100%"
+            >
+              {Object.entries(FILE_PICKET_TABS).map(
+                ([tabId, { Component }]) => (
+                  <TabbedView.When
+                    key={tabId}
+                    tabId={tabId as keyof typeof FILE_PICKET_TABS}
+                  >
+                    <Component />
+                  </TabbedView.When>
+                )
+              )}
+            </Flex>
+          </TabbedView.Root>
+        </FilePickerContext.Provider>
       )}
-      <Flex
-        direction="column"
-        height="100%"
-        my="lg"
-        style={{ minHeight: 0 }}
-        width="100%"
-      >
-        {(() => {
-          switch (mode) {
-            case 'local':
-              return (
-                <LocalUpload
-                  acceptedMimeTypes={mimeTypes}
-                  file={file}
-                  preview={preview}
-                  setFile={setFile}
-                  setPreview={setPreview}
-                />
-              )
-            case 'url':
-              return (
-                <ImageURL
-                  file={file}
-                  setFile={setFile}
-                  setPreview={setPreview}
-                />
-              )
-            case 'pixabay':
-              return (
-                <Pixabay
-                  file={file}
-                  setFile={setFile}
-                  setPreview={setPreview}
-                />
-              )
-            case 'ai':
-              return (
-                <AIImageGenerator
-                  defaultPrompt={sources.ai ? sources.ai.defaultPrompt : ''}
-                  file={file}
-                  setFile={setFile}
-                  setPreview={setPreview}
-                />
-              )
-          }
-        })()}
-      </Flex>
       <Button
         disabled={file === null}
         icon="tabler:check"
