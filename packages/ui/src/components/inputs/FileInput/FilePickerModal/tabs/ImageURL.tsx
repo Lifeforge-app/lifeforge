@@ -1,15 +1,11 @@
 import { TextInput } from '@/components/inputs'
 import { Box, Icon, Text } from '@/components/primitives'
 
-export function ImageURL({
-  file,
-  setFile,
-  setPreview
-}: {
-  file: string | File | null
-  setFile: React.Dispatch<React.SetStateAction<string | File | null>>
-  setPreview: React.Dispatch<React.SetStateAction<string | null>>
-}) {
+import { useFilePicker } from '../contexts/FilePickerContext'
+
+export function ImageURL() {
+  const { file, setFile, setPreview } = useFilePicker()
+
   return (
     <>
       <TextInput

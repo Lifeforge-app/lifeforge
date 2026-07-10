@@ -4,22 +4,21 @@ import { Button } from '@/components/inputs'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 import { FILE_ICONS } from '../../../constants/file_icons'
+import { useFilePicker } from '../../../contexts/FilePickerContext'
 
 export function PreviewContainer({
   preview,
-  setPreview,
   file,
-  setFile,
   fileName,
   onRemove
 }: {
   preview: string | null
-  setPreview: (preview: string | null) => void
   file: File | string | null
-  setFile: (file: File | null) => void
   fileName?: string
   onRemove?: () => void
 }) {
+  const { setFile, setPreview } = useFilePicker()
+
   const finalFileName = useMemo(() => {
     if (fileName) return fileName
     if (typeof file === 'string') return file.split('/').pop()

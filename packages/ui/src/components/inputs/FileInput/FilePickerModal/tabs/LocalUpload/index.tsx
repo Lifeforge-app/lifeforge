@@ -4,22 +4,14 @@ import { useDropzone } from 'react-dropzone'
 
 import { toast } from '@/providers'
 
+import { useFilePicker } from '../../contexts/FilePickerContext'
 import { DnDContainer } from './components/DnDContainer'
 import { PreviewContainer } from './components/PreviewContainer'
 
-export function LocalUpload({
-  acceptedMimeTypes,
-  setFile,
-  file,
-  setPreview,
-  preview
-}: {
-  acceptedMimeTypes?: Record<string, string[]>
-  setFile: (file: File | string | null) => void
-  file: File | string | null
-  setPreview: (preview: string | null) => void
-  preview: string | null
-}) {
+export function LocalUpload() {
+  const { acceptedMimeTypes, file, preview, setFile, setPreview } =
+    useFilePicker()
+
   const onDrop = useCallback((acceptedFiles: File[]) => {
     acceptedFiles[0]
       .arrayBuffer()
@@ -39,39 +31,32 @@ export function LocalUpload({
         }
 
         if (mimeType !== undefined && mimeType.mime.startsWith('image')) {
-          const file = new FileReader()
+          const reader = new FileReader()
 
-          file.onload = function () {
-            setPreview(file.result as string)
+          reader.onload = function () {
+            setPreview(reader.result as string)
           }
 
-          file.readAsDataURL(acceptedFiles[0])
+          reader.readAsDataURL(acceptedFiles[0])
         }
 
         setFile(acceptedFiles[0])
       })
       .catch(console.error)
   }, [])
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: acceptedMimeTypes
+    accept: acceptedMimeTypes,
+    onDrop
   })
 
   return file === null ? (
     <DnDContainer
-      acceptedMimeTypes={acceptedMimeTypes || {}}
       getInputProps={getInputProps}
       getRootProps={getRootProps}
       isDragActive={isDragActive}
-      setFile={setFile}
-      setPreview={setPreview}
     />
   ) : (
-    <PreviewContainer
-      file={file as File}
-      preview={preview}
-      setFile={setFile}
-      setPreview={setPreview}
-    />
+    <PreviewContainer file={file as File} preview={preview} />
   )
 }

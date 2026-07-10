@@ -46,15 +46,7 @@ export function reducer(
   }
 }
 
-export function Pixabay({
-  file,
-  setFile,
-  setPreview
-}: {
-  file: string | File | null
-  setFile: React.Dispatch<React.SetStateAction<string | File | null>>
-  setPreview: React.Dispatch<React.SetStateAction<string | null>>
-}) {
+export function Pixabay() {
   const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
 
@@ -207,12 +199,9 @@ export function Pixabay({
                       />
                     ) : (
                       <SearchResults
-                        file={file}
                         page={page}
                         results={results}
-                        setFile={setFile}
                         setPage={setPage}
-                        setPreview={setPreview}
                         onSearch={onSearch}
                       />
                     )
