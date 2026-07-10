@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 import { useAPIEndpoint, usePromiseLoading } from '@lifeforge/api'
 
+import { WithQueryData } from '@/components/api'
 import { EmptyStateScreen } from '@/components/feedback'
 import { Button, TextAreaInput } from '@/components/inputs'
 import { Box, Flex } from '@/components/primitives'
-import { WithQueryData } from '@/components/utilities'
 import { toast } from '@/providers'
 import { forgeAPI } from '@/utils/forgeAPI'
 

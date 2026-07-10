@@ -1,6 +1,6 @@
+import { Tooltip } from '@/components/feedback'
 import { Card, type CardProps } from '@/components/layout'
 import { Flex, Icon, Text } from '@/components/primitives'
-import { Tooltip } from '@/components/utilities'
 import type { ResponsiveProp, SpaceToken } from '@/system'
 
 type DirectionValue = 'row' | 'column' | 'row-reverse' | 'column-reverse'

@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { TagChip } from '@/components/data-display'
+import { TagChip } from '@/components/display'
 import { Flex, Icon, Text, Transition } from '@/components/primitives'
 import { usePersonalization } from '@/providers'
 

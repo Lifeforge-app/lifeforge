@@ -1,9 +1,9 @@
 import type { CSSProperties, SetStateAction } from 'react'
 import PhotoAlbum from 'react-photo-album'
 
+import { Scrollbar } from '@/components/layout'
 import { Pagination } from '@/components/navigation'
 import { Box, Ring, Transition } from '@/components/primitives'
-import { Scrollbar } from '@/components/utilities'
 
 import { useFilePicker } from '../../../contexts/FilePickerContext'
 import { type IPixabaySearchResult } from '../typescript/pixabay_interfaces'

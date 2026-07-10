@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
+import { Tooltip } from '@/components/feedback'
 import { SliderInput, Switch } from '@/components/inputs'
 import { Flex, Text } from '@/components/primitives'
-import { Tooltip } from '@/components/utilities'
 
 import { OptionsColumn } from './index'
 

@@ -5,8 +5,9 @@ import { useEffect } from 'react'
 import { ModuleMetadataProvider } from '@lifeforge/federation'
 
 import { Flex } from '@/components/primitives'
-import { Scrollbar } from '@/components/utilities'
 import { ModuleSidebarStateProvider } from '@/providers'
+
+import { Scrollbar } from '../Scrollbar'
 
 /**
  * The wrapper component for all modules in the app. It provides the layout and context for the module header and sidebar, as well as handling query cleanup on unmount if specified. If being used within LifeForge instance, it will be automatically wrapped around the module content. Therefore, no explicit usage is needed in most cases.

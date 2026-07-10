@@ -2,6 +2,7 @@ import { useReducer, useState } from 'react'
 
 import { useAPIEndpoint, usePromiseLoading } from '@lifeforge/api'
 
+import { WithQueryData } from '@/components/api'
 import {
   EmptyStateScreen,
   ErrorScreen,
@@ -9,7 +10,6 @@ import {
 } from '@/components/feedback'
 import { Button, SearchInput } from '@/components/inputs'
 import { Flex } from '@/components/primitives'
-import { WithQueryData } from '@/components/utilities'
 import { toast } from '@/providers'
 import { forgeAPI } from '@/utils/forgeAPI'
 

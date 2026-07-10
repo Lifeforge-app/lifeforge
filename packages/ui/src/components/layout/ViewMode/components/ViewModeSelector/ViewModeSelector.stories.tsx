@@ -4,8 +4,8 @@ import { useState } from 'react'
 import { SearchInput } from '@/components/inputs'
 import { Box, Flex } from '@/components/primitives'
 
-import { Widget } from '../Widget'
 import { ViewModeSelector } from './index'
+import { Widget } from '@/components/display';
 
 const meta = {
   argTypes: {

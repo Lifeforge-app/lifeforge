@@ -3,8 +3,8 @@ import { collections as importedCollections } from '@iconify/collections'
 import { type IconifyInfo } from '@iconify/types'
 import { useMemo, useState } from 'react'
 
+import { Scrollbar } from '@/components/layout'
 import { Box, Flex } from '@/components/primitives'
-import { Scrollbar } from '@/components/utilities'
 
 import type { IIconSet } from '../../typescript/icon_selector_interfaces'
 import { CategoryEntry } from './components/CategoryEntry'

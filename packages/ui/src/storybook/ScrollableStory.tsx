@@ -1,5 +1,5 @@
+import { Scrollbar } from '@/components/layout'
 import { Box, Flex } from '@/components/primitives'
-import { Scrollbar } from '@/components/utilities'
 
 export function ScrollableStory({ children }: { children: React.ReactNode }) {
   return (

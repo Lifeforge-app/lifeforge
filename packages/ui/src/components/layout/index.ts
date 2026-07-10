@@ -11,3 +11,9 @@ export * from './ModuleWrapper'
 export * from './ViewMode'
 
 export * from './TabbedView'
+
+export * from './Scrollbar'
+
+export * from './VirtualGrid'
+
+export * from './PrintArea'
