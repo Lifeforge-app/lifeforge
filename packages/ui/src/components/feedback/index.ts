@@ -7,3 +7,5 @@ export * from './ErrorScreen'
 export * from './LoadingScreen'
 
 export * from './NotFoundScreen'
+
+export * from './Tooltip'

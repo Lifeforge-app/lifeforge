@@ -1,6 +1,9 @@
 import { Box, Flex } from '@/components/primitives'
 
-import { Scrollbars, type ScrollbarsProps } from '../Scrollbars'
+import {
+  Scrollbars,
+  type ScrollbarsProps
+} from './components/ReactCustomScrollbars'
 
 /**
  * A wrapper around the `react-custom-scrollbars` component that provides custom styling and optional right padding.

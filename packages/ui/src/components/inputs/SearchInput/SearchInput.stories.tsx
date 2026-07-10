@@ -3,9 +3,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
 import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
-import { WithQuery } from '@/components/utilities'
 
 import { SearchInput } from './index'
+import { WithQuery } from '@/components/api';
 
 const meta = {
   component: SearchInput,

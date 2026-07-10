@@ -5,11 +5,10 @@ import { create } from 'zustand'
 import { useModuleMetadata } from '@lifeforge/federation'
 import { useModuleTranslation } from '@lifeforge/localization'
 
-import {
-  ViewModeContextMenuSelector as ViewModeContextMenuSelectorComponent,
-  ViewModeSelector as ViewModeSelectorComponent
-} from '@/components/data-display'
 import useNuqsOrBasicState from '@/hooks/useNuqsOrBasicState'
+
+import { ViewModeContextMenuSelector as ViewModeContextMenuSelectorComponent } from './components/ViewModeContextMenuSelector'
+import { ViewModeSelector as ViewModeSelectorComponent } from './components/ViewModeSelector'
 
 export interface ViewModeState<TMode extends string = string> {
   currentMode: TMode
