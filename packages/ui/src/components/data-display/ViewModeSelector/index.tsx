@@ -16,7 +16,7 @@ interface ViewModeSelectorProps<
   /** Callback when the mode is changed */
   onModeChange: (value: TKey) => void
   /** An array of objects representing the available view modes */
-  options: T
+  modes: T
 }
 
 /**
@@ -29,7 +29,7 @@ export function ViewModeSelector<
   currentMode,
   size = 'default',
   onModeChange,
-  options,
+  modes,
   ...rest
 }: ViewModeSelectorProps<T, TKey>) {
   return (
@@ -43,7 +43,7 @@ export function ViewModeSelector<
       r="lg"
       {...rest}
     >
-      {options.map(({ value, icon, text }) => (
+      {modes.map(({ value, icon, text }) => (
         <Transition key={value}>
           <Text
             asChild
@@ -59,7 +59,7 @@ export function ViewModeSelector<
             weight={value === currentMode ? 'semibold' : 'normal'}
           >
             <Flex
-              align="center"
+              centered
               as="button"
               bg={
                 value === currentMode

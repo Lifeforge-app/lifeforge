@@ -5,7 +5,7 @@ import {
   Button,
   ModalHeader,
   Stack,
-  Tabs,
+  WithTab,
   toast,
   usePersonalization
 } from '@lifeforge/ui'
@@ -15,17 +15,10 @@ import { useUserPersonalization } from '@/providers/features/UserPersonalization
 import CustomFontSelector from './tabs/custom'
 import GoogleFontSelector from './tabs/google'
 
-type TabType = 'google' | 'custom'
-
 function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation('common.personalization')
   const { fontFamily } = usePersonalization()
   const { changeFontFamily } = useUserPersonalization()
-
-  const [activeTab, setActiveTab] = useState<TabType>(
-    fontFamily.startsWith('custom:') ? 'custom' : 'google'
-  )
-
   const [selectedFont, setSelectedFont] = useState<string | null>(fontFamily)
 
   return (
@@ -36,10 +29,9 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
         title="fontFamily.modals.fontFamilySelector"
         onClose={onClose}
       />
-      <Tabs
-        currentTab={activeTab}
-        enabled={['google', 'custom'] as const}
-        items={
+      <WithTab
+        defaultValue={fontFamily.startsWith('custom:') ? 'custom' : 'google'}
+        tabs={
           [
             {
               id: 'google',
@@ -53,21 +45,29 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
             }
           ] as const
         }
-        onTabChange={setActiveTab}
-      />
-      <Stack flex="1" width="100%">
-        {activeTab === 'google' ? (
-          <GoogleFontSelector
-            selectedFont={selectedFont}
-            setSelectedFont={setSelectedFont}
-          />
-        ) : (
-          <CustomFontSelector
-            selectedFont={selectedFont}
-            setSelectedFont={setSelectedFont}
-          />
+        useNuqs={false}
+      >
+        {({ TabSelector, Tab }) => (
+          <>
+            <TabSelector />
+            <Stack flex="1" width="100%">
+              <Tab tabId="google">
+                <GoogleFontSelector
+                  selectedFont={selectedFont}
+                  setSelectedFont={setSelectedFont}
+                />
+              </Tab>
+
+              <Tab tabId="custom">
+                <CustomFontSelector
+                  selectedFont={selectedFont}
+                  setSelectedFont={setSelectedFont}
+                />
+              </Tab>
+            </Stack>
+          </>
         )}
-      </Stack>
+      </WithTab>
       {selectedFont && selectedFont !== fontFamily && (
         <Button
           icon="tabler:check"

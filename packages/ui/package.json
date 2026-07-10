@@ -64,6 +64,7 @@
     "react-photo-album": "^2.4.1",
     "react-tooltip": "^5.30.0",
     "react-virtualized": "^9.22.6",
+    "nuqs": "^2.7.1",
     "rrule": "^2.8.1",
     "uuid": "^11.1.0",
     "react-toastify": "^11.0.5",

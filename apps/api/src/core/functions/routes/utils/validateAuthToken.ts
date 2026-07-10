@@ -11,6 +11,8 @@ export default async function isAuthTokenValid(
 
   const pb = new Pocketbase(process.env.PB_HOST)
 
+  pb.autoCancellation(false)
+
   if (!bearerToken || req.url.startsWith('/user/auth')) {
     if (req.url === '/' || noAuth) {
       req.pb = (module: { id: string }) => new PBService(pb, module)

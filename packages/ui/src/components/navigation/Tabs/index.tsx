@@ -25,7 +25,7 @@ export function Tabs<
     readonly name: string
     readonly color?: string
     readonly icon?: string
-    readonly amount?: number
+    readonly amount?: number | ((currentTab: string) => number)
   }>,
   TKey = T extends ReadonlyArray<{ readonly id: infer U }> ? U : never
 >({ items, enabled, currentTab, onTabChange, className }: TabsProps<T, TKey>) {
@@ -33,81 +33,85 @@ export function Tabs<
     <Flex align="center" className={className} gapY="sm" wrap="wrap">
       {items
         .filter(({ id }) => enabled.includes(id as TKey))
-        .map(({ name, icon, id, color }) => (
-          <Bordered
-            key={id}
-            asChild
-            borderColor={
-              currentTab !== id
-                ? {
-                    base: 'bg-400',
-                    hover: 'bg-800',
-                    dark: 'bg-500',
-                    darkHover: 'bg-200'
-                  }
-                : !color
-                  ? { base: 'custom-500' }
-                  : undefined
-            }
-            borderSide="bottom"
-            borderWidth="2px"
-            style={
-              color && currentTab === id ? { borderColor: color } : undefined
-            }
-          >
-            <Transition>
-              <Text
-                asChild
-                color={
-                  currentTab === id
+        .map(({ name, icon, id, color, amount }) => {
+          const resolvedAmount =
+            typeof amount === 'function' ? amount(currentTab as string) : amount
+
+          return (
+            <Bordered
+              key={id}
+              asChild
+              borderColor={
+                currentTab !== id
+                  ? {
+                      base: 'bg-400',
+                      hover: 'bg-800',
+                      dark: 'bg-500',
+                      darkHover: 'bg-200'
+                    }
+                  : !color
                     ? { base: 'custom-500' }
-                    : {
-                        base: 'bg-400',
-                        hover: 'bg-800',
-                        dark: 'bg-500',
-                        darkHover: 'bg-200'
-                      }
-                }
-                tracking="wide"
-                transform="uppercase"
-                whiteSpace="nowrap"
-              >
-                <Flex
-                  align="center"
-                  as="button"
-                  bg="transparent"
-                  flex="1 1 0%"
-                  gap="sm"
-                  justify="center"
-                  p="md"
-                  style={color && currentTab === id ? { color } : {}}
-                  onClick={() => {
-                    onTabChange(id as TKey)
-                  }}
+                    : undefined
+              }
+              borderSide="bottom"
+              borderWidth="2px"
+              style={
+                color && currentTab === id ? { borderColor: color } : undefined
+              }
+            >
+              <Transition>
+                <Text
+                  asChild
+                  color={
+                    currentTab === id
+                      ? { base: 'custom-500' }
+                      : {
+                          base: 'bg-400',
+                          hover: 'bg-800',
+                          dark: 'bg-500',
+                          darkHover: 'bg-200'
+                        }
+                  }
+                  tracking="wide"
+                  transform="uppercase"
+                  whiteSpace="nowrap"
                 >
-                  {icon && <Icon icon={icon} />}
-                  <Text
-                    as="span"
-                    display="block"
-                    weight={currentTab === id ? 'medium' : 'normal'}
+                  <Flex
+                    align="center"
+                    as="button"
+                    bg="transparent"
+                    flex="1 1 0%"
+                    gap="sm"
+                    justify="center"
+                    p="md"
+                    style={color && currentTab === id ? { color } : {}}
+                    onClick={() => {
+                      onTabChange(id as TKey)
+                    }}
                   >
-                    {name}
-                  </Text>
-                  {items.find(item => item.name === name)?.amount !==
-                    undefined && (
+                    {icon && <Icon icon={icon} />}
                     <Text
                       as="span"
-                      display={{ base: 'none', sm: 'block' }}
-                      size="sm"
+                      display="block"
+                      weight={currentTab === id ? 'medium' : 'normal'}
                     >
-                      ({items.find(item => item.name === name)?.amount})
+                      {name}
                     </Text>
-                  )}
-                </Flex>
-              </Text>
-            </Transition>
-          </Bordered>
-        ))}
+                    {resolvedAmount !== undefined && (
+                      <Text
+                        as="span"
+                        display={{ base: 'none', sm: 'block' }}
+                        size="sm"
+                      >
+                        ({resolvedAmount})
+                      </Text>
+                    )}
+                  </Flex>
+                </Text>
+              </Transition>
+            </Bordered>
+          )
+        })}
     </Flex>
   )
 }

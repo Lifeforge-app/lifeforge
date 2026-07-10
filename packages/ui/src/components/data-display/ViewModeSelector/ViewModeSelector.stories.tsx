@@ -9,10 +9,10 @@ import { ViewModeSelector } from './index'
 
 const meta = {
   argTypes: {
-    onModeChange: {
+    modes: {
       control: false
     },
-    options: {
+    onModeChange: {
       control: false
     }
   },
@@ -36,11 +36,11 @@ const VIEW_OPTIONS = [
 export const Default: Story = {
   args: {
     currentMode: 'list',
-    onModeChange: () => {},
-    options: VIEW_OPTIONS.map(({ icon, value }) => ({
+    modes: VIEW_OPTIONS.map(({ icon, value }) => ({
       icon,
       value
-    }))
+    })),
+    onModeChange: () => {}
   },
   render: args => {
     const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
@@ -62,8 +62,8 @@ export const Default: Story = {
 export const WithText: Story = {
   args: {
     currentMode: 'list',
-    onModeChange: () => {},
-    options: VIEW_OPTIONS
+    modes: VIEW_OPTIONS,
+    onModeChange: () => {}
   },
   render: args => {
     const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
@@ -85,11 +85,11 @@ export const WithText: Story = {
 export const TextOnly: Story = {
   args: {
     currentMode: 'list',
-    onModeChange: () => {},
-    options: VIEW_OPTIONS.map(({ text, value }) => ({
+    modes: VIEW_OPTIONS.map(({ text, value }) => ({
       text,
       value
-    }))
+    })),
+    onModeChange: () => {}
   },
   render: args => {
     const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
@@ -114,8 +114,8 @@ export const TextOnly: Story = {
 export const BesideSearchBar: Story = {
   args: {
     currentMode: 'list',
-    onModeChange: () => {},
-    options: VIEW_OPTIONS
+    modes: VIEW_OPTIONS,
+    onModeChange: () => {}
   },
   render: args => {
     const [viewMode, setViewMode] = useState<'list' | 'grid' | 'gallery'>(
@@ -151,11 +151,11 @@ export const BesideSearchBar: Story = {
 export const InsideWidget: Story = {
   args: {
     currentMode: '1M',
-    onModeChange: () => {},
-    options: ['1W', '1M', '3M', 'YTD', '1Y', 'ALL'].map(item => ({
+    modes: ['1W', '1M', '3M', 'YTD', '1Y', 'ALL'].map(item => ({
       text: item,
       value: item
-    }))
+    })),
+    onModeChange: () => {}
   },
   render: args => {
     const [viewMode, setViewMode] = useState<
