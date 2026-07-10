@@ -1167,7 +1167,7 @@ return (
 
 ```tsx
 return (
-  <WithQueryData controller={forgeAPI.tasks.listAll}>
+  <WithQueryData contract={forgeAPI.tasks.listAll}>
     {(tasks) => (
       <Stack>
         {tasks.map(t => <Text key={t.id}>{t.name}</Text>)}

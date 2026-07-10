@@ -2,7 +2,7 @@ import { Button } from '@/components/inputs'
 import { Flex, Icon, Text } from '@/components/primitives'
 
 import type { FileValue } from '..'
-import { FILE_ICONS } from '../FilePickerModal/constants/file_icons'
+import { FILE_ICONS } from '../constants/file_icons'
 
 export function CompactFileDisplay({
   value,

@@ -29,7 +29,7 @@ import Commit from "../../components/Commit";
   directly. Good for use cases when query data doesn't need to be manipulated.
 
   ```tsx
-  <WithQueryData controller={forgeAPI.myApp.coolStuff.list}>
+  <WithQueryData contract={forgeAPI.myApp.coolStuff.list}>
     {data => <>{JSON.stringify(data)}</>}
   </WithQueryData>
   ```
