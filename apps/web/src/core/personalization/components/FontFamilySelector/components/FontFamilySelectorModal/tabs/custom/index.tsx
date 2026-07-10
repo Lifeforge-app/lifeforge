@@ -26,13 +26,7 @@ export type CustomFont = {
   collectionId: string
 }
 
-function CustomFontSelector({
-  selectedFont,
-  setSelectedFont
-}: {
-  selectedFont: string | null
-  setSelectedFont: (font: string | null) => void
-}) {
+function CustomFontSelector() {
   const { t } = useTranslation('common.personalization')
   const { open } = useModalStore()
 
@@ -70,12 +64,7 @@ function CustomFontSelector({
                   >
                     <Stack p="sm">
                       {fonts.map(font => (
-                        <CustomFontCard
-                          key={font.id}
-                          font={font}
-                          selectedFont={selectedFont}
-                          setSelectedFont={setSelectedFont}
-                        />
+                        <CustomFontCard key={font.id} font={font} />
                       ))}
                     </Stack>
                   </Scrollbar>
