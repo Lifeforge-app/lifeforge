@@ -1,5 +1,6 @@
 import type React from 'react'
-import { getI18n } from 'react-i18next'
+
+import { getI18n } from '../getI18n'
 
 export function I18nCommonNameSpacePreloadProvider({
   children
@@ -8,13 +9,12 @@ export function I18nCommonNameSpacePreloadProvider({
 }) {
   const i18n = getI18n()
 
-  i18n.on('loaded', () => {
+  i18n?.on?.('loaded', () => {
     const loadedLangs = i18n.languages || ['en']
 
     for (const lang of loadedLangs) {
       const commonBundle = i18n.getResourceBundle(lang, 'common') as
-        | Record<string, unknown>
-        | undefined
+        Record<string, unknown> | undefined
 
       if (commonBundle) {
         const subnamespaces = Object.keys(commonBundle)
