@@ -1,15 +1,16 @@
 import { Icon } from '@iconify/react'
 import { useEffect } from 'react'
-import Scrollbars from 'react-custom-scrollbars'
 import { useLocation } from 'react-router'
+
+import { Scrollbar } from '@lifeforge/ui'
 
 import { BLACKLISTED_PAGES } from '../Rightbar'
 import NavigationBar from './components/NavigationBar'
 
 function Boilerplate({ children }: { children: React.ReactNode }) {
   const location = useLocation()
-  
-useEffect(() => {
+
+  useEffect(() => {
     const hash = location.hash
 
     if (hash) {
@@ -27,20 +28,7 @@ useEffect(() => {
 
   return (
     <article className="relative h-full min-h-0 flex-1 p-6 !pb-0 sm:p-12 xl:ml-[18rem]">
-      <Scrollbars
-        autoHide
-        autoHideDuration={200}
-        autoHideTimeout={1000}
-        renderThumbVertical={({ style, ...props }) => (
-          <div
-            {...props}
-            className="bg-bg-800 rounded-md"
-            style={{
-              ...style
-            }}
-          />
-        )}
-      >
+      <Scrollbar>
         <div
           className={`flex w-full min-w-0 flex-col sm:pl-8 ${BLACKLISTED_PAGES.some(page => location.pathname.startsWith(page)) ? '' : 'lg:w-[calc(100%-20rem)]'}`}
         >
@@ -77,7 +65,7 @@ useEffect(() => {
             </p>
           </div>
         </div>
-      </Scrollbars>
+      </Scrollbar>
     </article>
   )
 }

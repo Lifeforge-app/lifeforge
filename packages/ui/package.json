@@ -85,7 +85,6 @@
     "@types/lodash": "^4.17.20",
     "@types/raf": "^3.4.3",
     "@types/react": "^19.2.0",
-    "@types/react-custom-scrollbars": "^4.0.13",
     "@types/react-dom": "^19.2.0",
     "@types/react-virtualized": "^9.22.3",
     "@types/tinycolor2": "^1.4.6",
