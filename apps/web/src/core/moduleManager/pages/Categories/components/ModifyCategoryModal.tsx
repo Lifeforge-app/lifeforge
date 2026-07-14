@@ -167,7 +167,7 @@ function ModifyCategoryModal({
         onClose={onClose}
       />
       <WithQueryData
-        controller={forgeAPI.checkAPIKeys({
+        contract={forgeAPI.checkAPIKeys({
           keys: 'openai'
         })}
       >

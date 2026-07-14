@@ -1,6 +1,6 @@
 import { Bordered, Flex, Icon, Text, Transition } from '@/components/primitives'
 
-interface TabsProps<
+export interface TabsProps<
   T,
   TKey = T extends ReadonlyArray<{ readonly id: infer U }> ? U : never
 > {
