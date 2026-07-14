@@ -1,6 +1,5 @@
 import type React from 'react'
-
-import { getI18n } from '../getI18n'
+import { getI18n } from 'react-i18next'
 
 export function I18nCommonNameSpacePreloadProvider({
   children
