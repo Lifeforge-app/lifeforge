@@ -38,7 +38,6 @@
     "postcss": "^8.5.3",
     "pretty-bytes": "^7.1.0",
     "qrcode.react": "^4.2.0",
-    "react-custom-scrollbars": "^4.2.1",
     "react-dropzone": "^14.3.8",
     "react-error-boundary": "^6.0.0",
     "react-grid-layout": "^1.5.2",
