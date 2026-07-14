@@ -14,7 +14,7 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && esbuild ./src/index.ts --bundle --outdir=dist --platform=node --format=esm --packages=external && tsgo --emitDeclarationOnly",
+    "build": "rm -rf dist && vite build && tsgo --emitDeclarationOnly",
     "types": "tsgo --emitDeclarationOnly"
   },
   "dependencies": {
