@@ -39,40 +39,36 @@ export function FilePickerModal({
         title="imagePicker.title"
         onClose={onClose}
       />
-      {Object.values(sources).some(e => e) && (
-        <FilePickerContext.Provider
-          value={{
-            acceptedMimeTypes: mimeTypes,
-            file,
-            preview,
-            setFile,
-            setPreview,
-            sources
-          }}
-        >
-          <TabbedView.Root onTabChange={() => setFile(null)}>
-            <TabbedView.Selector />
-            <Flex
-              direction="column"
-              height="100%"
-              my="lg"
-              style={{ minHeight: 0 }}
-              width="100%"
-            >
-              {Object.entries(FILE_PICKET_TABS).map(
-                ([tabId, { Component }]) => (
-                  <TabbedView.When
-                    key={tabId}
-                    tabId={tabId as keyof typeof FILE_PICKET_TABS}
-                  >
-                    <Component />
-                  </TabbedView.When>
-                )
-              )}
-            </Flex>
-          </TabbedView.Root>
-        </FilePickerContext.Provider>
-      )}
+      <FilePickerContext
+        value={{
+          acceptedMimeTypes: mimeTypes,
+          file,
+          preview,
+          setFile,
+          setPreview,
+          sources
+        }}
+      >
+        <TabbedView.Root onTabChange={() => setFile(null)}>
+          <TabbedView.Selector />
+          <Flex
+            direction="column"
+            height="100%"
+            my="lg"
+            style={{ minHeight: 0 }}
+            width="100%"
+          >
+            {Object.entries(FILE_PICKET_TABS).map(([tabId, { Component }]) => (
+              <TabbedView.When
+                key={tabId}
+                tabId={tabId as keyof typeof FILE_PICKET_TABS}
+              >
+                <Component />
+              </TabbedView.When>
+            ))}
+          </Flex>
+        </TabbedView.Root>
+      </FilePickerContext>
       <Button
         disabled={file === null}
         icon="tabler:check"

@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next'
+import { useModuleTranslation } from '@lifeforge/localization'
 
 import { ContextMenuGroup, ContextMenuItem } from '@/components/overlays'
 
@@ -6,6 +6,7 @@ export interface ViewModeContextMenuSelectorProps<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
   TKey = T[number]['value']
 > {
+  namespace: string | false | undefined
   currentMode: TKey
   onModeChange: (value: TKey) => void
   modes: T
@@ -15,11 +16,12 @@ export function ViewModeContextMenuSelector<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
   TKey = T[number]['value']
 >({
+  namespace,
   currentMode,
   onModeChange,
   modes
 }: ViewModeContextMenuSelectorProps<T, TKey>) {
-  const { t } = useTranslation('common.misc')
+  const { t } = useModuleTranslation(['common.misc'])
 
   return (
     <ContextMenuGroup icon="tabler:eye" label={t('common.misc:viewMode')}>
@@ -28,7 +30,14 @@ export function ViewModeContextMenuSelector<
           key={value}
           checked={currentMode === value}
           icon={icon}
-          label={text || icon || 'Unnamed View Mode'}
+          label={
+            namespace === false
+              ? text || value
+              : t([`viewModes.${text}`, `viewModes.${value}`], {
+                  defaultValue: text || value
+                })
+          }
+          namespace={false}
           onClick={() => {
             onModeChange(value as TKey)
           }}

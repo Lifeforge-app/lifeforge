@@ -57,6 +57,7 @@ export function ViewModeSelector<
             }
             size={size === 'small' ? 'sm' : 'base'}
             weight={value === currentMode ? 'semibold' : 'normal'}
+            whiteSpace="nowrap"
           >
             <Flex
               centered

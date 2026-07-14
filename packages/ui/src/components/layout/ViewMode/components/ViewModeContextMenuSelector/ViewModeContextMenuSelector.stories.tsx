@@ -40,6 +40,7 @@ export const Default: Story = {
       icon,
       value
     })),
+    namespace: false,
     onModeChange: () => {}
   },
   render: args => {
@@ -71,6 +72,7 @@ export const TextOnly: Story = {
       text,
       value
     })),
+    namespace: '',
     onModeChange: () => {}
   },
   render: args => {
