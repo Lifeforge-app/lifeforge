@@ -55,6 +55,7 @@ function NotFoundWidget({
         />
       }
       icon="tabler:apps-off"
+      namespace={false}
       title={widgetId}
     >
       {h > 1 && w > 1 && (

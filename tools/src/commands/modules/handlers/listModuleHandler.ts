@@ -15,7 +15,7 @@ export async function listModulesHandler(): Promise<void> {
   if (totalCount === 0) {
     logger.print('No modules installed')
     logger.print(
-      chalk.dim('  Run "bun forge modules install <name>" to install one')
+      chalk.dim('  Run "pnpm forge modules install <name>" to install one')
     )
 
     return

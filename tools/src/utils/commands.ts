@@ -88,10 +88,10 @@ export default function executeCommand(
 }
 
 /**
- * Runs `bun install` in the root directory to install dependencies.
+ * Runs `pnpm install` in the root directory to install dependencies.
  */
-export function bunInstall() {
-  executeCommand('bun install --ignore-scripts', {
+export function installDeps() {
+  executeCommand('pnpm install --ignore-scripts', {
     cwd: ROOT_DIR
   })
 }
@@ -99,9 +99,9 @@ export function bunInstall() {
 /**
  * Installs a package from the registry and copies it to the target directory.
  *
- * Downloads the package using `bun add` at root, copies from node_modules to the target
+ * Downloads the package using `pnpm add` at root, copies from node_modules to the target
  * directory, adds it as a dependency to the appropriate package.json (apps or locales),
- * removes it from root package.json, and runs `bun install`.
+ * removes it from root package.json, and runs `pnpm install`.
  *
  * @param fullName - The full package name (e.g., `@lifeforge/lifeforge--calendar`)
  * @param targetDir - The absolute path to copy the package to
@@ -118,7 +118,7 @@ export function installPackage(
 
   logger.debug(`Installing ${chalk.blue(fullName)} from registry...`)
 
-  executeCommand(`bun add ${fullName}@latest --ignore-scripts`, {
+  executeCommand(`pnpm add ${fullName}@latest --ignore-scripts`, {
     cwd: ROOT_DIR
   })
 
@@ -144,5 +144,5 @@ export function installPackage(
     fs.rmSync(installedPath, { recursive: true, force: true })
   }
 
-  bunInstall()
+  installDeps()
 }

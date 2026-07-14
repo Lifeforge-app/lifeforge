@@ -6,8 +6,14 @@ import { LOG_LEVELS, type LogLevel, coreLogger } from '@functions/logging'
 import createSocketServer from '@functions/socketio/createSocketServer'
 import chalk from 'chalk'
 import { program } from 'commander'
+import dotenv from 'dotenv'
 import fs from 'fs'
 import { createServer } from 'node:http'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+dotenv.config({ path: path.resolve(__dirname, '../../env/.env.local') })
 
 import { traceRouteStack } from '@lifeforge/server-utils'
 

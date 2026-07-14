@@ -18,8 +18,8 @@ interface BuildOptions {
  * Builds module client and server bundles.
  *
  * For each module:
- * - If client/vite.config.ts exists: Runs `bun run build:client`
- * - If server/index.ts exists: Runs `bun run build:server`
+ * - If client/vite.config.ts exists: Runs `pnpm run build:client`
+ * - If server/index.ts exists: Runs `pnpm run build:server`
  *
  * @param moduleName - Optional module name to build (builds all if omitted)
  * @param options.docker - If true, builds for Docker (outputs to dist-docker with /api base)
@@ -79,7 +79,7 @@ export async function buildModuleHandler(
         logger.info(`Building ${chalk.blue(shortName)} client...`)
 
         try {
-          executeCommand('bun run build:client', {
+          executeCommand('pnpm run build:client', {
             cwd: targetDir,
             env: isDocker ? { ...process.env, DOCKER_BUILD: 'true' } : undefined
           })
@@ -96,7 +96,7 @@ export async function buildModuleHandler(
       logger.info(`Building ${chalk.blue(shortName)} server...`)
 
       try {
-        executeCommand('bun run build:server', {
+        executeCommand('pnpm run build:server', {
           cwd: targetDir
         })
         serverBuiltCount++

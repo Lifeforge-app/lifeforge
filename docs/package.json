@@ -14,8 +14,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "types": "tsc -b",
-    "build": "bun types && vite build",
+    "types": "tsgo -b",
+    "build": "tsgo -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

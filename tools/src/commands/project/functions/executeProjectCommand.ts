@@ -17,7 +17,7 @@ export function executeProjectCommand(
   for (const projectType of finalProjects) {
     const projectPath = PROJECTS[projectType as ProjectType]
 
-    executeCommand(`bun run ${commandType}`, {
+    executeCommand(`pnpm run ${commandType}`, {
       cwd: projectPath
     })
   }

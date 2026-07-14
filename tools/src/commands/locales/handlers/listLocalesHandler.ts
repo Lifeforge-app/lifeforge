@@ -10,7 +10,7 @@ export function listLocalesHandler(): void {
   if (locales.length === 0) {
     logger.info('No language packs installed')
     logger.info(
-      'Use "bun forge locales install <lang>" to install a language pack'
+      'Use "pnpm forge locales install <lang>" to install a language pack'
     )
 
     return

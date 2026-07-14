@@ -187,7 +187,7 @@ export const uninstall = forge
   })
   .callback(async ({ body: { moduleName }, response }) => {
     try {
-      execSync(`bun forge modules uninstall ${moduleName}`, {
+      execSync(`pnpm forge modules uninstall ${moduleName}`, {
         cwd: ROOT_DIR,
         stdio: 'pipe'
       })

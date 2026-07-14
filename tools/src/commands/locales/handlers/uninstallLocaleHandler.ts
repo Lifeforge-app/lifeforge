@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
-import { bunInstall } from '@/utils/commands'
+import { installDeps } from '@/utils/commands'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
@@ -35,7 +35,7 @@ export async function uninstallLocaleHandler(langCode: string): Promise<void> {
 
   removeDependency(fullName)
 
-  bunInstall()
+  installDeps()
 
   logger.success(`Uninstalled ${chalk.blue(fullName)}`)
 }

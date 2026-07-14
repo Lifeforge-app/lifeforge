@@ -1,0 +1,8 @@
+packages:
+  - "./apps/api"
+  - "./apps/web"
+  - "./docs"
+  - "./packages/*"
+  - "./modules/*"
+  - "./locales/*"
+  - "./tools"

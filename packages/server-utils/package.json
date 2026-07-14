@@ -14,8 +14,8 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && bun build ./src/index.ts --outdir=dist --target=node && bun tsgo --emitDeclarationOnly",
-    "types": "bun tsgo --emitDeclarationOnly"
+    "build": "rm -rf dist && esbuild ./src/index.ts --bundle --outdir=dist --platform=node --format=esm --packages=external && tsgo --emitDeclarationOnly",
+    "types": "tsgo --emitDeclarationOnly"
   },
   "dependencies": {
     "chalk": "^5.6.2",
@@ -39,6 +39,7 @@
     "@types/express-serve-static-core": "4",
     "@types/lodash": "^4.17.21",
     "@types/multer": "^1.4.13",
+    "vite": "^7.1.9",
     "vitest": "^4.1.7"
   },
   "peerDependencies": {

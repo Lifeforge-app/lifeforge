@@ -33,7 +33,7 @@ export function setupCLI(): void {
   configureHelp(program)
 
   program
-    .name('bun forge')
+    .name('pnpm forge')
     .description('Build and manage the LifeForge ecosystem')
     .version(getVersion())
     .enablePositionalOptions()
