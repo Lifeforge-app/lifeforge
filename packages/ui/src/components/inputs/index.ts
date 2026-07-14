@@ -18,6 +18,8 @@ export * from './ColorInput'
 
 export * from './FileInput'
 
+export * from './FileInput/FilePickerModal'
+
 export * from './DateInput'
 
 export * from './RRuleInput'
