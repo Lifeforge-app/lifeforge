@@ -6,3 +6,10 @@ packages:
   - "./modules/*"
   - "./locales/*"
   - "./tools"
+
+allowBuilds:
+  es5-ext: true
+  esbuild: true
+  fsevents: true
+  tesseract.js: true
+
