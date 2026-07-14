@@ -15,7 +15,7 @@
   "main": "./dist/server.js",
   "scripts": {
     "types": "tsgo -b",
-    "build": "tsgo -b && esbuild ./src/index.ts --bundle --outfile=./dist/server.js --platform=node --format=esm --minify --define:process.env.NODE_ENV=production --external:pocketbase",
+    "build": "tsgo -b && vite build",
     "start": "tsgo -b && NODE_ENV=production tsx ./src/index.ts",
     "start:prod": "NODE_ENV=production node ./dist/server.js",
     "start:watch": "NODE_ENV=production node --watch ./dist/server.js",
@@ -32,7 +32,6 @@
     "chalk": "^5.4.1",
     "commander": "^14.0.2",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "crypto-js": "^4.2.0",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
@@ -70,6 +69,7 @@
     "eslint": "^9.31.0",
     "forever": "^4.0.3",
     "tsx": "^4.19.1",
+    "vite": "^7.1.9",
     "vitest": "^4.0.2"
   }
 }

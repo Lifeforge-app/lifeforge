@@ -189,9 +189,6 @@ importers:
       cors:
         specifier: ^2.8.5
         version: 2.8.6
-      crypto:
-        specifier: ^1.0.1
-        version: 1.0.1
       crypto-js:
         specifier: ^4.2.0
         version: 4.2.0
@@ -298,6 +295,9 @@ importers:
       tsx:
         specifier: ^4.19.1
         version: 4.23.1
+      vite:
+        specifier: ^7.1.9
+        version: 7.3.6(@types/node@25.9.5)(jiti@2.7.0)(lightningcss@1.32.0)(tsx@4.23.1)
       vitest:
         specifier: ^4.0.2
         version: 4.1.10(@types/node@25.9.5)(@vitest/ui@4.1.10)(vite@7.3.6(@types/node@25.9.5)(jiti@2.7.0)(lightningcss@1.32.0)(tsx@4.23.1))
@@ -4804,10 +4804,6 @@ packages:
   crypto-random-string@2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
     engines: {node: '>=8'}
-
-  crypto@1.0.1:
-    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
-    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
 
   css-select@5.2.2:
     resolution: {integrity: sha512-TizTzUddG/xYLA3NXodFM0fSbNizXjOKhqiQQwvhlspadZokn1KDy0NZFS0wuEubIYAV5/c1/lAr0TaaFXEXzw==}
@@ -13609,8 +13605,6 @@ snapshots:
   crypto-random-string@1.0.0: {}
 
   crypto-random-string@2.0.0: {}
-
-  crypto@1.0.1: {}
 
   css-select@5.2.2:
     dependencies:

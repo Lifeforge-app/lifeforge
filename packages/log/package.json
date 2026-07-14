@@ -20,7 +20,7 @@
     }
   },
   "scripts": {
-    "build": "esbuild ./src/index.ts ./src/loggers/cliLogger.ts --bundle --outdir=dist --platform=node --format=esm --packages=external && tsgo --project tsconfig.json",
+    "build": "vite build && tsgo --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },
