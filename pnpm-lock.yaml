@@ -62,6 +62,9 @@ importers:
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
+      tsx:
+        specifier: ^4.23.1
+        version: 4.23.1
       zod:
         specifier: 4.3.5
         version: 4.3.5
@@ -673,9 +676,6 @@ importers:
 
   packages/api:
     dependencies:
-      '@tanstack/react-query':
-        specifier: ^5.90.2
-        version: 5.101.2(react@19.2.7)
       axios:
         specifier: ^1.12.2
         version: 1.18.1
@@ -685,12 +685,6 @@ importers:
       json-schema-to-ts:
         specifier: ^3.1.1
         version: 3.1.1
-      react:
-        specifier: ^19.2.0
-        version: 19.2.7
-      react-i18next:
-        specifier: ^15.0.0
-        version: 15.7.4(i18next@25.10.10(typescript@5.9.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3)
       socket.io-client:
         specifier: ^4.8.1
         version: 4.8.3
@@ -8051,22 +8045,6 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
-
-  react-i18next@15.7.4:
-    resolution: {integrity: sha512-nyU8iKNrI5uDJch0z9+Y5XEr34b0wkyYj3Rp+tfbahxtlswxSCjcUL9H0nqXo9IR3/t5Y5PKIA3fx3MfUyR9Xw==}
-    peerDependencies:
-      i18next: '>= 23.4.0'
-      react: '>= 16.8.0'
-      react-dom: '*'
-      react-native: '*'
-      typescript: ^5
-    peerDependenciesMeta:
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-      typescript:
-        optional: true
 
   react-i18next@16.6.6:
     resolution: {integrity: sha512-ZgL2HUoW34UKUkOV7uSQFE1CDnRPD+tCR3ywSuWH7u2iapnz86U8Bi3Vrs620qNDzCf1F47NxglCEkchCTDOHw==}
@@ -17482,16 +17460,6 @@ snapshots:
   react-hook-form@7.81.0(react@19.2.7):
     dependencies:
       react: 19.2.7
-
-  react-i18next@15.7.4(i18next@25.10.10(typescript@5.9.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3):
-    dependencies:
-      '@babel/runtime': 7.29.7
-      html-parse-stringify: 3.0.1
-      i18next: 25.10.10(typescript@5.9.3)
-      react: 19.2.7
-    optionalDependencies:
-      react-dom: 19.2.7(react@19.2.7)
-      typescript: 5.9.3
 
   react-i18next@16.6.6(i18next@25.10.10(typescript@5.9.3))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)(typescript@5.9.3):
     dependencies:

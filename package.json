@@ -88,6 +88,7 @@
     "react-i18next": "^16.5.1",
     "react-router": "^7.9.4",
     "tinycolor2": "^1.6.0",
+    "tsx": "^4.23.1",
     "zod": "4.3.5"
   }
 }
