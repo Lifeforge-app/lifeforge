@@ -2,7 +2,6 @@ import type { Command } from 'commander'
 
 import { buildModuleHandler } from './handlers/buildModuleHandler'
 import { compareModuleHandler } from './handlers/compareModuleHandler'
-import { createModuleHandler } from './handlers/createModuleHandler'
 import { installModuleHandler } from './handlers/installModuleHandler'
 import { listModulesHandler } from './handlers/listModuleHandler'
 import { publishModuleHandler } from './handlers/publishModuleHandler'
@@ -60,16 +59,6 @@ export default function setup(program: Command): void {
       'Build for Docker (outputs to dist-docker with /api base)'
     )
     .action(buildModuleHandler)
-
-  command
-    .command('create')
-    .alias('new')
-    .description('Create a new LifeForge module scaffold')
-    .argument(
-      '[moduleName]',
-      'Name of the module to create. Leave empty to prompt.'
-    )
-    .action(createModuleHandler)
 
   command
     .command('publish')

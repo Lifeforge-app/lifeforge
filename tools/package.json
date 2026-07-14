@@ -4,7 +4,7 @@
   "description": "Command line interface for managing LifeForge projects",
   "main": "src/index.ts",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outfile=dist/forge.js --platform=node --format=cjs --minify --banner:js='#!/usr/bin/env node'",
+    "build": "rm -rf dist && vite build",
     "types": "tsgo --noEmit --skipLibCheck"
   },
   "dependencies": {
