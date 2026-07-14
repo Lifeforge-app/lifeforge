@@ -236,7 +236,7 @@ Pass query parameters using `.input()`:
 function EventList({ startDate, endDate }: { startDate: string; endDate: string }) {
   return (
     <WithQueryData
-      controller={forgeAPI.events.getByDateRange.input({
+      contract={forgeAPI.events.getByDateRange.input({
         start: startDate,
         end: endDate
       })}
@@ -259,7 +259,7 @@ Customize behaviour with additional props:
 
 ```tsx
 <WithQueryData
-  controller={forgeAPI.items.list}
+  contract={forgeAPI.items.list}
   queryOptions={{ enabled: isReady }}  // React Query options
   showLoading={true}           // Show loading spinner (default: true)
   showRetryButton={true}       // Show retry button on error (default: true)

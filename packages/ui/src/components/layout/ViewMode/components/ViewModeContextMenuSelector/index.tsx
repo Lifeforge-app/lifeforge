@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import { ContextMenuGroup, ContextMenuItem } from '@/components/overlays'
 
-interface ViewModeContextMenuSelectorProps<
+export interface ViewModeContextMenuSelectorProps<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
   TKey = T[number]['value']
 > {

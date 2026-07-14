@@ -31,7 +31,7 @@ workspace package and is developed/built independently.
   "description": "Your personal library, no overdue fees.",
   "repository": { "type": "git", "url": "..." },
   "scripts": {
-    "types": "cd client && bun tsc",
+    "types": "cd client && tsgo",
     "build:client": "cd client && bun run vite build",
     "build:server": "bun build ./server/index.ts --outdir ./server/dist --target bun --external @lifeforge/server-utils --external zod"
   },

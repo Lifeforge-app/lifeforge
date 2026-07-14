@@ -8,8 +8,10 @@ packages:
   - "./tools"
 
 allowBuilds:
+  core-js: true
   es5-ext: true
   esbuild: true
   fsevents: true
+  sharp: true
   tesseract.js: true
-
+  zipfile: true

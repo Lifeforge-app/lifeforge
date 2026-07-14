@@ -41,9 +41,9 @@ export function WithMasterPassword<TCreationOutput>({
     return (
       <LockedScreen
         challengeController={controllers.getChallenge}
-        onRecoveryRequested={onRecoveryRequested}
         setMasterPassword={setMasterPassword}
         verifyController={controllers.verifyPassword}
+        onRecoveryRequested={onRecoveryRequested}
       />
     )
   }

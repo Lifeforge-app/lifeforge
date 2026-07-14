@@ -94,8 +94,7 @@ export function createViewMode<
     const storedDefault =
       typeof window !== 'undefined' && storageKey
         ? (localStorage.getItem(storageKey) as
-            | TViewModes[number]['value']
-            | null)
+            TViewModes[number]['value'] | null)
         : null
 
     const effectiveDefault = storedDefault ?? defaultValue
@@ -218,3 +217,7 @@ export function createViewMode<
 
   return { Root, When, Selector, ContextMenuSelector, useContext }
 }
+
+export type { ViewModeContextMenuSelectorProps } from './components/ViewModeContextMenuSelector'
+
+export type { ViewModeSelectorProps } from './components/ViewModeSelector'
