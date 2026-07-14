@@ -648,6 +648,9 @@ importers:
       pretty-bytes:
         specifier: ^7.1.0
         version: 7.1.0
+      react-virtualized:
+        specifier: ^9.22.6
+        version: 9.22.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       socket.io:
         specifier: ^4.8.1
         version: 4.8.3
@@ -661,6 +664,9 @@ importers:
       '@types/nodemailer':
         specifier: ^7.0.2
         version: 7.0.12
+      '@types/react-virtualized':
+        specifier: ^9.22.3
+        version: 9.22.3
 
   modules/lifeforge--calendar:
     dependencies:

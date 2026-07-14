@@ -18,8 +18,11 @@
 
 ## UI Library Usage
 
-1. **When being asked to utilize a component in the UI library (`@lifeforge/ui` or `packages/ui`), always check its corresponding `.stories.tsx` file first for usage examples before implementing.** Do not guess the API from the component source alone.
-2. **Before adding `useModuleTranslation` / `t()` for localization, check if the component already handles it internally.** Components like `Button`, `ModalHeader`, `ModuleHeader`, `ContextMenuItem` (with `label` prop), and form fields auto-resolve their text via i18n. Only use `t()` explicitly when the component does not support internal localization (e.g. `Tabs` item names, raw `Text` elements).
+1. **TAILWIND CSS IS STRICTLY PROHIBITED.** No Tailwind utility classes, no `@apply`, no `@reference`, no `@layer`, no `theme()` — in any file type (`.tsx`, `.css`, `.css.ts`, etc.). Every style must use UI primitives (`Box`, `Flex`, `Text`, etc.) and their props, or plain CSS custom properties. Third-party component APIs (`classNames`, `className`) that accept raw strings as a styling mechanism must use plain CSS class names or inline `style` objects — never Tailwind classes.
+
+2. **When being asked to utilize a component in the UI library (`@lifeforge/ui` or `packages/ui`), always check its corresponding `.stories.tsx` file first for usage examples before implementing.** Do not guess the API from the component source alone.
+
+3. **Before adding `useModuleTranslation` / `t()` for localization, check if the component already handles it internally.** Components like `Button`, `ModalHeader`, `ModuleHeader`, `ContextMenuItem` (with `label` prop), and form fields auto-resolve their text via i18n. Only use `t()` explicitly when the component does not support internal localization (e.g. `Tabs` item names, raw `Text` elements).
 
 ## Component Separation Rules
 

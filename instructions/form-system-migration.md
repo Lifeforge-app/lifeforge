@@ -753,6 +753,9 @@ The label prop references the key **after** `inputs.` — e.g. `label="modifyEnt
 > 💡 **Why this convention?** The `inputs.` grouping in the locale file keeps all form field labels organized under one section, while the label prop stays short and focused on the modal-specific key. Each modal gets its own sub-object under `inputs` (e.g. `modifyCollection`, `modifyEntry`, `modifyType`), avoiding flat naming collisions.
 
 **Old field config property → new field prop mapping:**
+
+| Old `.setupFields` property | New prop                                                     | Remarks                                                                                                                         |
+| --------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
 | `icon`                      | `icon`                                                       | Same                                                                                                                            |
 | `required`                  | `required`                                                   | Same                                                                                                                            |
 | `placeholder`               | `placeholder`                                                | Same                                                                                                                            |

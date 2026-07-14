@@ -186,28 +186,16 @@ export function createViewMode<
   function ContextMenuSelector(
     props?: Omit<
       React.ComponentProps<typeof ViewModeContextMenuSelectorComponent>,
-      'modes' | 'currentMode' | 'onModeChange'
+      'modes' | 'currentMode' | 'onModeChange' | 'namespace'
     >
   ) {
     const { currentMode, setCurrentMode } = useContext()
 
-    const { t } = useModuleTranslation(
-      namespace === false ? [] : namespace ? [namespace] : []
-    )
-
-    const items = useMemo(
-      () =>
-        modes.map(mode => ({
-          ...mode,
-          text: namespace === false || !mode.text ? mode.text : t(mode.text)
-        })),
-      []
-    )
-
     return (
       <ViewModeContextMenuSelectorComponent
         currentMode={currentMode}
-        modes={items as unknown as typeof modes}
+        modes={modes}
+        namespace={namespace}
         onModeChange={setCurrentMode}
         {...configContextMenuSelectorProps}
         {...props}
