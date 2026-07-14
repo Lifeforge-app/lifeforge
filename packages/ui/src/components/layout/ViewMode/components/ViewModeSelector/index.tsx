@@ -6,7 +6,7 @@ import {
   Transition
 } from '@/components/primitives'
 
-interface ViewModeSelectorProps<
+export interface ViewModeSelectorProps<
   T extends ReadonlyArray<{ value: string; icon?: string; text?: string }>,
   TKey = T[number]['value']
 > extends FlexProps<'div'> {
