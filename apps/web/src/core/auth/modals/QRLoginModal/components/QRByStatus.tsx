@@ -1,5 +1,4 @@
 import { QRCodeSVG } from 'qrcode.react'
-import { useTranslation } from 'react-i18next'
 
 import {
   Box,
@@ -18,8 +17,6 @@ export default function QRByStatus({
   qrData: string
   refreshSession: () => void
 }) {
-  const { t } = useTranslation('common.auth')
-
   switch (status) {
     case 'loading':
       return <LoadingScreen />
@@ -53,7 +50,7 @@ export default function QRByStatus({
           width="100%"
           onClick={refreshSession}
         >
-          {t('refresh')}
+        refresh
         </Button>
       )
     default:

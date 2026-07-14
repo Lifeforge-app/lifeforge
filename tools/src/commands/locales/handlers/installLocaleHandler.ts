@@ -23,7 +23,7 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
 
   if (fs.existsSync(targetDir)) {
     logger.error(
-      `Locale already exists at locales/${shortName}. Remove it first with: bun forge locales uninstall ${shortName}`
+      `Locale already exists at locales/${shortName}. Remove it first with: pnpm forge locales uninstall ${shortName}`
     )
 
     process.exit(1)

@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite build --watch",
     "types": "tsgo -b --noEmit",
-    "build": "rm -rf dist && bun types && vite build"
+    "build": "rm -rf dist && tsgo -b --noEmit && vite build"
   },
   "dependencies": {
     "axios": "^1.12.2",

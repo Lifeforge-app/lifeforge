@@ -8,15 +8,19 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
     },
     "./cli": {
       "types": "./dist/loggers/cliLogger.d.ts",
-      "import": "./dist/loggers/cliLogger.js"
+      "import": "./dist/loggers/cliLogger.js",
+      "require": "./dist/loggers/cliLogger.js",
+      "default": "./dist/loggers/cliLogger.js"
     }
   },
   "scripts": {
-    "build": "bun build ./src/index.ts ./src/loggers/cliLogger.ts --outdir=dist --target=node && bun tsgo --project tsconfig.json",
+    "build": "esbuild ./src/index.ts ./src/loggers/cliLogger.ts --bundle --outdir=dist --platform=node --format=esm --packages=external && tsgo --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -28,6 +32,7 @@
   },
   "devDependencies": {
     "@types/node": "^25.0.6",
+    "vite": "^7.1.9",
     "vitest": "^4.0.0"
   }
 }

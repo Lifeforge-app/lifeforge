@@ -4,7 +4,7 @@
   "description": "Command line interface for managing LifeForge projects",
   "main": "src/index.ts",
   "scripts": {
-    "build": "bun build src/index.ts --outfile=dist/forge.js --target=bun --minify",
+    "build": "esbuild src/index.ts --bundle --outfile=dist/forge.js --platform=node --format=cjs --minify --banner:js='#!/usr/bin/env node'",
     "types": "tsgo --noEmit --skipLibCheck"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "@types/lodash": "^4.17.21",
     "@types/prompts": "^2.4.9",
     "@types/semver": "^7.7.1",
-    "@types/tar": "^6.1.13"
+    "@types/tar": "^6.1.13",
+    "vite": "^7.1.9"
   }
 }

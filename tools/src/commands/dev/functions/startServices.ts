@@ -18,6 +18,9 @@ export async function startSingleService(
   host?: boolean,
   port?: string
 ): Promise<void> {
+  // Prevent forge CLI's --tsconfig from leaking to child processes
+  delete process.env.TSX_TSCONFIG_PATH
+
   // Handle core services
   if (service in SERVICE_COMMANDS) {
     const config = SERVICE_COMMANDS[service]
@@ -57,7 +60,7 @@ export async function startSingleService(
   if (service in PROJECTS) {
     const projectPath = PROJECTS[service as keyof typeof PROJECTS]
 
-    executeCommand(`cd ${projectPath} && bun run dev`, {}, extraArgs)
+    executeCommand('pnpm run dev', { cwd: projectPath }, extraArgs)
 
     return
   }
@@ -73,6 +76,9 @@ export async function startAllServices(
   port?: string
 ): Promise<void> {
   try {
+    // Prevent forge CLI's --tsconfig from leaking to child processes
+    delete process.env.TSX_TSCONFIG_PATH
+
     const concurrentServices = await getConcurrentServices(host, port)
 
     const { result } = concurrently(concurrentServices, {

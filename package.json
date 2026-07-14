@@ -2,7 +2,7 @@
   "name": "lifeforge-monorepo",
   "private": true,
   "type": "module",
-  "packageManager": "bun@1.3.14",
+  "packageManager": "pnpm@11.13.0",
   "description": "A comprehensive self-hosted all-in-one personal management system",
   "version": "0.0.0",
   "license": "CC BY-NC-SA 4.0",
@@ -22,11 +22,11 @@
     "./tools"
   ],
   "scripts": {
-    "forge": "bun run tools/src/index.ts",
+    "forge": "tsx --tsconfig=$PWD/tools/tsconfig.json tools/src/index.ts",
     "build": "turbo build",
     "types": "turbo types",
     "lint": "prettier --check . && eslint .",
-    "fix": "bun prettier --write ./ && eslint . --fix",
+    "fix": "prettier --write ./ && pnpm lint",
     "test": "turbo test",
     "postinstall": "turbo build --filter=\"./packages/*\""
   },
@@ -50,7 +50,6 @@
     "@typescript-eslint/utils": "8.61.0",
     "@typescript/native-preview": "^7.0.0-dev.20260609.1",
     "@vitejs/plugin-react": "^4.4.1",
-    "bun-types": "latest",
     "concurrently": "^9.1.2",
     "eslint": "^9.26.0",
     "eslint-config-standard-with-typescript": "^40.0.0",

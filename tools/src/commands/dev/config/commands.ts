@@ -38,7 +38,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
 
       if (!fs.existsSync(PB_BINARY_PATH)) {
         logger.error(
-          `PocketBase binary does not exist: ${chalk.blue(PB_BINARY_PATH)}. Please run "bun forge db init" to initialize the database.`
+          `PocketBase binary does not exist: ${chalk.blue(PB_BINARY_PATH)}. Please run "pnpm forge db init" to initialize the database.`
         )
         process.exit(1)
       }
@@ -50,7 +50,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   server: {
     command: async () => {
       const killedProcess = killExistingProcess(
-        'lifeforge/apps/api/node_modules/.bin/tsx'
+        'tsx.*apps/api.*src/index.ts'
       )
 
       if (killedProcess) {
@@ -64,35 +64,35 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
         process.exit(1)
       }
 
-      return 'bun run dev'
+      return 'pnpm run dev'
     },
     cwd: 'apps/api'
   },
   docs: {
     command: () => {
-      killExistingProcess('lifeforge/docs/node_modules/.bin/vite')
+      killExistingProcess('vite.*docs')
 
-      return 'bun run dev'
+      return 'pnpm run dev'
     },
     cwd: 'docs'
   },
   client: {
     command: () => {
-      killExistingProcess('lifeforge/apps/web/node_modules/.bin/vite')
+      killExistingProcess('vite.*apps/web')
 
       if (!fs.existsSync('packages/ui/dist')) {
-        executeCommand('bun forge build ui')
+        executeCommand('pnpm forge build ui')
       }
 
-      return 'bun run dev'
+      return 'pnpm run dev'
     },
     cwd: 'apps/web'
   },
   ui: {
     command: () => {
-      killExistingProcess('lifeforge/packages/ui/node_modules/.bin/storybook')
+      killExistingProcess('storybook.*packages/ui')
 
-      return 'bun run dev'
+      return 'pnpm run dev'
     },
     cwd: 'packages/ui'
   }

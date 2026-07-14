@@ -3,7 +3,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
-import { bunInstall } from '@/utils/commands'
+import { installDeps } from '@/utils/commands'
 import { smartReloadServer } from '@/utils/docker'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
@@ -19,7 +19,7 @@ import { findPackageName, removeDependency } from '@/utils/packageJson'
  * 4. Removes from package.json dependencies
  *
  * After uninstallation:
- * - Runs bun install to clean up
+ * - Runs pnpm install to clean up
  * - Regenerates route and schema registries
  */
 export async function uninstallModuleHandler(
@@ -55,7 +55,7 @@ export async function uninstallModuleHandler(
     return
   }
 
-  bunInstall()
+  installDeps()
 
   smartReloadServer()
 }

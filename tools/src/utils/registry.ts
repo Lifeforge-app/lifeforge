@@ -7,20 +7,20 @@ import logger from '@/utils/logger'
 import { getEnvVar } from './helpers'
 
 /**
- * Gets the registry URL for the @lifeforge scope from bunfig.toml.
+ * Gets the registry URL for the @lifeforge scope from .npmrc.
  *
  * @returns The registry URL, or the default registry if not configured
  */
 export function getRegistryUrl(): string {
-  const bunfigPath = path.join(ROOT_DIR, 'bunfig.toml')
+  const npmrcPath = path.join(ROOT_DIR, '.npmrc')
 
-  if (fs.existsSync(bunfigPath)) {
-    const content = fs.readFileSync(bunfigPath, 'utf-8')
+  if (fs.existsSync(npmrcPath)) {
+    const content = fs.readFileSync(npmrcPath, 'utf-8')
 
-    const match = content.match(/"@lifeforge"\s*=\s*"([^"]+)"/)
+    const match = content.match(/@lifeforge:registry=(.+)/)
 
     if (match) {
-      return match[1]
+      return match[1].trim()
     }
   }
 

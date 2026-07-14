@@ -117,7 +117,7 @@ export function configureHelp(program: Command): void {
       output.push('')
       output.push(
         chalk.dim(
-          `   Run ${chalk.cyan('bun forge <command> --help')} for more info on a specific command`
+          `   Run ${chalk.cyan('pnpm forge <command> --help')} for more info on a specific command`
         )
       )
       output.push('')

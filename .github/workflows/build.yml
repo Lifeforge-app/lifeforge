@@ -17,19 +17,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
-        run: bun upgrade && bun install --linker isolated
+        run: pnpm install --frozen-lockfile
 
       - name: Type check server
-        run: bun run forge types server
+        run: pnpm run forge types server
 
       - name: Build server
-        run: bun run forge build server
+        run: pnpm run forge build server
 
   build-frontend:
     name: Build Frontend
@@ -39,16 +37,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
-        run: bun upgrade && bun install --linker isolated
+        run: pnpm install --frozen-lockfile
 
       - name: Build client
-        run: bun run forge build client
+        run: pnpm run forge build client
 
   build-summary:
     name: Build Summary

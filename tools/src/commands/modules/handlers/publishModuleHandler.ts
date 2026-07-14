@@ -82,7 +82,7 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
   logger.debug(`Publishing ${chalk.blue(moduleName)}...`)
 
   try {
-    executeCommand(`bun publish --registry ${getRegistryUrl()}`, {
+    executeCommand(`pnpm publish --registry ${getRegistryUrl()}`, {
       cwd: modulePath
     })
 

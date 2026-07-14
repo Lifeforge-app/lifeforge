@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 
-import { bunInstall, installPackage } from '@/utils/commands'
+import { installDeps, installPackage } from '@/utils/commands'
 import { confirmAction } from '@/utils/helpers'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
@@ -39,7 +39,7 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
   }
 
   if (upgradedCount > 0) {
-    bunInstall()
+    installDeps()
     logger.success(
       `Upgraded ${upgradedCount} locale${upgradedCount > 1 ? 's' : ''}`
     )
