@@ -1,7 +1,7 @@
 import { verify as argonVerify } from 'argon2'
 import z from 'zod'
 
-import { COOKIE_OPTIONS } from '../constants/cookie'
+import { getCookieOptions } from '../constants/cookie'
 import { getPB } from '../constants/pb'
 import forge from '../forge'
 import {
@@ -90,7 +90,7 @@ export const login = forge
       ip
     })
 
-    res.cookie('refresh_token', refreshToken, COOKIE_OPTIONS)
+    res.cookie('refresh_token', refreshToken, getCookieOptions(req))
 
     return response.ok({ accessToken })
   })

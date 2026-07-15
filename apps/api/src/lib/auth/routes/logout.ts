@@ -1,15 +1,8 @@
 import z from 'zod'
 
+import { getClearCookieOptions } from '../constants/cookie'
 import forge from '../forge'
 import { findToken, revokeFamily } from '../utils/refreshTokenStore'
-
-const COOKIE_CLEAR_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
-  path: '/auth',
-  maxAge: 0
-}
 
 export const logout = forge
   .mutation({
@@ -32,14 +25,14 @@ export const logout = forge
     const record = await findToken(refreshToken)
 
     if (!record) {
-      res.cookie('refresh_token', '', COOKIE_CLEAR_OPTIONS)
+      res.cookie('refresh_token', '', getClearCookieOptions(req))
 
       return response.unauthorized()
     }
 
     await revokeFamily(record.family)
 
-    res.cookie('refresh_token', '', COOKIE_CLEAR_OPTIONS)
+    res.cookie('refresh_token', '', getClearCookieOptions(req))
 
     return response.ok(true)
   })

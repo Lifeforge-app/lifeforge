@@ -4,7 +4,7 @@ import {
 } from '@functions/database/dbUtils'
 import z from 'zod'
 
-import { COOKIE_OPTIONS } from '../constants/cookie'
+import { getCookieOptions } from '../constants/cookie'
 import forge from '../forge'
 import {
   findToken,
@@ -79,7 +79,7 @@ export const refresh = forge
       family: record.family
     })
 
-    res.cookie('refresh_token', newRefreshToken, COOKIE_OPTIONS)
+    res.cookie('refresh_token', newRefreshToken, getCookieOptions(req))
 
     return response.ok({ accessToken })
   })
