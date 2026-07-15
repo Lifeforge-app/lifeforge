@@ -64,7 +64,10 @@ export function FormModal<T extends FieldValues>({
       onClose?.()
     } catch (error) {
       console.error(error)
-      toast.error('Failed to submit form. Please check the console for details')
+      toast.error(
+        (error as Error).message ||
+          'Failed to submit form. Please check the console for details'
+      )
     }
   })
 

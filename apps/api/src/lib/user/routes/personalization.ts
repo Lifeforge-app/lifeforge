@@ -243,9 +243,11 @@ export const updateBgImage = forge
       },
       response
     }) => {
+      const userRecord = await pb.getFirstListItem.collection('users').execute()
+
       const newRecord = await pb.update
         .collection('users')
-        .id(pb.instance.authStore.record!.id)
+        .id(userRecord.id)
         .data({
           ...(await retrieveMedia('bgImage', file)),
           backdropFilters: {
@@ -275,9 +277,11 @@ export const deleteBgImage = forge
     }
   })
   .callback(async ({ pb, response }) => {
+    const userRecord = await pb.getFirstListItem.collection('users').execute()
+
     await pb.update
       .collection('users')
-      .id(pb.instance.authStore.record!.id)
+      .id(userRecord.id)
       .data({
         bgImage: null
       })
@@ -334,9 +338,11 @@ export const updatePersonalization = forge
       return response.badRequest('No data to update')
     }
 
+    const userRecord = await pb.getFirstListItem.collection('users').execute()
+
     await pb.update
       .collection('users')
-      .id(pb.instance.authStore.record!.id)
+      .id(userRecord.id)
       .data(toBeUpdated)
       .execute()
 

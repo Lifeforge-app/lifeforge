@@ -18,32 +18,21 @@ function SigninWithProviderButton({
   const [searchParams] = useSearchParams()
 
   const signInWithProvider = useCallback(async () => {
-    const providerInstance = await fetch(
-      forgeAPI.user.oauth.getEndpoint.input({
-        provider
-      }).endpoint
-    )
-      .then(async res => {
-        const data = await res.json()
+    try {
+      const data = await forgeAPI.auth.oauth.authorize
+        .input({
+          provider
+        })
+        .queryRaw()
 
-        if (res.ok) {
-          return data.data
-        } else {
-          throw new Error(data.message)
-        }
-      })
-      .catch(err => {
-        toast.error("Couldn't fetch provider data")
-        console.error(err)
-      })
+      sessionStorage.setItem('oauthState', data.state)
+      sessionStorage.setItem('oauthProvider', provider)
 
-    if (!providerInstance) return
-
-    localStorage.setItem('authState', providerInstance.state)
-    localStorage.setItem('authProvider', provider)
-
-    window.location.href =
-      providerInstance.authUrl + `${window.location.origin}/auth`
+      window.location.href = data.url
+    } catch (err) {
+      toast.error("Couldn't connect to OAuth provider")
+      console.error(err)
+    }
   }, [provider])
 
   return (

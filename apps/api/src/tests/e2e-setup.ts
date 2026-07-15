@@ -59,7 +59,7 @@ export async function initAuthTests(): Promise<{
   const pb = getPB()
 
   const existingTokens = await pb
-    .collection('user__auth_refresh_tokens')
+    .collection('auth__refresh_tokens')
     .getFullList()
 
   snapshotIds = new Set(existingTokens.map((r: any) => r.id))
@@ -109,11 +109,11 @@ export async function initAuthTests(): Promise<{
 
 export async function cleanupTestTokens(): Promise<void> {
   const pb = getPB()
-  const records = await pb.collection('user__auth_refresh_tokens').getFullList()
+  const records = await pb.collection('auth__refresh_tokens').getFullList()
 
   for (const record of records) {
     if (!snapshotIds.has(record.id)) {
-      await pb.collection('user__auth_refresh_tokens').delete(record.id)
+      await pb.collection('auth__refresh_tokens').delete(record.id)
     }
   }
 }

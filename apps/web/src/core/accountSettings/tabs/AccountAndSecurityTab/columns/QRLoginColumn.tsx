@@ -9,7 +9,7 @@ import {
   useModalStore
 } from '@lifeforge/ui'
 
-import QRLoginApprovalModal from '../modals/QRLoginScannerModal'
+import QRLoginApprovalModal from '../../../modals/QRLoginScannerModal'
 
 function QRLoginColumn() {
   const { open } = useModalStore()

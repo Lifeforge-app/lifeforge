@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next'
 import { useAuth } from '@lifeforge/api'
 import { Flex, OptionsColumn, Switch, Text, useModalStore } from '@lifeforge/ui'
 
-import DisableTwoFAModal from '../modals/DisableTwoFAModal'
-import EnableTwoFAModal from '../modals/EnableTwoFAModal'
+import DisableTwoFAModal from '../../../modals/DisableTwoFAModal'
+import EnableTwoFAModal from '../../../modals/EnableTwoFAModal'
 
 function TwoFAColumn() {
   const { open } = useModalStore()

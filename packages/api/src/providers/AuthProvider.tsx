@@ -51,6 +51,7 @@ interface AuthData {
     password: string
   }) => Promise<string | void>
   logout: () => void
+  verifyOAuth: (code: string, state: string) => Promise<string | false>
   authLoading: boolean
   userData: UserData | null
   setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
@@ -131,6 +132,49 @@ export function AuthProvider({
     _forgeAPI.auth.logout.mutateRaw().catch(() => {})
   }, [])
 
+  const verifyOAuth = useCallback(
+    async (code: string, state: string): Promise<string | false> => {
+      try {
+        const storedState = sessionStorage.getItem('oauthState')
+        const storedProvider = sessionStorage.getItem('oauthProvider')
+
+        if (!state || !storedState || !storedProvider) {
+          return false
+        }
+
+        sessionStorage.removeItem('oauthState')
+        sessionStorage.removeItem('oauthProvider')
+
+        if (storedState !== state) {
+          return false
+        }
+
+        const data = await _forgeAPI.auth.oauth.verify.mutateRaw({
+          code,
+          provider: storedProvider,
+          state
+        })
+
+        setAccessToken(data.accessToken)
+
+        const userResponse = await _forgeAPI.auth.me.queryRaw()
+
+        setUserData(userResponse.userData)
+        setAuth(true)
+
+        return 'success: ' + userResponse.userData.name
+      } catch {
+        setAuth(false)
+        setUserData(null)
+
+        return false
+      } finally {
+        setAuthLoading(false)
+      }
+    },
+    []
+  )
+
   const getAvatarURL = useCallback((): string => {
     if (userData) {
       return (forgeAPI as any).getMedia({
@@ -183,6 +227,7 @@ export function AuthProvider({
       setAuth,
       authenticate,
       logout,
+      verifyOAuth,
       authLoading,
       userData,
       setUserData,

@@ -18,6 +18,7 @@ function getCooldown(count: number): number {
   for (const tier of THRESHOLDS) {
     if (count <= tier.maxAttempts) return tier.cooldownMs
   }
+
   return 300_000
 }
 

@@ -15,6 +15,7 @@ export function ConfirmationModal({
     confirmationButton = 'confirm',
     confirmationPrompt,
     onConfirm,
+    onReject,
     renderChildren
   }
 }: {
@@ -23,11 +24,10 @@ export function ConfirmationModal({
     title: string
     description: string
     confirmationButton?:
-      | 'delete'
-      | 'confirm'
-      | React.ComponentProps<typeof Button>
+      'delete' | 'confirm' | React.ComponentProps<typeof Button>
     confirmationPrompt?: string
     onConfirm?: () => Promise<void>
+    onReject?: () => void
     renderChildren?: (onClose: () => void) => React.ReactNode
   }
 }) {
@@ -81,7 +81,15 @@ export function ConfirmationModal({
           mt="xl"
           width="100%"
         >
-          <Button flex="1" icon="" variant="secondary" onClick={onClose}>
+          <Button
+            flex="1"
+            icon=""
+            variant="secondary"
+            onClick={() => {
+              onClose()
+              onReject?.()
+            }}
+          >
             Cancel
           </Button>
           {typeof confirmationButton === 'string' ? (

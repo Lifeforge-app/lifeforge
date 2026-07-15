@@ -1,35 +1,8 @@
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@functions/database/dbUtils'
+import schema from '@lib/user/schema'
 import z from 'zod'
 
+import { getPB } from '../constants/pb'
 import forge from '../forge'
-
-const UserDataSchema = z.object({
-  id: z.string(),
-  collectionId: z.string(),
-  collectionName: z.string(),
-  email: z.string(),
-  emailVisibility: z.boolean(),
-  verified: z.boolean(),
-  username: z.string(),
-  name: z.string(),
-  avatar: z.string(),
-  dateOfBirth: z.string(),
-  theme: z.enum(['system', 'light', 'dark']),
-  color: z.string(),
-  bgTemp: z.string(),
-  bgImage: z.string(),
-  fontFamily: z.string(),
-  fontScale: z.number(),
-  borderRadiusMultiplier: z.number(),
-  bordered: z.boolean(),
-  language: z.string(),
-  dashboardLayout: z.unknown(),
-  hasAPIKeysMasterPassword: z.boolean(),
-  twoFAEnabled: z.boolean()
-})
 
 export const me = forge
   .query({
@@ -38,16 +11,27 @@ export const me = forge
     input: {},
     output: {
       OK: z.object({
-        userData: UserDataSchema
+        userData: schema.users.omit({
+          backdropFilters: true,
+          APIKeysMasterPasswordHash: true,
+          twoFASecret: true,
+          pinnedFontFamilies: true,
+          auth_password_hash: true,
+          created: true,
+          updated: true
+        })
       }),
       UNAUTHORIZED: true
     }
   })
   .callback(async ({ response }) => {
-    const config = validateEnvironmentVariables()
-    const pb = await connectToPocketBase(config)
-    const users = await pb.collection('users').getList(1, 1)
-    const user = users.items[0] as unknown as Record<string, unknown> | undefined
+    const pb = await getPB('user')
+    const users = await pb.getList
+      .collection('users')
+      .page(1)
+      .perPage(1)
+      .execute()
+    const user = users.items[0]
 
     if (!user) {
       return response.unauthorized()
@@ -64,19 +48,19 @@ export const me = forge
       name: user.name,
       avatar: user.avatar || '',
       dateOfBirth: user.dateOfBirth || '',
-      theme: (user.theme as string) || 'system',
-      color: (user.color as string) || '',
-      bgTemp: (user.bgTemp as string) || '',
-      bgImage: (user.bgImage as string) || '',
-      fontFamily: (user.fontFamily as string) || '',
-      fontScale: (user.fontScale as number) || 1,
-      borderRadiusMultiplier: (user.borderRadiusMultiplier as number) || 1,
-      bordered: (user.bordered as boolean) || false,
-      language: (user.language as string) || 'en',
+      theme: user.theme || 'system',
+      color: user.color || '',
+      bgTemp: user.bgTemp || '',
+      bgImage: user.bgImage || '',
+      fontFamily: user.fontFamily || '',
+      fontScale: user.fontScale || 1,
+      borderRadiusMultiplier: user.borderRadiusMultiplier || 1,
+      bordered: user.bordered || false,
+      language: user.language || 'en',
       dashboardLayout: user.dashboardLayout ?? null,
       hasAPIKeysMasterPassword: Boolean(user.APIKeysMasterPasswordHash),
       twoFAEnabled: Boolean(user.twoFASecret)
-    } as z.infer<typeof UserDataSchema>
+    }
 
     return response.ok({ userData: sanitized })
   })

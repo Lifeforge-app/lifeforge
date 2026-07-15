@@ -1,7 +1,9 @@
+import { verify as argonVerify } from 'argon2'
 import z from 'zod'
 
+import { COOKIE_OPTIONS } from '../constants/cookie'
+import { getPB } from '../constants/pb'
 import forge from '../forge'
-import { verifyPassword } from '../utils/password'
 import {
   checkLoginRateLimit,
   clearLoginRateLimit,
@@ -13,15 +15,6 @@ import {
   generateRefreshToken,
   signAccessToken
 } from '../utils/tokens'
-import { connectToPocketBase, validateEnvironmentVariables } from '@functions/database/dbUtils'
-
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
-  path: '/auth',
-  maxAge: 7 * 24 * 60 * 60 * 1000
-}
 
 export const login = forge
   .mutation({
@@ -30,7 +23,7 @@ export const login = forge
     encrypted: false,
     input: {
       body: z.object({
-        email: z.string().email(),
+        email: z.email(),
         password: z.string().min(1)
       })
     },
@@ -48,12 +41,18 @@ export const login = forge
       return response.unauthorized()
     }
 
-    const config = validateEnvironmentVariables()
-    const pb = await connectToPocketBase(config)
+    const pb = await getPB('user')
 
-    const users = await pb
+    const users = await pb.getFullList
       .collection('users')
-      .getFullList({ filter: `email = "${email}"` })
+      .filter([
+        {
+          field: 'email',
+          operator: '=',
+          value: email
+        }
+      ])
+      .execute()
 
     if (users.length === 0) {
       recordFailedLogin(ip)
@@ -61,9 +60,9 @@ export const login = forge
       return response.unauthorized()
     }
 
-    const user = users[0] as Record<string, unknown>
+    const user = users[0]
 
-    const passwordHash = user.auth_password_hash as string | undefined
+    const passwordHash = user.auth_password_hash
 
     if (!passwordHash) {
       recordFailedLogin(ip)
@@ -71,7 +70,7 @@ export const login = forge
       return response.unauthorized()
     }
 
-    const valid = await verifyPassword(passwordHash, password)
+    const valid = await argonVerify(passwordHash, password)
 
     if (!valid) {
       recordFailedLogin(ip)
@@ -81,9 +80,7 @@ export const login = forge
 
     clearLoginRateLimit(ip)
 
-    const userId = user.id as string
-
-    const accessToken = signAccessToken(userId)
+    const accessToken = signAccessToken(user.id)
     const refreshToken = generateRefreshToken()
     const family = generateFamily()
 
