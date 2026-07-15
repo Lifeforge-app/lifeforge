@@ -1850,17 +1850,10 @@ export const contract = {
             "userData": {
               "type": "object",
               "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "collectionId": {
-                  "type": "string"
-                },
-                "collectionName": {
-                  "type": "string"
-                },
                 "email": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "email",
+                  "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
                 },
                 "emailVisibility": {
                   "type": "boolean"
@@ -1900,6 +1893,7 @@ export const contract = {
                 "fontFamily": {
                   "type": "string"
                 },
+                "dashboardLayout": {},
                 "fontScale": {
                   "type": "number"
                 },
@@ -1912,18 +1906,17 @@ export const contract = {
                 "language": {
                   "type": "string"
                 },
-                "dashboardLayout": {},
-                "hasAPIKeysMasterPassword": {
-                  "type": "boolean"
+                "id": {
+                  "type": "string"
                 },
-                "twoFAEnabled": {
-                  "type": "boolean"
+                "collectionId": {
+                  "type": "string"
+                },
+                "collectionName": {
+                  "type": "string"
                 }
               },
               "required": [
-                "id",
-                "collectionId",
-                "collectionName",
                 "email",
                 "emailVisibility",
                 "verified",
@@ -1936,13 +1929,14 @@ export const contract = {
                 "bgTemp",
                 "bgImage",
                 "fontFamily",
+                "dashboardLayout",
                 "fontScale",
                 "borderRadiusMultiplier",
                 "bordered",
                 "language",
-                "dashboardLayout",
-                "hasAPIKeysMasterPassword",
-                "twoFAEnabled"
+                "id",
+                "collectionId",
+                "collectionName"
               ],
               "additionalProperties": false
             }
@@ -1953,6 +1947,309 @@ export const contract = {
           "additionalProperties": false
         },
         "UNAUTHORIZED": true
+      }
+    },
+    "oauth": {
+      "authorize": {
+        "method": "get",
+        "description": "Start OAuth authorization flow",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "query": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "url",
+              "state"
+            ],
+            "additionalProperties": false
+          },
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          }
+        }
+      },
+      "verify": {
+        "method": "post",
+        "description": "Verify OAuth authorization callback",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider",
+              "code",
+              "state"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessToken"
+            ],
+            "additionalProperties": false
+          },
+          "UNAUTHORIZED": true,
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          }
+        }
+      },
+      "providers": {
+        "listEnabled": {
+          "method": "get",
+          "description": "List enabled OAuth providers for the login portal",
+          "noAuth": true,
+          "encrypted": false,
+          "isDownloadable": false,
+          "media": null,
+          "input": {},
+          "output": {
+            "OK": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string"
+                  },
+                  "icon": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "provider",
+                  "icon",
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "listOptions": {
+          "method": "get",
+          "description": "List all available OAuth provider options for configuration",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {},
+          "output": {
+            "OK": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "provider": {
+                    "type": "string"
+                  },
+                  "configured": {
+                    "type": "boolean"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "icon": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "updated": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "provider",
+                  "configured",
+                  "enabled",
+                  "icon",
+                  "name",
+                  "updated"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "remove": {
+          "method": "post",
+          "description": "Delete OAuth provider configuration",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {
+            "query": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "output": {
+            "NO_CONTENT": true,
+            "NOT_FOUND": true
+          }
+        },
+        "toggle": {
+          "method": "post",
+          "description": "Toggle OAuth provider enabled status",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {
+            "query": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "output": {
+            "NO_CONTENT": true,
+            "NOT_FOUND": true
+          }
+        },
+        "upsert": {
+          "method": "post",
+          "description": "Update OAuth provider configuration",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {
+            "query": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "provider": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "provider"
+              ],
+              "additionalProperties": false
+            },
+            "body": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "clientId": {
+                  "type": "string"
+                },
+                "clientSecret": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "clientId",
+                "clientSecret"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "output": {
+            "NO_CONTENT": true,
+            "BAD_REQUEST": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string"
+            },
+            "NOT_FOUND": true
+          }
+        }
       }
     },
     "refresh": {

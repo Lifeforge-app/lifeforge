@@ -1,12 +1,21 @@
-import crypto from 'node:crypto'
 import jwt from 'jsonwebtoken'
+import crypto from 'node:crypto'
 
-const JWT_SECRET = process.env.JWT_SIGNING_KEY!
+export const JWT_SECRET = process.env.JWT_SIGNING_KEY!
 
-const ACCESS_TOKEN_DURATION = 15 * 60 // 15 minutes in seconds
-const REFRESH_TOKEN_BYTES = 64 // 512-bit
-const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
-const MAX_SESSION_AGE_MS = 60 * 24 * 60 * 60 * 1000 // 60 days
+if (!JWT_SECRET) {
+  throw new Error(
+    'No JWT_SECRET_KEY found. Please make sure it is set in environment variable.'
+  )
+}
+
+export const ACCESS_TOKEN_DURATION = 15 * 60 // 15 minutes in seconds
+
+export const REFRESH_TOKEN_BYTES = 64 // 512-bit
+
+export const REFRESH_TOKEN_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
+
+export const MAX_SESSION_AGE_MS = 60 * 24 * 60 * 60 * 1000 // 60 days
 
 export interface AccessTokenPayload {
   sub: string
@@ -47,5 +56,3 @@ export function getRefreshTokenExpiry(): number {
 export function getMaxSessionExpiry(): number {
   return Date.now() + MAX_SESSION_AGE_MS
 }
-
-export { ACCESS_TOKEN_DURATION, REFRESH_TOKEN_EXPIRY_MS, MAX_SESSION_AGE_MS }

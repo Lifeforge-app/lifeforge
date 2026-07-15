@@ -16,6 +16,7 @@ export function useAppRouter() {
   const { auth, authLoading } = useAuth()
   const { modules, loading: modulesLoading } = useFederation()
   const [appRouter, setAppRouter] = useState<DataRouter | null>(null)
+  const [routerId, setRouterId] = useState(0)
 
   const loadingRouter = useMemo(
     () => createBrowserRouter(createAuthLoadingConfig()),
@@ -26,7 +27,7 @@ export function useAppRouter() {
     []
   )
   useEffect(() => {
-    if (authLoading || !auth || modulesLoading) {
+    if (authLoading || !auth || modulesLoading || modules.length === 0) {
       return
     }
 
@@ -38,6 +39,7 @@ export function useAppRouter() {
     }).then(routerConfig => {
       if (!cancelled) {
         setAppRouter(createBrowserRouter(routerConfig))
+        setRouterId(id => id + 1)
       }
     })
 
@@ -46,7 +48,7 @@ export function useAppRouter() {
     }
   }, [auth, t, authLoading, modules, modulesLoading])
   const router = useMemo(() => {
-    if (authLoading || modulesLoading) {
+    if (authLoading || modulesLoading || (auth && modules.length === 0)) {
       return loadingRouter
     }
 
@@ -55,9 +57,9 @@ export function useAppRouter() {
     }
 
     return appRouter ?? loadingRouter
-  }, [auth, authLoading, modulesLoading, appRouter, loadingRouter, authRouter])
+  }, [auth, authLoading, modulesLoading, modules, appRouter, loadingRouter, authRouter])
   const routerKey = useMemo(() => {
-    if (authLoading || modulesLoading) {
+    if (authLoading || modulesLoading || (auth && modules.length === 0)) {
       return 'loading'
     }
 
@@ -65,8 +67,8 @@ export function useAppRouter() {
       return 'auth'
     }
 
-    return appRouter ? 'app' : 'loading'
-  }, [auth, authLoading, modulesLoading, appRouter])
+    return appRouter ? `app-${routerId}` : 'loading'
+  }, [auth, authLoading, modulesLoading, modules, appRouter, routerId])
 
   return { router, isAuthenticated: !!auth, routerKey }
 }

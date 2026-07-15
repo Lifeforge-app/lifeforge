@@ -135,9 +135,11 @@ export const verifyAndEnable = forge
         return response.unauthorized()
       }
 
+      const userRecord = await pb.getFirstListItem.collection('users').execute()
+
       await pb.update
         .collection('users')
-        .id(pb.instance.authStore.record!.id)
+        .id(userRecord!.id)
         .data({
           twoFASecret: encrypt(
             Buffer.from(tempCode),
@@ -159,9 +161,11 @@ export const disable = forge
     }
   })
   .callback(async ({ pb, response }) => {
+    const userRecord = await pb.getFirstListItem.collection('users').execute()
+
     await pb.update
       .collection('users')
-      .id(pb.instance.authStore.record!.id)
+      .id(userRecord.id)
       .data({
         twoFASecret: ''
       })
