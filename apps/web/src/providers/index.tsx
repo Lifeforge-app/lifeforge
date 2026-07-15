@@ -24,9 +24,11 @@ import {
   MainSidebarStateProvider,
   PersonalizationProvider,
   ToastProvider,
-  toast
+  toast,
+  useModalStore
 } from '@lifeforge/ui'
 
+import TwoFAModal from '@/core/auth/modals/TwoFAModal'
 // import TwoFAModal from '@/core/auth/modals/TwoFAModal'
 import CoreFederationProvider from '@/federation/providers/CoreFederationProvider'
 import forgeAPI from '@/forgeAPI'
@@ -42,7 +44,7 @@ const queryClient = new QueryClient()
 setForgeMutationErrorHandler(msg => toast.error(msg))
 
 function Providers() {
-  // const { open } = useModalStore()
+  const { open } = useModalStore()
 
   const providers = useMemo(
     () =>
@@ -97,7 +99,7 @@ function Providers() {
           {
             forgeAPI,
             onTwoFAModalOpen: () => {
-              // open(TwoFAModal, {})
+              open(TwoFAModal, {})
             }
           }
         ],

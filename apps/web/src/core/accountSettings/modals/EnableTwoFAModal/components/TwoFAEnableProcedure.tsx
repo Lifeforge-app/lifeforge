@@ -9,15 +9,16 @@ import QRCodeDisplay from './QRCodeDisplay'
 function TwoFAEnableProcedure({ onSuccess }: { onSuccess: () => void }) {
   const { t } = useTranslation('common.account-settings')
   const [proceeded, setProceeded] = useState(false)
+  const [tid, setTid] = useState('')
 
   return proceeded ? (
-    <OTPConfirmScreen onSuccess={onSuccess} />
+    <OTPConfirmScreen onSuccess={onSuccess} tid={tid} />
   ) : (
     <Stack gap="lg">
       <Text as="p" color="muted">
         {t('modals.enable2FA.description')}
       </Text>
-      <QRCodeDisplay />
+      <QRCodeDisplay onTid={setTid} />
       <Button
         icon="tabler:arrow-right"
         iconPosition="end"

@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
-import { extractCookies, forgeAPI, unwrap } from '@tests/utils'
+import { expectNo2FA, extractCookies, forgeAPI, unwrap } from '@tests/utils'
 import { setAccessToken } from '@lifeforge/api'
 
 let email = ''
@@ -24,7 +24,7 @@ describe('Full lifecycle', () => {
 
     expect(login.status).toBe(200)
 
-    const accessToken1 = unwrap(login).accessToken
+    const accessToken1 = expectNo2FA(unwrap(login)).accessToken
     const cookies1 = extractCookies(login.headers['set-cookie'])
 
     setAccessToken(accessToken1)

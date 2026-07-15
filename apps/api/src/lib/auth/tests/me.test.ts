@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
-import { forgeAPI, unwrap } from '@tests/utils'
+import { expectNo2FA, forgeAPI, unwrap } from '@tests/utils'
 import { clearAccessToken, setAccessToken } from '@lifeforge/api'
 
 let email = ''
@@ -21,7 +21,7 @@ afterAll(cleanupTestTokens)
 describe('GET /auth/me', () => {
   it('returns 200 with userData when authenticated', async () => {
     const login = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
-    setAccessToken(unwrap(login).accessToken)
+    setAccessToken(expectNo2FA(unwrap(login)).accessToken)
 
     const res = await forgeAPI.auth.me.queryRaw({ raw: true })
     const data = unwrap(res)
@@ -51,7 +51,7 @@ describe('GET /auth/me', () => {
 
   it('userData excludes sensitive fields', async () => {
     const login = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
-    setAccessToken(unwrap(login).accessToken)
+    setAccessToken(expectNo2FA(unwrap(login)).accessToken)
 
     const me = await forgeAPI.auth.me.queryRaw({ raw: true })
     const userData = unwrap(me).userData
@@ -64,7 +64,7 @@ describe('GET /auth/me', () => {
 
   it('userData contains required public fields', async () => {
     const login = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
-    setAccessToken(unwrap(login).accessToken)
+    setAccessToken(expectNo2FA(unwrap(login)).accessToken)
 
     const me = await forgeAPI.auth.me.queryRaw({ raw: true })
     const userData = unwrap(me).userData

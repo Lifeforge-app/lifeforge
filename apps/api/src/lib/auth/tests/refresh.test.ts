@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
-import { extractCookies, forgeAPI, unwrap } from '@tests/utils'
+import { expectNo2FA, extractCookies, forgeAPI, unwrap } from '@tests/utils'
 
 let email = ''
 let password = ''
@@ -137,6 +137,8 @@ describe('POST /auth/refresh', () => {
       { raw: true, headers: { Cookie: cookies } }
     )
 
-    expect(unwrap(refresh).accessToken).not.toBe(unwrap(loginToken).accessToken)
+    expect(unwrap(refresh).accessToken).not.toBe(
+      expectNo2FA(unwrap(loginToken)).accessToken
+    )
   })
 })

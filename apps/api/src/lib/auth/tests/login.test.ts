@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
-import { extractCookies, forgeAPI, unwrap } from '@tests/utils'
+import { expectNo2FA, extractCookies, forgeAPI, unwrap } from '@tests/utils'
 import { setAccessToken } from '@lifeforge/api'
 
 let email = ''
@@ -21,7 +21,7 @@ afterAll(cleanupTestTokens)
 describe('POST /auth/login', () => {
   it('returns 200, accessToken and sets cookie for valid credentials', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
-    const data = unwrap(res)
+    const data = expectNo2FA(unwrap(res))
 
     expect(res.status).toBe(200)
     expect(data).toHaveProperty('accessToken')
@@ -35,7 +35,7 @@ describe('POST /auth/login', () => {
 
   it('returns the correct user data via /auth/me after login', async () => {
     const login = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
-    setAccessToken(unwrap(login).accessToken)
+    setAccessToken(expectNo2FA(unwrap(login)).accessToken)
 
     const meRes = await forgeAPI.auth.me.queryRaw({ raw: true })
     const meData = unwrap(meRes)
@@ -135,10 +135,10 @@ describe('POST /auth/login', () => {
     const login1 = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
     const login2 = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
 
-    setAccessToken(unwrap(login1).accessToken)
+    setAccessToken(expectNo2FA(unwrap(login1)).accessToken)
     const me1 = await forgeAPI.auth.me.queryRaw({ raw: true })
 
-    setAccessToken(unwrap(login2).accessToken)
+    setAccessToken(expectNo2FA(unwrap(login2)).accessToken)
     const me2 = await forgeAPI.auth.me.queryRaw({ raw: true })
 
     expect(me1.status).toBe(200)
@@ -147,7 +147,7 @@ describe('POST /auth/login', () => {
 
   it('access token is a valid JWT (three dot-separated segments)', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
-    const token = unwrap(res).accessToken
+    const token = expectNo2FA(unwrap(res)).accessToken
     const segments = token.split('.')
 
     expect(segments.length).toBe(3)
