@@ -1890,6 +1890,7 @@ export const contract = {
                 "bgImage": {
                   "type": "string"
                 },
+                "backdropFilters": {},
                 "fontFamily": {
                   "type": "string"
                 },
@@ -1914,6 +1915,12 @@ export const contract = {
                 },
                 "collectionName": {
                   "type": "string"
+                },
+                "twoFAEnabled": {
+                  "type": "boolean"
+                },
+                "hasAPIKeysMasterPassword": {
+                  "type": "boolean"
                 }
               },
               "required": [
@@ -1928,6 +1935,7 @@ export const contract = {
                 "color",
                 "bgTemp",
                 "bgImage",
+                "backdropFilters",
                 "fontFamily",
                 "dashboardLayout",
                 "fontScale",
@@ -1936,7 +1944,9 @@ export const contract = {
                 "language",
                 "id",
                 "collectionId",
-                "collectionName"
+                "collectionName",
+                "twoFAEnabled",
+                "hasAPIKeysMasterPassword"
               ],
               "additionalProperties": false
             }

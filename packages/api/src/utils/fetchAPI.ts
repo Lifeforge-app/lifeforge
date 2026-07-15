@@ -134,8 +134,7 @@ export type FetchAPIOptions = {
 } & Omit<AxiosRequestConfig, 'method' | 'url' | 'data'>
 
 export type ResponseWrapper<T> =
-  | { state: 'success'; data: T }
-  | { state: 'error'; message: string }
+  { state: 'success'; data: T } | { state: 'error'; message: string }
 
 export async function fetchAPI<T>(
   apiHost: string,
@@ -187,7 +186,8 @@ export async function fetchAPI<T>(
     url: isExternal ? endpoint : normalizedEndpoint,
     timeout: overrideTimeout,
     data: body,
-    headers: mergedHeaders
+    headers: mergedHeaders,
+    withCredentials: true
   }
 
   if (body instanceof FormData) {
