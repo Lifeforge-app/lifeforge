@@ -35,7 +35,8 @@ export default defineConfig({
         'react-toastify',
         /^react-router/,
         /^react-i18next/,
-        /^i18next/
+        /^i18next/,
+        /^nuqs/
       ],
       output: {
         globals: {

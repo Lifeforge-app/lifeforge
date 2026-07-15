@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import { defineConfig } from 'vite'
 
-import { SHARED_PACKAGES } from '../constants/shared-packages'
+import { SHARED_DEPS, SHARED_PACKAGES } from '../constants/shared-packages'
 import { aliasResolver } from '../resolvers/alias-resolver'
 
 /**
@@ -62,16 +62,12 @@ export function defineClientConfig(dirname: string) {
           remotes: {
             None: ''
           },
-          shared: [
-            'react',
-            'react-dom',
-            '@tanstack/react-query',
-            'i18next',
-            'react-i18next',
-            'react-router',
-            'nuqs',
-            ...Object.keys(SHARED_PACKAGES)
-          ]
+          shared: {
+            ...SHARED_DEPS,
+            ...Object.fromEntries(
+              Object.keys(SHARED_PACKAGES).map(name => [name, {}])
+            )
+          }
         })
       ],
       server: {
