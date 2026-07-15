@@ -169,9 +169,11 @@ export const listGoogleFontsPin = forge
       return response.unauthorized()
     }
 
+    const userRecord = await pb.getFirstListItem.collection('users').execute()
+
     const record = await pb.getOne
       .collection('users')
-      .id(pb.instance.authStore.record.id)
+      .id(userRecord.id)
       .execute()
 
     return response.ok((record.pinnedFontFamilies || []) as string[])
@@ -195,9 +197,11 @@ export const toggleGoogleFontsPin = forge
       return response.unauthorized()
     }
 
+    const userRecord = await pb.getFirstListItem.collection('users').execute()
+
     const record = await pb.getOne
       .collection('users')
-      .id(pb.instance.authStore.record.id)
+      .id(userRecord.id)
       .execute()
 
     const pinnedFontFamilies: string[] = record.pinnedFontFamilies || []
@@ -208,7 +212,7 @@ export const toggleGoogleFontsPin = forge
 
     await pb.update
       .collection('users')
-      .id(pb.instance.authStore.record.id)
+      .id(userRecord.id)
       .data({
         pinnedFontFamilies: updatedPinnedFontFamilies
       })
