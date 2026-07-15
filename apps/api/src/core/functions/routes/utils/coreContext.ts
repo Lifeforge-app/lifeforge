@@ -10,7 +10,6 @@ import {
   encrypt,
   encrypt2
 } from '@functions/auth/encryption'
-import validateOTP from '@functions/auth/validateOTP'
 import { checkExistence, getAPIKey } from '@functions/database'
 import fetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
@@ -62,8 +61,7 @@ export function createCoreContext({
     tempFile: TempFileManager,
     validation: {
       checkRecordExistence: checkExistence,
-      checkModulesAvailability,
-      validateOTP
+      checkModulesAvailability
     },
     media: {
       retrieveMedia,
