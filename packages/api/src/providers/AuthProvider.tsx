@@ -10,7 +10,7 @@ import {
   useState
 } from 'react'
 
-import { contract } from '../../contract'
+import { contract } from '../contract'
 import { createForgeProxy } from '../core'
 import type { InferOutput } from '../typescript'
 import {

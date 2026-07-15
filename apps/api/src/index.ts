@@ -2,7 +2,12 @@ import { PORT } from '@constants'
 import checkDB from '@functions/database/dbUtils'
 import ensureCredentials from '@functions/initialization/ensureCredentials'
 import { LocaleService } from '@functions/initialization/localeService'
-import { LOG_LEVELS, type LogLevel, coreLogger } from '@functions/logging'
+import {
+  LOG_LEVELS,
+  type LogLevel,
+  coreLogger,
+  createServiceLogger
+} from '@functions/logging'
 import createSocketServer from '@functions/socketio/createSocketServer'
 import chalk from 'chalk'
 import { program } from 'commander'
@@ -12,12 +17,15 @@ import { createServer } from 'node:http'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-dotenv.config({ path: path.resolve(__dirname, '../../env/.env.local') })
-
 import { traceRouteStack } from '@lifeforge/server-utils'
 
 import app from './core/app'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+dotenv.config({
+  path: path.resolve(__dirname, '../../env/.env.local'),
+  quiet: true
+})
 
 // Parse CLI arguments
 program
@@ -55,8 +63,12 @@ function startServer(server: ReturnType<typeof createServer>): void {
   server.listen(PORT, () => {
     const routes = traceRouteStack(app._router.stack)
 
-    coreLogger.info(`Registered routes: ${chalk.green(routes.length)}`)
-    coreLogger.info(`REST API server running on port ${chalk.green(PORT)}`)
+    createServiceLogger('Route Loader').info(
+      `Registered routes: ${chalk.green(routes.length)}`
+    )
+    createServiceLogger('Route Loader').info(
+      `REST API server running on port ${chalk.green(PORT)}`
+    )
   })
 }
 

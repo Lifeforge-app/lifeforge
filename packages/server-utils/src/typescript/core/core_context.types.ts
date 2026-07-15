@@ -41,8 +41,7 @@ type GetAPIKeyFunc = (id: string, pb: IPBService<any>) => Promise<string>
 type CheckModulesAvailabilityFunc = (moduleIds: string) => Promise<boolean>
 
 type FileResult<TFieldName extends string> =
-  | {}
-  | { [K in TFieldName]: File | null | undefined }
+  {} | { [K in TFieldName]: File | null | undefined }
 
 export type RetrieveMediaFunc = <TFieldName extends string = string>(
   fieldName: TFieldName,
@@ -88,18 +87,6 @@ export type EncryptFunc = (data: Buffer, key: string) => Buffer
 
 export type Encrypt2Func = (data: string, key: string) => string
 
-export type ValidateOTPFunc = (
-  pb: IPBService<any>,
-  {
-    otp,
-    otpId
-  }: {
-    otp: string
-    otpId: string
-  },
-  challenge?: string
-) => Promise<boolean>
-
 export interface CoreContext {
   logging: Logger
   api: {
@@ -111,7 +98,6 @@ export interface CoreContext {
   validation: {
     checkRecordExistence: CheckExistenceFunc
     checkModulesAvailability: CheckModulesAvailabilityFunc
-    validateOTP: ValidateOTPFunc
   }
   media: {
     retrieveMedia: RetrieveMediaFunc

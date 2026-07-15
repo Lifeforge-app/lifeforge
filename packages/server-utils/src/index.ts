@@ -95,8 +95,7 @@ export type {
   ParseOCRFunc,
   RetrieveMediaFunc,
   FetchAIFunc,
-  SearchLocationsFunc,
-  ValidateOTPFunc
+  SearchLocationsFunc
 } from './typescript/core/core_context.types'
 
 export type { ITempFileManager } from './typescript/core/tempfile_manager.types'
