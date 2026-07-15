@@ -1,8 +1,8 @@
 import { memo } from 'react'
 
-import { Box, Button, Grid, useModalStore } from '@lifeforge/ui'
+import { Box, Button, Grid } from '@lifeforge/ui'
 
-import QRLoginModal from '@/core/auth/modals/QRLoginModal'
+// import QRLoginModal from '@/core/auth/modals/QRLoginModal'
 
 import OrAuthWithDivider from '../OrAuthWithDivider'
 import SignInButton from './components/SignInButton'
@@ -17,7 +17,7 @@ function AuthSignInButton({
   signIn: () => void
   providers: string[]
 }) {
-  const { open } = useModalStore()
+  // const { open } = useModalStore()
 
   return (
     <Box mt="lg">
@@ -43,7 +43,7 @@ function AuthSignInButton({
         namespace="common.auth"
         variant="secondary"
         width="100%"
-        onClick={() => open(QRLoginModal, {})}
+        // onClick={() => open(QRLoginModal, {})}
       >
         qrLogin.title
       </Button>

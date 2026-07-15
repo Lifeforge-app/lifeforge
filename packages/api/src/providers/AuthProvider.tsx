@@ -10,35 +10,20 @@ import {
   useState
 } from 'react'
 
-import type { ProxyTree } from '../typescript'
-import { clearAccessToken, getAccessToken, setAccessToken } from '../utils/authTokenStore'
+import { contract } from '../../contract'
+import { createForgeProxy } from '../core'
+import type { InferOutput } from '../typescript'
+import {
+  clearAccessToken,
+  getAccessToken,
+  setAccessToken
+} from '../utils/authTokenStore'
 
 let bootstrapped = false
 
-export interface UserData {
-  id: string
-  collectionId: string
-  collectionName: string
-  email: string
-  emailVisibility: boolean
-  verified: boolean
-  username: string
-  name: string
-  avatar: string
-  dateOfBirth: string
-  theme: string
-  color: string
-  bgTemp: string
-  bgImage: string
-  fontFamily: string
-  fontScale: number
-  borderRadiusMultiplier: number
-  bordered: boolean
-  language: string
-  dashboardLayout: unknown | null
-  hasAPIKeysMasterPassword: boolean
-  twoFAEnabled: boolean
-}
+const forgeAPI = createForgeProxy(contract)
+
+export type UserData = InferOutput<typeof forgeAPI.auth.me>['userData']
 
 interface AuthData {
   auth: boolean
@@ -62,11 +47,9 @@ interface AuthData {
 export const AuthContext = createContext<AuthData | undefined>(undefined)
 
 export function AuthProvider({
-  forgeAPI,
   onTwoFAModalOpen,
   children
 }: {
-  forgeAPI: ProxyTree<any>
   onTwoFAModalOpen: () => void
   children: React.ReactNode
 }) {
@@ -74,8 +57,6 @@ export function AuthProvider({
   const [userData, setUserData] = useState<UserData | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
   const tid = useRef('')
-
-  const _forgeAPI = forgeAPI as any
 
   const setAuth = useCallback(
     (value: boolean) => {
@@ -93,14 +74,14 @@ export function AuthProvider({
       password: string
     }): Promise<string | void> => {
       try {
-        const loginData = await _forgeAPI.auth.login.mutateRaw({
+        const loginData = await forgeAPI.auth.login.mutateRaw({
           email,
           password
         })
 
         setAccessToken(loginData.accessToken)
 
-        const userResponse = await _forgeAPI.auth.me.queryRaw()
+        const userResponse = await forgeAPI.auth.me.queryRaw()
 
         setUserData(userResponse.userData)
         setAuth(true)
@@ -129,7 +110,7 @@ export function AuthProvider({
     setAuth(false)
     setUserData(null)
 
-    _forgeAPI.auth.logout.mutateRaw().catch(() => {})
+    forgeAPI.auth.logout.mutateRaw(undefined).catch(() => {})
   }, [])
 
   const verifyOAuth = useCallback(
@@ -149,7 +130,7 @@ export function AuthProvider({
           return false
         }
 
-        const data = await _forgeAPI.auth.oauth.verify.mutateRaw({
+        const data = await forgeAPI.auth.oauth.verify.mutateRaw({
           code,
           provider: storedProvider,
           state
@@ -157,7 +138,7 @@ export function AuthProvider({
 
         setAccessToken(data.accessToken)
 
-        const userResponse = await _forgeAPI.auth.me.queryRaw()
+        const userResponse = await forgeAPI.auth.me.queryRaw()
 
         setUserData(userResponse.userData)
         setAuth(true)
@@ -201,14 +182,14 @@ export function AuthProvider({
     bootstrapped = true
     setAuthLoading(true)
 
-    _forgeAPI.auth.refresh
-      .mutateRaw()
+    forgeAPI.auth.refresh
+      .mutateRaw(undefined)
       .then((data: { accessToken: string }) => {
         setAccessToken(data.accessToken)
 
-        return _forgeAPI.auth.me.queryRaw()
+        return forgeAPI.auth.me.queryRaw()
       })
-      .then((data: { userData: UserData }) => {
+      .then(data => {
         setUserData(data.userData)
         setAuth(true)
       })

@@ -11,15 +11,19 @@ export const me = forge
     input: {},
     output: {
       OK: z.object({
-        userData: schema.users.omit({
-          backdropFilters: true,
-          APIKeysMasterPasswordHash: true,
-          twoFASecret: true,
-          pinnedFontFamilies: true,
-          auth_password_hash: true,
-          created: true,
-          updated: true
-        })
+        userData: schema.users
+          .omit({
+            APIKeysMasterPasswordHash: true,
+            twoFASecret: true,
+            pinnedFontFamilies: true,
+            auth_password_hash: true,
+            created: true,
+            updated: true
+          })
+          .extend({
+            twoFAEnabled: z.boolean(),
+            hasAPIKeysMasterPassword: z.boolean()
+          })
       }),
       UNAUTHORIZED: true
     }
@@ -59,7 +63,8 @@ export const me = forge
       language: user.language || 'en',
       dashboardLayout: user.dashboardLayout ?? null,
       hasAPIKeysMasterPassword: Boolean(user.APIKeysMasterPasswordHash),
-      twoFAEnabled: Boolean(user.twoFASecret)
+      twoFAEnabled: Boolean(user.twoFASecret),
+      backdropFilters: user.backdropFilters
     }
 
     return response.ok({ userData: sanitized })
