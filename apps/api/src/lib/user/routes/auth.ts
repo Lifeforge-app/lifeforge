@@ -1,4 +1,3 @@
-import { default as _validateOTP } from '@functions/auth/validateOTP'
 import {
   connectToPocketBase,
   validateEnvironmentVariables
@@ -6,43 +5,6 @@ import {
 import z from 'zod'
 
 import forge from '../forge'
-
-export const validateOTP = forge
-  .mutation({
-    description: 'Verify one-time password',
-    encrypted: false,
-    input: {
-      body: z.object({
-        otp: z.string(),
-        otpId: z.string()
-      })
-    },
-    output: {
-      OK: z.boolean()
-    }
-  })
-  .callback(async ({ pb, body, response }) =>
-    response.ok(await _validateOTP(pb, body))
-  )
-
-export const generateOTP = forge
-  .query({
-    description: 'Generate one-time password',
-    encrypted: false,
-    input: {},
-    output: {
-      OK: z.string()
-    }
-  })
-  .callback(async ({ pb, response }) =>
-    response.ok(
-      (
-        await pb.instance
-          .collection('users')
-          .requestOTP(pb.instance.authStore.record?.email)
-      ).otpId
-    )
-  )
 
 export const createFirstUser = forge
   .mutation({
