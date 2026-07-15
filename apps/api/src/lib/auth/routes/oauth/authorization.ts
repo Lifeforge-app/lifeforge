@@ -1,4 +1,4 @@
-import { COOKIE_OPTIONS } from '@lib/auth/constants/cookie'
+import { getCookieOptions } from '@lib/auth/constants/cookie'
 import { getPB } from '@lib/auth/constants/pb'
 import forge from '@lib/auth/forge'
 import { fetchUserEmail, getProvider } from '@lib/auth/utils/oauth'
@@ -195,7 +195,7 @@ export const verify = forge
         ip
       })
 
-      res.cookie('refresh_token', refreshToken, COOKIE_OPTIONS)
+      res.cookie('refresh_token', refreshToken, getCookieOptions(req))
 
       return response.ok({ accessToken: jwtToken })
     }
