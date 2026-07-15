@@ -5,7 +5,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { type UserConfig, defineConfig, loadEnv, mergeConfig } from 'vite'
 
-import { SHARED_PACKAGES } from '../constants/shared-packages'
+import { SHARED_DEPS, SHARED_PACKAGES } from '../constants/shared-packages'
 
 interface ModuleConfigOptions {
   dirname: string
@@ -66,13 +66,12 @@ export function defineModuleConfig(
             None: ''
           },
           shared: {
-            react: { generate: false },
-            'react-dom': { generate: false },
-            'react-i18next': { generate: false },
-            i18next: { generate: false },
-            '@tanstack/react-query': { generate: false },
-            'react-router': { generate: false },
-            nuqs: { generate: false },
+            ...Object.fromEntries(
+              Object.entries(SHARED_DEPS).map(([name, config]) => [
+                name,
+                { ...config, generate: false }
+              ])
+            ),
             ...Object.fromEntries(
               Object.keys(SHARED_PACKAGES).map(e => [e, { generate: false }])
             )

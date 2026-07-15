@@ -16,3 +16,16 @@ export const SHARED_PACKAGES = {
     entryPoint: '../packages/ui/src/index.ts'
   }
 }
+
+export const SHARED_DEPS = {
+  react: {},
+  'react-dom': {},
+  '@tanstack/react-query': {},
+  i18next: {},
+  'react-i18next': {},
+  'react-router': {},
+  nuqs: {},
+  'nuqs/adapters/react': {
+    version: '2.9.0'
+  }
+} as const
