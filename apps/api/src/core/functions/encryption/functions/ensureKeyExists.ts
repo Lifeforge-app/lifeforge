@@ -1,26 +1,17 @@
+import chalk from 'chalk'
 import crypto from 'crypto'
-import fs from 'fs'
 
-import {
-  KEYS_DIR,
-  PRIVATE_KEY_PATH,
-  PUBLIC_KEY_PATH,
-  RSA_KEY_SIZE,
-  logger
-} from '../constants'
+import { RSA_KEY_SIZE, logger } from '../constants'
 
-/**
- * Generates a fresh RSA keypair on every server restart.
- * Should be called during server startup.
- */
+let privateKey: string | null = null
+let publicKey: string | null = null
+
 export default function ensureKeysExist(): void {
-  if (!fs.existsSync(KEYS_DIR)) {
-    fs.mkdirSync(KEYS_DIR, { recursive: true })
-  }
+  if (privateKey && publicKey) return
 
   logger.debug('Generating new RSA keypair...')
 
-  const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+  const keypair = crypto.generateKeyPairSync('rsa', {
     modulusLength: RSA_KEY_SIZE,
     publicKeyEncoding: {
       type: 'spki',
@@ -32,7 +23,28 @@ export default function ensureKeysExist(): void {
     }
   })
 
-  fs.writeFileSync(PUBLIC_KEY_PATH, publicKey)
-  fs.writeFileSync(PRIVATE_KEY_PATH, privateKey, { mode: 0o600 })
-  logger.info('RSA keypair generated successfully')
+  privateKey = keypair.privateKey
+  publicKey = keypair.publicKey
+
+  const fingerprint = crypto
+    .createHash('sha256')
+    .update(publicKey)
+    .digest('base64url')
+    .slice(0, 12)
+
+  logger.info(
+    `RSA keypair generated (fingerprint: ${chalk.magenta(fingerprint)})`
+  )
+}
+
+export function getPublicKeyPem(): string {
+  if (!publicKey) ensureKeysExist()
+
+  return publicKey!
+}
+
+export function getPrivateKeyPem(): string {
+  if (!privateKey) ensureKeysExist()
+
+  return privateKey!
 }

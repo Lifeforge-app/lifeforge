@@ -6,7 +6,8 @@ import path from 'path'
 
 export default function ensureCredentials(): void {
   dotenv.config({
-    path: path.join(ROOT_DIR, 'env/.env.local')
+    path: path.join(ROOT_DIR, 'env/.env.local'),
+    quiet: true
   })
 
   if (!process.env.MASTER_KEY) {
