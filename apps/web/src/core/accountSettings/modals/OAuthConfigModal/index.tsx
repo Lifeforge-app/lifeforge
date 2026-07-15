@@ -17,7 +17,7 @@ function OAuthConfigModal({ onClose }: { onClose: () => void }) {
         {data => (
           <>
             {data.map(entry => (
-              <ProviderItem key={entry.id} entry={entry} />
+              <ProviderItem key={entry.provider} entry={entry} />
             ))}
           </>
         )}
