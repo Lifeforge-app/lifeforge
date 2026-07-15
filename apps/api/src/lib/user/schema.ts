@@ -25,6 +25,7 @@ export const schemas = {
       borderRadiusMultiplier: z.number(),
       bordered: z.boolean(),
       language: z.string(),
+      auth_password_hash: z.string(),
       created: z.string(),
       updated: z.string()
     }),
@@ -315,6 +316,19 @@ export const schemas = {
           type: 'text'
         },
         {
+          autogeneratePattern: '',
+          hidden: false,
+          max: 0,
+          min: 0,
+          name: 'auth_password_hash',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: false,
+          system: false,
+          type: 'text'
+        },
+        {
           hidden: false,
           name: 'created',
           onCreate: true,
@@ -345,7 +359,7 @@ export const schemas = {
         enabled: true,
         emailTemplate: {
           subject: 'Login from a new location',
-          body: "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location.</p>\n<p>If this was you, you may disregard this email.</p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+          body: "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location:</p>\n<p><em>{ALERT_INFO}</em></p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>If this was you, you may disregard this email.</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
         }
       },
       passwordAuth: {
@@ -496,6 +510,146 @@ export const schemas = {
         }
       ],
       indexes: [],
+      system: false
+    }
+  },
+  auth_refresh_tokens: {
+    schema: z.object({
+      token_hash: z.string(),
+      family: z.string(),
+      bound_ip: z.string(),
+      last_ip: z.string(),
+      expires_at: z.string(),
+      revoked: z.boolean(),
+      last_used_at: z.string(),
+      created: z.string(),
+      updated: z.string()
+    }),
+    raw: {
+      listRule: null,
+      viewRule: null,
+      createRule: null,
+      updateRule: null,
+      deleteRule: null,
+      name: 'user__auth_refresh_tokens',
+      type: 'base',
+      fields: [
+        {
+          autogeneratePattern: '[a-z0-9]{15}',
+          hidden: false,
+          max: 15,
+          min: 15,
+          name: 'id',
+          pattern: '^[a-z0-9]+$',
+          presentable: false,
+          primaryKey: true,
+          required: true,
+          system: true,
+          type: 'text'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          max: 0,
+          min: 0,
+          name: 'token_hash',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: true,
+          system: false,
+          type: 'text'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          max: 0,
+          min: 0,
+          name: 'family',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: true,
+          system: false,
+          type: 'text'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          max: 0,
+          min: 0,
+          name: 'bound_ip',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: true,
+          system: false,
+          type: 'text'
+        },
+        {
+          autogeneratePattern: '',
+          hidden: false,
+          max: 0,
+          min: 0,
+          name: 'last_ip',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: true,
+          system: false,
+          type: 'text'
+        },
+        {
+          hidden: false,
+          max: '',
+          min: '',
+          name: 'expires_at',
+          presentable: false,
+          required: true,
+          system: false,
+          type: 'date'
+        },
+        {
+          hidden: false,
+          name: 'revoked',
+          presentable: false,
+          required: false,
+          system: false,
+          type: 'bool'
+        },
+        {
+          hidden: false,
+          max: '',
+          min: '',
+          name: 'last_used_at',
+          presentable: false,
+          required: true,
+          system: false,
+          type: 'date'
+        },
+        {
+          hidden: false,
+          name: 'created',
+          onCreate: true,
+          onUpdate: false,
+          presentable: false,
+          system: false,
+          type: 'autodate'
+        },
+        {
+          hidden: false,
+          name: 'updated',
+          onCreate: true,
+          onUpdate: true,
+          presentable: false,
+          system: false,
+          type: 'autodate'
+        }
+      ],
+      indexes: [
+        'CREATE UNIQUE INDEX `idx_JfdBwvzkez` ON `user__auth_refresh_tokens` (`token_hash`)',
+        'CREATE INDEX `idx_AxW8ImTh8x` ON `user__auth_refresh_tokens` (`family`)'
+      ],
       system: false
     }
   }

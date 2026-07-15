@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
+import type { AxiosResponse } from 'axios'
 import { z } from 'zod'
 
 import type { InferRawInput, InferRawOutput } from '../typescript'
@@ -9,9 +10,12 @@ import {
   encryptRequest,
   isEncryptedResponse
 } from '../utils/encryption'
-import { fetchAPI } from '../utils/fetchAPI'
+import { fetchAPI, type FetchAPIOptions, type ResponseWrapper } from '../utils/fetchAPI'
 import { globalProxyRegistry } from './registry'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
+
+type QueryRawOptions = Omit<FetchAPIOptions, 'method' | 'body'>
+type MutateRawOptions = Omit<FetchAPIOptions, 'method' | 'body'>
 
 /**
  * ForgeEndpoint is a chainable API endpoint handler for making type-safe
@@ -287,18 +291,31 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
    *
    * @returns Promise resolving to the API response
    */
-  queryRaw(options?: {
-    timeout?: number
-    raiseError?: boolean
-    isExternal?: boolean
-  }) {
+  queryRaw(
+    options: { raw: true } & QueryRawOptions
+  ): Promise<AxiosResponse<ResponseWrapper<InferRawOutput<T>>>>
+
+  queryRaw(options?: { raw?: false } & QueryRawOptions): Promise<InferRawOutput<T>>
+
+  queryRaw(options: { raw?: boolean } & QueryRawOptions = {}): Promise<
+    AxiosResponse<ResponseWrapper<InferRawOutput<T>>> | InferRawOutput<T>
+  > {
     const { apiHost, prefix } = this._resolvedConfig
 
     const path = this._getPath(prefix)
+    const { raw, ...rest } = options
+
+    if (raw) {
+      return fetchAPI<InferRawOutput<T>>(apiHost, path, {
+        raw: true as const,
+        method: 'GET',
+        ...rest
+      })
+    }
 
     return fetchAPI<InferRawOutput<T>>(apiHost, path, {
       method: 'GET',
-      ...options
+      ...rest
     })
   }
 
@@ -310,15 +327,43 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
    * @param data The body data for the request
    * @returns Promise resolving to the API response
    */
-  mutateRaw(data: InferRawInput<T>['body'] | FormData) {
+  mutateRaw(
+    data: InferRawInput<T>['body'] | FormData,
+    options: { raw: true } & MutateRawOptions
+  ): Promise<AxiosResponse<ResponseWrapper<InferRawOutput<T>>>>
+
+  mutateRaw(
+    data: InferRawInput<T>['body'] | FormData,
+    options?: { raw?: false } & MutateRawOptions
+  ): Promise<InferRawOutput<T>>
+
+  mutateRaw(
+    data: InferRawInput<T>['body'] | FormData,
+    options: { raw?: boolean } & MutateRawOptions = {}
+  ): Promise<AxiosResponse<ResponseWrapper<InferRawOutput<T>>> | InferRawOutput<T>> {
     const { apiHost, prefix } = this._resolvedConfig
 
     const path = this._getPath(prefix)
-
     const payloadData = data === undefined ? {} : data
+    const { raw, ...rest } = options
+
+    if (raw) {
+      return fetchAPI<InferRawOutput<T>>(apiHost, path, {
+        raw: true as const,
+        method: 'POST',
+        ...rest,
+        body:
+          payloadData instanceof FormData
+            ? payloadData
+            : hasFile(payloadData)
+              ? getFormData(payloadData)
+              : payloadData
+      })
+    }
 
     return fetchAPI<InferRawOutput<T>>(apiHost, path, {
       method: 'POST',
+      ...rest,
       body:
         payloadData instanceof FormData
           ? payloadData
