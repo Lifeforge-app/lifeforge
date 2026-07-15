@@ -11,7 +11,7 @@ function DisableTwoFAModal({ onClose }: { onClose: () => void }) {
 
   async function handleConfirm() {
     try {
-      await forgeAPI.user['2fa'].disable.mutate(undefined)
+      await forgeAPI.auth['2fa'].disable.mutateRaw()
 
       setUserData(userData =>
         userData ? { ...userData, twoFAEnabled: false } : null

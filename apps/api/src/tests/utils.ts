@@ -36,6 +36,14 @@ export function unwrap<T>(res: AxiosResponse<ResponseWrapper<T>>): T {
   return res.data.data
 }
 
+export function expectNo2FA<T>(data: T): T extends { state: string } ? never : T {
+  if (data && typeof data === 'object' && 'state' in data) {
+    throw new Error('Unexpected 2FA response in test')
+  }
+
+  return data as any
+}
+
 let pbInstance: PocketBase | null = null
 
 export async function authenticateSuperuser(

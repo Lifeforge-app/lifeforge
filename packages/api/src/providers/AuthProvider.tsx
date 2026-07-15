@@ -37,6 +37,7 @@ interface AuthData {
   }) => Promise<string | void>
   logout: () => void
   verifyOAuth: (code: string, state: string) => Promise<string | false>
+  authenticateWith2FA: (otp: string) => Promise<string>
   authLoading: boolean
   userData: UserData | null
   setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
@@ -79,6 +80,13 @@ export function AuthProvider({
           password
         })
 
+        if ('state' in loginData) {
+          tid.current = loginData.tid
+          onTwoFAModalOpen()
+
+          return '2FA required'
+        }
+
         setAccessToken(loginData.accessToken)
 
         const userResponse = await forgeAPI.auth.me.queryRaw()
@@ -102,7 +110,7 @@ export function AuthProvider({
         throw err
       }
     },
-    []
+    [onTwoFAModalOpen]
   )
 
   const logout = useCallback(() => {
@@ -130,13 +138,20 @@ export function AuthProvider({
           return false
         }
 
-        const data = await forgeAPI.auth.oauth.verify.mutateRaw({
+        const oauthData = await forgeAPI.auth.oauth.verify.mutateRaw({
           code,
           provider: storedProvider,
           state
         })
 
-        setAccessToken(data.accessToken)
+        if ('state' in oauthData) {
+          tid.current = oauthData.tid
+          onTwoFAModalOpen()
+
+          return '2FA required'
+        }
+
+        setAccessToken(oauthData.accessToken)
 
         const userResponse = await forgeAPI.auth.me.queryRaw()
 
@@ -152,6 +167,25 @@ export function AuthProvider({
       } finally {
         setAuthLoading(false)
       }
+    },
+    [onTwoFAModalOpen]
+  )
+
+  const authenticateWith2FA = useCallback(
+    async (otp: string): Promise<string> => {
+      const data = await forgeAPI.auth['2fa'].verify.mutateRaw({
+        otp,
+        tid: tid.current
+      })
+
+      setAccessToken(data.accessToken)
+
+      const userResponse = await forgeAPI.auth.me.queryRaw()
+
+      setUserData(userResponse.userData)
+      setAuth(true)
+
+      return userResponse.userData.name
     },
     []
   )
@@ -209,6 +243,7 @@ export function AuthProvider({
       authenticate,
       logout,
       verifyOAuth,
+      authenticateWith2FA,
       authLoading,
       userData,
       setUserData,

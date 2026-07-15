@@ -1,6 +1,7 @@
 import { getCookieOptions } from '@lib/auth/constants/cookie'
 import { getPB } from '@lib/auth/constants/pb'
 import forge from '@lib/auth/forge'
+import { create2FASession } from '@lib/auth/utils/2fa'
 import { fetchUserEmail, getProvider } from '@lib/auth/utils/oauth'
 import { storeRefreshToken } from '@lib/auth/utils/refreshTokenStore'
 import {
@@ -108,9 +109,15 @@ export const verify = forge
       })
     },
     output: {
-      OK: z.object({
-        accessToken: z.string()
-      }),
+      OK: z.union([
+        z.object({
+          accessToken: z.string()
+        }),
+        z.object({
+          state: z.literal('2fa_required'),
+          tid: z.string()
+        })
+      ]),
       UNAUTHORIZED: true,
       BAD_REQUEST: z.string()
     }
@@ -181,6 +188,15 @@ export const verify = forge
 
       if (!user) {
         return response.unauthorized()
+      }
+
+      if (user.twoFASecret) {
+        const tid = await create2FASession(user.id)
+
+        return response.ok({
+          state: '2fa_required' as const,
+          tid
+        })
       }
 
       const ip = req.ip || req.socket.remoteAddress || '127.0.0.1'

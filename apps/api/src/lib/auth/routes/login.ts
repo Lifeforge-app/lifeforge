@@ -4,6 +4,7 @@ import z from 'zod'
 import { getCookieOptions } from '../constants/cookie'
 import { getPB } from '../constants/pb'
 import forge from '../forge'
+import { create2FASession } from '../utils/2fa'
 import {
   checkLoginRateLimit,
   clearLoginRateLimit,
@@ -28,9 +29,15 @@ export const login = forge
       })
     },
     output: {
-      OK: z.object({
-        accessToken: z.string()
-      }),
+      OK: z.union([
+        z.object({
+          accessToken: z.string()
+        }),
+        z.object({
+          state: z.literal('2fa_required'),
+          tid: z.string()
+        })
+      ]),
       UNAUTHORIZED: true
     }
   })
@@ -79,6 +86,15 @@ export const login = forge
     }
 
     clearLoginRateLimit(ip)
+
+    if (user.twoFASecret) {
+      const tid = await create2FASession(user.id)
+
+      return response.ok({
+        state: '2fa_required' as const,
+        tid
+      })
+    }
 
     const accessToken = signAccessToken(user.id)
     const refreshToken = generateRefreshToken()

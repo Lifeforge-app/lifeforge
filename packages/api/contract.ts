@@ -247,308 +247,6 @@ export const contract = {
         }
       }
     },
-    "oauth": {
-      "getEndpoint": {
-        "method": "get",
-        "description": "Get OAuth authorization URL for provider",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "provider": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "provider"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "codeVerifier": {
-                "type": "string"
-              },
-              "codeChallenge": {
-                "type": "string"
-              },
-              "codeChallengeMethod": {
-                "type": "string"
-              },
-              "authURL": {
-                "type": "string"
-              },
-              "displayName": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "name",
-              "state",
-              "codeVerifier",
-              "codeChallenge",
-              "codeChallengeMethod",
-              "authURL",
-              "displayName"
-            ],
-            "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "listProviders": {
-        "method": "get",
-        "description": "Retrieve available OAuth providers",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "verify": {
-        "method": "post",
-        "description": "Verify OAuth authorization callback",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "provider": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "provider",
-              "code"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "const": "2fa_required"
-                  },
-                  "tid": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "state",
-                  "tid"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "UNAUTHORIZED": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      }
-    },
-    "2fa": {
-      "disable": {
-        "method": "post",
-        "description": "Disable two-factor authentication",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "generateAuthenticatorLink": {
-        "method": "get",
-        "description": "Generate authenticator app setup link",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "getChallenge": {
-        "method": "get",
-        "description": "Retrieve 2FA challenge token",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "requestOTP": {
-        "method": "get",
-        "description": "Request OTP for two-factor authentication",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "format": "email",
-                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-              }
-            },
-            "required": [
-              "email"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "verify": {
-        "method": "post",
-        "description": "Verify two-factor authentication code",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "otp": {
-                "type": "string"
-              },
-              "tid": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "email",
-                  "app"
-                ]
-              }
-            },
-            "required": [
-              "otp",
-              "tid",
-              "type"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "session": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "session"
-            ],
-            "additionalProperties": false
-          },
-          "UNAUTHORIZED": true
-        }
-      },
-      "verifyAndEnable": {
-        "method": "post",
-        "description": "Verify and activate two-factor authentication",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "otp": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "otp"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
-        }
-      }
-    },
     "qrLogin": {
       "approveQRLogin": {
         "method": "post",
@@ -1772,6 +1470,122 @@ export const contract = {
     }
   },
   "auth": {
+    "2fa": {
+      "disable": {
+        "method": "post",
+        "description": "Disable two-factor authentication",
+        "noAuth": false,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {},
+        "output": {
+          "NO_CONTENT": true
+        }
+      },
+      "enable": {
+        "method": "post",
+        "description": "Verify OTP and enable two-factor authentication",
+        "noAuth": false,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "otp": {
+                "type": "string"
+              },
+              "tid": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "otp",
+              "tid"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "NO_CONTENT": true,
+          "UNAUTHORIZED": true
+        }
+      },
+      "generate": {
+        "method": "post",
+        "description": "Generate 2FA authenticator app setup link",
+        "noAuth": false,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {},
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "tid": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "tid",
+              "link"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "verify": {
+        "method": "post",
+        "description": "Verify two-factor authentication code during login",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "otp": {
+                "type": "string"
+              },
+              "tid": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "otp",
+              "tid"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessToken"
+            ],
+            "additionalProperties": false
+          },
+          "UNAUTHORIZED": true
+        }
+      }
+    },
     "login": {
       "method": "post",
       "description": "Authenticate user with email and password",
@@ -1804,16 +1618,37 @@ export const contract = {
       "output": {
         "OK": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "accessToken": {
-              "type": "string"
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "accessToken"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "const": "2fa_required"
+                },
+                "tid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "state",
+                "tid"
+              ],
+              "additionalProperties": false
             }
-          },
-          "required": [
-            "accessToken"
-          ],
-          "additionalProperties": false
+          ]
         },
         "UNAUTHORIZED": true
       }
@@ -2039,16 +1874,37 @@ export const contract = {
         "output": {
           "OK": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "accessToken": {
-                "type": "string"
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "accessToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accessToken"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "const": "2fa_required"
+                  },
+                  "tid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "state",
+                  "tid"
+                ],
+                "additionalProperties": false
               }
-            },
-            "required": [
-              "accessToken"
-            ],
-            "additionalProperties": false
+            ]
           },
           "UNAUTHORIZED": true,
           "BAD_REQUEST": {

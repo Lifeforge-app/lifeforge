@@ -71,7 +71,8 @@ function AuthForm({ providers }: { providers: string[] }) {
           throw new Error()
         }
       })
-      .catch(() => {
+      .catch(e => {
+        console.error(e)
         toast.error(t('messages.invalidLoginAttempt'))
       })
       .finally(() => {

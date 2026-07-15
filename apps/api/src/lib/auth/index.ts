@@ -6,8 +6,10 @@ import * as meRoutes from './routes/me'
 import * as oauthAuthRoutes from './routes/oauth/authorization'
 import * as oauthProviderRoutes from './routes/oauth/providers'
 import * as refreshRoutes from './routes/refresh'
+import * as twoFARoutes from './routes/twoFA'
 
 export default forgeRouter({
+  '2fa': twoFARoutes,
   login: loginRoutes.login,
   logout: logoutRoutes.logout,
   me: meRoutes.me,

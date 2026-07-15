@@ -9,11 +9,9 @@ import { forgeRouter } from '@lifeforge/server-utils'
 import forge from './forge'
 import * as authRoutes from './routes/auth'
 import * as customFontsRoutes from './routes/customFonts'
-import * as oAuthRoutes from './routes/oauth'
 import * as personalizationRoutes from './routes/personalization'
 import * as qrLoginRoutes from './routes/qrLogin'
 import * as settingsRoutes from './routes/settings'
-import * as twoFARoutes from './routes/twoFA'
 
 export const currentSession = {
   token: '',
@@ -42,8 +40,6 @@ export default forgeRouter({
       return response.ok(users.length > 0)
     }),
   auth: authRoutes,
-  oauth: oAuthRoutes,
-  '2fa': twoFARoutes,
   qrLogin: qrLoginRoutes,
   settings: settingsRoutes,
   personalization: personalizationRoutes,
