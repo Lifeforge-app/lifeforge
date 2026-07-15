@@ -1,0 +1,43 @@
+import { useTranslation } from 'react-i18next'
+
+import { usePromiseLoading } from '@lifeforge/api'
+import { Button, OptionsColumn, toast } from '@lifeforge/ui'
+
+import forgeAPI from '@/core/utils/forgeAPI'
+
+function PasswordColumn() {
+  const { t } = useTranslation('common.account-settings')
+
+  async function handlePasswordChange() {
+    try {
+      await forgeAPI.user.settings.requestPasswordReset.mutate(undefined)
+
+      toast.info('A password reset link has been sent to your email.')
+    } catch {
+      toast.error('Failed to send password reset link.')
+    }
+  }
+
+  const [loading, onSubmit] = usePromiseLoading(handlePasswordChange)
+
+  return (
+    <OptionsColumn
+      description={t('settings.desc.password')}
+      icon="tabler:key"
+      title={t('settings.title.password')}
+    >
+      <Button
+        icon="tabler:key"
+        loading={loading}
+        namespace="common.account-settings"
+        variant="secondary"
+        width={{ base: '100%', md: 'auto' }}
+        onClick={onSubmit}
+      >
+        change password
+      </Button>
+    </OptionsColumn>
+  )
+}
+
+export default PasswordColumn

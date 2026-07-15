@@ -47,13 +47,7 @@ interface AuthData {
 
 export const AuthContext = createContext<AuthData | undefined>(undefined)
 
-export function AuthProvider({
-  onTwoFAModalOpen,
-  children
-}: {
-  onTwoFAModalOpen: () => void
-  children: React.ReactNode
-}) {
+export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [auth, _setAuth] = useState(false)
   const [userData, setUserData] = useState<UserData | null>(null)
   const [authLoading, setAuthLoading] = useState(true)
@@ -82,7 +76,6 @@ export function AuthProvider({
 
         if ('state' in loginData) {
           tid.current = loginData.tid
-          onTwoFAModalOpen()
 
           return '2FA required'
         }
@@ -110,7 +103,7 @@ export function AuthProvider({
         throw err
       }
     },
-    [onTwoFAModalOpen]
+    []
   )
 
   const logout = useCallback(() => {
@@ -146,7 +139,6 @@ export function AuthProvider({
 
         if ('state' in oauthData) {
           tid.current = oauthData.tid
-          onTwoFAModalOpen()
 
           return '2FA required'
         }
@@ -168,7 +160,7 @@ export function AuthProvider({
         setAuthLoading(false)
       }
     },
-    [onTwoFAModalOpen]
+    []
   )
 
   const authenticateWith2FA = useCallback(
