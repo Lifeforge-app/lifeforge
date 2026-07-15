@@ -1,6 +1,7 @@
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
+import cookieParser from 'cookie-parser'
 
 import morganMiddleware from './middlewares/morganMiddleware'
 import rateLimitingMiddleware from './middlewares/rateLimitingMiddleware'
@@ -20,12 +21,16 @@ app.use(
   })
 )
 
-// CORS configuration
+// CORS configuration with credentials support
 app.use(
   cors({
-    origin: CORS_ALLOWED_ORIGINS
+    origin: CORS_ALLOWED_ORIGINS,
+    credentials: true
   })
 )
+
+// Cookie parser
+app.use(cookieParser())
 
 // Body parsers
 app.use(express.raw())

@@ -10,13 +10,35 @@ import {
   useState
 } from 'react'
 
-import { contract } from '../../contract'
-import { createForgeProxy } from '../core/createForgeProxy'
-import type { InferOutput, ProxyTree } from '../typescript'
+import type { ProxyTree } from '../typescript'
+import { clearAccessToken, getAccessToken, setAccessToken } from '../utils/authTokenStore'
 
-const _forgeAPI = createForgeProxy(contract)
+let bootstrapped = false
 
-export type UserData = InferOutput<typeof _forgeAPI.user.auth.getUserData>
+export interface UserData {
+  id: string
+  collectionId: string
+  collectionName: string
+  email: string
+  emailVisibility: boolean
+  verified: boolean
+  username: string
+  name: string
+  avatar: string
+  dateOfBirth: string
+  theme: string
+  color: string
+  bgTemp: string
+  bgImage: string
+  fontFamily: string
+  fontScale: number
+  borderRadiusMultiplier: number
+  bordered: boolean
+  language: string
+  dashboardLayout: unknown | null
+  hasAPIKeysMasterPassword: boolean
+  twoFAEnabled: boolean
+}
 
 interface AuthData {
   auth: boolean
@@ -28,30 +50,12 @@ interface AuthData {
     email: string
     password: string
   }) => Promise<string | void>
-  authenticateWith2FA: ({
-    otp,
-    type
-  }: {
-    otp: string
-    type: 'email' | 'app'
-  }) => Promise<string>
-  verifySession: (
-    session: string
-  ) => Promise<{ success: boolean; userData: UserData | null }>
-  verifyOAuth: (code: string, state: string) => Promise<boolean>
   logout: () => void
   authLoading: boolean
   userData: UserData | null
   setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
   getAvatarURL: () => string
   tid: RefObject<string>
-}
-
-interface Verify2FAResponse {
-  state: string
-  data: {
-    session: string
-  }
 }
 
 export const AuthContext = createContext<AuthData | undefined>(undefined)
@@ -70,45 +74,15 @@ export function AuthProvider({
   const [authLoading, setAuthLoading] = useState(true)
   const tid = useRef('')
 
+  const _forgeAPI = forgeAPI as any
+
   const setAuth = useCallback(
     (value: boolean) => {
       _setAuth(value)
     },
     [_setAuth]
   )
-  const verifySession = useCallback(
-    async (
-      session: string
-    ): Promise<{
-      success: boolean
-      userData: UserData | null
-    }> => {
-      try {
-        const verifyRes = await fetch(
-          forgeAPI.user.auth.verifySessionToken.endpoint,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${session}`
-            }
-          }
-        )
 
-        const verifyData = await verifyRes.json()
-
-        if (!verifyRes.ok || verifyData.state !== 'success') {
-          return { success: false, userData: null }
-        }
-
-        const userData = await forgeAPI.user.auth.getUserData.query()
-
-        return { success: true, userData }
-      } catch {
-        return { success: false, userData: null }
-      }
-    },
-    []
-  )
   const authenticate = useCallback(
     async ({
       email,
@@ -118,32 +92,28 @@ export function AuthProvider({
       password: string
     }): Promise<string | void> => {
       try {
-        const data = await forgeAPI.user.auth.login.mutate({
+        const loginData = await _forgeAPI.auth.login.mutateRaw({
           email,
           password
         })
 
-        if (data.state === 'success') {
-          localStorage.setItem('session', data.session)
+        setAccessToken(loginData.accessToken)
 
-          const userData = await forgeAPI.user.auth.getUserData.query()
+        const userResponse = await _forgeAPI.auth.me.queryRaw()
 
-          setUserData(userData)
-          setAuth(true)
+        setUserData(userResponse.userData)
+        setAuth(true)
 
-          return 'success: ' + userData.name
-        } else if (data.state === '2fa_required') {
-          onTwoFAModalOpen()
-          tid.current = data.tid
-
-          return '2FA required'
-        }
+        return 'success: ' + userResponse.userData.name
       } catch (err) {
         if (!(err instanceof Error)) {
           throw new Error('Unknown error')
         }
 
-        if (err.message === 'Invalid credentials') {
+        if (
+          err.message === 'Invalid authorization credentials' ||
+          err.message === 'Failed to perform API request'
+        ) {
           return 'invalid'
         }
 
@@ -152,108 +122,18 @@ export function AuthProvider({
     },
     []
   )
-  const authenticateWith2FA = useCallback(
-    async ({
-      otp,
-      type
-    }: {
-      otp: string
-      type: 'email' | 'app'
-    }): Promise<string> => {
-      try {
-        const res = await fetch(forgeAPI.user['2fa'].verify.endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ otp, tid: tid.current, type })
-        })
 
-        const data = (await res.json()) as Verify2FAResponse
-
-        if (res.ok && data.state === 'success') {
-          localStorage.setItem('session', data.data.session)
-
-          const userData = await forgeAPI.user.auth.getUserData.query()
-
-          setUserData(userData)
-          setAuth(true)
-
-          return userData.name
-        } else {
-          throw new Error('Invalid OTP')
-        }
-      } catch {
-        throw new Error('Invalid OTP')
-      }
-    },
-    []
-  )
-  const verifyOAuth = useCallback(
-    async (code: string, state: string): Promise<boolean> => {
-      try {
-        const storedState = localStorage.getItem('authState')
-
-        const storedProvider = localStorage.getItem('authProvider')
-
-        if (!state || !storedState || !storedProvider) {
-          throw new Error('Invalid login attempt')
-        }
-
-        localStorage.removeItem('authProvider')
-        localStorage.removeItem('authState')
-
-        if (storedState !== state) {
-          throw new Error('Invalid state')
-        }
-
-        const session = await forgeAPI.user.oauth.verify.mutate({
-          code,
-          provider: storedProvider
-        })
-
-        if (typeof session !== 'string') {
-          if (session.state !== '2fa_required') {
-            throw new Error('Invalid session')
-          }
-          onTwoFAModalOpen()
-          tid.current = session.tid
-
-          return true
-        }
-
-        const { success, userData } = await verifySession(session)
-
-        if (success && userData) {
-          setUserData(userData)
-          setAuth(true)
-
-          localStorage.setItem('session', session)
-
-          return true
-        } else {
-          throw new Error('Invalid session')
-        }
-      } catch {
-        setAuth(false)
-        setUserData(null)
-        setAuthLoading(false)
-
-        return false
-      } finally {
-        setAuthLoading(false)
-      }
-    },
-    [verifySession]
-  )
   const logout = useCallback(() => {
+    clearAccessToken()
     setAuth(false)
-    localStorage.removeItem('session')
     setUserData(null)
+
+    _forgeAPI.auth.logout.mutateRaw().catch(() => {})
   }, [])
+
   const getAvatarURL = useCallback((): string => {
     if (userData) {
-      return forgeAPI.getMedia({
+      return (forgeAPI as any).getMedia({
         collectionId: userData.collectionId,
         recordId: userData.id,
         fieldId: userData.avatar,
@@ -262,39 +142,46 @@ export function AuthProvider({
     }
 
     return ''
-  }, [userData])
-  const doUseEffect = useCallback(() => {
+  }, [userData, forgeAPI])
+
+  useEffect(() => {
+    if (getAccessToken()) {
+      setAuth(true)
+      setAuthLoading(false)
+
+      return
+    }
+
+    if (bootstrapped) return
+
+    bootstrapped = true
     setAuthLoading(true)
 
-    if (localStorage.getItem('session')) {
-      verifySession(localStorage.getItem('session')!)
-        .then(async ({ success, userData }) => {
-          if (success) {
-            setUserData(userData)
-            setAuth(true)
-          }
-        })
-        .catch(() => {
-          setAuth(false)
-        })
-        .finally(() => {
-          setAuthLoading(false)
-        })
-    } else {
-      setAuthLoading(false)
-    }
+    _forgeAPI.auth.refresh
+      .mutateRaw()
+      .then((data: { accessToken: string }) => {
+        setAccessToken(data.accessToken)
+
+        return _forgeAPI.auth.me.queryRaw()
+      })
+      .then((data: { userData: UserData }) => {
+        setUserData(data.userData)
+        setAuth(true)
+      })
+      .catch(() => {
+        setAuth(false)
+        setUserData(null)
+      })
+      .finally(() => {
+        setAuthLoading(false)
+      })
   }, [])
-  useEffect(() => {
-    doUseEffect()
-  }, [])
+
   const value = useMemo(
     () => ({
       auth,
       setAuth,
       authenticate,
-      authenticateWith2FA,
-      verifySession,
-      verifyOAuth,
       logout,
       authLoading,
       userData,

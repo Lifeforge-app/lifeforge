@@ -113,6 +113,7 @@ const coreRoutes = forgeRouter({
   locales: (await import('@lib/locales')).default,
   user: (await import('@lib/user')).default,
   apiKeys: (await import('@lib/apiKeys')).default,
+  auth: (await import('@lib/auth')).default,
   pixabay: (await import('@lib/pixabay')).default,
   locations: (await import('@lib/locations')).default,
   backups: (await import('@lib/backups')).default,
@@ -139,6 +140,11 @@ writeContractFileToClient(
 writeContractFileToClient(
   coreRoutes,
   path.resolve(import.meta.dirname, '../../../../../packages/api'),
+  '.'
+)
+writeContractFileToClient(
+  coreRoutes,
+  path.resolve(import.meta.dirname, '../../tests'),
   '.'
 )
 

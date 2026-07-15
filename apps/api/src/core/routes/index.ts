@@ -46,7 +46,6 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
 
   const resolvedPath = path.join(moduleDistPath, filePath)
 
-  res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
   res.sendFile(resolvedPath, err => {

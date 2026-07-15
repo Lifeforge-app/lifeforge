@@ -213,205 +213,6 @@ export const contract = {
           }
         }
       },
-      "getUserData": {
-        "method": "get",
-        "description": "Get current user data",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "format": "email",
-                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-              },
-              "emailVisibility": {
-                "type": "boolean"
-              },
-              "verified": {
-                "type": "boolean"
-              },
-              "username": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "avatar": {
-                "type": "string"
-              },
-              "dateOfBirth": {
-                "type": "string"
-              },
-              "theme": {
-                "type": "string",
-                "enum": [
-                  "system",
-                  "light",
-                  "dark"
-                ]
-              },
-              "color": {
-                "type": "string"
-              },
-              "bgTemp": {
-                "type": "string"
-              },
-              "bgImage": {
-                "type": "string"
-              },
-              "backdropFilters": {},
-              "fontFamily": {
-                "type": "string"
-              },
-              "dashboardLayout": {},
-              "fontScale": {
-                "type": "number"
-              },
-              "pinnedFontFamilies": {},
-              "borderRadiusMultiplier": {
-                "type": "number"
-              },
-              "bordered": {
-                "type": "boolean"
-              },
-              "language": {
-                "type": "string"
-              },
-              "created": {
-                "type": "string"
-              },
-              "updated": {
-                "type": "string"
-              },
-              "id": {
-                "type": "string"
-              },
-              "collectionId": {
-                "type": "string"
-              },
-              "collectionName": {
-                "type": "string"
-              },
-              "hasJournalMasterPassword": {
-                "type": "boolean"
-              },
-              "hasAPIKeysMasterPassword": {
-                "type": "boolean"
-              },
-              "twoFAEnabled": {
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "email",
-              "emailVisibility",
-              "verified",
-              "username",
-              "name",
-              "avatar",
-              "dateOfBirth",
-              "theme",
-              "color",
-              "bgTemp",
-              "bgImage",
-              "backdropFilters",
-              "fontFamily",
-              "dashboardLayout",
-              "fontScale",
-              "pinnedFontFamilies",
-              "borderRadiusMultiplier",
-              "bordered",
-              "language",
-              "created",
-              "updated",
-              "id",
-              "collectionId",
-              "collectionName",
-              "hasJournalMasterPassword",
-              "hasAPIKeysMasterPassword",
-              "twoFAEnabled"
-            ],
-            "additionalProperties": false
-          },
-          "NOT_FOUND": true
-        }
-      },
-      "login": {
-        "method": "post",
-        "description": "Authenticate user with credentials",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "email",
-              "password"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "const": "2fa_required"
-                  },
-                  "tid": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "state",
-                  "tid"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "const": "success"
-                  },
-                  "session": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "state",
-                  "session"
-                ],
-                "additionalProperties": false
-              }
-            ]
-          },
-          "UNAUTHORIZED": true
-        }
-      },
       "validateOTP": {
         "method": "post",
         "description": "Verify one-time password",
@@ -443,22 +244,6 @@ export const contract = {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "boolean"
           }
-        }
-      },
-      "verifySessionToken": {
-        "method": "post",
-        "description": "Validate user session token",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "boolean"
-          },
-          "UNAUTHORIZED": true
         }
       }
     },
@@ -1983,6 +1768,216 @@ export const contract = {
           "NO_CONTENT": true,
           "NOT_FOUND": true
         }
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "method": "post",
+      "description": "Authenticate user with email and password",
+      "noAuth": true,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {
+        "body": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "password": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "email",
+            "password"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "accessToken": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "accessToken"
+          ],
+          "additionalProperties": false
+        },
+        "UNAUTHORIZED": true
+      }
+    },
+    "logout": {
+      "method": "post",
+      "description": "Invalidate refresh token and clear session",
+      "noAuth": true,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "boolean"
+        },
+        "UNAUTHORIZED": true
+      }
+    },
+    "me": {
+      "method": "get",
+      "description": "Get current user data",
+      "noAuth": false,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "userData": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "collectionId": {
+                  "type": "string"
+                },
+                "collectionName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "emailVisibility": {
+                  "type": "boolean"
+                },
+                "verified": {
+                  "type": "boolean"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "dateOfBirth": {
+                  "type": "string"
+                },
+                "theme": {
+                  "type": "string",
+                  "enum": [
+                    "system",
+                    "light",
+                    "dark"
+                  ]
+                },
+                "color": {
+                  "type": "string"
+                },
+                "bgTemp": {
+                  "type": "string"
+                },
+                "bgImage": {
+                  "type": "string"
+                },
+                "fontFamily": {
+                  "type": "string"
+                },
+                "fontScale": {
+                  "type": "number"
+                },
+                "borderRadiusMultiplier": {
+                  "type": "number"
+                },
+                "bordered": {
+                  "type": "boolean"
+                },
+                "language": {
+                  "type": "string"
+                },
+                "dashboardLayout": {},
+                "hasAPIKeysMasterPassword": {
+                  "type": "boolean"
+                },
+                "twoFAEnabled": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "collectionId",
+                "collectionName",
+                "email",
+                "emailVisibility",
+                "verified",
+                "username",
+                "name",
+                "avatar",
+                "dateOfBirth",
+                "theme",
+                "color",
+                "bgTemp",
+                "bgImage",
+                "fontFamily",
+                "fontScale",
+                "borderRadiusMultiplier",
+                "bordered",
+                "language",
+                "dashboardLayout",
+                "hasAPIKeysMasterPassword",
+                "twoFAEnabled"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "userData"
+          ],
+          "additionalProperties": false
+        },
+        "UNAUTHORIZED": true
+      }
+    },
+    "refresh": {
+      "method": "post",
+      "description": "Refresh access token using refresh token cookie",
+      "noAuth": true,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "accessToken": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "accessToken"
+          ],
+          "additionalProperties": false
+        },
+        "UNAUTHORIZED": true
       }
     }
   },

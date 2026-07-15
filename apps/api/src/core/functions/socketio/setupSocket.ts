@@ -1,6 +1,8 @@
 import { globalTaskPool } from '@functions/socketio/taskPool'
-import Pocketbase from 'pocketbase'
+import jwt from 'jsonwebtoken'
 import { Server } from 'socket.io'
+
+const JWT_SECRET = process.env.JWT_SIGNING_KEY!
 
 export function setupSocket(io: Server) {
   // QR Login namespace - no authentication required
@@ -34,8 +36,6 @@ export function setupSocket(io: Server) {
   io.use(async (socket, next) => {
     const bearerToken = socket.handshake.auth.token as string
 
-    const pb = new Pocketbase(process.env.PB_HOST)
-
     if (!bearerToken) {
       next(new Error('Authorization token is required'))
 
@@ -43,20 +43,10 @@ export function setupSocket(io: Server) {
     }
 
     try {
-      pb.authStore.save(bearerToken, null)
-
-      try {
-        await pb.collection('users').authRefresh()
-      } catch (error: any) {
-        if (error.response.code === 401) {
-          next(new Error('Invalid authorization credentials'))
-
-          return
-        }
-      }
+      jwt.verify(bearerToken, JWT_SECRET, { algorithms: ['HS512'] })
       next()
     } catch {
-      next(new Error('Internal server error'))
+      next(new Error('Invalid authorization credentials'))
     }
   })
 
