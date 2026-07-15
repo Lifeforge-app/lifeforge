@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Socket, io } from 'socket.io-client'
 
-import { useAuth, setAccessToken } from '@lifeforge/api'
+import { setAccessToken, useAuth } from '@lifeforge/api'
 import { toast } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
@@ -15,12 +15,7 @@ import {
 import getBrowserInfo from '../utils/getBrowserInfo'
 
 export type QRStatus =
-  | 'loading'
-  | 'ready'
-  | 'waiting'
-  | 'approved'
-  | 'expired'
-  | 'error'
+  'loading' | 'ready' | 'waiting' | 'approved' | 'expired' | 'error'
 
 interface UseQRLoginSessionOptions {
   onSuccess: () => void
@@ -71,9 +66,9 @@ export default function useQRLoginSession({
 
       pollingIntervalRef.current = setInterval(async () => {
         try {
-          const response = await forgeAPI.auth.qrLogin.status.queryRaw({
-            query: { sessionId }
-          })
+          const response = await forgeAPI.auth.qrLogin.status
+            .input({ sessionId })
+            .queryRaw()
 
           if (response.status === 'approved') {
             clearInterval(pollingIntervalRef.current!)

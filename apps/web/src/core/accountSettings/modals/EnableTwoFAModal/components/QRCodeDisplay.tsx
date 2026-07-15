@@ -17,7 +17,8 @@ function QRCodeDisplay({ onTid }: { onTid: (tid: string) => void }) {
 
   async function fetchLink() {
     try {
-      const { tid, link } = await forgeAPI.auth['2fa'].generate.mutateRaw()
+      const { tid, link } =
+        await forgeAPI.auth['2fa'].generate.mutateRaw(undefined)
 
       onTid(tid)
       setLink(link)
@@ -44,9 +45,7 @@ function QRCodeDisplay({ onTid }: { onTid: (tid: string) => void }) {
           <QRCodeSVG
             bgColor="transparent"
             fgColor={
-              derivedTheme === 'dark'
-                ? bgTempPalette[100]
-                : bgTempPalette[800]
+              derivedTheme === 'dark' ? bgTempPalette[100] : bgTempPalette[800]
             }
             value={link}
           />
