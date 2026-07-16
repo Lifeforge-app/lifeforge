@@ -23,10 +23,10 @@ The `ForgeCLI` provides commands to manage language packs:
 
 | Command | Description |
 |---------|-------------|
-| `bun forge locales list` | List all installed language packs |
-| `bun forge locales add <lang>` | Install a new language pack |
-| `bun forge locales remove <lang>` | Remove an installed language pack |
-| `bun forge locales validate <lang>` | Validate a language pack structure |
+| `pnpm forge locales list` | List all installed language packs |
+| `pnpm forge locales add <lang>` | Install a new language pack |
+| `pnpm forge locales remove <lang>` | Remove an installed language pack |
+| `pnpm forge locales validate <lang>` | Validate a language pack structure |
 
 </section>
 
@@ -36,7 +36,7 @@ The `ForgeCLI` provides commands to manage language packs:
 To see which language packs are currently installed:
 
 ```bash
-bun forge locales list
+pnpm forge locales list
 ```
 
 This will display all installed language packs along with their display names:
@@ -57,13 +57,13 @@ Installed language packs (4):
 To install a new language pack, use the `add` command with the package name:
 
 ```bash
-bun forge locales add <package-name>
+pnpm forge locales add <package-name>
 ```
 
 For example, to install Japanese:
 
 ```bash
-bun forge locales add lifeforge--lang-ja
+pnpm forge locales add lifeforge--lang-ja
 ```
 
 <Alert className="mt-6" type="note">
@@ -88,13 +88,13 @@ After installing a language pack, restart the server for the changes to take eff
 To remove an installed language pack:
 
 ```bash
-bun forge locales remove <package-name>
+pnpm forge locales remove <package-name>
 ```
 
 For example, to remove Simplified Chinese:
 
 ```bash
-bun forge locales remove melvinchia3636--lang-zh-CN
+pnpm forge locales remove melvinchia3636--lang-zh-CN
 ```
 
 ### What Happens During Removal
@@ -137,7 +137,7 @@ Want to contribute a new language? See the [Creating Language Packs](/developer-
 
 ### Language Pack Not Loading After Installation
 
-- Restart the development server (`bun forge dev`)
+- Restart the development server (`pnpm forge dev`)
 - Verify the `package.json` file exists and is valid
 - Check server logs for any error messages
 
@@ -146,8 +146,8 @@ Want to contribute a new language? See the [Creating Language Packs](/developer-
 The language pack directory already exists. If you want to reinstall:
 
 ```bash
-bun forge locales remove <package-name>
-bun forge locales add <package-name>
+pnpm forge locales remove <package-name>
+pnpm forge locales add <package-name>
 ```
 
 ### Git Submodule Errors

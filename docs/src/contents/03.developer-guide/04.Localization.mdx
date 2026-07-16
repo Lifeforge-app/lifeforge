@@ -395,7 +395,7 @@ All other files in the directory must be flat `.json` files corresponding to nam
 The `ForgeCLI` enforces strict validation rules. Run the following to validate your structure:
 
 ```bash
-bun forge locales validate <lang>
+pnpm forge locales validate <lang>
 ```
 
 If your locale appears in the list without errors, it is valid. Common validation errors include:
@@ -409,7 +409,7 @@ If your locale appears in the list without errors, it is valid. Common validatio
 Once your language pack is ready, you can publish it to the LifeForge registry.
 
 ```bash
-bun forge locales publish <lang-code>
+pnpm forge locales publish <lang-code>
 ```
 
 *   **Package Structure Validation**: The CLI will validate your package structure to make sure it is valid.

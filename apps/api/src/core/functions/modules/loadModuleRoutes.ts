@@ -53,7 +53,7 @@ function registerModuleMetadata(
 /**
  * Dynamically loads module routes.
  * - In production: loads from pre-bundled dist/index.js
- * - In development: loads from TypeScript source (Bun runs TS natively)
+ * - In development: loads from TypeScript source (Pnpm runs TS natively)
  */
 export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
   logger.info(

@@ -32,8 +32,8 @@ workspace package and is developed/built independently.
   "repository": { "type": "git", "url": "..." },
   "scripts": {
     "types": "cd client && tsgo",
-    "build:client": "cd client && bun run vite build",
-    "build:server": "bun build ./server/index.ts --outdir ./server/dist --target bun --external @lifeforge/server-utils --external zod"
+    "build:client": "cd client && pnpm run vite build",
+    "build:server": "pnpm build ./server/index.ts --outdir ./server/dist --target pnpm --external @lifeforge/server-utils --external zod"
   },
   "dependencies": { /* runtime deps used by the SERVER */ },
   "devDependencies": { /* @types/* etc. */ },
@@ -81,7 +81,7 @@ Key points:
 - Shared framework packages are declared as `peerDependencies` with
   `workspace:*`; module-specific runtime libraries go into `dependencies`.
 - Three build scripts: `types` (typecheck client), `build:client` (Vite
-  federation bundle), `build:server` (Bun bundle of the server entry).
+  federation bundle), `build:server` (Pnpm bundle of the server entry).
 
 ## Client Side (`client/`)
 

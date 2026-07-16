@@ -17,16 +17,16 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --linker isolated
+    pnpm install --linker isolated
 
 # Build @lifeforge/log (required by tools)
-RUN cd /app/packages/log && bun run build
+RUN cd /app/packages/log && pnpm run build
 
 # Build @lifeforge/server-utils (required by schema files)
-RUN cd /app/packages/server-utils && bun run build
+RUN cd /app/packages/server-utils && pnpm run build
 
 # Build forge CLI
-RUN cd /app/tools && bun run build
+RUN cd /app/tools && pnpm run build
 
 # Collect only schema files to staging directory
 RUN mkdir -p /schemas && \
@@ -62,7 +62,7 @@ RUN mkdir -p node_modules/@lifeforge && \
     ln -sf /app/packages/server-utils node_modules/@lifeforge/server-utils
 
 # Install minimal dependencies for schema evaluation
-RUN echo '{"dependencies":{"zod":"^4.0.0"}}' > package.json && bun install
+RUN echo '{"dependencies":{"zod":"^4.0.0"}}' > package.json && pnpm install
 
 # Set environment for Docker mode
 ENV DOCKER_MODE=true

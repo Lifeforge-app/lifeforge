@@ -14,22 +14,22 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --linker isolated
+    pnpm install --linker isolated
 
 # Build shared package
-RUN cd /lifeforge/shared && bun run build
+RUN cd /lifeforge/shared && pnpm run build
 
 # Build @lifeforge/log package
-RUN cd /lifeforge/packages/log && bun run build
+RUN cd /lifeforge/packages/log && pnpm run build
 
 # Build lifeforge-server-utils package
-RUN cd /lifeforge/packages/server-utils && bun run build
+RUN cd /lifeforge/packages/server-utils && pnpm run build
 
 # Build server bundle
-RUN cd /lifeforge/apps/api && bun run build
+RUN cd /lifeforge/apps/api && pnpm run build
 
 # Create cleaned package.json without workspace deps for production install
-RUN bun -e "const pkg = require('./apps/api/package.json'); \
+RUN pnpm -e "const pkg = require('./apps/api/package.json'); \
     delete pkg.dependencies.shared; \
     delete pkg.dependencies['@lifeforge/log']; \
     delete pkg.dependencies['@lifeforge/server-utils']; \
@@ -63,7 +63,7 @@ COPY --from=builder /lifeforge/packages/server-utils/package.json ./packages/ser
 
 # Install server dependencies
 COPY --from=builder /lifeforge/apps/api/package.docker.json ./package.json
-RUN bun install --production
+RUN pnpm install --production
 
 # Create apps directory for module mounting
 RUN mkdir -p /lifeforge/modules

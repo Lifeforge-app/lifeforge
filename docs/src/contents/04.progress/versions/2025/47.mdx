@@ -1,5 +1,5 @@
 import Commit from "../../components/Commit";
-import {Icon} from "@iconify/react";
+import { Icon } from "@iconify/react";
 
 ### 🏗️ Infrastructure & Technical Improvements
 
@@ -23,7 +23,7 @@ import {Icon} from "@iconify/react";
 - <Commit hash="e93cbcd5fb1efa58c7531940de786a289b7ce7d0" />: Migrated API Explorer from standalone SSO module to installable module that can be added to any LifeForge instance by:
 
   ```bash
-  bun forge modules install lifeforge-app/lifeforge-module-apiEndpointExplorer
+  pnpm forge modules install lifeforge-app/lifeforge-module-apiEndpointExplorer
   ```
   
 - <Commit hash="07b1bfcafa2347686730d3a9d7e0a2eb601a86e6" />: Enhance PBService filter generation to support null fields.
@@ -53,7 +53,7 @@ import {Icon} from "@iconify/react";
 - <Commit hash="27cda9280a90c7cff3778376832e5030fa8ac69b" />: Corrected command name for schema generation in documentation.
 
   ```bash
-  bun forge modules generate-schemas # previously was 'generate-schema'
+  pnpm forge modules generate-schemas # previously was 'generate-schema'
   ```
 
 - <Commit hash="8042433a3775f03847d56edeca58bfbbf6760642" />: Added automatic migration generation command after module update.
@@ -62,4 +62,4 @@ import {Icon} from "@iconify/react";
 - <Commit hash="f333e38031d5af1ca6d635d55ae40e2e86f55b38" />: Running PocketBase instance will be checked before creating module.
 - <Commit hash="abca742e5d3dbc72e9218c7562cdc6be2025490c" />: Added guidance for dynamic query construction with optional filters in DatabaseOperations
 - <Commit hash="96027747b77a694b8159cc368871dd65af2a69bd" />: Fixed code formatting issue in documentation site.
-- <Commit hash="daedfe35dc692ff3260ec804c60a31010c0ea554" />: Added guidance for using `--linker isolated` flag during Bun installation in monorepo setup.
+- <Commit hash="daedfe35dc692ff3260ec804c60a31010c0ea554" />: Added guidance for using `--linker isolated` flag during Pnpm installation in monorepo setup.

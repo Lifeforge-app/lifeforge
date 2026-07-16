@@ -85,12 +85,12 @@ import Commit from "../../components/Commit";
 - <Commit hash="081a02b272bba8f93a9cd865b6a40cbde2a3955a" />, <Commit hash="a92322fbe8f9ea8abbf373fdfd3d21b9cc9f7a11" />, <Commit hash='4e2c31a3bb6dafc2f08ba4139caff42aee171cf6' />, <Commit hash="1b0327b6f91d78ec10bd9264f6995dc1ae4825f2" />: Mechanism to add, remove, and list modules via CLI is now implemented in ForgeCLI. Integrated database schema and migration script into forgeCLI. Logging is also improved for better readability.
 
   ```bash
-  bun forge module add <author>/<moduleName>
-  bun forge module remove <moduleName>
-  bun forge module list
+  pnpm forge module add <author>/<moduleName>
+  pnpm forge module remove <moduleName>
+  pnpm forge module list
 
-  bun forge db generate-schema
-  bun forge db generate-migrations
+  pnpm forge db generate-schema
+  pnpm forge db generate-migrations
   ```
 
 - <Commit hash="b98631f5a5b3b4ec268890908386f5ecb0127ff2" />, <Commit hash="ba3800f382a9efd96d35a09e5616384a1867a4d6" />: ForgeCLI is moved from `scripts/` directory to `tools/` directory to better reflect its purpose as a development tool for LifeForge ecosystem.
@@ -99,7 +99,7 @@ import Commit from "../../components/Commit";
 - <Commit hash="f3d16f05247e1867093195a1b91877c4f5e6a5fe" />, <Commit hash="a97697cc22d8afb98f66466412ad31172786d94e" />, <Commit hash="9c44e06bcd34e5318807b1d72c9bff7dc46cff78" />, <Commit hash="be756c8f57e13babcd9038733c25e1c6f06b6316" />: Added database initialization command in ForgeCLI to facilitate setting up the database for new installations. It can be run using:
 
   ```bash
-  bun run forge db init
+  pnpm run forge db init
   ```
 
   For more information, refer to the [Configuration Guide](/getting-started/configuration).

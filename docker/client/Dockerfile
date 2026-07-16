@@ -16,19 +16,19 @@ COPY . .
 
 # Install dependencies
 RUN --mount=type=cache,target=/root/.bun/install/cache \
-    bun install --linker isolated
+    pnpm install --linker isolated
 
 # Build @lifeforge/log (required by forge CLI used in prebuild)
-RUN cd /app/packages/log && bun run build
+RUN cd /app/packages/log && pnpm run build
 
 # Build shared package (required by server types)
-RUN cd /app/shared && bun run build
+RUN cd /app/shared && pnpm run build
 
 # Build @lifeforge/server-utils (required by server types)
-RUN cd /app/packages/server-utils && bun run build
+RUN cd /app/packages/server-utils && pnpm run build
 
 # Build client
-RUN cd /app/apps/web && bun run build
+RUN cd /app/apps/web && pnpm run build
 
 # ============================================
 # Production stage - Nginx static server

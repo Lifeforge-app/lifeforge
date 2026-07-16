@@ -30,4 +30,4 @@ fi
 
 echo "Starting server..."
 cd /lifeforge/apps/api
-exec bun dist/server.js
+exec pnpm dist/server.js

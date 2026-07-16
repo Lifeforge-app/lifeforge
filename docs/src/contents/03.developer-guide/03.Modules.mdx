@@ -188,8 +188,8 @@ cd apps/myusername--my-module
   "description": "Description of what your module does",
   "scripts": {
     "types": "cd client && tsgo",
-    "build:client": "cd client && bun run vite build",
-    "build:server": "bun build ./server/index.ts --outdir ./server/dist --target bun --external @lifeforge/server-utils --external zod"
+    "build:client": "cd client && pnpm run vite build",
+    "build:server": "pnpm build ./server/index.ts --outdir ./server/dist --target pnpm --external @lifeforge/server-utils --external zod"
   },
   "dependencies": {},
   "devDependencies": {},
@@ -223,7 +223,7 @@ mkdir -p client/src/{pages,components} server/routes locales
 
 ```bash
 cd ../../  # Back to monorepo root
-bun install
+pnpm install
 ```
 
 **Step 6:** Initialize Git (for development):
@@ -257,8 +257,8 @@ The `package.json` file is crucial for your module's configuration.
   },
   "scripts": {
     "types": "cd client && tsgo",
-    "build:client": "cd client && bun run vite build",
-    "build:server": "bun build ./server/index.ts --outdir ./server/dist --target bun --external @lifeforge/server-utils --external zod"
+    "build:client": "cd client && pnpm run vite build",
+    "build:server": "pnpm build ./server/index.ts --outdir ./server/dist --target pnpm --external @lifeforge/server-utils --external zod"
   },
   "dependencies": {
     "chart.js": "^4.5.0",
@@ -605,9 +605,9 @@ export default cleanSchemas(schemas)
 ### Schema Workflow
 
 1. **Design in PocketBase Dashboard** – Configure collections through the admin UI
-2. **Pull to Code** – `bun forge db pull <module-name>`
+2. **Pull to Code** – `pnpm forge db pull <module-name>`
 3. **Commit** – Track your schema in version control
-4. **Push (on install)** – `bun forge db push <module-name>` applies schema
+4. **Push (on install)** – `pnpm forge db push <module-name>` applies schema
 
 <Alert className="mt-6" type="caution">
   **Do not manually edit `schema.ts` files.** Make changes through PocketBase, then pull.
@@ -708,7 +708,7 @@ Install hook-using libraries in your module:
 
 ```bash
 cd apps/myusername--my-module
-bun add recharts@^2.15.0
+pnpm add recharts@^2.15.0
 ```
 
 <Alert className="mt-6" type="warning">
@@ -728,13 +728,13 @@ Build your module using the Forge CLI:
 
 ```bash
 # Build normal dist
-bun forge modules build <module-name>
+pnpm forge modules build <module-name>
 
 # Build Docker dist
-bun forge modules build <module-name> --docker
+pnpm forge modules build <module-name> --docker
 
 # Build all modules
-bun forge modules build
+pnpm forge modules build
 ```
 
 ### What Gets Built
@@ -759,7 +759,7 @@ server/dist/
 ```
 
 <Alert className="mt-6" type="tip">
-  During development, the server runs source TypeScript directly (Bun executes TS natively). Builds are only needed for production deployment.
+  During development, the server runs source TypeScript directly (Pnpm executes TS natively). Builds are only needed for production deployment.
 </Alert>
 
 </section>
@@ -772,7 +772,7 @@ When installing modules, you can choose between **production** and **development
 ### Production Mode (Default)
 
 ```bash
-bun forge modules install lifeforge--calendar
+pnpm forge modules install lifeforge--calendar
 ```
 
 **Behavior:**
@@ -786,7 +786,7 @@ bun forge modules install lifeforge--calendar
 ### Development Mode
 
 ```bash
-bun forge modules install lifeforge--calendar --dev
+pnpm forge modules install lifeforge--calendar --dev
 ```
 
 **Behavior:**
@@ -831,7 +831,7 @@ git add .
 git commit -m "Initial commit"
 
 # Or install with --dev
-bun forge modules install lifeforge--calendar --dev
+pnpm forge modules install lifeforge--calendar --dev
 ```
 
 ### For Production
@@ -850,12 +850,12 @@ LifeForge allows any developer to publish modules to the registry.
 1. Visit the [LifeForge Module Registry](https://registry.lifeforge.dev)
 2. Log in with your GitHub account
 3. Obtain your authentication token
-4. Configure npm/bun with your token
+4. Configure npm/pnpm with your token
 
 ### Publishing Your Module
 
 ```bash
-bun forge modules publish <author>--<module-name>
+pnpm forge modules publish <author>--<module-name>
 ```
 
 ### Pre-Publish Checklist
@@ -879,7 +879,7 @@ The CLI will:
 6. Restore `.gitignore`
 
 ```bash
-$ bun forge modules publish myusername--my-module
+$ pnpm forge modules publish myusername--my-module
   Version: 0.0.1 → 0.0.2
   ✔ Published myusername--my-module v0.0.2
 ```
@@ -895,7 +895,7 @@ $ bun forge modules publish myusername--my-module
 <section id="cli-reference">
 ## CLI Reference
 
-All module-related commands are under `bun forge modules`:
+All module-related commands are under `pnpm forge modules`:
 
 ### Commands
 
@@ -926,28 +926,28 @@ All module-related commands are under `bun forge modules`:
 
 ```bash
 # List installed modules
-bun forge modules list
+pnpm forge modules list
 
 # Install a module (production mode)
-bun forge modules install lifeforge--calendar
+pnpm forge modules install lifeforge--calendar
 
 # Install for development
-bun forge modules install lifeforge--calendar --dev
+pnpm forge modules install lifeforge--calendar --dev
 
 # Install multiple modules
-bun forge modules i lifeforge--calendar lifeforge--todo-list
+pnpm forge modules i lifeforge--calendar lifeforge--todo-list
 
 # Uninstall
-bun forge modules rm lifeforge--calendar
+pnpm forge modules rm lifeforge--calendar
 
 # Check for updates
-bun forge modules up
+pnpm forge modules up
 
 # Build a specific module
-bun forge modules build lifeforge--calendar
+pnpm forge modules build lifeforge--calendar
 
 # Build all modules for Docker
-bun forge modules build --docker
+pnpm forge modules build --docker
 ```
 
 </section>
@@ -1056,7 +1056,7 @@ Only add dependencies that are **not** in the root `package.json`:
 
 ```bash
 cd apps/myusername--my-module
-bun add recharts zustand  # Module-specific packages
+pnpm add recharts zustand  # Module-specific packages
 ```
 
 <Alert className="mt-6" type="tip">
