@@ -1,4 +1,4 @@
-import { isModuleNameRegistered } from '../modules/moduleRegistry'
+import { isModuleNameRegistered } from './moduleRegistry'
 
 export async function checkModulesAvailability(
   moduleId: string

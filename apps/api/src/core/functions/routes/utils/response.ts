@@ -15,7 +15,7 @@ export function clientError({
   code?: number
   moduleName?: string
 }) {
-  const logger = createLogger({ name: moduleName || 'unknown-module' })
+  const logger = createLogger({ name: moduleName })
 
   try {
     logger.error(
@@ -31,8 +31,12 @@ export function clientError({
   }
 }
 
-export function serverError(res: Response, err?: string, moduleName?: string) {
-  const logger = createLogger({ name: moduleName || 'unknown-module' })
+export function serverError(
+  res: Response,
+  err?: string,
+  moduleName: string = 'unknown-module'
+) {
+  const logger = createLogger({ name: moduleName })
 
   try {
     logger.error(chalk.red(err))

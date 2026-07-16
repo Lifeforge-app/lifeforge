@@ -1,3 +1,4 @@
+import { createCache } from '@functions/cache'
 import OpenAI from 'openai'
 import z from 'zod'
 
@@ -12,7 +13,7 @@ export interface AIProvider {
   }): Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null>
 }
 
-const registry = new Map<string, AIProvider>()
+const registry = createCache<AIProvider>('ai-providers')
 
 export function registerProvider(name: string, provider: AIProvider): void {
   registry.set(name, provider)

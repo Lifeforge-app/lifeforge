@@ -1,11 +1,11 @@
-import NodeCache from 'node-cache'
+import { createCache } from '@functions/cache'
 
 interface AttemptRecord {
   count: number
   blockedUntil: number
 }
 
-const cache = new NodeCache({ stdTTL: 3600, checkperiod: 600 })
+const cache = createCache<AttemptRecord>('login-rate-limiter', { stdTTL: 3600 })
 
 const THRESHOLDS = [
   { maxAttempts: 3, cooldownMs: 0 },
@@ -23,7 +23,7 @@ function getCooldown(count: number): number {
 }
 
 export function checkLoginRateLimit(ip: string): boolean {
-  const record = cache.get<AttemptRecord>(ip)
+  const record = cache.get(ip)
 
   if (!record) return true
 
@@ -35,7 +35,7 @@ export function checkLoginRateLimit(ip: string): boolean {
 }
 
 export function recordFailedLogin(ip: string): void {
-  const record = cache.get<AttemptRecord>(ip) || { count: 0, blockedUntil: 0 }
+  const record = cache.get(ip) || { count: 0, blockedUntil: 0 }
 
   record.count++
 

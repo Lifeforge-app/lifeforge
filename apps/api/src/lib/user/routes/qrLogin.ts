@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import { createCache } from '@functions/cache'
 import PocketBase from 'pocketbase'
 import z from 'zod'
 
@@ -8,24 +8,12 @@ import { removeSensitiveData, updateNullData } from '../utils/auth'
 interface PendingQRSession {
   sessionId: string
   browserInfo: string
-  createdAt: string
-  expiresAt: string
   userId?: string
   sessionToken?: string
   status: 'pending' | 'approved' | 'expired'
 }
 
-const pendingQRSessions = new Map<string, PendingQRSession>()
-
-setInterval(() => {
-  const now = dayjs()
-
-  for (const [sessionId, session] of pendingQRSessions) {
-    if (dayjs(session.expiresAt).isBefore(now)) {
-      pendingQRSessions.delete(sessionId)
-    }
-  }
-}, 60 * 1000)
+const pendingQRSessions = createCache<PendingQRSession>('qr-sessions-user', { stdTTL: 300 })
 
 export const registerQRSession = forge
   .mutation({
@@ -50,19 +38,15 @@ export const registerQRSession = forge
       return response.badRequest('Session already registered')
     }
 
-    const session: PendingQRSession = {
+    pendingQRSessions.set(sessionId, {
       sessionId,
       browserInfo,
-      createdAt: dayjs().toISOString(),
-      expiresAt: dayjs().add(5, 'minutes').toISOString(),
       status: 'pending'
-    }
-
-    pendingQRSessions.set(sessionId, session)
+    })
 
     return response.created({
       sessionId,
-      expiresAt: session.expiresAt
+      expiresAt: new Date(Date.now() + 300 * 1000).toISOString()
     })
   })
 
@@ -92,12 +76,6 @@ export const approveQRLogin = forge
 
     if (pendingSession.status === 'approved') {
       return response.badRequest('Session already approved')
-    }
-
-    if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
-      pendingQRSessions.delete(sessionId)
-
-      return response.badRequest('Session expired')
     }
 
     const userData = pb.instance.authStore.record
@@ -169,25 +147,19 @@ export const checkQRSessionStatus = forge
       return response.ok({ status: 'not_found' as const })
     }
 
-    if (dayjs(pendingSession.expiresAt).isBefore(dayjs())) {
-      pendingQRSessions.delete(sessionId)
-
-      return response.ok({ status: 'expired' as const })
-    }
-
     if (pendingSession.status === 'approved' && pendingSession.sessionToken) {
       const result = {
         status: 'approved' as const,
         session: pendingSession.sessionToken
       }
 
-      pendingQRSessions.delete(sessionId)
+      pendingQRSessions.del(sessionId)
 
       return response.ok(result)
     }
 
     return response.ok({
       status: pendingSession.status as 'pending',
-      expiresAt: pendingSession.expiresAt
+      expiresAt: new Date(pendingQRSessions.expiryTime(sessionId)!).toISOString()
     })
   })

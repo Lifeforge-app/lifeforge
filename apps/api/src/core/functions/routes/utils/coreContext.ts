@@ -10,25 +10,25 @@ import {
   encrypt,
   encrypt2
 } from '@functions/auth/encryption'
+import { createCache } from '@functions/cache'
 import { checkExistence, getAPIKey } from '@functions/database'
 import fetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'
 import convertPDFToImage from '@functions/media/convertPDFToImage'
 import retrieveMedia from '@functions/media/retrieveMedia'
+import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import {
   addToTaskPool,
   globalTaskPool,
   updateTaskInPool
 } from '@functions/socketio/taskPool'
-import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
 import TempFileManager from '@functions/utils/tempFileManager'
 
 import { type Logger, createLogger } from '@lifeforge/log'
 import { CoreContext, IPBService } from '@lifeforge/server-utils'
 
-// Cache loggers per module to avoid creating new file stream listeners per request
-const loggerCache = new Map<string, Logger>()
+const loggerCache = createCache<Logger>('loggers')
 
 function getOrCreateLogger(moduleId: string): Logger {
   if (!loggerCache.has(moduleId)) {

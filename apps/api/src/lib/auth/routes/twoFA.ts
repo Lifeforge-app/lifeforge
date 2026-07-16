@@ -11,7 +11,6 @@ import { getCookieOptions } from '../constants/cookie'
 import { getPB } from '../constants/pb'
 import forge from '../forge'
 import {
-  cleanExpired2FASessions,
   pending2FASessions,
   pendingTOTPSetups
 } from '../utils/2fa'
@@ -40,8 +39,6 @@ export const generate = forge
     const pb = await getPB('user')
     const user = await pb.getFirstListItem.collection('users').execute()
 
-    cleanExpired2FASessions()
-
     const secret = speakeasy.generateSecret({
       name: user.email,
       length: 32,
@@ -50,10 +47,7 @@ export const generate = forge
 
     const tid = v4()
 
-    pendingTOTPSetups.set(tid, {
-      secret,
-      expiresAt: Date.now() + 5 * 60 * 1000
-    })
+    pendingTOTPSetups.set(tid, { secret })
 
     const otpauthUrl = `otpauth://totp/${encodeURIComponent(user.email)}?secret=${secret}&issuer=LifeForge.`
 
@@ -79,15 +73,13 @@ export const enable = forge
     }
   })
   .callback(async ({ body: { otp, tid }, response }) => {
-    cleanExpired2FASessions()
-
     const pending = pendingTOTPSetups.get(tid)
 
     if (!pending) {
       return response.unauthorized()
     }
 
-    pendingTOTPSetups.delete(tid)
+    pendingTOTPSetups.del(tid)
 
     const verified = speakeasy.totp.verify({
       secret: pending.secret,
@@ -156,15 +148,13 @@ export const verify = forge
     }
   })
   .callback(async ({ body: { otp, tid }, req, res, response }) => {
-    cleanExpired2FASessions()
-
     const pending = pending2FASessions.get(tid)
 
     if (!pending) {
       return response.unauthorized()
     }
 
-    pending2FASessions.delete(tid)
+    pending2FASessions.del(tid)
 
     const config = validateEnvironmentVariables()
     const pb = await connectToPocketBase(config)
