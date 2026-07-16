@@ -53,7 +53,6 @@ function AuthForm({ providers }: { providers: string[] }) {
 
     await authenticate({ email: emailOrUsername, password })
       .then(res => {
-        console.log(res)
         if (res === '2fa_required' || !res) {
           open(TwoFAModal, {})
           return
