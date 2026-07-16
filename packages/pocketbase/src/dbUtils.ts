@@ -1,6 +1,6 @@
 import Pocketbase from 'pocketbase'
 
-import { parseCollectionName } from '@lifeforge/server-utils'
+import parseCollectionName from './utils/parseCollectionName'
 
 import { PBLogger } from './PBService'
 

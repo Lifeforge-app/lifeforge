@@ -1,4 +1,4 @@
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
@@ -8,10 +8,12 @@ import {
   CollectionKey,
   ExpandConfig,
   FieldSelection,
-  FilterType,
+  FilterType
+} from '../../types/pb_service.types'
+import {
   IGetFullList,
   IGetFullListFactory
-} from '@lifeforge/server-utils'
+} from '../../types/service.interface'
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'

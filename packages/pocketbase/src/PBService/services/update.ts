@@ -1,4 +1,4 @@
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
@@ -6,22 +6,25 @@ import {
   CleanedSchemas,
   CollectionKey,
   ExpandConfig,
-  FieldSelection,
-  ICreate,
-  ICreateData,
-  ICreateFactory
-} from '@lifeforge/server-utils'
+  FieldSelection
+} from '../../types/pb_service.types'
+import {
+  IUpdate,
+  IUpdateData,
+  IUpdateFactory
+} from '../../types/service.interface'
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
- * Class for creating new records in PocketBase collections with type safety
+ * Class for updating existing records in PocketBase collections with type safety
+ * @template TSchemas - The flattened schemas type
  * @template TCollectionKey - The collection key type
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
-export class Create<
+export class Update<
   TSchemas extends CleanedSchemas,
   TCollectionKey extends CollectionKey<TSchemas>,
   TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
@@ -30,15 +33,16 @@ export class Create<
   >,
   TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
     Record<never, never>
-> implements ICreate<TSchemas, TCollectionKey, TExpandConfig, TFields> {
-  private _data: ICreateData<TSchemas, TCollectionKey> = {}
+> implements IUpdate<TSchemas, TCollectionKey, TExpandConfig, TFields> {
+  private _recordId: string = ''
+  private _data: IUpdateData<TSchemas, TCollectionKey> = {}
   private _expand: string = ''
   private _fields: string = ''
 
   /**
-   * Creates an instance of the Create class
+   * Creates an instance of the Update class
    * @param _pb - The PocketBase instance
-   * @param collectionKey - The collection key to create records in
+   * @param collectionKey - The collection key to update records in
    */
   constructor(
     private _pb: PocketBase,
@@ -46,11 +50,22 @@ export class Create<
   ) {}
 
   /**
-   * Sets the data to be created
-   * @param data - The data object containing the fields to create
-   * @returns The current Create instance for method chaining
+   * Sets the ID of the record to update
+   * @param recordId - The unique identifier of the record to update
+   * @returns The current Update instance for method chaining
    */
-  data(data: ICreateData<TSchemas, TCollectionKey>) {
+  id(recordId: string) {
+    this._recordId = recordId
+
+    return this
+  }
+
+  /**
+   * Sets the data to be updated
+   * @param data - The data object containing the fields to update
+   * @returns The current Update instance for method chaining
+   */
+  data(data: IUpdateData<TSchemas, TCollectionKey>) {
     this._data = data
 
     return this
@@ -60,18 +75,19 @@ export class Create<
    * Specifies which fields to return in the response
    * @template NewFields - The new field selection type
    * @param fields - Object specifying which fields to include in the response
-   * @returns A new Create instance with the specified field selection
+   * @returns A new Update instance with the specified field selection
    */
   fields<
     NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
   >(fields: NewFields) {
-    const newInstance = new Create<
+    const newInstance = new Update<
       TSchemas,
       TCollectionKey,
       TExpandConfig,
       NewFields
     >(this._pb, this.collectionKey)
 
+    newInstance._recordId = this._recordId
     newInstance._data = this._data
     newInstance._expand = this._expand
     newInstance._fields = Object.keys(fields).join(', ')
@@ -83,16 +99,17 @@ export class Create<
    * Configures which related records to expand in the response
    * @template NewExpandConfig - The new expand configuration type
    * @param expandConfig - Object specifying which relations to expand
-   * @returns A new Create instance with the specified expand configuration
+   * @returns A new Update instance with the specified expand configuration
    */
   expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
   ) {
-    const newInstance = new Create<TSchemas, TCollectionKey, NewExpandConfig>(
+    const newInstance = new Update<TSchemas, TCollectionKey, NewExpandConfig>(
       this._pb,
       this.collectionKey
     )
 
+    newInstance._recordId = this._recordId
     newInstance._data = this._data
     newInstance._expand = Object.keys(expandConfig).join(', ')
     newInstance._fields = ''
@@ -101,79 +118,90 @@ export class Create<
   }
 
   /**
-   * Executes the create operation
-   * @returns Promise that resolves to the created record with applied field selection and expansions
+   * Executes the update operation
+   * @returns Promise that resolves to the updated record with applied field selection and expansions
    * @throws Error if collection key is not set
+   * @throws Error if record ID is not provided
    * @throws Error if data is not provided
    */
   async execute() {
     if (!this.collectionKey) {
       throw new Error(
-        'Collection key is required. Use .collection() method to set the collection key.'
+        `Collection key is required. Use .collection() method to set the collection key.`
+      )
+    }
+
+    if (!this._recordId) {
+      throw new Error(
+        `Failed to update record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`
       )
     }
 
     if (Object.keys(this._data).length === 0) {
-      throw new Error('Data is required. Use .data() method to set the data.')
+      throw new Error(
+        `Failed to update record in collection "${this.collectionKey}". Data is required. Use .data() method to set the data.`
+      )
     }
 
     const result = await this._pb
       .collection(getFinalCollectionName(this.collectionKey))
-      .create(this._data, {
+      .update(this._recordId, this._data, {
         expand: this._expand,
-        fields: this._fields,
-        requestKey: null
+        fields: this._fields
       })
 
     PBLogger.debug(
-      `${chalk.hex('#2ed573').bold('create')} Created record with ID ${chalk
+      `${chalk.hex('#2ed573').bold('update')} Updated record with ID ${chalk
         .hex('#34ace0')
-        .bold(result.id)} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
+        .bold(
+          this._recordId
+        )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
     return result as Awaited<
       ReturnType<
-        ICreate<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
+        IUpdate<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
       >
     >
   }
 }
 
 /**
- * Factory function for creating Create instances
+ * Factory function for creating Update instances
  * @param pb - The PocketBase instance
  * @returns Object with collection method for specifying the target collection
  * @example
  * ```typescript
- * const result = await create(pb)
+ * const updatedUser = await update(pb)
  *   .collection('users')
- *   .data({ name: 'John', email: 'john@example.com' })
+ *   .id('record_id_123')
+ *   .data({ name: 'John Doe', email: 'john.doe@example.com' })
  *   .execute()
  * ```
  */
-const create = <TSchemas extends CleanedSchemas>(
+const update = <TSchemas extends CleanedSchemas>(
   pb: PocketBase,
   module: { id: string }
-): ICreateFactory<TSchemas> => ({
+): IUpdateFactory<TSchemas> => ({
   /**
-   * Specifies the collection to create records in
+   * Specifies the collection to update records in
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
-   * @returns A new Create instance for the specified collection
+   * @returns A new Update instance for the specified collection
    */
   collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
   ) => {
     const finalCollectionName = toPocketBaseCollectionName(
-      collection as string,
+      collection,
       module.id
     )
 
-    return new Create<TSchemas, TCollectionKey>(
+    return new Update<TSchemas, TCollectionKey>(
       pb,
       finalCollectionName as TCollectionKey
     )
   }
 })
 
-export default create
+export default update

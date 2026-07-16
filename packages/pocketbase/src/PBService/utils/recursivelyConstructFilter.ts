@@ -3,7 +3,7 @@ import {
   CollectionKey,
   ExpandConfig,
   FilterType
-} from '@lifeforge/server-utils'
+} from '../../types/pb_service.types'
 
 /**
  * Recursively builds filter expressions and parameters for PocketBase queries

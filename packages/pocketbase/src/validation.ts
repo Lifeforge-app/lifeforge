@@ -1,8 +1,10 @@
 import {
   CleanedSchemas,
-  CollectionKey,
+  CollectionKey
+} from './types/pb_service.types'
+import {
   IPBService
-} from '@lifeforge/server-utils'
+} from './types/service.interface'
 
 const checkExistence = async <TSchemas extends CleanedSchemas>(
   pb: IPBService<TSchemas>,

@@ -7,8 +7,11 @@ import type {
   ForgeContract,
   ForgeExpressContext
 } from '../typescript/core/forge_contract.types'
-import type IPBService from '../typescript/pb/PBService.interface'
-import { CollectionKey } from '../typescript/pb/pb_service.types'
+import {
+  type IPBService,
+  type CollectionKey,
+  type CleanedSchemas
+} from '@lifeforge/pocketbase'
 import type {
   OutputDefinition,
   OutputHelpers,
@@ -19,7 +22,6 @@ import type {
   MediaConfig
 } from '../typescript/standalone/media.types'
 import { Output, OutputType } from '../utils/outputStatus'
-import { CleanedSchemas } from '../utils/schemaUtils'
 
 type KeysOf<T> = T extends any ? keyof T : never
 

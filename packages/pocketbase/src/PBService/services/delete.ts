@@ -1,14 +1,24 @@
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
 import {
   CleanedSchemas,
-  ClientError,
-  CollectionKey,
+  CollectionKey
+} from '../../types/pb_service.types'
+import {
   IDelete,
   IDeleteFactory
-} from '@lifeforge/server-utils'
+} from '../../types/service.interface'
+
+class ClientError extends Error {
+  code: number
+  constructor(message: string, code: number) {
+    super(message)
+    this.name = 'ClientError'
+    this.code = code
+  }
+}
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'

@@ -1,0 +1,30 @@
+{
+  "name": "@lifeforge/pocketbase",
+  "version": "0.0.1",
+  "description": "PocketBase types, interfaces, and PBService implementation for LifeForge",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rm -rf dist && vite build && tsgo --emitDeclarationOnly",
+    "types": "tsgo --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "pocketbase": "^0.26.2",
+    "@lifeforge/log": "workspace:*",
+    "lodash": "^4.17.21",
+    "chalk": "^5.6.2"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.17.21",
+    "vite": "^7.1.9"
+  }
+}

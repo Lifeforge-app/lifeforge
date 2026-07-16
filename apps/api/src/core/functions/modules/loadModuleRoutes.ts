@@ -79,28 +79,37 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
 
     const { key } = metadata
 
-    // In production, load from bundled dist; in dev, load from source
+    // In production, load from bundled dist only; skip unbundled modules
     const distPath = path.join(appsDir, modDir, 'server', 'dist', 'index.js')
     const sourcePath = path.join(appsDir, modDir, 'server', 'index.ts')
 
-    // Load from dist if in production or if source code does not exist
     const modulePath =
       (IS_PRODUCTION || !fs.existsSync(sourcePath)) && fs.existsSync(distPath)
         ? distPath
-        : sourcePath
+        : !IS_PRODUCTION && fs.existsSync(sourcePath)
+          ? sourcePath
+          : null
 
-    if (fs.existsSync(modulePath)) {
-      try {
-        const mod = await import(modulePath)
-
-        if (mod.default) {
-          modules[key] = mod.default
-        } else {
-          logger.warn(`Module ${modDir} has no default export`)
-        }
-      } catch (importError) {
-        logger.error(`Failed to load routes from ${modDir}: ${importError}`)
+    if (!modulePath) {
+      if (IS_PRODUCTION) {
+        logger.warn(
+          `Skipping unbundled module ${chalk.yellow(modDir)} — no dist/index.js found`
+        )
       }
+
+      continue
+    }
+
+    try {
+      const mod = await import(modulePath)
+
+      if (mod.default) {
+        modules[key] = mod.default
+      } else {
+        logger.warn(`Module ${modDir} has no default export`)
+      }
+    } catch (importError) {
+      logger.error(`Failed to load routes from ${modDir}: ${importError}`)
     }
   }
 

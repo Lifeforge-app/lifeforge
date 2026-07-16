@@ -17,8 +17,8 @@
     "types": "tsgo -b",
     "build": "tsgo -b && vite build",
     "start": "tsgo -b && NODE_ENV=production tsx ./src/index.ts",
-    "start:prod": "NODE_ENV=production node ./dist/server.js",
-    "start:watch": "NODE_ENV=production node --watch ./dist/server.js",
+    "start:prod": "NODE_ENV=production node --env-file=../../env/.env.local ./dist/server.js",
+    "start:watch": "NODE_ENV=production node --watch --env-file=../../env/.env.local ./dist/server.js",
     "dev": "tsx watch ./src/index.ts",
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "vitest",
@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@lifeforge/log": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",
     "arctic": "^3.7.0",
     "argon2": "^0.44.0",

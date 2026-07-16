@@ -1,4 +1,4 @@
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
@@ -6,23 +6,24 @@ import {
   CleanedSchemas,
   CollectionKey,
   ExpandConfig,
-  FieldSelection,
-  IUpdate,
-  IUpdateData,
-  IUpdateFactory
-} from '@lifeforge/server-utils'
+  FieldSelection
+} from '../../types/pb_service.types'
+import {
+  IGetOne,
+  IGetOneFactory
+} from '../../types/service.interface'
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
- * Class for updating existing records in PocketBase collections with type safety
+ * Class for retrieving a single record from PocketBase collections with field selection and expansion capabilities
  * @template TSchemas - The flattened schemas type
  * @template TCollectionKey - The collection key type
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
-export class Update<
+export class GetOne<
   TSchemas extends CleanedSchemas,
   TCollectionKey extends CollectionKey<TSchemas>,
   TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
@@ -31,16 +32,15 @@ export class Update<
   >,
   TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
     Record<never, never>
-> implements IUpdate<TSchemas, TCollectionKey, TExpandConfig, TFields> {
-  private _recordId: string = ''
-  private _data: IUpdateData<TSchemas, TCollectionKey> = {}
+> implements IGetOne<TSchemas, TCollectionKey, TExpandConfig, TFields> {
+  private _itemId: string = ''
   private _expand: string = ''
   private _fields: string = ''
 
   /**
-   * Creates an instance of the Update class
+   * Creates an instance of the GetOne class
    * @param _pb - The PocketBase instance
-   * @param collectionKey - The collection key to update records in
+   * @param collectionKey - The collection key to retrieve the record from
    */
   constructor(
     private _pb: PocketBase,
@@ -48,23 +48,12 @@ export class Update<
   ) {}
 
   /**
-   * Sets the ID of the record to update
-   * @param recordId - The unique identifier of the record to update
-   * @returns The current Update instance for method chaining
+   * Sets the ID of the record to retrieve
+   * @param itemId - The unique identifier of the record to fetch
+   * @returns The current GetOne instance for method chaining
    */
-  id(recordId: string) {
-    this._recordId = recordId
-
-    return this
-  }
-
-  /**
-   * Sets the data to be updated
-   * @param data - The data object containing the fields to update
-   * @returns The current Update instance for method chaining
-   */
-  data(data: IUpdateData<TSchemas, TCollectionKey>) {
-    this._data = data
+  id(itemId: string) {
+    this._itemId = itemId
 
     return this
   }
@@ -73,20 +62,19 @@ export class Update<
    * Specifies which fields to return in the response
    * @template NewFields - The new field selection type
    * @param fields - Object specifying which fields to include in the response
-   * @returns A new Update instance with the specified field selection
+   * @returns A new GetOne instance with the specified field selection
    */
   fields<
     NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
   >(fields: NewFields) {
-    const newInstance = new Update<
+    const newInstance = new GetOne<
       TSchemas,
       TCollectionKey,
       TExpandConfig,
       NewFields
     >(this._pb, this.collectionKey)
 
-    newInstance._recordId = this._recordId
-    newInstance._data = this._data
+    newInstance._itemId = this._itemId
     newInstance._expand = this._expand
     newInstance._fields = Object.keys(fields).join(', ')
 
@@ -97,18 +85,17 @@ export class Update<
    * Configures which related records to expand in the response
    * @template NewExpandConfig - The new expand configuration type
    * @param expandConfig - Object specifying which relations to expand
-   * @returns A new Update instance with the specified expand configuration
+   * @returns A new GetOne instance with the specified expand configuration
    */
   expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
   ) {
-    const newInstance = new Update<TSchemas, TCollectionKey, NewExpandConfig>(
+    const newInstance = new GetOne<TSchemas, TCollectionKey, NewExpandConfig>(
       this._pb,
       this.collectionKey
     )
 
-    newInstance._recordId = this._recordId
-    newInstance._data = this._data
+    newInstance._itemId = this._itemId
     newInstance._expand = Object.keys(expandConfig).join(', ')
     newInstance._fields = ''
 
@@ -116,76 +103,67 @@ export class Update<
   }
 
   /**
-   * Executes the update operation
-   * @returns Promise that resolves to the updated record with applied field selection and expansions
+   * Executes the query and retrieves the specified record
+   * @returns Promise that resolves to the record with applied field selection and expansions
    * @throws Error if collection key is not set
-   * @throws Error if record ID is not provided
-   * @throws Error if data is not provided
+   * @throws Error if item ID is not provided
    */
   async execute() {
     if (!this.collectionKey) {
       throw new Error(
-        `Collection key is required. Use .collection() method to set the collection key.`
+        'Collection key is required. Use .collection() method to set the collection key.'
       )
     }
 
-    if (!this._recordId) {
+    if (!this._itemId) {
       throw new Error(
-        `Failed to update record in collection "${this.collectionKey}". Record ID is required. Use .id() method to set the ID.`
+        `Failed to retrieve record in collection "${this.collectionKey}". Item ID is required. Use .id() method to set the ID.`
       )
     }
 
-    if (Object.keys(this._data).length === 0) {
-      throw new Error(
-        `Failed to update record in collection "${this.collectionKey}". Data is required. Use .data() method to set the data.`
-      )
-    }
-
-    const result = await this._pb
+    const result = this._pb
       .collection(getFinalCollectionName(this.collectionKey))
-      .update(this._recordId, this._data, {
+      .getOne(this._itemId, {
         expand: this._expand,
         fields: this._fields
       })
 
     PBLogger.debug(
-      `${chalk.hex('#2ed573').bold('update')} Updated record with ID ${chalk
+      `${chalk.hex('#82c8e5').bold('getOne')} Fetched record with ID ${chalk
         .hex('#34ace0')
         .bold(
-          this._recordId
-        )} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
+          this._itemId
+        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
-    return result as Awaited<
-      ReturnType<
-        IUpdate<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
-      >
+    return result as ReturnType<
+      IGetOne<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
     >
   }
 }
 
 /**
- * Factory function for creating Update instances
+ * Factory function for creating GetOne instances
  * @param pb - The PocketBase instance
  * @returns Object with collection method for specifying the target collection
  * @example
  * ```typescript
- * const updatedUser = await update(pb)
+ * const user = await getOne(pb)
  *   .collection('users')
  *   .id('record_id_123')
- *   .data({ name: 'John Doe', email: 'john.doe@example.com' })
+ *   .fields({ name: true, email: true })
  *   .execute()
  * ```
  */
-const update = <TSchemas extends CleanedSchemas>(
+const getOne = <TSchemas extends CleanedSchemas>(
   pb: PocketBase,
   module: { id: string }
-): IUpdateFactory<TSchemas> => ({
+): IGetOneFactory<TSchemas> => ({
   /**
-   * Specifies the collection to update records in
+   * Specifies the collection to retrieve a record from
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
-   * @returns A new Update instance for the specified collection
+   * @returns A new GetOne instance for the specified collection
    */
   collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
@@ -195,11 +173,11 @@ const update = <TSchemas extends CleanedSchemas>(
       module.id
     )
 
-    return new Update<TSchemas, TCollectionKey>(
+    return new GetOne<TSchemas, TCollectionKey>(
       pb,
       finalCollectionName as TCollectionKey
     )
   }
 })
 
-export default update
+export default getOne

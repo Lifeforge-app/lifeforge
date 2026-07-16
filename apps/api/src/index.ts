@@ -1,5 +1,4 @@
 import { PORT } from '@constants'
-import checkDB from '@functions/database/dbUtils'
 import ensureCredentials from '@functions/initialization/ensureCredentials'
 import { LocaleService } from '@functions/initialization/localeService'
 import {
@@ -17,6 +16,7 @@ import { createServer } from 'node:http'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { checkDB } from '@lifeforge/pocketbase'
 import { traceRouteStack } from '@lifeforge/server-utils'
 
 import app from './core/app'

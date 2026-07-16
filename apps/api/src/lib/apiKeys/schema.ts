@@ -1,5 +1,6 @@
 import z from 'zod'
-import { cleanSchemas } from '@lifeforge/server-utils'
+
+import { cleanSchemas } from '@lifeforge/pocketbase'
 
 export const schemas = {
   entries: {

@@ -31,7 +31,8 @@
     "socket.io": "^4.8.3",
     "tesseract.js": "^5.1.1",
     "uuid": "^11.1.0",
-    "@lifeforge/log": "workspace:*"
+    "@lifeforge/log": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
@@ -41,8 +42,5 @@
     "@types/multer": "^1.4.13",
     "vite": "^7.1.9",
     "vitest": "^4.1.7"
-  },
-  "peerDependencies": {
-    "pocketbase": "^0.26.2"
   }
 }

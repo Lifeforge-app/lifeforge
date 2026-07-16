@@ -18,11 +18,14 @@ import type { Request, Response, Router } from 'express'
 
 import {
   BaseResponse,
-  ClientError,
   ForgeContract,
   MediaConfig,
   getStatusMessage
 } from '@lifeforge/server-utils'
+
+function isClientError(err: unknown): err is Error & { code: number } {
+  return err instanceof Error && err.name === 'ClientError' && 'code' in err
+}
 
 import checkRecordExistence from '../utils/checkRecordExistence'
 import { createCoreContext } from '../utils/coreContext'
@@ -134,7 +137,7 @@ function createHandler(
         status
       )
     } catch (err) {
-      if (ClientError.isClientError(err)) {
+      if (isClientError(err)) {
         return clientError({
           res,
           message: err.message,

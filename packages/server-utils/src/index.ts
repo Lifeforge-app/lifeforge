@@ -6,55 +6,9 @@ export {
   type ForgeRouter
 } from './routes/forgeRouter'
 
-export {
-  cleanSchemas,
-  schemaWithPB,
-  type RawSchemas,
-  type CleanedSchemas
-} from './utils/schemaUtils'
-
-export { default as getCallerModuleId } from './utils/getCallerModuleId'
-
-export { default as parseCollectionName } from './utils/parseCollectionName'
-
 export { Output, getStatusMessage } from './utils/outputStatus'
 
-export type {
-  default as IPBService,
-  ICreate,
-  ICreateData,
-  ICreateFactory,
-  IDelete,
-  IDeleteFactory,
-  IGetFullList,
-  IGetFirstListItem,
-  IGetFirstListItemFactory,
-  IGetFullListFactory,
-  IGetList,
-  IGetListFactory,
-  IGetListReturnType,
-  IGetOne,
-  IGetOneFactory,
-  IUpdate,
-  IUpdateData,
-  IUpdateFactory
-} from './typescript/pb/PBService.interface'
-
-export type {
-  SchemaWithPB,
-  CollectionKey,
-  CollectionKeyBracket,
-  ExpandConfig,
-  FilterType,
-  FieldSelection,
-  AllPossibleFieldsForFilter,
-  AllPossibleFields,
-  AllPossibleFieldsForFieldSelection,
-  FieldKey,
-  MultiItemsReturnType,
-  PickSelectedFields,
-  SingleItemReturnType
-} from './typescript/pb/pb_service.types'
+export { default as getCallerModuleId } from './utils/getCallerModuleId'
 
 export {
   default as createForgeContractBuilder,

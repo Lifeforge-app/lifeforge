@@ -1,12 +1,12 @@
-import { PBService } from '@functions/database'
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@functions/database/dbUtils'
 import { default as userSchema } from '@lib/user/schema'
 import type PocketBase from 'pocketbase'
 
-import { IPBService } from '@lifeforge/server-utils'
+import {
+  IPBService,
+  PBService,
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@lifeforge/pocketbase'
 
 import { default as selfSchema } from '../schema'
 

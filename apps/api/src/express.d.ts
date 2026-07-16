@@ -1,4 +1,4 @@
-import { PBService } from '@functions/database'
+import { PBService } from '@lifeforge/pocketbase'
 import {
   ConvertMedia,
   MediaConfig
