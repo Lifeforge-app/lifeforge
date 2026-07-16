@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "rm -rf dist && vite build && tsgo --emitDeclarationOnly",
-    "types": "tsgo --emitDeclarationOnly"
+    "typecheck": "tsgo --emitDeclarationOnly"
   },
   "dependencies": {
     "pocketbase": "^0.26.2",

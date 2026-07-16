@@ -24,11 +24,11 @@
   "scripts": {
     "forge": "tsx --tsconfig=$PWD/tools/tsconfig.json tools/src/index.ts",
     "build": "turbo build",
-    "types": "turbo types",
     "lint": "prettier --check . && eslint .",
     "fix": "prettier --write ./ && pnpm lint",
     "test": "turbo test",
-    "postinstall": "turbo build --filter=\"./packages/*\""
+    "postinstall": "turbo build --filter=\"./packages/*\"",
+    "typecheck": "turbo typecheck"
   },
   "keywords": [
     "lifeforge"

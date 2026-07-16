@@ -23,9 +23,9 @@
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "types": "tsgo -b",
     "build": "tsgo -b && rm -rf dist && vite build",
-    "build-storybook": "tsgo -b && storybook build"
+    "build-storybook": "tsgo -b && storybook build",
+    "typecheck": "tsgo -b"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
