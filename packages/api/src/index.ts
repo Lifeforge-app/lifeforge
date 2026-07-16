@@ -1,3 +1,5 @@
+export { contract } from './contract'
+
 export * from './core'
 
 export * from './hooks'

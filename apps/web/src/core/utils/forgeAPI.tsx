@@ -1,6 +1,4 @@
-import { createForgeProxy, globalProxyRegistry } from '@lifeforge/api'
-
-import contract from '../../contract'
+import { contract, createForgeProxy, globalProxyRegistry } from '@lifeforge/api'
 
 globalProxyRegistry.set(contract, {
   moduleId: '',

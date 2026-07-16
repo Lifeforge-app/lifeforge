@@ -2,12 +2,11 @@ import type { AxiosResponse } from 'axios'
 import PocketBase from 'pocketbase'
 
 import {
+  contract,
   type ResponseWrapper,
   createForgeProxy,
   globalProxyRegistry
 } from '@lifeforge/api'
-
-import contract from './contract'
 
 globalProxyRegistry.set(contract, {
   moduleId: '',
