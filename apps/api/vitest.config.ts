@@ -1,8 +1,25 @@
-import { resolve } from 'path'
 import dotenv from 'dotenv'
+import fs from 'fs'
+import { resolve } from 'path'
 import { defineConfig } from 'vitest/config'
 
-dotenv.config({ path: resolve(__dirname, '../../env/.env.local') })
+function findEnvFile(startDir: string): string | null {
+  let dir = startDir
+  while (true) {
+    const envPath = resolve(dir, 'env', '.env.local')
+    if (fs.existsSync(envPath)) return envPath
+    const parent = resolve(dir, '..')
+    if (parent === dir) break
+    dir = parent
+  }
+  return null
+}
+
+const envPath = findEnvFile(__dirname || process.cwd())
+
+if (envPath) {
+  dotenv.config({ path: envPath })
+}
 
 export default defineConfig({
   test: {

@@ -1,9 +1,5 @@
 import { authenticateSuperuser, forgeAPI, getPB } from './utils'
 
-const PB_EMAIL = process.env.PB_EMAIL!
-const PB_PASSWORD = process.env.PB_PASSWORD!
-const TEST_USER_PASSWORD = process.env.TEST_USER_PASSWORD!
-
 let cachedEmail = ''
 let cachedPassword = ''
 let cachedUsername = ''
@@ -40,9 +36,13 @@ export async function initAuthTests(): Promise<{
 
   if (!serverAlive) {
     throw new Error(
-      'Cannot connect to API server at http://localhost:3636. Start with: cd apps/api && bun dev'
+      'Cannot connect to API server at http://localhost:3636. Start with: cd apps/api && pnpmdev'
     )
   }
+
+  const PB_EMAIL = process.env.PB_EMAIL
+  const PB_PASSWORD = process.env.PB_PASSWORD
+  const TEST_USER_PASSWORD = process.env.VITE_TEST_USER_PASSWORD
 
   if (!PB_EMAIL || !PB_PASSWORD) {
     throw new Error('PB_EMAIL and PB_PASSWORD must be set in env/.env.local')

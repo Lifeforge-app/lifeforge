@@ -1,11 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { Writable } from 'node:stream'
 
-import { createLogger } from '../logger'
+import { createLogger } from '../loggers/logger'
 
-vi.mock('../transports/file', () => ({
-  getFileStream: () => ({
-    write: vi.fn()
-  })
+vi.mock('../utils/fileTransport', () => ({
+  getFileStream: () =>
+    new Writable({
+      write: vi.fn()
+    })
 }))
 
 describe('createLogger', () => {
@@ -61,8 +63,8 @@ describe('createLogger', () => {
     log.debug('Debug message')
     log.error('Error message')
 
-    const calls = consoleSpy.mock.calls.filter(call =>
-      call[0]?.toString().includes('Error message')
+    const calls = consoleSpy.mock.calls.filter((call: unknown[]) =>
+      (call[0] as string).includes('Error message')
     )
 
     expect(calls.length).toBeGreaterThan(0)

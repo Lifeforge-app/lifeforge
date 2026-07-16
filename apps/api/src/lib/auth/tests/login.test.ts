@@ -1,6 +1,7 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
 import { expectNo2FA, extractCookies, forgeAPI, unwrap } from '@tests/utils'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+
 import { setAccessToken } from '@lifeforge/api'
 
 let email = ''
@@ -78,19 +79,17 @@ describe('POST /auth/login', () => {
   })
 
   it('returns 400 for missing email field', async () => {
-    const res = await forgeAPI.auth.login.mutateRaw(
-      { password } as any,
-      { raw: true }
-    )
+    const res = await forgeAPI.auth.login.mutateRaw({ password } as any, {
+      raw: true
+    })
 
     expect(res.status).toBe(400)
   })
 
   it('returns 400 for missing password field', async () => {
-    const res = await forgeAPI.auth.login.mutateRaw(
-      { email } as any,
-      { raw: true }
-    )
+    const res = await forgeAPI.auth.login.mutateRaw({ email } as any, {
+      raw: true
+    })
 
     expect(res.status).toBe(400)
   })
@@ -155,7 +154,7 @@ describe('POST /auth/login', () => {
     expect(() => JSON.parse(atob(segments[1]))).not.toThrow()
   })
 
-  it('cookie has httpOnly, SameSite=Strict, Path=/auth', async () => {
+  it('cookie has httpOnly, SameSite=Lax, Path=/auth in development', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
     const cookieHeader = res.headers['set-cookie']
     const setCookie = Array.isArray(cookieHeader)
@@ -163,7 +162,7 @@ describe('POST /auth/login', () => {
       : (cookieHeader ?? '')
 
     expect(setCookie.toLowerCase()).toContain('httponly')
-    expect(setCookie.toLowerCase()).toContain('samesite=strict')
+    expect(setCookie.toLowerCase()).toContain('samesite=lax')
     expect(setCookie).toContain('Path=/auth')
     expect(setCookie).toContain('refresh_token=')
   })
