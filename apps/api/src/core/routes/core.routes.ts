@@ -129,22 +129,7 @@ const coreRoutes = forgeRouter({
 
 writeContractFileToClient(
   coreRoutes,
-  path.resolve(import.meta.dirname, '../../../../web'),
-  'src'
-)
-writeContractFileToClient(
-  coreRoutes,
-  path.resolve(import.meta.dirname, '../../../../../packages/ui/src'),
-  '.'
-)
-writeContractFileToClient(
-  coreRoutes,
   path.resolve(import.meta.dirname, '../../../../../packages/api/src'),
-  '.'
-)
-writeContractFileToClient(
-  coreRoutes,
-  path.resolve(import.meta.dirname, '../../tests'),
   '.'
 )
 

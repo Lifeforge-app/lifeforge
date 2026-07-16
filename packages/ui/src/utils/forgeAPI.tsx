@@ -1,5 +1,3 @@
-import { createForgeProxy } from '@lifeforge/api'
-
-import { contract } from '@/contract'
+import { contract, createForgeProxy } from '@lifeforge/api'
 
 export const forgeAPI = createForgeProxy(contract)
