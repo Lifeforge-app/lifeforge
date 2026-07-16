@@ -77,7 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if ('state' in loginData) {
           tid.current = loginData.tid
 
-          return '2FA required'
+          return '2fa_required'
         }
 
         setAccessToken(loginData.accessToken)
@@ -140,7 +140,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if ('state' in oauthData) {
           tid.current = oauthData.tid
 
-          return '2FA required'
+          return '2fa_required'
         }
 
         setAccessToken(oauthData.accessToken)

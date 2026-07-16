@@ -12,7 +12,7 @@ The LifeForge UI library is built on a **zero-runtime CSS-in-JS** architecture p
 
 > [!IMPORTANT]
 > **RULE 1: NO TAILWINDCSS AT ALL**  
-> Tailwind utility classes, `@apply` directives, `@reference`, `@layer`, and `theme()` are **forbidden** in all files — `.tsx`, `.css`, `.css.ts`, everywhere. All layout, spacing, typography, and styling must use the custom primitives or standard CSS custom properties. Third-party library overrides in `.css` files must use plain CSS with `var(--color-*)` custom properties — never `@apply`, `@layer`, or Tailwind classes. External library CSS should be imported with plain `@import` (no `layer()`).
+> Tailwind utility classes, `@apply` directives, `@reference`, `@layer`, and `theme()` are **forbidden** in all files - `.tsx`, `.css`, `.css.ts`, everywhere. All layout, spacing, typography, and styling must use the custom primitives or standard CSS custom properties. Third-party library overrides in `.css` files must use plain CSS with `var(--color-*)` custom properties - never `@apply`, `@layer`, or Tailwind classes. External library CSS should be imported with plain `@import` (no `layer()`).
 
 > [!IMPORTANT]
 > **RULE 2: NO INLINE STYLES FOR CORE LAYOUT & DESIGN**  
@@ -20,7 +20,7 @@ The LifeForge UI library is built on a **zero-runtime CSS-in-JS** architecture p
 
 > [!IMPORTANT]
 > **RULE 3: PRIMITIVES FIRST, INLINE STYLES AND CSS.TS LAST**  
-> Every style must first be attempted using UI primitives (`Box`, `Flex`, `Stack`, `Grid`, `Text`, `Icon`, `Bordered`, `Ring`, `Button`, `Card`, etc.) and their props. Only when a style **cannot** be expressed through any primitive prop — even with `asChild` composition — should you resort to inline `style` or a `.css.ts` vanilla-extract file. Acceptable exceptions: `fontFamily` for custom fonts, `listStyleType` for list markers, `wordBreak` for table cells. If a `.css.ts` file is created, it must contain ONLY the styles that cannot be achieved through primitives — nothing more.
+> Every style must first be attempted using UI primitives (`Box`, `Flex`, `Stack`, `Grid`, `Text`, `Icon`, `Bordered`, `Ring`, `Button`, `Card`, etc.) and their props. Only when a style **cannot** be expressed through any primitive prop - even with `asChild` composition - should you resort to inline `style` or a `.css.ts` vanilla-extract file. Acceptable exceptions: `fontFamily` for custom fonts, `listStyleType` for list markers, `wordBreak` for table cells. If a `.css.ts` file is created, it must contain ONLY the styles that cannot be achieved through primitives - nothing more.
 
 ### Design Tokens & Dynamic Scaling
 
@@ -91,7 +91,7 @@ Typography values scale with `--custom-font-scale`:
 
 ### D. Category/Tag Chips
 
-For dynamic category labels or tag chips that need background colors based on data (not theme tokens), use **inline `style` with `backgroundColor`** set directly from the data source. Do NOT create `.css.ts` files for one-off dynamic colors — inline styles are the correct pattern here because the color value is computed at runtime from external data.
+For dynamic category labels or tag chips that need background colors based on data (not theme tokens), use **inline `style` with `backgroundColor`** set directly from the data source. Do NOT create `.css.ts` files for one-off dynamic colors - inline styles are the correct pattern here because the color value is computed at runtime from external data.
 
 ✅ **Correct (dynamic colors from data):**
 ```tsx
@@ -170,19 +170,19 @@ The most common background patterns are available as a pre-built `surface` objec
 ```typescript
 import { surface } from '@lifeforge/ui'
 
-// Light static surface — for non-interactive light backgrounds
+// Light static surface - for non-interactive light backgrounds
 surface.light
 // => { base: 'bg-100', dark: 'bg-800' }
 
-// Light interactive surface — for controls (Listbox, SearchInput, selectable Cards)
+// Light interactive surface - for controls (Listbox, SearchInput, selectable Cards)
 surface.lightInteractive
 // => { base: 'bg-100', hover: 'bg-200', dark: 'bg-800', darkHover: colorWithOpacity('bg-700', '50%') }
 
-// Default surface — for static Cards
+// Default surface - for static Cards
 surface.default
 // => { base: 'bg-50', dark: 'bg-900' }
 
-// Default interactive surface — for clickable Cards
+// Default interactive surface - for clickable Cards
 surface.defaultInteractive
 // => { base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }
 ```
@@ -195,7 +195,7 @@ These are `as const` objects that can be spread or passed directly into the `bg`
 <Card isInteractive ... />                    {/* Uses surface.defaultInteractive automatically */}
 ```
 
-> The `surface.default` and `surface.defaultInteractive` presets already serve as the built-in defaults for the `Card` component — you only need to pass them explicitly when overriding or when using them on non-Card primitives.
+> The `surface.default` and `surface.defaultInteractive` presets already serve as the built-in defaults for the `Card` component - you only need to pass them explicitly when overriding or when using them on non-Card primitives.
 
 ### B. Opacity Modifiers (`colorWithOpacity`)
 
@@ -210,7 +210,7 @@ const semiTransparentPrimary = colorWithOpacity('primary', '30%')
 
 _Supported Opacity Levels:_ `'5%'`, `'10%'`, `'20%'`, `'30%'`, `'40%'`, `'50%'`, `'60%'`, `'70%'`, `'80%'`, `'90%'`.
 
-`colorWithOpacity` can be used **directly in the `bg` prop** — no inline `style` needed. It also works in vanilla-extract `.css.ts` files at build time via `.toString()`:
+`colorWithOpacity` can be used **directly in the `bg` prop** - no inline `style` needed. It also works in vanilla-extract `.css.ts` files at build time via `.toString()`:
 
 ```typescript
 // In a .css.ts file (build-time evaluation)
@@ -327,15 +327,15 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
 ```
 
 > [!TIP]
-> **`aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis` are available as props on all primitives** — no inline `style` needed. Always check if a CSS property exists in the `ArbitraryProps` type before resorting to inline styles.
+> **`aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis` are available as props on all primitives** - no inline `style` needed. Always check if a CSS property exists in the `ArbitraryProps` type before resorting to inline styles.
 
 > [!WARNING]
 > **`top`, `right`, `bottom`, `left`, and `inset` accept raw CSS strings** (e.g. `"0.5rem"`, `"8px"`, `"50%"`), not `SpaceToken` values like `sm`, `md`, `lg`.  
 > Spacing tokens only work with padding (`p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`) and margin (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`) props.  
-> ❌ `top="sm"` — will not resolve  
-> ✅ `top="0.5rem"` — correct
+> ❌ `top="sm"` - will not resolve  
+> ✅ `top="0.5rem"` - correct
 >
-> **`top`, `right`, `bottom`, `left`, and `inset` are NOT tokenized.** They do not accept spacing tokens (`sm`, `md`, `lg`) — only raw CSS values. These properties are used for absolute/fixed positioning, which is inherently pixel/length-based and does not benefit from the token system's font-scaling.
+> **`top`, `right`, `bottom`, `left`, and `inset` are NOT tokenized.** They do not accept spacing tokens (`sm`, `md`, `lg`) - only raw CSS values. These properties are used for absolute/fixed positioning, which is inherently pixel/length-based and does not benefit from the token system's font-scaling.
 
 // Border Radius (Uses RadiusTokens)
 r?: ResponsiveProp<RadiusToken> // All corners
@@ -466,7 +466,7 @@ export function Stack<T extends ElementType = 'div'>(props: FlexProps<T>) {
 
 #### Example:
 
-For listing content, Stack's default `gap="sm"` is usually sufficient — no need to explicitly set `gap`:
+For listing content, Stack's default `gap="sm"` is usually sufficient - no need to explicitly set `gap`:
 
 ```tsx
 <Stack>
@@ -518,7 +518,7 @@ interface TextOwnProps {
 
 #### Example: Headline and Subtitle
 
-`Text` also accepts all spacing props (`mt`, `mb`, `py`, `px`, etc.) and `style` directly — no wrapping `Box` needed.
+`Text` also accepts all spacing props (`mt`, `mb`, `py`, `px`, etc.) and `style` directly - no wrapping `Box` needed.
 
 ```tsx
 <Stack gap="xs">
@@ -531,7 +531,7 @@ interface TextOwnProps {
 </Stack>
 
 <Text as="p" mt="md" py="sm" style={{ fontFamily: 'Inter' }}>
-  Direct spacing and style — no Box wrapper.
+  Direct spacing and style - no Box wrapper.
 </Text>
 ```
 
@@ -548,7 +548,7 @@ type IconProps = Omit<TextProps, 'size'> & {
 }
 ```
 
-> The default size of `Icon` is **`1.25em`**, which works well alongside `Text size="base"`. Only pass `size` explicitly when you need a different size (e.g. `size="1.5em"` for larger decorative icons). Do NOT redundantly specify `size="1.25em"` — it is the default.
+> The default size of `Icon` is **`1.25em`**, which works well alongside `Text size="base"`. Only pass `size` explicitly when you need a different size (e.g. `size="1.5em"` for larger decorative icons). Do NOT redundantly specify `size="1.25em"` - it is the default.
 
 #### Example:
 
@@ -798,9 +798,9 @@ type ButtonProps<T extends ElementType = 'button'> = ButtonOwnProps &
 | Category                | Props                                                                                                                      |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | **Button-specific**     | `variant`, `dangerous`, `icon`, `iconPosition`, `loading`, `disabled`, `namespace`                                         |
-| **Inherited from Flex** | All `FlexProps` — `mt`, `width`, `position`, `top`, `gap`, and everything from `BoxProps` (`bg`, `p`, `r`, `shadow`, etc.) |
+| **Inherited from Flex** | All `FlexProps` - `mt`, `width`, `position`, `top`, `gap`, and everything from `BoxProps` (`bg`, `p`, `r`, `shadow`, etc.) |
 
-Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop available on `Flex` or `Box` can be passed directly** — no wrapping `Box` needed. Only reach for `Box asChild` when you need a prop that Flex/Box doesn't support (e.g. CSS properties only available via inline `style`).
+Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop available on `Flex` or `Box` can be passed directly** - no wrapping `Box` needed. Only reach for `Box asChild` when you need a prop that Flex/Box doesn't support (e.g. CSS properties only available via inline `style`).
 
 #### Notable Engineering Features:
 
@@ -815,7 +815,7 @@ Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop
   variant="primary"
   icon="tabler:send"
   loading={isSubmitting}
-  mt="lg" // Inherited from Flex — no Box wrapper needed
+  mt="lg" // Inherited from Flex - no Box wrapper needed
   width="100%" // Inherited from Flex
   onClick={onSubmit}
 >
@@ -1026,7 +1026,7 @@ The basic block container for laying out groups of information.
   ```
 
 > [!TIP]
-> **`Card` is already a `Flex` component.** Because `CardProps` extends `FlexProps`, you can pass `align`, `gap`, `justify`, `direction`, and all other layout props **directly to `Card`** — no need to wrap its children in a `<Flex>` container. The only prop `Card` adds beyond `Flex` is `isInteractive`.
+> **`Card` is already a `Flex` component.** Because `CardProps` extends `FlexProps`, you can pass `align`, `gap`, `justify`, `direction`, and all other layout props **directly to `Card`** - no need to wrap its children in a `<Flex>` container. The only prop `Card` adds beyond `Flex` is `isInteractive`.
 >
 > ```tsx
 > // ❌ Redundant: Card + inner Flex wrapper
@@ -1368,9 +1368,9 @@ The legacy `component-bg-*` utility classes have been **removed** from the codeb
 | `component-bg-with-hover`         | `surface.defaultInteractive`                                                                              |
 | `component-bg-lighter`            | `surface.light`                                                                                           |
 | `component-bg-lighter-with-hover` | `surface.lightInteractive`                                                                                |
-| `darker-component-bg-with-hover`  | `{ base: 'bg-200', dark: 'bg-800', hover: 'bg-200', darkHover: 'bg-800' }` (no preset — inline if needed) |
+| `darker-component-bg-with-hover`  | `{ base: 'bg-200', dark: 'bg-800', hover: 'bg-200', darkHover: 'bg-800' }` (no preset - inline if needed) |
 
-The legacy classes also had `.has-bg-image &` nested variants that applied `backdrop-blur-xs` and reduced opacity. In the new system, the `.has-bg-image` and `.hasBgImage`/`.darkHasBgImage` state keys on the `bg` prop handle this automatically — you **do not** need to manually apply backdrop or opacity.
+The legacy classes also had `.has-bg-image &` nested variants that applied `backdrop-blur-xs` and reduced opacity. In the new system, the `.has-bg-image` and `.hasBgImage`/`.darkHasBgImage` state keys on the `bg` prop handle this automatically - you **do not** need to manually apply backdrop or opacity.
 
 ### Migration Pattern
 
@@ -1450,7 +1450,7 @@ For selected-state borders, use the `Ring` primitive to wrap the card instead of
 ```
 
 > [!NOTE]
-> `Ring` applies the outline to its child using `outline`, which does not affect layout — no absolute positioning needed.
+> `Ring` applies the outline to its child using `outline`, which does not affect layout - no absolute positioning needed.
 
 ### Check Icon Overlay
 
@@ -1477,7 +1477,7 @@ After:
 
 1. Search for `component-bg` in your component files.
 2. Map each class to the `bg` prop using the table above.
-3. Remove `className` entirely — use primitive props (`p`, `py`, `r`, `width`, etc.) for all layout.
+3. Remove `className` entirely - use primitive props (`p`, `py`, `r`, `width`, etc.) for all layout.
 4. Replace selected-state borders with `Bordered` overlay pattern.
 5. Replace all `text-custom-500`, `text-bg-500` etc. Tailwind color classes with the `color` prop on `Text` or `Icon`.
 
@@ -1495,7 +1495,7 @@ The standalone `Icon` from `@iconify/react` must never be imported directly. Alw
 | Sizing   | `width` / `height` props (e.g. `width="1.5em"`)      | **`size`** prop (e.g. `size="1.5em"`)                      |
 | Color    | `className="text-custom-500"` (Tailwind)             | `color="primary"` (design token)                           |
 | Layout   | `className="absolute right-1.5 bottom-2"` (Tailwind) | `Box asChild position="absolute" bottom="sm" right="sm"`   |
-| Inherits | —                                                    | All `Text` props (`ml`, `mr`, `display`, `truncate`, etc.) |
+| Inherits | -                                                    | All `Text` props (`ml`, `mr`, `display`, `truncate`, etc.) |
 
 > `Icon` is built on top of the `Text` primitive, so any prop that `Text` accepts (e.g. `ml`, `mr`, `display`, `truncate`, `wrap`, `className`, `style`) works directly on `Icon` without needing a `Box` wrapper.
 
@@ -1524,7 +1524,7 @@ import { Box, Icon } from '@lifeforge/ui'
 </Box>
 ```
 
-After (inline — no positioning needed):
+After (inline - no positioning needed):
 
 ```tsx
 import { Icon } from '@lifeforge/ui'
@@ -1540,7 +1540,7 @@ import { Icon } from '@lifeforge/ui'
 2. Replace `width="..." height="..."` with a single `size="..."`.
 3. Replace `className="text-custom-500"` / `className="text-bg-500"` with `color="primary"` / `color="muted"`.
 4. For positioned icons (`position`, `top`, `right`, `bottom`), wrap with `Box asChild`. For spacing and display, pass props directly to `Icon` (it inherits all `Text` props).
-5. Remove all remaining `className` props from `Icon` — they are not used anywhere in the codebase.
+5. Remove all remaining `className` props from `Icon` - they are not used anywhere in the codebase.
 
 ---
 
@@ -1557,6 +1557,6 @@ Before submitting a pull request, verify that you have adhered to all core desig
 - [ ] **Check ArbitraryProps first:** Before reaching for inline `style` or `.css.ts`, check if the CSS property is available via `ArbitraryProps` (e.g. `aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`).
 - [ ] **Component deconstruction:** If a component's JSX grows beyond a single conceptual block, extract sub-sections into their own component files under a `components/` subdirectory.
 - [ ] **Hooks co-location:** Hooks that are only consumed by a child component should live inside that child component, not in the parent.
-- [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin — no need to define responsive sizes like `mb={{ base: '6rem', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
+- [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin - no need to define responsive sizes like `mb={{ base: '6rem', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
 - [ ] **Component organization:** Components are strictly separated into individual files under their respective `components/` folders instead of being grouped together.
 - [ ] **Conventional functions:** All React components use standard function declarations (`export function Component()`) and avoid arrow functions.

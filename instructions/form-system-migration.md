@@ -184,18 +184,18 @@ function MyModal({ data: { type }, onClose }) {
 
 For each modal file being migrated, the following must be done:
 
-- [ ] **Imports** — remove `defineForm`, add `useForm`, `zodResolver`, `z`, field components, `createDefaultValues`
-- [ ] **Zod schema** — define `z.object({...})` matching the form shape, with validation rules replacing old `validator` functions
-- [ ] **`useForm()` call** — set `resolver: zodResolver(schema)` and `defaultValues: createDefaultValues(schema)`, merge any overrides
-- [ ] **Remove builder chain** — replace `.typesMap()`, `.setupFields()`, `.initialData()`, `.onSubmit()`, `.build()` with JSX
-- [ ] **JSX children** — compose field components (`<TextField>`, `<NumberField>`, etc.) as children of `<FormModal>`
-- [ ] **Submission config** — move `onSubmit` logic into `submissionConfig.handler`; pass `mutation.mutateAsync` directly if no data transformation is needed
-- [ ] **Conditional fields** — replace `.conditionalFields()` with `useWatch()` + conditional rendering
-- [ ] **Derived listbox options** — replace function-based `options: (state) => [...]` with `useWatch()` + computed variable
-- [ ] **Explicit state access** — replace `formStateStore` / `formStateStore.getState()` with `form.getValues()` / `form.setValue()`
-- [ ] **Cross-field validation** — replace `formStateStore.getState().password` with `schema.superRefine()` in the Zod schema
-- [ ] **Auto-focus** — replace `.autoFocusField('name')` with `<TextField autoFocus .../>`
-- [ ] **Return** — render `<FormModal>` with the new API
+- [ ] **Imports** - remove `defineForm`, add `useForm`, `zodResolver`, `z`, field components, `createDefaultValues`
+- [ ] **Zod schema** - define `z.object({...})` matching the form shape, with validation rules replacing old `validator` functions
+- [ ] **`useForm()` call** - set `resolver: zodResolver(schema)` and `defaultValues: createDefaultValues(schema)`, merge any overrides
+- [ ] **Remove builder chain** - replace `.typesMap()`, `.setupFields()`, `.initialData()`, `.onSubmit()`, `.build()` with JSX
+- [ ] **JSX children** - compose field components (`<TextField>`, `<NumberField>`, etc.) as children of `<FormModal>`
+- [ ] **Submission config** - move `onSubmit` logic into `submissionConfig.handler`; pass `mutation.mutateAsync` directly if no data transformation is needed
+- [ ] **Conditional fields** - replace `.conditionalFields()` with `useWatch()` + conditional rendering
+- [ ] **Derived listbox options** - replace function-based `options: (state) => [...]` with `useWatch()` + computed variable
+- [ ] **Explicit state access** - replace `formStateStore` / `formStateStore.getState()` with `form.getValues()` / `form.setValue()`
+- [ ] **Cross-field validation** - replace `formStateStore.getState().password` with `schema.superRefine()` in the Zod schema
+- [ ] **Auto-focus** - replace `.autoFocusField('name')` with `<TextField autoFocus .../>`
+- [ ] **Return** - render `<FormModal>` with the new API
 
 ---
 
@@ -243,7 +243,7 @@ import {
 
 Replace the old pattern where you either used a plain TypeScript interface or `InferInput<...>['body']` as the generic type.
 
-Zod v4 is the version used in this project (`zod@4.3.5`). It introduces top-level format factories (e.g., `z.email()`, `z.url()`, `z.uuid()`) alongside the classic chainable methods (`.min()`, `.max()`, `.regex()`, etc.). Prefer the top-level factories — they are the idiomatic v4 way. The instance methods (`.email()`, `.url()`) still exist but are deprecated.
+Zod v4 is the version used in this project (`zod@4.3.5`). It introduces top-level format factories (e.g., `z.email()`, `z.url()`, `z.uuid()`) alongside the classic chainable methods (`.min()`, `.max()`, `.regex()`, etc.). Prefer the top-level factories - they are the idiomatic v4 way. The instance methods (`.email()`, `.url()`) still exist but are deprecated.
 
 #### Schema Mapping by Field Type
 
@@ -260,9 +260,9 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Regex pattern         | `z.string().regex(/^[a-zA-Z0-9]+$/, 'Alphanumeric only')`                                        |
 | Email                 | `z.email('Invalid email')` (top-level factory)                                                   |
 | URL                   | `z.url('Invalid URL')`                                                                           |
-| UUID                  | `z.uuid()` — any UUID version                                                                    |
+| UUID                  | `z.uuid()` - any UUID version                                                                    |
 | Color hex             | `z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Color must be a valid hex color (e.g. #FF0000)')`        |
-| Icon identifier       | `z.string().regex(/^[a-z]+:[a-z-]+$/)` — or just `z.string()` if you trust the icon picker       |
+| Icon identifier       | `z.string().regex(/^[a-z]+:[a-z-]+$/)` - or just `z.string()` if you trust the icon picker       |
 | Lowercase / Uppercase | `z.string().lowercase()` / `z.string().uppercase()`                                              |
 | Trim whitespace       | `z.string().trim()` (overwrites value)                                                           |
 | Slug                  | `z.string().slugify()` (converts to URL slug)                                                    |
@@ -275,7 +275,7 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Emoji                 | `z.emoji()`                                                                                      |
 | NanoID / CUID / ULID  | `z.nanoid()` / `z.cuid()` / `z.ulid()`                                                           |
 
-> **Important:** Color hex values must always be validated with this regex. The `ColorField` component returns a hex string, but the Zod schema must enforce it — otherwise any string would pass validation. Always use `/^#[0-9A-Fa-f]{6}$/`.
+> **Important:** Color hex values must always be validated with this regex. The `ColorField` component returns a hex string, but the Zod schema must enforce it - otherwise any string would pass validation. Always use `/^#[0-9A-Fa-f]{6}$/`.
 >
 > **Note:** In Zod v4, format validators like `z.email()` are top-level factories that return a `ZodString` with the format constraint baked in. You can chain `.optional()`, `.nullable()`, `.default()`, etc. on them just like any schema: `z.email().optional().default('')`.
 
@@ -295,7 +295,7 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Multiple of value | `z.number().multipleOf(0.5)`                                 |
 | Specific format   | `z.int()` (integer factory), `z.float32()`, `z.int32()`      |
 
-> **Note:** Use `.int()` for integers. `z.number().safe()` is **deprecated** in v4 (now identical to `.int()`). `z.number().finite()` is a **no-op** in v4 — Infinity is rejected by default.
+> **Note:** Use `.int()` for integers. `z.number().safe()` is **deprecated** in v4 (now identical to `.int()`). `z.number().finite()` is a **no-op** in v4 - Infinity is rejected by default.
 
 ##### Boolean Fields (`<CheckboxField>`)
 
@@ -335,7 +335,7 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Validation               | Zod Code                                                                                                                                    |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | Required location object | `z.object({ name: z.string(), location: z.object({ latitude: z.number(), longitude: z.number() }), formattedAddress: z.string() })`         |
-| Optional location        | `z.object({...}).optional()` (use `.optional()` — NOT `.nullable()`, because react-hook-form uses `undefined` for unset fields, not `null`) |
+| Optional location        | `z.object({...}).optional()` (use `.optional()` - NOT `.nullable()`, because react-hook-form uses `undefined` for unset fields, not `null`) |
 
 > **Important:** Location fields must use `.optional()`, not `.nullable()`. React-hook-form represents unset/empty fields as `undefined`, and using `.nullable()` (`| null`) creates a type mismatch with the form's `FieldValues` generic. Always use `.optional()` for optional locations. The default value should be `undefined` (or omit it from `defaultValues`) rather than `null`.
 
@@ -343,9 +343,9 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 
 The new form system provides a complete file handling pipeline with three utilities:
 
-- **`fileValueSchema`** — a `z.discriminatedUnion('type', [...])` schema that validates the `FileValue` type (empty / existing / upload / url). Use this instead of `z.any()` for proper type safety.
-- **`getFormFileFieldInitialData(forgeAPI, initialData, file)`** — converts raw API data (`File`, filename string, or `null`) into a `FileValue` for the field's `defaultValues`. Handles preview URL generation for existing files.
-- **`convertFormFileFieldData(value)`** — converts the `FileValue` back to the format the API expects (`File`, `'keep'`, `'removed'`, or URL string) before submission.
+- **`fileValueSchema`** - a `z.discriminatedUnion('type', [...])` schema that validates the `FileValue` type (empty / existing / upload / url). Use this instead of `z.any()` for proper type safety.
+- **`getFormFileFieldInitialData(forgeAPI, initialData, file)`** - converts raw API data (`File`, filename string, or `null`) into a `FileValue` for the field's `defaultValues`. Handles preview URL generation for existing files.
+- **`convertFormFileFieldData(value)`** - converts the `FileValue` back to the format the API expects (`File`, `'keep'`, `'removed'`, or URL string) before submission.
 
 ```tsx
 import {
@@ -419,9 +419,9 @@ return (
 | Make a field nullable          | `z.string().nullable()` → allows `null`                                     |
 | Both optional + nullable       | `z.string().nullish()` → allows `undefined` or `null`                       |
 | Default value                  | `z.string().default('default')` or `z.number().default(0)`                  |
-| Catch errors (replace invalid) | `z.string().catch('fallback')` — replaces parse failures with `'fallback'`  |
+| Catch errors (replace invalid) | `z.string().catch('fallback')` - replaces parse failures with `'fallback'`  |
 | Transform value                | `z.string().transform(s => s.toUpperCase())`                                |
-| Pipe/chain schemas             | `z.pipe(z.string(), z.number().int())` — parse string, then validate as int |
+| Pipe/chain schemas             | `z.pipe(z.string(), z.number().int())` - parse string, then validate as int |
 
 ---
 
@@ -464,7 +464,7 @@ const budgetSchema = z.object({
 })
 ```
 
-> The `rollover_cap` field is conditionally rendered — it should be `.optional()` so it doesn't block submission when hidden. The defaults are set in `useForm()`'s `defaultValues`, not in the schema.
+> The `rollover_cap` field is conditionally rendered - it should be `.optional()` so it doesn't block submission when hidden. The defaults are set in `useForm()`'s `defaultValues`, not in the schema.
 
 #### Cross-Field Validation with `.superRefine()`
 
@@ -497,11 +497,11 @@ const signupSchema = z
 | `z.string().datetime()`   | `z.iso.datetime()` or `z.datetime()` | Instance method deprecated                |
 | `z.string().ip()`         | `z.ipv4()` or `z.ipv6()`             | New top-level factories                   |
 | `z.number().safe()`       | `z.number().int()`                   | `.safe()` deprecated; use `.int()`        |
-| `z.number().finite()`     | (nothing — skip it)                  | No-op in v4; Infinity rejected by default |
+| `z.number().finite()`     | (nothing - skip it)                  | No-op in v4; Infinity rejected by default |
 | `z.number().step(0.5)`    | `z.number().multipleOf(0.5)`         | `.step()` deprecated                      |
 | `z.nativeEnum(MyEnum)`    | `z.enum(MyEnum)`                     | Merged into single `z.enum()`             |
 
-**If in doubt which API is correct**, check the Zod version: `z.version` at runtime or `node_modules/zod/package.json` — this project uses `zod@4.3.5`, so always write v4-style code.
+**If in doubt which API is correct**, check the Zod version: `z.version` at runtime or `node_modules/zod/package.json` - this project uses `zod@4.3.5`, so always write v4-style code.
 
 ### Step 3: Set Up `useForm`
 
@@ -520,9 +520,9 @@ const form = useForm({
 
 - `createDefaultValues(schema)` gives you a complete defaults object (empty strings, zero numbers, etc.).
 - Merge `initialData` on top of it: `{ ...createDefaultValues(schema), ...initialData }`.
-- The old `.initialData()` method accepted `Partial<FormData>`. The new approach is the same — spread the `initialData` object on top of the defaults.
+- The old `.initialData()` method accepted `Partial<FormData>`. The new approach is the same - spread the `initialData` object on top of the defaults.
 - For complex fields like `Location`, `date` (Date object conversion), or `file` (FileValue conversion), you must transform the raw API data in the spread, just as you did in the old `.initialData()`.
-- **🚨 Default values should NEVER be set via the Zod schema (`.default()`).** Always set them in the `defaultValues` object passed to `useForm()`. The schema should only define validation rules — not business defaults. Defaults like `rollover_cap: 100` or `alert_threshold: 80` belong in the `defaultValues` spread, not in `z.number().default(100)`. Using `.default()` in the schema couples validation logic with default-value logic and makes it harder to override defaults per-modal-instance.
+- **🚨 Default values should NEVER be set via the Zod schema (`.default()`).** Always set them in the `defaultValues` object passed to `useForm()`. The schema should only define validation rules - not business defaults. Defaults like `rollover_cap: 100` or `alert_threshold: 80` belong in the `defaultValues` spread, not in `z.number().default(100)`. Using `.default()` in the schema couples validation logic with default-value logic and makes it harder to override defaults per-modal-instance.
 
 **File field special handling:**
 
@@ -564,17 +564,17 @@ submissionConfig={{
 
 `getFormFileFieldInitialData` returns one of the `FileValue` discriminated union variants:
 
-- `{ type: 'empty' }` — no file selected
-- `{ type: 'upload', file, preview? }` — newly uploaded `File` object
-- `{ type: 'existing', id, filename, preview? }` — existing file referenced by string ID
-- `{ type: 'url', url, preview? }` — external URL
+- `{ type: 'empty' }` - no file selected
+- `{ type: 'upload', file, preview? }` - newly uploaded `File` object
+- `{ type: 'existing', id, filename, preview? }` - existing file referenced by string ID
+- `{ type: 'url', url, preview? }` - external URL
 
 `convertFormFileFieldData` converts back to the format the API expects:
 
-- `'removed'` — file was removed (empty/null/undefined)
-- `'keep'` — existing file kept as-is (`type: 'existing'`)
-- `File` — newly uploaded file (`type: 'upload'`)
-- URL string — external URL (`type: 'url'`)
+- `'removed'` - file was removed (empty/null/undefined)
+- `'keep'` - existing file kept as-is (`type: 'existing'`)
+- `File` - newly uploaded file (`type: 'upload'`)
+- URL string - external URL (`type: 'url'`)
 
 **Example from ModifyTransactionsModal (old):**
 
@@ -661,7 +661,7 @@ return (
 
 > ### 🚨 Direct handler rule
 >
-> If no preprocessing or transformation is needed before the API call, **always** pass the mutation function directly — `handler: mutation.mutateAsync`. This works because `mutation.mutateAsync` already accepts the form data as its argument and returns a promise. Only inline the handler if you need to transform the data first (e.g., `dayjs(date).format('YYYY-MM-DD')`, stripping tracking fields like `_type`, converting `FileValue` with `convertFormFileFieldData`, etc.).
+> If no preprocessing or transformation is needed before the API call, **always** pass the mutation function directly - `handler: mutation.mutateAsync`. This works because `mutation.mutateAsync` already accepts the form data as its argument and returns a promise. Only inline the handler if you need to transform the data first (e.g., `dayjs(date).format('YYYY-MM-DD')`, stripping tracking fields like `_type`, converting `FileValue` with `convertFormFileFieldData`, etc.).
 >
 > **✅ Correct (no transform needed):**
 >
@@ -697,11 +697,11 @@ return (
 | Old `defineForm` arg | New `uiConfig` prop         | Notes                                                                                 |
 | -------------------- | --------------------------- | ------------------------------------------------------------------------------------- |
 | `icon`               | `icon`                      | Same                                                                                  |
-| `title`              | `title`                     | `modals.` prefix is **auto-prepended** by `FormModal` — do NOT include `modals.` in the title string. E.g. use `title: 'category.create'` (not `'modals.category.create'`). Final locale key resolved to `modals.category.create`. |
+| `title`              | `title`                     | `modals.` prefix is **auto-prepended** by `FormModal` - do NOT include `modals.` in the title string. E.g. use `title: 'category.create'` (not `'modals.category.create'`). Final locale key resolved to `modals.category.create`. |
 | `namespace`          | `namespace`                 | Same                                                                                  |
 | `loading`            | `loading`                   | Same                                                                                  |
 | `onClose`            | `onClose`                   | Same                                                                                  |
-| `actionButton`       | `headerActions`             | `actionButton` was an object, `headerActions` is `React.ReactNode` — wrap in a Button |
+| `actionButton`       | `headerActions`             | `actionButton` was an object, `headerActions` is `React.ReactNode` - wrap in a Button |
 | `submitButton`       | (now in `submissionConfig`) | See below                                                                             |
 
 **`submissionConfig` mapping:**
@@ -748,7 +748,7 @@ Field `label` props are **auto-translated** through the module's i18n namespace 
 }
 ```
 
-The label prop references the key **after** `inputs.` — e.g. `label="modifyEntry.name"` resolves to `inputs.modifyEntry.name` in the locale file. There is no `inputs.` prefix needed in the label prop — the `FieldWrapper` component auto-prepends the `inputs.` namespace segment.
+The label prop references the key **after** `inputs.` - e.g. `label="modifyEntry.name"` resolves to `inputs.modifyEntry.name` in the locale file. There is no `inputs.` prefix needed in the label prop - the `FieldWrapper` component auto-prepends the `inputs.` namespace segment.
 
 > 💡 **Why this convention?** The `inputs.` grouping in the locale file keeps all form field labels organized under one section, while the label prop stays short and focused on the modal-specific key. Each modal gets its own sub-object under `inputs` (e.g. `modifyCollection`, `modifyEntry`, `modifyType`), avoiding flat naming collisions.
 
@@ -772,10 +772,10 @@ The label prop references the key **after** `inputs.` — e.g. `label="modifyEnt
 | `reminderText`              | `reminderText`                                               | Only for `FileField`                                                                                                            |
 | `onImageRemoved`            | `onImageRemoved`                                             | Only for `FileField`                                                                                                            |
 | `sources`                   | `sources`                                                    | Only for `FileField`                                                                                                            |
-| `autoFocus`                 | `autoFocus`                                                  | Same — moved from `.autoFocusField()` to the field component itself                                                             |
+| `autoFocus`                 | `autoFocus`                                                  | Same - moved from `.autoFocusField()` to the field component itself                                                             |
 | `qrScanner`                 | N/A in old system                                            | Only in new `TextField`                                                                                                         |
 | `isPassword`                | N/A in old system                                            | Only in new `TextField`                                                                                                         |
-| `actionButtonProps`         | `actionButtonProps`                                          | Only for `TextField` — this is the underlying `TextInput`'s action button, different from `ListboxField`'s `actionButtonOption` |
+| `actionButtonProps`         | `actionButtonProps`                                          | Only for `TextField` - this is the underlying `TextInput`'s action button, different from `ListboxField`'s `actionButtonOption` |
 
 **Note:** In the old system, each field config could have arbitrary additional props that were spread onto the input. In the new system, props must explicitly match the field component's prop type. Check each field component's props carefully (see [Field Type Mapping Reference](#field-type-mapping-reference)).
 
@@ -885,11 +885,11 @@ In the new system, this is replaced by `react-hook-form`'s API:
 | `formStateStore.getState().fieldName`                                         | `form.getValues('fieldName')`                                                        |
 | `formStateStore.subscribe(callback)`                                          | `useWatch({ control })` in render, or `form.watch((data) => {...})` for side-effects |
 | `setData(old => ({ ...old, key: val }))`                                      | `form.setValue('key', val)`                                                          |
-| `formStateStore.getState().fieldName` in field's `actionButtonOption.onClick` | Just use JS closure — `form` is available in the component scope                     |
+| `formStateStore.getState().fieldName` in field's `actionButtonOption.onClick` | Just use JS closure - `form` is available in the component scope                     |
 
 > **Important:** When using `form.setValue()` programmatically (not triggered by user input), pass `{ shouldValidate: true }` as the third argument to ensure the new value is validated immediately. Without this, the error state won't update until the next user interaction. Example: `form.setValue('family', metadata.family, { shouldValidate: true })`.
 
-**Example — old `actionButtonOption` accessing `formStateStore`:**
+**Example - old `actionButtonOption` accessing `formStateStore`:**
 
 ```tsx
 // Old: within .setupFields, actionButtonOption.onClick receives (data, setData)
@@ -1035,7 +1035,7 @@ The table below maps the old `typesMap` type strings to the new field components
 | `'color'`               | `<ColorField>`    | `name` constrained to `string`                 |
 | `'datetime'`            | `<DateField>`     | `name` constrained to `Date \| null \| string` |
 | `'icon'`                | `<IconField>`     | `name` constrained to `string`                 |
-| `'listbox'`             | `<ListboxField>`  | Generic `TOption` — single or multi select     |
+| `'listbox'`             | `<ListboxField>`  | Generic `TOption` - single or multi select     |
 | `'location'`            | `<LocationField>` | `name` constrained to `Location \| null`       |
 | `'file'`                | `<FileField>`     | `name` constrained to `FileValue`              |
 | `'rrule'`               | `<RRuleField>`    | `name` constrained to `string`                 |
@@ -1059,7 +1059,7 @@ New (new system):
 { text: string, value: TOption, icon?: string, color?: string }
 ```
 
-Same shape — generic `value` type instead of always `string`.
+Same shape - generic `value` type instead of always `string`.
 
 ### `FileField` props
 
@@ -1088,7 +1088,7 @@ New JSX:
 
 > Note: `optional` in the old system has no direct equivalent in `FileField`. To make a field optional in the Zod schema, use `.optional()`, e.g., `receipt: z.any().optional()`.
 >
-> `FileField` now supports error validation — `fieldState.error?.message` is automatically passed to the underlying `FileInput`. You can also pass an explicit `errorMsg` prop to override the field state error.
+> `FileField` now supports error validation - `fieldState.error?.message` is automatically passed to the underlying `FileInput`. You can also pass an explicit `errorMsg` prop to override the field state error.
 
 ### `CheckboxField` props
 
@@ -1148,13 +1148,13 @@ New:
 
 ## Form Validation Mode (when errors show)
 
-By default, react-hook-form validates **on submit** (`mode: 'onSubmit'`). This matches the old system's behavior — validation only runs when the user clicks the submit button.
+By default, react-hook-form validates **on submit** (`mode: 'onSubmit'`). This matches the old system's behavior - validation only runs when the user clicks the submit button.
 
-If you need real-time validation (e.g., to enable/disable the submit button dynamically), pass `mode` to `useForm`. **`'all'` is the preferred mode** — it validates on both blur and change:
+If you need real-time validation (e.g., to enable/disable the submit button dynamically), pass `mode` to `useForm`. **`'all'` is the preferred mode** - it validates on both blur and change:
 
 ```tsx
 const form = useForm({
-  mode: 'all', // preferred — validates on blur and every change
+  mode: 'all', // preferred - validates on blur and every change
   defaultValues: ...,
   resolver: zodResolver(schema)
 })
@@ -1185,15 +1185,15 @@ const { isValid } = form.formState
 >
 ```
 
-> **Recommendation:** Always use `mode: 'all'`. It validates on both blur and change, giving the most responsive feedback — errors clear as the user types and appear as soon as they tab away.
+> **Recommendation:** Always use `mode: 'all'`. It validates on both blur and change, giving the most responsive feedback - errors clear as the user types and appear as soon as they tab away.
 >
-> **Important:** Since users will see errors in real time, every error message defined in the Zod schema must be clear and concise — tell the user exactly what's wrong and what's expected. Bad: `"Invalid input"`. Good: `"Name must be at least 3 characters"` or `"Amount must be a positive number"`. Review all `.min()`, `.max()`, `.regex()`, `.email()`, `.refine()` messages to ensure they are user-friendly.
+> **Important:** Since users will see errors in real time, every error message defined in the Zod schema must be clear and concise - tell the user exactly what's wrong and what's expected. Bad: `"Invalid input"`. Good: `"Name must be at least 3 characters"` or `"Amount must be a positive number"`. Review all `.min()`, `.max()`, `.regex()`, `.email()`, `.refine()` messages to ensure they are user-friendly.
 
 ---
 
 ## Zod Schema Must Mimic the API Shape Exactly
 
-When migrating from `InferInput<typeof forgeAPI.x.create>['body']`, you might be tempted to define a loose schema. However, the TypeScript types will be validated at the **mutation call site** — when you pass `formData` to `mutation.mutateAsync(formData)`, TypeScript will check that the form data matches what the API expects. If the Zod schema produces a shape that differs from the API's `InferInput`, you'll get a type error on the mutation line.
+When migrating from `InferInput<typeof forgeAPI.x.create>['body']`, you might be tempted to define a loose schema. However, the TypeScript types will be validated at the **mutation call site** - when you pass `formData` to `mutation.mutateAsync(formData)`, TypeScript will check that the form data matches what the API expects. If the Zod schema produces a shape that differs from the API's `InferInput`, you'll get a type error on the mutation line.
 
 Therefore, the Zod schema must **mimic the required shape of the ForgeAPI endpoint exactly**. Use `InferInput<typeof forgeAPI.x.create>['body']` as a reference while writing the schema, or define the schema alongside it.
 
@@ -1205,7 +1205,7 @@ Therefore, the Zod schema must **mimic the required shape of the ForgeAPI endpoi
 | Wallet       | `apps/lifeforge--wallet/client/src/contract.ts`       |
 | Core client  | `client/src/contract.ts`                              |
 
-These `contract.ts` files contain the full input/output schemas for every endpoint. Open the relevant one and look at the `input.body.properties` for the endpoint you're migrating — that's the exact shape your Zod schema must match.
+These `contract.ts` files contain the full input/output schemas for every endpoint. Open the relevant one and look at the `input.body.properties` for the endpoint you're migrating - that's the exact shape your Zod schema must match.
 
 ```tsx
 import type { InferInput } from '@lifeforge/shared'
@@ -1294,7 +1294,7 @@ The old system's listbox always stored `string` values. In the new system, `List
 
 ### 5. Always use `useWatch` instead of `form.watch()`
 
-Calling `form.watch('fieldName')` in the render path re-renders the entire component on every change to that field. Use `useWatch` from `react-hook-form` — it isolates the re-render to only the fields you're watching:
+Calling `form.watch('fieldName')` in the render path re-renders the entire component on every change to that field. Use `useWatch` from `react-hook-form` - it isolates the re-render to only the fields you're watching:
 
 ```tsx
 import { useWatch } from 'react-hook-form'
@@ -1341,4 +1341,4 @@ submissionConfig={{
 
 ### 9. Old `defineForm` with `any` type
 
-Some modals (like `CreateBackupModal`) use `defineForm<any>(...)`. These must be migrated to a properly constructed Zod schema that matches the API shape, just like any other modal. Avoid `z.any()` — the whole point of the new system is type safety. If the schema is complex, break it down field by field matching the actual expected types from `InferInput<typeof forgeAPI.x.create>['body']`.
+Some modals (like `CreateBackupModal`) use `defineForm<any>(...)`. These must be migrated to a properly constructed Zod schema that matches the API shape, just like any other modal. Avoid `z.any()` - the whole point of the new system is type safety. If the schema is complex, break it down field by field matching the actual expected types from `InferInput<typeof forgeAPI.x.create>['body']`.

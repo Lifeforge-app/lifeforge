@@ -69,13 +69,13 @@ Key points:
 - `lifeforge.APIKeyAccess` declares which entries from the central API-key vault
   the module needs. Each key is the vault entry id (e.g. `deepseek`, `openai`,
   `gcloud`, `tmdb`) mapped to:
-  - `usage` — human-readable reason shown to the user when granting access.
-  - `required` — whether the module is unusable without the key (`true`) or the
+  - `usage` - human-readable reason shown to the user when granting access.
+  - `required` - whether the module is unusable without the key (`true`) or the
     key only enables optional features (`false`).
   Declared keys are surfaced to the user for consent and are read at runtime on
   the server via `core.api.getAPIKey('<id>', pb)` inside a route callback. Omit
   the block entirely when the module needs no external API keys (most modules).
-  **Every API key the module uses must be declared here — whether it is consumed
+  **Every API key the module uses must be declared here - whether it is consumed
   indirectly through an AI chat-completion call or read directly via
   `getAPIKey`. Accessing an undeclared API key results in an error at runtime.**
 - Shared framework packages are declared as `peerDependencies` with
@@ -147,7 +147,7 @@ export { forgeAPI }
 A large `as const` object describing every endpoint: HTTP `method`,
 `description`, `noAuth`, `encrypted`, `media`, and JSON-schema `input`/`output`.
 It is generated from the server routes by `writeContractFileToClient` (called in
-`server/index.ts`) — **never edit it manually**. No command is required to regenerate 
+`server/index.ts`) - **never edit it manually**. No command is required to regenerate 
 it as it will be automatically regenerated on every single mutation to the server code
 whenever the server is running. It serves as the single source of truththat gives 
 `forgeAPI` full end-to-end type safety.
@@ -209,9 +209,9 @@ invalidation (see `modules/lifeforge--wallet`). **Never hardcode query-key
 string arrays.** Every endpoint namespace exposes a `.key` derived from the
 contract, which is used both as the query key and for invalidation:
 
-- `forgeAPI.<namespace>.key` — invalidates everything under that namespace
+- `forgeAPI.<namespace>.key` - invalidates everything under that namespace
   (e.g. `forgeAPI.assets.key`, `forgeAPI.transactions.key`).
-- `forgeAPI.key` — invalidates the entire module's cache.
+- `forgeAPI.key` - invalidates the entire module's cache.
 
 The preferred way to mutate is `useForgeMutation` from `@lifeforge/api`, which
 takes the endpoint and a config `{ action, queryKey }`. It auto-invalidates
@@ -248,7 +248,7 @@ queryClient.invalidateQueries({ queryKey: forgeAPI.transactions.key })
 ```
 
 > Older modules (e.g. `books-library`) still use `useMutation(...mutationOptions())`
-> with hardcoded keys like `['booksLibrary']` — this is legacy and must not be
+> with hardcoded keys like `['booksLibrary']` - this is legacy and must not be
 > replicated. They will be refactored soon. Always use the `forgeAPI.*.key` pattern above.
 
 Types are inferred from the contract with helpers from `@lifeforge/api`:
@@ -267,7 +267,7 @@ type CreateBody = InferInput<typeof forgeAPI.collections.create>['body']
 
 ### Other client conventions
 
-- **Forms**: use the composition pattern — `useForm()` (react-hook-form) +
+- **Forms**: use the composition pattern - `useForm()` (react-hook-form) +
   `zodResolver(schema)` + `<FormModal form={form} uiConfig={...} submissionConfig={...}>`
   with field components (`<TextField>`, `<NumberField>`, ...) as children. The old
   `defineForm(...).typesMap(...).setupFields(...).build()` builder is obsolete.
@@ -282,7 +282,7 @@ type CreateBody = InferInput<typeof forgeAPI.collections.create>['body']
 - **Stores**: transient UI state uses small `zustand` stores under `stores/`.
 - **Localization**: `useModuleTranslation()` + `t()`. Many `@lifeforge/ui`
   components (`Button`, `ModuleHeader`, form fields, `ContextMenuItem` with
-  `label`) auto-resolve i18n internally — only use `t()` where they don't.
+  `label`) auto-resolve i18n internally - only use `t()` where they don't.
 
 ## Server Side (`server/`)
 
@@ -335,7 +335,7 @@ export default forge
 
 Defines the module's PocketBase collections. Each entry pairs a **zod `schema`**
 (runtime + type validation) with a **`raw`** PocketBase collection definition
-(access rules, fields, indexes, and — for `type: 'view'` — a `viewQuery`).
+(access rules, fields, indexes, and - for `type: 'view'` - a `viewQuery`).
 Collection names are namespaced with the module prefix (e.g.
 `books_library__entries`). Aggregated read-only views (e.g.
 `books_library__collections_aggregated`) compute counts via SQL. The file is
@@ -356,7 +356,7 @@ export const schemas = {
 export default cleanSchemas(schemas)
 ```
 
-### `routes/*.ts` — endpoints (Server DSL)
+### `routes/*.ts` - endpoints (Server DSL)
 
 Each file exports named endpoints built with the `forge` DSL. Endpoints are
 `forge.query(...)` (reads) or `forge.mutation(...)` (writes), followed by
@@ -390,15 +390,15 @@ export const create = forge
 ```
 
 The callback receives a context object, commonly destructuring:
-- `pb` — typed PocketBase query builder (`getFullList`, `getOne`, `create`,
+- `pb` - typed PocketBase query builder (`getFullList`, `getOne`, `create`,
   `update`, `delete`, each chained with `.collection(...)`, `.id(...)`,
   `.data(...)`, `.filter([...])`, `.execute()`).
-- `query` / `body` / `media` — validated request inputs.
-- `response` — status helpers: `response.ok(...)`, `response.created(...)`,
+- `query` / `body` / `media` - validated request inputs.
+- `response` - status helpers: `response.ok(...)`, `response.created(...)`,
   `response.noContent()`, `response.badRequest(...)`, etc.
-- `core` — framework services, e.g. `core.media.retrieveMedia` /
+- `core` - framework services, e.g. `core.media.retrieveMedia` /
   `convertPDFToImage`, `core.api.getAPIKey`, `core.tasks`.
-- `io` — Socket.IO server for pushing progress updates.
+- `io` - Socket.IO server for pushing progress updates.
 
 `existenceCheck` validates that referenced records exist before running the
 callback: `{ query: { id: 'entries' }, body: { collection: '[collections]' } }`
@@ -409,9 +409,9 @@ The full DSL and migration notes live in
 
 ### `utils/` and `constants/`
 
-- `utils/` — server-only helpers (thumbnail generation, downloads, date ranges,
+- `utils/` - server-only helpers (thumbnail generation, downloads, date ranges,
   external API scraping) imported by routes.
-- `constants/` — static data such as AI prompt templates.
+- `constants/` - static data such as AI prompt templates.
 
 ## `locales/`
 

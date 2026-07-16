@@ -30,6 +30,7 @@ function LoginPage() {
         return
       }
 
+
       if (result.startsWith('success')) {
         toast.success(
           t('messages.welcomeBack', {

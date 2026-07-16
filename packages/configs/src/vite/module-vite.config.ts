@@ -45,10 +45,6 @@ export function defineModuleConfig(
 
     const apiHost = isDocker ? '/api' : env.VITE_API_HOST
 
-    if (!apiHost) {
-      throw new Error('VITE_API_HOST is not defined')
-    }
-
     // 2. Base default configuration
     const baseConfig: UserConfig = {
       base: `${apiHost}/modules/${moduleName}/`,

@@ -71,11 +71,11 @@ const deleteMutation = useForgeMutation(
 
 ## Migration Checklist by File
 
-- [ ] **Imports** — remove `useMutation`, `useQueryClient` from `@tanstack/react-query`; remove `useModuleTranslation` from `@lifeforge/localization` if only used for `common.fetch`; remove `toast` from `@lifeforge/ui` if only used in mutation; add `useForgeMutation` from `@lifeforge/api`
-- [ ] **Replace mutation block** — remove `useMutation(...)` and replace with `useForgeMutation(...)` (see patterns below)
-- [ ] **Use forgeAPI key** — replace hardcoded query key arrays with `forgeAPI.<entity>.key` or `forgeAPI.key`
-- [ ] **Create/update splitting** — split conditional `(type === 'create' ? create : update)` into two separate `useForgeMutation` calls
-- [ ] **Refactor handler** — update `mutation.mutateAsync` references to use `createMutation` / `updateMutation` as appropriate
+- [ ] **Imports** - remove `useMutation`, `useQueryClient` from `@tanstack/react-query`; remove `useModuleTranslation` from `@lifeforge/localization` if only used for `common.fetch`; remove `toast` from `@lifeforge/ui` if only used in mutation; add `useForgeMutation` from `@lifeforge/api`
+- [ ] **Replace mutation block** - remove `useMutation(...)` and replace with `useForgeMutation(...)` (see patterns below)
+- [ ] **Use forgeAPI key** - replace hardcoded query key arrays with `forgeAPI.<entity>.key` or `forgeAPI.key`
+- [ ] **Create/update splitting** - split conditional `(type === 'create' ? create : update)` into two separate `useForgeMutation` calls
+- [ ] **Refactor handler** - update `mutation.mutateAsync` references to use `createMutation` / `updateMutation` as appropriate
 
 ---
 
@@ -111,7 +111,7 @@ import { toast } from '@lifeforge/ui'                      // if toast.success()
 
 #### Pattern A: Delete Mutation
 
-The simplest case — a delete mutation with no custom onSuccess logic beyond query invalidation.
+The simplest case - a delete mutation with no custom onSuccess logic beyond query invalidation.
 
 **Before:**
 
@@ -151,8 +151,8 @@ await deleteMutation.mutateAsync(undefined)
 ```
 
 **Key details:**
-- `action: 'delete'` — the hook auto-resolves this to `t('common.fetch:action.delete')` via i18n
-- `queryKey: forgeAPI.entities.key` — replaces hardcoded `['moduleName', 'entities']`
+- `action: 'delete'` - the hook auto-resolves this to `t('common.fetch:action.delete')` via i18n
+- `queryKey: forgeAPI.entities.key` - replaces hardcoded `['moduleName', 'entities']`
 - For entire-module invalidation, use `queryKey: forgeAPI.key` (equivalent to `['moduleName']`)
 
 #### Pattern B: Create/Update with Conditional Endpoint
@@ -186,7 +186,7 @@ const mutation = useMutation(
   })
 )
 
-// Usage — direct handler:
+// Usage - direct handler:
 return (
   <FormModal
     submissionConfig={{
@@ -197,13 +197,13 @@ return (
   />
 )
 
-// Usage — wrapped handler:
+// Usage - wrapped handler:
 handler: async data => {
   await mutation.mutateAsync(data)
 }
 ```
 
-**After — direct handler:**
+**After - direct handler:**
 
 ```tsx
 const createMutation = useForgeMutation(
@@ -230,7 +230,7 @@ return (
 )
 ```
 
-**After — wrapped handler:**
+**After - wrapped handler:**
 
 ```tsx
 handler: async data => {
@@ -241,7 +241,7 @@ handler: async data => {
 }
 ```
 
-> **Important:** The handler wrapper must use the ternary inside `mutateAsync()` — not an if/else that conditionally calls `useForgeMutation()`. React hooks cannot be called conditionally. Both mutations are always created; only one is invoked.
+> **Important:** The handler wrapper must use the ternary inside `mutateAsync()` - not an if/else that conditionally calls `useForgeMutation()`. React hooks cannot be called conditionally. Both mutations are always created; only one is invoked.
 
 #### Pattern C: Custom onSuccess / onError
 
@@ -307,10 +307,10 @@ const deleteMutation = useForgeMutation(
 
 After migration, remove any imports that are no longer used anywhere in the file:
 
-- `useMutation` — no longer needed
-- `useQueryClient` — only keep if still used by non-migrated mutations (e.g., `queryClient.setQueryData()`)
-- `useModuleTranslation` — only keep if `t()` is used for UI labels, buttons, etc.
-- `toast` — only keep if `toast.success()` or `toast.error()` is used outside mutations (e.g., clipboard copy confirmations)
+- `useMutation` - no longer needed
+- `useQueryClient` - only keep if still used by non-migrated mutations (e.g., `queryClient.setQueryData()`)
+- `useModuleTranslation` - only keep if `t()` is used for UI labels, buttons, etc.
+- `toast` - only keep if `toast.success()` or `toast.error()` is used outside mutations (e.g., clipboard copy confirmations)
 
 ---
 
@@ -363,7 +363,7 @@ const mutation = useForgeMutation(
 )
 ```
 
-The hook checks via `i18n.exists()` — if the key is found in `common.fetch`, it's translated; otherwise the raw string is used.
+The hook checks via `i18n.exists()` - if the key is found in `common.fetch`, it's translated; otherwise the raw string is used.
 
 > **Note:** The `common.fetch:action` entry was stripped to only `create`, `update`, and `delete`. All other 19 entries (`rename`, `pin`, `archive`, etc.) were unused dead keys and have been removed. For niche actions, pass a pre-translated string or add the key back to the locale file.
 
@@ -373,10 +373,10 @@ The hook checks via `i18n.exists()` — if the key is found in `common.fetch`, i
 
 The following mutation patterns should **not** be converted to `useForgeMutation`:
 
-- **Mutations using `queryClient.setQueryData()`** — these have unique cache-busting logic that can't be abstracted. Example: `forgeAPI.events.addException` in EventDetailsHeader.
-- **Mutations using `queryClient.removeQueries()`** — different invalidation strategy.
-- **Raw `.mutate()` calls outside `useMutation`** — these are direct API calls, not React Query mutations. Example: `forgeAPI.events.scanImage.mutate()` in ScanImageModal.
-- **Mutations with `.refetch()` on a specific query** — the hook only does `invalidateQueries`. If you need `.refetch()` instead, keep manual handling or use `onSuccess` with `refetch`.
+- **Mutations using `queryClient.setQueryData()`** - these have unique cache-busting logic that can't be abstracted. Example: `forgeAPI.events.addException` in EventDetailsHeader.
+- **Mutations using `queryClient.removeQueries()`** - different invalidation strategy.
+- **Raw `.mutate()` calls outside `useMutation`** - these are direct API calls, not React Query mutations. Example: `forgeAPI.events.scanImage.mutate()` in ScanImageModal.
+- **Mutations with `.refetch()` on a specific query** - the hook only does `invalidateQueries`. If you need `.refetch()` instead, keep manual handling or use `onSuccess` with `refetch`.
 
 ---
 
@@ -385,12 +385,12 @@ The following mutation patterns should **not** be converted to `useForgeMutation
 ### 1. Don't hook conditionally
 
 ```tsx
-// ❌ WRONG — hooks must not be called conditionally
+// ❌ WRONG - hooks must not be called conditionally
 if (type === 'create') {
   const mutation = useForgeMutation(...)
 }
 
-// ✅ CORRECT — create both, invoke one
+// ✅ CORRECT - create both, invoke one
 const createMutation = useForgeMutation(...)
 const updateMutation = useForgeMutation(...)
 handler: data => {
@@ -401,10 +401,10 @@ handler: data => {
 ### 2. Not removing `['common.fetch']` from `useModuleTranslation`
 
 ```tsx
-// ❌ WRONG — common.fetch is no longer needed
+// ❌ WRONG - common.fetch is no longer needed
 const { t } = useModuleTranslation(['common.fetch'])
 
-// ✅ CORRECT — default namespace is enough for UI labels
+// ✅ CORRECT - default namespace is enough for UI labels
 const { t } = useModuleTranslation()
 ```
 
@@ -413,23 +413,23 @@ const { t } = useModuleTranslation()
 Check if `queryClient` is used by any remaining non-converted mutations. If not:
 
 ```tsx
-// ❌ WRONG — unused import
+// ❌ WRONG - unused import
 const queryClient = useQueryClient()
 
-// ✅ CORRECT — remove it
+// ✅ CORRECT - remove it
 // (don't import useQueryClient at all)
 ```
 
 ### 4. Forgetting to split create/update
 
 ```tsx
-// ❌ WRONG — produces union type error
+// ❌ WRONG - produces union type error
 const mutation = useForgeMutation(
   (type === 'create' ? forgeAPI.e.create : forgeAPI.e.update.input({ id })),
   { action: type, queryKey: forgeAPI.key }
 )
 
-// ✅ CORRECT — split into two
+// ✅ CORRECT - split into two
 const createMutation = useForgeMutation(forgeAPI.e.create, { action: 'create', ... })
 const updateMutation = useForgeMutation(forgeAPI.e.update.input({ id }), { action: 'update', ... })
 ```
@@ -437,10 +437,10 @@ const updateMutation = useForgeMutation(forgeAPI.e.update.input({ id }), { actio
 ### 5. Using hardcoded query keys
 
 ```tsx
-// ❌ WRONG — fragile, breaks if module ID changes
+// ❌ WRONG - fragile, breaks if module ID changes
 queryKey: ['wallet', 'assets']
 
-// ✅ CORRECT — derived from forgeAPI
+// ✅ CORRECT - derived from forgeAPI
 queryKey: forgeAPI.assets.key
 ```
 
@@ -453,12 +453,12 @@ queryKey: forgeAPI.assets.key
 | Parameter        | Type                                          | Description                                              |
 | ---------------- | --------------------------------------------- | -------------------------------------------------------- |
 | `endpoint`       | `ForgeEndpoint<T>`                            | A forgeAPI endpoint (e.g., `forgeAPI.templates.remove.input({ id })`) |
-| `options.action` | `string`                                      | Action name — resolved via `common.fetch:action.*` or used as-is |
+| `options.action` | `string`                                      | Action name - resolved via `common.fetch:action.*` or used as-is |
 | `options.queryKey` | `QueryKey \| QueryKey[]` (optional)          | Query key(s) to invalidate on success. Supports single key or array of keys for multi-entity invalidation |
 | `options.onSuccess` | `() => void` (optional)                     | Called after query invalidation. Use for side effects like closing modals or success toasts |
 | `options.onError` | `(error: Error) => void` (optional)          | Overrides the default i18n error toast. The hook still logs `console.error` |
 
-**Returns:** `UseMutationResult` — same object shape as `useMutation()`. All standard properties available: `.mutateAsync()`, `.mutate()`, `.isPending`, `.data`, `.error`, etc.
+**Returns:** `UseMutationResult` - same object shape as `useMutation()`. All standard properties available: `.mutateAsync()`, `.mutate()`, `.isPending`, `.data`, `.error`, etc.
 
 **Internal behavior:**
 1. Calls `endpoint.mutationOptions()` to generate React Query options

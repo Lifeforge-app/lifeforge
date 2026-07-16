@@ -11,7 +11,7 @@ The standard convention for persisting page state (search, filters, pagination) 
 Every filterable list page in a LifeForge module follows this structure:
 
 1. A `useFilter()` hook in `src/hooks/useFilter.ts` manages all URL-bound state
-2. **Search query** (`q`) is a standalone `useQueryState` — kept separate because it is often debounced independently
+2. **Search query** (`q`) is a standalone `useQueryState` - kept separate because it is often debounced independently
 3. **All other state** (string filters, boolean toggles, sort order, view mode, page number) is grouped in a single `useQueryStates` call
 4. A single `updateFilter(key, value)` helper is exported for component use
 5. Filters feed into a data-fetching hook (e.g., `useQuery`), which rebuilds the API request whenever URL params change
@@ -86,7 +86,7 @@ With the above config, a user filtering by category `"fiction"`, sorted newest-f
 /list?q=dune&category=fiction&sort=newest&view=grid&page=3
 ```
 
-Default values (`''`, `false`, `newest`, `grid`, `1`) are **omitted** from the URL by nuqs — they only appear when the value diverges from the default.
+Default values (`''`, `false`, `newest`, `grid`, `1`) are **omitted** from the URL by nuqs - they only appear when the value diverges from the default.
 
 ---
 
@@ -95,12 +95,12 @@ Default values (`''`, `false`, `newest`, `grid`, `1`) are **omitted** from the U
 The hook lives alongside your data-fetching logic. The typical pattern:
 
 ```tsx
-// useFilter.ts — URL state (no side effects)
+// useFilter.ts - URL state (no side effects)
 export default function useFilter() {
   // ... as shown above
 }
 
-// useList.ts — data fetching (consumes filter state)
+// useList.ts - data fetching (consumes filter state)
 import { useQuery } from '@tanstack/react-query'
 import forgeAPI from '@/utils/forgeAPI'
 
@@ -120,7 +120,7 @@ export function useList({
   )
 }
 
-// Page component — wires them together
+// Page component - wires them together
 export default function BooksPage() {
   const filters = useFilter()
   const listQuery = useList(filters)
@@ -143,7 +143,7 @@ export default function BooksPage() {
 }
 ```
 
-> **Key point:** `useList` re-fetches automatically when `searchQuery`, `category`, `sort`, or `page` change — because `useQuery` watches its inputs and the inputs are derived from nuqs state which updates the URL, which triggers re-renders.
+> **Key point:** `useList` re-fetches automatically when `searchQuery`, `category`, `sort`, or `page` change - because `useQuery` watches its inputs and the inputs are derived from nuqs state which updates the URL, which triggers re-renders.
 
 ### Debouncing search
 
@@ -181,7 +181,7 @@ This keeps the URL update (which triggers re-fetch) on a 300ms delay, while the 
 const [searchQuery, setSearchQuery] = useQueryState('q', parseAsString.withDefault(''))
 const [filter, setFilter] = useQueryStates({ ... })
 
-// ❌ Wrong — search bundled with filters
+// ❌ Wrong - search bundled with filters
 const [filter, setFilter] = useQueryStates({
   q: parseAsString.withDefault(''),
   category: parseAsString.withDefault(''),
@@ -189,21 +189,21 @@ const [filter, setFilter] = useQueryStates({
 })
 ```
 
-### 2. Always use `.withDefault(...)` — never return `null`
+### 2. Always use `.withDefault(...)` - never return `null`
 
 Every parser must have `.withDefault()`. This guarantees the returned value is never `null`, eliminating conditional checks in components and API call preparation.
 
 ```tsx
-// ✅ Correct — value is always a string
+// ✅ Correct - value is always a string
 category: parseAsString.withDefault('')
 
-// ✅ Correct — value is always a boolean
+// ✅ Correct - value is always a boolean
 favourite: parseAsBoolean.withDefault(false)
 
-// ✅ Correct — value is always a number
+// ✅ Correct - value is always a number
 page: parseAsInteger.withDefault(1)
 
-// ❌ Wrong — value is `string | null`
+// ❌ Wrong - value is `string | null`
 category: parseAsString
 ```
 
@@ -212,10 +212,10 @@ category: parseAsString
 TypeScript infers `string[]` from a plain array, which weakens autocomplete. Add `as const`:
 
 ```tsx
-// ✅ Correct — type is '"newest" | "oldest" | "name"'
+// ✅ Correct - type is '"newest" | "oldest" | "name"'
 sort: parseAsStringEnum(['newest', 'oldest', 'name'] as const).withDefault('newest')
 
-// ❌ Wrong — type is `string`
+// ❌ Wrong - type is `string`
 sort: parseAsStringEnum(['newest', 'oldest', 'name']).withDefault('newest')
 ```
 
@@ -238,11 +238,11 @@ difficulty: parseAsStringEnum(
 Components should **never** call `setFilter` directly. The `updateFilter` helper wraps it for consistency:
 
 ```tsx
-// ✅ Correct — goes through the single public setter
+// ✅ Correct - goes through the single public setter
 updateFilter('category', 'fiction')
 updateFilter('page', 3)
 
-// ❌ Wrong — bypasses the hook's API
+// ❌ Wrong - bypasses the hook's API
 setFilter(prev => ({ ...prev, category: 'fiction' }))
 ```
 
@@ -252,7 +252,7 @@ setFilter(prev => ({ ...prev, category: 'fiction' }))
 
 ## Return Value Conventions
 
-Two styles exist in the codebase. **Prefer Style A** (spread) — it's more ergonomic in components.
+Two styles exist in the codebase. **Prefer Style A** (spread) - it's more ergonomic in components.
 
 ### Style A: Spread (preferred)
 
@@ -290,9 +290,9 @@ useEffect(() => {
 }, [filter, searchQuery])
 ```
 
-**Why `initialLoading`?** Without it, the effect fires on mount and immediately resets `page` to 1 — even if the user navigated to `?page=3&category=fiction`. The flag suppresses the reset on the initial render, preserving the user's intent.
+**Why `initialLoading`?** Without it, the effect fires on mount and immediately resets `page` to 1 - even if the user navigated to `?page=3&category=fiction`. The flag suppresses the reset on the initial render, preserving the user's intent.
 
-> **Alternative:** If `page` is a standalone `useQueryState` (like `books-library`), the reset logic is the same — just reference `page` directly instead of `filter.page`.
+> **Alternative:** If `page` is a standalone `useQueryState` (like `books-library`), the reset logic is the same - just reference `page` directly instead of `filter.page`.
 
 ---
 
@@ -303,7 +303,7 @@ These patterns exist in the codebase but should **not** be replicated:
 ### ❌ Multiple `useQueryState` calls for each filter
 
 ```tsx
-// ❌ DON'T — calendar module does this; no grouping, no updateFilter helper
+// ❌ DON'T - calendar module does this; no grouping, no updateFilter helper
 const [category, setCategory] = useQueryState('category', parseAsString.withDefault(''))
 const [calendar, setCalendar] = useQueryState('calendar', parseAsString.withDefault(''))
 // ... as the list grows, the component destructuring becomes unwieldy
@@ -314,7 +314,7 @@ Use `useQueryStates` to group related filters. The only standalone `useQueryStat
 ### ❌ Raw objects instead of parsers
 
 ```tsx
-// ❌ DON'T — wallet/Assets uses this; loses type narrowing and parser validation
+// ❌ DON'T - wallet/Assets uses this; loses type narrowing and parser validation
 const [q, setQ] = useQueryState('q', { defaultValue: '' })
 const [range, setRange] = useQueryState('range', { defaultValue: 'month' })
 ```
@@ -324,7 +324,7 @@ Always use the `parseAs*` parsers from nuqs. They enforce types at the URL bound
 ### ❌ Filter state in Zustand instead of URL
 
 ```tsx
-// ❌ DON'T — wallet/Transactions stores filters in a Zustand store
+// ❌ DON'T - wallet/Transactions stores filters in a Zustand store
 const { category, searchQuery } = useWalletStore()
 ```
 
@@ -337,7 +337,7 @@ If filter state belongs in the URL (sharable and back-button-friendly), use nuqs
 - [ ] `useFilter()` hook created in `src/hooks/useFilter.ts`
 - [ ] Search query is standalone `useQueryState('q', parseAsString.withDefault(''))`
 - [ ] All other state (filters, toggles, sort, view, page) grouped in one `useQueryStates({...})`
-- [ ] Every parser has `.withDefault(...)` — no `null` returns
+- [ ] Every parser has `.withDefault(...)` - no `null` returns
 - [ ] Enum parsers use `as const` on the literal array
 - [ ] `updateFilter(key, value)` helper provided and used by all components
 - [ ] Data-fetching hook consumes filter state from `useFilter()`'s return

@@ -1,3 +1,4 @@
+import { createServiceLogger } from '@functions/logging'
 import { generateModuleId } from '@functions/modules/loadModuleRoutes'
 import fs from 'fs'
 import path from 'path'
@@ -11,7 +12,7 @@ export const packageJSONSchema = z.object({
   author: z.string(),
   scripts: z
     .object({
-      types: z.string()
+      typecheck: z.string()
     })
     .optional(),
   dependencies: z.record(z.string(), z.string()).optional(),
@@ -75,7 +76,12 @@ export default function scanFederatedModules(
 
       const parsed = packageJSONSchema.safeParse(pkg)
 
-      if (!parsed.success) continue
+      if (!parsed.success) {
+        createServiceLogger('Route Loader').warn(
+          `Skipping module ${dir.name}: invalid package.json - ${parsed.error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join(', ')}`
+        )
+        continue
+      }
 
       const distDir =
         process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'

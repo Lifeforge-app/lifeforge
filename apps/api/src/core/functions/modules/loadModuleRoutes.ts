@@ -93,7 +93,7 @@ export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
     if (!modulePath) {
       if (IS_PRODUCTION) {
         logger.warn(
-          `Skipping unbundled module ${chalk.yellow(modDir)} — no dist/index.js found`
+          `Skipping unbundled module ${chalk.yellow(modDir)} - no dist/index.js found`
         )
       }
 
