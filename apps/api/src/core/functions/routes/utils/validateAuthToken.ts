@@ -1,3 +1,4 @@
+import { createCache } from '@functions/cache'
 import { PBService } from '@functions/database'
 import { connectToPocketBase, validateEnvironmentVariables } from '@functions/database/dbUtils'
 import { Request, Response } from 'express'
@@ -6,18 +7,16 @@ import Pocketbase from 'pocketbase'
 
 const JWT_SECRET = process.env.JWT_SIGNING_KEY!
 
-let pbCache: { pb: Pocketbase; expiresAt: number } | null = null
+const superUserPBCache = createCache<Pocketbase>('superuser-pb', { stdTTL: 3600 })
 
 async function getSuperUserPB(): Promise<Pocketbase> {
-  const now = Date.now()
+  const cached = superUserPBCache.get('instance')
 
-  if (pbCache && pbCache.expiresAt > now) {
-    return pbCache.pb
-  }
+  if (cached) return cached
 
   const pb = await connectToPocketBase(validateEnvironmentVariables())
 
-  pbCache = { pb, expiresAt: now + 60 * 60 * 1000 }
+  superUserPBCache.set('instance', pb)
 
   return pb
 }

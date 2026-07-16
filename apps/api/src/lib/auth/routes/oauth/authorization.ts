@@ -1,3 +1,4 @@
+import { createCache } from '@functions/cache'
 import { getCookieOptions } from '@lib/auth/constants/cookie'
 import { getPB } from '@lib/auth/constants/pb'
 import forge from '@lib/auth/forge'
@@ -17,20 +18,11 @@ import { CORS_ALLOWED_ORIGINS } from '../../../../core/routes/constants/corsAllo
 interface PendingOAuthState {
   codeVerifier: string
   provider: string
-  expiresAt: number
 }
 
-const pendingStates = new Map<string, PendingOAuthState>()
-
-function cleanExpiredStates(): void {
-  const now = Date.now()
-
-  for (const [state, pending] of pendingStates) {
-    if (pending.expiresAt < now) {
-      pendingStates.delete(state)
-    }
-  }
-}
+const pendingStates = createCache<PendingOAuthState>('oauth-states', {
+  stdTTL: 300
+})
 
 function resolveOrigin(origin: string | undefined): string | null {
   if (origin && CORS_ALLOWED_ORIGINS.includes(origin)) return origin
@@ -57,8 +49,6 @@ export const authorize = forge
     }
   })
   .callback(async ({ query: { provider }, req, response }) => {
-    cleanExpiredStates()
-
     const origin = resolveOrigin(req.headers.origin)
 
     if (!origin) {
@@ -78,8 +68,7 @@ export const authorize = forge
 
     pendingStates.set(state, {
       codeVerifier,
-      provider,
-      expiresAt: Date.now() + 5 * 60 * 1000
+      provider
     })
 
     const url = providerConfig.pkce
@@ -129,8 +118,6 @@ export const verify = forge
       res,
       response
     }) => {
-      cleanExpiredStates()
-
       const pending = pendingStates.get(state)
 
       if (!pending) {
@@ -141,7 +128,7 @@ export const verify = forge
         return response.badRequest('Provider mismatch')
       }
 
-      pendingStates.delete(state)
+      pendingStates.del(state)
 
       const origin = resolveOrigin(req.headers.origin)
 

@@ -1,6 +1,6 @@
 import { ROOT_DIR } from '@constants'
 import { generateModuleId } from '@functions/modules/loadModuleRoutes'
-import { checkModulesAvailability } from '@functions/utils/checkModulesAvailability'
+import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'

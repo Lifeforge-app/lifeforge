@@ -1,9 +1,56 @@
-import NodeCache from 'node-cache'
+import { createCache } from '@functions/cache'
 import z from 'zod'
 
 import forge from '../forge'
 
-const fontCache = new NodeCache({ stdTTL: 86400, checkperiod: 3600 })
+const googleFontItemSchema = z.object({
+  family: z.string(),
+  variants: z.array(z.string()),
+  subsets: z.array(z.string()),
+  version: z.string(),
+  lastModified: z.string(),
+  files: z.object({
+    regular: z.string().optional(),
+    italic: z.string().optional(),
+    '500': z.string().optional(),
+    '600': z.string().optional(),
+    '700': z.string().optional(),
+    '800': z.string().optional(),
+    '100': z.string().optional(),
+    '200': z.string().optional(),
+    '300': z.string().optional(),
+    '900': z.string().optional(),
+    '100italic': z.string().optional(),
+    '200italic': z.string().optional(),
+    '300italic': z.string().optional(),
+    '500italic': z.string().optional(),
+    '600italic': z.string().optional(),
+    '700italic': z.string().optional(),
+    '800italic': z.string().optional(),
+    '900italic': z.string().optional()
+  }),
+  category: z.enum([
+    'display',
+    'handwriting',
+    'monospace',
+    'sans-serif',
+    'serif'
+  ]),
+  kind: z.literal('webfonts#webfont'),
+  menu: z.string(),
+  colorCapabilities: z
+    .array(z.enum(['COLRv0', 'COLRv1', 'SVG']))
+    .optional()
+})
+
+type GoogleFontItem = z.infer<typeof googleFontItemSchema>
+
+type GoogleFontResult = {
+  enabled: boolean
+  items: GoogleFontItem[]
+}
+
+const fontCache = createCache<GoogleFontResult>('google-fonts', { stdTTL: 86400 })
 
 export const listGoogleFonts = forge
   .query({
@@ -12,47 +59,7 @@ export const listGoogleFonts = forge
     output: {
       OK: z.object({
         enabled: z.boolean(),
-        items: z.array(
-          z.object({
-            family: z.string(),
-            variants: z.array(z.string()),
-            subsets: z.array(z.string()),
-            version: z.string(),
-            lastModified: z.string(),
-            files: z.object({
-              regular: z.string().optional(),
-              italic: z.string().optional(),
-              '500': z.string().optional(),
-              '600': z.string().optional(),
-              '700': z.string().optional(),
-              '800': z.string().optional(),
-              '100': z.string().optional(),
-              '200': z.string().optional(),
-              '300': z.string().optional(),
-              '900': z.string().optional(),
-              '100italic': z.string().optional(),
-              '200italic': z.string().optional(),
-              '300italic': z.string().optional(),
-              '500italic': z.string().optional(),
-              '600italic': z.string().optional(),
-              '700italic': z.string().optional(),
-              '800italic': z.string().optional(),
-              '900italic': z.string().optional()
-            }),
-            category: z.enum([
-              'display',
-              'handwriting',
-              'monospace',
-              'sans-serif',
-              'serif'
-            ]),
-            kind: z.literal('webfonts#webfont'),
-            menu: z.string(),
-            colorCapabilities: z
-              .array(z.enum(['COLRv0', 'COLRv1', 'SVG']))
-              .optional()
-          })
-        )
+        items: z.array(googleFontItemSchema)
       })
     }
   })
@@ -67,7 +74,7 @@ export const listGoogleFonts = forge
       const cached = fontCache.get('listGoogleFonts')
 
       if (cached) {
-        return response.ok(cached as any)
+        return response.ok(cached)
       }
 
       const key = await getAPIKey('gcloud', pb)
@@ -76,7 +83,7 @@ export const listGoogleFonts = forge
         return response.ok({
           enabled: false,
           items: []
-        } as any)
+        })
       }
 
       const target = `https://www.googleapis.com/webfonts/v1/webfonts?key=${key}`
@@ -85,10 +92,10 @@ export const listGoogleFonts = forge
 
       const data = await r.json()
 
-      const result = {
+      const result: GoogleFontResult = {
         enabled: true,
         items: data.items
-      } as any
+      }
 
       fontCache.set('listGoogleFonts', result)
 
@@ -122,9 +129,7 @@ export const getGoogleFont = forge
     }) => {
       const cacheKey = `getGoogleFont:${family}`
 
-      const cached = fontCache.get<{ enabled: boolean; items?: unknown }>(
-        cacheKey
-      )
+      const cached = fontCache.get(cacheKey)
 
       if (cached) {
         return response.ok(cached)
@@ -144,7 +149,7 @@ export const getGoogleFont = forge
 
       const data = await r.json()
 
-      const result = {
+      const result: GoogleFontResult = {
         enabled: true,
         items: data.items
       }

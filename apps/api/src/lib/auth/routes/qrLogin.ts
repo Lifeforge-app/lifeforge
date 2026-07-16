@@ -4,18 +4,14 @@ import z from 'zod'
 import { getCookieOptions } from '../constants/cookie'
 import { getPB } from '../constants/pb'
 import forge from '../forge'
-import {
-  createQRSession,
-  deleteQRSession,
-  getQRSession,
-  approveQRSession as approveQR
-} from '../utils/qrLogin'
+import { sessions } from '../utils/qrLogin'
 import { storeRefreshToken } from '../utils/refreshTokenStore'
 import {
   generateFamily,
   generateRefreshToken,
   signAccessToken
 } from '../utils/tokens'
+
 
 export const register = forge
   .mutation({
@@ -37,7 +33,14 @@ export const register = forge
   .callback(async ({ body: { browserInfo }, response }) => {
     const sessionId = v4()
 
-    createQRSession(sessionId, browserInfo)
+    sessions.set(sessionId, {
+      sessionId,
+      browserInfo,
+      status: 'pending',
+      accessToken: '',
+      refreshToken: '',
+      userId: ''
+    })
 
     return response.created({
       sessionId,
@@ -65,7 +68,7 @@ export const approve = forge
     }
   })
   .callback(async ({ body: { sessionId }, req, response }) => {
-    const session = getQRSession(sessionId)
+    const session = sessions.get(sessionId)
 
     if (!session) {
       return response.notFound()
@@ -89,7 +92,10 @@ export const approve = forge
       ip
     })
 
-    approveQR(sessionId, user.id, accessToken, refreshToken)
+    session.status = 'approved'
+    session.userId = user.id
+    session.accessToken = accessToken
+    session.refreshToken = refreshToken
 
     const io = req.io
 
@@ -134,7 +140,7 @@ export const status = forge
     }
   })
   .callback(async ({ query: { sessionId }, response }) => {
-    const session = getQRSession(sessionId)
+    const session = sessions.get(sessionId)
 
     if (!session) {
       return response.ok({ status: 'not_found' as const })
@@ -143,7 +149,7 @@ export const status = forge
     if (session.status === 'approved') {
       const { accessToken } = session
 
-      deleteQRSession(sessionId)
+      sessions.del(sessionId)
 
       return response.ok({
         status: 'approved' as const,
@@ -153,7 +159,7 @@ export const status = forge
 
     return response.ok({
       status: 'pending' as const,
-      expiresAt: new Date(session.expiresAt).toISOString()
+      expiresAt: new Date(sessions.expiryTime(sessionId)!).toISOString()
     })
   })
 
@@ -175,7 +181,7 @@ export const claim = forge
     }
   })
   .callback(async ({ body: { sessionId }, req, res, response }) => {
-    const session = getQRSession(sessionId)
+    const session = sessions.get(sessionId)
 
     if (!session || session.status !== 'approved') {
       return response.notFound()
@@ -185,7 +191,7 @@ export const claim = forge
 
     const { accessToken } = session
 
-    deleteQRSession(sessionId)
+    sessions.del(sessionId)
 
     return response.ok({ accessToken })
   })
