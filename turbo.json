@@ -2,20 +2,32 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["dist/**", "client/dist/**", "server/dist/**"],
-      "env": ["VITE_API_HOST"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        "client/dist/**",
+        "server/dist/**"
+      ],
+      "env": [
+        "VITE_API_HOST"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "types": {
-      "dependsOn": ["^types"]
-    },
     "lint": {},
     "test": {
-      "dependsOn": ["build"]
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "typecheck": {
+      "dependsOn": [
+        "^typecheck"
+      ]
     }
   }
 }

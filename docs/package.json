@@ -14,9 +14,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "types": "tsgo -b",
     "build": "tsgo -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsgo -b"
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",

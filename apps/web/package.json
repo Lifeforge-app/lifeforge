@@ -13,9 +13,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "types": "tsgo -b",
     "build": "tsgo -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "typecheck": "tsgo -b"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

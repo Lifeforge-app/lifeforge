@@ -5,7 +5,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "rm -rf dist && vite build",
-    "types": "tsgo --noEmit --skipLibCheck"
+    "typecheck": "tsgo --noEmit --skipLibCheck"
   },
   "dependencies": {
     "tar": "^7.5.2",

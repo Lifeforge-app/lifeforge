@@ -14,7 +14,6 @@
   "type": "module",
   "main": "./dist/server.js",
   "scripts": {
-    "types": "tsgo -b",
     "build": "tsgo -b && vite build",
     "start": "tsgo -b && NODE_ENV=production tsx ./src/index.ts",
     "start:prod": "NODE_ENV=production node --env-file=../../env/.env.local ./dist/server.js",
@@ -23,7 +22,8 @@
     "lint": "eslint ./src --fix && prettier --write ./src",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run"
+    "test:run": "vitest run",
+    "typecheck": "tsgo -b"
   },
   "dependencies": {
     "@lifeforge/log": "workspace:*",
