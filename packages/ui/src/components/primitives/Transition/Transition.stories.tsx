@@ -56,7 +56,7 @@ export const Opacity: Story = {
         Open the browser dev tools to inspect the <code>transition</code>{' '}
         property applied to the wrapper element.
       </Alert>
-      <Demo label="opacity — duration: 400ms, easing: ease">
+      <Demo label="opacity - duration: 400ms, easing: ease">
         {on => (
           <Transition duration={400} easing="ease" property="opacity">
             <Box
@@ -72,7 +72,7 @@ export const Opacity: Story = {
           </Transition>
         )}
       </Demo>
-      <Demo label="transform (scale) — duration: 300ms, easing: ease-out">
+      <Demo label="transform (scale) - duration: 300ms, easing: ease-out">
         {on => (
           <Transition duration={300} easing="ease-out" property="transform">
             <Box
@@ -92,7 +92,7 @@ export const Opacity: Story = {
           </Transition>
         )}
       </Demo>
-      <Demo label="background-color — duration: 600ms, easing: ease-in-out">
+      <Demo label="background-color - duration: 600ms, easing: ease-in-out">
         {on => (
           <Transition
             duration={600}
@@ -118,7 +118,7 @@ export const Opacity: Story = {
           </Transition>
         )}
       </Demo>
-      <Demo label="box-shadow — duration: 300ms, easing: ease">
+      <Demo label="box-shadow - duration: 300ms, easing: ease">
         {on => (
           <Transition duration={300} easing="ease" property="box-shadow">
             <Box
@@ -149,7 +149,7 @@ export const MultiProperty: Story = {
   args: { children: null },
   render: () => (
     <Flex direction="column" gap="md">
-      <Demo label="opacity + transform — shared duration: 400ms, easing: ease-out">
+      <Demo label="opacity + transform - shared duration: 400ms, easing: ease-out">
         {on => (
           <Transition
             duration={400}
@@ -173,7 +173,7 @@ export const MultiProperty: Story = {
         )}
       </Demo>
 
-      <Demo label="width + height — duration: 500ms, easing: ease">
+      <Demo label="width + height - duration: 500ms, easing: ease">
         {on => (
           <Transition
             duration={500}
@@ -275,14 +275,14 @@ export const PerPropertyOverrides: Story = {
 
 /**
  * Demonstrates a transition triggered by hover. Uses mouse events to toggle
- * state, driving inline styles — showing how `Transition` powers interactive
+ * state, driving inline styles - showing how `Transition` powers interactive
  * UI without framework-level animation libraries.
  */
 export const HoverTriggered: Story = {
   args: { children: null },
   render: () => {
     return (
-      <VariantContainer title="background-color on hover — 400ms ease">
+      <VariantContainer title="background-color on hover - 400ms ease">
         <Transition duration={400} easing="ease" property="background-color">
           <Box
             as="button"
@@ -295,7 +295,7 @@ export const HoverTriggered: Story = {
             width="100%"
           >
             <Text weight="semibold">
-              Hover me — background color transitions
+              Hover me - background color transitions
             </Text>
           </Box>
         </Transition>
@@ -312,7 +312,7 @@ export const SingleEntryObject: Story = {
   args: { children: null },
   render: () => {
     return (
-      <Demo label="Single TransitionEntry — border-color, 500ms, ease-out, with 200ms delay">
+      <Demo label="Single TransitionEntry - border-color, 500ms, ease-out, with 200ms delay">
         {on => (
           <Transition
             property={{

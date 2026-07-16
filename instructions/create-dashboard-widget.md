@@ -212,12 +212,12 @@ export const config: WidgetConfig = {
 ```
 
 > [!NOTE]
-> When using `Card` directly as a widget root (no `Widget` wrapper), `Card` already provides the correct default background (`surface.default`), shadow, padding, and rounded corners — no inline styles or Tailwind classes needed.
+> When using `Card` directly as a widget root (no `Widget` wrapper), `Card` already provides the correct default background (`surface.default`), shadow, padding, and rounded corners - no inline styles or Tailwind classes needed.
 
 ### Legacy Pattern (Do NOT Use)
 
 ```tsx
-// ❌ OLD — uses removed component-bg classes, clsx, inline styles, and @iconify/react
+// ❌ OLD - uses removed component-bg classes, clsx, inline styles, and @iconify/react
 import { Icon } from '@iconify/react'
 import clsx from 'clsx'
 
@@ -230,7 +230,7 @@ import clsx from 'clsx'
 ```
 
 ```tsx
-// ✅ NEW — use Card with direction/align/justify props
+// ✅ NEW - use Card with direction/align/justify props
 <Card
   align={h < 2 ? 'center' : undefined}
   direction={h < 2 ? 'row' : 'column'}
@@ -373,7 +373,7 @@ Examine these existing widgets for patterns:
 ### Data-Driven Widgets
 
 - `apps/calendar/client/src/widgets/TodaysEvent.tsx` - List with items
-- `apps/wallet/client/src/widgets/AssetsBalance.tsx` - Grid layout with toggle (not yet migrated — see as legacy reference)
+- `apps/wallet/client/src/widgets/AssetsBalance.tsx` - Grid layout with toggle (not yet migrated - see as legacy reference)
 - `apps/todoList/client/src/widgets/TodoList.tsx` - List with context provider
 - `apps/codeTime/client/src/widgets/CodeTime.tsx` - Chart visualization
 
@@ -393,7 +393,7 @@ Examine these existing widgets for patterns:
 - [ ] Import `Icon` from UI library, not `@iconify/react`
 - [ ] Use `size` prop for icon sizing, `color` prop for icon colors
 - [ ] No `className` with Tailwind classes
-- [ ] No `component-bg-*` classes — use `surface` presets or `Card` instead
+- [ ] No `component-bg-*` classes - use `surface` presets or `Card` instead
 - [ ] Use `@lifeforge/ui` / `@lifeforge/shared` for core, `lifeforge-ui` / `shared` for modules
 - [ ] Add `namespace` for translations
 - [ ] Set appropriate dimension constraints

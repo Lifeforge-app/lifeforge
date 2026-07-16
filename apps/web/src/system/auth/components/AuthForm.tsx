@@ -4,8 +4,9 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { useAuth, usePromiseLoading } from '@lifeforge/api'
-import { Stack, TextInput, toast } from '@lifeforge/ui'
+import { Stack, TextInput, toast, useModalStore } from '@lifeforge/ui'
 
+import TwoFAModal from '../modals/TwoFAModal'
 import AuthSignInButton from './AuthSignInButtons'
 
 function AuthForm({ providers }: { providers: string[] }) {
@@ -15,6 +16,7 @@ function AuthForm({ providers }: { providers: string[] }) {
   const passwordRef = useRef(password)
   const [formDisabled, setFormDisabled] = useState(false)
   const [searchParams] = useSearchParams()
+  const { open } = useModalStore()
   const { t } = useTranslation('common.auth')
   const { authenticate } = useAuth()
 
@@ -51,7 +53,9 @@ function AuthForm({ providers }: { providers: string[] }) {
 
     await authenticate({ email: emailOrUsername, password })
       .then(res => {
-        if (res === '2FA required' || !res) {
+        console.log(res)
+        if (res === '2fa_required' || !res) {
+          open(TwoFAModal, {})
           return
         }
 

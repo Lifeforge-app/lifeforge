@@ -47,17 +47,28 @@ export function useAppRouter() {
       cancelled = true
     }
   }, [auth, t, authLoading, modules, modulesLoading])
+
   const router = useMemo(() => {
-    if (authLoading || modulesLoading || (auth && modules.length === 0)) {
+    if (authLoading || modulesLoading) {
       return loadingRouter
     }
+
 
     if (!auth) {
       return authRouter
     }
 
     return appRouter ?? loadingRouter
-  }, [auth, authLoading, modulesLoading, modules, appRouter, loadingRouter, authRouter])
+  }, [
+    auth,
+    authLoading,
+    modulesLoading,
+    modules,
+    appRouter,
+    loadingRouter,
+    authRouter
+  ])
+
   const routerKey = useMemo(() => {
     if (authLoading || modulesLoading || (auth && modules.length === 0)) {
       return 'loading'

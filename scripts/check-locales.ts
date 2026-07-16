@@ -89,7 +89,7 @@ for (const file of fs.readdirSync(refDir)) {
     }
 
     if (missing.length > 0) {
-      console.log(`\n${langDir}/${file} — ${missing.length} missing key(s):`)
+      console.log(`\n${langDir}/${file} - ${missing.length} missing key(s):`)
 
       for (const key of missing) {
         console.log(`  - ${key}`)
@@ -98,7 +98,7 @@ for (const file of fs.readdirSync(refDir)) {
     }
 
     if (extra.length > 0) {
-      console.log(`\n${langDir}/${file} — ${extra.length} extra key(s):`)
+      console.log(`\n${langDir}/${file} - ${extra.length} extra key(s):`)
 
       for (const key of extra) {
         console.log(`  + ${key}`)

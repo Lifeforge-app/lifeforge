@@ -66,7 +66,7 @@ All configuration moves inside `query({...})` / `mutation({...})`:
 | `.input({...})`                   | `input: {...}`                            |
 | `.media({...})`                   | `media: {...}`                            |
 | `.isDownloadable()`               | `isDownloadable: true`                    |
-| `.statusCode(N)`                  | ❌ Removed — status comes from output key |
+| `.statusCode(N)`                  | ❌ Removed - status comes from output key |
 | `.existenceCheck('query', {...})` | `existenceCheck: { query: {...} }`        |
 
 When there were multiple `.existenceCheck()` calls in the old API (e.g. one for `query` and one for `body`), merge them into a single `existenceCheck` object:
@@ -105,22 +105,22 @@ Every route **must** declare an `output` object with at least one status key. Th
 - If `hasPayload` is absent → value must be `true`
 - `BAD_REQUEST` payload is `z.string()` (error message)
 
-When the return shape comes from an external API or complex join, define the zod schema explicitly inline or at the top of the file — do NOT fall back to `z.any()`.
+When the return shape comes from an external API or complex join, define the zod schema explicitly inline or at the top of the file - do NOT fall back to `z.any()`.
 
 ### 3. Output data types must be serializable to JSON Schema
 
-Do NOT use `z.custom()`, `z.void()`, `z.undefined()`, `z.unknown()`, `z.any()`, or `z.object({}).passthrough()` — these are not serializable to JSON Schema.
+Do NOT use `z.custom()`, `z.void()`, `z.undefined()`, `z.unknown()`, `z.any()`, or `z.object({}).passthrough()` - these are not serializable to JSON Schema.
 
 **`z.any()` and `.passthrough()` are ABSOLUTELY PROHIBITED in output schemas.** Every status key with a payload must have an explicitly defined zod schema that accurately describes the return shape.
 
 ```typescript
-// ❌ Bad — not serializable
+// ❌ Bad - not serializable
 output: {
   OK: z.custom<SomeType>(),
   CREATED: z.void()
 }
 
-// ✅ Good — use actual zod schema or the schema from cleanSchemas
+// ✅ Good - use actual zod schema or the schema from cleanSchemas
 output: {
   OK: walletSchemas.transaction_templates,
   CREATED: z.object({ id: z.string(), name: z.string() })
@@ -150,7 +150,7 @@ output: {
 For nested external API responses, write the full zod schema matching every field:
 
 ````typescript
-// ✅ Good — full explicit schema for external API response
+// ✅ Good - full explicit schema for external API response
 const ProjectDetailsSchema = z.object({
   id: z.string(),
   slug: z.string(),
@@ -166,18 +166,18 @@ output: {
   OK: ProjectDetailsSchema
 }
 
-// ❌ Bad — z.any() is NOT allowed
+// ❌ Bad - z.any() is NOT allowed
 output: {
   OK: z.any()  // PROHIBITED
 }
 
 
-### 4. Input schemas must be plain — no `.transform()` in zod
+### 4. Input schemas must be plain - no `.transform()` in zod
 
 `.transform()` is not serializable to JSON Schema. Move all parsing/transformation logic into the business logic:
 
 ```typescript
-// ❌ Bad — transform in zod
+// ❌ Bad - transform in zod
 input: {
   query: z.object({
     year: z.string().transform(val => parseInt(val)),
@@ -185,7 +185,7 @@ input: {
   })
 }
 
-// ✅ Good — plain string, parse in callback
+// ✅ Good - plain string, parse in callback
 input: {
   query: z.object({
     year: z.string(),
@@ -229,7 +229,7 @@ const parsedViewFilter: ('income' | 'expenses' | 'transfer')[] =
 For short single-use input schemas, inline them directly rather than extracting into a named variable:
 
 ```typescript
-// ✅ Good — inline for single use
+// ✅ Good - inline for single use
 input: {
   query: z.object({
     year: z.string(),
@@ -297,12 +297,12 @@ Each `response.<method>()` call must correspond to a key declared in the `output
 | `CONFLICT`     | `response.conflict()`       | 409       |
 
 ```typescript
-// ✅ Correct — NO_CONTENT in output, response.noContent() in callback
+// ✅ Correct - NO_CONTENT in output, response.noContent() in callback
 output: { NO_CONTENT: true, NOT_FOUND: true }
 // ...
 return response.noContent()
 
-// ❌ Wrong — output has NO_CONTENT but callback uses response.ok()
+// ❌ Wrong - output has NO_CONTENT but callback uses response.ok()
 // This will cause a runtime error because the response type doesn't match
 output: { NO_CONTENT: true }
 // ...
@@ -362,18 +362,18 @@ output: {
 If the callback body uses `await` (e.g. awaiting a PocketBase call), the callback itself must be declared `async`:
 
 ```typescript
-// ❌ Bad — missing async/await
+// ❌ Bad - missing async/await
 .callback(({ pb, query: { id }, response }) =>
   response.ok(pb.getOne.collection('calendars').id(id).execute())
 )
 
-// ✅ Good — async with await
+// ✅ Good - async with await
 .callback(async ({ pb, query: { id }, response }) =>
   response.ok(await pb.getOne.collection('calendars').id(id).execute())
 )
 ```
 
-This includes one-liner arrow functions that perform async operations — they must use `async`/`await` just like any other async function.
+This includes one-liner arrow functions that perform async operations - they must use `async`/`await` just like any other async function.
 
 ### 11. Get `response` from context destructuring
 
