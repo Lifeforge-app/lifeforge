@@ -180,7 +180,7 @@ Before you start, make sure you have the following items on hand:
     <span className="mr-2">**Bun:**</span>
     <span>
       LifeForge is a pure TypeScript project, while the cute little bun, is used
-      as the runtime environment. You can download and install bun from
+      as the runtime environment. You can download and install pnpm from
       [here](https://bun.sh/).
     </span>
   </div>
@@ -193,7 +193,7 @@ Before you start, make sure you have the following items on hand:
     <span>
       This is the database that will be used to store all your data. You can
       download the latest version of PocketBase from
-      [here](https://pocketbase.io/), or use `bun forge db init` command to
+      [here](https://pocketbase.io/), or use `pnpm forge db init` command to
       automatically download and set it up for you.
     </span>
   </div>
@@ -246,15 +246,15 @@ git clone https://github.com/lifeforge-app/lifeforge.git
 Then, install the dependencies by running the following command:
 
 ```bash
-cd lifeforge && bun install --linker isolated
+cd lifeforge && pnpm install --linker isolated
 ```
 
 <Alert className="mt-6" type="warning">
 #### Using `--linker isolated`
 
-By default, Bun uses a global cache for dependencies. However, in a monorepo setup like LifeForge, this can lead to issues with dependency resolution. To avoid these issues, we recommend using the `--linker isolated` flag when installing dependencies. This will ensure that each package in the monorepo has its own isolated set of dependencies to prevent phantom dependency issues.
+By default, Pnpm uses a global cache for dependencies. However, in a monorepo setup like LifeForge, this can lead to issues with dependency resolution. To avoid these issues, we recommend using the `--linker isolated` flag when installing dependencies. This will ensure that each package in the monorepo has its own isolated set of dependencies to prevent phantom dependency issues.
 
-When doing deployment on a server, make sure to always use the `--linker isolated` flag when running `bun install`.
+When doing deployment on a server, make sure to always use the `--linker isolated` flag when running `pnpm install`.
 
 </Alert>
 

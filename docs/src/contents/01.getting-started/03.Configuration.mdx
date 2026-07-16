@@ -54,7 +54,7 @@ For the server side, there are several environment variables that need to be set
 The Forge CLI is a command-line interface tool that helps you manage and configure your LifeForge system. It provides a simple way to manage your system and modules. This tool doesn't require any installation, as it's included in the monorepo inside the `tools/` directory. You can run it using bun.
 
 ```bash
-bun run forge
+pnpm run forge
 ```
 
 After that, you should see the Forge CLI help menu.
@@ -71,7 +71,7 @@ With that out of the way, let's move on to the configuration.
 Pocketbase is just an empty shell out of the box. You need to set up the database schema and create an admin user. Fortunately, the Forge CLI can help you with that. To set up the database, run the following command:
 
 ```bash
-bun run forge db init 
+pnpm run forge db init 
 ```
 
 This initialization process will do quite a few things:
@@ -89,7 +89,7 @@ This initialization process will do quite a few things:
 Now, you can start the Pocketbase instance using the following command:
 
 ```bash
-bun run forge dev db
+pnpm run forge dev db
 ```
 
 This will start the Pocketbase instance. You can access the admin dashboard at <a href="http://localhost:8090/_" target="_blank" rel="noopener noreferrer">http://localhost:8090/\_</a>. Enter the email and password you provided earlier to log in.
@@ -116,7 +116,7 @@ LifeForge currently supports OAuth2 authentication via Google and GitHub. To ena
 To start the API server, run the following command:
 
 ```bash
-bun run forge dev server
+pnpm run forge dev server
 ```
 
 Once started, you should see an output similar to this:
@@ -150,7 +150,7 @@ If you see this message, congratulations! The API server is up and running. You 
 To start the client application, run the following command:
 
 ```bash
-bun run forge dev client
+pnpm run forge dev client
 ```
 
 It will first build the UI and the shared library using Vite, and then start the development server of the client codebase. You should see an output similar to this:

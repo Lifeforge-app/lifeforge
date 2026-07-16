@@ -20,7 +20,7 @@ import { Alert } from "@lifeforge/ui";
 - <PR number={51} />, <Commit hash="ada44b82069bc16531c1f70db03b5105d70adb67" />, <Commit hash="994372fe503a6368a3a1626014485e0f7ef6a3f7" />, <Commit hash="f88502018e38884c07c7542407ea24c435d81f42" />: Implemented dynamic language pack loading engine, separating localization files from the main application codebase. User can now add new language support by simply installing the corresponding language pack through
 
     ```bash
-    bun forge locales add <locale-code>
+    pnpm forge locales add <locale-code>
     ```
 
     For more information, refer to the <a href="/user-guide/localization">localization guide</a>.
@@ -38,12 +38,12 @@ import { Alert } from "@lifeforge/ui";
 
     ```bash
     # Old commands
-    bun forge db generate-schemas
-    bun forge db generate-migrations
+    pnpm forge db generate-schemas
+    pnpm forge db generate-migrations
 
     # New commands
-    bun forge db pull
-    bun forge db push
+    pnpm forge db pull
+    pnpm forge db push
     ```
 
 - <PR number={57} />: Huge rework on the API key management. Master password is now removed from the API key management page since LifeForge API now supports end-to-end asymmetric encryption for every API call, so there is no need to encrypt the API key a second time using the master password.
@@ -153,7 +153,7 @@ import { Alert } from "@lifeforge/ui";
 - <PR number={53} />: Clarified module naming conventions for installation/uninstallation, updated example command, and named future module registry. Thanks <GithubUser username="jiahuiiiii" />~
 - <PR number={56} />, <Commit hash="3daa4a81add7008df6390d3ac9db81826e4a8b2c" />: Huge overhaul and refactoring on `forgeCLI` codebase.
 - <Commit hash="c3ff86695b9926a5e643f489933d023ec7cdf0f7" />: Make git submodule updating target more specific modules to avoid unnecessary updates that cause longer setup time.
-- <Commit hash="b2f0884ef53c866a8ff1d26a97ee34bae85b600b" />: Extra CLI arguments are now piped to the dev script when running `bun forge dev` for better flexibility.
+- <Commit hash="b2f0884ef53c866a8ff1d26a97ee34bae85b600b" />: Extra CLI arguments are now piped to the dev script when running `pnpm forge dev` for better flexibility.
 - <Commit hash="a1de57f78b637b33c363f39b06aec8bfbf703d77" />, <Commit hash="b50cbe8a4c7a0969fd94d997430a593b736f35d9" />, <Commit hash="929e85e8c1550b9894404f59bd076df39c9c3200" />: Another huge overhaul and refactor on the ForgeCLI codebase, added mechanism to load commands dynamically during runtime, and ~~vibed~~ created a much more nice looking help screen.
 
     ![](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w52-5.webp)

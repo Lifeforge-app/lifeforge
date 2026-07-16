@@ -1013,8 +1013,8 @@ After migration, remove unused imports:
 Run the following commands from the root directory to lint and format the migrated file:
 
 ```
-bun eslint <path-to-file> --fix
-bun prettier --write <path-to-file> --config ./.prettierrc
+pnpm eslint <path-to-file> --fix
+pnpm prettier --write <path-to-file> --config ./.prettierrc
 ```
 
 Replace `<path-to-file>` with the actual path of the migrated file (e.g., `apps/lifeforge--achievements/client/src/components/modals/ModifyAchievementModal.tsx`). ESLint will catch unused imports, type errors, and other issues; Prettier will format the output.
@@ -1233,7 +1233,7 @@ const transactionSchema = z.object({
 This is a separate package. Ensure it is installed in the consuming app's `package.json`:
 
 ```
-bun add @hookform/resolvers
+pnpm add @hookform/resolvers
 ```
 
 ### 2. Always use Zod v4 API (not v3)
