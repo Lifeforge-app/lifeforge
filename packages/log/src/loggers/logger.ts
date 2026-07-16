@@ -100,7 +100,7 @@ function createPinoLogger(options: LoggerOptions): pino.Logger {
 
   const level = options.level ?? config.level
 
-  const isPretty = options.pretty ?? !config.isProduction
+  const isPretty = options.pretty ?? true
 
   const fileEnabled = options.file?.enabled ?? true
 

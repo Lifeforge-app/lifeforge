@@ -1,7 +1,7 @@
 import {
   connectToPocketBase,
   validateEnvironmentVariables
-} from '@functions/database/dbUtils'
+} from '@lifeforge/pocketbase'
 import z from 'zod'
 
 import { createForge, forgeRouter } from '@lifeforge/server-utils'

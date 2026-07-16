@@ -1,4 +1,4 @@
-import { toPocketBaseCollectionName } from '@functions/database/dbUtils'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
@@ -6,22 +6,24 @@ import {
   CleanedSchemas,
   CollectionKey,
   ExpandConfig,
-  FieldSelection,
-  IGetOne,
-  IGetOneFactory
-} from '@lifeforge/server-utils'
+  FieldSelection
+} from '../../types/pb_service.types'
+import {
+  ICreate,
+  ICreateData,
+  ICreateFactory
+} from '../../types/service.interface'
 
 import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
- * Class for retrieving a single record from PocketBase collections with field selection and expansion capabilities
- * @template TSchemas - The flattened schemas type
+ * Class for creating new records in PocketBase collections with type safety
  * @template TCollectionKey - The collection key type
  * @template TExpandConfig - The expand configuration type
  * @template TFields - The field selection type
  */
-export class GetOne<
+export class Create<
   TSchemas extends CleanedSchemas,
   TCollectionKey extends CollectionKey<TSchemas>,
   TExpandConfig extends ExpandConfig<TSchemas, TCollectionKey> = Record<
@@ -30,15 +32,15 @@ export class GetOne<
   >,
   TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
     Record<never, never>
-> implements IGetOne<TSchemas, TCollectionKey, TExpandConfig, TFields> {
-  private _itemId: string = ''
+> implements ICreate<TSchemas, TCollectionKey, TExpandConfig, TFields> {
+  private _data: ICreateData<TSchemas, TCollectionKey> = {}
   private _expand: string = ''
   private _fields: string = ''
 
   /**
-   * Creates an instance of the GetOne class
+   * Creates an instance of the Create class
    * @param _pb - The PocketBase instance
-   * @param collectionKey - The collection key to retrieve the record from
+   * @param collectionKey - The collection key to create records in
    */
   constructor(
     private _pb: PocketBase,
@@ -46,12 +48,12 @@ export class GetOne<
   ) {}
 
   /**
-   * Sets the ID of the record to retrieve
-   * @param itemId - The unique identifier of the record to fetch
-   * @returns The current GetOne instance for method chaining
+   * Sets the data to be created
+   * @param data - The data object containing the fields to create
+   * @returns The current Create instance for method chaining
    */
-  id(itemId: string) {
-    this._itemId = itemId
+  data(data: ICreateData<TSchemas, TCollectionKey>) {
+    this._data = data
 
     return this
   }
@@ -60,19 +62,19 @@ export class GetOne<
    * Specifies which fields to return in the response
    * @template NewFields - The new field selection type
    * @param fields - Object specifying which fields to include in the response
-   * @returns A new GetOne instance with the specified field selection
+   * @returns A new Create instance with the specified field selection
    */
   fields<
     NewFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig>
   >(fields: NewFields) {
-    const newInstance = new GetOne<
+    const newInstance = new Create<
       TSchemas,
       TCollectionKey,
       TExpandConfig,
       NewFields
     >(this._pb, this.collectionKey)
 
-    newInstance._itemId = this._itemId
+    newInstance._data = this._data
     newInstance._expand = this._expand
     newInstance._fields = Object.keys(fields).join(', ')
 
@@ -83,17 +85,17 @@ export class GetOne<
    * Configures which related records to expand in the response
    * @template NewExpandConfig - The new expand configuration type
    * @param expandConfig - Object specifying which relations to expand
-   * @returns A new GetOne instance with the specified expand configuration
+   * @returns A new Create instance with the specified expand configuration
    */
   expand<NewExpandConfig extends ExpandConfig<TSchemas, TCollectionKey>>(
     expandConfig: NewExpandConfig
   ) {
-    const newInstance = new GetOne<TSchemas, TCollectionKey, NewExpandConfig>(
+    const newInstance = new Create<TSchemas, TCollectionKey, NewExpandConfig>(
       this._pb,
       this.collectionKey
     )
 
-    newInstance._itemId = this._itemId
+    newInstance._data = this._data
     newInstance._expand = Object.keys(expandConfig).join(', ')
     newInstance._fields = ''
 
@@ -101,10 +103,10 @@ export class GetOne<
   }
 
   /**
-   * Executes the query and retrieves the specified record
-   * @returns Promise that resolves to the record with applied field selection and expansions
+   * Executes the create operation
+   * @returns Promise that resolves to the created record with applied field selection and expansions
    * @throws Error if collection key is not set
-   * @throws Error if item ID is not provided
+   * @throws Error if data is not provided
    */
   async execute() {
     if (!this.collectionKey) {
@@ -113,69 +115,67 @@ export class GetOne<
       )
     }
 
-    if (!this._itemId) {
-      throw new Error(
-        `Failed to retrieve record in collection "${this.collectionKey}". Item ID is required. Use .id() method to set the ID.`
-      )
+    if (Object.keys(this._data).length === 0) {
+      throw new Error('Data is required. Use .data() method to set the data.')
     }
 
-    const result = this._pb
+    const result = await this._pb
       .collection(getFinalCollectionName(this.collectionKey))
-      .getOne(this._itemId, {
+      .create(this._data, {
         expand: this._expand,
-        fields: this._fields
+        fields: this._fields,
+        requestKey: null
       })
 
     PBLogger.debug(
-      `${chalk.hex('#82c8e5').bold('getOne')} Fetched record with ID ${chalk
+      `${chalk.hex('#2ed573').bold('create')} Created record with ID ${chalk
         .hex('#34ace0')
-        .bold(
-          this._itemId
-        )} from ${chalk.hex('#34ace0').bold(this.collectionKey)}`
+        .bold(result.id)} in ${chalk.hex('#34ace0').bold(this.collectionKey)}`
     )
 
-    return result as ReturnType<
-      IGetOne<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
+    return result as Awaited<
+      ReturnType<
+        ICreate<TSchemas, TCollectionKey, TExpandConfig, TFields>['execute']
+      >
     >
   }
 }
 
 /**
- * Factory function for creating GetOne instances
+ * Factory function for creating Create instances
  * @param pb - The PocketBase instance
  * @returns Object with collection method for specifying the target collection
  * @example
  * ```typescript
- * const user = await getOne(pb)
+ * const result = await create(pb)
  *   .collection('users')
- *   .id('record_id_123')
- *   .fields({ name: true, email: true })
+ *   .data({ name: 'John', email: 'john@example.com' })
  *   .execute()
  * ```
  */
-const getOne = <TSchemas extends CleanedSchemas>(
+const create = <TSchemas extends CleanedSchemas>(
   pb: PocketBase,
   module: { id: string }
-): IGetOneFactory<TSchemas> => ({
+): ICreateFactory<TSchemas> => ({
   /**
-   * Specifies the collection to retrieve a record from
+   * Specifies the collection to create records in
    * @template TCollectionKey - The collection key type
    * @param collection - The collection key
-   * @returns A new GetOne instance for the specified collection
+   * @returns A new Create instance for the specified collection
    */
   collection: <TCollectionKey extends CollectionKey<TSchemas>>(
     collection: TCollectionKey
   ) => {
     const finalCollectionName = toPocketBaseCollectionName(
-      collection,
+      collection as string,
       module.id
     )
 
-    return new GetOne<TSchemas, TCollectionKey>(
+    return new Create<TSchemas, TCollectionKey>(
       pb,
       finalCollectionName as TCollectionKey
     )
   }
 })
 
-export default getOne
+export default create

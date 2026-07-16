@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase'
 
-import { CleanedSchemas } from '../../utils/schemaUtils'
+import { CleanedSchemas } from '../utils/schemaUtils'
 import {
   AllPossibleFieldsForFilter,
   CollectionKey,
@@ -312,7 +312,7 @@ export interface IDeleteFactory<TSchemas extends CleanedSchemas> {
 
 // ==================== PBService Interface ====================
 
-export default interface IPBService<TSchemas extends CleanedSchemas> {
+export interface IPBService<TSchemas extends CleanedSchemas> {
   instance: PocketBase
 
   readonly getFullList: IGetFullListFactory<TSchemas>

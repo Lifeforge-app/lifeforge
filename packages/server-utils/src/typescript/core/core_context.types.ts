@@ -4,9 +4,11 @@ import z from 'zod'
 
 import type { Logger } from '@lifeforge/log'
 
-import { CleanedSchemas } from '../../utils/schemaUtils'
-import IPBService from '../pb/PBService.interface'
-import { CollectionKey } from '../pb/pb_service.types'
+import {
+  type CleanedSchemas,
+  type IPBService,
+  type CollectionKey
+} from '@lifeforge/pocketbase'
 import { ITempFileManagerConstructor } from './tempfile_manager.types'
 
 export type FetchAIFunc = <

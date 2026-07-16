@@ -1,7 +1,7 @@
 import {
   connectToPocketBase,
   validateEnvironmentVariables
-} from '@functions/database/dbUtils'
+} from '@lifeforge/pocketbase'
 import dayjs from 'dayjs'
 import z from 'zod'
 

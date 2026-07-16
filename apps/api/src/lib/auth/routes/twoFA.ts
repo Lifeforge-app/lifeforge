@@ -2,7 +2,7 @@ import { decrypt, encrypt } from '@functions/auth/encryption'
 import {
   connectToPocketBase,
   validateEnvironmentVariables
-} from '@functions/database/dbUtils'
+} from '@lifeforge/pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
 import z from 'zod'

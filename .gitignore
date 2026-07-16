@@ -20,6 +20,7 @@ storybook-static
 !eslint.config.js
 *.tsbuildinfo
 pocketbase
+!packages/pocketbase
 pb_*/
 medium
 .temp

@@ -11,7 +11,7 @@ import {
   encrypt2
 } from '@functions/auth/encryption'
 import { createCache } from '@functions/cache'
-import { checkExistence, getAPIKey } from '@functions/database'
+import getAPIKeyFactory from '@functions/database/getAPIKey';
 import fetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'
@@ -26,7 +26,8 @@ import {
 import TempFileManager from '@functions/utils/tempFileManager'
 
 import { type Logger, createLogger } from '@lifeforge/log'
-import { CoreContext, IPBService } from '@lifeforge/server-utils'
+import { IPBService, checkExistence } from '@lifeforge/pocketbase'
+import { CoreContext } from '@lifeforge/server-utils'
 
 const loggerCache = createCache<Logger>('loggers')
 
@@ -56,7 +57,7 @@ export function createCoreContext({
     api: {
       fetchAI,
       searchLocations,
-      getAPIKey: getAPIKey(pb, module)
+      getAPIKey: getAPIKeyFactory(pb, module)
     },
     tempFile: TempFileManager,
     validation: {

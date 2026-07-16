@@ -1,14 +1,15 @@
-import { getAPIKey } from '@functions/database'
-import { validateCallerAccess } from '@functions/database/getAPIKey'
+import getAPIKeyFactory, {
+  validateCallerAccess
+} from '@functions/database/getAPIKey'
 import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
 import OpenAI from 'openai'
 import z from 'zod'
 
+import { IPBService } from '@lifeforge/pocketbase'
 import {
   ClientError,
   FetchAIFunc,
-  IPBService,
   getCallerModuleId
 } from '@lifeforge/server-utils'
 
@@ -55,7 +56,7 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
   if (aiProvider.requireAPIKey) {
     await validateCallerAccess(callerModule, provider)
 
-    const fetchedKey = await getAPIKey(pb, callerModule)(provider)
+    const fetchedKey = await getAPIKeyFactory(pb, callerModule)(provider)
 
     if (!fetchedKey) {
       throw new ClientError(`API key for ${provider} not found.`)

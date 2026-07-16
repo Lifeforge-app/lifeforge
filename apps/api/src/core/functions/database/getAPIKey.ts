@@ -5,9 +5,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { IPBService } from '@lifeforge/server-utils'
-
-import PBService from './PBService'
+import { IPBService, PBService } from '@lifeforge/pocketbase'
 
 const logger = createServiceLogger('API Key Vault')
 

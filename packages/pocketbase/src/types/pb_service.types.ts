@@ -1,6 +1,8 @@
 import { ZodArray, ZodObject, ZodType, z } from 'zod'
 
-import { CleanedSchemas } from '../../utils/schemaUtils'
+import { CleanedSchemas } from '../utils/schemaUtils'
+
+export type { CleanedSchemas }
 
 export type SchemaWithPB<T> = T & {
   id: string

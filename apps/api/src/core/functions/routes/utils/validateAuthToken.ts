@@ -1,6 +1,6 @@
 import { createCache } from '@functions/cache'
-import { PBService } from '@functions/database'
-import { connectToPocketBase, validateEnvironmentVariables } from '@functions/database/dbUtils'
+import { PBService } from '@lifeforge/pocketbase'
+import { connectToPocketBase, validateEnvironmentVariables } from '@lifeforge/pocketbase'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import Pocketbase from 'pocketbase'
