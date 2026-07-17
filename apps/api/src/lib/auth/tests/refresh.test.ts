@@ -1,6 +1,6 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
 import { expectNo2FA, extractCookies, forgeAPI, unwrap } from '@tests/utils'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 let email = ''
 let password = ''
@@ -16,9 +16,9 @@ function creds() {
 }
 
 function loginAndCookies() {
-  return forgeAPI.auth.login.mutateRaw(creds(), { raw: true }).then(res =>
-    extractCookies(res.headers['set-cookie'])
-  )
+  return forgeAPI.auth.login
+    .mutateRaw(creds(), { raw: true })
+    .then(res => extractCookies(res.headers['set-cookie']))
 }
 
 afterAll(cleanupTestTokens)
@@ -27,10 +27,10 @@ describe('POST /auth/refresh', () => {
   it('returns 200 with new accessToken and cookie', async () => {
     const cookies = await loginAndCookies()
 
-    const res = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies } }
-    )
+    const res = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies }
+    })
     const data = unwrap(res)
 
     expect(res.status).toBe(200)
@@ -46,10 +46,10 @@ describe('POST /auth/refresh', () => {
   })
 
   it('returns 401 for an invalid cookie', async () => {
-    const res = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: 'refresh_token=somegarbage123456' } }
-    )
+    const res = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: 'refresh_token=somegarbage123456' }
+    })
 
     expect(res.status).toBe(401)
   })
@@ -57,17 +57,17 @@ describe('POST /auth/refresh', () => {
   it('old token is invalidated after rotation', async () => {
     const cookies = await loginAndCookies()
 
-    const refresh1 = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies } }
-    )
+    const refresh1 = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies }
+    })
 
     expect(refresh1.status).toBe(200)
 
-    const retry = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies } }
-    )
+    const retry = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies }
+    })
 
     expect(retry.status).toBe(401)
   })
@@ -75,10 +75,10 @@ describe('POST /auth/refresh', () => {
   it('new cookie from refresh is valid for subsequent requests', async () => {
     const cookies = await loginAndCookies()
 
-    const refresh = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies } }
-    )
+    const refresh = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies }
+    })
 
     expect(refresh.status).toBe(200)
   })
@@ -87,10 +87,10 @@ describe('POST /auth/refresh', () => {
     let cookies = await loginAndCookies()
 
     for (let i = 0; i < 3; i++) {
-      const refresh = await forgeAPI.auth.refresh.mutateRaw(
-        undefined,
-        { raw: true, headers: { Cookie: cookies } }
-      )
+      const refresh = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+        raw: true,
+        headers: { Cookie: cookies }
+      })
 
       expect(refresh.status).toBe(200)
       expect(unwrap(refresh).accessToken).toBeTruthy()
@@ -103,27 +103,24 @@ describe('POST /auth/refresh', () => {
   it('replay detection: rotated token triggers family revocation', async () => {
     const cookies = await loginAndCookies()
 
-    const refresh1 = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies } }
-    )
+    const refresh1 = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies }
+    })
 
     expect(refresh1.status).toBe(200)
 
-    const oldReplay = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies } }
-    )
+    const oldReplay = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies }
+    })
 
     expect(oldReplay.status).toBe(401)
 
-    const activeFail = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      {
-        raw: true,
-        headers: { Cookie: extractCookies(refresh1.headers['set-cookie']) }
-      }
-    )
+    const activeFail = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: extractCookies(refresh1.headers['set-cookie']) }
+    })
 
     expect(activeFail.status).toBe(401)
   })
@@ -131,11 +128,13 @@ describe('POST /auth/refresh', () => {
   it('access token changes on each refresh', async () => {
     const cookies = await loginAndCookies()
 
-    const loginToken = (await forgeAPI.auth.login.mutateRaw(creds(), { raw: true }))
-    const refresh = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies } }
-    )
+    const loginToken = await forgeAPI.auth.login.mutateRaw(creds(), {
+      raw: true
+    })
+    const refresh = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies }
+    })
 
     expect(unwrap(refresh).accessToken).not.toBe(
       expectNo2FA(unwrap(loginToken)).accessToken

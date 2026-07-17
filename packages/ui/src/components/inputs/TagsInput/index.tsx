@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 
+import { TagChip } from '@/components/display'
 import { Flex } from '@/components/primitives'
 
 import { TextInputBox } from '../TextInput/components/TextInputBox'
@@ -10,7 +11,6 @@ import { InputLabel } from '../shared/components/InputLabel'
 import { InputWrapper } from '../shared/components/InputWrapper'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
-import { TagChip } from '@/components/display';
 
 /**
  * Props for the TagsInput component.

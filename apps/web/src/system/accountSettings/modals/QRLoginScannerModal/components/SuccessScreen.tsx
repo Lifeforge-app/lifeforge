@@ -30,7 +30,7 @@ function SuccessScreen({
         <Icon color="green-500" icon="tabler:check" size="2.25em" />
       </Flex>
 
-      <Text size="xl" mt="lg" weight="medium">
+      <Text mt="lg" size="xl" weight="medium">
         {t('qrLogin.success')}
       </Text>
       {browserInfo && (
@@ -47,7 +47,7 @@ function SuccessScreen({
         width="100%"
         onClick={onClose}
       >
-     proceed
+        proceed
       </Button>
     </Stack>
   )

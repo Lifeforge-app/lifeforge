@@ -1,8 +1,9 @@
+import z from 'zod'
+
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@lifeforge/pocketbase'
-import z from 'zod'
 
 import { getCookieOptions } from '../constants/cookie'
 import forge from '../forge'

@@ -54,12 +54,7 @@ type TextTransform = 'uppercase' | 'lowercase' | 'capitalize' | 'none'
 type TextWrap = 'wrap' | 'nowrap' | 'pretty' | 'balance'
 
 type TextWhiteSpace =
-  | 'normal'
-  | 'nowrap'
-  | 'pre'
-  | 'pre-line'
-  | 'pre-wrap'
-  | 'break-spaces'
+  'normal' | 'nowrap' | 'pre' | 'pre-line' | 'pre-wrap' | 'break-spaces'
 
 type TextWordBreak = 'normal' | 'break-all' | 'keep-all'
 

@@ -694,15 +694,15 @@ return (
 
 **`uiConfig` old → new mapping:**
 
-| Old `defineForm` arg | New `uiConfig` prop         | Notes                                                                                 |
-| -------------------- | --------------------------- | ------------------------------------------------------------------------------------- |
-| `icon`               | `icon`                      | Same                                                                                  |
+| Old `defineForm` arg | New `uiConfig` prop         | Notes                                                                                                                                                                                                                              |
+| -------------------- | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `icon`               | `icon`                      | Same                                                                                                                                                                                                                               |
 | `title`              | `title`                     | `modals.` prefix is **auto-prepended** by `FormModal` - do NOT include `modals.` in the title string. E.g. use `title: 'category.create'` (not `'modals.category.create'`). Final locale key resolved to `modals.category.create`. |
-| `namespace`          | `namespace`                 | Same                                                                                  |
-| `loading`            | `loading`                   | Same                                                                                  |
-| `onClose`            | `onClose`                   | Same                                                                                  |
-| `actionButton`       | `headerActions`             | `actionButton` was an object, `headerActions` is `React.ReactNode` - wrap in a Button |
-| `submitButton`       | (now in `submissionConfig`) | See below                                                                             |
+| `namespace`          | `namespace`                 | Same                                                                                                                                                                                                                               |
+| `loading`            | `loading`                   | Same                                                                                                                                                                                                                               |
+| `onClose`            | `onClose`                   | Same                                                                                                                                                                                                                               |
+| `actionButton`       | `headerActions`             | `actionButton` was an object, `headerActions` is `React.ReactNode` - wrap in a Button                                                                                                                                              |
+| `submitButton`       | (now in `submissionConfig`) | See below                                                                                                                                                                                                                          |
 
 **`submissionConfig` mapping:**
 

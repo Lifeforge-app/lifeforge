@@ -94,6 +94,7 @@ Typography values scale with `--custom-font-scale`:
 For dynamic category labels or tag chips that need background colors based on data (not theme tokens), use **inline `style` with `backgroundColor`** set directly from the data source. Do NOT create `.css.ts` files for one-off dynamic colors - inline styles are the correct pattern here because the color value is computed at runtime from external data.
 
 ✅ **Correct (dynamic colors from data):**
+
 ```tsx
 <span
   style={{
@@ -554,7 +555,8 @@ type IconProps = Omit<TextProps, 'size'> & {
 
 ```tsx
 <Flex align="center" gap="sm">
-  <Icon color="primary" icon="tabler:settings" />   {/* Size defaults to 1.25em */}
+  <Icon color="primary" icon="tabler:settings" />{' '}
+  {/* Size defaults to 1.25em */}
   <Text>Settings</Text>
 </Flex>
 ```
@@ -653,17 +655,10 @@ Applies CSS transitions to a wrapped component utilizing the `asChild` compositi
 interface TransitionProps {
   duration?: number | string // e.g. 200, '300ms', '0.2s'. Defaults to '100ms'
   easing?:
-    | 'linear'
-    | 'ease'
-    | 'ease-in'
-    | 'ease-out'
-    | 'ease-in-out'
-    | (string & {})
+    'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | (string & {})
   delay?: number | string
   property?:
-    | PropertyValue
-    | TransitionEntry
-    | Array<PropertyValue | TransitionEntry>
+    PropertyValue | TransitionEntry | Array<PropertyValue | TransitionEntry>
 }
 ```
 

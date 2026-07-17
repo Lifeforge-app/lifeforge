@@ -122,6 +122,7 @@ if (isClientError(err)) { ... }
 ```
 
 This means:
+
 - `ClientError` stays in `@lifeforge/server-utils` for all other throwers (parseQuery,
   parsePayload, checkRecordExistence, decryptPayload, ai/index.ts, modrinth)
 - `delete.ts` gets its own inline definition, not exported from the barrel
@@ -134,29 +135,29 @@ This means:
 
 ### From `packages/server-utils/` → `packages/pocketbase/`
 
-| Source | Destination |
-|---|---|
-| `src/typescript/pb/pb_service.types.ts` | `src/types/pb_service.types.ts` |
-| `src/typescript/pb/PBService.interface.ts` | `src/types/service.interface.ts` |
-| `src/utils/schemaUtils.ts` | `src/utils/schemaUtils.ts` |
-| `src/utils/parseCollectionName.ts` | `src/utils/parseCollectionName.ts` |
+| Source                                     | Destination                        |
+| ------------------------------------------ | ---------------------------------- |
+| `src/typescript/pb/pb_service.types.ts`    | `src/types/pb_service.types.ts`    |
+| `src/typescript/pb/PBService.interface.ts` | `src/types/service.interface.ts`   |
+| `src/utils/schemaUtils.ts`                 | `src/utils/schemaUtils.ts`         |
+| `src/utils/parseCollectionName.ts`         | `src/utils/parseCollectionName.ts` |
 
 ### From `apps/api/` → `packages/pocketbase/`
 
-| Source | Destination |
-|---|---|
-| `src/core/functions/database/PBService/index.ts` | `src/PBService/index.ts` |
-| `src/core/functions/database/PBService/services/create.ts` | `src/PBService/services/create.ts` |
-| `src/core/functions/database/PBService/services/update.ts` | `src/PBService/services/update.ts` |
-| `src/core/functions/database/PBService/services/delete.ts` | `src/PBService/services/delete.ts` |
-| `src/core/functions/database/PBService/services/getOne.ts` | `src/PBService/services/getOne.ts` |
-| `src/core/functions/database/PBService/services/getList.ts` | `src/PBService/services/getList.ts` |
-| `src/core/functions/database/PBService/services/getFullList.ts` | `src/PBService/services/getFullList.ts` |
-| `src/core/functions/database/PBService/services/getFirstListItem.ts` | `src/PBService/services/getFirstListItem.ts` |
+| Source                                                                      | Destination                                         |
+| --------------------------------------------------------------------------- | --------------------------------------------------- |
+| `src/core/functions/database/PBService/index.ts`                            | `src/PBService/index.ts`                            |
+| `src/core/functions/database/PBService/services/create.ts`                  | `src/PBService/services/create.ts`                  |
+| `src/core/functions/database/PBService/services/update.ts`                  | `src/PBService/services/update.ts`                  |
+| `src/core/functions/database/PBService/services/delete.ts`                  | `src/PBService/services/delete.ts`                  |
+| `src/core/functions/database/PBService/services/getOne.ts`                  | `src/PBService/services/getOne.ts`                  |
+| `src/core/functions/database/PBService/services/getList.ts`                 | `src/PBService/services/getList.ts`                 |
+| `src/core/functions/database/PBService/services/getFullList.ts`             | `src/PBService/services/getFullList.ts`             |
+| `src/core/functions/database/PBService/services/getFirstListItem.ts`        | `src/PBService/services/getFirstListItem.ts`        |
 | `src/core/functions/database/PBService/utils/recursivelyConstructFilter.ts` | `src/PBService/utils/recursivelyConstructFilter.ts` |
-| `src/core/functions/database/PBService/utils/getFinalCollectionName.ts` | `src/PBService/utils/getFinalCollectionName.ts` |
-| `src/core/functions/database/dbUtils.ts` | `src/dbUtils.ts` |
-| `src/core/functions/database/validation.ts` | `src/validation.ts` |
+| `src/core/functions/database/PBService/utils/getFinalCollectionName.ts`     | `src/PBService/utils/getFinalCollectionName.ts`     |
+| `src/core/functions/database/dbUtils.ts`                                    | `src/dbUtils.ts`                                    |
+| `src/core/functions/database/validation.ts`                                 | `src/validation.ts`                                 |
 
 **Total: 16 files moved.**
 
@@ -220,23 +221,21 @@ server build scripts need it added to the externals list:
 "build:server": "bun build ./server/index.ts --outdir ./server/dist --target bun --external @lifeforge/server-utils --external @lifeforge/pocketbase --external zod"
 ```
 
-
-
 ---
 
 ## Import Updates
 
 ### `packages/server-utils/` (internal - relative imports become package imports)
 
-| File | Old Import | New Import |
-|---|---|---|
-| `src/routes/forgeContract.ts` | `'../typescript/pb/pb_service.types'` | `'@lifeforge/pocketbase'` |
-| `src/routes/forgeContract.ts` | `'../typescript/pb/PBService.interface'` | `'@lifeforge/pocketbase'` |
-| `src/routes/forgeContract.ts` | `'../utils/schemaUtils'` | `'@lifeforge/pocketbase'` |
-| `src/typescript/core/forge_contract.types.ts` | `'./core_context.types'` | *(indirect, via CoreContext)* |
-| `src/typescript/core/core_context.types.ts` | `'../pb/PBService.interface'` | `'@lifeforge/pocketbase'` |
-| `src/typescript/core/core_context.types.ts` | `'../pb/pb_service.types'` | `'@lifeforge/pocketbase'` |
-| `src/typescript/core/core_context.types.ts` | `'../../utils/schemaUtils'` | `'@lifeforge/pocketbase'` |
+| File                                          | Old Import                               | New Import                    |
+| --------------------------------------------- | ---------------------------------------- | ----------------------------- |
+| `src/routes/forgeContract.ts`                 | `'../typescript/pb/pb_service.types'`    | `'@lifeforge/pocketbase'`     |
+| `src/routes/forgeContract.ts`                 | `'../typescript/pb/PBService.interface'` | `'@lifeforge/pocketbase'`     |
+| `src/routes/forgeContract.ts`                 | `'../utils/schemaUtils'`                 | `'@lifeforge/pocketbase'`     |
+| `src/typescript/core/forge_contract.types.ts` | `'./core_context.types'`                 | _(indirect, via CoreContext)_ |
+| `src/typescript/core/core_context.types.ts`   | `'../pb/PBService.interface'`            | `'@lifeforge/pocketbase'`     |
+| `src/typescript/core/core_context.types.ts`   | `'../pb/pb_service.types'`               | `'@lifeforge/pocketbase'`     |
+| `src/typescript/core/core_context.types.ts`   | `'../../utils/schemaUtils'`              | `'@lifeforge/pocketbase'`     |
 
 ### `packages/server-utils/src/index.ts` - removed exports
 
@@ -257,15 +256,15 @@ from `server-utils` (they've been moved, not copied).
 
 ### `apps/api/` - consumers of `@functions/database`
 
-| File | Old Import | New Import |
-|---|---|---|
-| `src/lib/auth/constants/pb.ts` | `@functions/database` | `@lifeforge/pocketbase` |
-| `src/core/functions/routes/utils/validateAuthToken.ts` | `@functions/database` | `@lifeforge/pocketbase` |
-| `src/core/functions/routes/utils/checkRecordExistence.ts` | `@functions/database` | `@lifeforge/pocketbase` |
-| `src/core/functions/routes/utils/coreContext.ts` | `@functions/database` (for `IPBService`) | `@lifeforge/pocketbase` |
-| `src/core/functions/external/ai/index.ts` | `@functions/database` (for `IPBService`) | `@lifeforge/pocketbase` |
-| `src/express.d.ts` | `@functions/database` (for `PBService`) | `@lifeforge/pocketbase` |
-| `src/lib/auth/...` (any other consumer) | `@functions/database` | `@lifeforge/pocketbase` |
+| File                                                      | Old Import                               | New Import              |
+| --------------------------------------------------------- | ---------------------------------------- | ----------------------- |
+| `src/lib/auth/constants/pb.ts`                            | `@functions/database`                    | `@lifeforge/pocketbase` |
+| `src/core/functions/routes/utils/validateAuthToken.ts`    | `@functions/database`                    | `@lifeforge/pocketbase` |
+| `src/core/functions/routes/utils/checkRecordExistence.ts` | `@functions/database`                    | `@lifeforge/pocketbase` |
+| `src/core/functions/routes/utils/coreContext.ts`          | `@functions/database` (for `IPBService`) | `@lifeforge/pocketbase` |
+| `src/core/functions/external/ai/index.ts`                 | `@functions/database` (for `IPBService`) | `@lifeforge/pocketbase` |
+| `src/express.d.ts`                                        | `@functions/database` (for `PBService`)  | `@lifeforge/pocketbase` |
+| `src/lib/auth/...` (any other consumer)                   | `@functions/database`                    | `@lifeforge/pocketbase` |
 
 The `@functions/database` barrel is removed (or shrunk to re-export nothing, since
 all files moved to `@lifeforge/pocketbase`).
@@ -274,13 +273,13 @@ all files moved to `@lifeforge/pocketbase`).
 
 Approximately **37 files** need import updates. These break down into:
 
-| Pattern | Count | Old Import | New Import |
-|---|---|---|---|
-| `createForge(schema)` (in `forge.ts`) | ~22 | N/A - `createForge` stays in `server-utils` | No change |
-| `cleanSchemas(schemas)` (in `schema.ts`) | ~15 | `'@lifeforge/server-utils'` | `'@lifeforge/pocketbase'` |
-| `import type { IPBService }` (in routes/utils) | ~7 | `'@lifeforge/server-utils'` | `'@lifeforge/pocketbase'` |
-| `schemaWithPB` (in routes) | ~2 | `'@lifeforge/server-utils'` | `'@lifeforge/pocketbase'` |
-| `forgeRouter`, `writeContractFileToClient` | ~20 | `'@lifeforge/server-utils'` (same import line as PB) | Split import: these from `server-utils`, PB types from `pocketbase` |
+| Pattern                                        | Count | Old Import                                           | New Import                                                          |
+| ---------------------------------------------- | ----- | ---------------------------------------------------- | ------------------------------------------------------------------- |
+| `createForge(schema)` (in `forge.ts`)          | ~22   | N/A - `createForge` stays in `server-utils`          | No change                                                           |
+| `cleanSchemas(schemas)` (in `schema.ts`)       | ~15   | `'@lifeforge/server-utils'`                          | `'@lifeforge/pocketbase'`                                           |
+| `import type { IPBService }` (in routes/utils) | ~7    | `'@lifeforge/server-utils'`                          | `'@lifeforge/pocketbase'`                                           |
+| `schemaWithPB` (in routes)                     | ~2    | `'@lifeforge/server-utils'`                          | `'@lifeforge/pocketbase'`                                           |
+| `forgeRouter`, `writeContractFileToClient`     | ~20   | `'@lifeforge/server-utils'` (same import line as PB) | Split import: these from `server-utils`, PB types from `pocketbase` |
 
 Example of a split import in modules:
 
@@ -338,13 +337,13 @@ The barrel file at `apps/api/src/core/functions/database/index.ts` is removed en
 
 ## What Stays in `apps/api`
 
-| File | Reason |
-|---|---|
+| File                                       | Reason                                                                      |
+| ------------------------------------------ | --------------------------------------------------------------------------- |
 | `src/core/functions/database/getAPIKey.ts` | Uses app-specific constants (`ROOT_DIR`, `decrypt2` from `@functions/auth`) |
-| `src/core/functions/auth/encryption.ts` | Crypto utilities - not PB-related |
-| `src/core/functions/cache/index.ts` | `createCache` helper - no PB dependency |
-| `src/core/functions/logging/index.ts` | `createServiceLogger` - from `@lifeforge/log` |
-| `src/lib/user/` | User management - not PB infrastructure |
+| `src/core/functions/auth/encryption.ts`    | Crypto utilities - not PB-related                                           |
+| `src/core/functions/cache/index.ts`        | `createCache` helper - no PB dependency                                     |
+| `src/core/functions/logging/index.ts`      | `createServiceLogger` - from `@lifeforge/log`                               |
+| `src/lib/user/`                            | User management - not PB infrastructure                                     |
 
 ---
 
@@ -386,10 +385,10 @@ The barrel file at `apps/api/src/core/functions/database/index.ts` is removed en
 
 ### Cycle check
 
-| Path | Cycle? |
-|---|---|
-| `server-utils` → `file-storage` → `pocketbase` ← `server-utils` | No (diamond, not cycle) |
-| `pocketbase` → anything | No zero internal deps (no `@lifeforge/*` deps besides itself) |
+| Path                                                            | Cycle?                                                        |
+| --------------------------------------------------------------- | ------------------------------------------------------------- |
+| `server-utils` → `file-storage` → `pocketbase` ← `server-utils` | No (diamond, not cycle)                                       |
+| `pocketbase` → anything                                         | No zero internal deps (no `@lifeforge/*` deps besides itself) |
 
 ---
 
@@ -460,7 +459,7 @@ Three options:
 Recommended: **Option 2** (reimplement the thin wrapper). `createServiceLogger` is just:
 
 ```typescript
-import { createLogger, Logger } from '@lifeforge/log'
+import { Logger, createLogger } from '@lifeforge/log'
 
 export function createServiceLogger(name: string): Logger {
   return createLogger({ name, type: 'service' })
@@ -473,31 +472,31 @@ This can live in `packages/pocketbase/src/utils/logger.ts`.
 
 ## File Changes Summary
 
-| File | Action | Description |
-|---|---|---|
-| `packages/pocketbase/` | **Create** | New package with 16 source files |
-| `packages/pocketbase/package.json` | **Create** | Deps: pocketbase, @lifeforge/log, lodash, chalk, node-cache |
-| `packages/server-utils/package.json` | **Edit** | Add `"@lifeforge/pocketbase": "workspace:*"`; remove `pocketbase` peerDep |
-| `apps/api/package.json` | **Edit** | Add `"@lifeforge/pocketbase": "workspace:*"` |
-| `apps/api/vite.config.ts` | **Edit** | Externalize `@lifeforge/pocketbase` and `@lifeforge/server-utils` |
-| ~22 modules `package.json` | **Edit** | Add `--external @lifeforge/pocketbase` to `build:server` scripts |
-| `packages/server-utils/src/typescript/pb/` | **Delete** | 2 files moved to pocketbase |
-| `packages/server-utils/src/utils/schemaUtils.ts` | **Delete** | Moved to pocketbase |
-| `packages/server-utils/src/utils/parseCollectionName.ts` | **Delete** | Moved to pocketbase |
-| `packages/server-utils/src/routes/ClientError.ts` | **Keep** | Stays - used by other throwers |
-| `packages/server-utils/src/index.ts` | **Edit** | Remove PB exports (lines 9-14, 18, 22-57); keep ClientError (line 1) |
-| `packages/server-utils/src/routes/forgeContract.ts` | **Edit** | Update 3 imports to `@lifeforge/pocketbase` |
-| `packages/server-utils/src/typescript/core/core_context.types.ts` | **Edit** | Update 3 imports to `@lifeforge/pocketbase` |
-| `apps/api/src/core/functions/database/` | **Delete** | PBService, dbUtils, validation, barrel (all moved) |
-| `apps/api/src/core/functions/routes/functions/controllerLogic.ts` | **Edit** | Duck-type `isClientError` instead of `instanceof` |
-| `apps/api/src/lib/auth/constants/pb.ts` | **Edit** | `@functions/database` → `@lifeforge/pocketbase` |
-| `apps/api/src/core/functions/routes/utils/validateAuthToken.ts` | **Edit** | `@functions/database` → `@lifeforge/pocketbase` |
-| `apps/api/src/core/functions/routes/utils/checkRecordExistence.ts` | **Edit** | `@functions/database` → `@lifeforge/pocketbase` |
-| `apps/api/src/core/functions/routes/utils/coreContext.ts` | **Edit** | `@functions/database` → `@lifeforge/pocketbase` |
-| `apps/api/src/core/functions/external/ai/index.ts` | **Edit** | `@functions/database` → `@lifeforge/pocketbase` |
-| `apps/api/src/express.d.ts` | **Edit** | `@functions/database` → `@lifeforge/pocketbase` |
-| `apps/api/src/core/functions/database/getAPIKey.ts` | **Edit** | Update internal PBService import |
-| ~15 modules `schema.ts` files | **Edit** | `cleanSchemas` → `@lifeforge/pocketbase` |
-| ~7 modules route/util files | **Edit** | `IPBService` → `@lifeforge/pocketbase` |
-| ~2 modules route files | **Edit** | `schemaWithPB` → `@lifeforge/pocketbase` |
-| ~15 modules with split imports | **Edit** | Split PB + server-utils imports into two lines |
+| File                                                               | Action     | Description                                                               |
+| ------------------------------------------------------------------ | ---------- | ------------------------------------------------------------------------- |
+| `packages/pocketbase/`                                             | **Create** | New package with 16 source files                                          |
+| `packages/pocketbase/package.json`                                 | **Create** | Deps: pocketbase, @lifeforge/log, lodash, chalk, node-cache               |
+| `packages/server-utils/package.json`                               | **Edit**   | Add `"@lifeforge/pocketbase": "workspace:*"`; remove `pocketbase` peerDep |
+| `apps/api/package.json`                                            | **Edit**   | Add `"@lifeforge/pocketbase": "workspace:*"`                              |
+| `apps/api/vite.config.ts`                                          | **Edit**   | Externalize `@lifeforge/pocketbase` and `@lifeforge/server-utils`         |
+| ~22 modules `package.json`                                         | **Edit**   | Add `--external @lifeforge/pocketbase` to `build:server` scripts          |
+| `packages/server-utils/src/typescript/pb/`                         | **Delete** | 2 files moved to pocketbase                                               |
+| `packages/server-utils/src/utils/schemaUtils.ts`                   | **Delete** | Moved to pocketbase                                                       |
+| `packages/server-utils/src/utils/parseCollectionName.ts`           | **Delete** | Moved to pocketbase                                                       |
+| `packages/server-utils/src/routes/ClientError.ts`                  | **Keep**   | Stays - used by other throwers                                            |
+| `packages/server-utils/src/index.ts`                               | **Edit**   | Remove PB exports (lines 9-14, 18, 22-57); keep ClientError (line 1)      |
+| `packages/server-utils/src/routes/forgeContract.ts`                | **Edit**   | Update 3 imports to `@lifeforge/pocketbase`                               |
+| `packages/server-utils/src/typescript/core/core_context.types.ts`  | **Edit**   | Update 3 imports to `@lifeforge/pocketbase`                               |
+| `apps/api/src/core/functions/database/`                            | **Delete** | PBService, dbUtils, validation, barrel (all moved)                        |
+| `apps/api/src/core/functions/routes/functions/controllerLogic.ts`  | **Edit**   | Duck-type `isClientError` instead of `instanceof`                         |
+| `apps/api/src/lib/auth/constants/pb.ts`                            | **Edit**   | `@functions/database` → `@lifeforge/pocketbase`                           |
+| `apps/api/src/core/functions/routes/utils/validateAuthToken.ts`    | **Edit**   | `@functions/database` → `@lifeforge/pocketbase`                           |
+| `apps/api/src/core/functions/routes/utils/checkRecordExistence.ts` | **Edit**   | `@functions/database` → `@lifeforge/pocketbase`                           |
+| `apps/api/src/core/functions/routes/utils/coreContext.ts`          | **Edit**   | `@functions/database` → `@lifeforge/pocketbase`                           |
+| `apps/api/src/core/functions/external/ai/index.ts`                 | **Edit**   | `@functions/database` → `@lifeforge/pocketbase`                           |
+| `apps/api/src/express.d.ts`                                        | **Edit**   | `@functions/database` → `@lifeforge/pocketbase`                           |
+| `apps/api/src/core/functions/database/getAPIKey.ts`                | **Edit**   | Update internal PBService import                                          |
+| ~15 modules `schema.ts` files                                      | **Edit**   | `cleanSchemas` → `@lifeforge/pocketbase`                                  |
+| ~7 modules route/util files                                        | **Edit**   | `IPBService` → `@lifeforge/pocketbase`                                    |
+| ~2 modules route files                                             | **Edit**   | `schemaWithPB` → `@lifeforge/pocketbase`                                  |
+| ~15 modules with split imports                                     | **Edit**   | Split PB + server-utils imports into two lines                            |

@@ -56,7 +56,9 @@ export default function useFilter() {
     // Boolean toggles
     favourite: parseAsBoolean.withDefault(false),
     // Enum-based state
-    sort: parseAsStringEnum(['newest', 'oldest', 'name'] as const).withDefault('newest'),
+    sort: parseAsStringEnum(['newest', 'oldest', 'name'] as const).withDefault(
+      'newest'
+    ),
     view: parseAsStringEnum(['grid', 'list'] as const).withDefault('grid'),
     // Pagination
     page: parseAsInteger.withDefault(1)
@@ -95,14 +97,15 @@ Default values (`''`, `false`, `newest`, `grid`, `1`) are **omitted** from the U
 The hook lives alongside your data-fetching logic. The typical pattern:
 
 ```tsx
+// useList.ts - data fetching (consumes filter state)
+import { useQuery } from '@tanstack/react-query'
+
+import forgeAPI from '@/utils/forgeAPI'
+
 // useFilter.ts - URL state (no side effects)
 export default function useFilter() {
   // ... as shown above
 }
-
-// useList.ts - data fetching (consumes filter state)
-import { useQuery } from '@tanstack/react-query'
-import forgeAPI from '@/utils/forgeAPI'
 
 export function useList({
   searchQuery,
@@ -127,7 +130,10 @@ export default function BooksPage() {
 
   return (
     <>
-      <SearchInput value={filters.searchQuery} onChange={filters.setSearchQuery} />
+      <SearchInput
+        value={filters.searchQuery}
+        onChange={filters.setSearchQuery}
+      />
       <ListboxField
         value={filters.category}
         onChange={value => filters.updateFilter('category', value)}
@@ -152,7 +158,13 @@ Search inputs should be debounced before hitting the API to avoid firing a reque
 ```tsx
 import { useEffect, useState } from 'react'
 
-function SearchInput({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+function SearchInput({
+  value,
+  onChange
+}: {
+  value: string
+  onChange: (v: string) => void
+}) {
   const [local, setLocal] = useState(value)
 
   useEffect(() => {
@@ -213,7 +225,9 @@ TypeScript infers `string[]` from a plain array, which weakens autocomplete. Add
 
 ```tsx
 // ✅ Correct - type is '"newest" | "oldest" | "name"'
-sort: parseAsStringEnum(['newest', 'oldest', 'name'] as const).withDefault('newest')
+sort: parseAsStringEnum(['newest', 'oldest', 'name'] as const).withDefault(
+  'newest'
+)
 
 // ❌ Wrong - type is `string`
 sort: parseAsStringEnum(['newest', 'oldest', 'name']).withDefault('newest')
@@ -304,8 +318,14 @@ These patterns exist in the codebase but should **not** be replicated:
 
 ```tsx
 // ❌ DON'T - calendar module does this; no grouping, no updateFilter helper
-const [category, setCategory] = useQueryState('category', parseAsString.withDefault(''))
-const [calendar, setCalendar] = useQueryState('calendar', parseAsString.withDefault(''))
+const [category, setCategory] = useQueryState(
+  'category',
+  parseAsString.withDefault('')
+)
+const [calendar, setCalendar] = useQueryState(
+  'calendar',
+  parseAsString.withDefault('')
+)
 // ... as the list grows, the component destructuring becomes unwieldy
 ```
 

@@ -1,9 +1,9 @@
+import z from 'zod'
+
 import {
   connectToPocketBase,
   validateEnvironmentVariables
 } from '@lifeforge/pocketbase'
-import z from 'zod'
-
 import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'database')

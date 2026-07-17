@@ -2,7 +2,9 @@ import { ColorWithOpacity } from '../color-with-opacity'
 import { TAILWIND_PALETTE } from './tailwind-palette'
 
 type TailwindPaletteToken = {
-  [K in keyof typeof TAILWIND_PALETTE]: `${K & string}-${keyof (typeof TAILWIND_PALETTE)[K] & string}`
+  [
+    K in keyof typeof TAILWIND_PALETTE
+  ]: `${K & string}-${keyof (typeof TAILWIND_PALETTE)[K] & string}`
 }[keyof typeof TAILWIND_PALETTE]
 
 const BASE_COLORS = {
@@ -54,6 +56,4 @@ export const COLORS = {
 export type TokenizedColor = keyof typeof BASE_COLORS | TailwindPaletteToken
 
 export type ColorValue =
-  | keyof typeof BASE_COLORS
-  | TailwindPaletteToken
-  | ColorWithOpacity
+  keyof typeof BASE_COLORS | TailwindPaletteToken | ColorWithOpacity

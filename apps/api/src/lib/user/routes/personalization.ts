@@ -38,9 +38,7 @@ const googleFontItemSchema = z.object({
   ]),
   kind: z.literal('webfonts#webfont'),
   menu: z.string(),
-  colorCapabilities: z
-    .array(z.enum(['COLRv0', 'COLRv1', 'SVG']))
-    .optional()
+  colorCapabilities: z.array(z.enum(['COLRv0', 'COLRv1', 'SVG'])).optional()
 })
 
 type GoogleFontItem = z.infer<typeof googleFontItemSchema>
@@ -50,7 +48,9 @@ type GoogleFontResult = {
   items: GoogleFontItem[]
 }
 
-const fontCache = createCache<GoogleFontResult>('google-fonts', { stdTTL: 86400 })
+const fontCache = createCache<GoogleFontResult>('google-fonts', {
+  stdTTL: 86400
+})
 
 export const listGoogleFonts = forge
   .query({

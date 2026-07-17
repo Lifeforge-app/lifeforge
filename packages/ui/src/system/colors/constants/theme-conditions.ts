@@ -10,8 +10,7 @@ export type ThemeConditionPropName =
   | 'print'
 
 export type ThemeConditionProp<T> =
-  | T
-  | Partial<Record<ThemeConditionPropName, T>>
+  T | Partial<Record<ThemeConditionPropName, T>>
 
 export const THEME_CONDITIONS = {
   base: {

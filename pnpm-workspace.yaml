@@ -1,11 +1,11 @@
 packages:
-  - "./apps/api"
-  - "./apps/web"
-  - "./docs"
-  - "./packages/*"
-  - "./modules/*"
-  - "./locales/*"
-  - "./tools"
+  - './apps/api'
+  - './apps/web'
+  - './docs'
+  - './packages/*'
+  - './modules/*'
+  - './locales/*'
+  - './tools'
 
 allowBuilds:
   argon2: true

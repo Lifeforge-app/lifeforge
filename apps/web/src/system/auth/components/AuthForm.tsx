@@ -55,6 +55,7 @@ function AuthForm({ providers }: { providers: string[] }) {
       .then(res => {
         if (res === '2fa_required' || !res) {
           open(TwoFAModal, {})
+
           return
         }
 

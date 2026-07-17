@@ -310,7 +310,9 @@ describe('Cache service', () => {
     })
 
     it('expiryTime returns 0 for persistent key', () => {
-      const cache = createCache(nextNamespace('unlimited-expiry'), { stdTTL: 0 })
+      const cache = createCache(nextNamespace('unlimited-expiry'), {
+        stdTTL: 0
+      })
       cache.set('key', 'value')
       expect(cache.expiryTime('key')).toBe(0)
     })

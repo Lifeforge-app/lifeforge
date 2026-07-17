@@ -53,7 +53,6 @@ export function useAppRouter() {
       return loadingRouter
     }
 
-
     if (!auth) {
       return authRouter
     }

@@ -25,5 +25,10 @@
       "@core/*": ["../../core/*"]
     }
   },
-  "include": ["./src/**/*", "./vite.config.ts", "./contract.ts", "../../packages/localization/src/providers/I18nCommonNameSpacePreloadProvider.tsx"]
+  "include": [
+    "./src/**/*",
+    "./vite.config.ts",
+    "./contract.ts",
+    "../../packages/localization/src/providers/I18nCommonNameSpacePreloadProvider.tsx"
+  ]
 }

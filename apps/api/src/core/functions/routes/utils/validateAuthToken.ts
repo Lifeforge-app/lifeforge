@@ -1,13 +1,19 @@
 import { createCache } from '@functions/cache'
-import { PBService } from '@lifeforge/pocketbase'
-import { connectToPocketBase, validateEnvironmentVariables } from '@lifeforge/pocketbase'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import Pocketbase from 'pocketbase'
 
+import {
+  PBService,
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@lifeforge/pocketbase'
+
 const JWT_SECRET = process.env.JWT_SIGNING_KEY!
 
-const superUserPBCache = createCache<Pocketbase>('superuser-pb', { stdTTL: 3600 })
+const superUserPBCache = createCache<Pocketbase>('superuser-pb', {
+  stdTTL: 3600
+})
 
 async function getSuperUserPB(): Promise<Pocketbase> {
   const cached = superUserPBCache.get('instance')

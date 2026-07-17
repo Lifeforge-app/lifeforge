@@ -3,12 +3,12 @@ import { Server } from 'socket.io'
 import z from 'zod'
 
 import type { Logger } from '@lifeforge/log'
-
 import {
   type CleanedSchemas,
-  type IPBService,
-  type CollectionKey
+  type CollectionKey,
+  type IPBService
 } from '@lifeforge/pocketbase'
+
 import { ITempFileManagerConstructor } from './tempfile_manager.types'
 
 export type FetchAIFunc = <

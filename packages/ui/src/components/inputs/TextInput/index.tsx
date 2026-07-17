@@ -24,14 +24,7 @@ export type TextInputProps = {
   autoFocus?: boolean
   isPassword?: boolean
   inputMode?:
-    | 'text'
-    | 'none'
-    | 'tel'
-    | 'url'
-    | 'email'
-    | 'numeric'
-    | 'decimal'
-    | 'search'
+    'text' | 'none' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search'
   actionButtonProps?: React.ComponentProps<typeof Button>
   className?: string
   namespace?: string | false

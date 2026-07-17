@@ -9,4 +9,6 @@ interface PendingQRSession {
   userId: string
 }
 
-export const sessions = createCache<PendingQRSession>('qr-sessions-auth', { stdTTL: 300 })
+export const sessions = createCache<PendingQRSession>('qr-sessions-auth', {
+  stdTTL: 300
+})

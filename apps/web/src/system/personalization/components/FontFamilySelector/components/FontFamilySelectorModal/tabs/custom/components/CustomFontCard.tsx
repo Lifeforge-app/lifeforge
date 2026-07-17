@@ -20,9 +20,8 @@ import {
 
 import forgeAPI from '@/core/utils/forgeAPI'
 
-import { useFontFamilySelector } from '../../../contexts/FontFamilySelectorContext'
-
 import type { CustomFont } from '..'
+import { useFontFamilySelector } from '../../../contexts/FontFamilySelectorContext'
 import CustomFontUploadModal from './CustomFontUploadModal'
 
 function CustomFontCard({ font }: { font: CustomFont }) {

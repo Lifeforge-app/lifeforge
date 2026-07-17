@@ -10,12 +10,7 @@ import { Slot } from '../Slot'
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 type EasingValue =
-  | 'linear'
-  | 'ease'
-  | 'ease-in'
-  | 'ease-out'
-  | 'ease-in-out'
-  | (string & {})
+  'linear' | 'ease' | 'ease-in' | 'ease-out' | 'ease-in-out' | (string & {})
 
 type PropertyValue =
   | 'all'
@@ -59,9 +54,7 @@ interface TransitionProps extends Omit<
    * `TransitionEntry` object with per-property overrides.
    */
   property?:
-    | PropertyValue
-    | TransitionEntry
-    | Array<PropertyValue | TransitionEntry>
+    PropertyValue | TransitionEntry | Array<PropertyValue | TransitionEntry>
   children?: ReactNode
   className?: string
   style?: CSSProperties

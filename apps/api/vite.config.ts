@@ -18,7 +18,11 @@ export default defineConfig({
     minify: true,
     rollupOptions: {
       output: { entryFileNames: 'server.js' },
-      external: ['pocketbase', '@lifeforge/pocketbase', '@lifeforge/server-utils']
+      external: [
+        'pocketbase',
+        '@lifeforge/pocketbase',
+        '@lifeforge/server-utils'
+      ]
     }
   },
   define: {

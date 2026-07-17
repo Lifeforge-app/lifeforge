@@ -1,15 +1,11 @@
-import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
-import {
-  CleanedSchemas,
-  CollectionKey
-} from '../../types/pb_service.types'
-import {
-  IDelete,
-  IDeleteFactory
-} from '../../types/service.interface'
+import { PBLogger } from '..'
+import { toPocketBaseCollectionName } from '../../dbUtils'
+import { CleanedSchemas, CollectionKey } from '../../types/pb_service.types'
+import { IDelete, IDeleteFactory } from '../../types/service.interface'
+import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 class ClientError extends Error {
   code: number
@@ -19,9 +15,6 @@ class ClientError extends Error {
     this.code = code
   }
 }
-
-import { PBLogger } from '..'
-import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
  * Class for deleting records from PocketBase collections with type safety

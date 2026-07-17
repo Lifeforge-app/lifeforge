@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { useTranslation } from 'react-i18next'
 import { AutoSizer } from 'react-virtualized'
 
 import {
@@ -44,8 +43,8 @@ function CustomFontSelector() {
       <Button
         icon="tabler:upload"
         mb="sm"
-        width="100%"
         namespace="common.personalization"
+        width="100%"
         onClick={handleUploadClick}
       >
         fontFamily.buttons.uploadButton

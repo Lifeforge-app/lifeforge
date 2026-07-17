@@ -1,5 +1,5 @@
-import AvatarColumn from './components/AvatarColumn'
 import OrdinaryColumn from '../../components/OrdinaryColumn'
+import AvatarColumn from './components/AvatarColumn'
 
 function PersonalInfoTab() {
   return (

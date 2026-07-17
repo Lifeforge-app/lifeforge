@@ -84,8 +84,7 @@ export function ListboxInput<T>({
     }
 
     const inputInside = (e.target as HTMLElement).querySelector('input') as
-      | HTMLInputElement
-      | HTMLTextAreaElement
+      HTMLInputElement | HTMLTextAreaElement
 
     if (inputInside && inputInside instanceof HTMLInputElement) {
       inputInside.focus()

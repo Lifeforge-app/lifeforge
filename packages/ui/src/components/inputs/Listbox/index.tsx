@@ -23,8 +23,7 @@ type ListboxWithoutMultiple<T> = {
 }
 
 type ListboxProps<T> = { disabled?: boolean } & (
-  | ListboxWithMultiple<T>
-  | ListboxWithoutMultiple<T>
+  ListboxWithMultiple<T> | ListboxWithoutMultiple<T>
 ) &
   Omit<FlexProps, 'onChange' | 'value'>
 

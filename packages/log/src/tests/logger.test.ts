@@ -1,5 +1,5 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Writable } from 'node:stream'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { createLogger } from '../loggers/logger'
 

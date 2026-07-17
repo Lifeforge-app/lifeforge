@@ -1,7 +1,8 @@
-import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
+import { PBLogger } from '..'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import {
   AllPossibleFieldsForFilter,
   CleanedSchemas,
@@ -15,8 +16,6 @@ import {
   IGetListFactory,
   IGetListReturnType
 } from '../../types/service.interface'
-
-import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 import { recursivelyBuildFilter } from '../utils/recursivelyConstructFilter'
 

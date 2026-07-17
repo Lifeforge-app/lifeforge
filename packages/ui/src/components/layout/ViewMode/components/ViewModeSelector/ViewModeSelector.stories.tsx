@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
+import { Widget } from '@/components/display'
 import { SearchInput } from '@/components/inputs'
 import { Box, Flex } from '@/components/primitives'
 
 import { ViewModeSelector } from './index'
-import { Widget } from '@/components/display';
 
 const meta = {
   argTypes: {

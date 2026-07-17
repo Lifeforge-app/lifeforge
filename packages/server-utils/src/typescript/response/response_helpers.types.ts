@@ -11,9 +11,9 @@ export type OutputHelpers<TOutputs extends OutputDefinition | 'custom'> =
   TOutputs extends 'custom'
     ? {}
     : {
-        [K in keyof TOutputs as SnakeToCamel<
-          K & string
-        >]-?: K extends keyof OutputType
+        [
+          K in keyof TOutputs as SnakeToCamel<K & string>
+        ]-?: K extends keyof OutputType
           ? OutputType[K] extends {
               hasPayload: true
             }

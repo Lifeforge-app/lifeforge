@@ -49,9 +49,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   },
   server: {
     command: async () => {
-      const killedProcess = killExistingProcess(
-        'tsx.*apps/api.*src/index.ts'
-      )
+      const killedProcess = killExistingProcess('tsx.*apps/api.*src/index.ts')
 
       if (killedProcess) {
         await delay(2000)

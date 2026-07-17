@@ -2,10 +2,8 @@ import type { Request, RequestHandler, Response } from 'express'
 import type { Server } from 'socket.io'
 import type { z } from 'zod'
 
-import {
-  type CleanedSchemas,
-  type IPBService
-} from '@lifeforge/pocketbase'
+import { type CleanedSchemas, type IPBService } from '@lifeforge/pocketbase'
+
 import {
   OutputDefinition,
   OutputHelpers

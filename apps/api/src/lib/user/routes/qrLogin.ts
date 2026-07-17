@@ -13,7 +13,9 @@ interface PendingQRSession {
   status: 'pending' | 'approved' | 'expired'
 }
 
-const pendingQRSessions = createCache<PendingQRSession>('qr-sessions-user', { stdTTL: 300 })
+const pendingQRSessions = createCache<PendingQRSession>('qr-sessions-user', {
+  stdTTL: 300
+})
 
 export const registerQRSession = forge
   .mutation({
@@ -160,6 +162,8 @@ export const checkQRSessionStatus = forge
 
     return response.ok({
       status: pendingSession.status as 'pending',
-      expiresAt: new Date(pendingQRSessions.expiryTime(sessionId)!).toISOString()
+      expiresAt: new Date(
+        pendingQRSessions.expiryTime(sessionId)!
+      ).toISOString()
     })
   })

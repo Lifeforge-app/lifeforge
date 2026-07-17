@@ -119,7 +119,6 @@ const storageProvider = createProvider()
 
 ```typescript
 // packages/server-utils/src/typescript/core/core_context.types.ts
-
 import { FileStorage } from '@lifeforge/file-storage'
 import { CleanedSchemas } from '@lifeforge/pocketbase'
 
@@ -184,9 +183,11 @@ const result = await callback({
 
 ```typescript
 // apps/api/src/core/functions/routes/utils/coreContext.ts
-
 import { FileStorage } from '@lifeforge/file-storage'
-import { storageProvider } from '../wherever/initialized'  // the singleton
+
+import { storageProvider } from '../wherever/initialized'
+
+// the singleton
 
 export function createCoreContext({
   pb,
@@ -225,6 +226,7 @@ export function createCoreContext({
 ```
 
 Examples:
+
 ```
 lifeforge--books-library/entries/file-a1b2c3d4.epub
 lifeforge--books-library/entries/thumbnail-e5f6g7h8.png
@@ -250,6 +252,7 @@ core/backups/database-u1v2w3x4.db
 ```
 
 Examples:
+
 ```
 lifeforge--books-library/entries/thumbnail-a1b2.epub/thumbs/200x0.epub
 lifeforge--books-library/entries/thumbnail-a1b2.epub/thumbs/0x512.epub
@@ -262,17 +265,17 @@ lifeforge--books-library/entries/thumbnail-a1b2.epub/thumbs/0x512.epub
 ### `save(file, options)`
 
 ```typescript
-import { FieldKey, CollectionKey, CleanedSchemas } from '@lifeforge/pocketbase'
+import { CleanedSchemas, CollectionKey, FieldKey } from '@lifeforge/pocketbase'
 
 interface SaveOptions<
   TSchemas extends CleanedSchemas,
   TCollection extends CollectionKey<TSchemas> = CollectionKey<TSchemas>
 > {
-  collection: TCollection                       // TypeScript autocomplete + runtime validation
-  field: FieldKey<TSchemas, TCollection>         // autocomplete narrowed by collection + runtime validation
-  key?: string                                   // Raw override (escape hatch)
-  thumbs?: string[]                              // e.g. ['200x0', '0x512'] - only for images
-  metadata?: Record<string, string>              // Arbitrary metadata
+  collection: TCollection // TypeScript autocomplete + runtime validation
+  field: FieldKey<TSchemas, TCollection> // autocomplete narrowed by collection + runtime validation
+  key?: string // Raw override (escape hatch)
+  thumbs?: string[] // e.g. ['200x0', '0x512'] - only for images
+  metadata?: Record<string, string> // Arbitrary metadata
 }
 ```
 
@@ -282,8 +285,8 @@ by `PBService.filter({ field: ... })`:
 
 ```typescript
 await core.storage.save(file, {
-  collection: 'entries',   // TCollection inferred as 'entries'
-  field: 'thumbnail',      // ← autocomplete: 'file' | 'thumbnail' | 'title' | ...
+  collection: 'entries', // TCollection inferred as 'entries'
+  field: 'thumbnail', // ← autocomplete: 'file' | 'thumbnail' | 'title' | ...
   thumbs: ['200x0']
 })
 ```
@@ -309,8 +312,8 @@ interface FileReference {
 }
 
 interface ThumbnailInfo {
-  size: string       // '200x0', '0x512', '200x200'
-  key: string        // Full storage key for the thumbnail
+  size: string // '200x0', '0x512', '200x200'
+  key: string // Full storage key for the thumbnail
   width: number
   height: number
 }
@@ -349,14 +352,15 @@ const thumbnailKey = await core.storage.resolveField(
 
 ```typescript
 const [fileKey, thumbnailKey] = await Promise.all([
-  core.storage.resolveField(
-    existing.fileKey, media.file,
-    { collection: 'entries', field: 'file' }
-  ),
-  core.storage.resolveField(
-    existing.thumbnailKey, media.thumbnail,
-    { collection: 'entries', field: 'thumbnail', thumbs: ['200x0'] }
-  )
+  core.storage.resolveField(existing.fileKey, media.file, {
+    collection: 'entries',
+    field: 'file'
+  }),
+  core.storage.resolveField(existing.thumbnailKey, media.thumbnail, {
+    collection: 'entries',
+    field: 'thumbnail',
+    thumbs: ['200x0']
+  })
 ])
 await pb.collection('entries').update(id, { ...body, fileKey, thumbnailKey })
 ```
@@ -365,7 +369,7 @@ await pb.collection('entries').update(id, { ...body, fileKey, thumbnailKey })
 
 ```typescript
 interface GetOptions {
-  thumb?: string   // Return thumbnail instead of original
+  thumb?: string // Return thumbnail instead of original
 }
 
 // Returns
@@ -432,7 +436,14 @@ handler: async ({ pb, body, media: { file }, core }) => {
 
 ```typescript
 // ─── CURRENT ───
-handler: async ({ pb, body, media: { file }, core: { media: { retrieveMedia, convertPDFToImage } } }) => {
+handler: async ({
+  pb,
+  body,
+  media: { file },
+  core: {
+    media: { retrieveMedia, convertPDFToImage }
+  }
+}) => {
   let thumbnail: File | undefined
   if (file.mimetype === 'application/pdf') {
     thumbnail = await convertPDFToImage(file.path)
@@ -496,11 +507,10 @@ handler: async ({ pb, body, media: { files }, core }) => {
 handler: async ({ pb, query: { id }, body, media: { file }, core }) => {
   const existing = await pb.collection('entries').getOne(id)
 
-  const fileKey = await core.storage.resolveField(
-    existing.fileKey,
-    file,
-    { collection: 'entries', field: 'file' }
-  )
+  const fileKey = await core.storage.resolveField(existing.fileKey, file, {
+    collection: 'entries',
+    field: 'file'
+  })
 
   await pb.collection('entries').update(id, { ...body, fileKey })
 }
@@ -515,7 +525,7 @@ handler: async ({ pb, query: { id }, body, media: { file }, core }) => {
 ```typescript
 // ─── CURRENT ───
 forgeAPI.getMedia({
-  collectionId: record.collectionId,  // PocketBase-specific
+  collectionId: record.collectionId, // PocketBase-specific
   recordId: record.id,
   fieldId: record.thumbnail,
   thumb: '200x0'
@@ -523,12 +533,13 @@ forgeAPI.getMedia({
 
 // ─── AFTER ───
 forgeAPI.getMedia({
-  key: record.thumbnailKey,   // storage key
+  key: record.thumbnailKey, // storage key
   thumb: '200x0'
 })
 ```
 
 URL generation:
+
 ```
 /api/files?key=lifeforge--books-library/entries/thumbnail-a1b2.epub&thumb=200x0
 ```
@@ -540,10 +551,11 @@ URL generation:
 
 export function createGetMediaHelper(apiHost: string | undefined) {
   return (params: {
-    key: string              // Changed from: collectionId, recordId, fieldId
+    key: string // Changed from: collectionId, recordId, fieldId
     thumb?: string
     token?: string
-  }): string | null => {     // Returns null on key ownership mismatch (logged as warning)
+  }): string | null => {
+    // Returns null on key ownership mismatch (logged as warning)
     const searchParams = new URLSearchParams()
     searchParams.append('key', params.key)
     if (params.thumb) searchParams.append('thumb', params.thumb)
@@ -563,37 +575,48 @@ export function createGetMediaHelper(apiHost: string | undefined) {
 // apps/api/src/core/routes/core.routes.ts
 
 // ─── CURRENT ───
-const getMedia = forge.query({
-  input: {
-    query: z.object({
-      collectionId: z.string(),
-      recordId: z.string(),
-      fieldId: z.string(),
-      thumb: z.string().optional(),
-      token: z.string().optional()
-    })
-  },
-  output: 'custom'
-}).callback(async ({ query: { collectionId, recordId, fieldId, thumb, token }, res }) => {
-  request(`${PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${params}`).pipe(res)
-})
+const getMedia = forge
+  .query({
+    input: {
+      query: z.object({
+        collectionId: z.string(),
+        recordId: z.string(),
+        fieldId: z.string(),
+        thumb: z.string().optional(),
+        token: z.string().optional()
+      })
+    },
+    output: 'custom'
+  })
+  .callback(
+    async ({
+      query: { collectionId, recordId, fieldId, thumb, token },
+      res
+    }) => {
+      request(
+        `${PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${params}`
+      ).pipe(res)
+    }
+  )
 
 // ─── AFTER ───
-const getFile = forge.query({
-  input: {
-    query: z.object({
-      key: z.string(),
-      thumb: z.string().optional()
-    })
-  },
-  output: 'custom'
-}).callback(async ({ query: { key, thumb }, res }) => {
-  const { stream, mimeType, size } = await storage.get(key, { thumb })
-  res.setHeader('Content-Type', mimeType)
-  res.setHeader('Content-Length', size)
-  res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
-  stream.pipe(res)
-})
+const getFile = forge
+  .query({
+    input: {
+      query: z.object({
+        key: z.string(),
+        thumb: z.string().optional()
+      })
+    },
+    output: 'custom'
+  })
+  .callback(async ({ query: { key, thumb }, res }) => {
+    const { stream, mimeType, size } = await storage.get(key, { thumb })
+    res.setHeader('Content-Type', mimeType)
+    res.setHeader('Content-Length', size)
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+    stream.pipe(res)
+  })
 ```
 
 ---
@@ -649,6 +672,7 @@ async save(file: MulterFile | Buffer, options: SaveOptions<TSchemas>): Promise<F
 ```
 
 This prevents:
+
 - Malformed requests bypassing the type system (e.g., raw HTTP calls)
 - Community modules accidentally accessing collections or fields outside their schema
 - Future security issues where collection/field names are user-controlled
@@ -688,9 +712,9 @@ This guard is applied internally, transparent to the module author:
 
 ```typescript
 // All of these log a warning and return null/false on key mismatch:
-await core.storage.delete(key)            // checks key prefix
-const stream = await core.storage.get(key)   // checks key prefix, returns null
-const url = core.storage.getURL(key)      // checks key prefix, returns null
+await core.storage.delete(key) // checks key prefix
+const stream = await core.storage.get(key) // checks key prefix, returns null
+const url = core.storage.getURL(key) // checks key prefix, returns null
 const ok = await core.storage.exists(key) // checks key prefix, returns false
 ```
 
@@ -727,6 +751,7 @@ an existing key since it's creating a new one. Its security is handled by:
 ## Implementation Order
 
 ### Phase 1: Core Package
+
 1. Create `packages/file-storage/` with package.json, tsconfig, vite config
 2. Implement `StorageProvider` interface + types
 3. Implement `LocalStorageProvider`
@@ -737,6 +762,7 @@ an existing key since it's creating a new one. Its security is handled by:
 8. Install `sharp` for thumbnail generation
 
 ### Phase 2: Type System Integration
+
 1. Make `CoreContext` generic - `CoreContext<TSchemas = any>` with `storage: FileStorage<TSchemas>`
 2. Update `ForgeContext` - `core: CoreContext<TSchemas>`
 3. Add `schemas` to forge contract `getValue()` metadata
@@ -744,14 +770,17 @@ an existing key since it's creating a new one. Its security is handled by:
 5. Update `controllerLogic.ts` to extract schemas from contract and pass to `createCoreContext`
 
 ### Phase 3: Backend Endpoint
+
 1. Initialize storage provider singleton in `apps/api/src/index.ts`
 2. Replace `GET /media` PocketBase proxy with `GET /api/files` using storage SDK
 
 ### Phase 4: Frontend
+
 1. Update `getMediaHelper.ts` - `{ key, thumb }` instead of `{ collectionId, recordId, fieldId, thumb }`
 2. Update all client code that calls `forgeAPI.getMedia()`
 
 ### Phase 5: Module Migration
+
 1. Migrate `wallet` module (simplest - single receipt field)
 2. Migrate `music` module
 3. Migrate `moment-vault` module
@@ -761,6 +790,7 @@ an existing key since it's creating a new one. Its security is handled by:
 7. Remove `retrieveMedia()` from CoreContext (no longer needed)
 
 ### Phase 6: Cleanup
+
 1. Remove `medium/` directory creation from `apps/api/src/index.ts`
 2. Consider switching multer from `diskStorage` to `memoryStorage` (no longer need disk temp files)
 3. Remove `convertPDFToImage` and `getEpubThumbnail` forwarders from CoreContext (modules import directly)
@@ -769,19 +799,19 @@ an existing key since it's creating a new one. Its security is handled by:
 
 ## File Changes Summary
 
-| File | Action | Description |
-|---|---|---|
-| `packages/file-storage/` | **Create** | New package - FileStorage, providers, serve middleware |
-| `packages/server-utils/src/typescript/core/core_context.types.ts` | **Edit** | `CoreContext` → generic, add `storage` property |
-| `packages/server-utils/src/typescript/core/forge_contract.types.ts` | **Edit** | `ForgeContext.core` type connects to `CoreContext<TSchemas>` |
-| `packages/server-utils/src/routes/forgeContract.ts` | **Edit** | `getValue()` includes `schemas` |
-| `apps/api/src/core/functions/routes/utils/coreContext.ts` | **Edit** | `createCoreContext` accepts schemas, creates `FileStorage` |
-| `apps/api/src/core/functions/routes/functions/controllerLogic.ts` | **Edit** | Extract schemas from contract, pass to `createCoreContext` |
-| `apps/api/src/core/routes/core.routes.ts` | **Edit** | Replace PB media proxy with storage SDK endpoint |
-| `apps/api/src/index.ts` | **Edit** | Initialize storage provider singleton |
-| `packages/api/src/core/helpers/getMediaHelper.ts` | **Edit** | `{ key }` params instead of PB params |
-| `apps/web/src/core/utils/forgeAPI.ts` | **Edit** | Update contract writing (auto-generated) |
-| All modules - client code | **Edit** | `forgeAPI.getMedia()` call sites |
-| All modules - server handlers | **Edit** | Replace manual file handling with `core.storage` |
-| All modules - PocketBase schemas | **Edit** | File fields → text fields |
-| `apps/api/src/core/functions/media/retrieveMedia.ts` | **Delete** | No longer needed |
+| File                                                                | Action     | Description                                                  |
+| ------------------------------------------------------------------- | ---------- | ------------------------------------------------------------ |
+| `packages/file-storage/`                                            | **Create** | New package - FileStorage, providers, serve middleware       |
+| `packages/server-utils/src/typescript/core/core_context.types.ts`   | **Edit**   | `CoreContext` → generic, add `storage` property              |
+| `packages/server-utils/src/typescript/core/forge_contract.types.ts` | **Edit**   | `ForgeContext.core` type connects to `CoreContext<TSchemas>` |
+| `packages/server-utils/src/routes/forgeContract.ts`                 | **Edit**   | `getValue()` includes `schemas`                              |
+| `apps/api/src/core/functions/routes/utils/coreContext.ts`           | **Edit**   | `createCoreContext` accepts schemas, creates `FileStorage`   |
+| `apps/api/src/core/functions/routes/functions/controllerLogic.ts`   | **Edit**   | Extract schemas from contract, pass to `createCoreContext`   |
+| `apps/api/src/core/routes/core.routes.ts`                           | **Edit**   | Replace PB media proxy with storage SDK endpoint             |
+| `apps/api/src/index.ts`                                             | **Edit**   | Initialize storage provider singleton                        |
+| `packages/api/src/core/helpers/getMediaHelper.ts`                   | **Edit**   | `{ key }` params instead of PB params                        |
+| `apps/web/src/core/utils/forgeAPI.ts`                               | **Edit**   | Update contract writing (auto-generated)                     |
+| All modules - client code                                           | **Edit**   | `forgeAPI.getMedia()` call sites                             |
+| All modules - server handlers                                       | **Edit**   | Replace manual file handling with `core.storage`             |
+| All modules - PocketBase schemas                                    | **Edit**   | File fields → text fields                                    |
+| `apps/api/src/core/functions/media/retrieveMedia.ts`                | **Delete** | No longer needed                                             |

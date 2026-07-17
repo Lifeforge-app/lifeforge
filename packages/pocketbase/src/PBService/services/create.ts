@@ -1,7 +1,8 @@
-import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
+import { PBLogger } from '..'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import {
   CleanedSchemas,
   CollectionKey,
@@ -13,8 +14,6 @@ import {
   ICreateData,
   ICreateFactory
 } from '../../types/service.interface'
-
-import { PBLogger } from '..'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**
