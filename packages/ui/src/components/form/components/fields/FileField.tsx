@@ -19,7 +19,8 @@ type FileFieldProps<TFieldValues extends FieldValues> = {
   icon: string
   label: string
   reminderText?: string
-  onImageRemoved?: () => void
+  onChange?: (value: FileValue) => void
+  onFileRemove?: () => void
   required?: boolean
   namespace?: string | false
   disabled?: boolean
@@ -33,6 +34,7 @@ export function FileField<TFieldValues extends FieldValues>({
   name,
   namespace,
   errorMsg,
+  onChange,
   ...rest
 }: FileFieldProps<TFieldValues>) {
   const { field, fieldState } = useController({
@@ -49,7 +51,10 @@ export function FileField<TFieldValues extends FieldValues>({
       errorMsg={errorMsg ?? fieldState.error?.message}
       namespace={activeNamespace}
       value={field.value ?? { type: 'empty' }}
-      onChange={field.onChange}
+      onChange={data => {
+        field.onChange(data)
+        onChange?.(data)
+      }}
       {...rest}
     />
   )

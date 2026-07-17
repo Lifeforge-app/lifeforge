@@ -22,7 +22,7 @@ export const Default: Story = {
       image: ['jpeg', 'png']
     },
 
-    onChange: function () {},
+    onChange: () => {},
     value: { type: 'empty' }
   },
   render: function (args) {
@@ -41,7 +41,7 @@ export const Disabled: Story = {
       image: ['jpeg', 'png']
     },
 
-    onChange: function () {},
+    onChange: () => {},
     value: { type: 'empty' }
   },
   render: function (args) {
@@ -61,7 +61,7 @@ export const WithError: Story = {
       image: ['jpeg', 'png']
     },
 
-    onChange: function () {},
+    onChange: () => {},
     value: { type: 'empty' }
   },
   render: function (args) {

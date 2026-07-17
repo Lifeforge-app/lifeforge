@@ -33,7 +33,7 @@ export function LocalUpload() {
         if (mimeType !== undefined && mimeType.mime.startsWith('image')) {
           const reader = new FileReader()
 
-          reader.onload = function () {
+          reader.onload = () => {
             setPreview(reader.result as string)
           }
 

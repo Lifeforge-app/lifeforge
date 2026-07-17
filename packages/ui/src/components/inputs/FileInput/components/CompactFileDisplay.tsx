@@ -6,12 +6,10 @@ import { FILE_ICONS } from '../constants/file_icons'
 
 export function CompactFileDisplay({
   value,
-  onChange,
-  onImageRemoved
+  onChange
 }: {
   value: FileValue
   onChange: (value: FileValue) => void
-  onImageRemoved?: () => void
 }) {
   return (
     <Flex align="center" gap="xl" justify="between" mt="md">
@@ -52,10 +50,7 @@ export function CompactFileDisplay({
         icon="tabler:x"
         p="sm"
         variant="plain"
-        onClick={function () {
-          onChange({ type: 'empty' })
-          onImageRemoved?.()
-        }}
+        onClick={() => onChange({ type: 'empty' })}
       />
     </Flex>
   )

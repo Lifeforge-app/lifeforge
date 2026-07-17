@@ -70,7 +70,6 @@ export function FileInput({
   reminderText,
   value,
   onChange,
-  onImageRemoved,
   required,
   namespace,
   disabled,
@@ -87,7 +86,6 @@ export function FileInput({
   reminderText?: string
   value: FileValue
   onChange: (value: FileValue) => void
-  onImageRemoved?: () => void
   required?: boolean
   namespace?: string | false
   disabled?: boolean
@@ -98,30 +96,27 @@ export function FileInput({
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label })
 
-  const handleFilePickerOpen = useCallback(
-    function () {
-      open(FilePickerModal, {
-        sources,
-        mimeTypes,
-        onSelect: async function (file: string | File, preview: string | null) {
-          if (file instanceof File) {
-            onChange({
-              type: 'upload',
-              file,
-              preview: preview ?? undefined
-            })
-          } else {
-            onChange({
-              type: 'url',
-              url: file,
-              preview: preview ?? undefined
-            })
-          }
+  const handleFilePickerOpen = useCallback(() => {
+    open(FilePickerModal, {
+      sources,
+      mimeTypes,
+      onSelect: async function (file: string | File, preview: string | null) {
+        if (file instanceof File) {
+          onChange({
+            type: 'upload',
+            file,
+            preview: preview ?? undefined
+          })
+        } else {
+          onChange({
+            type: 'url',
+            url: file,
+            preview: preview ?? undefined
+          })
         }
-      })
-    },
-    [sources, mimeTypes, onChange]
-  )
+      }
+    })
+  }, [sources, mimeTypes, onChange])
 
   const previewUrl = value.type !== 'empty' ? value.preview : undefined
 
@@ -169,17 +164,9 @@ export function FileInput({
             (previewUrl.startsWith('http') ||
               previewUrl.startsWith('blob:') ||
               previewUrl.startsWith('data:')) ? (
-              <PreviewFileDisplay
-                previewUrl={previewUrl}
-                onChange={onChange}
-                onImageRemoved={onImageRemoved}
-              />
+              <PreviewFileDisplay previewUrl={previewUrl} onChange={onChange} />
             ) : (
-              <CompactFileDisplay
-                value={value}
-                onChange={onChange}
-                onImageRemoved={onImageRemoved}
-              />
+              <CompactFileDisplay value={value} onChange={onChange} />
             )}
           </>
         )}
