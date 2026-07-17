@@ -54,10 +54,6 @@ export const manifest = forge
 
     scanFederatedModules(APPS_DIR, modules, false, '/modules', devModeModules)
 
-    const internalAppsDir = path.join(ROOT_DIR, 'apps', 'web', 'src', 'system')
-
-    scanFederatedModules(internalAppsDir, modules, true, '/internal-modules')
-
     return response.ok({ modules })
   })
 
