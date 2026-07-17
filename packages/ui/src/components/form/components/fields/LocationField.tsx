@@ -5,27 +5,22 @@ import {
   useController
 } from 'react-hook-form'
 
-import { type Location, LocationInput } from '@/components/inputs'
+import {
+  type Location,
+  LocationInput,
+  type LocationInputProps
+} from '@/components/inputs'
 
 import { useNamespace } from '../FormModal'
 
 type LocationFieldProps<TFieldValues extends FieldValues> = {
   control: Control<TFieldValues>
   name: FieldPathByValue<TFieldValues, Location | null | undefined>
-  icon?: string
-  label: string
-  required?: boolean
-  disabled?: boolean
-  autoFocus?: boolean
-  namespace?: string | false
-}
+} & Omit<LocationInputProps, 'value' | 'onChange'>
 
 export function LocationField<TFieldValues extends FieldValues>({
   control,
   name,
-  disabled = false,
-  required = false,
-  autoFocus = false,
   namespace,
   ...rest
 }: LocationFieldProps<TFieldValues>) {
@@ -40,11 +35,8 @@ export function LocationField<TFieldValues extends FieldValues>({
 
   return (
     <LocationInput
-      autoFocus={autoFocus}
-      disabled={disabled}
       errorMsg={fieldState.error?.message}
       namespace={activeNamespace}
-      required={required}
       value={field.value}
       onChange={val =>
         field.onChange(

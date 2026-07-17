@@ -30,6 +30,7 @@ export type TextInputProps = {
   namespace?: string | false
   errorMsg?: string
   inputRef?: React.RefObject<HTMLInputElement | null>
+  onEnter?: () => void
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> &
   InputVariants<true>
 
@@ -52,6 +53,7 @@ export function _TextInput({
   errorMsg,
   autoFocus = false,
   inputRef: externalInputRef,
+  onEnter,
   ...inputProps
 }: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
@@ -103,6 +105,7 @@ export function _TextInput({
           value={value}
           variant={variant}
           onChange={onChange}
+          onEnter={onEnter}
           onRawChange={onRawChange}
           {...inputProps}
         />

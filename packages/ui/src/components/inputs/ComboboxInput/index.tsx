@@ -45,6 +45,8 @@ interface ComboboxInputProps<T> {
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 }
 
 export function ComboboxInput<T>({
@@ -62,7 +64,8 @@ export function ComboboxInput<T>({
   forcedActiveWhen: customActive,
   className,
   namespace,
-  errorMsg
+  errorMsg,
+  onEnter
 }: ComboboxInputProps<T> & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
@@ -154,6 +157,11 @@ export function ComboboxInput<T>({
 
                   if (e.target.value === '') {
                     onChange(undefined as unknown as T)
+                  }
+                }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && onEnter) {
+                    onEnter()
                   }
                 }}
               />

@@ -34,6 +34,8 @@ export type TextAreaInputProps = {
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 } & InputVariants
 
 export function TextAreaInput({
@@ -48,7 +50,8 @@ export function TextAreaInput({
   autoFocus = false,
   className,
   namespace,
-  errorMsg
+  errorMsg,
+  onEnter
 }: TextAreaInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const ref = useRef<HTMLTextAreaElement>(null)
@@ -116,6 +119,13 @@ export function TextAreaInput({
                 }}
                 onKeyDown={e => {
                   if (e.key === 'Enter') {
+                    if (onEnter) {
+                      onEnter()
+                      e.preventDefault()
+
+                      return
+                    }
+
                     const cursorPosition = e.currentTarget.selectionStart
 
                     const text = e.currentTarget.value

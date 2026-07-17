@@ -53,6 +53,8 @@ interface TagsInputProps {
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 }
 
 /**
@@ -73,7 +75,8 @@ export function TagsInput({
   className = '',
   actionButtonProps,
   namespace,
-  errorMsg
+  errorMsg,
+  onEnter
 }: TagsInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const [currentTag, setCurrentTag] = useState<string>('')
@@ -96,7 +99,15 @@ export function TagsInput({
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === 'Enter' || e.key === ',') {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+
+      if (currentTag.trim() !== '') {
+        addTag()
+      } else if (onEnter) {
+        onEnter()
+      }
+    } else if (e.key === ',') {
       e.preventDefault()
       addTag()
     } else if (e.key === 'Backspace' && currentTag === '' && value.length > 0) {

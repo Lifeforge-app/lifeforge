@@ -20,6 +20,8 @@ export function TextInputBox({
   autoFocus = false,
   variant = 'classic',
   size = 'default',
+  onEnter,
+  onKeyDown,
   ...inputProps
 }: {
   value: string
@@ -44,6 +46,7 @@ export function TextInputBox({
   className?: string
   variant?: InputVariant
   size?: InputSize
+  onEnter?: () => void
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'value' | 'onChange'>) {
   const inputClassName = textInputBoxRecipe({
     variant,
@@ -77,6 +80,15 @@ export function TextInputBox({
               onRawChange(e)
             }
             onChange(e.target.value)
+          }}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && onEnter) {
+              onEnter()
+            }
+
+            if (onKeyDown) {
+              onKeyDown(e)
+            }
           }}
           {...inputProps}
         />
