@@ -13,7 +13,7 @@ export function useFontFamilySelector(): FontFamilySelectorContextValue {
 
   if (!context) {
     throw new Error(
-      'useFontFamilySelector must be used within a FontFamilySelectorContext.Provider'
+      'useFontFamilySelector must be used within a FontFamilySelectorContext'
     )
   }
 

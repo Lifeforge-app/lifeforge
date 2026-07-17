@@ -27,7 +27,7 @@ interface GoogleFontContextValue {
   >
   page: number
   pinnedFontsQuery: ReturnType<typeof useQuery<string[]>>
-  scrollableRef: React.MutableRefObject<any>
+  scrollableRef: React.RefObject<any>
   searchQuery: string
   selectedCategory: string | null
   selectedFont: string | null

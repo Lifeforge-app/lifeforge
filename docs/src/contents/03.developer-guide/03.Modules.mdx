@@ -447,9 +447,9 @@ export default function ModuleProvider({ children }: { children: React.ReactNode
   const [state, setState] = useState(...)
   
   return (
-    <ModuleContext.Provider value={{ state, setState }}>
+    <ModuleContext value={{ state, setState }}>
       {children}
-    </ModuleContext.Provider>
+    </ModuleContext>
   )
 }
 

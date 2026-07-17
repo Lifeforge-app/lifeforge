@@ -20,9 +20,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
   const TabbedView = useTabbedView()
 
   return (
-    <FontFamilySelectorContext.Provider
-      value={{ selectedFont, setSelectedFont }}
-    >
+    <FontFamilySelectorContext value={{ selectedFont, setSelectedFont }}>
       <Stack gap="md" height="100%" minHeight="80vh" minWidth="60vw">
         <ModalHeader
           icon="tabler:text-size"
@@ -57,7 +55,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
           </Button>
         )}
       </Stack>
-    </FontFamilySelectorContext.Provider>
+    </FontFamilySelectorContext>
   )
 }
 
