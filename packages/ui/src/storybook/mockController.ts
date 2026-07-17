@@ -13,10 +13,10 @@ export function mockController() {
         mutationFn: async () => true
       }
     },
-    setHost: () => {
+    setHost() {
       return this
     },
-    input: () => {
+    input() {
       return this
     },
     get key() {
