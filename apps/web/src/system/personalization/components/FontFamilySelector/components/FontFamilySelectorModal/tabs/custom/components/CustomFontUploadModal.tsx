@@ -85,6 +85,42 @@ function CustomFontUploadModal({
     resolver: zodResolver(schema)
   })
 
+  const autoDetectFontMetadata = async () => {
+    const currentFile = form.getValues('file')
+
+    if (currentFile.type !== 'upload') {
+      return
+    }
+
+    if (!currentFile?.file || !(currentFile.file instanceof File)) {
+      form.setValue('family', '', { shouldValidate: true })
+      form.setValue('weight', 500, { shouldValidate: true })
+      form.setValue('displayName', 'metadata.family', {
+        shouldValidate: true
+      })
+
+      return
+    }
+
+    try {
+      const metadata = await detectFontMetadata(currentFile.file)
+
+      form.setValue('family', metadata.family, { shouldValidate: true })
+      form.setValue('weight', metadata.weight, { shouldValidate: true })
+      form.setValue('displayName', metadata.family, {
+        shouldValidate: true
+      })
+
+      toast.success('Font metadata detected successfully!')
+    } catch (error) {
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : 'Failed to detect font metadata'
+      )
+    }
+  }
+
   return (
     <FormModal
       form={form}
@@ -118,43 +154,14 @@ function CustomFontUploadModal({
         mimeTypes={{
           font: ['ttf', 'otf', 'woff', 'woff2']
         }}
+        onChange={autoDetectFontMetadata}
         name="file"
       />
       <TextField
         required
         actionButtonProps={{
           icon: 'tabler:wand',
-          onClick: async () => {
-            const currentFile = form.getValues('file')
-
-            if (currentFile.type !== 'upload') {
-              return
-            }
-
-            if (!currentFile?.file || !(currentFile.file instanceof File)) {
-              toast.error('Please select a font file first')
-
-              return
-            }
-
-            try {
-              const metadata = await detectFontMetadata(currentFile.file)
-
-              form.setValue('family', metadata.family, { shouldValidate: true })
-              form.setValue('weight', metadata.weight, { shouldValidate: true })
-              form.setValue('displayName', metadata.family, {
-                shouldValidate: true
-              })
-
-              toast.success('Font metadata detected successfully!')
-            } catch (error) {
-              toast.error(
-                error instanceof Error
-                  ? error.message
-                  : 'Failed to detect font metadata'
-              )
-            }
-          }
+          onClick: autoDetectFontMetadata
         }}
         control={form.control}
         icon="tabler:tag"
