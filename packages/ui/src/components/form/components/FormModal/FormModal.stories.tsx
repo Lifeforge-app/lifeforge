@@ -153,12 +153,12 @@ export const Default: Story = {
       icon: 'tabler:forms',
       loading: false,
       namespace: '',
-      onClose: function () {},
+      onClose: () => {},
       submitButton: 'update',
       title: 'Form Modal'
     }
   } as never,
-  render: function () {
+  render: () => {
     const { open } = useModalStore()
 
     function handleButtonClick() {

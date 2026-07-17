@@ -65,7 +65,7 @@ describe('createDefaultValues', () => {
   it('should resolve default schema to the specified default value', () => {
     const schema1 = z.string().default('hello')
 
-    const schema2 = z.string().default(function () {
+    const schema2 = z.string().default(() => {
       return 'dynamic-hello'
     })
 
@@ -80,7 +80,7 @@ describe('createDefaultValues', () => {
   })
 
   it('should resolve lazy schema to its inner default value', () => {
-    const schema = z.lazy(function () {
+    const schema = z.lazy(() => {
       return z.string()
     })
 

@@ -51,7 +51,7 @@ function Shell({ children }: { children: React.ReactNode }) {
 export const Default: Story = {
   args: {
     icon: 'tabler:plus',
-    onClose: function () {},
+    onClose: () => {},
     title: 'Create Item'
   },
   render: function (args) {
@@ -71,7 +71,7 @@ export const Default: Story = {
 export const UntranslatedTitle: Story = {
   args: {
     icon: 'tabler:file-unknown',
-    onClose: function () {},
+    onClose: () => {},
     title: 'untranslated_modal_key_xyz'
   },
   render: function (args) {
@@ -91,7 +91,7 @@ export const WithAIBadge: Story = {
   args: {
     hasAI: true,
     icon: 'tabler:brain',
-    onClose: function () {},
+    onClose: () => {},
     title: 'Smart Suggestions'
   },
   render: function (args) {
@@ -123,7 +123,7 @@ export const WithAppendTitle: Story = {
       </span>
     ),
     icon: 'tabler:tag',
-    onClose: function () {},
+    onClose: () => {},
     title: 'Manage Tags'
   },
   render: function (args) {
@@ -143,10 +143,10 @@ export const WithAppendTitle: Story = {
 export const WithActionButton: Story = {
   args: {
     headerActions: (
-      <Button icon="tabler:help" variant="plain" onClick={function () {}} />
+      <Button icon="tabler:help" variant="plain" onClick={() => {}} />
     ),
     icon: 'tabler:file-export',
-    onClose: function () {},
+    onClose: () => {},
     title: 'Export Data'
   },
   render: function (args) {
@@ -166,12 +166,12 @@ export const WithActionButton: Story = {
 export const WithActionButtonVariant: Story = {
   args: {
     headerActions: (
-      <Button icon="tabler:eye" variant="secondary" onClick={function () {}}>
+      <Button icon="tabler:eye" variant="secondary" onClick={() => {}}>
         Preview
       </Button>
     ),
     icon: 'tabler:send',
-    onClose: function () {},
+    onClose: () => {},
     title: 'Publish Post'
   },
   render: function (args) {
@@ -207,10 +207,10 @@ export const KitchenSink: Story = {
     ),
     hasAI: true,
     headerActions: (
-      <Button icon="tabler:settings" variant="plain" onClick={function () {}} />
+      <Button icon="tabler:settings" variant="plain" onClick={() => {}} />
     ),
     icon: 'tabler:sparkles',
-    onClose: function () {},
+    onClose: () => {},
     title: 'AI Content Generator'
   },
   render: function (args) {
@@ -229,7 +229,7 @@ export const KitchenSink: Story = {
 export const ReactNodeTitle: Story = {
   args: {
     icon: 'tabler:edit',
-    onClose: function () {},
+    onClose: () => {},
     title: (
       <span style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
         Edit <strong style={{ color: '#4caf50' }}>Project Alpha</strong>
@@ -252,7 +252,7 @@ export const ReactNodeTitle: Story = {
 export const LongTitle: Story = {
   args: {
     icon: 'tabler:text-size',
-    onClose: function () {},
+    onClose: () => {},
     title:
       'This Is An Exceptionally Long Modal Title That Might Overflow If Not Truncated Properly'
   },

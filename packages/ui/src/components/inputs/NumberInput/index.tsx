@@ -41,7 +41,7 @@ function NumberTextInputAdapter(props: any) {
 
   const localRef = useRef<HTMLInputElement | null>(null)
 
-  useEffect(function () {
+  useEffect(() => {
     if (getInputRef) {
       if (typeof getInputRef === 'function') {
         getInputRef(localRef.current)
@@ -55,7 +55,7 @@ function NumberTextInputAdapter(props: any) {
     <TextInput
       {...rest}
       inputRef={localRef}
-      onChange={function () {}}
+      onChange={() => {}}
       onRawChange={onChange}
     />
   )
@@ -95,7 +95,7 @@ export function NumberInput({
       size={size as never}
       value={value}
       variant={variant as never}
-      onBlur={function () {
+      onBlur={() => {
         let numericValue = value
 
         if (min !== undefined && numericValue < min) {
