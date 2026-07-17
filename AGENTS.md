@@ -12,6 +12,10 @@
 8. **Never do or think anything outside the scope of the latest instruction given by the user, unless otherwise instructed.** Do not add, remove, refactor, restructure, create, delete, or investigate anything beyond what the user's most recent message explicitly asks for, unless otherwise instructed. Do not explore or think about future steps, related files, or broader context.
 9. **When refactoring with breaking changes, do not update consumer files unless explicitly told to.** Only modify the files the user directly asks you to change. Consumer-side updates are a separate task.
 
+## Package Manager
+
+1. **pnpm is the only allowed package manager for this project.** All project commands (install, build, lint, typecheck, dev, etc.) must be executed via `pnpm`. Never use `npx`, `bun`, `yarn`, `npm`, or any other package manager.
+
 ## Import Conventions
 
 1. **The `@` alias always points to the `src` folder of the current module.** Prefer using the `@` alias when the relative path would be longer (e.g. `@/modals/...` instead of `../../../modals/...`). Use relative paths only when the import is short and co-located (e.g. `./components/ActionMenu` or `../hooks/useToggleWatched`).
@@ -23,6 +27,42 @@
 2. **When being asked to utilize a component in the UI library (`@lifeforge/ui` or `packages/ui`), always check its corresponding `.stories.tsx` file first for usage examples before implementing.** Do not guess the API from the component source alone.
 
 3. **Before adding `useModuleTranslation` / `t()` for localization, check if the component already handles it internally.** Components like `Button`, `ModalHeader`, `ModuleHeader`, `ContextMenuItem` (with `label` prop), and form fields auto-resolve their text via i18n. Only use `t()` explicitly when the component does not support internal localization (e.g. `Tabs` item names, raw `Text` elements).
+
+## Context Provider Pattern
+
+1. **When replacing prop drilling with a context provider, move all state, effects, and derived functions into the provider itself.** The provider should own `useState`, `useEffect`, `useRef`, and any `update*` functions so that child components remain stateless and only consume values via `useContext`.
+
+   **Bad** (leaves logic in parent):
+
+   ```tsx
+   function Parent() {
+     const [collapsed, setCollapsed] = useState(true)
+     function updateItem(updates) { ... }
+     useEffect(() => { ... }, [collapsed])
+     return (
+       <Ctx.Provider value={{ collapsed, setCollapsed, updateItem }}>
+         <Child />
+       </Ctx.Provider>
+     )
+   }
+   ```
+
+   **Good** (moves logic into provider):
+
+   ```tsx
+   export function ItemProvider({ children }) {
+     const [collapsed, setCollapsed] = useState(true)
+     function updateItem(updates) { ... }
+     useEffect(() => { ... }, [collapsed])
+     return (
+       <Ctx value={{ collapsed, setCollapsed, updateItem }}>
+         {children}
+       </Ctx>
+     )
+   }
+   ```
+
+2. **This project uses React 19, so use `<Context>` directly as the provider element instead of `<Context.Provider>`.** React 19 supports rendering a `createContext` object directly as a provider.
 
 ## Component Separation Rules
 

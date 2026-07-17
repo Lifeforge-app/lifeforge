@@ -740,9 +740,9 @@ export function MyModuleProvider({ children }: { children: React.ReactNode }) {
   )
 
   return (
-    <MyModuleContext.Provider value={{ items, isLoading }}>
+    <MyModuleContext value={{ items, isLoading }}>
       {children}
-    </MyModuleContext.Provider>
+    </MyModuleContext>
   )
 }
 
