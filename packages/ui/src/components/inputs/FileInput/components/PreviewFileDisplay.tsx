@@ -7,12 +7,10 @@ import type { FileValue } from '..'
 
 export function PreviewFileDisplay({
   previewUrl,
-  onChange,
-  onImageRemoved
+  onChange
 }: {
   previewUrl: string
   onChange: (value: FileValue) => void
-  onImageRemoved?: () => void
 }) {
   return (
     <Box mt="lg">
@@ -25,10 +23,7 @@ export function PreviewFileDisplay({
         dangerous
         icon="tabler:x"
         style={{ marginTop: '1.5rem', width: '100%' }}
-        onClick={function () {
-          onChange({ type: 'empty' })
-          onImageRemoved?.()
-        }}
+        onClick={() => onChange({ type: 'empty' })}
       >
         Remove
       </Button>
