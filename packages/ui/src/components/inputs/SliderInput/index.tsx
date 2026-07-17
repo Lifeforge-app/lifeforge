@@ -42,12 +42,15 @@ export function SliderInput({
   return (
     <Box width="100%" {...rest}>
       <SliderHeader
+        disabled={disabled}
         icon={icon}
         label={label}
         max={max}
+        min={min}
         namespace={namespace}
         required={required}
         value={value}
+        onChange={onChange}
       />
       <Box
         bg={{ base: 'bg-200', dark: 'bg-800' }}

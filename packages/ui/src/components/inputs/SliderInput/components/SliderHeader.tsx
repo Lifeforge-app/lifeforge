@@ -1,5 +1,10 @@
+import { useState } from 'react'
+
 import { useInputLabel } from '@/components/inputs/shared/hooks/useInputLabel'
 import { Flex, Icon, Text } from '@/components/primitives'
+import { useModalStore } from '@/providers'
+
+import { SliderValueModal } from './SliderValueModal'
 
 export function SliderHeader({
   icon,
@@ -7,7 +12,10 @@ export function SliderHeader({
   namespace,
   value,
   required,
-  max = 100
+  max = 100,
+  min = 0,
+  onChange,
+  disabled
 }: {
   icon?: string
   label?: string
@@ -15,10 +23,27 @@ export function SliderHeader({
   value: number
   required?: boolean
   max?: number
+  min?: number
+  onChange?: (value: number) => void
+  disabled?: boolean
 }) {
+  const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
+  const [isHovered, setIsHovered] = useState(false)
 
   if (!label || !icon) return null
+
+  function handleValueClick() {
+    if (disabled || !onChange) return
+    open(SliderValueModal, {
+      value,
+      min,
+      max,
+      label: inputLabel,
+      icon,
+      onConfirm: onChange
+    })
+  }
 
   return (
     <Flex
@@ -46,7 +71,23 @@ export function SliderHeader({
         </Flex>
       </Text>
       <Flex align="center" gap="sm">
-        <span>{value}</span>
+        <span
+          style={{
+            cursor: disabled || !onChange ? 'default' : 'pointer',
+            textDecoration:
+              !disabled && onChange && isHovered ? 'underline' : 'none',
+            transition: 'all 0.2s ease'
+          }}
+          onClick={handleValueClick}
+          onMouseEnter={() => {
+            setIsHovered(true)
+          }}
+          onMouseLeave={() => {
+            setIsHovered(false)
+          }}
+        >
+          {value}
+        </span>
         <Text color="muted" style={{ fontSize: '0.75rem' }}>
           /{max}
         </Text>
