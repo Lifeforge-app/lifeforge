@@ -169,7 +169,8 @@ export function TagsInput({
               padding: 0,
               margin: 0,
               display: 'inline-block',
-              width: 'min-content'
+              width: 'min-content',
+              minWidth: '0'
             }}
             value={currentTag}
             variant={variant}
