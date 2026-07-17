@@ -17,7 +17,7 @@ export type Location = {
   location: { latitude: number; longitude: number }
 }
 
-interface LocationInputProps {
+export interface LocationInputProps {
   label?: string
   icon?: string
   value: Location | null
@@ -28,6 +28,8 @@ interface LocationInputProps {
   className?: string
   namespace?: string | false
   errorMsg?: string
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 }
 
 export function LocationInput({
@@ -41,7 +43,8 @@ export function LocationInput({
   className,
   namespace,
   errorMsg,
-  variant = 'classic'
+  variant = 'classic',
+  onEnter
 }: LocationInputProps & InputVariants) {
   const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
@@ -94,6 +97,7 @@ export function LocationInput({
             onChange(location ?? null)
           }}
           onQueryChanged={setQuery}
+          onEnter={onEnter}
         >
           {query.trim() !== '' &&
             (dataQuery.data ? (

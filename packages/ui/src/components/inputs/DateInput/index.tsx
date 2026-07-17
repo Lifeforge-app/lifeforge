@@ -49,6 +49,8 @@ export interface DateInputProps {
   startDate?: Date
   /** The latest selectable date. */
   endDate?: Date
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 }
 
 /**
@@ -68,7 +70,8 @@ export function DateInput({
   namespace,
   errorMsg,
   startDate,
-  endDate
+  endDate,
+  onEnter
 }: DateInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const { derivedThemeColor } = usePersonalization()
@@ -106,6 +109,11 @@ export function DateInput({
               ref={autoFocusableRef(autoFocus, ref, e => {
                 e.input?.focus()
               })}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && onEnter) {
+                  onEnter()
+                }
+              }}
               shouldCloseOnSelect
               calendarClassName={
                 tinycolor(derivedThemeColor).isLight()
