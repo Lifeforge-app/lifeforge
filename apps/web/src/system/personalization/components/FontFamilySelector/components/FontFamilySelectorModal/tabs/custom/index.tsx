@@ -27,7 +27,6 @@ export type CustomFont = {
 }
 
 function CustomFontSelector() {
-  const { t } = useTranslation('common.personalization')
   const { open } = useModalStore()
 
   const customFontsQuery = useQuery(
@@ -46,9 +45,10 @@ function CustomFontSelector() {
         icon="tabler:upload"
         mb="sm"
         width="100%"
+        namespace="common.personalization"
         onClick={handleUploadClick}
       >
-        {t('fontFamily.buttons.uploadButton')}
+        fontFamily.buttons.uploadButton
       </Button>
       <WithQuery query={customFontsQuery}>
         {fonts =>
