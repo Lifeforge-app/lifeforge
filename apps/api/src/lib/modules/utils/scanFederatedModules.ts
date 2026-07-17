@@ -10,11 +10,7 @@ export const packageJSONSchema = z.object({
   version: z.string(),
   description: z.string(),
   author: z.string(),
-  scripts: z
-    .object({
-      typecheck: z.string()
-    })
-    .optional(),
+  scripts: z.record(z.string(), z.string()),
   dependencies: z.record(z.string(), z.string()).optional(),
   devDependencies: z.record(z.string(), z.string()).optional(),
   lifeforge: z.object({
