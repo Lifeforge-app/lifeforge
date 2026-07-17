@@ -14,10 +14,10 @@ export function mockController() {
       }
     },
     setHost: () => {
-      return this
+      return
     },
     input: () => {
-      return this
+      return
     },
     get key() {
       return ['mock']
