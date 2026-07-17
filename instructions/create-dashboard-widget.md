@@ -97,7 +97,7 @@ import {
   Widget,
   WithQuery,
   surface
-} from 'lifeforge-ui'
+} from '@lifeforge/ui'
 import { Link } from 'shared'
 import type { WidgetConfig } from 'shared'
 
@@ -218,7 +218,7 @@ export const config: WidgetConfig = {
 
 ```tsx
 // ❌ OLD - uses removed component-bg classes, clsx, inline styles, and @iconify/react
-import { Icon } from '@iconify/react'
+import { Icon } from '@lifeforge/ui'
 import clsx from 'clsx'
 
 <div
