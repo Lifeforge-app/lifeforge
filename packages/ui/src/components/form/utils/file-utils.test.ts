@@ -47,7 +47,7 @@ describe('file-utils', () => {
   })
 
   describe('getFormFileFieldInitialData', () => {
-    const mockGetMedia = vi.fn(function () {
+    const mockGetMedia = vi.fn(() => {
       return 'http://media-url/image.png'
     })
 
