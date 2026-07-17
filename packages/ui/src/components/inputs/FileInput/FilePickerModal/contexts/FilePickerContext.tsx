@@ -19,9 +19,7 @@ export function useFilePicker(): FilePickerContextValue {
   const context = useContext(FilePickerContext)
 
   if (!context) {
-    throw new Error(
-      'useFilePicker must be used within a FilePickerContext.Provider'
-    )
+    throw new Error('useFilePicker must be used within a FilePickerContext')
   }
 
   return context

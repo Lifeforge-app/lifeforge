@@ -24,6 +24,8 @@ export interface IconInputProps {
   autoFocus?: boolean
   namespace?: string | false
   errorMsg?: string
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 }
 
 export function IconInput({
@@ -35,7 +37,8 @@ export function IconInput({
   disabled = false,
   autoFocus = false,
   namespace,
-  errorMsg
+  errorMsg,
+  onEnter
 }: IconInputProps & InputVariants) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -88,6 +91,11 @@ export function IconInput({
                   onChange(e.target.value.trim())
                 }}
                 onChange={e => onChange(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && onEnter) {
+                    onEnter()
+                  }
+                }}
               />
             </Box>
           </Placeholder>
@@ -102,3 +110,4 @@ export function IconInput({
     </InputWrapper>
   )
 }
+

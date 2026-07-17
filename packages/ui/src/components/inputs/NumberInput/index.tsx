@@ -1,3 +1,4 @@
+/* eslint-disable react-compiler/react-compiler */
 import { useEffect, useRef } from 'react'
 import { NumericFormat } from 'react-number-format'
 
@@ -34,6 +35,8 @@ export interface NumberInputProps {
   placeholder?: string
   /** Properties for constructing the action button component at the right hand side. */
   actionButtonProps?: React.ComponentProps<typeof Button>
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 }
 
 function NumberTextInputAdapter(props: any) {
@@ -77,7 +80,8 @@ export function NumberInput({
   min,
   max,
   placeholder = '123',
-  actionButtonProps
+  actionButtonProps,
+  onEnter
 }: NumberInputProps & InputVariants<true>) {
   return (
     <NumericFormat
@@ -110,6 +114,7 @@ export function NumberInput({
           onChange(numericValue)
         }
       }}
+      onEnter={onEnter}
       onValueChange={function (values) {
         const numericValue = values.floatValue ?? 0
 

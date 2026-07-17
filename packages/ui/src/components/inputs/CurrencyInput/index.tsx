@@ -36,6 +36,8 @@ export type CurrencyInputProps = {
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 } & InputVariants
 
 /** CurrencyInputComponent for entering currency values with two decimal places and comma-separated thousands. */
@@ -51,7 +53,8 @@ export function CurrencyInput({
   autoFocus = false,
   className,
   namespace,
-  errorMsg
+  errorMsg,
+  onEnter
 }: CurrencyInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
@@ -121,6 +124,11 @@ export function CurrencyInput({
                       onChange(numericValue)
                     } else {
                       onChange(0)
+                    }
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && onEnter) {
+                      onEnter()
                     }
                   }}
                   value={innerValue}

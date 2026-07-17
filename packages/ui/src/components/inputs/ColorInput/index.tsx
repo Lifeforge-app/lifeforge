@@ -33,6 +33,8 @@ export interface ColorInputProps {
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
+  /** Callback function called when Enter is pressed. */
+  onEnter?: () => void
 }
 
 export function ColorInput({
@@ -45,7 +47,8 @@ export function ColorInput({
   autoFocus = false,
   className,
   namespace,
-  errorMsg
+  errorMsg,
+  onEnter
 }: ColorInputProps & InputVariants) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -127,6 +130,11 @@ export function ColorInput({
                       onChange('#' + e.target.value.trim().toUpperCase())
                     }}
                     onFocus={() => setFocused(true)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter' && onEnter) {
+                        onEnter()
+                      }
+                    }}
                   />
                 </Text>
               </Box>
