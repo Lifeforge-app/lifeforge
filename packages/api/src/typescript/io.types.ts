@@ -11,8 +11,7 @@ import type {
 import type { ForgeEndpoint } from '../core/forgeEndpoint'
 
 type ZodObjectOrIntersection =
-  | ZodObject<ZodRawShape>
-  | ZodIntersection<ZodTypeAny, ZodTypeAny>
+  ZodObject<ZodRawShape> | ZodIntersection<ZodTypeAny, ZodTypeAny>
 
 /**
  * Infers the input TypeScript type from a Forge endpoint config object.

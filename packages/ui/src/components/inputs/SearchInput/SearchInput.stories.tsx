@@ -2,10 +2,10 @@ import type { StoryObj, Meta as _Meta } from '@storybook/react-vite'
 import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { WithQuery } from '@/components/api'
 import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
 
 import { SearchInput } from './index'
-import { WithQuery } from '@/components/api';
 
 const meta = {
   component: SearchInput,

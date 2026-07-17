@@ -1,19 +1,15 @@
-import { toPocketBaseCollectionName } from '../../dbUtils'
 import chalk from 'chalk'
 import PocketBase from 'pocketbase'
 
+import { PBLogger } from '..'
+import { toPocketBaseCollectionName } from '../../dbUtils'
 import {
   CleanedSchemas,
   CollectionKey,
   ExpandConfig,
   FieldSelection
 } from '../../types/pb_service.types'
-import {
-  IGetOne,
-  IGetOneFactory
-} from '../../types/service.interface'
-
-import { PBLogger } from '..'
+import { IGetOne, IGetOneFactory } from '../../types/service.interface'
 import getFinalCollectionName from '../utils/getFinalCollectionName'
 
 /**

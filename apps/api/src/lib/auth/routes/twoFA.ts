@@ -1,19 +1,17 @@
 import { decrypt, encrypt } from '@functions/auth/encryption'
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@lifeforge/pocketbase'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
 import z from 'zod'
 
+import {
+  connectToPocketBase,
+  validateEnvironmentVariables
+} from '@lifeforge/pocketbase'
+
 import { getCookieOptions } from '../constants/cookie'
 import { getPB } from '../constants/pb'
 import forge from '../forge'
-import {
-  pending2FASessions,
-  pendingTOTPSetups
-} from '../utils/2fa'
+import { pending2FASessions, pendingTOTPSetups } from '../utils/2fa'
 import { storeRefreshToken } from '../utils/refreshTokenStore'
 import {
   generateFamily,

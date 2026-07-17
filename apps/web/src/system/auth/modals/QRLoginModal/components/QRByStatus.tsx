@@ -50,7 +50,7 @@ export default function QRByStatus({
           width="100%"
           onClick={refreshSession}
         >
-        refresh
+          refresh
         </Button>
       )
     default:

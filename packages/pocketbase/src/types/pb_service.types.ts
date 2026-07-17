@@ -58,7 +58,9 @@ export type AllPossibleFieldsForFilter<
   | (keyof TExpandConfig extends never
       ? never
       : {
-          [K in keyof TExpandConfig]: TExpandConfig[K] extends CollectionKey<TSchemas>
+          [
+            K in keyof TExpandConfig
+          ]: TExpandConfig[K] extends CollectionKey<TSchemas>
             ? `${string & K}.${string & keyof SchemaWithPB<ExtractZodShape<CollectionSchema<TSchemas, TExpandConfig[K]>>>}`
             : never
         }[keyof TExpandConfig])
@@ -74,7 +76,9 @@ export type AllPossibleFieldsForFieldSelection<
   | (keyof TExpandConfig extends never
       ? never
       : {
-          [K in keyof TExpandConfig]: TExpandConfig[K] extends CollectionKey<TSchemas>
+          [
+            K in keyof TExpandConfig
+          ]: TExpandConfig[K] extends CollectionKey<TSchemas>
             ? `expand.${string & K}.${string & keyof SchemaWithPB<ExtractZodShape<CollectionSchema<TSchemas, TExpandConfig[K]>>>}`
             : never
         }[keyof TExpandConfig])
@@ -159,11 +163,13 @@ export type PickSelectedFields<
   TFields extends FieldSelection<TSchemas, TCollectionKey, TExpandConfig> =
     Record<never, never>
 > = {
-  [K in keyof TFields as K extends keyof SchemaWithPB<
-    ExtractZodShape<CollectionSchema<TSchemas, TCollectionKey>>
-  >
-    ? K
-    : never]: K extends keyof SchemaWithPB<
+  [
+    K in keyof TFields as K extends keyof SchemaWithPB<
+      ExtractZodShape<CollectionSchema<TSchemas, TCollectionKey>>
+    >
+      ? K
+      : never
+  ]: K extends keyof SchemaWithPB<
     ExtractZodShape<CollectionSchema<TSchemas, TCollectionKey>>
   >
     ? SchemaWithPB<
@@ -175,19 +181,21 @@ export type PickSelectedFields<
   : {
       expand?: {
         [ExpandKey in keyof TExpandConfig]?: {
-          [FieldKey in string &
-            keyof SchemaWithPB<
-              ExtractZodShape<
-                CollectionSchema<
-                  TSchemas,
-                  TExpandConfig[ExpandKey] extends CollectionKey<TSchemas>
-                    ? TExpandConfig[ExpandKey]
-                    : never
+          [
+            FieldKey in string &
+              keyof SchemaWithPB<
+                ExtractZodShape<
+                  CollectionSchema<
+                    TSchemas,
+                    TExpandConfig[ExpandKey] extends CollectionKey<TSchemas>
+                      ? TExpandConfig[ExpandKey]
+                      : never
+                  >
                 >
-              >
-            > as `expand.${string & ExpandKey}.${FieldKey}` extends keyof TFields
-            ? FieldKey
-            : never]?: SchemaWithPB<
+              > as `expand.${string & ExpandKey}.${FieldKey}` extends keyof TFields
+              ? FieldKey
+              : never
+          ]?: SchemaWithPB<
             ExtractZodShape<
               CollectionSchema<
                 TSchemas,

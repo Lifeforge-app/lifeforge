@@ -12,7 +12,7 @@ function TwoFAEnableProcedure({ onSuccess }: { onSuccess: () => void }) {
   const [tid, setTid] = useState('')
 
   return proceeded ? (
-    <OTPConfirmScreen onSuccess={onSuccess} tid={tid} />
+    <OTPConfirmScreen tid={tid} onSuccess={onSuccess} />
   ) : (
     <Stack gap="lg">
       <Text as="p" color="muted">

@@ -15,8 +15,7 @@ export default function getAESKey(
   // For GET requests with encryption, client sends AES key via header
   if (isEncrypted && req.method === 'GET') {
     const encryptedKeyHeader = req.headers['x-lifeforge-key'] as
-      | string
-      | undefined
+      string | undefined
 
     if (encryptedKeyHeader) {
       try {

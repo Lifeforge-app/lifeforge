@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
+import type { InferOutput } from '@lifeforge/api'
 import { EmptyStateScreen, Flex, WithQuery } from '@lifeforge/ui'
 
 import forgeAPI from '@/core/utils/forgeAPI'
@@ -7,8 +8,6 @@ import forgeAPI from '@/core/utils/forgeAPI'
 import GoogleFontFilter from './components/GoogleFontFilter'
 import GoogleFontList from './components/GoogleFontList'
 import { GoogleFontProvider, useGoogleFont } from './contexts/GoogleFontContext'
-
-import type { InferOutput } from '@lifeforge/api'
 
 export type FontFamily = InferOutput<
   typeof forgeAPI.user.personalization.listGoogleFonts

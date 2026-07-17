@@ -132,7 +132,11 @@ export function serializeRoutes(node: any): any {
     for (const [key, value] of Object.entries(node)) {
       const serialized = serializeRoutes(value)
 
-      if (serialized !== null && typeof serialized === 'object' && !Array.isArray(serialized)) {
+      if (
+        serialized !== null &&
+        typeof serialized === 'object' &&
+        !Array.isArray(serialized)
+      ) {
         result[key] = serialized
       }
     }

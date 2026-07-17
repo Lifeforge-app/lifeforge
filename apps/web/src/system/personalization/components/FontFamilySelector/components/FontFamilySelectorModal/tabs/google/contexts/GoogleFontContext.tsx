@@ -14,7 +14,6 @@ import { usePersonalization } from '@lifeforge/ui'
 import forgeAPI from '@/core/utils/forgeAPI'
 
 import { useFontFamilySelector } from '../../../contexts/FontFamilySelectorContext'
-
 import type { FontFamily } from '../index'
 
 interface GoogleFontContextValue {

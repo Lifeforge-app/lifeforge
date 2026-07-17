@@ -1,6 +1,7 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
 import { expectNo2FA, forgeAPI, unwrap } from '@tests/utils'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+
 import { clearAccessToken, setAccessToken } from '@lifeforge/api'
 
 let email = ''

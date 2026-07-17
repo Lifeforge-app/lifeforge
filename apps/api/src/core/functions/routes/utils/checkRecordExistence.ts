@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { PBService, checkExistence } from '@lifeforge/pocketbase'
 import { Request } from 'express'
 
+import { PBService, checkExistence } from '@lifeforge/pocketbase'
 import { ClientError } from '@lifeforge/server-utils'
 
 async function check(

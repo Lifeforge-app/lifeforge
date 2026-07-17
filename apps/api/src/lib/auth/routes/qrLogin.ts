@@ -12,7 +12,6 @@ import {
   signAccessToken
 } from '../utils/tokens'
 
-
 export const register = forge
   .mutation({
     description: 'Register a new QR login session',
@@ -44,9 +43,7 @@ export const register = forge
 
     return response.created({
       sessionId,
-      expiresAt: new Date(
-        Date.now() + 5 * 60 * 1000
-      ).toISOString()
+      expiresAt: new Date(Date.now() + 5 * 60 * 1000).toISOString()
     })
   })
 

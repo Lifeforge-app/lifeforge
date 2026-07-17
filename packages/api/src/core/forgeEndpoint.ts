@@ -10,7 +10,11 @@ import {
   encryptRequest,
   isEncryptedResponse
 } from '../utils/encryption'
-import { fetchAPI, type FetchAPIOptions, type ResponseWrapper } from '../utils/fetchAPI'
+import {
+  type FetchAPIOptions,
+  type ResponseWrapper,
+  fetchAPI
+} from '../utils/fetchAPI'
 import { globalProxyRegistry } from './registry'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
@@ -295,9 +299,13 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     options: { raw: true } & QueryRawOptions
   ): Promise<AxiosResponse<ResponseWrapper<InferRawOutput<T>>>>
 
-  queryRaw(options?: { raw?: false } & QueryRawOptions): Promise<InferRawOutput<T>>
+  queryRaw(
+    options?: { raw?: false } & QueryRawOptions
+  ): Promise<InferRawOutput<T>>
 
-  queryRaw(options: { raw?: boolean } & QueryRawOptions = {}): Promise<
+  queryRaw(
+    options: { raw?: boolean } & QueryRawOptions = {}
+  ): Promise<
     AxiosResponse<ResponseWrapper<InferRawOutput<T>>> | InferRawOutput<T>
   > {
     const { apiHost, prefix } = this._resolvedConfig
@@ -340,7 +348,9 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
   mutateRaw(
     data: InferRawInput<T>['body'] | FormData,
     options: { raw?: boolean } & MutateRawOptions = {}
-  ): Promise<AxiosResponse<ResponseWrapper<InferRawOutput<T>>> | InferRawOutput<T>> {
+  ): Promise<
+    AxiosResponse<ResponseWrapper<InferRawOutput<T>>> | InferRawOutput<T>
+  > {
     const { apiHost, prefix } = this._resolvedConfig
 
     const path = this._getPath(prefix)

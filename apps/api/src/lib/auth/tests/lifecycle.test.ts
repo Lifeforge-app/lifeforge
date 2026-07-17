@@ -1,6 +1,7 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { cleanupTestTokens, initAuthTests } from '@tests/e2e-setup'
 import { expectNo2FA, extractCookies, forgeAPI, unwrap } from '@tests/utils'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+
 import { setAccessToken } from '@lifeforge/api'
 
 let email = ''
@@ -33,10 +34,10 @@ describe('Full lifecycle', () => {
     expect(me1.status).toBe(200)
     expect(unwrap(me1).userData.email).toBe(email)
 
-    const refresh1 = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies1 } }
-    )
+    const refresh1 = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies1 }
+    })
 
     expect(refresh1.status).toBe(200)
 
@@ -48,17 +49,17 @@ describe('Full lifecycle', () => {
 
     expect(me2.status).toBe(200)
 
-    const logout = await forgeAPI.auth.logout.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies2 } }
-    )
+    const logout = await forgeAPI.auth.logout.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies2 }
+    })
 
     expect(logout.status).toBe(200)
 
-    const refreshAfter = await forgeAPI.auth.refresh.mutateRaw(
-      undefined,
-      { raw: true, headers: { Cookie: cookies2 } }
-    )
+    const refreshAfter = await forgeAPI.auth.refresh.mutateRaw(undefined, {
+      raw: true,
+      headers: { Cookie: cookies2 }
+    })
 
     expect(refreshAfter.status).toBe(401)
 
@@ -71,10 +72,10 @@ describe('Full lifecycle', () => {
 
     const results = await Promise.allSettled(
       Array.from({ length: 5 }, () =>
-        forgeAPI.auth.refresh.mutateRaw(
-          undefined,
-          { raw: true, headers: { Cookie: cookies } }
-        )
+        forgeAPI.auth.refresh.mutateRaw(undefined, {
+          raw: true,
+          headers: { Cookie: cookies }
+        })
       )
     )
 

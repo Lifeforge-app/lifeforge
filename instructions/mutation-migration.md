@@ -34,6 +34,7 @@
 
 ```tsx
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+
 import { useModuleTranslation } from '@lifeforge/localization'
 import { toast } from '@lifeforge/ui'
 
@@ -87,8 +88,12 @@ const deleteMutation = useForgeMutation(
 
 ```tsx
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useModuleTranslation } from '@lifeforge/localization'   // if only used for common.fetch
-import { toast } from '@lifeforge/ui'                             // if only used in mutation
+
+import { useModuleTranslation } from '@lifeforge/localization'
+// if only used for common.fetch
+import { toast } from '@lifeforge/ui'
+
+// if only used in mutation
 ```
 
 **Add this import:**
@@ -100,9 +105,14 @@ import { useForgeMutation } from '@lifeforge/api'
 **Preserve these imports if needed elsewhere in the file:**
 
 ```tsx
-import { useQuery } from '@tanstack/react-query'           // still needed for data queries
-import { useModuleTranslation } from '@lifeforge/localization'  // if t() is used for UI labels
-import { toast } from '@lifeforge/ui'                      // if toast.success() used outside mutation
+import { useQuery } from '@tanstack/react-query'
+
+// still needed for data queries
+import { useModuleTranslation } from '@lifeforge/localization'
+// if t() is used for UI labels
+import { toast } from '@lifeforge/ui'
+
+// if toast.success() used outside mutation
 ```
 
 > **Always verify before removing.** Check the rest of the file for any remaining usage of `t`, `toast`, `queryClient`, etc.
@@ -151,6 +161,7 @@ await deleteMutation.mutateAsync(undefined)
 ```
 
 **Key details:**
+
 - `action: 'delete'` - the hook auto-resolves this to `t('common.fetch:action.delete')` via i18n
 - `queryKey: forgeAPI.entities.key` - replaces hardcoded `['moduleName', 'entities']`
 - For entire-module invalidation, use `queryKey: forgeAPI.key` (equivalent to `['moduleName']`)
@@ -234,10 +245,7 @@ return (
 
 ```tsx
 handler: async data => {
-  await (type === 'create'
-    ? createMutation
-    : updateMutation
-  ).mutateAsync(data)
+  await (type === 'create' ? createMutation : updateMutation).mutateAsync(data)
 }
 ```
 
@@ -268,23 +276,21 @@ const mutation = useMutation(
 **After:**
 
 ```tsx
-const mutation = useForgeMutation(
-  forgeAPI.transactions.createMultiple,
-  {
-    action: 'create',
-    queryKey: forgeAPI.key,
-    onSuccess: () => {
-      toast.success(t('toasts.createMultipleTransactions.success'))
-      onClose()
-    },
-    onError: () => {
-      toast.error(t('toasts.createMultipleTransactions.error'))
-    }
+const mutation = useForgeMutation(forgeAPI.transactions.createMultiple, {
+  action: 'create',
+  queryKey: forgeAPI.key,
+  onSuccess: () => {
+    toast.success(t('toasts.createMultipleTransactions.success'))
+    onClose()
+  },
+  onError: () => {
+    toast.error(t('toasts.createMultipleTransactions.error'))
   }
-)
+})
 ```
 
 **Key details:**
+
 - `queryClient.invalidateQueries` and `onClose()` → removed; hook handles invalidation; `onClose()` moved to `onSuccess`
 - `console.error(error)` → removed; hook always logs with `[useForgeMutation] action failed:` prefix
 - Custom `onError` → **overrides** the default i18n toast. Use for module-specific error messages (e.g., `t('toasts.savePrompts.error')`)
@@ -318,12 +324,12 @@ After migration, remove any imports that are no longer used anywhere in the file
 
 Always use `forgeAPI`-derived keys instead of hardcoded string arrays. This ensures correct module ID scoping.
 
-| Scope                             | Convention                         | Example result        |
-| --------------------------------- | ---------------------------------- | --------------------- |
-| Entire module                     | `forgeAPI.key`                     | `['wallet']`          |
-| Entity subtree (all nested ops)   | `forgeAPI.<entity>.key`            | `['wallet', 'assets']` |
-| Specific list query               | `forgeAPI.<entity>.list.key`       | `['wallet', 'assets', 'list']` |
-| Multiple entities                 | `[forgeAPI.a.key, forgeAPI.b.key]` | Array of query keys   |
+| Scope                           | Convention                         | Example result                 |
+| ------------------------------- | ---------------------------------- | ------------------------------ |
+| Entire module                   | `forgeAPI.key`                     | `['wallet']`                   |
+| Entity subtree (all nested ops) | `forgeAPI.<entity>.key`            | `['wallet', 'assets']`         |
+| Specific list query             | `forgeAPI.<entity>.list.key`       | `['wallet', 'assets', 'list']` |
+| Multiple entities               | `[forgeAPI.a.key, forgeAPI.b.key]` | Array of query keys            |
 
 > **Why?** The module ID in `forgeAPI.key` is dynamically generated. Hardcoded `['wallet']` would break if the module ID changes. `forgeAPI.key` always resolves correctly.
 
@@ -337,16 +343,18 @@ The `action` parameter can be either a common action key (auto-resolved via `com
 
 These are stored in `locales/lang-en/common.json` under `fetch.action`:
 
-| Key        | Resolves to       |
-| ---------- | ----------------- |
-| `create`   | `"created"`       |
-| `update`   | `"updated"`       |
-| `delete`   | `"deleted"`       |
+| Key      | Resolves to |
+| -------- | ----------- |
+| `create` | `"created"` |
+| `update` | `"updated"` |
+| `delete` | `"deleted"` |
 
 Used like:
 
 ```ts
-{ action: 'delete' }
+{
+  action: 'delete'
+}
 // → toast: "Oh no... Failed to get the item deleted. Please try again."
 ```
 
@@ -357,10 +365,10 @@ When no matching key exists in `common.fetch:action`, the `action` string is use
 ```ts
 const { t } = useModuleTranslation()
 
-const mutation = useForgeMutation(
-  forgeAPI.events.summarize.input({ id }),
-  { action: t('calendar:actions.summarized'), queryKey: forgeAPI.key }
-)
+const mutation = useForgeMutation(forgeAPI.events.summarize.input({ id }), {
+  action: t('calendar:actions.summarized'),
+  queryKey: forgeAPI.key
+})
 ```
 
 The hook checks via `i18n.exists()` - if the key is found in `common.fetch`, it's translated; otherwise the raw string is used.
@@ -450,17 +458,18 @@ queryKey: forgeAPI.assets.key
 
 ### `useForgeMutation(endpoint, options)`
 
-| Parameter        | Type                                          | Description                                              |
-| ---------------- | --------------------------------------------- | -------------------------------------------------------- |
-| `endpoint`       | `ForgeEndpoint<T>`                            | A forgeAPI endpoint (e.g., `forgeAPI.templates.remove.input({ id })`) |
-| `options.action` | `string`                                      | Action name - resolved via `common.fetch:action.*` or used as-is |
-| `options.queryKey` | `QueryKey \| QueryKey[]` (optional)          | Query key(s) to invalidate on success. Supports single key or array of keys for multi-entity invalidation |
-| `options.onSuccess` | `() => void` (optional)                     | Called after query invalidation. Use for side effects like closing modals or success toasts |
-| `options.onError` | `(error: Error) => void` (optional)          | Overrides the default i18n error toast. The hook still logs `console.error` |
+| Parameter           | Type                                | Description                                                                                               |
+| ------------------- | ----------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `endpoint`          | `ForgeEndpoint<T>`                  | A forgeAPI endpoint (e.g., `forgeAPI.templates.remove.input({ id })`)                                     |
+| `options.action`    | `string`                            | Action name - resolved via `common.fetch:action.*` or used as-is                                          |
+| `options.queryKey`  | `QueryKey \| QueryKey[]` (optional) | Query key(s) to invalidate on success. Supports single key or array of keys for multi-entity invalidation |
+| `options.onSuccess` | `() => void` (optional)             | Called after query invalidation. Use for side effects like closing modals or success toasts               |
+| `options.onError`   | `(error: Error) => void` (optional) | Overrides the default i18n error toast. The hook still logs `console.error`                               |
 
 **Returns:** `UseMutationResult` - same object shape as `useMutation()`. All standard properties available: `.mutateAsync()`, `.mutate()`, `.isPending`, `.data`, `.error`, etc.
 
 **Internal behavior:**
+
 1. Calls `endpoint.mutationOptions()` to generate React Query options
 2. Injects `onSuccess` that invalidates `queryKey` (if provided), then calls `options.onSuccess`
 3. Injects `onError` that logs with `console.error`, then:

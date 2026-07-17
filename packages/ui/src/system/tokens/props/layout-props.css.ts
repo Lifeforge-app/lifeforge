@@ -3,11 +3,7 @@ import { defineProperties } from '@vanilla-extract/sprinkles'
 import { RESPONSIVE_CONDITIONS, type ResponsiveProp } from '../..'
 
 export type PositionValue =
-  | 'static'
-  | 'relative'
-  | 'absolute'
-  | 'fixed'
-  | 'sticky'
+  'static' | 'relative' | 'absolute' | 'fixed' | 'sticky'
 
 export type OverflowValue = 'visible' | 'hidden' | 'scroll' | 'auto'
 

@@ -9,8 +9,8 @@
 5. **Do not update AGENTS.md** unless the user explicitly tells you to.
 6. **If a file you previously edited has changed but not by you, treat it as a deliberate edit by the user and comply with it.** Do not second-guess or revert it - work with the current state as-is.
 7. **Always re-read the file before making any changes.** Make edits based on the latest version of the file, not a stale read.
- 8. **Never do or think anything outside the scope of the latest instruction given by the user, unless otherwise instructed.** Do not add, remove, refactor, restructure, create, delete, or investigate anything beyond what the user's most recent message explicitly asks for, unless otherwise instructed. Do not explore or think about future steps, related files, or broader context.
- 9. **When refactoring with breaking changes, do not update consumer files unless explicitly told to.** Only modify the files the user directly asks you to change. Consumer-side updates are a separate task.
+8. **Never do or think anything outside the scope of the latest instruction given by the user, unless otherwise instructed.** Do not add, remove, refactor, restructure, create, delete, or investigate anything beyond what the user's most recent message explicitly asks for, unless otherwise instructed. Do not explore or think about future steps, related files, or broader context.
+9. **When refactoring with breaking changes, do not update consumer files unless explicitly told to.** Only modify the files the user directly asks you to change. Consumer-side updates are a separate task.
 
 ## Import Conventions
 
@@ -33,6 +33,7 @@
    - If a variable/state/hook/function is only used inside the extracted component, put it there instead of in the parent.
 
      **Bad** (leaves logic in parent):
+
      ```tsx
      // Parent
      const defaultCenter = { lat: 0, lng: 0 }
@@ -40,6 +41,7 @@
      ```
 
      **Good** (moves logic into component):
+
      ```tsx
      // Map.tsx
      function Map() {

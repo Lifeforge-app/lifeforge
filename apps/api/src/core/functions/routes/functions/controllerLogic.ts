@@ -23,10 +23,6 @@ import {
   getStatusMessage
 } from '@lifeforge/server-utils'
 
-function isClientError(err: unknown): err is Error & { code: number } {
-  return err instanceof Error && err.name === 'ClientError' && 'code' in err
-}
-
 import checkRecordExistence from '../utils/checkRecordExistence'
 import { createCoreContext } from '../utils/coreContext'
 import getAESKey from '../utils/getAESKey'
@@ -35,6 +31,10 @@ import parseQuery from '../utils/parseQuery'
 import { clientError, serverError, success } from '../utils/response'
 import fieldsUploadMiddleware from '../utils/uploadMiddleware'
 import isAuthTokenValid from '../utils/validateAuthToken'
+
+function isClientError(err: unknown): err is Error & { code: number } {
+  return err instanceof Error && err.name === 'ClientError' && 'code' in err
+}
 
 /**
  * Creates an Express request handler from a ForgeControllerBuilder's configuration.

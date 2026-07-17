@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { FromSchema } from "json-schema-to-ts";
-import type { ZodTypeAny } from "zod";
+import type { FromSchema } from 'json-schema-to-ts'
+import type { ZodTypeAny } from 'zod'
 
 export type OmitIndexSignature<T> = T extends object
   ? T extends Array<any>
@@ -8,25 +8,29 @@ export type OmitIndexSignature<T> = T extends object
     : string extends keyof T
       ? unknown extends T[string]
         ? {
-            [K in keyof T as string extends K
-              ? never
-              : number extends K
-                ? never
-                : symbol extends K
-                  ? never
-                  : K]: OmitIndexSignature<T[K]>
-          }
-        : { [K in keyof T]: OmitIndexSignature<T[K]> }
-      : number extends keyof T
-        ? unknown extends T[number]
-          ? {
-              [K in keyof T as string extends K
+            [
+              K in keyof T as string extends K
                 ? never
                 : number extends K
                   ? never
                   : symbol extends K
                     ? never
-                    : K]: OmitIndexSignature<T[K]>
+                    : K
+            ]: OmitIndexSignature<T[K]>
+          }
+        : { [K in keyof T]: OmitIndexSignature<T[K]> }
+      : number extends keyof T
+        ? unknown extends T[number]
+          ? {
+              [
+                K in keyof T as string extends K
+                  ? never
+                  : number extends K
+                    ? never
+                    : symbol extends K
+                      ? never
+                      : K
+              ]: OmitIndexSignature<T[K]>
             }
           : { [K in keyof T]: OmitIndexSignature<T[K]> }
         : { [K in keyof T]: OmitIndexSignature<T[K]> }

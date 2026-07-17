@@ -3,11 +3,10 @@ import { createContext, useContext, useMemo, useState } from 'react'
 import tinycolor from 'tinycolor2'
 
 import type { ProxyTree } from '@lifeforge/api'
+import { useLanguageEffect } from '@lifeforge/localization'
 
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
-import { useLanguageEffect } from '@lifeforge/localization'
-
 import useBgTempEffect from './hooks/useBgTempEffect'
 import useBorderRadiusEffect from './hooks/useBorderRadiusEffect'
 import useBorderedEffect from './hooks/useBorderedEffect'

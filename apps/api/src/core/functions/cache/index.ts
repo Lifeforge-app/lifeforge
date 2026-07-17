@@ -62,10 +62,12 @@ export function createCache<T = unknown>(
       return cache.keys().filter(k => cache.get(k) !== undefined)
     },
     get size(): number {
-      return cache.keys().reduce(
-        (count, k) => (cache.get(k) !== undefined ? count + 1 : count),
-        0
-      )
+      return cache
+        .keys()
+        .reduce(
+          (count, k) => (cache.get(k) !== undefined ? count + 1 : count),
+          0
+        )
     },
     expiryTime(key: string): number | undefined {
       return cache.getTtl(key)

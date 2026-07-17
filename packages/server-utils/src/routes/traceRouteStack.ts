@@ -31,8 +31,7 @@ export default function traceRouteStack(
 ): Route[] {
   for (const layer of stack) {
     const handle = layer.handle as
-      | { stack?: RouteStackLayer[]; meta?: Route }
-      | undefined
+      { stack?: RouteStackLayer[]; meta?: Route } | undefined
 
     if (handle?.stack && Array.isArray(handle.stack)) {
       const pathName =
@@ -73,8 +72,7 @@ export default function traceRouteStack(
 
       const controllerLayerMeta = (
         routeStack[routeStack.length - 1]?.handle as
-          | { meta?: Route }
-          | undefined
+          { meta?: Route } | undefined
       )?.meta
 
       if (!controllerLayerMeta) {

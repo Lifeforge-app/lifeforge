@@ -1,7 +1,7 @@
+import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express from 'express'
 import helmet from 'helmet'
-import cookieParser from 'cookie-parser'
 
 import morganMiddleware from './middlewares/morganMiddleware'
 import rateLimitingMiddleware from './middlewares/rateLimitingMiddleware'

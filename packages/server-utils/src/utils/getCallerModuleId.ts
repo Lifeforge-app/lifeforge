@@ -1,8 +1,7 @@
 import getProjectRootDir from './extractProjectRoot'
 
 export default function getCallerModuleId():
-  | { source: 'app' | 'core'; id: string }
-  | undefined {
+  { source: 'app' | 'core'; id: string } | undefined {
   const obj: { stack?: string } = {}
 
   Error.captureStackTrace(obj)

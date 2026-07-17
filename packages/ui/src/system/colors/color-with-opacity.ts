@@ -4,16 +4,7 @@ import type { TokenizedColor } from './constants/colors'
 const COLOR_WITH_OPACITY_BRAND = Symbol('ColorWithOpacity')
 
 export type OpacityValue =
-  | '5%'
-  | '10%'
-  | '20%'
-  | '30%'
-  | '40%'
-  | '50%'
-  | '60%'
-  | '70%'
-  | '80%'
-  | '90%'
+  '5%' | '10%' | '20%' | '30%' | '40%' | '50%' | '60%' | '70%' | '80%' | '90%'
 
 export class ColorWithOpacity {
   readonly [COLOR_WITH_OPACITY_BRAND] = true

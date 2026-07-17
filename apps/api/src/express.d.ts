@@ -1,9 +1,10 @@
-import { PBService } from '@lifeforge/pocketbase'
 import {
   ConvertMedia,
   MediaConfig
 } from '@functions/routes/typescript/forge_controller.types'
 import { ITaskPoolTask } from '@functions/socketio/taskPool'
+
+import { PBService } from '@lifeforge/pocketbase'
 
 declare global {
   namespace Express {

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
+import { Tooltip } from '@/components/feedback'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-import { Tooltip } from '@/components/feedback';
 
 export function LocationServiceStatusIndicator({
   enabled

@@ -154,8 +154,8 @@ function CustomFontUploadModal({
         mimeTypes={{
           font: ['ttf', 'otf', 'woff', 'woff2']
         }}
-        onChange={autoDetectFontMetadata}
         name="file"
+        onChange={autoDetectFontMetadata}
       />
       <TextField
         required

@@ -1,9 +1,12 @@
 import { createCache } from '@functions/cache'
 import { v4 } from 'uuid'
 
-export const pendingTOTPSetups = createCache<{ secret: string }>('totp-setups', {
-  stdTTL: 300
-})
+export const pendingTOTPSetups = createCache<{ secret: string }>(
+  'totp-setups',
+  {
+    stdTTL: 300
+  }
+)
 
 export const pending2FASessions = createCache<{ userId: string }>(
   '2fa-sessions',

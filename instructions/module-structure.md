@@ -26,7 +26,7 @@ workspace package and is developed/built independently.
 ```jsonc
 {
   "name": "@lifeforge/lifeforge--books-library",
-  "displayName": "Books Library",          // Human-readable name shown in the UI
+  "displayName": "Books Library", // Human-readable name shown in the UI
   "version": "0.0.5",
   "description": "Your personal library, no overdue fees.",
   "repository": { "type": "git", "url": "..." },
@@ -35,13 +35,14 @@ workspace package and is developed/built independently.
     "build:client": "cd client && pnpm run vite build",
     "build:server": "pnpm build ./server/index.ts --outdir ./server/dist --target pnpm --external @lifeforge/server-utils --external zod"
   },
-  "dependencies": { /* runtime deps used by the SERVER */ },
-  "devDependencies": { /* @types/* etc. */ },
+  "dependencies": {/* runtime deps used by the SERVER */},
+  "devDependencies": {/* @types/* etc. */},
   "author": "...",
   "lifeforge": {
-    "icon": "tabler:books",                 // Iconify icon for the module
-    "category": "Storage",                  // Category used for grouping
-    "APIKeyAccess": {                        // API keys the module wants access to
+    "icon": "tabler:books", // Iconify icon for the module
+    "category": "Storage", // Category used for grouping
+    "APIKeyAccess": {
+      // API keys the module wants access to
       "deepseek": {
         "usage": "Create transactions from natural language and images using llm",
         "required": false
@@ -64,6 +65,7 @@ workspace package and is developed/built independently.
 ```
 
 Key points:
+
 - The `lifeforge` block (`icon`, `category`) drives how the module appears in
   the host shell.
 - `lifeforge.APIKeyAccess` declares which entries from the central API-key vault
@@ -72,12 +74,12 @@ Key points:
   - `usage` - human-readable reason shown to the user when granting access.
   - `required` - whether the module is unusable without the key (`true`) or the
     key only enables optional features (`false`).
-  Declared keys are surfaced to the user for consent and are read at runtime on
-  the server via `core.api.getAPIKey('<id>', pb)` inside a route callback. Omit
-  the block entirely when the module needs no external API keys (most modules).
-  **Every API key the module uses must be declared here - whether it is consumed
-  indirectly through an AI chat-completion call or read directly via
-  `getAPIKey`. Accessing an undeclared API key results in an error at runtime.**
+    Declared keys are surfaced to the user for consent and are read at runtime on
+    the server via `core.api.getAPIKey('<id>', pb)` inside a route callback. Omit
+    the block entirely when the module needs no external API keys (most modules).
+    **Every API key the module uses must be declared here - whether it is consumed
+    indirectly through an AI chat-completion call or read directly via
+    `getAPIKey`. Accessing an undeclared API key results in an error at runtime.**
 - Shared framework packages are declared as `peerDependencies` with
   `workspace:*`; module-specific runtime libraries go into `dependencies`.
 - Three build scripts: `types` (typecheck client), `build:client` (Vite
@@ -114,14 +116,20 @@ The manifest wires the client into the host via module federation. It calls
 
 ```typescript
 import { lazy } from 'react'
+
 import { createForgeModuleClient } from '@lifeforge/federation'
+
 import contract from './contract'
 
 const { forgeAPI, ...manifest } = createForgeModuleClient({
   // Optional: sidebar sub-navigation for multi-page modules
   subsection: [
     { label: 'Dashboard', icon: 'tabler:dashboard', path: '' },
-    { label: 'Transactions', icon: 'tabler:arrows-exchange', path: 'transactions' }
+    {
+      label: 'Transactions',
+      icon: 'tabler:arrows-exchange',
+      path: 'transactions'
+    }
   ],
   // Route -> lazily-loaded page component. "@" resolves to src/index
   routes: {
@@ -147,9 +155,9 @@ export { forgeAPI }
 A large `as const` object describing every endpoint: HTTP `method`,
 `description`, `noAuth`, `encrypted`, `media`, and JSON-schema `input`/`output`.
 It is generated from the server routes by `writeContractFileToClient` (called in
-`server/index.ts`) - **never edit it manually**. No command is required to regenerate 
+`server/index.ts`) - **never edit it manually**. No command is required to regenerate
 it as it will be automatically regenerated on every single mutation to the server code
-whenever the server is running. It serves as the single source of truththat gives 
+whenever the server is running. It serves as the single source of truththat gives
 `forgeAPI` full end-to-end type safety.
 
 ### `vite.config.ts` & `tsconfig.json`
@@ -159,6 +167,7 @@ Both are thin wrappers around shared configs:
 ```typescript
 // vite.config.ts
 import { defineModuleConfig } from '@lifeforge/configs/vite'
+
 export default defineModuleConfig({ dirname: __dirname })
 ```
 
@@ -173,7 +182,12 @@ export default defineModuleConfig({ dirname: __dirname })
       "@/*": ["./src/*"]
     }
   },
-  "include": ["./src/**/*", "./manifest.ts", "./vite.config.ts", "./contract.ts"]
+  "include": [
+    "./src/**/*",
+    "./manifest.ts",
+    "./vite.config.ts",
+    "./contract.ts"
+  ]
 }
 ```
 
@@ -221,10 +235,10 @@ takes the endpoint and a config `{ action, queryKey }`. It auto-invalidates
 ```typescript
 import { useForgeMutation } from '@lifeforge/api'
 
-const createMutation = useForgeMutation(
-  forgeAPI.assets.create,
-  { action: 'create', queryKey: forgeAPI.assets.key }
-)
+const createMutation = useForgeMutation(forgeAPI.assets.create, {
+  action: 'create',
+  queryKey: forgeAPI.assets.key
+})
 
 const updateMutation = useForgeMutation(
   forgeAPI.assets.update.input({ id: initialData?.id || '' }),
@@ -303,8 +317,9 @@ of the client `contract.ts`:
 
 ```typescript
 import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
-import * as entriesRoutes from './routes/entries'
+
 import * as collectionsRoutes from './routes/collection'
+import * as entriesRoutes from './routes/entries'
 
 const routes = forgeRouter({
   entries: entriesRoutes,
@@ -325,6 +340,7 @@ Creates the module's `forge` builder bound to the schema:
 
 ```typescript
 import { createForge } from '@lifeforge/server-utils'
+
 import schema from './schema'
 
 const forge = createForge(schema)
@@ -344,12 +360,17 @@ the routes.
 
 ```typescript
 import z from 'zod'
+
 import { cleanSchemas } from '@lifeforge/server-utils'
 
 export const schemas = {
   collections: {
     schema: z.object({ name: z.string(), icon: z.string() }),
-    raw: { name: 'books_library__collections', type: 'base', fields: [ /* ... */ ] }
+    raw: {
+      name: 'books_library__collections',
+      type: 'base',
+      fields: [/* ... */]
+    }
   }
 }
 
@@ -366,6 +387,7 @@ Each file exports named endpoints built with the `forge` DSL. Endpoints are
 
 ```typescript
 import z from 'zod'
+
 import forge from '../forge'
 import schema from '../schema'
 
@@ -375,7 +397,12 @@ export const list = forge
     output: { OK: z.array(schema.collections_aggregated) }
   })
   .callback(async ({ pb, response }) =>
-    response.ok(await pb.getFullList.collection('collections_aggregated').sort(['name']).execute())
+    response.ok(
+      await pb.getFullList
+        .collection('collections_aggregated')
+        .sort(['name'])
+        .execute()
+    )
   )
 
 export const create = forge
@@ -385,11 +412,14 @@ export const create = forge
     output: { CREATED: schema.collections }
   })
   .callback(async ({ pb, body, response }) =>
-    response.created(await pb.create.collection('collections').data(body).execute())
+    response.created(
+      await pb.create.collection('collections').data(body).execute()
+    )
   )
 ```
 
 The callback receives a context object, commonly destructuring:
+
 - `pb` - typed PocketBase query builder (`getFullList`, `getOne`, `create`,
   `update`, `delete`, each chained with `.collection(...)`, `.id(...)`,
   `.data(...)`, `.filter([...])`, `.execute()`).

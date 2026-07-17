@@ -11,7 +11,7 @@ import {
   storiesConfig,
   styleConfig,
   testsConfig
-} from './eslint/index'
+} from '.'
 
 const config: Linter.Config[] = [
   {

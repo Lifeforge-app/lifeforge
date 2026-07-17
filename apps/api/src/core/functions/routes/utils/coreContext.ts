@@ -11,7 +11,7 @@ import {
   encrypt2
 } from '@functions/auth/encryption'
 import { createCache } from '@functions/cache'
-import getAPIKeyFactory from '@functions/database/getAPIKey';
+import getAPIKeyFactory from '@functions/database/getAPIKey'
 import fetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'

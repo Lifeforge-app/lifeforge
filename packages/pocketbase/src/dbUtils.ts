@@ -1,8 +1,7 @@
 import Pocketbase from 'pocketbase'
 
-import parseCollectionName from './utils/parseCollectionName'
-
 import { PBLogger } from './PBService'
+import parseCollectionName from './utils/parseCollectionName'
 
 /**
  * Converts a code-format collection name to PocketBase format

@@ -1,4 +1,4 @@
-import { createLogger, type Logger } from '@lifeforge/log'
+import { type Logger, createLogger } from '@lifeforge/log'
 
 export function createServiceLogger(serviceName: string): Logger {
   return createLogger({ name: serviceName })
