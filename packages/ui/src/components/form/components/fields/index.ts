@@ -4,6 +4,8 @@ export * from './CheckboxField'
 
 export * from './ColorField'
 
+export * from './ComboboxField'
+
 export * from './CurrencyField'
 
 export * from './DateField'
