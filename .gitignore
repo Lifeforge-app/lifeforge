@@ -61,6 +61,3 @@ keys
 
 # user-generated files
 # modules
-locales/*
-!modules/**/locales/*
-!locales/lang-en
