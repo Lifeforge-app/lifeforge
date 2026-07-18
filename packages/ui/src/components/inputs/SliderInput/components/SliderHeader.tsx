@@ -15,7 +15,8 @@ export function SliderHeader({
   max = 100,
   min = 0,
   onChange,
-  disabled
+  disabled,
+  renderValue
 }: {
   icon?: string
   label?: string
@@ -26,6 +27,7 @@ export function SliderHeader({
   min?: number
   onChange?: (value: number) => void
   disabled?: boolean
+  renderValue?: (value: number) => string
 }) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -86,10 +88,10 @@ export function SliderHeader({
             setIsHovered(false)
           }}
         >
-          {value}
+          {renderValue ? renderValue(value) : value}
         </span>
         <Text color="muted" style={{ fontSize: '0.75rem' }}>
-          /{max}
+          /{renderValue ? renderValue(max) : max}
         </Text>
       </Flex>
     </Flex>

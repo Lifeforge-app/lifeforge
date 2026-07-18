@@ -21,6 +21,7 @@ export interface SliderInputProps extends Omit<
   step?: number
   className?: string
   namespace?: string | false
+  renderValue?: (value: number) => string
 }
 
 export function SliderInput({
@@ -35,6 +36,7 @@ export function SliderInput({
   step = 1,
   className,
   namespace,
+  renderValue,
   ...rest
 }: SliderInputProps) {
   const progress = ((value - min) / (max - min)) * 100
@@ -48,6 +50,7 @@ export function SliderInput({
         max={max}
         min={min}
         namespace={namespace}
+        renderValue={renderValue}
         required={required}
         value={value}
         onChange={onChange}
@@ -74,7 +77,7 @@ export function SliderInput({
           }}
         />
       </Box>
-      <SliderTicks max={max} min={min} />
+      <SliderTicks max={max} min={min} renderValue={renderValue} />
     </Box>
   )
 }

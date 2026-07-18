@@ -1089,9 +1089,16 @@ importers:
       '@lifeforge/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@vis.gl/react-google-maps':
-        specifier: ^1.5.5
-        version: 1.9.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      leaflet:
+        specifier: ^1.9.4
+        version: 1.9.4
+      recharts:
+        specifier: ^2.15.0
+        version: 2.15.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+    devDependencies:
+      '@types/leaflet':
+        specifier: ^1.9.20
+        version: 1.9.21
 
   modules/lifeforge--passwords:
     dependencies:
@@ -1546,6 +1553,37 @@ importers:
       '@types/react-virtualized':
         specifier: ^9.22.3
         version: 9.22.3
+
+  modules/mrt-map-builder:
+    dependencies:
+      '@lifeforge/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@lifeforge/federation':
+        specifier: workspace:*
+        version: link:../../packages/federation
+      '@lifeforge/localization':
+        specifier: workspace:*
+        version: link:../../packages/localization
+      '@lifeforge/server-utils':
+        specifier: workspace:*
+        version: link:../../packages/server-utils
+      '@lifeforge/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      d3:
+        specifier: ^7.9.0
+        version: 7.9.0
+      uuid:
+        specifier: ^14.0.1
+        version: 14.0.1
+    devDependencies:
+      '@types/d3':
+        specifier: ^7.4.3
+        version: 7.4.3
 
   packages/api:
     dependencies:
@@ -11274,6 +11312,10 @@ packages:
 
   uuid@13.0.2:
     resolution: {integrity: sha512-vzi9uRZ926x4XV73S/4qQaTwPXM2JBj6/6lI/byHH1jOpCzb0zDbfytgA9LcN/hzb2l7WQSQnxITOVx5un/wGw==}
+    hasBin: true
+
+  uuid@14.0.1:
+    resolution: {integrity: sha512-6ZxzVpzDXDa3bJWaHilVayA+BH/1zmxCJoVgvmqJnid/gPoKHxUrS/aC/T6LGQtNHT+XHG9fXPJB4d+IrU30Ew==}
     hasBin: true
 
   uuid@3.4.0:
@@ -22395,6 +22437,8 @@ snapshots:
   uuid@11.1.1: {}
 
   uuid@13.0.2: {}
+
+  uuid@14.0.1: {}
 
   uuid@3.4.0: {}
 
