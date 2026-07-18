@@ -10,7 +10,6 @@ import forge from './forge'
 import * as authRoutes from './routes/auth'
 import * as customFontsRoutes from './routes/customFonts'
 import * as personalizationRoutes from './routes/personalization'
-import * as qrLoginRoutes from './routes/qrLogin'
 import * as settingsRoutes from './routes/settings'
 
 export const currentSession = {
@@ -40,7 +39,6 @@ export default forgeRouter({
       return response.ok(users.length > 0)
     }),
   auth: authRoutes,
-  qrLogin: qrLoginRoutes,
   settings: settingsRoutes,
   personalization: personalizationRoutes,
   customFonts: customFontsRoutes

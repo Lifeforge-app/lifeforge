@@ -5,7 +5,11 @@ import path from 'path'
 import request from 'request'
 import z from 'zod'
 
-import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
+import {
+  forgeRouter,
+  traceRouteStack,
+  writeContractFileToClient
+} from '@lifeforge/server-utils'
 
 import forge from './forge'
 
@@ -108,6 +112,34 @@ const encryptionPublicKey = forge
   })
   .callback(async ({ response }) => response.ok(getPublicKey()))
 
+const listRoutes = forge
+  .query({
+    description: 'List all registered routes',
+    noAuth: true,
+    encrypted: false,
+    input: {},
+    output: {
+      OK: z.array(
+        z.object({
+          method: z.string(),
+          path: z.string(),
+          description: z.string()
+        })
+      )
+    }
+  })
+  .callback(async ({ req, response }) =>
+    response.ok(
+      traceRouteStack(req.app._router.stack).map(
+        ({ method, path, description }) => ({
+          method,
+          path,
+          description
+        })
+      )
+    )
+  )
+
 const coreRoutes = forgeRouter({
   '': welcome,
   locales: (await import('@lib/locales')).default,
@@ -122,6 +154,7 @@ const coreRoutes = forgeRouter({
   ai: (await import('@lib/ai')).default,
   ping,
   status,
+  listRoutes,
   media: getMedia,
   corsAnywhere,
   encryptionPublicKey

@@ -32,7 +32,7 @@ export async function matchCollectionToModule(
   allModules: string[],
   collection: Record<string, unknown>
 ) {
-  const { parseCollectionName } = await import('@lifeforge/server-utils')
+  const { parseCollectionName } = await import('@lifeforge/pocketbase')
 
   const collectionName = collection.name as string
 

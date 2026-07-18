@@ -3,7 +3,13 @@ import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 
 import { useAuth } from '@lifeforge/api'
-import { ModalManager, Stack, WithQueryData, toast } from '@lifeforge/ui'
+import {
+  ModalManager,
+  Stack,
+  WithQueryData,
+  toast,
+  useModalStore
+} from '@lifeforge/ui'
 
 import forgeAPI from '@/core/utils/forgeAPI'
 
@@ -11,8 +17,10 @@ import AuthFooter from '../components/AuthFooter'
 import AuthForm from '../components/AuthForm'
 import AuthHeader from '../components/AuthHeader'
 import AuthSideImage from '../components/AuthSideImage'
+import TwoFAModal from '../modals/TwoFAModal'
 
 function LoginPage() {
+  const { open } = useModalStore()
   const { verifyOAuth } = useAuth()
   const { t } = useTranslation('common.auth')
   const [searchParams, setSearchParams] = useSearchParams()
@@ -28,6 +36,10 @@ function LoginPage() {
         setSearchParams({})
 
         return
+      }
+
+      if (result === '2fa_required') {
+        open(TwoFAModal, {})
       }
 
       if (result.startsWith('success')) {

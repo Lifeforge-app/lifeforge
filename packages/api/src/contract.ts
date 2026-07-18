@@ -199,201 +199,6 @@ export const contract = {
         }
       }
     },
-    "qrLogin": {
-      "approveQRLogin": {
-        "method": "post",
-        "description": "Approve a QR login request",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              }
-            },
-            "required": [
-              "sessionId"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "success": {
-                "type": "boolean"
-              },
-              "browserInfo": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "success",
-              "browserInfo"
-            ],
-            "additionalProperties": false
-          },
-          "NOT_FOUND": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "checkQRSessionStatus": {
-        "method": "get",
-        "description": "Check QR login session status",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              }
-            },
-            "required": [
-              "sessionId"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "not_found"
-                  }
-                },
-                "required": [
-                  "status"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "expired"
-                  }
-                },
-                "required": [
-                  "status"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "approved"
-                  },
-                  "session": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "status",
-                  "session"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "pending"
-                  },
-                  "expiresAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "status",
-                  "expiresAt"
-                ],
-                "additionalProperties": false
-              }
-            ]
-          }
-        }
-      },
-      "registerQRSession": {
-        "method": "post",
-        "description": "Register a new QR login session",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              },
-              "browserInfo": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "sessionId",
-              "browserInfo"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "CREATED": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string"
-              },
-              "expiresAt": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "sessionId",
-              "expiresAt"
-            ],
-            "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      }
-    },
     "settings": {
       "deleteAvatar": {
         "method": "post",
@@ -3209,6 +3014,41 @@ export const contract = {
           "environment"
         ],
         "additionalProperties": false
+      }
+    }
+  },
+  "listRoutes": {
+    "method": "get",
+    "description": "List all registered routes",
+    "noAuth": true,
+    "encrypted": false,
+    "isDownloadable": false,
+    "media": null,
+    "input": {},
+    "output": {
+      "OK": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string"
+            },
+            "path": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "method",
+            "path",
+            "description"
+          ],
+          "additionalProperties": false
+        }
       }
     }
   },

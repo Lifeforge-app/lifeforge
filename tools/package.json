@@ -22,7 +22,7 @@
     "prompts": "^2.4.2",
     "semver": "^7.7.3",
     "@lifeforge/log": "workspace:*",
-    "@lifeforge/server-utils": "workspace:*"
+    "@lifeforge/pocketbase": "workspace:*"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",

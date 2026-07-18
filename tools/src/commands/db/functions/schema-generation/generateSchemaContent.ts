@@ -12,7 +12,7 @@ async function processCollectionSchema(
   collection: Record<string, unknown>,
   idToNameMap: Map<string, string>
 ): Promise<string> {
-  const { parseCollectionName } = await import('@lifeforge/server-utils')
+  const { parseCollectionName } = await import('@lifeforge/pocketbase')
 
   const collectionName = collection.name as string
 
@@ -70,7 +70,7 @@ export default async function generateSchemaContent(
   }
 
   return `import z from 'zod'
-import { cleanSchemas } from '@lifeforge/server-utils'
+import { cleanSchemas } from '@lifeforge/pocketbase'
 
 export const schemas = {
 ${schemaEntries.join('\n')}

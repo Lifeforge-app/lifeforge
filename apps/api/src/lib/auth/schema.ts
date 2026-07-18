@@ -1,5 +1,4 @@
 import z from 'zod'
-
 import { cleanSchemas } from '@lifeforge/pocketbase'
 
 export const schemas = {
@@ -136,10 +135,7 @@ export const schemas = {
           type: 'autodate'
         }
       ],
-      indexes: [
-        'CREATE UNIQUE INDEX `idx_JfdBwvzkez` ON `auth__refresh_tokens` (`token_hash`)',
-        'CREATE INDEX `idx_AxW8ImTh8x` ON `auth__refresh_tokens` (`family`)'
-      ],
+      indexes: [],
       system: false
     }
   },
@@ -240,9 +236,7 @@ export const schemas = {
           type: 'autodate'
         }
       ],
-      indexes: [
-        'CREATE UNIQUE INDEX `idx_vNNma4iNEP` ON `auth__oauth_providers` (`provider`)'
-      ],
+      indexes: [],
       system: false
     }
   }

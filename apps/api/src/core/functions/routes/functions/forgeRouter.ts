@@ -26,11 +26,28 @@ function isForgeController(value: unknown): value is ForgeContract {
   )
 }
 
-function extractAlias(routes: RouterInput): string | undefined {
+function collectAliases(routes: RouterInput, set: Set<string>): void {
   for (const value of Object.values(routes)) {
-    if (isForgeController(value) && value.modulePathAlias) {
-      return value.modulePathAlias
+    if (isForgeController(value)) {
+      if (value.modulePathAlias) {
+        set.add(value.modulePathAlias)
+      }
+    } else if (
+      typeof value === 'object' &&
+      value !== null &&
+      !isRouter(value)
+    ) {
+      collectAliases(value as RouterInput, set)
     }
+  }
+}
+
+function extractAlias(routes: RouterInput): string | undefined {
+  const aliases = new Set<string>()
+  collectAliases(routes, aliases)
+
+  if (aliases.size === 1) {
+    return aliases.values().next().value
   }
 
   return undefined
