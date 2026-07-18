@@ -135,7 +135,10 @@ export const schemas = {
           type: 'autodate'
         }
       ],
-      indexes: [],
+      indexes: [
+        'CREATE UNIQUE INDEX `idx_JfdBwvzkez` ON `auth__refresh_tokens` (`token_hash`)',
+        'CREATE INDEX `idx_AxW8ImTh8x` ON `auth__refresh_tokens` (`family`)'
+      ],
       system: false
     }
   },
@@ -236,7 +239,9 @@ export const schemas = {
           type: 'autodate'
         }
       ],
-      indexes: [],
+      indexes: [
+        'CREATE UNIQUE INDEX `idx_vNNma4iNEP` ON `auth__oauth_providers` (`provider`)'
+      ],
       system: false
     }
   }
