@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "forge": "tsx --tsconfig=$PWD/tools/tsconfig.json tools/src/index.ts",
-    "build": "turbo build --filter=\"./packages/*\" && turbo build",
+    "build": "turbo build --filter=\"./packages/*\" && turbo build --continue",
     "lint": "prettier --check . && eslint .",
     "fix": "prettier --write ./ && pnpm lint",
     "test": "turbo test",
