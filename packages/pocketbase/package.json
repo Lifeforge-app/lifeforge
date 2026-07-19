@@ -18,8 +18,9 @@
     "typecheck": "tsc --emitDeclarationOnly"
   },
   "dependencies": {
-    "pocketbase": "^0.27.0",
     "@lifeforge/log": "workspace:*",
-    "chalk": "^5.6.2"
+    "@types/node": "^25.9.5",
+    "chalk": "^5.6.2",
+    "pocketbase": "^0.27.0"
   }
 }
