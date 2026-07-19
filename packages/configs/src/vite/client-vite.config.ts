@@ -62,9 +62,17 @@ export function defineClientConfig(dirname: string) {
             None: ''
           },
           shared: {
-            ...SHARED_DEPS,
             ...Object.fromEntries(
-              Object.keys(SHARED_PACKAGES).map(name => [name, {}])
+              Object.entries(SHARED_DEPS).map(([name, config]) => [
+                name,
+                { ...config, singleton: true }
+              ])
+            ),
+            ...Object.fromEntries(
+              Object.keys(SHARED_PACKAGES).map(name => [
+                name,
+                { singleton: true }
+              ])
             )
           }
         })
