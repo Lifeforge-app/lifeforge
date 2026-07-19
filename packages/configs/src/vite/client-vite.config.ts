@@ -1,7 +1,7 @@
-// import MillionLint from '@million/lint'
 import federation from '@originjs/vite-plugin-federation'
+import babel from '@rolldown/plugin-babel'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
-import react from '@vitejs/plugin-react'
+import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import path from 'node:path'
 import { defineConfig } from 'vite'
 
@@ -19,12 +19,7 @@ export function defineClientConfig(dirname: string) {
         replacement: path.resolve(dirname, '../', entryPoint)
       })
     ),
-    { find: '@modules', replacement: path.resolve(dirname, '../../modules') },
-    {
-      find: '@',
-      replacement: '@',
-      customResolver: aliasResolver
-    }
+    { find: '@modules', replacement: path.resolve(dirname, '../../modules') }
   ]
 
   return defineConfig(({ command }) => {
@@ -41,22 +36,25 @@ export function defineClientConfig(dirname: string) {
     return {
       envDir: path.resolve(dirname, '../../env'),
       plugins: [
-        // MillionLint.vite({}),
-        react({
-          babel: {
-            plugins: [
-              [
-                'babel-plugin-react-compiler',
-                {
-                  sources: () => {
-                    return true
-                  }
-                }
-              ]
-            ]
+        {
+          name: 'alias-resolver',
+          enforce: 'pre',
+          resolveId(source, importer) {
+            if (source === '@' || source.startsWith('@/')) {
+              return aliasResolver(source, importer)
+            }
+            return null
+          }
+        },
+        react(),
+        babel({
+          presets: [reactCompilerPreset()]
+        }),
+        vanillaExtractPlugin({
+          unstable_pluginFilter: ({ name }) => {
+            return ['vite-tsconfig-paths', 'alias-resolver'].includes(name)
           }
         }),
-        vanillaExtractPlugin(),
         federation({
           name: 'host',
           remotes: {
@@ -81,6 +79,13 @@ export function defineClientConfig(dirname: string) {
       resolve: {
         alias: activeAlias
       },
+      ssr: {
+        noExternal: [
+          /^@lifeforge\//,
+          new RegExp(path.resolve(dirname, '../../packages')),
+          new RegExp(path.resolve(dirname, '../../modules'))
+        ]
+      },
       build: {
         commonjsOptions: {
           transformMixedEsModules: true
@@ -89,16 +94,14 @@ export function defineClientConfig(dirname: string) {
         sourcemap: false,
         rollupOptions: {
           output: {
-            experimentalMinChunkSize: 5000
+            codeSplitting: {
+              minSize: 5000
+            }
           }
         }
       },
       optimizeDeps: {
-        exclude: Object.keys(SHARED_PACKAGES),
-        esbuildOptions: {
-          sourcemap: false,
-          target: 'esnext'
-        }
+        exclude: Object.keys(SHARED_PACKAGES)
       },
       css: {
         postcss: {

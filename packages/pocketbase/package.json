@@ -14,17 +14,12 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && vite build && tsgo --emitDeclarationOnly",
-    "typecheck": "tsgo --emitDeclarationOnly"
+    "build": "rm -rf dist && vite build && tsc --emitDeclarationOnly",
+    "typecheck": "tsc --emitDeclarationOnly"
   },
   "dependencies": {
-    "pocketbase": "^0.26.2",
+    "pocketbase": "^0.27.0",
     "@lifeforge/log": "workspace:*",
-    "lodash": "^4.17.21",
     "chalk": "^5.6.2"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.17.21",
-    "vite": "^7.1.9"
   }
 }

@@ -27,7 +27,6 @@ export function clientI18nConfig({
     lng: 'en',
     fallbackLng: 'en',
     cache: { enabled: true },
-    initImmediate: true,
     maxRetries: 1,
     cleanCode: true,
     debug: false,

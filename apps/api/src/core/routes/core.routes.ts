@@ -1,8 +1,8 @@
 import { getPublicKey } from '@functions/encryption'
 import corsAnywhere from '@lib/corsAnywhere'
 import dayjs from 'dayjs'
+import { Readable } from 'node:stream'
 import path from 'path'
-import request from 'request'
 import z from 'zod'
 
 import {
@@ -94,9 +94,26 @@ const getMedia = forge
         searchParams.append('token', token)
       }
 
-      request(
+      const fileRes = await fetch(
         `${process.env.PB_HOST}/api/files/${collectionId}/${recordId}/${fieldId}?${searchParams.toString()}`
-      ).pipe(res)
+      )
+
+      if (!fileRes.ok) {
+        res.status(fileRes.status).send(await fileRes.text())
+        return
+      }
+
+      for (const [key, value] of fileRes.headers.entries()) {
+        res.setHeader(key, value)
+      }
+
+      if (fileRes.body) {
+        Readable.fromWeb(
+          fileRes.body as Parameters<typeof Readable.fromWeb>[0]
+        ).pipe(res)
+      } else {
+        res.end()
+      }
     }
   )
 

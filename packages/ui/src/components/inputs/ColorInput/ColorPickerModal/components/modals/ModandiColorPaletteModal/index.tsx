@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { sortFn } from 'color-sorter'
 
 import { ModalHeader } from '@/components/overlays'
 import { Box, Flex, Grid, Icon } from '@/components/primitives'
@@ -33,7 +32,7 @@ function MorandiColorPaletteModal({
         style={{ gap: '0.75rem' }}
         templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
       >
-        {MORANDI_COLORS.sort(sortFn).map((morandiColor, index) => (
+        {MORANDI_COLORS.map((morandiColor, index) => (
           <Flex key={index} asChild centered r="md">
             <button
               className={clsx(

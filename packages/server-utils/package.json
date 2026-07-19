@@ -14,33 +14,28 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && vite build && tsgo --emitDeclarationOnly",
-    "typecheck": "tsgo --emitDeclarationOnly"
+    "build": "rm -rf dist && vite build && tsc --emitDeclarationOnly",
+    "typecheck": "tsc --emitDeclarationOnly"
   },
   "dependencies": {
+    "@lifeforge/log": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
     "chalk": "^5.6.2",
     "crypto-js": "^4.2.0",
     "express": "^4.21.2",
     "form-data": "^4.0.0",
     "groq-sdk": "^0.20.0",
     "ical.js": "^2.1.0",
-    "lodash": "^4.17.21",
-    "multer": "^1.4.5-lts.1",
     "openai": "^4.81.0",
     "pdf2pic": "^3.1.5",
     "socket.io": "^4.8.3",
     "tesseract.js": "^5.1.1",
-    "uuid": "^11.1.0",
-    "@lifeforge/log": "workspace:*",
-    "@lifeforge/pocketbase": "workspace:*"
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",
     "@types/express": "^4.17.23",
     "@types/express-serve-static-core": "4",
-    "@types/lodash": "^4.17.21",
-    "@types/multer": "^1.4.13",
-    "vite": "^7.1.9",
-    "vitest": "^4.1.7"
+    "@types/multer": "^2.2.0"
   }
 }

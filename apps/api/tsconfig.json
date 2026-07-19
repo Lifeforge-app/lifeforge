@@ -10,12 +10,29 @@
     "noEmit": true,
     "rootDir": "../../",
     "paths": {
-      "@constants": ["./src/core/constants"],
-      "@functions/*": ["./src/core/functions/*"],
-      "@schema": ["./src/core/schema"],
-      "@lib/*": ["./src/lib/*", "../../modules/*"],
-      "@tests/*": ["./src/tests/*"]
-    }
+      "@constants": [
+        "./src/core/constants"
+      ],
+      "@functions/*": [
+        "./src/core/functions/*"
+      ],
+      "@schema": [
+        "./src/core/schema"
+      ],
+      "@lib/*": [
+        "./src/lib/*",
+        "../../modules/*"
+      ],
+      "@tests/*": [
+        "./src/tests/*"
+      ]
+    },
+    "types": [
+      "multer"
+    ]
   },
-  "include": ["./src/**/*", "../../modules/**/server/**/*"]
+  "include": [
+    "./src/**/*",
+    "../../modules/**/server/**/*"
+  ]
 }

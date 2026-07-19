@@ -14,9 +14,18 @@ export function aliasResolver(
     return null
   }
 
+  let normalizedImporter = importer
+  if (!path.isAbsolute(normalizedImporter)) {
+    normalizedImporter = path.resolve(process.cwd(), normalizedImporter)
+  }
+  normalizedImporter = normalizedImporter.replace(/^\/@fs\/?/, '')
+  if (!normalizedImporter.startsWith('/')) {
+    normalizedImporter = '/' + normalizedImporter
+  }
+
   let rootDir: string
 
-  const clientMatch = importer.match(/(.+\/(?:client|web))/)
+  const clientMatch = normalizedImporter.match(/(.+\/(?:client|web))/)
 
   if (clientMatch) {
     const clientDir = clientMatch[1]
@@ -26,7 +35,7 @@ export function aliasResolver(
         ? clientDir
         : `${clientDir}/src`
   } else {
-    const srcMatch = importer.match(/(.+\/src)/)
+    const srcMatch = normalizedImporter.match(/(.+\/src)/)
 
     if (!srcMatch) {
       return null
@@ -34,7 +43,8 @@ export function aliasResolver(
     rootDir = srcMatch[1]
   }
 
-  const basePath = path.resolve(rootDir, id.slice(2))
+  const subPath = id === '@' ? '' : id.slice(2)
+  const basePath = path.resolve(rootDir, subPath)
 
   const candidates = [
     `${basePath}.tsx`,

@@ -1,6 +1,6 @@
 import mdx, { Options } from '@mdx-js/rollup'
-import react from '@vitejs/plugin-react'
 import federation from '@originjs/vite-plugin-federation'
+import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
@@ -53,12 +53,6 @@ export default defineConfig({
           }
         }
       }
-    }
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      sourcemap: false,
-      target: 'esnext'
     }
   }
 })

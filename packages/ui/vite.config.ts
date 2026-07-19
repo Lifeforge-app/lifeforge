@@ -1,7 +1,7 @@
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig, esmExternalRequirePlugin } from 'vite'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
@@ -9,7 +9,11 @@ export default defineConfig({
     react(),
     vanillaExtractPlugin(),
     dts({
-      rollupTypes: true
+      bundleTypes: true
+    }),
+    esmExternalRequirePlugin({
+      skipDuplicateCheck: true,
+      external: [/^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/]
     })
   ],
   resolve: {
@@ -24,20 +28,7 @@ export default defineConfig({
       fileName: format => `index.${format === 'es' ? 'mjs' : 'js'}`
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        'react/jsx-runtime',
-        '@lifeforge/api',
-        '@lifeforge/federation',
-        '@lifeforge/localization',
-        '@tanstack/react-query',
-        'react-toastify',
-        /^react-router/,
-        /^react-i18next/,
-        /^i18next/,
-        /^nuqs/
-      ],
+      external: [/^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/],
       output: {
         globals: {
           react: 'React',

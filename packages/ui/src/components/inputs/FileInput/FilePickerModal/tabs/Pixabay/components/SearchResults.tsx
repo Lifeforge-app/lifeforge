@@ -52,47 +52,49 @@ export function SearchResults({
               key: image.id,
               fullResURL: image.imageURL
             }))}
-            renderPhoto={({ photo, imageProps: { src, alt, style } }) => (
-              <Transition>
-                <Ring
-                  asChild
-                  ringColor={
-                    photo.fullResURL === file
-                      ? 'custom-500'
-                      : {
-                          base: 'transparent',
-                          hover: 'bg-400',
-                          darkHover: 'bg-600'
-                        }
-                  }
-                  ringOffsetWidth="2px"
-                  ringWidth="2px"
-                >
-                  <Box
-                    as="button"
-                    bg={{ base: 'bg-200', dark: 'bg-800' }}
-                    overflow="hidden"
-                    r="md"
-                    style={style as CSSProperties}
-                    width="100%"
-                    onClick={() => {
-                      setFile(photo.fullResURL)
-                      setPreview(photo.src)
-                    }}
+            render={{
+              image: ({ src, alt, style }, { photo }) => (
+                <Transition>
+                  <Ring
+                    asChild
+                    ringColor={
+                      photo.fullResURL === file
+                        ? 'custom-500'
+                        : {
+                            base: 'transparent',
+                            hover: 'bg-400',
+                            darkHover: 'bg-600'
+                          }
+                    }
+                    ringOffsetWidth="2px"
+                    ringWidth="2px"
                   >
-                    <img
-                      alt={alt}
-                      src={src}
-                      style={{
-                        height: '100%',
-                        objectFit: 'cover',
-                        width: '100%'
+                    <Box
+                      as="button"
+                      bg={{ base: 'bg-200', dark: 'bg-800' }}
+                      overflow="hidden"
+                      r="md"
+                      style={style as CSSProperties}
+                      width="100%"
+                      onClick={() => {
+                        setFile(photo.fullResURL)
+                        setPreview(photo.src)
                       }}
-                    />
-                  </Box>
-                </Ring>
-              </Transition>
-            )}
+                    >
+                      <img
+                        alt={alt}
+                        src={src}
+                        style={{
+                          height: '100%',
+                          objectFit: 'cover',
+                          width: '100%'
+                        }}
+                      />
+                    </Box>
+                  </Ring>
+                </Transition>
+              )
+            }}
             spacing={12}
           />
         </Box>

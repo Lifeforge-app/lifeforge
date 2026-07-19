@@ -7,15 +7,9 @@
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
-    "build": "tsgo"
+    "build": "tsc"
   },
   "dependencies": {
     "@lifeforge/api": "workspace:*"
-  },
-  "peerDependencies": {
-    "react": "^19.2.0"
-  },
-  "devDependencies": {
-    "@types/react": "^19.2.0"
   }
 }

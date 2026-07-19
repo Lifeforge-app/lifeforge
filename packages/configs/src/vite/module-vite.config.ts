@@ -51,7 +51,7 @@ export function defineModuleConfig(
       envDir,
       plugins: [
         react(),
-        vanillaExtractPlugin(),
+        vanillaExtractPlugin() as any,
         federation({
           name: moduleName,
           filename: 'remoteEntry.js',

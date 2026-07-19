@@ -14,9 +14,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsgo -b && vite build",
+    "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsgo -b"
+    "typecheck": "tsc -b"
   },
   "dependencies": {
     "@iconify/react": "^6.0.0",
@@ -28,7 +28,6 @@
     "autoprefixer": "^10.4.21",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.18",
-    "lodash": "^4.17.21",
     "mermaid": "^11.12.2",
     "postcss": "^8.5.6",
     "react": "^19.2.0",
@@ -44,9 +43,6 @@
     "@types/react-dom": "^19.1.6",
     "@types/react-syntax-highlighter": "^15.5.13",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "@vitejs/plugin-react": "^4.7.0",
-    "typescript": "^5.8.3",
-    "vite": "^7.0.5"
+    "@typescript-eslint/parser": "^7.18.0"
   }
 }

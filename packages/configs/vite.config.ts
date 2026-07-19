@@ -13,14 +13,8 @@ export default defineConfig({
     },
     rollupOptions: {
       external: [
-        'node:path',
-        'node:fs',
-        'vite',
-        '@originjs/vite-plugin-federation',
-        '@vitejs/plugin-react',
-        '@vanilla-extract/vite-plugin',
-        'zod',
-        'react'
+        /^node:/,
+        /^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/
       ]
     },
     outDir: 'dist',

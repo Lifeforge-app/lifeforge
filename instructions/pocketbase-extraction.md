@@ -77,7 +77,7 @@ packages/pocketbase/
 ```json
 {
   "dependencies": {
-    "pocketbase": "^0.26.2",
+    "pocketbase": "^0.27.0",
     "@lifeforge/log": "workspace:*",
     "lodash": "^4.17.21",
     "chalk": "^5.x",

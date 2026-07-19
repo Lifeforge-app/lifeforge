@@ -20,7 +20,7 @@
     }
   },
   "scripts": {
-    "build": "vite build && tsgo --project tsconfig.json",
+    "build": "vite build && tsc --project tsconfig.json",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -31,8 +31,6 @@
     "chalk": "^5.4.0"
   },
   "devDependencies": {
-    "@types/node": "^25.0.6",
-    "vite": "^7.1.9",
-    "vitest": "^4.0.0"
+    "@types/node": "^25.0.6"
   }
 }

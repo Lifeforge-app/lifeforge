@@ -1,15 +1,20 @@
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
-import { defineConfig } from 'vite'
+import { defineConfig, esmExternalRequirePlugin } from 'vite'
 import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   plugins: [
     react(),
     dts({
-      rollupTypes: false,
       entryRoot: resolve(__dirname, 'src'),
-      outDir: resolve(__dirname, 'dist')
+      outDirs: {
+        dir: resolve(__dirname, 'dist')
+      }
+    }),
+    esmExternalRequirePlugin({
+      skipDuplicateCheck: true,
+      external: [/^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/]
     })
   ],
   resolve: {
@@ -24,17 +29,7 @@ export default defineConfig({
       fileName: format => `index.${format === 'es' ? 'mjs' : 'js'}`
     },
     rollupOptions: {
-      external: [
-        'react',
-        'react-dom',
-        'react/jsx-runtime',
-        '@tanstack/react-query',
-        'zod',
-        'axios',
-        'crypto-js',
-        'json-schema-to-ts',
-        'socket.io-client'
-      ],
+      external: [/^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/],
       output: {
         globals: {
           react: 'React',
