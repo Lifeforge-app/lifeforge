@@ -87,7 +87,6 @@ export default function scanFederatedModules(
         dir.name,
         'client',
         distDir,
-        'assets',
         'remoteEntry.js'
       )
 
@@ -112,6 +111,8 @@ export default function scanFederatedModules(
         return devModeModules?.includes(`@lifeforge/${dir.name}`)
       })()
 
+      console.log(`${urlPrefix}/${dir.name}/remoteEntry.js`)
+
       modules.push({
         name: dir.name,
         moduleId: generateModuleId(parsed.data.name),
@@ -121,7 +122,7 @@ export default function scanFederatedModules(
         author: parsed.data.author,
         icon: parsed.data.lifeforge.icon,
         category: parsed.data.lifeforge.category,
-        remoteEntryUrl: `${urlPrefix}/${dir.name}/assets/remoteEntry.js`,
+        remoteEntryUrl: `${urlPrefix}/${dir.name}/remoteEntry.js`,
         isInternal,
         APIKeyAccess: parsed.data.lifeforge.APIKeyAccess,
         isDevMode: !!isDevMode

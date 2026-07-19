@@ -1,3 +1,4 @@
+import { registerRemotes, loadRemote } from '@module-federation/runtime'
 import { globalProxyRegistry } from '@lifeforge/api'
 import {
   type ModuleCategory,
@@ -131,21 +132,16 @@ export async function loadModuleConfig(
 async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
   const remoteName = mod.name.replace(/-+/g, '_')
 
-  const {
-    __federation_method_setRemote: setRemote,
-    __federation_method_getRemote: getRemote,
-    __federation_method_unwrapDefault: unwrapModule
-  } = await import('virtual:__federation__')
+  registerRemotes([
+    {
+      name: remoteName,
+      entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
+      type: 'module'
+    }
+  ])
 
-  setRemote(remoteName, {
-    url: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
-    format: 'esm',
-    from: 'vite'
-  })
-
-  const remoteModule = await getRemote(remoteName, './Manifest')
-
-  const unwrapped = (await unwrapModule(remoteModule)) as ModuleConfig
+  const remoteModule = await loadRemote<any>(`${remoteName}/Manifest`)
+  const unwrapped = (remoteModule?.default || remoteModule) as ModuleConfig
 
   if (!unwrapped) {
     throw new Error(`Failed to load federated manifest: ${mod.name}`)

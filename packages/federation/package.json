@@ -10,6 +10,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@lifeforge/api": "workspace:*"
+    "@lifeforge/api": "workspace:*",
+    "@module-federation/runtime": "^2.8.0"
   }
 }

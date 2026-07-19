@@ -1,4 +1,4 @@
-import federation from '@originjs/vite-plugin-federation'
+import { federation } from '@module-federation/vite'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react from '@vitejs/plugin-react'
 import fs from 'node:fs'
@@ -52,9 +52,10 @@ export function defineModuleConfig(
       plugins: [
         react(),
         vanillaExtractPlugin() as any,
-        federation({
+        !isDev && federation({
           name: moduleName,
           filename: 'remoteEntry.js',
+          dts: false,
           exposes: {
             './Manifest': './manifest.ts'
           },
@@ -62,18 +63,13 @@ export function defineModuleConfig(
             None: ''
           },
           shared: {
+            ...SHARED_DEPS,
             ...Object.fromEntries(
-              Object.entries(SHARED_DEPS).map(([name, config]) => [
-                name,
-                { ...config, generate: false }
-              ])
-            ),
-            ...Object.fromEntries(
-              Object.keys(SHARED_PACKAGES).map(e => [e, { generate: false }])
+              Object.keys(SHARED_PACKAGES).map(name => [name, {}])
             )
           }
         })
-      ],
+      ].filter(Boolean),
       resolve: {
         alias: [
           ...(isDev

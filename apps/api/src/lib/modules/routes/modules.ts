@@ -123,7 +123,6 @@ export const list = forge
           dir.name,
           'client',
           distDir,
-          'assets',
           'remoteEntry.js'
         )
 

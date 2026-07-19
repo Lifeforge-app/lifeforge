@@ -1,5 +1,5 @@
 import mdx, { Options } from '@mdx-js/rollup'
-import federation from '@originjs/vite-plugin-federation'
+import { federation } from '@module-federation/vite'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import remarkGfm from 'remark-gfm'
@@ -12,19 +12,21 @@ const options: Options = {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    react(),
-    mdx(options),
-    mdxListCountsPlugin(),
-    federation({
-      name: 'docs-host',
-      remotes: {
-        None: ''
-      },
-      shared: ['react', 'react-dom']
-    })
-  ],
+export default defineConfig(({ command }) => {
+  const isDev = command === 'serve'
+  return {
+    plugins: [
+      react(),
+      mdx(options),
+      mdxListCountsPlugin(),
+      !isDev && federation({
+        name: 'docs-host',
+        remotes: {
+          None: ''
+        },
+        shared: ['react', 'react-dom']
+      })
+    ].filter(Boolean),
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src')
@@ -54,5 +56,6 @@ export default defineConfig({
         }
       }
     }
+  }
   }
 })

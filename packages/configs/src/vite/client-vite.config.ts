@@ -1,4 +1,4 @@
-import federation from '@originjs/vite-plugin-federation'
+import { federation } from '@module-federation/vite'
 import babel from '@rolldown/plugin-babel'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
@@ -39,7 +39,7 @@ export function defineClientConfig(dirname: string) {
         {
           name: 'alias-resolver',
           enforce: 'pre',
-          resolveId(source, importer) {
+          resolveId(source: string, importer: string | undefined) {
             if (source === '@' || source.startsWith('@/')) {
               return aliasResolver(source, importer)
             }
@@ -55,8 +55,9 @@ export function defineClientConfig(dirname: string) {
             return ['vite-tsconfig-paths', 'alias-resolver'].includes(name)
           }
         }),
-        federation({
+        !isDev && federation({
           name: 'host',
+          dts: false,
           remotes: {
             None: ''
           },
@@ -67,7 +68,7 @@ export function defineClientConfig(dirname: string) {
             )
           }
         })
-      ],
+      ].filter(Boolean),
       server: {
         fs: {
           strict: true
