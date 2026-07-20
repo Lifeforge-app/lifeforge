@@ -52,31 +52,32 @@ export function defineModuleConfig(
       plugins: [
         react(),
         vanillaExtractPlugin() as any,
-        !isDev && federation({
-          name: moduleName,
-          filename: 'remoteEntry.js',
-          dts: false,
-          exposes: {
-            './Manifest': './manifest.ts'
-          },
-          remotes: {
-            None: ''
-          },
-          shared: {
-            ...Object.fromEntries(
-              Object.entries(SHARED_DEPS).map(([name, config]) => [
-                name,
-                { ...config, singleton: true }
-              ])
-            ),
-            ...Object.fromEntries(
-              Object.keys(SHARED_PACKAGES).map(name => [
-                name,
-                { singleton: true }
-              ])
-            )
-          }
-        })
+        !isDev &&
+          federation({
+            name: moduleName,
+            filename: 'remoteEntry.js',
+            dts: false,
+            exposes: {
+              './Manifest': './manifest.ts'
+            },
+            remotes: {
+              None: ''
+            },
+            shared: {
+              ...Object.fromEntries(
+                Object.entries(SHARED_DEPS).map(([name, config]) => [
+                  name,
+                  { ...config, singleton: true }
+                ])
+              ),
+              ...Object.fromEntries(
+                Object.keys(SHARED_PACKAGES).map(name => [
+                  name,
+                  { singleton: true }
+                ])
+              )
+            }
+          })
       ].filter(Boolean),
       resolve: {
         alias: [

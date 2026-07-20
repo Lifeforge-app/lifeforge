@@ -1,4 +1,10 @@
-import { registerRemotes, loadRemote } from '@module-federation/runtime'
+import {
+  getInstance,
+  init,
+  loadRemote,
+  registerRemotes
+} from '@module-federation/runtime'
+
 import { globalProxyRegistry } from '@lifeforge/api'
 import {
   type ModuleCategory,
@@ -131,6 +137,13 @@ export async function loadModuleConfig(
  */
 async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
   const remoteName = mod.name.replace(/-+/g, '_')
+
+  if (!getInstance()) {
+    init({
+      name: 'host',
+      remotes: []
+    })
+  }
 
   registerRemotes([
     {

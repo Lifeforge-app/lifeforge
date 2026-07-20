@@ -1,3 +1,4 @@
+import { registerHooks } from 'node:module'
 import { ROOT_DIR } from '@constants'
 import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
@@ -56,6 +57,30 @@ function registerModuleMetadata(
  * - In development: loads from TypeScript source (Pnpm runs TS natively)
  */
 export async function loadModuleRoutes(): Promise<Record<string, unknown>> {
+  if (!IS_PRODUCTION) {
+    try {
+      registerHooks({
+        resolve: (specifier, context, nextResolve) => {
+          if (specifier.startsWith('@/')) {
+            const parentURL = context.parentURL
+            if (parentURL) {
+              const match = parentURL.match(/(.*\/modules\/[^/]+\/server)\//)
+              if (match) {
+                const serverRoot = match[1]
+                const relativePath = specifier.slice(2)
+                const resolvedSpecifier = new URL(relativePath, serverRoot + '/').href
+                return nextResolve(resolvedSpecifier, context)
+              }
+            }
+          }
+          return nextResolve(specifier, context)
+        }
+      })
+    } catch (e) {
+      logger.error(`Failed to register custom path alias resolver hooks: ${e}`)
+    }
+  }
+
   logger.info(
     `Detected ${chalk.blue(process.env.NODE_ENV === 'production' ? 'production' : 'development')} environment, loading ${IS_PRODUCTION ? chalk.green('bundled') : chalk.yellow('source')} routes`
   )

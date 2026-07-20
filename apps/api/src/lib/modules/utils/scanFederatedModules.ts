@@ -111,8 +111,6 @@ export default function scanFederatedModules(
         return devModeModules?.includes(`@lifeforge/${dir.name}`)
       })()
 
-      console.log(`${urlPrefix}/${dir.name}/remoteEntry.js`)
-
       modules.push({
         name: dir.name,
         moduleId: generateModuleId(parsed.data.name),
