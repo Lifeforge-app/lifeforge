@@ -81,7 +81,7 @@ export const contract = {
             },
             "subnamespace": {
               "type": "string",
-              "pattern": "^$|^[a-zA-Z][a-zA-Z0-9-]*$"
+              "pattern": "^$|^@[a-zA-Z0-9_.-]+\\/[a-zA-Z0-9_.-]+$|^[a-zA-Z0-9_.-]+$"
             }
           },
           "required": [
@@ -2614,13 +2614,13 @@ export const contract = {
               "isInternal": {
                 "type": "boolean"
               },
-              "isDevMode": {
-                "type": "boolean"
-              },
               "hasDist": {
                 "type": "boolean"
               },
               "hasSource": {
+                "type": "boolean"
+              },
+              "isDevMode": {
                 "type": "boolean"
               }
             },
@@ -2634,9 +2634,9 @@ export const contract = {
               "icon",
               "category",
               "isInternal",
-              "isDevMode",
               "hasDist",
-              "hasSource"
+              "hasSource",
+              "isDevMode"
             ],
             "additionalProperties": false
           }
@@ -2691,9 +2691,6 @@ export const contract = {
                   "isInternal": {
                     "type": "boolean"
                   },
-                  "isDevMode": {
-                    "type": "boolean"
-                  },
                   "APIKeyAccess": {
                     "type": "object",
                     "additionalProperties": {
@@ -2712,6 +2709,9 @@ export const contract = {
                       ],
                       "additionalProperties": false
                     }
+                  },
+                  "isDevMode": {
+                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -2724,7 +2724,8 @@ export const contract = {
                   "icon",
                   "category",
                   "remoteEntryUrl",
-                  "isInternal"
+                  "isInternal",
+                  "isDevMode"
                 ],
                 "additionalProperties": false
               }
@@ -2737,45 +2738,54 @@ export const contract = {
         }
       }
     },
-    "uninstall": {
-      "method": "post",
-      "description": "Uninstall a module",
+    "widgets": {
+      "method": "get",
+      "description": "Get all available widgets configuration",
       "noAuth": false,
       "encrypted": true,
       "isDownloadable": false,
       "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "moduleName": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "required": [
-            "moduleName"
-          ],
-          "additionalProperties": false
-        }
-      },
+      "input": {},
       "output": {
         "OK": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "success": {
-              "type": "boolean"
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string"
+              },
+              "minW": {
+                "type": "number"
+              },
+              "minH": {
+                "type": "number"
+              },
+              "maxW": {
+                "type": "number"
+              },
+              "maxH": {
+                "type": "number"
+              },
+              "moduleName": {
+                "type": "string"
+              },
+              "componentName": {
+                "type": "string"
+              }
             },
-            "error": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "success"
-          ],
-          "additionalProperties": false
+            "required": [
+              "id",
+              "icon",
+              "moduleName",
+              "componentName"
+            ],
+            "additionalProperties": false
+          }
         }
       }
     },
@@ -2888,38 +2898,6 @@ export const contract = {
               "success"
             ],
             "additionalProperties": false
-          }
-        }
-      }
-    },
-    "devMode": {
-      "toggle": {
-        "method": "post",
-        "description": "Toggle dev mode for a module",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "moduleName": {
-                "type": "string",
-                "minLength": 1
-              }
-            },
-            "required": [
-              "moduleName"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "boolean"
           }
         }
       }

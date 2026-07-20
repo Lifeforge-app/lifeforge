@@ -1,39 +1,19 @@
-import { useMutation } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
-import { useAPIOnlineStatus } from '@lifeforge/api'
-import { useFederation } from '@lifeforge/federation'
 import {
   Box,
   Card,
-  ConfirmationModal,
-  ContextMenu,
-  ContextMenuItem,
   Flex,
   Icon,
   TAILWIND_PALETTE,
   TagChip,
   Text,
-  colorWithOpacity,
-  toast,
-  useModalStore
+  colorWithOpacity
 } from '@lifeforge/ui'
 
-import forgeAPI from '@/core/utils/forgeAPI'
+import type { Module } from '..'
 
-import type { InstalledModule } from '..'
-
-function ModuleItem({
-  module,
-  onUninstall,
-  onDevModeChange
-}: {
-  module: InstalledModule
-  onUninstall: (moduleName: string) => Promise<void>
-  onDevModeChange?: () => void
-}) {
-  const { environment } = useAPIOnlineStatus()
-
+function ModuleItem({ module }: { module: Module }) {
   // Module name format: @lifeforge/lifeforge--wallet -> lifeforge--wallet
   const moduleKey = module.name.replace('@lifeforge/', '')
 
@@ -45,61 +25,6 @@ function ModuleItem({
   const translatedTitle = i18n.exists(`apps.${moduleKey}:title`)
     ? t(`apps.${moduleKey}:title`)
     : module.displayName
-
-  const { open } = useModalStore()
-  const { refetch: refetchFederation } = useFederation()
-
-  const devModeMutation = useMutation({
-    mutationFn: () =>
-      forgeAPI.modules.devMode.toggle.mutate({ moduleName: module.name }),
-    onSuccess: () => {
-      toast.success(
-        !module.isDevMode
-          ? t('common.module-manager:devMode.enabled', {
-              module: translatedTitle
-            })
-          : t('common.module-manager:devMode.disabled', {
-              module: translatedTitle
-            })
-      )
-
-      onDevModeChange?.()
-      refetchFederation.current?.()
-    },
-    onError: () => {
-      toast.error('Failed to toggle dev mode')
-    }
-  })
-
-  function handleUninstall() {
-    open(ConfirmationModal, {
-      title: t('common.module-manager:modals.uninstall.title', {
-        module: translatedTitle
-      }),
-      description: t('common.module-manager:modals.uninstall.description', {
-        module: translatedTitle
-      }),
-      onConfirm: async () => {
-        await onUninstall(module.name)
-      }
-    })
-  }
-
-  function handleDevModeToggle() {
-    const isEnabling = !module.isDevMode
-
-    open(ConfirmationModal, {
-      title: isEnabling
-        ? t('common.module-manager:modals.devMode.enable.title')
-        : t('common.module-manager:modals.devMode.disable.title'),
-      description: isEnabling
-        ? t('common.module-manager:modals.devMode.enable.description')
-        : t('common.module-manager:modals.devMode.disable.description'),
-      onConfirm: async () => {
-        await devModeMutation.mutateAsync()
-      }
-    })
-  }
 
   return (
     <Card gap="md" minWidth="0">
@@ -121,7 +46,7 @@ function ModuleItem({
               <Text truncate as="h3" size="lg" weight="semibold">
                 {translatedTitle}
               </Text>
-              {module.isDevMode && environment.client === 'development' && (
+              {module.isDevMode && (
                 <TagChip
                   color={TAILWIND_PALETTE.yellow[500]}
                   flexShrink="0"
@@ -146,24 +71,6 @@ function ModuleItem({
               v{module.version}
             </Text>
           </Box>
-          <ContextMenu>
-            {environment.client === 'development' && (
-              <ContextMenuItem
-                disabled={!(module.hasSource && module.hasDist)}
-                icon={module.isDevMode ? 'tabler:code-off' : 'tabler:code'}
-                label={module.isDevMode ? 'devMode.disable' : 'devMode.enable'}
-                namespace="common.module-manager"
-                onClick={handleDevModeToggle}
-              />
-            )}
-            <ContextMenuItem
-              dangerous
-              icon="tabler:trash"
-              label="uninstall"
-              namespace="common.module-manager"
-              onClick={handleUninstall}
-            />
-          </ContextMenu>
         </Flex>
       </Flex>
       <Text as="p" color="muted" leading="relaxed" lineClamp={2}>

@@ -807,7 +807,6 @@ Since `Button` extends `FlexProps` (which extends `BoxProps`), **any layout prop
 
 ```tsx
 <Button
-  variant="primary"
   icon="tabler:send"
   loading={isSubmitting}
   mt="lg" // Inherited from Flex - no Box wrapper needed

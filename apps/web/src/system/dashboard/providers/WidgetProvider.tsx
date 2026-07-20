@@ -7,11 +7,17 @@ import {
   useState
 } from 'react'
 
-import { useFederation, widgetConfigSchema } from '@lifeforge/federation'
+import { loadModuleConfig, useFederation } from '@lifeforge/federation'
 import { LoadingScreen } from '@lifeforge/ui'
 
+import {
+  devModeImports,
+  devModePkgs
+} from '@/core/providers/features/CoreFederationProvider'
+import forgeAPI from '@/core/utils/forgeAPI'
+
 export interface WidgetEntry {
-  component: React.FC<{ dimension: { w: number; h: number } }>
+  component: React.ComponentType<{ dimension: { w: number; h: number } }>
   moduleName: string
   icon: string
   minW?: number
@@ -49,49 +55,56 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
     async function loadFederatedWidgets() {
       setLoading(true)
 
-      const loadedWidgets: Record<string, WidgetEntry> = {}
+      try {
+        const serverWidgets = await forgeAPI.modules.widgets.query()
+        const loadedWidgets: Record<string, WidgetEntry> = {}
 
-      for (const category of modules) {
-        for (const item of category.items) {
-          if (item.widgets && item.widgets.length > 0) {
-            for (const widgetImportFn of item.widgets) {
-              try {
-                const widgetModule = await widgetImportFn()
+        for (const widget of serverWidgets) {
+          const item = modules
+            .flatMap(cat => cat.items)
+            .find(i => i.name === widget.moduleName)
 
-                const parsedConfig = widgetConfigSchema.safeParse(
-                  widgetModule.config
-                )
+          if (!item || !item.rawModule) continue
 
-                if (parsedConfig.success) {
-                  const config = parsedConfig.data
+          const rawModule = item.rawModule
 
-                  const LazyComponent = lazy(widgetImportFn)
+          const LazyComponent = lazy(async () => {
+            const unwrapped = await loadModuleConfig(
+              rawModule,
+              devModeImports,
+              devModePkgs
+            )
 
-                  loadedWidgets[config.id] = {
-                    moduleName: item.name,
-                    component: LazyComponent,
-                    icon: config.icon,
-                    minW: config.minW,
-                    minH: config.minH,
-                    maxW: config.maxW,
-                    maxH: config.maxH
-                  }
-                } else {
-                  console.warn(
-                    `Failed to validate widget config for module ${category.title}/${item.name}:`,
-                    parsedConfig.error.format()
-                  )
-                }
-              } catch (e) {
-                console.warn('Failed to load widget:', e)
+            for (const widgetImportFn of unwrapped.widgets || []) {
+              const widgetModule = await widgetImportFn()
+
+              if (widgetModule.config.id === widget.id) {
+                return { default: widgetModule.default }
               }
             }
+
+            throw new Error(
+              `Widget ${widget.id} not found in module ${widget.moduleName}`
+            )
+          })
+
+          loadedWidgets[widget.id] = {
+            moduleName: widget.moduleName,
+            component: LazyComponent,
+            icon: widget.icon,
+            minW: widget.minW,
+            minH: widget.minH,
+            maxW: widget.maxW,
+            maxH: widget.maxH
           }
         }
-      }
 
-      setFederatedWidgets(loadedWidgets)
-      setLoading(false)
+        setFederatedWidgets(loadedWidgets)
+      } catch (e) {
+        console.error('Failed to load federated widgets:', e)
+      } finally {
+        setLoading(false)
+      }
     }
 
     if (modules.length > 0) {
@@ -100,6 +113,7 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
       setLoading(false)
     }
   }, [modules])
+
   const value = useMemo(
     () => ({
       widgets: federatedWidgets,

@@ -5,35 +5,24 @@ import {
   registerRemotes
 } from '@module-federation/runtime'
 
-import { globalProxyRegistry } from '@lifeforge/api'
+import { type InferOutput, globalProxyRegistry } from '@lifeforge/api'
 import {
   type ModuleCategory,
   type ModuleConfig,
   moduleConfigSchema
 } from '@lifeforge/configs'
 
-export interface FederatedModule {
-  name: string
-  displayName: string
-  version: string
-  description: string
-  author: string
-  icon: string
-  category: string
-  remoteEntryUrl: string
-  isDevMode: boolean
-  APIKeyAccess?: Record<string, { usage: string; required: boolean }>
-  moduleId: string
-}
+import { forgeAPI } from '../utils/forgeAPI'
 
-/**
- * Fetches module manifest from the server
- */
+export type FederatedModule = InferOutput<
+  typeof forgeAPI.modules.manifest
+>['modules'][number]
+
 export async function fetchModuleManifest(
-  forgeAPI: any
+  apiHost: string
 ): Promise<FederatedModule[]> {
   try {
-    const { modules } = await forgeAPI.modules.manifest.query()
+    const { modules } = await forgeAPI.modules.manifest.setHost(apiHost).query()
 
     return modules ?? []
   } catch (e) {
@@ -52,14 +41,16 @@ export async function fetchModuleManifest(
  */
 function getDevModeImport(
   moduleName: string,
-  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>>
+  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>>,
+  devModePkgs: Record<string, { name: string }> = {}
 ): (() => Promise<{ default: ModuleConfig }>) | null {
-  // Module names are like "lifeforge--music" or "jiahuiiiii--stock"
-  // The glob path is "../../modules/lifeforge--music/client/manifest.ts"
-  const shortName = moduleName.replace('@lifeforge/', '')
+  for (const [importPath, importFn] of Object.entries(devModeImports)) {
+    const pkgPath = importPath.replace(
+      /\/client\/manifest\.ts$/,
+      '/package.json'
+    )
 
-  for (const [path, importFn] of Object.entries(devModeImports)) {
-    if (path.includes(`/modules/${shortName}/`)) {
+    if (devModePkgs[pkgPath]?.name === moduleName) {
       return importFn as () => Promise<{ default: ModuleConfig }>
     }
   }
@@ -72,13 +63,14 @@ function getDevModeImport(
  */
 export async function loadModuleConfig(
   mod: FederatedModule,
-  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>> = {}
+  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>> = {},
+  devModePkgs: Record<string, { name: string }> = {}
 ): Promise<ModuleCategory['items'][number]> {
   let unwrapped: ModuleConfig
 
   // Dev mode: import directly from source for hot-reload
-  if (import.meta.env.DEV && mod.isDevMode) {
-    const devImport = getDevModeImport(mod.name, devModeImports)
+  if (import.meta.env.DEV) {
+    const devImport = getDevModeImport(mod.name, devModeImports, devModePkgs)
 
     if (devImport) {
       const devModule = await devImport()
@@ -112,6 +104,7 @@ export async function loadModuleConfig(
     author: mod.author,
     icon: mod.icon,
     category: mod.category,
+    
     routes: unwrapped.routes,
     provider: unwrapped.provider,
     subsection: unwrapped.subsection,
@@ -132,28 +125,41 @@ export async function loadModuleConfig(
   return moduleConfig
 }
 
+export const registeredRemotesSet = new Set<string>()
+
 /**
  * Loads module config via federation (from remoteEntry.js)
  */
 async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
-  const remoteName = mod.name.replace(/-+/g, '_')
+  const remoteName = mod.name.replace(/^@[^/]+\//, '').replace(/-+/g, '_')
 
-  if (!getInstance()) {
-    init({
-      name: 'host',
-      remotes: []
-    })
+  if (!registeredRemotesSet.has(remoteName)) {
+    if (!getInstance()) {
+      init({
+        name: 'host',
+        remotes: [
+          {
+            name: remoteName,
+            entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
+            type: 'module'
+          }
+        ]
+      })
+    } else {
+      registerRemotes([
+        {
+          name: remoteName,
+          entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
+          type: 'module'
+        }
+      ])
+    }
+    registeredRemotesSet.add(remoteName)
   }
 
-  registerRemotes([
-    {
-      name: remoteName,
-      entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
-      type: 'module'
-    }
-  ])
-
-  const remoteModule = await loadRemote<any>(`${remoteName}/Manifest`)
+  const remoteModule = await loadRemote<{ default: unknown }>(
+    `${remoteName}/Manifest`
+  )
   const unwrapped = (remoteModule?.default || remoteModule) as ModuleConfig
 
   if (!unwrapped) {

@@ -1,6 +1,14 @@
 import { createContext, useContext, useMemo, useRef, useState } from 'react'
 
 import type { ModuleCategory } from '@lifeforge/configs'
+import { type FederatedModule } from '../loaders/loadModuleConfig'
+
+export interface FederatedModuleCategory {
+  title: string
+  items: (ModuleCategory['items'][number] & {
+    rawModule?: FederatedModule
+  })[]
+}
 
 export const SYSTEM_CATEGORIES = [
   '<START>',
@@ -11,8 +19,8 @@ export const SYSTEM_CATEGORIES = [
 ]
 
 interface FederationContextValue {
-  modules: ModuleCategory[]
-  setModules: React.Dispatch<React.SetStateAction<ModuleCategory[]>>
+  modules: FederatedModuleCategory[]
+  setModules: React.Dispatch<React.SetStateAction<FederatedModuleCategory[]>>
   globalProviders: React.FC<{ children: React.ReactNode }>[]
   setGlobalProviders: React.Dispatch<
     React.SetStateAction<React.FC<{ children: React.ReactNode }>[]>
@@ -49,7 +57,7 @@ export function useFederation(): FederationContextValue {
 }
 
 function FederationProvider({ children }: { children: React.ReactNode }) {
-  const [modules, setModules] = useState<ModuleCategory[]>([])
+  const [modules, setModules] = useState<FederatedModuleCategory[]>([])
 
   const [globalProviders, setGlobalProviders] = useState<
     React.FC<{ children: React.ReactNode }>[]

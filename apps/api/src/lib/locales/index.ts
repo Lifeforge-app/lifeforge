@@ -3,7 +3,7 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
-import { getRegisteredModules } from '@functions/modules/moduleRegistry'
+import { ModuleRegistry } from '@functions/modules/moduleRegistry'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
@@ -65,7 +65,9 @@ const getLocale = forge
       query: z.object({
         lang: z.string(),
         namespace: z.enum(ALLOWED_NAMESPACE),
-        subnamespace: z.string().regex(/^$|^[a-zA-Z][a-zA-Z0-9-]*$/)
+        subnamespace: z
+          .string()
+          .regex(/^$|^@[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+$|^[a-zA-Z0-9_.-]+$/)
       })
     },
     output: {
@@ -87,9 +89,19 @@ const getLocale = forge
     let data
 
     if (namespace === 'apps') {
-      const target = moduleApps.find(
-        modulePath => path.basename(modulePath) === subnamespace
-      )
+      const target = moduleApps.find(modulePath => {
+        try {
+          const pkgPath = path.join(modulePath, 'package.json')
+
+          if (fs.existsSync(pkgPath)) {
+            const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+
+            return pkg.name === subnamespace
+          }
+        } catch {
+          return false
+        }
+      })
 
       if (!target) {
         return response.ok({})
@@ -145,7 +157,18 @@ const getLocale = forge
                 fs.readFileSync(localePath, 'utf-8')
               )
 
-              const moduleName = path.basename(modulePath)
+              const pkgPath = path.join(modulePath, 'package.json')
+
+              let moduleName = path.basename(modulePath)
+
+              if (fs.existsSync(pkgPath)) {
+                try {
+                  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+                  moduleName = pkg.name
+                } catch {
+                  // Do nothing
+                }
+              }
 
               return [
                 moduleName,
@@ -197,11 +220,11 @@ const listUnsupportedModules = forge
 
     const normalizedSelected = finalLang.toLowerCase()
 
-    const unsupported = getRegisteredModules()
+    const unsupported = ModuleRegistry.entries
       .filter(
         m => !m.supportedLangs.some(l => l.toLowerCase() === normalizedSelected)
       )
-      .map(m => m.fullName)
+      .map(m => m.name)
 
     return response.ok(unsupported)
   })

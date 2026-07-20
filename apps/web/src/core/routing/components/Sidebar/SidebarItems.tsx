@@ -83,9 +83,10 @@ function SidebarItems({ query }: { query: string }) {
                         <MainSidebarTitle title={item.title} />
                       )}
                     {filteredModules.map(subItem => {
-                      const link = subItem.name.startsWith('lifeforge--')
-                        ? subItem.name.split('--')[1]
-                        : subItem.name
+                      const strippedName = subItem.name.replace(/^@[^/]+\//, '')
+                      const link = strippedName.startsWith('lifeforge--')
+                        ? strippedName.split('--')[1]
+                        : strippedName
 
                       return (
                         <MainSidebarItem

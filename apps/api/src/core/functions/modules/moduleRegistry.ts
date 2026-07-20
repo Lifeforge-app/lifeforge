@@ -1,27 +1,86 @@
-interface ModuleEntry {
-  hashedKey: string
-  fullName: string
-  supportedLangs: string[]
-}
+import {
+  Module,
+  ModuleEntry,
+  ModuleManifest,
+  ModuleWidget
+} from './schemas'
 
-const registeredModules: ModuleEntry[] = []
+export class ModuleRegistry {
+  private static registeredModules: ModuleEntry[] = []
 
-export function registerModule(
-  hashedKey: string,
-  fullName: string,
-  supportedLangs: string[]
-) {
-  registeredModules.push({ hashedKey, fullName, supportedLangs })
-}
+  static register(entry: ModuleEntry): void {
+    ModuleRegistry.registeredModules.push(entry)
+  }
 
-export function isModuleRegistered(hashedKey: string): boolean {
-  return registeredModules.some(m => m.hashedKey === hashedKey)
-}
+  static isRegistered(name: string): boolean {
+    return ModuleRegistry.registeredModules.some(m => m.name === name)
+  }
 
-export function isModuleNameRegistered(fullName: string): boolean {
-  return registeredModules.some(m => m.fullName === fullName)
-}
+  static get entries(): ModuleEntry[] {
+    return [...ModuleRegistry.registeredModules]
+  }
 
-export function getRegisteredModules(): ModuleEntry[] {
-  return [...registeredModules]
+  static get manifests(): ModuleManifest[] {
+    const list: ModuleManifest[] = []
+
+    for (const mod of ModuleRegistry.registeredModules) {
+      const isDevMode =
+        process.env.NODE_ENV !== 'production' &&
+        mod.hasSource
+
+      list.push({
+        name: mod.name,
+        moduleId: mod.moduleId,
+        displayName: mod.displayName,
+        version: mod.version,
+        description: mod.description,
+        author: mod.author,
+        icon: mod.icon,
+        category: mod.category,
+        remoteEntryUrl: mod.remoteEntryUrl,
+        isInternal: mod.isInternal,
+        APIKeyAccess: mod.APIKeyAccess,
+        isDevMode
+      })
+    }
+
+    return list
+  }
+
+  static get list(): Module[] {
+    const list: Module[] = []
+
+    for (const mod of ModuleRegistry.registeredModules) {
+      const isDevMode =
+        process.env.NODE_ENV !== 'production' &&
+        mod.hasSource
+
+      list.push({
+        name: mod.name,
+        moduleId: mod.moduleId,
+        displayName: mod.displayName,
+        version: mod.version,
+        description: mod.description,
+        author: mod.author,
+        icon: mod.icon,
+        category: mod.category,
+        isInternal: mod.isInternal,
+        hasDist: mod.hasDist,
+        hasSource: mod.hasSource,
+        isDevMode
+      })
+    }
+
+    return list
+  }
+
+  static get widgets(): ModuleWidget[] {
+    const list: ModuleWidget[] = []
+
+    for (const mod of ModuleRegistry.registeredModules) {
+      list.push(...mod.widgets)
+    }
+
+    return list
+  }
 }

@@ -7,7 +7,6 @@ import {
   useFederation
 } from '@lifeforge/federation'
 
-import forgeAPI from '@/core/utils/forgeAPI'
 import accountSettings from '@/system/accountSettings/manifest'
 import apiKeys from '@/system/apiKeys/manifest'
 import backups from '@/system/backups/manifest'
@@ -26,10 +25,17 @@ const coreModules = [
   moduleManager
 ]
 
-const devModeImports = import.meta.env.DEV
+export const devModeImports = import.meta.env.DEV
   ? import.meta.glob<{ default: ModuleConfig }>(
       '../../../../../../modules/*/client/manifest.ts',
       { eager: false }
+    )
+  : {}
+
+export const devModePkgs = import.meta.env.DEV
+  ? import.meta.glob<{ name: string }>(
+      '../../../../../../modules/*/package.json',
+      { eager: true }
     )
   : {}
 
@@ -54,7 +60,10 @@ export default function CoreFederationProvider({
     setError(null)
 
     try {
-      const result = await loadModules(forgeAPI, coreModules, devModeImports)
+      const result = await loadModules(
+        import.meta.env.VITE_API_HOST || '',
+        coreModules
+      )
 
       setModules(result.routes)
       setGlobalProviders(result.globalProviders)

@@ -1,11 +1,18 @@
-import type { ModuleCategory, ModuleConfig } from '@lifeforge/configs'
+import { getInstance, init, registerRemotes } from '@module-federation/runtime'
 
+import type { ModuleCategory } from '@lifeforge/configs'
+
+import { type FederatedModuleCategory } from '../providers/FederationProvider'
 import {
   type CategoryOrder,
   fetchCategoryOrder,
   sortRoutes
 } from '../utils/sortRoutes'
-import { fetchModuleManifest, loadModuleConfig } from './loadModuleConfig'
+import {
+  type FederatedModule,
+  fetchModuleManifest,
+  registeredRemotesSet
+} from './loadModuleConfig'
 
 export type GlobalProviderComponent = React.FC<{ children: React.ReactNode }>
 
@@ -39,15 +46,14 @@ function addToRoute(
  * Collects providers from module manifests
  */
 export default async function loadModules(
-  forgeAPI: any,
-  coreModules: ModuleCategory['items'][number][] = [],
-  devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>> = {}
+  apiHost: string,
+  coreModules: ModuleCategory['items'][number][] = []
 ): Promise<{
-  routes: ModuleCategory[]
+  routes: FederatedModuleCategory[]
   globalProviders: GlobalProviderComponent[]
   categoryTranslations: CategoryOrder
 }> {
-  const ROUTES: ModuleCategory[] = []
+  const ROUTES: FederatedModuleCategory[] = []
 
   const globalProviders: GlobalProviderComponent[] = []
 
@@ -56,31 +62,58 @@ export default async function loadModules(
 
     // Collect provider from core module if exists
     if (mod.provider) {
-      globalProviders.push(mod.provider as unknown as GlobalProviderComponent)
+      globalProviders.push(mod.provider)
     }
   }
 
   // Fetch federated modules and category order (which includes translations)
   const [serverManifest, categoryOrder] = await Promise.all([
-    fetchModuleManifest(forgeAPI),
-    fetchCategoryOrder(forgeAPI)
+    fetchModuleManifest(apiHost),
+    fetchCategoryOrder(apiHost)
   ])
 
-  for (const mod of serverManifest) {
-    try {
-      const moduleConfig = await loadModuleConfig(mod, devModeImports)
+  // Register all remotes at once in production/production-client mode to prevent race conditions
+  if (!import.meta.env.DEV) {
+    const remotes = serverManifest.map(mod => {
+      const remoteName = mod.name.replace(/^@[^/]+\//, '').replace(/-+/g, '_')
+      registeredRemotesSet.add(remoteName)
 
-      addToRoute(ROUTES, mod.category, moduleConfig)
-
-      // Collect provider from manifest if exists
-      if (moduleConfig.provider) {
-        globalProviders.push(
-          moduleConfig.provider as unknown as GlobalProviderComponent
-        )
+      return {
+        name: remoteName,
+        entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
+        type: 'module' as const
       }
-    } catch (e) {
-      console.error(`Failed to load module ${mod.name}:`, e)
+    })
+
+    if (!getInstance()) {
+      init({
+        name: 'host',
+        remotes
+      })
+    } else {
+      registerRemotes(remotes)
     }
+  }
+
+  for (const mod of serverManifest) {
+    const moduleConfig: ModuleCategory['items'][number] & {
+      rawModule: FederatedModule
+    } = {
+      name: mod.name,
+      moduleId: mod.moduleId,
+      displayName: mod.displayName,
+      version: mod.version,
+      description: mod.description,
+      author: mod.author,
+      icon: mod.icon,
+      category: mod.category,
+      routes: {},
+      widgets: [],
+      APIKeyAccess: mod.APIKeyAccess,
+      rawModule: mod
+    }
+
+    addToRoute(ROUTES, mod.category, moduleConfig)
   }
 
   return {
