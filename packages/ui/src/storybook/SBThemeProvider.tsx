@@ -28,7 +28,7 @@ export function SBThemeProvider({
         ...existingGlobals,
         rawThemeColor: deriveFinalValue(existingGlobals.themeColor, '#a9d066'),
         theme: deriveFinalValue(existingGlobals.theme, 'light'),
-        fontScale: deriveFinalValue(existingGlobals.fontScale, 1),
+        fontScale: Number(deriveFinalValue(existingGlobals.fontScale, 1)),
         bgTemp: deriveFinalValue(existingGlobals.bgTemp, 'bg-zinc')
       }
     }

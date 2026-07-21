@@ -3,17 +3,17 @@ export const THEME_TOOLBAR_CONFIG = {
   description: 'Light / Dark mode',
   defaultValue: 'light',
   toolbar: {
-    icon: 'circlehollow',
+    icon: 'circlehollow' as const,
     items: [
       {
         value: 'light',
         title: 'Light Mode',
-        icon: 'sun'
+        icon: 'sun' as const
       },
       {
         value: 'dark',
         title: 'Dark Mode',
-        icon: 'moon'
+        icon: 'moon' as const
       }
     ],
     showName: true,
