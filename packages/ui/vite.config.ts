@@ -9,7 +9,7 @@ export default defineConfig({
     react(),
     vanillaExtractPlugin(),
     dts({
-      bundleTypes: true
+      entryRoot: resolve(__dirname, 'src')
     }),
     esmExternalRequirePlugin({
       skipDuplicateCheck: true,
