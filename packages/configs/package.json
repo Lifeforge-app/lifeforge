@@ -21,7 +21,8 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "vite build && tsc --emitDeclarationOnly"
+    "build": "vite build && tsc --emitDeclarationOnly",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@types/react": "^19.2.0"

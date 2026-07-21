@@ -1,6 +1,7 @@
 import { federation } from '@module-federation/vite'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react from '@vitejs/plugin-react'
+import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
 import { type UserConfig, defineConfig, loadEnv, mergeConfig } from 'vite'
@@ -19,7 +20,7 @@ interface ModuleConfigOptions {
  * Creates a standard Vite configuration for LifeForge modules.
  * Supports custom overrides via the second parameter.
  */
-export function defineModuleConfig(
+export function defineModuleClientConfig(
   { dirname, pkg: customPkg }: ModuleConfigOptions,
   overrides: UserConfig | ((env: any) => UserConfig) = {}
 ) {
@@ -34,6 +35,8 @@ export function defineModuleConfig(
     )
 
   const moduleName = pkg.name.replace('@lifeforge/', '')
+  const moduleId = crypto.createHash('sha256').update(pkg.name).digest('hex')
+  const remoteName = `m_${moduleId}`
 
   return defineConfig(configEnv => {
     const isDev = configEnv.command === 'serve'
@@ -54,7 +57,7 @@ export function defineModuleConfig(
         vanillaExtractPlugin() as any,
         !isDev &&
           federation({
-            name: moduleName,
+            name: remoteName,
             filename: 'remoteEntry.js',
             dts: false,
             exposes: {

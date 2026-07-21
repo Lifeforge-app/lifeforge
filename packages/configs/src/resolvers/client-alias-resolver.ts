@@ -6,7 +6,7 @@ import path from 'node:path'
  * Supports resolving from the client src directory, client root for manifest files,
  * and falls back to package src directories.
  */
-export function aliasResolver(
+export function clientAliasResolver(
   id: string,
   importer: string | undefined
 ): string | null {
@@ -15,10 +15,12 @@ export function aliasResolver(
   }
 
   let normalizedImporter = importer
+
   if (!path.isAbsolute(normalizedImporter)) {
     normalizedImporter = path.resolve(process.cwd(), normalizedImporter)
   }
   normalizedImporter = normalizedImporter.replace(/^\/@fs\/?/, '')
+
   if (!normalizedImporter.startsWith('/')) {
     normalizedImporter = '/' + normalizedImporter
   }

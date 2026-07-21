@@ -1,5 +1,5 @@
 import { ROOT_DIR } from '@constants'
-import { loadAndRegisterModuleRoutes } from '@functions/modules/loadModuleRoutes'
+import { loadAndRegisterModuleRoutes } from '@functions/modules/loadAndRegisterModuleRoutes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 import express from 'express'

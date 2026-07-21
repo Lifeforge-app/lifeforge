@@ -1,7 +1,8 @@
 import { createContext, useContext, useMemo, useRef, useState } from 'react'
 
 import type { ModuleCategory } from '@lifeforge/configs'
-import { type FederatedModule } from '../loaders/loadModuleConfig'
+
+import type { FederatedModule } from '../utils/fetchModuleData'
 
 export interface FederatedModuleCategory {
   title: string

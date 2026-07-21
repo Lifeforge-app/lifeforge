@@ -26,6 +26,7 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@lifeforge/configs": "workspace:*",
     "@lifeforge/log": "workspace:*",
     "@lifeforge/pocketbase": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",

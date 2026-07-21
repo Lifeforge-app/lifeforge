@@ -5,32 +5,14 @@ import {
   registerRemotes
 } from '@module-federation/runtime'
 
-import { type InferOutput, globalProxyRegistry } from '@lifeforge/api'
+import { globalProxyRegistry } from '@lifeforge/api'
 import {
   type ModuleCategory,
   type ModuleConfig,
   moduleConfigSchema
 } from '@lifeforge/configs'
 
-import { forgeAPI } from '../utils/forgeAPI'
-
-export type FederatedModule = InferOutput<
-  typeof forgeAPI.modules.manifest
->['modules'][number]
-
-export async function fetchModuleManifest(
-  apiHost: string
-): Promise<FederatedModule[]> {
-  try {
-    const { modules } = await forgeAPI.modules.manifest.setHost(apiHost).query()
-
-    return modules ?? []
-  } catch (e) {
-    console.warn('Failed to fetch module manifest:', e)
-
-    return []
-  }
-}
+import { type FederatedModule } from '../utils/fetchModuleData'
 
 /**
  * Maps module short name to import function for dev mode
@@ -131,7 +113,7 @@ export const registeredRemotesSet = new Set<string>()
  * Loads module config via federation (from remoteEntry.js)
  */
 async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
-  const remoteName = mod.name.replace(/^@[^/]+\//, '').replace(/-+/g, '_')
+  const remoteName = `m_${mod.moduleId}`
 
   if (!registeredRemotesSet.has(remoteName)) {
     if (!getInstance()) {

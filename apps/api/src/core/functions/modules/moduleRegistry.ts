@@ -1,6 +1,11 @@
 import { createServiceLogger } from '@functions/logging'
 
-import { Module, ModuleEntry, ModuleManifest, ModuleWidget } from './schemas'
+import type {
+  Module,
+  ModuleEntry,
+  ModuleManifest,
+  ModuleWidget
+} from '@lifeforge/configs'
 
 export const moduleLoaderLogger = createServiceLogger('Module Loader')
 
@@ -23,6 +28,10 @@ export class ModuleRegistry {
     const list: ModuleManifest[] = []
 
     for (const mod of ModuleRegistry.registeredModules) {
+      if (process.env.NODE_ENV === 'production' && !mod.hasDist) {
+        continue
+      }
+
       const isDevMode = process.env.NODE_ENV !== 'production' && mod.hasSource
 
       list.push({

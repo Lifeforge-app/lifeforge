@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import { serverAliasResolver } from '../resolvers/mod-server-alias-resolver'
 
 /**
  * Creates a standard Vite configuration for module server-side builds.
@@ -15,6 +16,9 @@ export function defineModuleServerConfig(dirname: string) {
         { find: /^@$/, replacement: `${dirname}/index` }
       ]
     },
+    plugins: [
+      serverAliasResolver(dirname)
+    ],
     build: {
       lib: {
         entry: `${dirname}/index.ts`,
@@ -23,8 +27,10 @@ export function defineModuleServerConfig(dirname: string) {
       outDir: `${dirname}/dist`,
       target: 'node22',
       rollupOptions: {
-        output: { entryFileNames: 'index.js' },
-        external: [/^[^./]/]
+        output: {
+          entryFileNames: 'index.js',
+          banner: 'import { createRequire as __createRequire } from \'node:module\'; globalThis.require = __createRequire(import.meta.url);'
+        }
       }
     }
   })

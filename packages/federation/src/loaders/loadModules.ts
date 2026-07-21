@@ -5,16 +5,12 @@ import type { ModuleCategory } from '@lifeforge/configs'
 import { type FederatedModuleCategory } from '../providers/FederationProvider'
 import {
   type CategoryOrder,
-  fetchCategoryOrder,
-  sortRoutes
-} from '../utils/sortRoutes'
-import {
   type FederatedModule,
-  fetchModuleManifest,
-  registeredRemotesSet
-} from './loadModuleConfig'
-
-export type GlobalProviderComponent = React.FC<{ children: React.ReactNode }>
+  fetchCategoryOrder,
+  fetchModuleManifest
+} from '../utils/fetchModuleData'
+import { sortRoutes } from '../utils/sortRoutes'
+import { registeredRemotesSet } from './loadModuleConfig'
 
 /**
  * Adds the module configuration to the routes
@@ -50,15 +46,15 @@ export default async function loadModules(
   coreModules: ModuleCategory['items'][number][] = []
 ): Promise<{
   routes: FederatedModuleCategory[]
-  globalProviders: GlobalProviderComponent[]
+  globalProviders: React.FC<{ children: React.ReactNode }>[]
   categoryTranslations: CategoryOrder
 }> {
-  const ROUTES: FederatedModuleCategory[] = []
+  const routes: FederatedModuleCategory[] = []
+  const globalProviders: React.FC<{ children: React.ReactNode }>[] = []
 
-  const globalProviders: GlobalProviderComponent[] = []
-
+  // Register core/system modules
   for (const mod of coreModules) {
-    addToRoute(ROUTES, mod.category, mod)
+    addToRoute(routes, mod.category, mod)
 
     // Collect provider from core module if exists
     if (mod.provider) {
@@ -66,36 +62,28 @@ export default async function loadModules(
     }
   }
 
-  // Fetch federated modules and category order (which includes translations)
-  const [serverManifest, categoryOrder] = await Promise.all([
+  // Fetch federated modules and category order
+  const [federatedModuleManifests, categoryOrder] = await Promise.all([
     fetchModuleManifest(apiHost),
     fetchCategoryOrder(apiHost)
   ])
 
-  // Register all remotes at once in production/production-client mode to prevent race conditions
-  if (!import.meta.env.DEV) {
-    const remotes = serverManifest.map(mod => {
-      const remoteName = mod.name.replace(/^@[^/]+\//, '').replace(/-+/g, '_')
-      registeredRemotesSet.add(remoteName)
+  const remotes: { name: string; entry: string; type: 'module' }[] = []
 
-      return {
-        name: remoteName,
-        entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
-        type: 'module' as const
-      }
+  for (const mod of federatedModuleManifests) {
+    if (!import.meta.env.DEV && mod.isDevMode) {
+      continue
+    }
+
+    const remoteName = `m_${mod.moduleId}`
+    registeredRemotesSet.add(remoteName)
+
+    remotes.push({
+      name: remoteName,
+      entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
+      type: 'module' as const
     })
 
-    if (!getInstance()) {
-      init({
-        name: 'host',
-        remotes
-      })
-    } else {
-      registerRemotes(remotes)
-    }
-  }
-
-  for (const mod of serverManifest) {
     const moduleConfig: ModuleCategory['items'][number] & {
       rawModule: FederatedModule
     } = {
@@ -113,11 +101,22 @@ export default async function loadModules(
       rawModule: mod
     }
 
-    addToRoute(ROUTES, mod.category, moduleConfig)
+    addToRoute(routes, mod.category, moduleConfig)
+  }
+
+  if (remotes.length > 0) {
+    if (!getInstance()) {
+      init({
+        name: 'host',
+        remotes
+      })
+    } else {
+      registerRemotes(remotes)
+    }
   }
 
   return {
-    routes: sortRoutes(ROUTES, categoryOrder),
+    routes: sortRoutes(routes, categoryOrder),
     globalProviders,
     categoryTranslations: categoryOrder
   }

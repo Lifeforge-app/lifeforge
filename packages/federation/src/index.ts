@@ -1,7 +1,4 @@
-export type {
-  ModuleConfig,
-  ModuleCategory
-} from '@lifeforge/configs'
+export type { ModuleConfig, ModuleCategory } from '@lifeforge/configs'
 
 export {
   default as FederationProvider,
@@ -12,14 +9,13 @@ export {
 
 export { default as loadModules } from './loaders/loadModules'
 
-export {
-  loadModuleConfig,
-  type FederatedModule
-} from './loaders/loadModuleConfig'
+export { loadModuleConfig } from './loaders/loadModuleConfig'
+
+export { type FederatedModule } from './utils/fetchModuleData'
 
 export {
   ModuleMetadataProvider,
   useModuleMetadata
 } from './providers/ModuleMetadataProvider'
 
-export { default as createForgeModuleClient } from './api/createForgeModuleClient'
+export { default as createForgeModule } from './api/createForgeModule'

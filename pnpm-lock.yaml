@@ -198,6 +198,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
       '@lifeforge/log':
         specifier: workspace:*
         version: link:../../packages/log

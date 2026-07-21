@@ -6,7 +6,7 @@ import { moduleLoaderLogger } from './moduleRegistry'
 
 /**
  * Checks if a module's manifest file has a provider defined by looking
- * for a `provider` property in the `createForgeModuleClient(...)` call.
+ * for a `provider` property in the `createForgeModule(...)` call.
  *
  * @param filePath - Path to the manifest file.
  * @returns Whether the manifest has a provider.
@@ -23,17 +23,17 @@ export default function checkManifestProvider(filePath: string): boolean {
       true
     )
 
-    // Find `createForgeModuleClient()` in the code
+    // Find `createForgeModule()` in the code
     const callExpr = findNode(
       sourceFile,
       n =>
         ts.isCallExpression(n) &&
-        n.expression.getText(sourceFile) === 'createForgeModuleClient'
+        n.expression.getText(sourceFile) === 'createForgeModule'
     )
 
     if (!callExpr) return false
 
-    // Get the first argument inside the `createForgeModuleClient`
+    // Get the first argument inside the `createForgeModule`
     const arg = (callExpr as ts.CallExpression).arguments[0]
 
     // Ensure the first argument is an object

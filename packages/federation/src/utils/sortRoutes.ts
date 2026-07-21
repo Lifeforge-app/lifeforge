@@ -1,33 +1,7 @@
 import type { ModuleCategory } from '@lifeforge/configs'
 
 import { SYSTEM_CATEGORIES } from '../providers/FederationProvider'
-import { forgeAPI } from './forgeAPI'
 
-export type CategoryOrder = Record<string, Record<string, string>>
-
-/**
- * Fetches category order (with translations) from the server
- */
-export async function fetchCategoryOrder(
-  apiHost: string
-): Promise<CategoryOrder> {
-  try {
-    return (
-      (await forgeAPI.modules.categories.list.setHost(apiHost).query()) ?? {}
-    )
-  } catch (e) {
-    console.warn('Failed to fetch category order:', e)
-
-    return {}
-  }
-}
-
-/**
- * Sorts the routes based on the order of the categories
- *
- * @param categoriesSeq The sequence of categories
- * @returns The sorted routes
- */
 function routeSorter(categoriesSeq: Record<string, Record<string, string>>) {
   return (a: ModuleCategory, b: ModuleCategory) => {
     const aIndex = SYSTEM_CATEGORIES.indexOf(a.title)

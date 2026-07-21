@@ -92,7 +92,7 @@ client/
 ├── manifest.ts           # Module federation manifest (routes, subsections, widgets)
 ├── contract.ts           # AUTO-GENERATED API contract (do not edit by hand)
 ├── index.html            # Empty entry HTML for Vite
-├── vite.config.ts        # defineModuleConfig({ dirname: __dirname })
+├── vite.config.ts        # defineModuleClientConfig({ dirname: __dirname })
 ├── tsconfig.json         # extends @lifeforge/configs/tsconfig/module.json
 └── src/
     ├── index.tsx         # Default-exported root component (route "/")
@@ -111,17 +111,17 @@ client/
 ### `manifest.ts`
 
 The manifest wires the client into the host via module federation. It calls
-`createForgeModuleClient` with the generated `contract` and returns both the
+`createForgeModule` with the generated `contract` and returns both the
 `manifest` (default export) and a typed `forgeAPI` client (named export).
 
 ```typescript
 import { lazy } from 'react'
 
-import { createForgeModuleClient } from '@lifeforge/federation'
+import { createForgeModule } from '@lifeforge/federation'
 
 import contract from './contract'
 
-const { forgeAPI, ...manifest } = createForgeModuleClient({
+const { forgeAPI, ...manifest } = createForgeModule({
   // Optional: sidebar sub-navigation for multi-page modules
   subsection: [
     { label: 'Dashboard', icon: 'tabler:dashboard', path: '' },
@@ -166,9 +166,9 @@ Both are thin wrappers around shared configs:
 
 ```typescript
 // vite.config.ts
-import { defineModuleConfig } from '@lifeforge/configs/vite'
+import { defineModuleClientConfig } from '@lifeforge/configs/vite'
 
-export default defineModuleConfig({ dirname: __dirname })
+export default defineModuleClientConfig({ dirname: __dirname })
 ```
 
 ```jsonc
@@ -457,7 +457,7 @@ One JSON file per supported language (`en.json`, `ms.json`, `zh-CN.json`,
    `forge` DSL.
 3. `server/index.ts` assembles them with `forgeRouter` and generates
    `client/contract.ts`.
-4. `client/manifest.ts` feeds the contract into `createForgeModuleClient`,
+4. `client/manifest.ts` feeds the contract into `createForgeModule`,
    producing the typed `forgeAPI` and the federation `manifest`.
 5. Client components import `forgeAPI` from `@/manifest` and call it via
    TanStack Query, with `InferInput`/`InferOutput` giving full type safety.

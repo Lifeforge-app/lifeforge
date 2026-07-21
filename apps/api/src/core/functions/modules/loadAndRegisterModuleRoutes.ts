@@ -6,7 +6,7 @@ import path from 'path'
 import gatherModuleMetadata from './gatherModuleMetadata'
 import { ModuleRegistry, moduleLoaderLogger } from './moduleRegistry'
 import registerDevResolverHooks from './registerDevResolverHooks'
-import { ModuleEntry } from './schemas'
+import type { ModuleEntry } from '@lifeforge/configs'
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
@@ -97,7 +97,7 @@ export async function loadAndRegisterModuleRoutes(): Promise<
   }
 
   moduleLoaderLogger.info(
-    `Loaded ${chalk.green(Object.keys(modules).length)} module(s): ${chalk.dim(
+    `Loaded ${chalk.green(Object.keys(ModuleRegistry.entries).length)} module(s): ${chalk.dim(
       Object.values(ModuleRegistry.entries)
         .map(e => e.displayName)
         .sort()

@@ -6,12 +6,12 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 
 import { SHARED_DEPS, SHARED_PACKAGES } from '../constants/shared-packages'
-import { aliasResolver } from '../resolvers/alias-resolver'
+import { clientAliasResolver } from '../resolvers/client-alias-resolver'
 
 /**
  * Creates the standard client/host Vite configuration for LifeForge.
  */
-export function defineClientConfig(dirname: string) {
+export function defineCoreClientConfig(dirname: string) {
   const aliasList = [
     ...Object.entries(SHARED_PACKAGES).map(
       ([, { aliasRegex, entryPoint }]) => ({
@@ -41,7 +41,7 @@ export function defineClientConfig(dirname: string) {
           enforce: 'pre',
           resolveId(source: string, importer: string | undefined) {
             if (source === '@' || source.startsWith('@/')) {
-              return aliasResolver(source, importer)
+              return clientAliasResolver(source, importer)
             }
             return null
           }
@@ -55,27 +55,28 @@ export function defineClientConfig(dirname: string) {
             return ['vite-tsconfig-paths', 'alias-resolver'].includes(name)
           }
         }),
-        !isDev && federation({
-          name: 'host',
-          dts: false,
-          remotes: {
-            None: ''
-          },
-          shared: {
-            ...Object.fromEntries(
-              Object.entries(SHARED_DEPS).map(([name, config]) => [
-                name,
-                { ...config, singleton: true }
-              ])
-            ),
-            ...Object.fromEntries(
-              Object.keys(SHARED_PACKAGES).map(name => [
-                name,
-                { singleton: true }
-              ])
-            )
-          }
-        })
+        !isDev &&
+          federation({
+            name: 'host',
+            dts: false,
+            remotes: {
+              None: ''
+            },
+            shared: {
+              ...Object.fromEntries(
+                Object.entries(SHARED_DEPS).map(([name, config]) => [
+                  name,
+                  { ...config, singleton: true }
+                ])
+              ),
+              ...Object.fromEntries(
+                Object.keys(SHARED_PACKAGES).map(name => [
+                  name,
+                  { singleton: true }
+                ])
+              )
+            }
+          })
       ].filter(Boolean),
       server: {
         fs: {

@@ -1,11 +1,12 @@
 import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import { ModuleRegistry } from '@functions/modules/moduleRegistry'
+import z from 'zod'
+
 import {
   moduleManifestSchema,
   moduleSchema,
   moduleWidgetSchema
-} from '@functions/modules/schemas'
-import z from 'zod'
+} from '@lifeforge/configs'
 
 import forge from '../forge'
 
@@ -19,11 +20,9 @@ export const manifest = forge
       })
     }
   })
-  .callback(async ({ response }) => {
-    const modules = ModuleRegistry.manifests
-
-    return response.ok({ modules })
-  })
+  .callback(async ({ response }) =>
+    response.ok({ modules: ModuleRegistry.manifests })
+  )
 
 export const list = forge
   .query({
@@ -33,9 +32,7 @@ export const list = forge
       OK: z.array(moduleSchema)
     }
   })
-  .callback(async ({ response }) =>
-    response.ok(ModuleRegistry.list)
-  )
+  .callback(async ({ response }) => response.ok(ModuleRegistry.list))
 
 export const checkModuleAvailability = forge
   .query({
@@ -61,6 +58,4 @@ export const widgets = forge
       OK: z.array(moduleWidgetSchema)
     }
   })
-  .callback(async ({ response }) =>
-    response.ok(ModuleRegistry.widgets)
-  )
+  .callback(async ({ response }) => response.ok(ModuleRegistry.widgets))

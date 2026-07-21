@@ -3,7 +3,7 @@ import fs from 'fs'
 
 import resolveExpressionMap, { findVariableDeclaration } from './ast-utils'
 import { moduleLoaderLogger } from './moduleRegistry'
-import { type WidgetConfig, widgetConfigSchema } from './schemas'
+import { type WidgetConfig, widgetConfigSchema } from '@lifeforge/configs'
 
 export default function parseWidgetConfig(
   filePath: string

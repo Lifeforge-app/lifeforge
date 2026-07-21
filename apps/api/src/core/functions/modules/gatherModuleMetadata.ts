@@ -10,7 +10,7 @@ import {
   type ModuleEntry,
   type ModuleWidget,
   modulePackageJSONSchema
-} from './schemas'
+} from '@lifeforge/configs'
 
 /**
  * Reads a module's package.json and file structure to gather its metadata
