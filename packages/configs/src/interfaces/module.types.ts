@@ -99,7 +99,6 @@ export const moduleEntrySchema = z.object({
     )
     .optional(),
   hasDist: z.boolean(),
-  hasSource: z.boolean(),
   hasProvider: z.boolean(),
   supportedLangs: z.array(z.string()),
   widgets: z.array(moduleWidgetSchema)

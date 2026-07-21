@@ -132,7 +132,6 @@ export default function gatherModuleMetadata(
       APIKeyAccess: packageJSON.lifeforge.APIKeyAccess,
       subsection,
       hasDist: isDistValid,
-      hasSource: hasClientSource,
       hasProvider,
       widgets,
       hasServerRoutes

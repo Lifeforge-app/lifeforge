@@ -32,7 +32,7 @@ export class ModuleRegistry {
         continue
       }
 
-      const isDevMode = process.env.NODE_ENV !== 'production' && mod.hasSource
+      const isDevMode = process.env.NODE_ENV !== 'production' && !mod.hasDist
 
       list.push({
         name: mod.name,
