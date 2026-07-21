@@ -28,6 +28,7 @@ export interface Module {
   isDevMode: boolean
   hasDist: boolean
   hasSource: boolean
+  hasProvider: boolean
 }
 
 function Modules() {

@@ -18,20 +18,18 @@ const modulePackageJSONSchema = z.object({
   })
 })
 
-const moduleWidgetSchema = z.object({
+const widgetConfigSchema = z.object({
   id: z.string(),
   icon: z.string(),
   minW: z.number().optional(),
   minH: z.number().optional(),
   maxW: z.number().optional(),
-  maxH: z.number().optional(),
-  moduleName: z.string(),
-  componentName: z.string()
+  maxH: z.number().optional()
 })
 
-const widgetConfigSchema = moduleWidgetSchema.omit({
-  moduleName: true,
-  componentName: true
+const moduleWidgetSchema = widgetConfigSchema.extend({
+  moduleName: z.string(),
+  componentName: z.string()
 })
 
 const moduleEntrySchema = z.object({
@@ -48,6 +46,7 @@ const moduleEntrySchema = z.object({
   APIKeyAccess: apiKeyAccessSchema.optional(),
   hasDist: z.boolean(),
   hasSource: z.boolean(),
+  hasProvider: z.boolean(),
   supportedLangs: z.array(z.string()),
   widgets: z.array(moduleWidgetSchema)
 })
@@ -64,7 +63,8 @@ const moduleManifestSchema = moduleEntrySchema
     category: true,
     remoteEntryUrl: true,
     isInternal: true,
-    APIKeyAccess: true
+    APIKeyAccess: true,
+    hasProvider: true
   })
   .extend({
     isDevMode: z.boolean()
@@ -82,7 +82,8 @@ const moduleSchema = moduleEntrySchema
     category: true,
     isInternal: true,
     hasDist: true,
-    hasSource: true
+    hasSource: true,
+    hasProvider: true
   })
   .extend({
     isDevMode: z.boolean()

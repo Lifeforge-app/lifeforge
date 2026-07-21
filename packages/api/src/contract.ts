@@ -2620,6 +2620,9 @@ export const contract = {
               "hasSource": {
                 "type": "boolean"
               },
+              "hasProvider": {
+                "type": "boolean"
+              },
               "isDevMode": {
                 "type": "boolean"
               }
@@ -2636,6 +2639,7 @@ export const contract = {
               "isInternal",
               "hasDist",
               "hasSource",
+              "hasProvider",
               "isDevMode"
             ],
             "additionalProperties": false
@@ -2710,6 +2714,9 @@ export const contract = {
                       "additionalProperties": false
                     }
                   },
+                  "hasProvider": {
+                    "type": "boolean"
+                  },
                   "isDevMode": {
                     "type": "boolean"
                   }
@@ -2725,6 +2732,7 @@ export const contract = {
                   "category",
                   "remoteEntryUrl",
                   "isInternal",
+                  "hasProvider",
                   "isDevMode"
                 ],
                 "additionalProperties": false

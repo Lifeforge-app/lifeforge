@@ -26,7 +26,7 @@ export default function LazyModuleProvider({
     let active = true
 
     async function load() {
-      if (!item.rawModule) {
+      if (!item.rawModule || !item.rawModule.hasProvider) {
         if (active) {
           setProvider(() => FallbackProvider)
         }
