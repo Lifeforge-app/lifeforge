@@ -1,17 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import {
-  Box,
-  Card,
-  Flex,
-  Icon,
-  TAILWIND_PALETTE,
-  TagChip,
-  Text,
-  colorWithOpacity
-} from '@lifeforge/ui'
-
-import type { Module } from '..'
+import type { Module } from '@lifeforge/configs'
+import { Box, Card, Flex, Icon, Text, colorWithOpacity } from '@lifeforge/ui'
 
 function ModuleItem({ module }: { module: Module }) {
   // Module name format: @lifeforge/lifeforge--wallet -> lifeforge--wallet
@@ -46,26 +36,6 @@ function ModuleItem({ module }: { module: Module }) {
               <Text truncate as="h3" size="lg" weight="semibold">
                 {translatedTitle}
               </Text>
-              {module.isDevMode && (
-                <TagChip
-                  color={TAILWIND_PALETTE.yellow[500]}
-                  flexShrink="0"
-                  icon="tabler:code"
-                  label={t('common.module-manager:devMode.label')}
-                  size="sm"
-                  variant="outlined"
-                />
-              )}
-              {!module.hasDist && (
-                <TagChip
-                  color={TAILWIND_PALETTE.red[500]}
-                  flexShrink="0"
-                  icon="tabler:alert-triangle"
-                  label={t('common.module-manager:notBuilt.label')}
-                  size="sm"
-                  variant="outlined"
-                />
-              )}
             </Flex>
             <Text color="muted" size="sm">
               v{module.version}

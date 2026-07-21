@@ -1,15 +1,12 @@
-export type { ModuleConfig, ModuleCategory } from '@lifeforge/configs'
-
 export {
   default as FederationProvider,
   useFederation,
-  SYSTEM_CATEGORIES,
-  type FederatedModuleCategory
+  SYSTEM_CATEGORIES
 } from './providers/FederationProvider'
 
-export { default as loadModules } from './loaders/loadModules'
+export { bootstrapModules } from './loaders/bootstrapModules'
 
-export { loadModuleConfig } from './loaders/loadModuleConfig'
+export { loadRemoteModuleConfig } from './loaders/loadRemoteModuleConfig'
 
 export { type FederatedModule } from './utils/fetchModuleData'
 

@@ -1,16 +1,13 @@
 import { Suspense } from 'react'
 import type { RouteObject } from 'react-router'
 
-import type {
-  FederatedModule,
-  ModuleCategory,
-  ModuleConfig
-} from '@lifeforge/federation'
+import type { ModuleConfig, ModuleGroup } from '@lifeforge/configs'
+import type { FederatedModule } from '@lifeforge/federation'
 import { LoadingScreen, ModalManager, ModuleWrapper } from '@lifeforge/ui'
 
 import APIKeyStatusProvider from '@/core/providers/features/APIKeyStatusProvider'
 
-import LazyModuleLoader from '../components/LazyModuleLoader'
+import LazyRouteLoader from '../components/LazyRouteLoader'
 
 interface RouteBuilderOptions {
   routes: ModuleConfig['routes']
@@ -20,7 +17,6 @@ interface RouteBuilderOptions {
   config: {
     name: string
     title: string
-    displayName: string
     icon: string
     clearQueryOnUnmount: boolean
   }
@@ -63,7 +59,7 @@ export function buildChildRoutes({
  * Creates route configuration for a module with optional provider wrapper
  */
 export function createModuleRoute(
-  item: ModuleCategory['items'][number] & { rawModule?: FederatedModule },
+  item: ModuleGroup['items'][number] & { rawModule?: FederatedModule },
   loadingMessage: string
 ): RouteObject | RouteObject[] {
   if (!item.rawModule) {
@@ -73,7 +69,6 @@ export function createModuleRoute(
       config: {
         name: item.name || '',
         title: item.name,
-        displayName: item.displayName,
         icon: item.icon,
         clearQueryOnUnmount: item.clearQueryOnUnmount ?? true
       },
@@ -95,6 +90,6 @@ export function createModuleRoute(
 
   return {
     path: `/${baseRoute}/*`,
-    element: <LazyModuleLoader item={item} loadingMessage={loadingMessage} />
+    element: <LazyRouteLoader item={item} loadingMessage={loadingMessage} />
   }
 }

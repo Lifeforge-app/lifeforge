@@ -2610,21 +2610,6 @@ export const contract = {
               },
               "category": {
                 "type": "string"
-              },
-              "isInternal": {
-                "type": "boolean"
-              },
-              "hasDist": {
-                "type": "boolean"
-              },
-              "hasSource": {
-                "type": "boolean"
-              },
-              "hasProvider": {
-                "type": "boolean"
-              },
-              "isDevMode": {
-                "type": "boolean"
               }
             },
             "required": [
@@ -2635,12 +2620,7 @@ export const contract = {
               "description",
               "author",
               "icon",
-              "category",
-              "isInternal",
-              "hasDist",
-              "hasSource",
-              "hasProvider",
-              "isDevMode"
+              "category"
             ],
             "additionalProperties": false
           }
@@ -2674,15 +2654,6 @@ export const contract = {
                   "displayName": {
                     "type": "string"
                   },
-                  "version": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "author": {
-                    "type": "string"
-                  },
                   "icon": {
                     "type": "string"
                   },
@@ -2691,9 +2662,6 @@ export const contract = {
                   },
                   "remoteEntryUrl": {
                     "type": "string"
-                  },
-                  "isInternal": {
-                    "type": "boolean"
                   },
                   "APIKeyAccess": {
                     "type": "object",
@@ -2717,6 +2685,29 @@ export const contract = {
                   "hasProvider": {
                     "type": "boolean"
                   },
+                  "subsection": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "label": {
+                          "type": "string"
+                        },
+                        "icon": {
+                          "type": "string"
+                        },
+                        "path": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "label",
+                        "icon",
+                        "path"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
                   "isDevMode": {
                     "type": "boolean"
                   }
@@ -2725,13 +2716,9 @@ export const contract = {
                   "name",
                   "moduleId",
                   "displayName",
-                  "version",
-                  "description",
-                  "author",
                   "icon",
                   "category",
                   "remoteEntryUrl",
-                  "isInternal",
                   "hasProvider",
                   "isDevMode"
                 ],

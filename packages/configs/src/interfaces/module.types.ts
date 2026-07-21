@@ -87,9 +87,17 @@ export const moduleEntrySchema = z.object({
   author: z.string(),
   icon: z.string(),
   category: z.string(),
-  isInternal: z.boolean(),
   remoteEntryUrl: z.string(),
   APIKeyAccess: apiKeyAccessSchema.optional(),
+  subsection: z
+    .array(
+      z.object({
+        label: z.string(),
+        icon: z.string(),
+        path: z.string()
+      })
+    )
+    .optional(),
   hasDist: z.boolean(),
   hasSource: z.boolean(),
   hasProvider: z.boolean(),
@@ -102,38 +110,27 @@ export const moduleManifestSchema = moduleEntrySchema
     name: true,
     moduleId: true,
     displayName: true,
-    version: true,
-    description: true,
-    author: true,
     icon: true,
     category: true,
     remoteEntryUrl: true,
-    isInternal: true,
     APIKeyAccess: true,
-    hasProvider: true
+    hasProvider: true,
+    subsection: true
   })
   .extend({
     isDevMode: z.boolean()
   })
 
-export const moduleSchema = moduleEntrySchema
-  .pick({
-    name: true,
-    moduleId: true,
-    displayName: true,
-    version: true,
-    description: true,
-    author: true,
-    icon: true,
-    category: true,
-    isInternal: true,
-    hasDist: true,
-    hasSource: true,
-    hasProvider: true
-  })
-  .extend({
-    isDevMode: z.boolean()
-  })
+export const moduleSchema = moduleEntrySchema.pick({
+  name: true,
+  moduleId: true,
+  displayName: true,
+  version: true,
+  description: true,
+  author: true,
+  icon: true,
+  category: true
+})
 
 export type APIKeyAccess = z.infer<typeof apiKeyAccessSchema>
 
@@ -151,15 +148,11 @@ export type Module = z.infer<typeof moduleSchema>
 // 3. Module Categorization Category Types
 // ==========================================
 
-export interface ModuleCategory {
+export interface ModuleGroup {
   title: string
   items: (ModuleConfig & {
     name: string
     moduleId?: string
-    displayName: string
-    version: string
-    author: string
-    description: string
     icon: string
     category: string
     APIKeyAccess?: Record<string, { usage: string; required: boolean }>

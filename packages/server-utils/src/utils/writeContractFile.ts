@@ -152,6 +152,8 @@ export function writeContractFileToClient(
   serverRootDir: string,
   clientDir: string = '../client'
 ): void {
+  if (process.env.NODE_ENV === 'production') return
+
   const serialized = serializeRoutes(routes)
 
   const content = `export const contract = ${JSON.stringify(serialized, null, 2)} as const\n\nexport default contract\n`

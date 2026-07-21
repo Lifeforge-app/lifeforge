@@ -1,9 +1,9 @@
-import type { ModuleCategory } from '@lifeforge/configs'
+import type { ModuleGroup } from '@lifeforge/configs'
 
 import { SYSTEM_CATEGORIES } from '../providers/FederationProvider'
 
 function routeSorter(categoriesSeq: Record<string, Record<string, string>>) {
-  return (a: ModuleCategory, b: ModuleCategory) => {
+  return (a: ModuleGroup, b: ModuleGroup) => {
     const aIndex = SYSTEM_CATEGORIES.indexOf(a.title)
 
     const bIndex = SYSTEM_CATEGORIES.indexOf(b.title)
@@ -55,7 +55,7 @@ function routeSorter(categoriesSeq: Record<string, Record<string, string>>) {
   }
 }
 
-export function sortRoutes<T extends ModuleCategory>(
+export function sortRoutes<T extends ModuleGroup>(
   routes: T[],
   categoryOrder: Record<string, Record<string, string>>
 ): T[] {

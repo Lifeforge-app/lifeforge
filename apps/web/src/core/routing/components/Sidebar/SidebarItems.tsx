@@ -18,14 +18,14 @@ import MainSidebarTitle from './MainSidebarTitle'
 
 function SidebarItems({ query }: { query: string }) {
   const { userData } = useAuth()
-  const { modules } = useFederation()
+  const { moduleGroups } = useFederation()
   const location = useLocation()
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
-  const [resolvedRoutes, setResolvedRoutes] = useState(modules)
+  const [resolvedModuleGroups, setResolvedModuleGroups] = useState(moduleGroups)
 
   const filteredRoutes = useMemo(
     () =>
-      resolvedRoutes.filter(
+      resolvedModuleGroups.filter(
         e =>
           e.title.toLowerCase().includes(query.toLowerCase()) ||
           e.items.some(
@@ -35,12 +35,12 @@ function SidebarItems({ query }: { query: string }) {
               !subItem.hidden
           )
       ),
-    [query, userData, resolvedRoutes]
+    [query, userData, resolvedModuleGroups]
   )
 
-  async function resolveRoutes() {
+  async function resolveModuleGroups() {
     const updatedRoutes = await Promise.all(
-      modules.map(async category => {
+      moduleGroups.map(async category => {
         const updatedItems = await Promise.all(
           category.items.map(async mod => {
             if (typeof mod.disabled === 'function') {
@@ -57,12 +57,12 @@ function SidebarItems({ query }: { query: string }) {
       })
     )
 
-    setResolvedRoutes(updatedRoutes)
+    setResolvedModuleGroups(updatedRoutes)
   }
 
   useEffect(() => {
-    resolveRoutes()
-  }, [modules])
+    resolveModuleGroups()
+  }, [moduleGroups])
 
   return (
     <Flex as="ul" direction="column" flex="1" pb="lg">
@@ -101,7 +101,7 @@ function SidebarItems({ query }: { query: string }) {
                         />
                       )
                     })}
-                    {index !== modules.length - 1 &&
+                    {index !== moduleGroups.length - 1 &&
                       filteredModules.length > 0 && <SidebarDivider />}
                   </Fragment>
                 )

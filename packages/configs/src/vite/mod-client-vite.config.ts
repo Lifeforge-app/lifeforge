@@ -46,7 +46,7 @@ export function defineModuleClientConfig(
 
     const env = loadEnv(configEnv.mode, envDir, '')
 
-    const apiHost = isDocker ? '/api' : env.VITE_API_HOST
+    const apiHost = isDocker ? '/api' : (env.VITE_API_HOST || '')
 
     // 2. Base default configuration
     const baseConfig: UserConfig = {

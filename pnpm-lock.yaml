@@ -339,6 +339,9 @@ importers:
       '@lifeforge/api':
         specifier: workspace:*
         version: link:../../packages/api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -602,6 +605,9 @@ importers:
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
+      '@lifeforge/pocketbase':
+        specifier: workspace:*
+        version: link:../../packages/pocketbase
       '@lifeforge/server-utils':
         specifier: workspace:*
         version: link:../../packages/server-utils

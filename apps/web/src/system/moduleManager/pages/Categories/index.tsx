@@ -36,7 +36,7 @@ import ModifyCategoryModal from './components/ModifyCategoryModal'
 function Categories() {
   const { t } = useTranslation('common.module-manager')
   const { open } = useModalStore()
-  const { categoryTranslations, modules, refetch } = useFederation()
+  const { categoryTranslations, moduleGroups, refetch } = useFederation()
 
   const [items, setItems] = useState<
     Array<{ key: string; value: Record<string, string> }>
@@ -45,7 +45,7 @@ function Categories() {
     const allKeys = [
       ...new Set([
         ...Object.keys(categoryTranslations),
-        ...modules
+        ...moduleGroups
           .flatMap(module =>
             module.items.map(item => item.category.toLowerCase())
           )
@@ -57,7 +57,7 @@ function Categories() {
     ]
 
     return allKeys.filter(key => !categoryTranslations[key])
-  }, [categoryTranslations, modules])
+  }, [categoryTranslations, moduleGroups])
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {

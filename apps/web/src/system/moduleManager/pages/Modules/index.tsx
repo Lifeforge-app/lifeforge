@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
+import type { Module } from '@lifeforge/configs'
 import { useFederation } from '@lifeforge/federation'
 import {
   EmptyStateScreen,
@@ -15,21 +16,6 @@ import {
 import forgeAPI from '@/core/utils/forgeAPI'
 
 import ModuleItem from './components/ModuleItem'
-
-export interface Module {
-  name: string
-  displayName: string
-  version: string
-  description: string
-  author: string
-  icon: string
-  category: string
-  isInternal: boolean
-  isDevMode: boolean
-  hasDist: boolean
-  hasSource: boolean
-  hasProvider: boolean
-}
 
 function Modules() {
   const { categoryTranslations } = useFederation()

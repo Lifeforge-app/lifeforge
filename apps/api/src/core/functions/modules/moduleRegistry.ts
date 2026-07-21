@@ -38,15 +38,12 @@ export class ModuleRegistry {
         name: mod.name,
         moduleId: mod.moduleId,
         displayName: mod.displayName,
-        version: mod.version,
-        description: mod.description,
-        author: mod.author,
         icon: mod.icon,
         category: mod.category,
         remoteEntryUrl: mod.remoteEntryUrl,
-        isInternal: mod.isInternal,
         APIKeyAccess: mod.APIKeyAccess,
         hasProvider: mod.hasProvider,
+        subsection: mod.subsection,
         isDevMode
       })
     }
@@ -58,8 +55,6 @@ export class ModuleRegistry {
     const list: Module[] = []
 
     for (const mod of ModuleRegistry.registeredModules) {
-      const isDevMode = process.env.NODE_ENV !== 'production' && mod.hasSource
-
       list.push({
         name: mod.name,
         moduleId: mod.moduleId,
@@ -68,12 +63,7 @@ export class ModuleRegistry {
         description: mod.description,
         author: mod.author,
         icon: mod.icon,
-        category: mod.category,
-        isInternal: mod.isInternal,
-        hasDist: mod.hasDist,
-        hasSource: mod.hasSource,
-        hasProvider: mod.hasProvider,
-        isDevMode
+        category: mod.category
       })
     }
 

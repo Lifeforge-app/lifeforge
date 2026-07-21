@@ -15,9 +15,9 @@ function ModulesRequiredListModal({
   }
 }) {
   const { t } = useTranslation('common.api-keys')
-  const { modules } = useFederation()
+  const { moduleGroups } = useFederation()
 
-  const modulesRequired = modules
+  const modulesRequired = moduleGroups
     .flatMap(cat => cat.items)
     .filter(item => item.APIKeyAccess?.[keyId])
 

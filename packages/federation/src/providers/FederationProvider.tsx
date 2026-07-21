@@ -1,12 +1,12 @@
 import { createContext, useContext, useMemo, useRef, useState } from 'react'
 
-import type { ModuleCategory } from '@lifeforge/configs'
+import type { ModuleGroup } from '@lifeforge/configs'
 
 import type { FederatedModule } from '../utils/fetchModuleData'
 
-export interface FederatedModuleCategory {
+export interface FederatedModuleGroup {
   title: string
-  items: (ModuleCategory['items'][number] & {
+  items: (ModuleGroup['items'][number] & {
     rawModule?: FederatedModule
   })[]
 }
@@ -20,8 +20,8 @@ export const SYSTEM_CATEGORIES = [
 ]
 
 interface FederationContextValue {
-  modules: FederatedModuleCategory[]
-  setModules: React.Dispatch<React.SetStateAction<FederatedModuleCategory[]>>
+  moduleGroups: FederatedModuleGroup[]
+  setModuleGroups: React.Dispatch<React.SetStateAction<FederatedModuleGroup[]>>
   globalProviders: React.FC<{ children: React.ReactNode }>[]
   setGlobalProviders: React.Dispatch<
     React.SetStateAction<React.FC<{ children: React.ReactNode }>[]>
@@ -38,8 +38,8 @@ interface FederationContextValue {
 }
 
 const defaultValue: FederationContextValue = {
-  modules: [],
-  setModules: () => {},
+  moduleGroups: [],
+  setModuleGroups: () => {},
   globalProviders: [],
   setGlobalProviders: () => {},
   categoryTranslations: {},
@@ -58,7 +58,7 @@ export function useFederation(): FederationContextValue {
 }
 
 function FederationProvider({ children }: { children: React.ReactNode }) {
-  const [modules, setModules] = useState<FederatedModuleCategory[]>([])
+  const [moduleGroups, setModuleGroups] = useState<FederatedModuleGroup[]>([])
 
   const [globalProviders, setGlobalProviders] = useState<
     React.FC<{ children: React.ReactNode }>[]
@@ -73,8 +73,8 @@ function FederationProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({
-      modules,
-      setModules,
+      moduleGroups,
+      setModuleGroups,
       globalProviders,
       setGlobalProviders,
       categoryTranslations,
@@ -85,7 +85,7 @@ function FederationProvider({ children }: { children: React.ReactNode }) {
       setError,
       refetch
     }),
-    [modules, globalProviders, categoryTranslations, loading, error]
+    [moduleGroups, globalProviders, categoryTranslations, loading, error]
   )
 
   return <FederationContext value={value}>{children}</FederationContext>

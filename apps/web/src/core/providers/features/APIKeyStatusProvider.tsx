@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router'
 
-import { type ModuleCategory } from '@lifeforge/federation'
+import type { ModuleGroup } from '@lifeforge/configs'
 import {
   Button,
   Card,
@@ -18,7 +18,7 @@ function APIKeyStatusProvider({
   APIKeyAccess,
   children
 }: {
-  APIKeyAccess: ModuleCategory['items'][number]['APIKeyAccess']
+  APIKeyAccess: ModuleGroup['items'][number]['APIKeyAccess']
   children: React.ReactNode
 }) {
   const { t } = useTranslation('common.api-keys')

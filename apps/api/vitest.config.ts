@@ -32,7 +32,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@tests': resolve(__dirname, 'src/tests'),
-      '@schema': resolve(__dirname, '../database/pb_data/types.d.ts')
+      '@schema': resolve(__dirname, '../database/pb_data/types.d.ts'),
+      '@functions': resolve(__dirname, 'src/core/functions'),
+      '@constants': resolve(__dirname, 'src/core/constants'),
+      '@lib': resolve(__dirname, 'src/lib')
     }
   }
 })

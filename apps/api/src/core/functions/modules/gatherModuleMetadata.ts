@@ -3,14 +3,16 @@ import crypto from 'crypto'
 import fs from 'fs'
 import path from 'path'
 
-import checkManifestProvider from './checkManifestProvider'
-import { moduleLoaderLogger } from './moduleRegistry'
-import parseWidgetConfig from './parseWidgetConfig'
 import {
   type ModuleEntry,
   type ModuleWidget,
   modulePackageJSONSchema
 } from '@lifeforge/configs'
+
+import checkManifestProvider from './checkManifestProvider'
+import { moduleLoaderLogger } from './moduleRegistry'
+import parseManifestSubsections from './parseManifestSubsections'
+import parseWidgetConfig from './parseWidgetConfig'
 
 /**
  * Reads a module's package.json and file structure to gather its metadata
@@ -114,6 +116,7 @@ export default function gatherModuleMetadata(
 
     const manifestPath = path.join(appsDir, modDir, 'client', 'manifest.ts')
     const hasProvider = checkManifestProvider(manifestPath)
+    const subsection = parseManifestSubsections(manifestPath)
 
     return {
       moduleId,
@@ -124,10 +127,10 @@ export default function gatherModuleMetadata(
       author: packageJSON.author,
       icon: packageJSON.lifeforge.icon,
       category: packageJSON.lifeforge.category,
-      isInternal: false,
       supportedLangs,
       remoteEntryUrl: `/modules/${modDir}/remoteEntry.js`,
       APIKeyAccess: packageJSON.lifeforge.APIKeyAccess,
+      subsection,
       hasDist: isDistValid,
       hasSource: hasClientSource,
       hasProvider,

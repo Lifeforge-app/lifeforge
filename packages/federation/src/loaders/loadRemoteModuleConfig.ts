@@ -7,7 +7,7 @@ import {
 
 import { globalProxyRegistry } from '@lifeforge/api'
 import {
-  type ModuleCategory,
+  type ModuleGroup,
   type ModuleConfig,
   moduleConfigSchema
 } from '@lifeforge/configs'
@@ -43,11 +43,11 @@ function getDevModeImport(
 /**
  * Loads a module config - either from dev source or federation bundle
  */
-export async function loadModuleConfig(
+export async function loadRemoteModuleConfig(
   mod: FederatedModule,
   devModeImports: Record<string, () => Promise<{ default: ModuleConfig }>> = {},
   devModePkgs: Record<string, { name: string }> = {}
-): Promise<ModuleCategory['items'][number]> {
+): Promise<ModuleGroup['items'][number]> {
   let unwrapped: ModuleConfig
 
   // Dev mode: import directly from source for hot-reload
@@ -77,16 +77,11 @@ export async function loadModuleConfig(
     )
   }
 
-  const moduleConfig: ModuleCategory['items'][number] = {
+  const moduleConfig: ModuleGroup['items'][number] = {
     name: mod.name,
     moduleId: mod.moduleId,
-    displayName: mod.displayName,
-    version: mod.version,
-    description: mod.description,
-    author: mod.author,
     icon: mod.icon,
     category: mod.category,
-    
     routes: unwrapped.routes,
     provider: unwrapped.provider,
     subsection: unwrapped.subsection,
@@ -116,25 +111,21 @@ async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
   const remoteName = `m_${mod.moduleId}`
 
   if (!registeredRemotesSet.has(remoteName)) {
+    const remoteConfig = {
+      name: remoteName,
+      entry: mod.remoteEntryUrl.startsWith('http')
+        ? mod.remoteEntryUrl
+        : `${import.meta.env.VITE_API_HOST || ''}${mod.remoteEntryUrl}`,
+      type: 'module'
+    }
+
     if (!getInstance()) {
       init({
         name: 'host',
-        remotes: [
-          {
-            name: remoteName,
-            entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
-            type: 'module'
-          }
-        ]
+        remotes: [remoteConfig]
       })
     } else {
-      registerRemotes([
-        {
-          name: remoteName,
-          entry: `${import.meta.env.VITE_API_HOST}${mod.remoteEntryUrl}`,
-          type: 'module'
-        }
-      ])
+      registerRemotes([remoteConfig])
     }
     registeredRemotesSet.add(remoteName)
   }

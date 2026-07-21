@@ -7,21 +7,21 @@ import {
   useState
 } from 'react'
 
-import { loadModuleConfig, useFederation } from '@lifeforge/federation'
+import { loadRemoteModuleConfig, useFederation } from '@lifeforge/federation'
 import { LoadingScreen } from '@lifeforge/ui'
 
 import {
   devModeImports,
   devModePkgs
-} from '@/core/providers/features/CoreFederationProvider'
+} from '@/core/utils/devModeImports'
 import forgeAPI from '@/core/utils/forgeAPI'
 
 export interface WidgetEntry {
-  component: React.ComponentType<{ dimension: { w: number; h: number } }>
   moduleName: string
+  component: React.ComponentType<any>
   icon: string
-  minW?: number
-  minH?: number
+  minW: number
+  minH: number
   maxW?: number
   maxH?: number
 }
@@ -43,7 +43,7 @@ export function useWidgets(): WidgetContextValue {
 }
 
 function WidgetProvider({ children }: { children: React.ReactNode }) {
-  const { modules } = useFederation()
+  const { moduleGroups } = useFederation()
 
   const [federatedWidgets, setFederatedWidgets] = useState<
     Record<string, WidgetEntry>
@@ -60,7 +60,7 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
         const loadedWidgets: Record<string, WidgetEntry> = {}
 
         for (const widget of serverWidgets) {
-          const item = modules
+          const item = moduleGroups
             .flatMap(cat => cat.items)
             .find(i => i.name === widget.moduleName)
 
@@ -69,7 +69,7 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
           const rawModule = item.rawModule
 
           const LazyComponent = lazy(async () => {
-            const unwrapped = await loadModuleConfig(
+            const unwrapped = await loadRemoteModuleConfig(
               rawModule,
               devModeImports,
               devModePkgs
@@ -92,8 +92,8 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
             moduleName: widget.moduleName,
             component: LazyComponent,
             icon: widget.icon,
-            minW: widget.minW,
-            minH: widget.minH,
+            minW: widget.minW || 1,
+            minH: widget.minH || 1,
             maxW: widget.maxW,
             maxH: widget.maxH
           }
@@ -107,12 +107,12 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
       }
     }
 
-    if (modules.length > 0) {
+    if (moduleGroups.length > 0) {
       loadFederatedWidgets()
     } else {
       setLoading(false)
     }
-  }, [modules])
+  }, [moduleGroups])
 
   const value = useMemo(
     () => ({
