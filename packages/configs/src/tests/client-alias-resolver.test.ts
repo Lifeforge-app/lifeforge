@@ -1,5 +1,6 @@
 import fs from 'node:fs'
-import { describe, expect, it, vi, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+
 import { clientAliasResolver } from '../resolvers/client-alias-resolver'
 
 vi.mock('node:fs', () => {
@@ -21,12 +22,16 @@ describe('clientAliasResolver', () => {
   })
 
   it('returns null if rootDir cannot be determined', () => {
-    expect(clientAliasResolver('@/components/Button', '/outside/project/file.ts')).toBeNull()
+    expect(
+      clientAliasResolver('@/components/Button', '/outside/project/file.ts')
+    ).toBeNull()
   })
 
   it('resolves "@/manifest" relative to client root directory', () => {
-    vi.mocked(fs.existsSync).mockImplementation((pathToCheck) => {
-      return pathToCheck === '/Users/project/modules/mrt-builder/client/manifest.ts'
+    vi.mocked(fs.existsSync).mockImplementation(pathToCheck => {
+      return (
+        pathToCheck === '/Users/project/modules/mrt-builder/client/manifest.ts'
+      )
     })
 
     const result = clientAliasResolver(
@@ -39,8 +44,11 @@ describe('clientAliasResolver', () => {
   })
 
   it('resolves components relative to client "src" directory', () => {
-    vi.mocked(fs.existsSync).mockImplementation((pathToCheck) => {
-      return pathToCheck === '/Users/project/modules/mrt-builder/client/src/components/Button.tsx'
+    vi.mocked(fs.existsSync).mockImplementation(pathToCheck => {
+      return (
+        pathToCheck ===
+        '/Users/project/modules/mrt-builder/client/src/components/Button.tsx'
+      )
     })
 
     const result = clientAliasResolver(
@@ -48,12 +56,17 @@ describe('clientAliasResolver', () => {
       '/Users/project/modules/mrt-builder/client/src/index.tsx'
     )
 
-    expect(result).toBe('/Users/project/modules/mrt-builder/client/src/components/Button.tsx')
+    expect(result).toBe(
+      '/Users/project/modules/mrt-builder/client/src/components/Button.tsx'
+    )
   })
 
   it('resolves index files if no file extension is specified', () => {
-    vi.mocked(fs.existsSync).mockImplementation((pathToCheck) => {
-      return pathToCheck === '/Users/project/modules/mrt-builder/client/src/components/Layout/index.tsx'
+    vi.mocked(fs.existsSync).mockImplementation(pathToCheck => {
+      return (
+        pathToCheck ===
+        '/Users/project/modules/mrt-builder/client/src/components/Layout/index.tsx'
+      )
     })
 
     const result = clientAliasResolver(
@@ -61,11 +74,13 @@ describe('clientAliasResolver', () => {
       '/Users/project/modules/mrt-builder/client/src/index.tsx'
     )
 
-    expect(result).toBe('/Users/project/modules/mrt-builder/client/src/components/Layout/index.tsx')
+    expect(result).toBe(
+      '/Users/project/modules/mrt-builder/client/src/components/Layout/index.tsx'
+    )
   })
 
   it('resolves using standard package "src" directories', () => {
-    vi.mocked(fs.existsSync).mockImplementation((pathToCheck) => {
+    vi.mocked(fs.existsSync).mockImplementation(pathToCheck => {
       return pathToCheck === '/Users/project/packages/core/src/utils/math.ts'
     })
 
@@ -78,8 +93,10 @@ describe('clientAliasResolver', () => {
   })
 
   it('handles "@fs" prefix and normalizes paths', () => {
-    vi.mocked(fs.existsSync).mockImplementation((pathToCheck) => {
-      return pathToCheck === '/Users/project/modules/mrt-builder/client/src/utils.ts'
+    vi.mocked(fs.existsSync).mockImplementation(pathToCheck => {
+      return (
+        pathToCheck === '/Users/project/modules/mrt-builder/client/src/utils.ts'
+      )
     })
 
     const result = clientAliasResolver(
@@ -87,11 +104,13 @@ describe('clientAliasResolver', () => {
       '/@fs/Users/project/modules/mrt-builder/client/src/index.tsx'
     )
 
-    expect(result).toBe('/Users/project/modules/mrt-builder/client/src/utils.ts')
+    expect(result).toBe(
+      '/Users/project/modules/mrt-builder/client/src/utils.ts'
+    )
   })
 
   it('resolves base import "@" correctly', () => {
-    vi.mocked(fs.existsSync).mockImplementation((pathToCheck) => {
+    vi.mocked(fs.existsSync).mockImplementation(pathToCheck => {
       return pathToCheck === '/Users/project/modules/mrt-builder/client/src'
     })
 

@@ -3,10 +3,11 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
+import type { ModuleEntry } from '@lifeforge/configs'
+
 import gatherModuleMetadata from './gatherModuleMetadata'
 import { ModuleRegistry, moduleLoaderLogger } from './moduleRegistry'
 import registerDevResolverHooks from './registerDevResolverHooks'
-import type { ModuleEntry } from '@lifeforge/configs'
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 

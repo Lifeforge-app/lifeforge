@@ -19,43 +19,44 @@ export default defineConfig(({ command }) => {
       react(),
       mdx(options),
       mdxListCountsPlugin(),
-      !isDev && federation({
-        name: 'docs-host',
-        remotes: {
-          None: ''
-        },
-        shared: ['react', 'react-dom']
-      })
+      !isDev &&
+        federation({
+          name: 'docs-host',
+          remotes: {
+            None: ''
+          },
+          shared: ['react', 'react-dom']
+        })
     ].filter(Boolean),
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  },
-  build: {
-    commonjsOptions: {
-      transformMixedEsModules: true
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
+      }
     },
-    target: 'esnext',
-    sourcemap: false,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return id
-              .toString()
-              .split('node_modules/')
-              .pop()!
-              .split('/')[0]
-              .toString()
-          } else if (id.endsWith('.mdx')) {
-            const mdxPath = id.toString().split('src/')[1]
+    build: {
+      commonjsOptions: {
+        transformMixedEsModules: true
+      },
+      target: 'esnext',
+      sourcemap: false,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              return id
+                .toString()
+                .split('node_modules/')
+                .pop()!
+                .split('/')[0]
+                .toString()
+            } else if (id.endsWith('.mdx')) {
+              const mdxPath = id.toString().split('src/')[1]
 
-            return `mdx-${mdxPath.replace(/\//g, '-').replace('.mdx', '')}`
+              return `mdx-${mdxPath.replace(/\//g, '-').replace('.mdx', '')}`
+            }
           }
         }
       }
     }
-  }
   }
 })

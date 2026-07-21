@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+
 import { serverAliasResolver } from '../resolvers/mod-server-alias-resolver'
 
 /**
@@ -16,9 +17,7 @@ export function defineModuleServerConfig(dirname: string) {
         { find: /^@$/, replacement: `${dirname}/index` }
       ]
     },
-    plugins: [
-      serverAliasResolver(dirname)
-    ],
+    plugins: [serverAliasResolver(dirname)],
     build: {
       lib: {
         entry: `${dirname}/index.ts`,
@@ -29,7 +28,8 @@ export function defineModuleServerConfig(dirname: string) {
       rollupOptions: {
         output: {
           entryFileNames: 'index.js',
-          banner: 'import { createRequire as __createRequire } from \'node:module\'; globalThis.require = __createRequire(import.meta.url);'
+          banner:
+            "import { createRequire as __createRequire } from 'node:module'; globalThis.require = __createRequire(import.meta.url);"
         }
       }
     }

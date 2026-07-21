@@ -45,10 +45,7 @@ interface SearchInputProps extends Omit<FlexProps<'search'>, 'onChange'> {
    * @default "query-not-empty"
    */
   showChildrenPolicy?:
-    | 'always'
-    | 'input-focus'
-    | 'query-not-empty'
-    | 'input-focus-query-not-empty'
+    'always' | 'input-focus' | 'query-not-empty' | 'input-focus-query-not-empty'
   /** Child components to render below the search input, typically used for displaying search results or suggestions. */
   children?: React.ReactNode
   /** Callback function called when Enter is pressed. */

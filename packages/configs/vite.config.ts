@@ -12,10 +12,7 @@ export default defineConfig({
       fileName: '[name]'
     },
     rollupOptions: {
-      external: [
-        /^node:/,
-        /^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/
-      ]
+      external: [/^node:/, /^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/]
     },
     outDir: 'dist',
     minify: false,

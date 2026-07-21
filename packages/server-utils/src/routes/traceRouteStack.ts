@@ -57,7 +57,7 @@ export default function traceRouteStack(
         .replace(/\/+/g, '/')
         .replace(/\\\//g, '/')
 
-      let route: Route = {
+      const route: Route = {
         method: methods[0]?.toUpperCase() || 'GET',
         path: routePath,
         schema: {
@@ -80,7 +80,6 @@ export default function traceRouteStack(
       }
 
       route.description = controllerLayerMeta.description
-      route = controllerLayerMeta
     }
   }
 

@@ -27,7 +27,12 @@ export function useAppRouter() {
     []
   )
   useEffect(() => {
-    if (authLoading || !auth || moduleGroupsLoading || moduleGroups.length === 0) {
+    if (
+      authLoading ||
+      !auth ||
+      moduleGroupsLoading ||
+      moduleGroups.length === 0
+    ) {
       return
     }
 
@@ -69,7 +74,11 @@ export function useAppRouter() {
   ])
 
   const routerKey = useMemo(() => {
-    if (authLoading || moduleGroupsLoading || (auth && moduleGroups.length === 0)) {
+    if (
+      authLoading ||
+      moduleGroupsLoading ||
+      (auth && moduleGroups.length === 0)
+    ) {
       return 'loading'
     }
 
@@ -78,7 +87,14 @@ export function useAppRouter() {
     }
 
     return appRouter ? `app-${routerId}` : 'loading'
-  }, [auth, authLoading, moduleGroupsLoading, moduleGroups, appRouter, routerId])
+  }, [
+    auth,
+    authLoading,
+    moduleGroupsLoading,
+    moduleGroups,
+    appRouter,
+    routerId
+  ])
 
   return { router, isAuthenticated: !!auth, routerKey }
 }

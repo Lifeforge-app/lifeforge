@@ -12,8 +12,8 @@ function Rightbar() {
   const userClickedRef = useRef(false)
   const userClickTimeoutRef = useRef<number | null>(null)
   // Apply aria-current attribute whenever activeSection changes
-  
-useEffect(() => {
+
+  useEffect(() => {
     if (activeSection) {
       document.querySelectorAll('li[aria-current=page]').forEach(li => {
         li.removeAttribute('aria-current')

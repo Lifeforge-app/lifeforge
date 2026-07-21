@@ -7,8 +7,8 @@ import {
 
 import { globalProxyRegistry } from '@lifeforge/api'
 import {
-  type ModuleGroup,
   type ModuleConfig,
+  type ModuleGroup,
   moduleConfigSchema
 } from '@lifeforge/configs'
 

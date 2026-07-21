@@ -110,4 +110,3 @@ export function IconInput({
     </InputWrapper>
   )
 }
-

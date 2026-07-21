@@ -20,10 +20,8 @@ export default function registerDevResolverHooks(): void {
             if (match) {
               const serverRoot = match[1]
               const relativePath = specifier.slice(2)
-              const resolvedSpecifier = new URL(
-                relativePath,
-                serverRoot + '/'
-              ).href
+              const resolvedSpecifier = new URL(relativePath, serverRoot + '/')
+                .href
 
               return nextResolve(resolvedSpecifier, context)
             }

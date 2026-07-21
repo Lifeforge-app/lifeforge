@@ -1,8 +1,9 @@
 import _ from 'lodash'
 import { Link, useLocation } from 'react-router'
 
+import { Scrollbar } from '@lifeforge/ui'
+
 import ROUTES from '../Router'
-import { Scrollbar } from '@lifeforge/ui';
 
 function Sidebar({
   sidebarOpen,

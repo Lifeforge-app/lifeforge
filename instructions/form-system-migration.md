@@ -651,7 +651,9 @@ return (
     }}
     submissionConfig={{
       template: type, // 'create' | 'update'
-      handler: async data => { await mutation.mutateAsync(data) }
+      handler: async data => {
+        await mutation.mutateAsync(data)
+      }
     }}
   >
     {/* Children here */}

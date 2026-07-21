@@ -10,10 +10,7 @@ import {
 import { loadRemoteModuleConfig, useFederation } from '@lifeforge/federation'
 import { LoadingScreen } from '@lifeforge/ui'
 
-import {
-  devModeImports,
-  devModePkgs
-} from '@/core/utils/devModeImports'
+import { devModeImports, devModePkgs } from '@/core/utils/devModeImports'
 import forgeAPI from '@/core/utils/forgeAPI'
 
 export interface WidgetEntry {

@@ -16,7 +16,7 @@ vi.mock('node:module', async importOriginal => {
   }
 })
 
-vi.mock('node:fs', async (importOriginal) => {
+vi.mock('node:fs', async importOriginal => {
   const actual = await importOriginal<any>()
 
   return {

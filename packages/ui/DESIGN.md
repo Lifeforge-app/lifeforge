@@ -1148,9 +1148,11 @@ const query = useQuery(tasksQueryOptions)
 
 return (
   <WithQuery query={query}>
-    {(tasks) => (
+    {tasks => (
       <Stack>
-        {tasks.map(t => <Text key={t.id}>{t.name}</Text>)}
+        {tasks.map(t => (
+          <Text key={t.id}>{t.name}</Text>
+        ))}
       </Stack>
     )}
   </WithQuery>
@@ -1162,9 +1164,11 @@ return (
 ```tsx
 return (
   <WithQueryData contract={forgeAPI.tasks.listAll}>
-    {(tasks) => (
+    {tasks => (
       <Stack>
-        {tasks.map(t => <Text key={t.id}>{t.name}</Text>)}
+        {tasks.map(t => (
+          <Text key={t.id}>{t.name}</Text>
+        ))}
       </Stack>
     )}
   </WithQueryData>

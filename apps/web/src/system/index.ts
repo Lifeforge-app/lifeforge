@@ -1,4 +1,3 @@
-
 import accountSettings from '@/system/accountSettings/manifest'
 import apiKeys from '@/system/apiKeys/manifest'
 import backups from '@/system/backups/manifest'

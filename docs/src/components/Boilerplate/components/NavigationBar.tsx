@@ -7,8 +7,8 @@ import ROUTES from '../../../Router'
 
 function NavigationBar() {
   const location = useLocation()
-  
-const currentGroup = useMemo(
+
+  const currentGroup = useMemo(
     () => location.pathname.split('/')[1],
     [location]
   )

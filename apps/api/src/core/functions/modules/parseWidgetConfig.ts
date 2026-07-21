@@ -1,9 +1,10 @@
 import * as ts from '@typescript/typescript6'
 import fs from 'fs'
 
+import { type WidgetConfig, widgetConfigSchema } from '@lifeforge/configs'
+
 import resolveExpressionMap, { findVariableDeclaration } from './ast-utils'
 import { moduleLoaderLogger } from './moduleRegistry'
-import { type WidgetConfig, widgetConfigSchema } from '@lifeforge/configs'
 
 export default function parseWidgetConfig(
   filePath: string

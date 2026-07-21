@@ -1,6 +1,7 @@
-import { afterEach, describe, expect, it } from 'vitest'
 import fs from 'fs'
 import path from 'path'
+import { afterEach, describe, expect, it } from 'vitest'
+
 import parseManifestSubsections from '../parseManifestSubsections'
 
 describe('parseManifestSubsections AST parser', () => {
@@ -59,7 +60,11 @@ describe('parseManifestSubsections AST parser', () => {
     )
     expect(parseManifestSubsections(tempFilePath)).toEqual([
       { label: 'Dashboard', icon: 'tabler:dashboard', path: '' },
-      { label: 'Transactions', icon: 'tabler:arrows-exchange', path: 'transactions' }
+      {
+        label: 'Transactions',
+        icon: 'tabler:arrows-exchange',
+        path: 'transactions'
+      }
     ])
   })
 })

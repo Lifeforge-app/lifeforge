@@ -6,8 +6,8 @@ import Code from '@/components/Code'
 
 function EnvExample() {
   const [envContent, setEnvContent] = useState('')
-  
-useEffect(() => {
+
+  useEffect(() => {
     fetch(
       'https://raw.githubusercontent.com/LifeForge-app/lifeforge/refs/heads/main/env/.env.example'
     )
