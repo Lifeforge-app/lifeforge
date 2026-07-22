@@ -3,7 +3,7 @@ export const BG_TEMP_TOOLBAR_CONFIG = {
   description: 'Background color temperature',
   defaultValue: 'bg-zinc',
   toolbar: {
-    icon: 'contrast',
+    icon: 'contrast' as const,
     items: [
       { value: 'bg-slate', title: '🪨 Slate' },
       { value: 'bg-gray', title: '🩶 Gray' },

@@ -14,7 +14,7 @@ import {
 export function useAppRouter() {
   const { t } = useTranslation('common.misc')
   const { auth, authLoading } = useAuth()
-  const { modules, loading: modulesLoading } = useFederation()
+  const { moduleGroups, loading: moduleGroupsLoading } = useFederation()
   const [appRouter, setAppRouter] = useState<DataRouter | null>(null)
   const [routerId, setRouterId] = useState(0)
 
@@ -27,14 +27,14 @@ export function useAppRouter() {
     []
   )
   useEffect(() => {
-    if (authLoading || !auth || modulesLoading || modules.length === 0) {
+    if (authLoading || !auth || moduleGroupsLoading || moduleGroups.length === 0) {
       return
     }
 
     let cancelled = false
 
     createRouterConfig({
-      routes: modules,
+      routes: moduleGroups,
       loadingMessage: t('loadingModule')
     }).then(routerConfig => {
       if (!cancelled) {
@@ -46,10 +46,10 @@ export function useAppRouter() {
     return () => {
       cancelled = true
     }
-  }, [auth, t, authLoading, modules, modulesLoading])
+  }, [auth, t, authLoading, moduleGroups, moduleGroupsLoading])
 
   const router = useMemo(() => {
-    if (authLoading || modulesLoading) {
+    if (authLoading || moduleGroupsLoading) {
       return loadingRouter
     }
 
@@ -61,15 +61,15 @@ export function useAppRouter() {
   }, [
     auth,
     authLoading,
-    modulesLoading,
-    modules,
+    moduleGroupsLoading,
+    moduleGroups,
     appRouter,
     loadingRouter,
     authRouter
   ])
 
   const routerKey = useMemo(() => {
-    if (authLoading || modulesLoading || (auth && modules.length === 0)) {
+    if (authLoading || moduleGroupsLoading || (auth && moduleGroups.length === 0)) {
       return 'loading'
     }
 
@@ -78,7 +78,7 @@ export function useAppRouter() {
     }
 
     return appRouter ? `app-${routerId}` : 'loading'
-  }, [auth, authLoading, modulesLoading, modules, appRouter, routerId])
+  }, [auth, authLoading, moduleGroupsLoading, moduleGroups, appRouter, routerId])
 
   return { router, isAuthenticated: !!auth, routerKey }
 }

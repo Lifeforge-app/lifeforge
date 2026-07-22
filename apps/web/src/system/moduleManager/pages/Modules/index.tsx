@@ -1,6 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 
+import type { Module } from '@lifeforge/configs'
 import { useFederation } from '@lifeforge/federation'
 import {
   EmptyStateScreen,
@@ -9,7 +10,6 @@ import {
   Stack,
   Text,
   WithQuery,
-  toast,
   usePersonalization
 } from '@lifeforge/ui'
 
@@ -17,46 +17,15 @@ import forgeAPI from '@/core/utils/forgeAPI'
 
 import ModuleItem from './components/ModuleItem'
 
-export interface InstalledModule {
-  name: string
-  displayName: string
-  version: string
-  description: string
-  author: string
-  icon: string
-  category: string
-  isInternal: boolean
-  isDevMode: boolean
-  hasDist: boolean
-  hasSource: boolean
-}
-
 function Modules() {
-  const { refetch: refetchFederation, categoryTranslations } = useFederation()
+  const { categoryTranslations } = useFederation()
   const { language } = usePersonalization()
-  const queryClient = useQueryClient()
   const modulesQuery = useQuery(forgeAPI.modules.list.queryOptions())
 
-  const uninstallMutation = useMutation({
-    mutationFn: (moduleName: string) =>
-      forgeAPI.modules.uninstall.mutate({ moduleName }),
-    onSuccess: (data, moduleName) => {
-      if (data.success) {
-        toast.success(`Uninstalled ${moduleName}`)
-        queryClient.invalidateQueries({ queryKey: ['modules', 'list'] })
-        refetchFederation.current()
-      } else {
-        toast.error(data.error || 'Failed to uninstall module')
-      }
-    },
-    onError: () => {
-      toast.error('Failed to uninstall module')
-    }
-  })
   const groupedModules = useMemo(() => {
     if (!modulesQuery.data) return {}
 
-    const groups: Record<string, InstalledModule[]> = {}
+    const groups: Record<string, Module[]> = {}
 
     for (const mod of modulesQuery.data) {
       const category = mod.category || 'Miscellaneous'
@@ -103,18 +72,7 @@ function Modules() {
                   </Text>
                   <Grid gap="md" templateCols={{ base: 1, md: 2, lg: 3 }}>
                     {mods.map(mod => (
-                      <ModuleItem
-                        key={mod.name}
-                        module={mod}
-                        onDevModeChange={() => {
-                          queryClient.invalidateQueries({
-                            queryKey: ['modules', 'list']
-                          })
-                        }}
-                        onUninstall={async moduleName => {
-                          await uninstallMutation.mutateAsync(moduleName)
-                        }}
-                      />
+                      <ModuleItem key={mod.name} module={mod} />
                     ))}
                   </Grid>
                 </Stack>

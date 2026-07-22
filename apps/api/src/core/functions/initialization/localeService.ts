@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-const localeLogger = createServiceLogger('Locale')
+const localeLogger = createServiceLogger('Locale Loader')
 
 export const ALLOWED_NAMESPACE = ['apps', 'common'] as const
 

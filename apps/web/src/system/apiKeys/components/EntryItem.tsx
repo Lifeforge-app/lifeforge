@@ -32,7 +32,7 @@ dayjs.extend(relativeTime)
 
 function EntryItem({ entry }: { entry: APIKeyEntry }) {
   const { t } = useTranslation('common.api-keys')
-  const { modules } = useFederation()
+  const { moduleGroups } = useFederation()
   const queryClient = useQueryClient()
   const { open } = useModalStore()
   const [isCopying, setIsCopying] = useState(false)
@@ -55,7 +55,7 @@ function EntryItem({ entry }: { entry: APIKeyEntry }) {
       })
   )
 
-  const modulesRequiredCount = modules
+  const modulesRequiredCount = moduleGroups
     .flatMap(cat => cat.items)
     .filter(item => item.APIKeyAccess?.[entry.keyId]).length
 

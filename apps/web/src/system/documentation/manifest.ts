@@ -1,6 +1,6 @@
 import { lazy } from 'react'
 
-import type { ModuleCategory } from '@lifeforge/federation'
+import type { ModuleGroup } from '@lifeforge/configs'
 
 export default {
   routes: {
@@ -14,4 +14,4 @@ export default {
   icon: 'tabler:info-circle',
   category: '<END>',
   APIKeyAccess: {}
-} as ModuleCategory['items'][number]
+} as ModuleGroup['items'][number]

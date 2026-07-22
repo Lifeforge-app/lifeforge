@@ -1,5 +1,5 @@
 import { ROOT_DIR } from '@constants'
-import { loadModuleRoutes } from '@functions/modules/loadModuleRoutes'
+import { loadAndRegisterModuleRoutes } from '@functions/modules/loadAndRegisterModuleRoutes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 import express from 'express'
@@ -11,9 +11,7 @@ import coreRoutes from './core.routes'
 
 const router = express.Router()
 
-// Load module routes: production uses FS scanning, dev uses generated registry
-// Type assertion ensures TypeScript uses generated types for inference
-const appRoutes = await loadModuleRoutes()
+const appRoutes = await loadAndRegisterModuleRoutes()
 
 const mainRoutes = forgeRouter({
   ...coreRoutes,
@@ -23,47 +21,39 @@ const mainRoutes = forgeRouter({
   })
 })
 
-router.get('/hello', (_, res) => {
-  res.send('Hello from the API server!')
-})
-
 router.use('/modules/:moduleName/*', (req, res, next) => {
   const moduleName = req.params.moduleName
+
+  // Strict whitelist check for moduleName to prevent traversal, spaces, or special characters
+  const MODULE_NAME_REGEX = /^[A-Za-z0-9][A-Za-z0-9_-]*$/
+
+  if (!MODULE_NAME_REGEX.test(moduleName)) {
+    return next()
+  }
 
   const filePath =
     (req.params[0 as any as keyof typeof req.params] as string) || ''
 
-  // Use dist-docker in Docker mode, dist otherwise
-  const distDir = process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'
+  // Block null byte injection in filePath
+  if (filePath.includes('\0')) {
+    return next()
+  }
 
-  const moduleDistPath = path.join(
+  const moduleDistPath = path.resolve(
     ROOT_DIR,
     'modules',
     moduleName,
     'client',
-    distDir
+    'dist'
   )
-
-  const resolvedPath = path.join(moduleDistPath, filePath)
 
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
-  res.sendFile(resolvedPath, err => {
-    if (!err) return
-
-    const fallbackPath = path.join(moduleDistPath, 'index.html')
-
-    if (fallbackPath === resolvedPath) {
+  // Serve file securely using the root sandbox parameter
+  res.sendFile(filePath, { root: moduleDistPath }, err => {
+    if (err) {
       next()
-
-      return
     }
-
-    res.sendFile(fallbackPath, fallbackErr => {
-      if (fallbackErr) {
-        next()
-      }
-    })
   })
 })
 

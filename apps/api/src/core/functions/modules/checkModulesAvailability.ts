@@ -1,11 +1,11 @@
-import { isModuleNameRegistered } from './moduleRegistry'
+import { ModuleRegistry } from './moduleRegistry'
 
 export async function checkModulesAvailability(
   moduleId: string
 ): Promise<boolean> {
-  const fullName = moduleId.startsWith('@')
+  const name = moduleId.startsWith('@')
     ? moduleId
     : `@lifeforge/${moduleId}`
 
-  return isModuleNameRegistered(fullName)
+  return ModuleRegistry.isRegistered(name)
 }

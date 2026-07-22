@@ -1,34 +1,18 @@
-export type {
-  ModuleConfig,
-  ModuleCategory,
-  WidgetConfig
-} from '@lifeforge/configs'
-
-export { moduleConfigSchema, widgetConfigSchema } from '@lifeforge/configs'
-
-export { default as createForgeModuleClient } from './api/createForgeModuleClient'
-
 export {
   default as FederationProvider,
   useFederation,
   SYSTEM_CATEGORIES
 } from './providers/FederationProvider'
 
-export { default as loadModules } from './loaders/loadModules'
+export { bootstrapModules } from './loaders/bootstrapModules'
 
-export {
-  loadModuleConfig,
-  fetchModuleManifest,
-  type FederatedModule
-} from './loaders/loadModuleConfig'
+export { loadRemoteModuleConfig } from './loaders/loadRemoteModuleConfig'
 
-export {
-  sortRoutes,
-  fetchCategoryOrder,
-  type CategoryOrder
-} from './utils/sortRoutes'
+export { type FederatedModule } from './utils/fetchModuleData'
 
 export {
   ModuleMetadataProvider,
   useModuleMetadata
 } from './providers/ModuleMetadataProvider'
+
+export { default as createForgeModule } from './api/createForgeModule'

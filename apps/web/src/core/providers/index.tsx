@@ -101,8 +101,7 @@ const PROVIDERS = defineProviders([
   // Provider that loads federated modules (routes and global providers)
   [FederationProvider],
   [CoreFederationProvider],
-  // GlobalProviders from federated modules
-  // (loaded dynamically via ./GlobalProvider export in each module)
+  // Global providers from federated modules
   [ExternalModuleProviders],
   // This is where all the routes are defined
   [AppRoutesProvider]

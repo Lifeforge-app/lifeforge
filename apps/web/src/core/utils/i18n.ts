@@ -15,7 +15,7 @@ export let AVAILABLE_LANG: {
 export async function initI18n() {
   try {
     const langRes = await fetch(
-      `${import.meta.env.VITE_API_HOST}/locales/listLanguages`
+      `${import.meta.env.VITE_API_HOST || ''}/locales/listLanguages`
     )
 
     if (langRes.ok) {

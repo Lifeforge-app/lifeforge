@@ -26,7 +26,7 @@ export function ConfirmationModal({
     confirmationButton?:
       'delete' | 'confirm' | React.ComponentProps<typeof Button>
     confirmationPrompt?: string
-    onConfirm?: () => Promise<void>
+    onConfirm?: () => Promise<void> | void
     onReject?: () => void
     renderChildren?: (onClose: () => void) => React.ReactNode
   }

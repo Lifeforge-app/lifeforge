@@ -1,17 +1,14 @@
-import { ROOT_DIR } from '@constants'
 import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
-import { generateModuleId } from '@functions/modules/loadModuleRoutes'
-import { execSync } from 'child_process'
-import fs from 'fs'
-import path from 'path'
+import { ModuleRegistry } from '@functions/modules/moduleRegistry'
 import z from 'zod'
 
-import forge from '../forge'
-import scanFederatedModules, {
-  type ModuleManifestEntry
-} from '../utils/scanFederatedModules'
+import {
+  moduleManifestSchema,
+  moduleSchema,
+  moduleWidgetSchema
+} from '@lifeforge/configs'
 
-const APPS_DIR = path.join(ROOT_DIR, 'modules')
+import forge from '../forge'
 
 export const manifest = forge
   .query({
@@ -19,182 +16,23 @@ export const manifest = forge
     input: {},
     output: {
       OK: z.object({
-        modules: z.array(
-          z.object({
-            name: z.string(),
-            moduleId: z.string(),
-            displayName: z.string(),
-            version: z.string(),
-            description: z.string(),
-            author: z.string(),
-            icon: z.string(),
-            category: z.string(),
-            remoteEntryUrl: z.string(),
-            isInternal: z.boolean(),
-            isDevMode: z.boolean().optional(),
-            APIKeyAccess: z
-              .record(
-                z.string(),
-                z.object({
-                  usage: z.string(),
-                  required: z.boolean()
-                })
-              )
-              .optional()
-          })
-        )
+        modules: z.array(moduleManifestSchema)
       })
     }
   })
-  .callback(async ({ core: { tempFile }, response }) => {
-    const modules: (ModuleManifestEntry & { isDevMode?: boolean })[] = []
-
-    const devModeModules =
-      (new tempFile('module_dev_mode.json', 'array').read() as string[]) || []
-
-    scanFederatedModules(APPS_DIR, modules, false, '/modules', devModeModules)
-
-    return response.ok({ modules })
-  })
-
-export interface InstalledModule {
-  name: string
-  moduleId: string
-  displayName: string
-  version: string
-  description: string
-  author: string
-  icon: string
-  category: string
-  isInternal: boolean
-  isDevMode: boolean
-  hasDist: boolean
-  hasSource: boolean
-}
+  .callback(async ({ response }) =>
+    response.ok({ modules: ModuleRegistry.manifests })
+  )
 
 export const list = forge
   .query({
     description: 'List installed modules with metadata',
     input: {},
     output: {
-      OK: z.array(
-        z.object({
-          name: z.string(),
-          moduleId: z.string(),
-          displayName: z.string(),
-          version: z.string(),
-          description: z.string(),
-          author: z.string(),
-          icon: z.string(),
-          category: z.string(),
-          isInternal: z.boolean(),
-          isDevMode: z.boolean(),
-          hasDist: z.boolean(),
-          hasSource: z.boolean()
-        })
-      )
+      OK: z.array(moduleSchema)
     }
   })
-  .callback(async ({ core: { tempFile }, response }) => {
-    const modules: InstalledModule[] = []
-
-    if (!fs.existsSync(APPS_DIR)) return response.ok(modules)
-
-    const devModeModules =
-      (new tempFile('module_dev_mode.json', 'array').read() as string[]) || []
-
-    const dirs = fs
-      .readdirSync(APPS_DIR, { withFileTypes: true })
-      .filter(d => d.isDirectory() && !d.name.startsWith('.'))
-
-    for (const dir of dirs) {
-      const pkgPath = path.join(APPS_DIR, dir.name, 'package.json')
-
-      if (!fs.existsSync(pkgPath)) continue
-
-      try {
-        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-
-        const distDir =
-          process.env.DOCKER_MODE === 'true' ? 'dist-docker' : 'dist'
-
-        const clientDistPath = path.join(
-          APPS_DIR,
-          dir.name,
-          'client',
-          distDir,
-          'remoteEntry.js'
-        )
-
-        const hasDist = fs.existsSync(clientDistPath)
-
-        const hasSource = fs.existsSync(
-          path.join(APPS_DIR, dir.name, 'client/src')
-        )
-
-        if (
-          !(hasSource || hasDist) ||
-          (process.env.NODE_ENV === 'production' && !hasDist)
-        )
-          continue
-
-        modules.push({
-          name: pkg.name,
-          moduleId: generateModuleId(pkg.name),
-          displayName: pkg.displayName || pkg.name,
-          version: pkg.version || '0.0.0',
-          description: pkg.description || '',
-          author: pkg.author || '',
-          icon: pkg.lifeforge?.icon || 'tabler:package',
-          category: pkg.lifeforge?.category || 'Miscellaneous',
-          isInternal: false,
-          isDevMode: (() => {
-            if (!hasSource) return false
-            if (!hasDist) return true
-
-            return devModeModules.includes(pkg.name)
-          })(),
-          hasDist,
-          hasSource
-        })
-      } catch {
-        // Skip invalid packages
-      }
-    }
-
-    return response.ok(modules)
-  })
-
-export const uninstall = forge
-  .mutation({
-    description: 'Uninstall a module',
-    input: {
-      body: z.object({
-        moduleName: z.string().min(1)
-      })
-    },
-    output: {
-      OK: z.object({
-        success: z.boolean(),
-        error: z.string().optional()
-      })
-    }
-  })
-  .callback(async ({ body: { moduleName }, response }) => {
-    try {
-      execSync(`pnpm forge modules uninstall ${moduleName}`, {
-        cwd: ROOT_DIR,
-        stdio: 'pipe'
-      })
-
-      return response.ok({ success: true })
-    } catch (error) {
-      const message =
-        error instanceof Error ? error.message : 'Uninstall failed'
-
-      return response.ok({ success: false, error: message })
-    }
-  })
+  .callback(async ({ response }) => response.ok(ModuleRegistry.list))
 
 export const checkModuleAvailability = forge
   .query({
@@ -208,8 +46,16 @@ export const checkModuleAvailability = forge
       OK: z.boolean()
     }
   })
-  .callback(async ({ query: { moduleId }, response }) => {
-    const available = await checkModulesAvailability(moduleId)
+  .callback(async ({ query: { moduleId }, response }) =>
+    response.ok(await checkModulesAvailability(moduleId))
+  )
 
-    return response.ok(available)
+export const widgets = forge
+  .query({
+    description: 'Get all available widgets configuration',
+    input: {},
+    output: {
+      OK: z.array(moduleWidgetSchema)
+    }
   })
+  .callback(async ({ response }) => response.ok(ModuleRegistry.widgets))

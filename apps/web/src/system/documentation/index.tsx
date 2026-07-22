@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router'
 
 import { toast } from '@lifeforge/ui'
 
-function index() {
+function Documentation() {
   const navigate = useNavigate()
   const { t } = useTranslation('common.fetch')
 
@@ -22,4 +22,4 @@ function index() {
   return null
 }
 
-export default index
+export default Documentation

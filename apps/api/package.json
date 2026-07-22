@@ -26,6 +26,7 @@
     "typecheck": "tsc -b"
   },
   "dependencies": {
+    "@lifeforge/configs": "workspace:*",
     "@lifeforge/log": "workspace:*",
     "@lifeforge/pocketbase": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",
@@ -53,7 +54,8 @@
     "socket.io": "^4.8.1",
     "speakeasy": "^2.0.0",
     "tesseract.js": "^7.0.0",
-    "uuid": "^14.0.1"
+    "uuid": "^14.0.1",
+    "@typescript/typescript6": "^6.0.2"
   },
   "devDependencies": {
     "@lifeforge/api": "workspace:*",

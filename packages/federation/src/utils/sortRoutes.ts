@@ -1,32 +1,9 @@
-import type { ModuleCategory } from '@lifeforge/configs'
+import type { ModuleGroup } from '@lifeforge/configs'
 
 import { SYSTEM_CATEGORIES } from '../providers/FederationProvider'
 
-export type CategoryOrder = Record<string, Record<string, string>>
-
-/**
- * Fetches category order (with translations) from the server
- */
-export async function fetchCategoryOrder(
-  forgeAPI: any
-): Promise<CategoryOrder> {
-  try {
-    return (await forgeAPI.modules.categories.list.query()) ?? {}
-  } catch (e) {
-    console.warn('Failed to fetch category order:', e)
-
-    return {}
-  }
-}
-
-/**
- * Sorts the routes based on the order of the categories
- *
- * @param categoriesSeq The sequence of categories
- * @returns The sorted routes
- */
 function routeSorter(categoriesSeq: Record<string, Record<string, string>>) {
-  return (a: ModuleCategory, b: ModuleCategory) => {
+  return (a: ModuleGroup, b: ModuleGroup) => {
     const aIndex = SYSTEM_CATEGORIES.indexOf(a.title)
 
     const bIndex = SYSTEM_CATEGORIES.indexOf(b.title)
@@ -78,12 +55,13 @@ function routeSorter(categoriesSeq: Record<string, Record<string, string>>) {
   }
 }
 
-export function sortRoutes(
-  routes: ModuleCategory[],
+export function sortRoutes<T extends ModuleGroup>(
+  routes: T[],
   categoryOrder: Record<string, Record<string, string>>
-) {
+): T[] {
   return routes.sort(routeSorter(categoryOrder)).map(cat => ({
+    ...cat,
     title: ['<START>', '<END>'].includes(cat.title) ? '' : cat.title,
     items: cat.items.sort((a, b) => a.name.localeCompare(b.name))
-  }))
+  })) as unknown as T[]
 }

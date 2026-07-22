@@ -44,7 +44,7 @@ export const THEME_COLOR_TOOLBAR_CONFIG = {
   description: 'Primary theme color',
   defaultValue: TAILWIND_PALETTE.green['500'],
   toolbar: {
-    icon: 'paintbrush',
+    icon: 'paintbrush' as const,
     items: THEME_COLOR_ITEMS,
     showName: true,
     dynamicTitle: true

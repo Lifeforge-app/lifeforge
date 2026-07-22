@@ -1,37 +1,9 @@
 import { useEffect } from 'react'
 
 import { useAuth } from '@lifeforge/api'
-import {
-  type ModuleConfig,
-  loadModules,
-  useFederation
-} from '@lifeforge/federation'
+import { bootstrapModules, useFederation } from '@lifeforge/federation'
 
-import forgeAPI from '@/core/utils/forgeAPI'
-import accountSettings from '@/system/accountSettings/manifest'
-import apiKeys from '@/system/apiKeys/manifest'
-import backups from '@/system/backups/manifest'
-import dashboard from '@/system/dashboard/manifest'
-import documentation from '@/system/documentation/manifest'
-import moduleManager from '@/system/moduleManager/manifest'
-import personalization from '@/system/personalization/manifest'
-
-const coreModules = [
-  accountSettings,
-  apiKeys,
-  backups,
-  dashboard,
-  documentation,
-  personalization,
-  moduleManager
-]
-
-const devModeImports = import.meta.env.DEV
-  ? import.meta.glob<{ default: ModuleConfig }>(
-      '../../../../../../modules/*/client/manifest.ts',
-      { eager: false }
-    )
-  : {}
+import { CORE_MODULES } from '@/system'
 
 export default function CoreFederationProvider({
   children
@@ -41,7 +13,7 @@ export default function CoreFederationProvider({
   const { auth } = useAuth()
 
   const {
-    setModules,
+    setModuleGroups,
     setGlobalProviders,
     setCategoryTranslations,
     setLoading,
@@ -54,9 +26,12 @@ export default function CoreFederationProvider({
     setError(null)
 
     try {
-      const result = await loadModules(forgeAPI, coreModules, devModeImports)
+      const result = await bootstrapModules(
+        import.meta.env.VITE_API_HOST || '',
+        CORE_MODULES
+      )
 
-      setModules(result.routes)
+      setModuleGroups(result.moduleGroups)
       setGlobalProviders(result.globalProviders)
       setCategoryTranslations(result.categoryTranslations)
     } catch (e) {

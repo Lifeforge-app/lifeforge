@@ -1,10 +1,13 @@
 import { Suspense } from 'react'
 import type { RouteObject } from 'react-router'
 
-import type { ModuleCategory, ModuleConfig } from '@lifeforge/federation'
+import type { ModuleConfig, ModuleGroup } from '@lifeforge/configs'
+import type { FederatedModule } from '@lifeforge/federation'
 import { LoadingScreen, ModalManager, ModuleWrapper } from '@lifeforge/ui'
 
 import APIKeyStatusProvider from '@/core/providers/features/APIKeyStatusProvider'
+
+import LazyRouteLoader from '../components/LazyRouteLoader'
 
 interface RouteBuilderOptions {
   routes: ModuleConfig['routes']
@@ -14,7 +17,6 @@ interface RouteBuilderOptions {
   config: {
     name: string
     title: string
-    displayName: string
     icon: string
     clearQueryOnUnmount: boolean
   }
@@ -57,24 +59,37 @@ export function buildChildRoutes({
  * Creates route configuration for a module with optional provider wrapper
  */
 export function createModuleRoute(
-  item: ModuleCategory['items'][number],
+  item: ModuleGroup['items'][number] & { rawModule?: FederatedModule },
   loadingMessage: string
 ): RouteObject | RouteObject[] {
-  const routeConfig = {
-    routes: item.routes,
-    APIKeyAccess: item.APIKeyAccess,
-    config: {
-      name: item.name || '',
-      title: item.name,
-      displayName: item.displayName,
-      icon: item.icon,
-      clearQueryOnUnmount: item.clearQueryOnUnmount ?? true
-    },
-    loadingMessage
+  if (!item.rawModule) {
+    const routeConfig = {
+      routes: item.routes,
+      APIKeyAccess: item.APIKeyAccess,
+      config: {
+        name: item.name || '',
+        title: item.name,
+        icon: item.icon,
+        clearQueryOnUnmount: item.clearQueryOnUnmount ?? true
+      },
+      loadingMessage
+    }
+
+    const strippedName = item.name.replace(/^@[^/]+\//, '')
+
+    return {
+      path: `/${strippedName.startsWith('lifeforge--') ? strippedName.split('--')[1] : strippedName}`,
+      children: buildChildRoutes(routeConfig)
+    }
   }
 
+  const strippedName = item.name.replace(/^@[^/]+\//, '')
+  const baseRoute = strippedName.startsWith('lifeforge--')
+    ? strippedName.split('--')[1]
+    : strippedName
+
   return {
-    path: `/${item.name.startsWith('lifeforge--') ? item.name.split('--')[1] : item.name}`,
-    children: buildChildRoutes(routeConfig)
+    path: `/${baseRoute}/*`,
+    element: <LazyRouteLoader item={item} loadingMessage={loadingMessage} />
   }
 }

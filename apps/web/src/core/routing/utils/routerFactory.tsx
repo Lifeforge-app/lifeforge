@@ -1,6 +1,6 @@
 import { Navigate, type RouteObject } from 'react-router'
 
-import type { ModuleCategory } from '@lifeforge/federation'
+import type { ModuleGroup } from '@lifeforge/configs'
 import { LoadingScreen, NotFoundScreen } from '@lifeforge/ui'
 
 import Auth from '@/system/auth'
@@ -10,7 +10,7 @@ import RouteErrorScreen from '../components/RouteErrorScreen'
 import { createModuleRoute } from './routeBuilder'
 
 interface CreateRouterConfigOptions {
-  routes: ModuleCategory[]
+  routes: ModuleGroup[]
   loadingMessage: string
 }
 

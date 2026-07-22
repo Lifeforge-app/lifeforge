@@ -1,3 +1,3 @@
-import { defineClientConfig } from '@lifeforge/configs/vite'
+import { defineCoreClientConfig } from '@lifeforge/configs/vite'
 
-export default defineClientConfig(__dirname)
+export default defineCoreClientConfig(__dirname)
