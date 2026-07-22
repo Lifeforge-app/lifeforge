@@ -53,6 +53,7 @@ function BorderRadiusSelector() {
           </Flex>
         )}
         value={borderRadiusMultiplier}
+        width="100%"
         onChange={value => {
           changeBorderRadiusMultiplier(value)
         }}

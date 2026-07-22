@@ -39,7 +39,7 @@ function LanguageSelector() {
     >
       <WithQuery loaderSize="1.5em" query={languagesQuery}>
         {langs => (
-          <Flex align="center" gap="sm">
+          <Flex align="center" gap="sm" width="100%">
             <Listbox
               bg={surface.lightInteractive}
               minWidth="16em"
@@ -57,6 +57,7 @@ function LanguageSelector() {
                 </Flex>
               )}
               value={language}
+              width="100%"
               onChange={language => {
                 changeLanguage(language)
               }}

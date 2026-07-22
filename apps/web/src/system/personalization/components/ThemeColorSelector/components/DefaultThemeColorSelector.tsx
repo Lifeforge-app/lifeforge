@@ -78,6 +78,7 @@ function DefaultThemeColorSelector({
         </Flex>
       )}
       value={themeColor.startsWith('#') ? 'theme-custom' : themeColor}
+      width="100%"
       onChange={color => {
         changeThemeColor(color === 'theme-custom' ? customThemeColor : color)
       }}
