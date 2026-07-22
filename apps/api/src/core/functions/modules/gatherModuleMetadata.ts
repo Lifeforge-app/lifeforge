@@ -84,10 +84,6 @@ export default function gatherModuleMetadata(
       }
     }
 
-    const hasClientSource = fs.existsSync(
-      path.join(appsDir, modDir, 'client/src')
-    )
-
     // Discover widgets JIT at server load
     const widgets: ModuleWidget[] = []
     const widgetsDir = path.join(appsDir, modDir, 'client/src/widgets')
