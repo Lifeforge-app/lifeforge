@@ -8,6 +8,7 @@ packages:
   - "./tools"
 
 allowBuilds:
+  argon2: true
   core-js: true
   es5-ext: true
   esbuild: true

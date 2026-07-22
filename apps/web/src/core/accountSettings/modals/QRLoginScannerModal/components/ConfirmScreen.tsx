@@ -43,19 +43,21 @@ function ConfirmScreen({
         <Button
           dangerous
           icon="tabler:ban"
+          namespace="common.auth"
           variant="secondary"
           width={{ base: '100%', sm: '50%' }}
           onClick={onClose}
         >
-          {t('qrLogin.deny')}
+          qrLogin.deny
         </Button>
         <Button
           icon="tabler:check"
           loading={loading}
+          namespace="common.auth"
           width={{ base: '100%', sm: '50%' }}
           onClick={onApprove}
         >
-          {t('qrLogin.approve')}
+          qrLogin.approve
         </Button>
       </Flex>
     </Stack>

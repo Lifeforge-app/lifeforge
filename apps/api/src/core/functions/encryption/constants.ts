@@ -1,16 +1,6 @@
-import { ROOT_DIR } from '@constants'
 import { createServiceLogger } from '@functions/logging'
-import path from 'path'
 
-// Key storage paths
-export const KEYS_DIR = path.join(ROOT_DIR, 'keys')
-
-export const PRIVATE_KEY_PATH = path.join(KEYS_DIR, 'server_private.pem')
-
-export const PUBLIC_KEY_PATH = path.join(KEYS_DIR, 'server_public.pem')
-
-// Encryption settings
-export const RSA_KEY_SIZE = 2048
+export const RSA_KEY_SIZE = 4096
 
 export const AES_ALGORITHM = 'aes-256-gcm'
 

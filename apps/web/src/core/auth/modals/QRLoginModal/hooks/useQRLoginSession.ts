@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Socket, io } from 'socket.io-client'
-import { v4 as uuidv4 } from 'uuid'
 
-import { useAPIEndpoint, useAuth } from '@lifeforge/api'
+import { useAuth, setAccessToken } from '@lifeforge/api'
 import { toast } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
@@ -31,18 +30,40 @@ export default function useQRLoginSession({
   onSuccess
 }: UseQRLoginSessionOptions) {
   const { t } = useTranslation('common.auth')
-  const apiHost = useAPIEndpoint()
-  const { verifySession, setAuth, setUserData } = useAuth()
+  const { setAuth, setUserData } = useAuth()
   const [status, setStatus] = useState<QRStatus>('loading')
   const [qrData, setQrData] = useState<string>('')
   const [expiresAt, setExpiresAt] = useState<string>('')
   const [timeLeft, setTimeLeft] = useState<number>(0)
   const sessionIdRef = useRef<string>('')
   const socketRef = useRef<Socket | null>(null)
-  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null)
-  /**
-   * Fallback polling for WebSocket connection issues
-   */
+  const pollingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const handleApproved = useCallback(
+    async (accessToken: string) => {
+      setStatus('approved')
+      clearStoredSession()
+
+      setAccessToken(accessToken)
+
+      try {
+        const meData = await forgeAPI.auth.me.queryRaw()
+
+        setUserData(meData.userData)
+        setAuth(true)
+        toast.success(
+          t('messages.welcomeBack', {
+            name: meData.userData.name
+          })
+        )
+        onSuccess()
+      } catch {
+        setStatus('error')
+        toast.error(t('messages.unknownError'))
+      }
+    },
+    [setAuth, setUserData, t, onSuccess]
+  )
 
   const startPolling = useCallback(
     (sessionId: string) => {
@@ -50,32 +71,17 @@ export default function useQRLoginSession({
 
       pollingIntervalRef.current = setInterval(async () => {
         try {
-          const response = await forgeAPI.user.qrLogin.checkQRSessionStatus
-            .input({
-              sessionId
-            })
-            .query()
+          const response = await forgeAPI.auth.qrLogin.status.queryRaw({
+            query: { sessionId }
+          })
 
-          if (response.status === 'approved' && response.session) {
+          if (response.status === 'approved') {
             clearInterval(pollingIntervalRef.current!)
             pollingIntervalRef.current = null
-            clearStoredSession()
 
-            setStatus('approved')
-            localStorage.setItem('session', response.session)
+            await forgeAPI.auth.qrLogin.claim.mutateRaw({ sessionId })
 
-            const { success, userData } = await verifySession(response.session)
-
-            if (success && userData) {
-              setUserData(userData)
-              setAuth(true)
-              toast.success(
-                t('messages.welcomeBack', {
-                  name: userData.username || userData.name
-                })
-              )
-              onSuccess()
-            }
+            await handleApproved(response.accessToken)
           } else if (response.status === 'expired') {
             clearInterval(pollingIntervalRef.current!)
             pollingIntervalRef.current = null
@@ -87,20 +93,17 @@ export default function useQRLoginSession({
         }
       }, 3000)
     },
-    [verifySession, setAuth, setUserData, t, onSuccess]
+    [handleApproved]
   )
-  /**
-   * Connect to WebSocket for a given session ID
-   */
+
   const connectWebSocket = useCallback(
     (sessionId: string) => {
-      // Clean up existing socket connection
       if (socketRef.current) {
         socketRef.current.disconnect()
         socketRef.current = null
       }
 
-      // Connect to WebSocket for real-time updates
+      const apiHost = import.meta.env.VITE_API_HOST || window.location.origin
       const socket = io(`${apiHost}/qr-login`, {
         transports: ['websocket', 'polling']
       })
@@ -111,72 +114,33 @@ export default function useQRLoginSession({
         socket.emit('joinQRSession', sessionId)
       })
 
-      socket.on('joinedQRSession', () => {
-        // Successfully joined the session room
-      })
-
-      socket.on('sessionApproved', async (data: { session: string }) => {
-        setStatus('approved')
-        clearStoredSession()
-
-        // Store the session token
-        localStorage.setItem('session', data.session)
-
-        // Verify the session and complete login
-        const { success, userData } = await verifySession(data.session)
-
-        if (success && userData) {
-          setUserData(userData)
-          setAuth(true)
-          toast.success(
-            t('messages.welcomeBack', {
-              name: userData.username || userData.name
-            })
-          )
-          onSuccess()
-        } else {
-          setStatus('error')
-          toast.error(t('messages.unknownError'))
-        }
+      socket.on('sessionApproved', async (data: { accessToken: string }) => {
+        await forgeAPI.auth.qrLogin.claim.mutateRaw({ sessionId })
+        await handleApproved(data.accessToken)
       })
 
       socket.on('error', () => {
-        // Socket error, fall back to polling
         startPolling(sessionId)
       })
 
       socket.on('disconnect', () => {
-        // If disconnected, start polling as fallback
         if (status !== 'approved' && status !== 'expired') {
           startPolling(sessionId)
         }
       })
     },
-    [
-      apiHost,
-      verifySession,
-      setAuth,
-      setUserData,
-      t,
-      onSuccess,
-      status,
-      startPolling
-    ]
+    [handleApproved, startPolling, status]
   )
-  /**
-   * Initialize QR session - check for existing session first
-   */
+
   const initializeSession = useCallback(
     async (forceNew = false) => {
       setStatus('loading')
 
-      // Clear polling interval
       if (pollingIntervalRef.current) {
         clearInterval(pollingIntervalRef.current)
         pollingIntervalRef.current = null
       }
 
-      // Check for existing valid session
       if (!forceNew) {
         const storedSession = getStoredSession()
 
@@ -185,8 +149,6 @@ export default function useQRLoginSession({
           setQrData(storedSession.qrData)
           setExpiresAt(storedSession.expiresAt)
           setStatus('ready')
-
-          // Connect WebSocket for existing session
           connectWebSocket(storedSession.sessionId)
 
           return
@@ -194,22 +156,15 @@ export default function useQRLoginSession({
       }
 
       try {
-        // Generate new session ID
-        const sessionId = uuidv4()
-
-        sessionIdRef.current = sessionId
-
-        // Register the QR session with the server
-        const response = await forgeAPI.user.qrLogin.registerQRSession.mutate({
-          sessionId,
+        const response = await forgeAPI.auth.qrLogin.register.mutateRaw({
           browserInfo: getBrowserInfo()
         })
 
-        const newExpiresAt = response.expiresAt
+        const sessionId = response.sessionId
 
-        setExpiresAt(newExpiresAt)
+        sessionIdRef.current = sessionId
+        setExpiresAt(response.expiresAt)
 
-        // Create QR data (simple, just sessionId for mobile to identify)
         const qrSessionData = {
           type: 'lifeforge-qr-login',
           v: 1,
@@ -221,41 +176,32 @@ export default function useQRLoginSession({
         setQrData(qrDataString)
         setStatus('ready')
 
-        // Store session for persistence
         storeSession({
           sessionId,
           qrData: qrDataString,
-          expiresAt: newExpiresAt
+          expiresAt: response.expiresAt
         })
 
-        // Connect WebSocket
         connectWebSocket(sessionId)
-      } catch (error) {
-        console.error('Failed to initialize QR session: ', error)
+      } catch {
         setStatus('error')
         toast.error(t('messages.unknownError'))
       }
     },
     [t, connectWebSocket]
   )
-  /**
-   * Force create a new session (for refresh button)
-   */
+
   const refreshSession = useCallback(() => {
     clearStoredSession()
     initializeSession(true)
   }, [initializeSession])
-  /**
-   * Update countdown timer
-   */
+
   useEffect(() => {
     if (!expiresAt || status === 'approved' || status === 'expired') return
 
     const updateTimer = () => {
       const now = Date.now()
-
       const expiry = new Date(expiresAt).getTime()
-
       const remaining = Math.max(0, Math.floor((expiry - now) / 1000))
 
       setTimeLeft(remaining)
@@ -272,9 +218,7 @@ export default function useQRLoginSession({
 
     return () => clearInterval(interval)
   }, [expiresAt, status])
-  /**
-   * Initialize on mount
-   */
+
   useEffect(() => {
     initializeSession()
 

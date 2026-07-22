@@ -113,9 +113,7 @@ export const schemas = {
           type: 'autodate'
         }
       ],
-      indexes: [
-        'CREATE UNIQUE INDEX `idx_V6OVTl5FtN` ON `api_keys__entries` (`keyId`)'
-      ],
+      indexes: [],
       system: false
     }
   }

@@ -1,12 +1,17 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { encrypt } from '@lifeforge/api'
 import { Flex, OTPInputBox, Text, toast } from '@lifeforge/ui'
 
 import forgeAPI from '@/forgeAPI'
 
-function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
+function OTPConfirmScreen({
+  tid,
+  onSuccess
+}: {
+  tid: string
+  onSuccess: () => void
+}) {
   const { t } = useTranslation('common.account-settings')
   const [otp, setOtp] = useState('')
   const [verifyOtpLoading, setVerifyOtpLoading] = useState(false)
@@ -21,11 +26,7 @@ function OTPConfirmScreen({ onSuccess }: { onSuccess: () => void }) {
     setVerifyOtpLoading(true)
 
     try {
-      const challenge = await forgeAPI.user['2fa'].getChallenge.query()
-
-      await forgeAPI.user['2fa'].verifyAndEnable.mutate({
-        otp: encrypt(encrypt(otp, challenge), localStorage.getItem('session')!)
-      })
+      await forgeAPI.auth['2fa'].enable.mutateRaw({ otp, tid })
 
       onSuccess()
     } catch {

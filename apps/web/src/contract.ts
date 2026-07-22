@@ -197,571 +197,6 @@ export const contract = {
             "type": "string"
           }
         }
-      },
-      "generateOTP": {
-        "method": "get",
-        "description": "Generate one-time password",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "getUserData": {
-        "method": "get",
-        "description": "Get current user data",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "format": "email",
-                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-              },
-              "emailVisibility": {
-                "type": "boolean"
-              },
-              "verified": {
-                "type": "boolean"
-              },
-              "username": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "avatar": {
-                "type": "string"
-              },
-              "dateOfBirth": {
-                "type": "string"
-              },
-              "theme": {
-                "type": "string",
-                "enum": [
-                  "system",
-                  "light",
-                  "dark"
-                ]
-              },
-              "color": {
-                "type": "string"
-              },
-              "bgTemp": {
-                "type": "string"
-              },
-              "bgImage": {
-                "type": "string"
-              },
-              "backdropFilters": {},
-              "fontFamily": {
-                "type": "string"
-              },
-              "dashboardLayout": {},
-              "fontScale": {
-                "type": "number"
-              },
-              "pinnedFontFamilies": {},
-              "borderRadiusMultiplier": {
-                "type": "number"
-              },
-              "bordered": {
-                "type": "boolean"
-              },
-              "language": {
-                "type": "string"
-              },
-              "created": {
-                "type": "string"
-              },
-              "updated": {
-                "type": "string"
-              },
-              "id": {
-                "type": "string"
-              },
-              "collectionId": {
-                "type": "string"
-              },
-              "collectionName": {
-                "type": "string"
-              },
-              "hasJournalMasterPassword": {
-                "type": "boolean"
-              },
-              "hasAPIKeysMasterPassword": {
-                "type": "boolean"
-              },
-              "twoFAEnabled": {
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "email",
-              "emailVisibility",
-              "verified",
-              "username",
-              "name",
-              "avatar",
-              "dateOfBirth",
-              "theme",
-              "color",
-              "bgTemp",
-              "bgImage",
-              "backdropFilters",
-              "fontFamily",
-              "dashboardLayout",
-              "fontScale",
-              "pinnedFontFamilies",
-              "borderRadiusMultiplier",
-              "bordered",
-              "language",
-              "created",
-              "updated",
-              "id",
-              "collectionId",
-              "collectionName",
-              "hasJournalMasterPassword",
-              "hasAPIKeysMasterPassword",
-              "twoFAEnabled"
-            ],
-            "additionalProperties": false
-          },
-          "NOT_FOUND": true
-        }
-      },
-      "login": {
-        "method": "post",
-        "description": "Authenticate user with credentials",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "email",
-              "password"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "const": "2fa_required"
-                  },
-                  "tid": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "state",
-                  "tid"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "const": "success"
-                  },
-                  "session": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "state",
-                  "session"
-                ],
-                "additionalProperties": false
-              }
-            ]
-          },
-          "UNAUTHORIZED": true
-        }
-      },
-      "validateOTP": {
-        "method": "post",
-        "description": "Verify one-time password",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "otp": {
-                "type": "string"
-              },
-              "otpId": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "otp",
-              "otpId"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "boolean"
-          }
-        }
-      },
-      "verifySessionToken": {
-        "method": "post",
-        "description": "Validate user session token",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "boolean"
-          },
-          "UNAUTHORIZED": true
-        }
-      }
-    },
-    "oauth": {
-      "getEndpoint": {
-        "method": "get",
-        "description": "Get OAuth authorization URL for provider",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "provider": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "provider"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              },
-              "codeVerifier": {
-                "type": "string"
-              },
-              "codeChallenge": {
-                "type": "string"
-              },
-              "codeChallengeMethod": {
-                "type": "string"
-              },
-              "authURL": {
-                "type": "string"
-              },
-              "displayName": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "name",
-              "state",
-              "codeVerifier",
-              "codeChallenge",
-              "codeChallengeMethod",
-              "authURL",
-              "displayName"
-            ],
-            "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "listProviders": {
-        "method": "get",
-        "description": "Retrieve available OAuth providers",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "verify": {
-        "method": "post",
-        "description": "Verify OAuth authorization callback",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "provider": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "provider",
-              "code"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "const": "2fa_required"
-                  },
-                  "tid": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "state",
-                  "tid"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "string"
-              }
-            ]
-          },
-          "UNAUTHORIZED": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      }
-    },
-    "2fa": {
-      "disable": {
-        "method": "post",
-        "description": "Disable two-factor authentication",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "generateAuthenticatorLink": {
-        "method": "get",
-        "description": "Generate authenticator app setup link",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "getChallenge": {
-        "method": "get",
-        "description": "Retrieve 2FA challenge token",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "requestOTP": {
-        "method": "get",
-        "description": "Request OTP for two-factor authentication",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "format": "email",
-                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-              }
-            },
-            "required": [
-              "email"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      },
-      "verify": {
-        "method": "post",
-        "description": "Verify two-factor authentication code",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "otp": {
-                "type": "string"
-              },
-              "tid": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "email",
-                  "app"
-                ]
-              }
-            },
-            "required": [
-              "otp",
-              "tid",
-              "type"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "session": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "session"
-            ],
-            "additionalProperties": false
-          },
-          "UNAUTHORIZED": true
-        }
-      },
-      "verifyAndEnable": {
-        "method": "post",
-        "description": "Verify and activate two-factor authentication",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "otp": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "otp"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
-        }
       }
     },
     "qrLogin": {
@@ -1983,6 +1418,903 @@ export const contract = {
           "NO_CONTENT": true,
           "NOT_FOUND": true
         }
+      }
+    }
+  },
+  "auth": {
+    "2fa": {
+      "disable": {
+        "method": "post",
+        "description": "Disable two-factor authentication",
+        "noAuth": false,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {},
+        "output": {
+          "NO_CONTENT": true
+        }
+      },
+      "enable": {
+        "method": "post",
+        "description": "Verify OTP and enable two-factor authentication",
+        "noAuth": false,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "otp": {
+                "type": "string"
+              },
+              "tid": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "otp",
+              "tid"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "NO_CONTENT": true,
+          "UNAUTHORIZED": true
+        }
+      },
+      "generate": {
+        "method": "post",
+        "description": "Generate 2FA authenticator app setup link",
+        "noAuth": false,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {},
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "tid": {
+                "type": "string"
+              },
+              "link": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "tid",
+              "link"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "verify": {
+        "method": "post",
+        "description": "Verify two-factor authentication code during login",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "otp": {
+                "type": "string"
+              },
+              "tid": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "otp",
+              "tid"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessToken"
+            ],
+            "additionalProperties": false
+          },
+          "UNAUTHORIZED": true
+        }
+      }
+    },
+    "login": {
+      "method": "post",
+      "description": "Authenticate user with email and password",
+      "noAuth": true,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {
+        "body": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            "password": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "email",
+            "password"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "accessToken"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "const": "2fa_required"
+                },
+                "tid": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "state",
+                "tid"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "UNAUTHORIZED": true
+      }
+    },
+    "logout": {
+      "method": "post",
+      "description": "Invalidate refresh token and clear session",
+      "noAuth": true,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "boolean"
+        },
+        "UNAUTHORIZED": true
+      }
+    },
+    "me": {
+      "method": "get",
+      "description": "Get current user data",
+      "noAuth": false,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "userData": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email",
+                  "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                },
+                "emailVisibility": {
+                  "type": "boolean"
+                },
+                "verified": {
+                  "type": "boolean"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "avatar": {
+                  "type": "string"
+                },
+                "dateOfBirth": {
+                  "type": "string"
+                },
+                "theme": {
+                  "type": "string",
+                  "enum": [
+                    "system",
+                    "light",
+                    "dark"
+                  ]
+                },
+                "color": {
+                  "type": "string"
+                },
+                "bgTemp": {
+                  "type": "string"
+                },
+                "bgImage": {
+                  "type": "string"
+                },
+                "backdropFilters": {},
+                "fontFamily": {
+                  "type": "string"
+                },
+                "dashboardLayout": {},
+                "fontScale": {
+                  "type": "number"
+                },
+                "borderRadiusMultiplier": {
+                  "type": "number"
+                },
+                "bordered": {
+                  "type": "boolean"
+                },
+                "language": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "collectionId": {
+                  "type": "string"
+                },
+                "collectionName": {
+                  "type": "string"
+                },
+                "twoFAEnabled": {
+                  "type": "boolean"
+                },
+                "hasAPIKeysMasterPassword": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "email",
+                "emailVisibility",
+                "verified",
+                "username",
+                "name",
+                "avatar",
+                "dateOfBirth",
+                "theme",
+                "color",
+                "bgTemp",
+                "bgImage",
+                "backdropFilters",
+                "fontFamily",
+                "dashboardLayout",
+                "fontScale",
+                "borderRadiusMultiplier",
+                "bordered",
+                "language",
+                "id",
+                "collectionId",
+                "collectionName",
+                "twoFAEnabled",
+                "hasAPIKeysMasterPassword"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "userData"
+          ],
+          "additionalProperties": false
+        },
+        "UNAUTHORIZED": true
+      }
+    },
+    "oauth": {
+      "authorize": {
+        "method": "get",
+        "description": "Start OAuth authorization flow",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "query": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "url",
+              "state"
+            ],
+            "additionalProperties": false
+          },
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          }
+        }
+      },
+      "verify": {
+        "method": "post",
+        "description": "Verify OAuth authorization callback",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "provider",
+              "code",
+              "state"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "accessToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "accessToken"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "state": {
+                    "type": "string",
+                    "const": "2fa_required"
+                  },
+                  "tid": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "state",
+                  "tid"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          },
+          "UNAUTHORIZED": true,
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          }
+        }
+      },
+      "providers": {
+        "listEnabled": {
+          "method": "get",
+          "description": "List enabled OAuth providers for the login portal",
+          "noAuth": true,
+          "encrypted": false,
+          "isDownloadable": false,
+          "media": null,
+          "input": {},
+          "output": {
+            "OK": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "provider": {
+                    "type": "string"
+                  },
+                  "icon": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "provider",
+                  "icon",
+                  "name"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "listOptions": {
+          "method": "get",
+          "description": "List all available OAuth provider options for configuration",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {},
+          "output": {
+            "OK": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  },
+                  "provider": {
+                    "type": "string"
+                  },
+                  "configured": {
+                    "type": "boolean"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "icon": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "updated": {
+                    "anyOf": [
+                      {
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "id",
+                  "provider",
+                  "configured",
+                  "enabled",
+                  "icon",
+                  "name",
+                  "updated"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "remove": {
+          "method": "post",
+          "description": "Delete OAuth provider configuration",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {
+            "query": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "output": {
+            "NO_CONTENT": true,
+            "NOT_FOUND": true
+          }
+        },
+        "toggle": {
+          "method": "post",
+          "description": "Toggle OAuth provider enabled status",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {
+            "query": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "output": {
+            "NO_CONTENT": true,
+            "NOT_FOUND": true
+          }
+        },
+        "upsert": {
+          "method": "post",
+          "description": "Update OAuth provider configuration",
+          "noAuth": false,
+          "encrypted": true,
+          "isDownloadable": false,
+          "media": null,
+          "input": {
+            "query": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "provider": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "provider"
+              ],
+              "additionalProperties": false
+            },
+            "body": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "object",
+              "properties": {
+                "clientId": {
+                  "type": "string"
+                },
+                "clientSecret": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "clientId",
+                "clientSecret"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "output": {
+            "NO_CONTENT": true,
+            "BAD_REQUEST": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "type": "string"
+            },
+            "NOT_FOUND": true
+          }
+        }
+      }
+    },
+    "qrLogin": {
+      "approve": {
+        "method": "post",
+        "description": "Approve a QR login request from an authenticated device",
+        "noAuth": false,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              }
+            },
+            "required": [
+              "sessionId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "browserInfo": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "browserInfo"
+            ],
+            "additionalProperties": false
+          },
+          "NOT_FOUND": true,
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          }
+        }
+      },
+      "claim": {
+        "method": "post",
+        "description": "Claim approved QR login session and set auth cookie",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              }
+            },
+            "required": [
+              "sessionId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "accessToken": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "accessToken"
+            ],
+            "additionalProperties": false
+          },
+          "NOT_FOUND": true
+        }
+      },
+      "register": {
+        "method": "post",
+        "description": "Register a new QR login session",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "browserInfo": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "browserInfo"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "CREATED": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string"
+              },
+              "expiresAt": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "sessionId",
+              "expiresAt"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "status": {
+        "method": "get",
+        "description": "Check QR login session status",
+        "noAuth": true,
+        "encrypted": false,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "query": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "sessionId": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              }
+            },
+            "required": [
+              "sessionId"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "const": "pending"
+                  },
+                  "expiresAt": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status",
+                  "expiresAt"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "const": "approved"
+                  },
+                  "accessToken": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "status",
+                  "accessToken"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "const": "expired"
+                  }
+                },
+                "required": [
+                  "status"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "const": "not_found"
+                  }
+                },
+                "required": [
+                  "status"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      }
+    },
+    "refresh": {
+      "method": "post",
+      "description": "Refresh access token using refresh token cookie",
+      "noAuth": true,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "accessToken": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "accessToken"
+          ],
+          "additionalProperties": false
+        },
+        "UNAUTHORIZED": true
       }
     }
   },

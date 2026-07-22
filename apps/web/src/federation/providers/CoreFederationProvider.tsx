@@ -67,6 +67,12 @@ export default function CoreFederationProvider({
   }
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false)
+
+      return
+    }
+
     fetchModules()
     refetch.current = fetchModules
   }, [auth])

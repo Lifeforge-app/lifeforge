@@ -81,6 +81,8 @@ export async function connectToPocketBase(
   try {
     const pb = new Pocketbase(config.host)
 
+    pb.autoCancellation(false)
+
     await pb
       .collection('_superusers')
       .authWithPassword(config.email, config.password)

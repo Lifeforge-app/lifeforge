@@ -9,7 +9,8 @@
       "email": "Email Address",
       "password": "Password",
       "dateOfBirth": "Date of Birth",
-      "twoFA": "Two-Factor Authentication"
+      "twoFA": "Two-Factor Authentication",
+      "oauth": "OAuth Providers"
     },
     "desc": {
       "profilePicture": "Upload a profile picture to personalize your account.",
@@ -18,11 +19,13 @@
       "email": "The email address you use to log in to your account.",
       "password": "Set a strong password to protect your account.",
       "dateOfBirth": "Set your date of birth, and we'll give you a surprise!",
-      "twoFA": "Enable two-factor authentication when logging into the system."
+      "twoFA": "Enable two-factor authentication when logging into the system.",
+      "oauth": "Configure OAuth providers to enable third-party logins."
     },
     "empty": "Not Set"
   },
   "modals": {
+    "oauthConfig": "OAuth Providers Configuration",
     "username": {
       "update": "Update Username"
     },
@@ -46,10 +49,15 @@
     },
     "changePassword": {
       "title": "Change Password"
+    },
+    "oauthProvider": {
+      "create": "Add OAuth Provider",
+      "update": "Update OAuth Provider"
     }
   },
   "buttons": {
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "configure": "Configure"
   },
   "inputs": {
     "dateOfBirth": "Date of Birth",
@@ -67,16 +75,31 @@
     "confirmPassword": {
       "label": "Confirm New Password",
       "placeholder": "Enter your new password again"
+    },
+    "oauthProvider": {
+      "provider": "Provider",
+      "clientId": "Client ID",
+      "clientSecret": "Client Secret"
     }
   },
   "messages": {
     "twoFA": {
       "enableSuccess": "Two-factor authentication enabled successfully.",
       "disableSuccess": "Two-factor authentication disabled successfully."
+    },
+    "oauth": {
+      "changeConfirm": "Are you sure you want to change the OAuth credentials?",
+      "changeAlert": "Updating the client ID and secret will replace existing ones. This action is not reversible."
     }
   },
   "misc": {
     "enabled": "Enabled",
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "oauthStatus": "{{confCount}} configured, {{enabledCount}} enabled",
+    "lastUpdated": "Last updated:"
+  },
+  "tabs": {
+    "personalInformation": "Personal Information",
+    "accountAndSecurity": "Account & Security"
   }
 }

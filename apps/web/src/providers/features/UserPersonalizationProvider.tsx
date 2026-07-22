@@ -108,7 +108,7 @@ function UserPersonalizationProvider({
   useEffect(() => {
     if (!userData) return
 
-    setTheme(userData.theme)
+    setTheme(userData.theme as 'light' | 'dark' | 'system')
 
     if (userData?.color !== '') {
       setRawThemeColor(

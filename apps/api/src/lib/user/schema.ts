@@ -25,6 +25,7 @@ export const schemas = {
       borderRadiusMultiplier: z.number(),
       bordered: z.boolean(),
       language: z.string(),
+      auth_password_hash: z.string(),
       created: z.string(),
       updated: z.string()
     }),
@@ -315,6 +316,19 @@ export const schemas = {
           type: 'text'
         },
         {
+          autogeneratePattern: '',
+          hidden: false,
+          max: 0,
+          min: 0,
+          name: 'auth_password_hash',
+          pattern: '',
+          presentable: false,
+          primaryKey: false,
+          required: false,
+          system: false,
+          type: 'text'
+        },
+        {
           hidden: false,
           name: 'created',
           onCreate: true,
@@ -345,7 +359,7 @@ export const schemas = {
         enabled: true,
         emailTemplate: {
           subject: 'Login from a new location',
-          body: "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location.</p>\n<p>If this was you, you may disregard this email.</p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
+          body: "<p>Hello,</p>\n<p>We noticed a login to your {APP_NAME} account from a new location:</p>\n<p><em>{ALERT_INFO}</em></p>\n<p><strong>If this wasn't you, you should immediately change your {APP_NAME} account password to revoke access from all other locations.</strong></p>\n<p>If this was you, you may disregard this email.</p>\n<p>\n  Thanks,<br/>\n  {APP_NAME} team\n</p>"
         }
       },
       passwordAuth: {

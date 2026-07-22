@@ -10,13 +10,20 @@ import {
   useState
 } from 'react'
 
-import { contract } from '../../contract'
-import { createForgeProxy } from '../core/createForgeProxy'
-import type { InferOutput, ProxyTree } from '../typescript'
+import { contract } from '../contract'
+import { createForgeProxy } from '../core'
+import type { InferOutput } from '../typescript'
+import {
+  clearAccessToken,
+  getAccessToken,
+  setAccessToken
+} from '../utils/authTokenStore'
 
-const _forgeAPI = createForgeProxy(contract)
+let bootstrapped = false
 
-export type UserData = InferOutput<typeof _forgeAPI.user.auth.getUserData>
+const forgeAPI = createForgeProxy(contract)
+
+export type UserData = InferOutput<typeof forgeAPI.auth.me>['userData']
 
 interface AuthData {
   auth: boolean
@@ -28,18 +35,9 @@ interface AuthData {
     email: string
     password: string
   }) => Promise<string | void>
-  authenticateWith2FA: ({
-    otp,
-    type
-  }: {
-    otp: string
-    type: 'email' | 'app'
-  }) => Promise<string>
-  verifySession: (
-    session: string
-  ) => Promise<{ success: boolean; userData: UserData | null }>
-  verifyOAuth: (code: string, state: string) => Promise<boolean>
   logout: () => void
+  verifyOAuth: (code: string, state: string) => Promise<string | false>
+  authenticateWith2FA: (otp: string) => Promise<string>
   authLoading: boolean
   userData: UserData | null
   setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
@@ -47,21 +45,12 @@ interface AuthData {
   tid: RefObject<string>
 }
 
-interface Verify2FAResponse {
-  state: string
-  data: {
-    session: string
-  }
-}
-
 export const AuthContext = createContext<AuthData | undefined>(undefined)
 
 export function AuthProvider({
-  forgeAPI,
   onTwoFAModalOpen,
   children
 }: {
-  forgeAPI: ProxyTree<any>
   onTwoFAModalOpen: () => void
   children: React.ReactNode
 }) {
@@ -76,39 +65,7 @@ export function AuthProvider({
     },
     [_setAuth]
   )
-  const verifySession = useCallback(
-    async (
-      session: string
-    ): Promise<{
-      success: boolean
-      userData: UserData | null
-    }> => {
-      try {
-        const verifyRes = await fetch(
-          forgeAPI.user.auth.verifySessionToken.endpoint,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${session}`
-            }
-          }
-        )
 
-        const verifyData = await verifyRes.json()
-
-        if (!verifyRes.ok || verifyData.state !== 'success') {
-          return { success: false, userData: null }
-        }
-
-        const userData = await forgeAPI.user.auth.getUserData.query()
-
-        return { success: true, userData }
-      } catch {
-        return { success: false, userData: null }
-      }
-    },
-    []
-  )
   const authenticate = useCallback(
     async ({
       email,
@@ -118,142 +75,124 @@ export function AuthProvider({
       password: string
     }): Promise<string | void> => {
       try {
-        const data = await forgeAPI.user.auth.login.mutate({
+        const loginData = await forgeAPI.auth.login.mutateRaw({
           email,
           password
         })
 
-        if (data.state === 'success') {
-          localStorage.setItem('session', data.session)
-
-          const userData = await forgeAPI.user.auth.getUserData.query()
-
-          setUserData(userData)
-          setAuth(true)
-
-          return 'success: ' + userData.name
-        } else if (data.state === '2fa_required') {
+        if ('state' in loginData) {
+          tid.current = loginData.tid
           onTwoFAModalOpen()
-          tid.current = data.tid
 
           return '2FA required'
         }
+
+        setAccessToken(loginData.accessToken)
+
+        const userResponse = await forgeAPI.auth.me.queryRaw()
+
+        setUserData(userResponse.userData)
+        setAuth(true)
+
+        return 'success: ' + userResponse.userData.name
       } catch (err) {
         if (!(err instanceof Error)) {
           throw new Error('Unknown error')
         }
 
-        if (err.message === 'Invalid credentials') {
+        if (
+          err.message === 'Invalid authorization credentials' ||
+          err.message === 'Failed to perform API request'
+        ) {
           return 'invalid'
         }
 
         throw err
       }
     },
-    []
+    [onTwoFAModalOpen]
   )
-  const authenticateWith2FA = useCallback(
-    async ({
-      otp,
-      type
-    }: {
-      otp: string
-      type: 'email' | 'app'
-    }): Promise<string> => {
-      try {
-        const res = await fetch(forgeAPI.user['2fa'].verify.endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ otp, tid: tid.current, type })
-        })
 
-        const data = (await res.json()) as Verify2FAResponse
+  const logout = useCallback(() => {
+    clearAccessToken()
+    setAuth(false)
+    setUserData(null)
 
-        if (res.ok && data.state === 'success') {
-          localStorage.setItem('session', data.data.session)
+    forgeAPI.auth.logout.mutateRaw(undefined).catch(() => {})
+  }, [])
 
-          const userData = await forgeAPI.user.auth.getUserData.query()
-
-          setUserData(userData)
-          setAuth(true)
-
-          return userData.name
-        } else {
-          throw new Error('Invalid OTP')
-        }
-      } catch {
-        throw new Error('Invalid OTP')
-      }
-    },
-    []
-  )
   const verifyOAuth = useCallback(
-    async (code: string, state: string): Promise<boolean> => {
+    async (code: string, state: string): Promise<string | false> => {
       try {
-        const storedState = localStorage.getItem('authState')
-
-        const storedProvider = localStorage.getItem('authProvider')
+        const storedState = sessionStorage.getItem('oauthState')
+        const storedProvider = sessionStorage.getItem('oauthProvider')
 
         if (!state || !storedState || !storedProvider) {
-          throw new Error('Invalid login attempt')
+          return false
         }
 
-        localStorage.removeItem('authProvider')
-        localStorage.removeItem('authState')
+        sessionStorage.removeItem('oauthState')
+        sessionStorage.removeItem('oauthProvider')
 
         if (storedState !== state) {
-          throw new Error('Invalid state')
+          return false
         }
 
-        const session = await forgeAPI.user.oauth.verify.mutate({
+        const oauthData = await forgeAPI.auth.oauth.verify.mutateRaw({
           code,
-          provider: storedProvider
+          provider: storedProvider,
+          state
         })
 
-        if (typeof session !== 'string') {
-          if (session.state !== '2fa_required') {
-            throw new Error('Invalid session')
-          }
+        if ('state' in oauthData) {
+          tid.current = oauthData.tid
           onTwoFAModalOpen()
-          tid.current = session.tid
 
-          return true
+          return '2FA required'
         }
 
-        const { success, userData } = await verifySession(session)
+        setAccessToken(oauthData.accessToken)
 
-        if (success && userData) {
-          setUserData(userData)
-          setAuth(true)
+        const userResponse = await forgeAPI.auth.me.queryRaw()
 
-          localStorage.setItem('session', session)
+        setUserData(userResponse.userData)
+        setAuth(true)
 
-          return true
-        } else {
-          throw new Error('Invalid session')
-        }
+        return 'success: ' + userResponse.userData.name
       } catch {
         setAuth(false)
         setUserData(null)
-        setAuthLoading(false)
 
         return false
       } finally {
         setAuthLoading(false)
       }
     },
-    [verifySession]
+    [onTwoFAModalOpen]
   )
-  const logout = useCallback(() => {
-    setAuth(false)
-    localStorage.removeItem('session')
-    setUserData(null)
-  }, [])
+
+  const authenticateWith2FA = useCallback(
+    async (otp: string): Promise<string> => {
+      const data = await forgeAPI.auth['2fa'].verify.mutateRaw({
+        otp,
+        tid: tid.current
+      })
+
+      setAccessToken(data.accessToken)
+
+      const userResponse = await forgeAPI.auth.me.queryRaw()
+
+      setUserData(userResponse.userData)
+      setAuth(true)
+
+      return userResponse.userData.name
+    },
+    []
+  )
+
   const getAvatarURL = useCallback((): string => {
     if (userData) {
-      return forgeAPI.getMedia({
+      return (forgeAPI as any).getMedia({
         collectionId: userData.collectionId,
         recordId: userData.id,
         fieldId: userData.avatar,
@@ -262,40 +201,49 @@ export function AuthProvider({
     }
 
     return ''
-  }, [userData])
-  const doUseEffect = useCallback(() => {
+  }, [userData, forgeAPI])
+
+  useEffect(() => {
+    if (getAccessToken()) {
+      setAuth(true)
+      setAuthLoading(false)
+
+      return
+    }
+
+    if (bootstrapped) return
+
+    bootstrapped = true
     setAuthLoading(true)
 
-    if (localStorage.getItem('session')) {
-      verifySession(localStorage.getItem('session')!)
-        .then(async ({ success, userData }) => {
-          if (success) {
-            setUserData(userData)
-            setAuth(true)
-          }
-        })
-        .catch(() => {
-          setAuth(false)
-        })
-        .finally(() => {
-          setAuthLoading(false)
-        })
-    } else {
-      setAuthLoading(false)
-    }
+    forgeAPI.auth.refresh
+      .mutateRaw(undefined)
+      .then((data: { accessToken: string }) => {
+        setAccessToken(data.accessToken)
+
+        return forgeAPI.auth.me.queryRaw()
+      })
+      .then(data => {
+        setUserData(data.userData)
+        setAuth(true)
+      })
+      .catch(() => {
+        setAuth(false)
+        setUserData(null)
+      })
+      .finally(() => {
+        setAuthLoading(false)
+      })
   }, [])
-  useEffect(() => {
-    doUseEffect()
-  }, [])
+
   const value = useMemo(
     () => ({
       auth,
       setAuth,
       authenticate,
-      authenticateWith2FA,
-      verifySession,
-      verifyOAuth,
       logout,
+      verifyOAuth,
+      authenticateWith2FA,
       authLoading,
       userData,
       setUserData,

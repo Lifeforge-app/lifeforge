@@ -1,25 +1,71 @@
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
+import {
+  clearAccessToken,
+  getAccessToken,
+  setAccessToken
+} from './authTokenStore'
+
 interface ApiResponse<T> {
   state: 'success' | 'error'
   data?: T
   message?: string
 }
 
+let isRefreshing = false
+let refreshPromise: Promise<boolean> | null = null
+
+async function refreshAccessToken(apiHost: string): Promise<boolean> {
+  if (isRefreshing) {
+    return refreshPromise!
+  }
+
+  isRefreshing = true
+  refreshPromise = (async () => {
+    try {
+      const res = await fetch(`${apiHost}/auth/refresh`, {
+        method: 'POST',
+        credentials: 'include'
+      })
+
+      const data = await res.json()
+
+      if (res.ok && data.state === 'success' && data.data?.accessToken) {
+        setAccessToken(data.data.accessToken)
+
+        return true
+      }
+
+      clearAccessToken()
+
+      return false
+    } catch {
+      clearAccessToken()
+
+      return false
+    } finally {
+      isRefreshing = false
+      refreshPromise = null
+    }
+  })()
+
+  return refreshPromise
+}
+
 function createAxiosInstance(apiHost: string, isExternal: boolean) {
   const instance = axios.create({
     baseURL: isExternal ? undefined : apiHost,
-    validateStatus: () => true // We'll handle status validation manually
+    withCredentials: true,
+    validateStatus: () => true
   })
 
-  // Request interceptor for authentication
   instance.interceptors.request.use(config => {
     if (!isExternal) {
-      const session = localStorage.getItem('session')
+      const token = getAccessToken()
 
-      if (session) {
-        config.headers.Authorization = `Bearer ${session}`
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`
       }
     }
 
@@ -72,7 +118,6 @@ async function handleAxiosResponse<T>(
       return data.data as T
     }
   } else if (response.headers['x-lifeforge-downloadable'] === 'true') {
-    // Axios automatically handles arrayBuffer as responseType
     return new Uint8Array(response.data) as unknown as T
   } else if (contentType.includes('text/plain')) {
     return response.data as unknown as T
@@ -81,28 +126,42 @@ async function handleAxiosResponse<T>(
   throw new Error('Unexpected API response format')
 }
 
+export type FetchAPIOptions = {
+  method?: string
+  body?: string | FormData | URLSearchParams | Blob | Record<string, unknown>
+  raiseError?: boolean
+  isExternal?: boolean
+} & Omit<AxiosRequestConfig, 'method' | 'url' | 'data'>
+
+export type ResponseWrapper<T> =
+  { state: 'success'; data: T } | { state: 'error'; message: string }
+
+export async function fetchAPI<T>(
+  apiHost: string,
+  endpoint: string,
+  options: FetchAPIOptions & { raw: true }
+): Promise<AxiosResponse<ResponseWrapper<T>>>
+
+export async function fetchAPI<T>(
+  apiHost: string,
+  endpoint: string,
+  options?: FetchAPIOptions & { raw?: false }
+): Promise<T>
+
 export async function fetchAPI<T>(
   apiHost: string,
   endpoint: string,
   {
+    raw = false,
     method = 'GET',
     body,
-    headers: customHeaders,
-    timeout = 300000,
     raiseError = true,
-    isExternal = false
-  }: {
-    method?: string
-    body?: string | FormData | URLSearchParams | Blob | Record<string, unknown>
-    headers?: Record<string, string>
-    timeout?: number
-    raiseError?: boolean
-    isExternal?: boolean
-  } = {}
-): Promise<T> {
+    isExternal = false,
+    ...overrides
+  }: FetchAPIOptions & { raw?: boolean } = {}
+): Promise<AxiosResponse<T> | T> {
   const axiosInstance = createAxiosInstance(apiHost, isExternal)
 
-  // Determine the content type and prepare the request
   const isJSON =
     !!body &&
     !(
@@ -111,29 +170,26 @@ export async function fetchAPI<T>(
       body instanceof Blob
     )
 
-  // Normalize endpoint path - ensure it starts with / for relative paths
   const normalizedEndpoint = (
     endpoint.startsWith('/') || endpoint.startsWith('http')
       ? endpoint
       : `/${endpoint}`
   ).replace(/\$/g, '__')
 
+  const mergedHeaders = { ...(overrides.headers || {}) }
+  const overrideTimeout = overrides.timeout ?? 300000
+
   const config: AxiosRequestConfig = {
+    ...overrides,
     method: method.toUpperCase() as
-      | 'GET'
-      | 'POST'
-      | 'PUT'
-      | 'DELETE'
-      | 'PATCH'
-      | 'HEAD'
-      | 'OPTIONS',
+      'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS',
     url: isExternal ? endpoint : normalizedEndpoint,
-    timeout,
+    timeout: overrideTimeout,
     data: body,
-    headers: { ...customHeaders }
+    headers: mergedHeaders,
+    withCredentials: true
   }
 
-  // Handle different body types
   if (body instanceof FormData) {
     config.headers!['Content-Type'] = 'multipart/form-data'
   } else if (body instanceof URLSearchParams) {
@@ -144,18 +200,14 @@ export async function fetchAPI<T>(
     config.headers!['Content-Type'] = 'application/json'
   }
 
-  // Handle binary responses (downloadable files)
   if (!isExternal) {
-    // We need to check for downloadable content, so we'll handle this in the response
     config.responseType = 'arraybuffer'
     config.transformResponse = [
       (data, headers) => {
-        // If it's downloadable content, return as-is
         if (headers['x-lifeforge-downloadable'] === 'true') {
           return data
         }
 
-        // Otherwise, try to parse as JSON or text
         try {
           const text = new TextDecoder().decode(data)
 
@@ -168,19 +220,57 @@ export async function fetchAPI<T>(
   }
 
   try {
-    const response = await axiosInstance.request<T>(config)
+    let response = await axiosInstance.request<T>(config)
+
+    if (raw) {
+      return response
+    }
+
+    if (
+      response.status === 401 &&
+      !isExternal &&
+      !normalizedEndpoint.startsWith('/auth')
+    ) {
+      const hasAuthHeader = !!config.headers?.Authorization
+
+      if (hasAuthHeader) {
+        const refreshed = await refreshAccessToken(apiHost)
+
+        if (refreshed) {
+          const newConfig = { ...config }
+
+          newConfig.headers = {
+            ...newConfig.headers,
+            Authorization: `Bearer ${getAccessToken()}`
+          }
+
+          response = await axiosInstance.request<T>(newConfig)
+        }
+      } else {
+        const token = getAccessToken()
+
+        if (token) {
+          const newConfig = { ...config }
+
+          newConfig.headers = {
+            ...newConfig.headers,
+            Authorization: `Bearer ${token}`
+          }
+
+          response = await axiosInstance.request<T>(newConfig)
+        }
+      }
+    }
 
     return await handleAxiosResponse<T>(response, isExternal)
   } catch (err) {
     if (raiseError) {
       if (axios.isAxiosError(err)) {
-        // Handle axios-specific errors
         if (err.code === 'ECONNABORTED') {
           throw new Error('Request timeout')
         }
 
         if (err.response) {
-          // Server responded with error status
           let errorMessage = 'Failed to perform API request'
 
           try {
@@ -198,7 +288,6 @@ export async function fetchAPI<T>(
         }
 
         if (err.request) {
-          // Request was made but no response received
           throw new Error('Network error: No response received')
         }
       }
