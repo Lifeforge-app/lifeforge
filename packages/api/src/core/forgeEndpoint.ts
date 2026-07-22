@@ -175,11 +175,12 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     } = {}
   ): UseQueryOptions<InferRawOutput<T>> {
     return {
-      ...options,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
       queryKey: options.queryKey ? options.queryKey : this.key,
-      queryFn: () => this.query()
+      queryFn: () => this.query(),
+      retry: false,
+      ...options
     }
   }
 
@@ -195,13 +196,14 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     } = {}
   ): UseQueryOptions<InferRawOutput<T>> {
     return {
-      ...options,
       refetchOnWindowFocus: false,
       staleTime: Infinity,
       queryKey: options.queryKey
         ? [...options.queryKey, 'raw']
         : [...this.key, 'raw'],
-      queryFn: () => this.queryRaw()
+      queryFn: () => this.queryRaw(),
+      retry: false,
+      ...options
     }
   }
 
@@ -218,11 +220,12 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     > = {}
   ): UseMutationOptions<InferRawOutput<T>, any, InferRawInput<T>['body']> {
     return {
-      ...options,
       mutationKey: this.key,
       mutationFn: (data: InferRawInput<T>['body']) => {
         return this.mutate(data)
-      }
+      },
+      retry: false,
+      ...options
     }
   }
 
@@ -239,7 +242,6 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     > = {}
   ): UseMutationOptions<InferRawOutput<T>, any, InferRawInput<T>['body']> {
     return {
-      ...options,
       mutationKey: [...this.key, 'raw'],
       mutationFn: (data: Partial<T>) => {
         const { apiHost, prefix } = this._resolvedConfig
@@ -250,7 +252,9 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
           method: 'POST',
           body: hasFile(data) ? getFormData(data) : data
         })
-      }
+      },
+      retry: false,
+      ...options
     }
   }
 

@@ -54,7 +54,8 @@ export default async function checkRecordExistence({
 
     if (!isValid) {
       throw new ClientError(
-        `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`
+        `Invalid ${type} field "${key}" with value "${value}" does not exist in collection "${collection}"`,
+        404
       )
     }
   }

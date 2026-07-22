@@ -1,3 +1,4 @@
+/* eslint-disable preserve-caught-error */
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
@@ -15,6 +16,15 @@ interface ApiResponse<T> {
 
 let isRefreshing = false
 let refreshPromise: Promise<boolean> | null = null
+
+export class APIError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number
+  ) {
+    super(message)
+  }
+}
 
 async function refreshAccessToken(apiHost: string): Promise<boolean> {
   if (isRefreshing) {
@@ -94,7 +104,7 @@ async function handleAxiosResponse<T>(
       // Ignore parsing errors, use default message
     }
 
-    throw new Error(errorMessage)
+    throw new APIError(errorMessage, response.status)
   }
 
   if (response.status === 204) {
@@ -111,7 +121,7 @@ async function handleAxiosResponse<T>(
     const data = response.data as ApiResponse<T>
 
     if (data.state === 'error') {
-      throw new Error(data.message || 'API returned an error')
+      throw new APIError(data.message || 'API returned an error', response.status)
     }
 
     if (data.state === 'success') {
@@ -123,7 +133,7 @@ async function handleAxiosResponse<T>(
     return response.data as unknown as T
   }
 
-  throw new Error('Unexpected API response format')
+  throw new APIError('Unexpected API response format', response.status)
 }
 
 export type FetchAPIOptions = {
@@ -284,7 +294,8 @@ export async function fetchAPI<T>(
           } catch {
             // Ignore parsing errors
           }
-          throw new Error(errorMessage)
+
+          throw new APIError(errorMessage, err.response.status)
         }
 
         if (err.request) {
