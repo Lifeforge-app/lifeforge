@@ -254,7 +254,7 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 | Validation            | Zod Code                                                                                         |
 | --------------------- | ------------------------------------------------------------------------------------------------ |
 | Required, any string  | `z.string().min(1, 'Required')`                                                                  |
-| Optional string       | `z.string().optional()` or **better**: `z.string().optional().catch('')` to keep default as `''` |
+| Optional string       | `z.string().optional()` or **better**: `z.string()` to keep default as `''` |
 | Min/max length        | `z.string().min(3).max(100)`                                                                     |
 | Exact length          | `z.string().length(10)`                                                                          |
 | Regex pattern         | `z.string().regex(/^[a-zA-Z0-9]+$/, 'Alphanumeric only')`                                        |
@@ -400,7 +400,7 @@ return (
 
 | Validation      | Zod Code                          |
 | --------------- | --------------------------------- |
-| String (rrule)  | `z.string().optional().catch('')` |
+| String (rrule)  | `z.string()` |
 | Non-empty rrule | `z.string().min(1).default('')`   |
 
 ##### Array/Collection Fields
