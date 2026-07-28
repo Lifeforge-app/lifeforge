@@ -4,7 +4,7 @@ import fs from 'fs'
 import { type WidgetConfig, widgetConfigSchema } from '@lifeforge/configs'
 
 import resolveExpressionMap, { findVariableDeclaration } from './ast-utils'
-import { moduleLoaderLogger } from './moduleRegistry'
+import { moduleLoaderLogger } from './moduleLoaderLogger'
 
 export default function parseWidgetConfig(
   filePath: string

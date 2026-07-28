@@ -37,7 +37,7 @@ export function buildChildRoutes({
 }: RouteBuilderOptions): RouteObject[] {
   const childRoutes: RouteObject[] = Object.entries(routes).map(
     ([path, Component]) => ({
-      path,
+      path: path.startsWith('/') ? path.slice(1) : path,
       element: (
         <APIKeyStatusProvider APIKeyAccess={APIKeyAccess}>
           <Suspense

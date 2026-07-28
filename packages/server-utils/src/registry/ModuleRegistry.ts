@@ -1,5 +1,3 @@
-import { createServiceLogger } from '@functions/logging'
-
 import type {
   Module,
   ModuleEntry,
@@ -7,13 +5,24 @@ import type {
   ModuleWidget
 } from '@lifeforge/configs'
 
-export const moduleLoaderLogger = createServiceLogger('Module Loader')
-
 export class ModuleRegistry {
   private static registeredModules: ModuleEntry[] = []
+  private static modulePaths = new Map<string, string>()
 
-  static register(entry: ModuleEntry): void {
+  static register(entry: ModuleEntry, absolutePath?: string): void {
     ModuleRegistry.registeredModules.push(entry)
+    if (absolutePath) {
+      ModuleRegistry.modulePaths.set(absolutePath, entry.name)
+    }
+  }
+
+  static unregister(name: string): void {
+    ModuleRegistry.registeredModules = ModuleRegistry.registeredModules.filter(m => m.name !== name)
+    for (const [modPath, modName] of ModuleRegistry.modulePaths.entries()) {
+      if (modName === name) {
+        ModuleRegistry.modulePaths.delete(modPath)
+      }
+    }
   }
 
   static isRegistered(name: string): boolean {
@@ -78,5 +87,23 @@ export class ModuleRegistry {
     }
 
     return list
+  }
+
+  static getPath(moduleIdOrName: string): string | undefined {
+    for (const [modPath, name] of ModuleRegistry.modulePaths.entries()) {
+      if (name === moduleIdOrName || name.endsWith('/' + moduleIdOrName)) {
+        return modPath
+      }
+    }
+    return undefined
+  }
+
+  static getModuleByPath(filePath: string): { source: 'app'; id: string } | undefined {
+    for (const [modPath, name] of ModuleRegistry.modulePaths.entries()) {
+      if (filePath.startsWith(modPath)) {
+        return { source: 'app', id: name }
+      }
+    }
+    return undefined
   }
 }

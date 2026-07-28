@@ -1,7 +1,11 @@
-import getProjectRootDir from './extractProjectRoot'
+import { ModuleRegistry } from '../registry/ModuleRegistry'
 
 export default function getCallerModuleId():
-  { source: 'app' | 'core'; id: string } | undefined {
+  | {
+      source: 'app' | 'core'
+      id: string
+    }
+  | undefined {
   const obj: { stack?: string } = {}
 
   Error.captureStackTrace(obj)
@@ -26,22 +30,16 @@ export default function getCallerModuleId():
 
     if (!filePath) continue
 
-    const projectRoot = getProjectRootDir(filePath)
+    const registeredCaller = ModuleRegistry.getModuleByPath(filePath)
 
-    if (!projectRoot) continue
+    if (registeredCaller) {
+      registeredCaller.id = registeredCaller.id.replace(/^@lifeforge\//, '')
 
-    const appMatch = filePath.match(
-      new RegExp(`${projectRoot}\\/modules\\/([^/]+)\\/server\\/`)
-    )
-
-    if (appMatch) {
-      return { source: 'app', id: appMatch[1] }
+      return registeredCaller
     }
 
     const coreMatch = filePath.match(
-      new RegExp(
-        `${projectRoot}\\/apps\\/api\\/src\\/(?:lib|core)\\/([^/]+)(?:\\/|$)`
-      )
+      /\/apps\/api\/src\/(?:lib|core)\/([^/]+)(?:\/|$)/
     )
 
     if (coreMatch) {

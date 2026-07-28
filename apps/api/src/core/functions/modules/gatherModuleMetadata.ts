@@ -10,7 +10,7 @@ import {
 } from '@lifeforge/configs'
 
 import checkManifestProvider from './checkManifestProvider'
-import { moduleLoaderLogger } from './moduleRegistry'
+import { moduleLoaderLogger } from './moduleLoaderLogger'
 import parseManifestSubsections from './parseManifestSubsections'
 import parseWidgetConfig from './parseWidgetConfig'
 

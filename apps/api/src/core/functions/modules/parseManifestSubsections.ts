@@ -2,7 +2,7 @@ import * as ts from '@typescript/typescript6'
 import fs from 'fs'
 
 import resolveExpressionMap, { findNode, parseObjectLiteral } from './ast-utils'
-import { moduleLoaderLogger } from './moduleRegistry'
+import { moduleLoaderLogger } from './moduleLoaderLogger'
 
 export interface ParsedSubsection {
   label: string
