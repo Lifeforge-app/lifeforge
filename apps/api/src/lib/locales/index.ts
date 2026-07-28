@@ -3,7 +3,7 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
-import { ModuleRegistry } from '@functions/modules/moduleRegistry'
+import { ModuleRegistry } from '@lifeforge/server-utils'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'

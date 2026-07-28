@@ -1,5 +1,5 @@
 import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
-import { ModuleRegistry } from '@functions/modules/moduleRegistry'
+import { ModuleRegistry } from '@lifeforge/server-utils'
 import z from 'zod'
 
 import {

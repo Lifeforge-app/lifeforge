@@ -6,6 +6,7 @@ import fs from 'fs'
 import path from 'path'
 
 import { IPBService, PBService } from '@lifeforge/pocketbase'
+import { ModuleRegistry } from '@lifeforge/server-utils'
 
 const logger = createServiceLogger('API Key Vault')
 
@@ -17,12 +18,11 @@ export async function validateCallerAccess(
     return
   }
 
-  const packageJSONPath = path.resolve(
-    ROOT_DIR,
-    'modules',
-    callerModule.id,
-    'package.json'
-  )
+  const modulePath =
+    ModuleRegistry.getPath(callerModule.id) ||
+    path.resolve(ROOT_DIR, 'modules', callerModule.id)
+
+  const packageJSONPath = path.join(modulePath, 'package.json')
 
   if (!fs.existsSync(packageJSONPath)) {
     throw new Error(`Manifest for ${callerModule.id} not found`)

@@ -1,6 +1,6 @@
 import { registerHooks } from 'node:module'
 
-import { moduleLoaderLogger } from './moduleRegistry'
+import { moduleLoaderLogger } from './moduleLoaderLogger'
 
 /**
  * Registers custom module resolution hooks for development mode,

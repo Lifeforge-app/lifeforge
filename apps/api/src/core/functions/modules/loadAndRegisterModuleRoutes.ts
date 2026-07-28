@@ -5,8 +5,10 @@ import path from 'path'
 
 import type { ModuleEntry } from '@lifeforge/configs'
 
+import { ModuleRegistry } from '@lifeforge/server-utils'
+
 import gatherModuleMetadata from './gatherModuleMetadata'
-import { ModuleRegistry, moduleLoaderLogger } from './moduleRegistry'
+import { moduleLoaderLogger } from './moduleLoaderLogger'
 import registerDevResolverHooks from './registerDevResolverHooks'
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
@@ -49,7 +51,7 @@ export async function loadAndRegisterModuleRoutes(): Promise<
     // simply register the entry, no further action needed.
     if (!metadata.hasServerRoutes) {
       const { hasServerRoutes: _, ...entry } = metadata
-      ModuleRegistry.register(entry)
+      ModuleRegistry.register(entry, path.join(appsDir, modDir))
       continue
     }
 
@@ -79,18 +81,21 @@ export async function loadAndRegisterModuleRoutes(): Promise<
     }
 
     try {
+      const { hasServerRoutes: _, ...entry } = metadata
+      ModuleRegistry.register(entry, path.join(appsDir, modDir))
+
       const mod = await import(modulePath)
 
       if (mod.default) {
         modules[metadata.moduleId] = mod.default
-        const { hasServerRoutes: _, ...entry } = metadata
-        ModuleRegistry.register(entry)
       } else {
+        ModuleRegistry.unregister(entry.name)
         moduleLoaderLogger.warn(
           `Skipping module ${chalk.yellow(metadata.displayName)}: The server file has no default export`
         )
       }
     } catch (importError) {
+      ModuleRegistry.unregister(metadata.name)
       moduleLoaderLogger.warn(
         `Skipping module ${chalk.yellow(metadata.displayName)}: ${importError}`
       )

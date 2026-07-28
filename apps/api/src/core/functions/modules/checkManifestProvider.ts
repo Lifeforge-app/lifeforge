@@ -2,7 +2,7 @@ import * as ts from '@typescript/typescript6'
 import fs from 'fs'
 
 import { findNode, parseObjectLiteral } from './ast-utils'
-import { moduleLoaderLogger } from './moduleRegistry'
+import { moduleLoaderLogger } from './moduleLoaderLogger'
 
 /**
  * Checks if a module's manifest file has a provider defined by looking
