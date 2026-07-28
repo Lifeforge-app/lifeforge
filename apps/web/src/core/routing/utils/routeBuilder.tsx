@@ -3,16 +3,20 @@ import type { RouteObject } from 'react-router'
 
 import type { ModuleConfig, ModuleGroup } from '@lifeforge/configs'
 import type { FederatedModule } from '@lifeforge/federation'
-import { LoadingScreen, ModalManager, ModuleWrapper } from '@lifeforge/ui'
+import {
+  LoadingScreen,
+  ModalManager,
+  ModuleWrapper,
+  NotFoundScreen
+} from '@lifeforge/ui'
 
 import APIKeyStatusProvider from '@/core/providers/features/APIKeyStatusProvider'
 
 import LazyRouteLoader from '../components/LazyRouteLoader'
 
-interface RouteBuilderOptions {
+export interface RouteBuilderOptions {
   routes: ModuleConfig['routes']
   loadingMessage: string
-  isNested?: boolean
   APIKeyAccess?: Record<string, { usage: string; required: boolean }>
   config: {
     name: string
@@ -31,17 +35,13 @@ export function buildChildRoutes({
   loadingMessage = 'loadingModule',
   config
 }: RouteBuilderOptions): RouteObject[] {
-  return Object.entries(routes).map(([path, component]) => {
-    path = path.startsWith('/') ? path.slice(1) : path
-
-    const Component = component
-
-    return {
+  const childRoutes: RouteObject[] = Object.entries(routes).map(
+    ([path, Component]) => ({
       path,
       element: (
         <APIKeyStatusProvider APIKeyAccess={APIKeyAccess}>
           <Suspense
-            key={`route-${path}`}
+            key={`route-${path.startsWith('/') ? path.slice(1) : path}`}
             fallback={<LoadingScreen message={loadingMessage} />}
           >
             <ModuleWrapper config={config}>
@@ -51,8 +51,15 @@ export function buildChildRoutes({
           </Suspense>
         </APIKeyStatusProvider>
       )
-    }
+    })
+  )
+
+  childRoutes.push({
+    path: '*',
+    element: <NotFoundScreen />
   })
+
+  return childRoutes
 }
 
 /**
