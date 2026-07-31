@@ -56,7 +56,6 @@ function Modules() {
         icon="tabler:apps"
         namespace="common.module-manager"
         title="modules"
-        totalItems={modulesQuery.data?.length}
       />
       <WithQuery query={modulesQuery}>
         {modules =>

@@ -83,10 +83,10 @@ export function FormModal<T extends FieldValues>({
     <NamespaceContext value={namespace}>
       <Stack gap="sm" minWidth="50vw">
         <ModalHeader
-          headerActions={headerActions}
           icon={icon}
           namespace={namespace}
           title={title}
+          trailing={headerActions}
           onClose={onClose}
         />
         {!loading ? (

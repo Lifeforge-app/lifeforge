@@ -144,11 +144,13 @@ export function SidebarItemContent({
       )}
       {!active && contextMenuItems !== undefined && (
         <ContextMenu
-          classNames={{ button: styles.contextMenuGroupHoverShow }}
-          styles={{
-            wrapper: { position: 'relative', overscrollBehavior: 'contain' },
-            button: { padding: '0.5em' }
+          componentProps={{
+            button: {
+              className: styles.contextMenuGroupHoverShow,
+              p: 'sm'
+            }
           }}
+          position="fixed"
           onOpenChange={setIsMenuOpen}
         >
           {contextMenuItems}

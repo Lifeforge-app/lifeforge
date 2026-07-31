@@ -1,23 +1,23 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
+import type React from 'react'
 
 import { Button } from '@/components/inputs'
-import { Bordered, Box } from '@/components/primitives'
+import {
+  Bordered,
+  type BorderedProps,
+  Box,
+  type BoxProps,
+  type IconProps
+} from '@/components/primitives'
 
-interface MenuProps {
+interface MenuProps extends BoxProps {
   /** The content to be displayed inside the menu. Typically one or more `<ContextMenuItem>` components. */
   children: React.ReactNode
-  /** Optional CSS styles for styling different parts of the menu component. */
-  styles?: {
-    wrapper?: React.CSSProperties
-    button?: React.CSSProperties
-    icon?: React.CSSProperties
-    menu?: React.CSSProperties
-  }
-  /** Optional CSS class names for styling different parts of the menu component. */
-  classNames?: {
-    wrapper?: string
-    button?: string
-    menu?: string
+  /** Optional props for styling different parts of the menu component. */
+  componentProps?: {
+    button?: React.ComponentProps<typeof Button>
+    icon?: IconProps
+    menu?: BorderedProps
   }
   /** The icon identifier from Iconify to replace the default hamburger menu icon. */
   customIcon?: string
@@ -33,28 +33,22 @@ interface MenuProps {
 
 export function ContextMenu({
   children,
-  styles,
-  classNames,
+  componentProps,
   customIcon,
   buttonComponent,
   onOpenChange,
   align = 'end',
-  side = 'bottom'
+  side = 'bottom',
+  ...rest
 }: MenuProps) {
   return (
     <DropdownMenuPrimitive.Root onOpenChange={onOpenChange}>
       <DropdownMenuPrimitive.Trigger asChild>
-        <Box
-          className={classNames?.wrapper}
-          role="menu"
-          style={styles?.wrapper}
-        >
+        <Box {...rest} role="menu">
           {buttonComponent || (
             <Button
-              className={classNames?.button}
               icon={customIcon ?? 'tabler:dots-vertical'}
-              iconStyle={styles?.icon}
-              style={styles?.button}
+              iconProps={componentProps?.icon}
               tabIndex={0}
               variant="plain"
               onClick={e => {
@@ -78,15 +72,15 @@ export function ContextMenu({
           <Bordered
             bg={{ base: 'bg-50', dark: 'bg-800' }}
             borderColor={{ base: 'bg-200', dark: 'bg-700' }}
-            className={classNames?.menu}
             minWidth="14rem"
             overflow="hidden"
             r="lg"
+            zIndex="9999"
+            {...componentProps?.menu}
             style={{
               width: 'var(--radix-popper-anchor-width)',
-              ...styles?.menu
+              ...componentProps?.menu?.style
             }}
-            zIndex="9999"
           >
             {children}
           </Bordered>

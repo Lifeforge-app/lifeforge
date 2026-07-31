@@ -35,7 +35,7 @@ function SidebarBottomBar() {
   if (!userData) return <></>
 
   return (
-    <Flex centered pb="md" px={sidebarExpanded ? 'lg' : 'none'} width="100%">
+    <Flex centered pb="md" px={sidebarExpanded ? 'md' : 'none'} width="100%">
       <ContextMenu
         buttonComponent={
           <Transition>
@@ -100,11 +100,7 @@ function SidebarBottomBar() {
             </Card>
           </Transition>
         }
-        styles={{
-          wrapper: {
-            width: '100%'
-          }
-        }}
+        width="100%"
       >
         <ContextMenuItem
           icon="tabler:user-cog"

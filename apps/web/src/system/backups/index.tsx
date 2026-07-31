@@ -24,7 +24,7 @@ function Backups() {
   return (
     <>
       <ModuleHeader
-        actionButton={
+        trailing={
           <Button
             display={{ base: 'none', sm: 'flex' }}
             icon="tabler:plus"
@@ -38,7 +38,6 @@ function Backups() {
             new
           </Button>
         }
-        totalItems={backupsQuery.data?.length ?? 0}
       />
       <WithQuery query={backupsQuery}>
         {data =>

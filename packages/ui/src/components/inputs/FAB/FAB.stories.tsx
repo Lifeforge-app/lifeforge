@@ -41,16 +41,12 @@ export const WithContextMenu: Story = {
     return (
       <Box style={{ height: '12rem' }}>
         <ContextMenu
+          bottom="1.5em"
           buttonComponent={<Fab {...props} style={{ position: 'static' }} />}
+          position="fixed"
+          right="1.5em"
           side="top"
-          styles={{
-            wrapper: {
-              bottom: '1.5em',
-              position: 'fixed',
-              right: '1.5em',
-              width: 'min-content'
-            }
-          }}
+          width="min-content"
         >
           <ContextMenuItem
             icon="tabler:pencil"
