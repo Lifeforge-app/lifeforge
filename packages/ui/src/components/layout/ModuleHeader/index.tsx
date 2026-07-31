@@ -1,15 +1,13 @@
-import { Menu, MenuButton, MenuItems } from '@headlessui/react'
 import _ from 'lodash'
 
 import { useModuleMetadata } from '@lifeforge/federation'
 import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
-import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 import { colorWithOpacity } from '@/system'
 
 import { useMainSidebarState } from '../../../providers'
-import { ContextMenu } from '../../overlays/ContextMenu'
 
 function getTKeys(
   namespace: string | undefined,
@@ -38,27 +36,14 @@ function getTKeys(
 interface ModuleHeaderProps {
   icon?: string
   title?: string
-  totalItems?: number
-  tips?:
-    | string
-    | {
-        title: string
-        content: React.ReactNode
-      }
-  contextMenuProps?: React.ComponentProps<typeof ContextMenu>
-  actionButton?: React.ReactNode
-  customElement?: React.ReactNode
+  trailing?: React.ReactNode
   namespace?: string | false
 }
 
 export function ModuleHeader({
   icon,
   title,
-  totalItems,
-  tips,
-  contextMenuProps,
-  actionButton,
-  customElement,
+  trailing,
   namespace
 }: ModuleHeaderProps) {
   const { title: innerTitle, icon: innerIcon } = useModuleMetadata()
@@ -130,17 +115,6 @@ export function ModuleHeader({
                   ? (title?.toString() ?? '')
                   : t(getTKeys(namespace, title, 'title'))}
               </Text>
-              <Box asChild minWidth="0">
-                <Text
-                  color="muted"
-                  size={{ base: 'sm', sm: 'base' }}
-                  weight="medium"
-                >
-                  {totalItems !== undefined
-                    ? `(${totalItems.toLocaleString()})`
-                    : ''}
-                </Text>
-              </Box>
             </Flex>
           </Text>
           <Box asChild minWidth="0" width="100%">
@@ -158,73 +132,7 @@ export function ModuleHeader({
         </Flex>
       </Flex>
       <Flex align="center" gap="sm">
-        {actionButton}
-        {tips && (
-          <Box
-            asChild
-            display={{ base: 'none', md: 'block' }}
-            overflow="hidden"
-            position="relative"
-            r="md"
-            style={{ zIndex: 50 }}
-          >
-            <Menu as="div">
-              <Transition>
-                <Box
-                  asChild
-                  bg={{
-                    hover: 'bg-100',
-                    darkHover: 'bg-900'
-                  }}
-                  p="md"
-                  r="lg"
-                >
-                  <Text
-                    asChild
-                    color={{
-                      base: 'bg-500',
-                      hover: 'bg-800',
-                      darkHover: 'bg-50'
-                    }}
-                  >
-                    <MenuButton>
-                      <Icon icon="tabler:question-circle" />
-                    </MenuButton>
-                  </Text>
-                </Box>
-              </Transition>
-              <Transition>
-                <Box
-                  asChild
-                  shadow
-                  bg={{ base: 'bg-100', dark: 'bg-800' }}
-                  style={{
-                    // @ts-expect-error - CSS variables
-                    '--anchor-gap': '8px'
-                  }}
-                >
-                  <MenuItems transition anchor="bottom end">
-                    <Text asChild color={{ base: 'bg-800', dark: 'bg-200' }}>
-                      <Flex align="center" gap="sm" p="md">
-                        <Icon icon="tabler:question-circle" size="1.5rem" />
-                        <Text as="h2" size="lg" weight="semibold">
-                          {typeof tips === 'string'
-                            ? t('common.misc:tipsAndTricks')
-                            : tips.title}
-                        </Text>
-                      </Flex>
-                    </Text>
-                    <Text as="div" color={{ base: 'bg-500' }} p="md" pt="none">
-                      {typeof tips === 'string' ? tips : tips.content}
-                    </Text>
-                  </MenuItems>
-                </Box>
-              </Transition>
-            </Menu>
-          </Box>
-        )}
-        {customElement}
-        {contextMenuProps && <ContextMenu {...contextMenuProps} />}
+        {trailing}
       </Flex>
     </Flex>
   )

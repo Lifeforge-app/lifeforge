@@ -10,7 +10,7 @@ const meta = {
     appendTitle: { control: false },
     className: { control: 'text' },
     hasAI: { control: 'boolean' },
-    headerActions: { control: false },
+    trailing: { control: false },
     icon: { control: 'text' },
     namespace: { control: 'text' },
     onClose: { control: false },
@@ -142,9 +142,7 @@ export const WithAppendTitle: Story = {
  */
 export const WithActionButton: Story = {
   args: {
-    headerActions: (
-      <Button icon="tabler:help" variant="plain" onClick={() => {}} />
-    ),
+    trailing: <Button icon="tabler:help" variant="plain" onClick={() => {}} />,
     icon: 'tabler:file-export',
     onClose: () => {},
     title: 'Export Data'
@@ -165,7 +163,7 @@ export const WithActionButton: Story = {
  */
 export const WithActionButtonVariant: Story = {
   args: {
-    headerActions: (
+    trailing: (
       <Button icon="tabler:eye" variant="secondary" onClick={() => {}}>
         Preview
       </Button>
@@ -206,7 +204,7 @@ export const KitchenSink: Story = {
       </span>
     ),
     hasAI: true,
-    headerActions: (
+    trailing: (
       <Button icon="tabler:settings" variant="plain" onClick={() => {}} />
     ),
     icon: 'tabler:sparkles',

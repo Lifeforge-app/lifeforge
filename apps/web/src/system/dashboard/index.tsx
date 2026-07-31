@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 
 import {
+  ContextMenu,
   ContextMenuItem,
   Flex,
   ModuleHeader,
@@ -26,26 +27,24 @@ function DashboardContent() {
   return (
     <Flex ref={wrapperRef} direction="column" flex="1" mb="2xl">
       <ModuleHeader
-        contextMenuProps={{
-          children: (
-            <>
-              <ContextMenuItem
-                icon="tabler:pencil"
-                label={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
-                namespace="common.dashboard"
-                onClick={() => {
-                  setCanLayoutChange(!canLayoutChange)
-                }}
-              />
-              <ContextMenuItem
-                icon="tabler:apps"
-                label="Manage Widgets"
-                namespace="common.dashboard"
-                onClick={handleManageWidget}
-              />
-            </>
-          )
-        }}
+        trailing={
+          <ContextMenu>
+            <ContextMenuItem
+              icon="tabler:pencil"
+              label={canLayoutChange ? 'Lock Layout' : 'Unlock Layout'}
+              namespace="common.dashboard"
+              onClick={() => {
+                setCanLayoutChange(!canLayoutChange)
+              }}
+            />
+            <ContextMenuItem
+              icon="tabler:apps"
+              label="Manage Widgets"
+              namespace="common.dashboard"
+              onClick={handleManageWidget}
+            />
+          </ContextMenu>
+        }
       />
       <DashboardGrid
         canLayoutChange={canLayoutChange}

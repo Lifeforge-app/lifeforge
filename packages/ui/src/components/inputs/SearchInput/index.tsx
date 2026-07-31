@@ -9,11 +9,10 @@ import { Card } from '@/components/layout'
 import { Icon } from '@/components/primitives'
 import { Box, Flex, type FlexProps, Transition } from '@/components/primitives'
 import useDivSize from '@/hooks/useDivSize'
-import { surface } from '@/system'
+import { COLORS, surface } from '@/system'
 
 import { Button } from '../Button'
 import { Placeholder } from '../shared/components/Placeholder'
-import * as styles from './SearchInput.css'
 
 interface SearchInputProps extends Omit<FlexProps<'search'>, 'onChange'> {
   /** Whether the search input is disabled and non-interactive. */
@@ -24,6 +23,8 @@ interface SearchInputProps extends Omit<FlexProps<'search'>, 'onChange'> {
   value: string
   /** Callback function called when the search query changes. */
   onChange: (query: string) => void
+  /** Callback function called when the search query is cleared. */
+  onClear?: () => void
   /** The target or context being searched for accessibility and labeling purposes. */
   searchTarget: string
   /** Properties to construct the action button component at the right hand side of the searchbar. */
@@ -59,6 +60,7 @@ export function SearchInput({
   icon = 'tabler:search',
   value,
   onChange,
+  onClear,
   searchTarget,
   actionButtonProps,
   onKeyUp,
@@ -116,6 +118,7 @@ export function SearchInput({
       setInternalValue('')
     }
     onChange('')
+    onClear?.()
   }
 
   const shouldShowChildren = (() => {
@@ -173,6 +176,7 @@ export function SearchInput({
   return (
     <Box
       ref={containerRef}
+      minWidth="0"
       position="relative"
       width="100%"
       onBlur={handleBlur}
@@ -185,19 +189,18 @@ export function SearchInput({
           as="search"
           bg={props.bg ?? surface.defaultInteractive}
           className={className}
-          height="4em"
+          gap="md"
+          minWidth="0"
+          p="md"
           position="relative"
-          px="md"
           r="lg"
           style={
             disabled
               ? {
                   cursor: 'not-allowed',
-                  gap: '0.75rem',
-                  minHeight: '3.5rem',
                   opacity: 0.5
                 }
-              : { cursor: 'text', gap: '0.75rem', minHeight: '3.5rem' }
+              : { cursor: 'text' }
           }
           width="100%"
           onClick={e => {
@@ -211,7 +214,6 @@ export function SearchInput({
             <input
               autoComplete="one-time-code"
               autoCorrect="off"
-              className={styles.searchInput}
               data-form-type="other"
               data-lpignore="true"
               disabled={disabled}
@@ -240,7 +242,10 @@ export function SearchInput({
                       )
                     })
               }
-              style={{ paddingRight: actionButtonProps ? '5rem' : '2.5rem' }}
+              style={{
+                caretColor: COLORS['custom-500'],
+                paddingRight: actionButtonProps ? '5rem' : '2.5rem'
+              }}
               type="text"
               value={displayValue}
               onChange={e => {

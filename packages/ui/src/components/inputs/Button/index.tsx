@@ -9,6 +9,7 @@ import {
   Box,
   Flex,
   type FlexProps,
+  type IconProps,
   Text,
   Transition
 } from '@/components/primitives'
@@ -25,7 +26,7 @@ type ButtonOwnProps = {
   /** The position of the icon within the button. Defaults to 'start'. */
   iconPosition?: 'start' | 'end'
   /** Additional CSS styles to apply to the icon. */
-  iconStyle?: React.CSSProperties
+  iconProps?: Omit<IconProps, 'icon'>
   /** Callback function called when the button is clicked. */
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>
   /** Whether the button is in a loading state. When true, displays a spinner and disables interactions. */
@@ -68,7 +69,7 @@ export function Button<T extends ElementType = 'button'>({
   variant = 'primary',
   dangerous = false,
   namespace = 'common.buttons',
-  iconStyle,
+  iconProps,
   tProps,
   style,
   ...props
@@ -117,8 +118,8 @@ export function Button<T extends ElementType = 'button'>({
               disabled={disabled}
               hasChildren={Boolean(children)}
               icon={icon}
-              iconStyle={iconStyle}
               loading={loading}
+              {...iconProps}
             />
           )}
           {children && typeof children === 'string' ? (
@@ -150,8 +151,8 @@ export function Button<T extends ElementType = 'button'>({
               disabled={disabled}
               hasChildren={Boolean(children)}
               icon={icon}
-              iconStyle={iconStyle}
               loading={loading}
+              {...iconProps}
             />
           )}
         </Flex>

@@ -141,7 +141,10 @@ function Categories() {
   return (
     <>
       <ModuleHeader
-        actionButton={
+        icon="tabler:category"
+        namespace="common.module-manager"
+        title="categories"
+        trailing={
           <Button
             display={{ base: 'none', md: 'flex' }}
             icon="tabler:plus"
@@ -158,10 +161,6 @@ function Categories() {
             new
           </Button>
         }
-        icon="tabler:category"
-        namespace="common.module-manager"
-        title="categories"
-        totalItems={items.length}
       />
       {missingKeys.length > 0 && (
         <Alert mb="md" type="warning">

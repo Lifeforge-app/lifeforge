@@ -1,20 +1,19 @@
 import { memo, useMemo } from 'react'
 
-import { Box, Icon } from '@/components/primitives'
+import { Icon, type IconProps } from '@/components/primitives'
 
 function _ButtonIcon({
   icon,
   disabled,
   loading,
-  iconStyle,
-  hasChildren
+  hasChildren,
+  ...rest
 }: {
-  icon: string
   disabled?: boolean
   loading?: boolean
   iconStyle?: React.CSSProperties
   hasChildren?: boolean
-}) {
+} & IconProps) {
   const finalIcon = useMemo(() => {
     if (loading) {
       return 'svg-spinners:ring-resize'
@@ -27,17 +26,7 @@ function _ButtonIcon({
     return icon
   }, [icon, disabled, loading, hasChildren])
 
-  return (
-    <Box
-      asChild
-      flexShrink="0"
-      style={{
-        ...iconStyle
-      }}
-    >
-      <Icon icon={finalIcon} />
-    </Box>
-  )
+  return <Icon {...rest} icon={finalIcon} />
 }
 
 export const ButtonIcon = memo(_ButtonIcon)

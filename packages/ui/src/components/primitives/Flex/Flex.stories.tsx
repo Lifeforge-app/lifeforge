@@ -372,9 +372,8 @@ export const ColumnLayout: Story = {
           <Text weight="semibold">Header</Text>
           <Button
             icon="tabler:pencil"
-            iconStyle={{
-              height: '1.1em',
-              width: '1.1em'
+            iconProps={{
+              size: '1.1em'
             }}
             p="sm"
             variant="plain"

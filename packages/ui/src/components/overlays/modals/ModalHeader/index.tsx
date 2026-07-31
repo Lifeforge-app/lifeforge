@@ -1,6 +1,5 @@
 import { useDebounce } from '@uidotdev/usehooks'
 import _ from 'lodash'
-import { memo } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
 
@@ -20,7 +19,7 @@ function getLocaleKeys(innerTitle: string, namespace?: string) {
   ].map(e => (namespace ? `${namespace}:${e}` : e))
 }
 
-function _ModalHeader({
+export function ModalHeader({
   title,
   icon,
   onClose,
@@ -28,7 +27,7 @@ function _ModalHeader({
   hasAI = false,
   appendTitle,
   namespace = 'common.modals',
-  headerActions
+  trailing
 }: {
   title: string | React.ReactNode
   icon: string
@@ -37,7 +36,7 @@ function _ModalHeader({
   className?: string
   appendTitle?: React.ReactElement
   namespace?: string | false
-  headerActions?: React.ReactNode
+  trailing?: React.ReactNode
 }) {
   const { t } = useModuleTranslation(namespace ? [namespace] : [])
   // Add some delay to prevent the title and icon to become empty
@@ -101,7 +100,7 @@ function _ModalHeader({
         </Flex>
       </Text>
       <Flex align="center" gap="sm">
-        {headerActions}
+        {trailing}
         <Button
           icon="tabler:x"
           style={{ padding: '0.75rem' }}
@@ -112,5 +111,3 @@ function _ModalHeader({
     </Flex>
   )
 }
-
-export const ModalHeader = memo(_ModalHeader)

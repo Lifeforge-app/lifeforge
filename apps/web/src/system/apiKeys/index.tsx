@@ -35,7 +35,7 @@ function APIKeys() {
   return (
     <>
       <ModuleHeader
-        actionButton={
+        trailing={
           <Button
             display={{ base: 'none', lg: 'flex' }}
             icon="tabler:plus"
