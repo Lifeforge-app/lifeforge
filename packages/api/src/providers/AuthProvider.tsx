@@ -10,14 +10,14 @@ import {
   useState
 } from 'react'
 
-import { contract } from '../contract'
-import { createForgeProxy } from '../core'
-import type { InferOutput } from '../typescript'
+import type { InferOutput } from '..'
 import {
   clearAccessToken,
   getAccessToken,
   setAccessToken
-} from '../utils/authTokenStore'
+} from '../client/tokenStore'
+import { contract } from '../contract'
+import { createForgeProxy } from '../proxy'
 
 let bootstrapped = false
 

@@ -1,7 +1,7 @@
 import z from 'zod'
 
-import { GetGoogleFontResponseSchema } from '../../interfaces/google_fonts.types'
-import type { UntypedEndpointType } from '../../typescript/forge_proxy.types'
+import { GetGoogleFontResponseSchema } from '../../types/fonts'
+import type { UntypedEndpointType } from '../../types/proxy'
 import type { ForgeEndpoint } from '../forgeEndpoint'
 
 /**

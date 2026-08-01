@@ -8,7 +8,7 @@ import type {
   z
 } from 'zod'
 
-import type { ForgeEndpoint } from '../core/forgeEndpoint'
+import type { ForgeEndpoint } from '../proxy/forgeEndpoint'
 
 type ZodObjectOrIntersection =
   ZodObject<ZodRawShape> | ZodIntersection<ZodTypeAny, ZodTypeAny>

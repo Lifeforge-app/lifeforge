@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 
-import { hasServerPublicKey, initializeEncryption } from '../utils/encryption'
+import { hasServerPublicKey, initializeEncryption } from '../crypto/encryption'
 
 interface EncryptionProviderProps {
   apiHost: string
