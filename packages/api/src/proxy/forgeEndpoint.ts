@@ -3,18 +3,18 @@ import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 import type { AxiosResponse } from 'axios'
 import { z } from 'zod'
 
-import type { InferRawInput, InferRawOutput } from '../typescript'
+import {
+  type FetchAPIOptions,
+  type ResponseWrapper,
+  fetchAPI
+} from '../client/fetch'
 import {
   createEncryptionSession,
   decryptResponse,
   encryptRequest,
   isEncryptedResponse
-} from '../utils/encryption'
-import {
-  type FetchAPIOptions,
-  type ResponseWrapper,
-  fetchAPI
-} from '../utils/fetchAPI'
+} from '../crypto/encryption'
+import type { InferRawInput, InferRawOutput } from '../types/socket'
 import { globalProxyRegistry } from './registry'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 

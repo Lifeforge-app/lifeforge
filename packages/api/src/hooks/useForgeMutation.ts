@@ -6,8 +6,8 @@ import {
 } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 
-import type { ForgeEndpoint } from '../core'
-import type { InferRawInput, InferRawOutput } from '../typescript'
+import type { ForgeEndpoint } from '../proxy'
+import type { InferRawInput, InferRawOutput } from '../types/socket'
 
 let _errorHandler: ((message: string) => void) | null = null
 

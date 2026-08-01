@@ -2,20 +2,13 @@
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import {
-  clearAccessToken,
-  getAccessToken,
-  setAccessToken
-} from './authTokenStore'
+import { createAxiosInstance } from './axios'
 
 interface ApiResponse<T> {
   state: 'success' | 'error'
   data?: T
   message?: string
 }
-
-let isRefreshing = false
-let refreshPromise: Promise<boolean> | null = null
 
 export class APIError extends Error {
   constructor(
@@ -24,65 +17,6 @@ export class APIError extends Error {
   ) {
     super(message)
   }
-}
-
-async function refreshAccessToken(apiHost: string): Promise<boolean> {
-  if (isRefreshing) {
-    return refreshPromise!
-  }
-
-  isRefreshing = true
-  refreshPromise = (async () => {
-    try {
-      const res = await fetch(`${apiHost}/auth/refresh`, {
-        method: 'POST',
-        credentials: 'include'
-      })
-
-      const data = await res.json()
-
-      if (res.ok && data.state === 'success' && data.data?.accessToken) {
-        setAccessToken(data.data.accessToken)
-
-        return true
-      }
-
-      clearAccessToken()
-
-      return false
-    } catch {
-      clearAccessToken()
-
-      return false
-    } finally {
-      isRefreshing = false
-      refreshPromise = null
-    }
-  })()
-
-  return refreshPromise
-}
-
-function createAxiosInstance(apiHost: string, isExternal: boolean) {
-  const instance = axios.create({
-    baseURL: isExternal ? undefined : apiHost,
-    withCredentials: true,
-    validateStatus: () => true
-  })
-
-  instance.interceptors.request.use(config => {
-    if (!isExternal) {
-      const token = getAccessToken()
-
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`
-      }
-    }
-
-    return config
-  })
-
-  return instance
 }
 
 async function handleAxiosResponse<T>(
@@ -121,7 +55,10 @@ async function handleAxiosResponse<T>(
     const data = response.data as ApiResponse<T>
 
     if (data.state === 'error') {
-      throw new APIError(data.message || 'API returned an error', response.status)
+      throw new APIError(
+        data.message || 'API returned an error',
+        response.status
+      )
     }
 
     if (data.state === 'success') {
@@ -230,47 +167,9 @@ export async function fetchAPI<T>(
   }
 
   try {
-    let response = await axiosInstance.request<T>(config)
+    const response = await axiosInstance.request<T>(config)
 
-    if (raw) {
-      return response
-    }
-
-    if (
-      response.status === 401 &&
-      !isExternal &&
-      !normalizedEndpoint.startsWith('/auth')
-    ) {
-      const hasAuthHeader = !!config.headers?.Authorization
-
-      if (hasAuthHeader) {
-        const refreshed = await refreshAccessToken(apiHost)
-
-        if (refreshed) {
-          const newConfig = { ...config }
-
-          newConfig.headers = {
-            ...newConfig.headers,
-            Authorization: `Bearer ${getAccessToken()}`
-          }
-
-          response = await axiosInstance.request<T>(newConfig)
-        }
-      } else {
-        const token = getAccessToken()
-
-        if (token) {
-          const newConfig = { ...config }
-
-          newConfig.headers = {
-            ...newConfig.headers,
-            Authorization: `Bearer ${token}`
-          }
-
-          response = await axiosInstance.request<T>(newConfig)
-        }
-      }
-    }
+    if (raw) return response
 
     return await handleAxiosResponse<T>(response, isExternal)
   } catch (err) {
@@ -282,14 +181,27 @@ export async function fetchAPI<T>(
 
         if (err.response) {
           let errorMessage = 'Failed to perform API request'
+          let data = err.response.data
+
+          if (data instanceof ArrayBuffer || data instanceof Uint8Array) {
+            try {
+              const text = new TextDecoder().decode(data)
+              data = JSON.parse(text)
+            } catch {
+              try {
+                data = new TextDecoder().decode(data)
+              } catch {}
+            }
+          }
 
           try {
             if (
-              err.response.data &&
-              typeof err.response.data === 'object' &&
-              'message' in err.response.data
+              data &&
+              typeof data === 'object' &&
+              'message' in data &&
+              typeof (data as Record<string, unknown>).message === 'string'
             ) {
-              errorMessage = err.response.data.message || errorMessage
+              errorMessage = (data as Record<string, unknown>).message as string
             }
           } catch {
             // Ignore parsing errors

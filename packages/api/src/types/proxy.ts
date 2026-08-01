@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type z from 'zod'
 
-import type { ForgeEndpoint } from '../core/forgeEndpoint'
-import type { CoreHelperReturnTypes } from '../core/helpers/config'
+import type { ForgeEndpoint } from '../proxy/forgeEndpoint'
+import type { CoreHelperReturnTypes } from '../proxy/helpers/config'
 import type {
   InferContractInput,
   InferContractMedia,
   InferContractOutput
-} from './contract.types'
+} from './contract'
 
 /**
  * Constructs a deeply-nested proxy tree from a server route schema.

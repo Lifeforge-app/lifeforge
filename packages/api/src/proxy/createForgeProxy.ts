@@ -2,7 +2,7 @@
 import type {
   ProxyTree,
   UntypedEndpointType
-} from '../typescript/forge_proxy.types'
+} from '../types/proxy'
 import { ForgeEndpoint } from './forgeEndpoint'
 import { CORE_HELPERS } from './helpers/config'
 import { createCoreHelper } from './helpers/createCoreHelper'
