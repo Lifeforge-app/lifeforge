@@ -10,6 +10,8 @@ function getBodyStyles(): Record<string, string> {
   for (let i = 0; i < htmlStyle.length; i++) {
     const key = htmlStyle[i]
 
+    if (key === 'pointer-events') continue
+
     styleObj[key] = htmlStyle.getPropertyValue(key)
   }
 
@@ -17,6 +19,8 @@ function getBodyStyles(): Record<string, string> {
 
   for (let i = 0; i < bodyStyle.length; i++) {
     const key = bodyStyle[i]
+
+    if (key === 'pointer-events') continue
 
     styleObj[key] = bodyStyle.getPropertyValue(key)
   }

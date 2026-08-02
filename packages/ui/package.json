@@ -10,7 +10,9 @@
     "react",
     "lifeforge"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "src/styles/index.css"
+  ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
