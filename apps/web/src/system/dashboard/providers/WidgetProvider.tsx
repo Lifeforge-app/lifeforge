@@ -62,11 +62,9 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
 
           if (!item || !item.rawModule) continue
 
-          const rawModule = item.rawModule
-
           const LazyComponent = lazy(async () => {
             const unwrapped = await loadRemoteModuleConfig(
-              rawModule,
+              item.rawModule!,
               devModeImports,
               devModePkgs
             )
