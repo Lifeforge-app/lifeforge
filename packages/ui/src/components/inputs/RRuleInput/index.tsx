@@ -217,7 +217,7 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
           required
           icon="tabler:clock"
           label="Start Time"
-          namespace="apps.calendar"
+          namespace="common.recurring"
           value={start}
           onChange={setStart}
         />
@@ -227,7 +227,7 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
           required
           icon="tabler:repeat"
           label="frequency"
-          namespace="apps.calendar"
+          namespace="common.recurring"
           renderContent={() => <>{t(`recurring.freqs.${rruleParams.freq}`)}</>}
           value={rruleParams.freq}
           onChange={freq => {
@@ -259,7 +259,7 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
             required
             icon="tabler:calendar"
             label="endType"
-            namespace="apps.calendar"
+            namespace="common.recurring"
             renderContent={() => (
               <>{t(`recurring.endTypes.${rruleParams.end.type}`)}</>
             )}
