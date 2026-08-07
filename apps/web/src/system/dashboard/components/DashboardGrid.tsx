@@ -5,8 +5,8 @@ import { useTranslation } from 'react-i18next'
 import { ModuleMetadataProvider } from '@lifeforge/federation'
 import {
   Box,
+  Card,
   EmptyStateScreen,
-  Flex,
   Icon,
   LoadingScreen,
   colorWithOpacity,
@@ -123,9 +123,13 @@ function DashboardGrid({
 
               if (loading) {
                 return (
-                  <Flex align="center" justify="center" height="100%" width="100%">
-                    <Icon icon="svg-spinners:ring-resize" size="2em" />
-                  </Flex>
+                  <Card centered height="100%" width="100%">
+                    <Icon
+                      color="muted"
+                      icon="svg-spinners:ring-resize"
+                      size="2em"
+                    />
+                  </Card>
                 )
               }
 
@@ -151,9 +155,13 @@ function DashboardGrid({
                 >
                   <Suspense
                     fallback={
-                      <Flex align="center" justify="center" height="100%" width="100%">
-                        <Icon icon="svg-spinners:ring-resize" size="2em" />
-                      </Flex>
+                      <Card centered height="100%" width="100%">
+                        <Icon
+                          color="muted"
+                          icon="svg-spinners:ring-resize"
+                          size="2em"
+                        />
+                      </Card>
                     }
                   >
                     <Component
