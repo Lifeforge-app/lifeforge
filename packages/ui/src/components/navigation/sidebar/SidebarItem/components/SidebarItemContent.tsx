@@ -150,7 +150,6 @@ export function SidebarItemContent({
               p: 'sm'
             }
           }}
-          position="fixed"
           onOpenChange={setIsMenuOpen}
         >
           {contextMenuItems}
