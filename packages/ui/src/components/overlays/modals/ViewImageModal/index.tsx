@@ -1,4 +1,4 @@
-import { Box, Flex } from '@/components/primitives'
+import { Box } from '@/components/primitives'
 
 import { ModalHeader } from '../ModalHeader'
 
@@ -17,9 +17,9 @@ export function ViewImageModal({
         title="viewImage"
         onClose={onClose}
       />
-      <Flex justify="center" style={{ minWidth: '24rem' }}>
+      <Box asChild r="md">
         {src !== '' && <img key={src} alt="" src={src} />}
-      </Flex>
+      </Box>
     </Box>
   )
 }
