@@ -12,7 +12,7 @@ export function HourlyForm({
   data: FreqSpecificParams['hourly']
   setData: (data: FreqSpecificParams['hourly']) => void
 }) {
-  const { t } = useTranslation(['apps.calendar', 'common.misc'])
+  const { t } = useTranslation('common.recurring')
 
   return (
     <Flex align="center" gap="md" width="100%">

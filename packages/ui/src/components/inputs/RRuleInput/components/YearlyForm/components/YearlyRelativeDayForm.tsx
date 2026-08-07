@@ -13,7 +13,7 @@ export function YearlyRelativeDayForm({
   data: FreqSpecificParams['yearly']
   setData: (data: FreqSpecificParams['yearly']) => void
 }) {
-  const { t } = useTranslation(['apps.calendar', 'common.misc'])
+  const { t } = useTranslation('common.recurring')
 
   return (
     <>

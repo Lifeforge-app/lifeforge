@@ -12,7 +12,7 @@ export function DailyForm({
   data: FreqSpecificParams['daily']
   setData: (data: FreqSpecificParams['daily']) => void
 }) {
-  const { t } = useTranslation(['apps.calendar', 'common.misc'])
+  const { t } = useTranslation('common.recurring')
 
   return (
     <Flex align="center" gap="md" width="100%">

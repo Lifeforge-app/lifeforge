@@ -106,7 +106,7 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
   onChange: (value: string) => void
   hasDuration: HasDuration
 }) {
-  const { t } = useTranslation(['apps.calendar', 'common.misc'])
+  const { t } = useTranslation('common.recurring')
   const valueParsed = useMemo(() => fromRRULEString(value), [value])
 
   const [start, setStart] = useState<Date | null>(
