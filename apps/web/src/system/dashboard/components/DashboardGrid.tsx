@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { Suspense, useMemo } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
 
@@ -6,6 +6,7 @@ import { ModuleMetadataProvider } from '@lifeforge/federation'
 import {
   Box,
   EmptyStateScreen,
+  Flex,
   Icon,
   LoadingScreen,
   colorWithOpacity,
@@ -40,7 +41,7 @@ function DashboardGrid({
   canLayoutChange: boolean
 }) {
   const { t } = useTranslation('common.dashboard')
-  const { widgets } = useWidgets()
+  const { widgets, loading } = useWidgets()
 
   const COMPONENTS = useMemo(
     () =>
@@ -120,6 +121,14 @@ function DashboardGrid({
                 return null
               }
 
+              if (loading) {
+                return (
+                  <Flex align="center" justify="center" height="100%" width="100%">
+                    <Icon icon="svg-spinners:ring-resize" size="2em" />
+                  </Flex>
+                )
+              }
+
               const target = COMPONENTS[widgetId as keyof typeof COMPONENTS]
 
               const Component = (target?.component ||
@@ -140,13 +149,21 @@ function DashboardGrid({
                     name: target?.name
                   }}
                 >
-                  <Component
-                    dimension={{
-                      w: dimension?.w ?? 0,
-                      h: dimension?.h ?? 0
-                    }}
-                    widgetId={widgetId}
-                  />
+                  <Suspense
+                    fallback={
+                      <Flex align="center" justify="center" height="100%" width="100%">
+                        <Icon icon="svg-spinners:ring-resize" size="2em" />
+                      </Flex>
+                    }
+                  >
+                    <Component
+                      dimension={{
+                        w: dimension?.w ?? 0,
+                        h: dimension?.h ?? 0
+                      }}
+                      widgetId={widgetId}
+                    />
+                  </Suspense>
                 </ModuleMetadataProvider>
               )
             })()}
