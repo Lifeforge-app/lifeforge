@@ -15,7 +15,7 @@ export function SelectableFormWrapper({
   onSelect: () => void
   children: React.ReactNode
 }) {
-  const { t } = useTranslation(['apps.calendar', 'common.misc'])
+  const { t } = useTranslation('common.recurring')
 
   return (
     <Box position="relative" width="100%">

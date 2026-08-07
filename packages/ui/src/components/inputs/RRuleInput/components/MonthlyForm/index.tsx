@@ -15,7 +15,7 @@ export function MonthlyForm({
   data: FreqSpecificParams['monthly']
   setData: (data: FreqSpecificParams['monthly']) => void
 }) {
-  const { t } = useTranslation(['apps.calendar', 'common.misc'])
+  const { t } = useTranslation('common.recurring')
 
   const forms = [
     {

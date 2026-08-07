@@ -424,5 +424,103 @@
         }
       }
     }
+  },
+  "recurring": {
+    "freqs": {
+      "yearly": "Yearly",
+      "monthly": "Monthly",
+      "weekly": "Weekly",
+      "daily": "Daily",
+      "hourly": "Hourly"
+    },
+    "onThe": {
+      "first": "First",
+      "second": "Second",
+      "third": "Third",
+      "fourth": "Fourth",
+      "last": "Last"
+    },
+    "onTheDay": {
+      "weekday": "Week Day",
+      "day": "Day",
+      "weekendDay": "Weekend Day"
+    },
+    "endTypes": {
+      "never": "Never",
+      "after": "After",
+      "on": "On Date"
+    },
+    "inputs": {
+      "on": "Date",
+      "after": "Amount",
+      "executions": "Execution(s)",
+      "durationUnit": "Duration Unit",
+      "durationAmount": "Duration Amount",
+      "frequency": "Frequency",
+      "yearly": {
+        "exactDate": {
+          "title": "On Exact Date",
+          "inputs": {
+            "month": "Month",
+            "date": "Date"
+          }
+        },
+        "relativeDay": {
+          "title": "On Relative Day",
+          "inputs": {
+            "onThe": "On The",
+            "onTheDay": "Day",
+            "ofTheMonth": "Of the Month"
+          }
+        }
+      },
+      "monthly": {
+        "inputs": {
+          "every": "Every",
+          "months": "Month(s)"
+        },
+        "exactDate": {
+          "title": "On Exact Date",
+          "inputs": {
+            "date": "Date"
+          }
+        },
+        "relativeDay": {
+          "title": "On Relative Day",
+          "inputs": {
+            "onThe": "On the",
+            "onTheDay": "Day"
+          }
+        }
+      },
+      "weekly": {
+        "inputs": {
+          "every": "Every",
+          "weeks": "Week(s)",
+          "onDays": "On Days"
+        }
+      },
+      "daily": {
+        "inputs": {
+          "every": "Every",
+          "days": "Day(s)"
+        }
+      },
+      "hourly": {
+        "inputs": {
+          "every": "Every",
+          "hours": "Hour(s)"
+        }
+      },
+      "endType": "End"
+    },
+    "durationUnits": {
+      "minute": "Minutes",
+      "hour": "Hours",
+      "day": "Days",
+      "week": "Weeks",
+      "month": "Months",
+      "year": "Years"
+    }
   }
 }

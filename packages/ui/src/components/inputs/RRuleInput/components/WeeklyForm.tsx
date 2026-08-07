@@ -14,7 +14,7 @@ export function WeeklyForm({
   data: FreqSpecificParams['weekly']
   setData: (data: FreqSpecificParams['weekly']) => void
 }) {
-  const { t } = useTranslation(['apps.calendar', 'common.misc'])
+  const { t } = useTranslation('common.recurring')
 
   return (
     <Flex direction="column" gap="md" width="100%">
