@@ -8,7 +8,6 @@ import {
 } from 'react'
 
 import { loadRemoteModuleConfig, useFederation } from '@lifeforge/federation'
-import { LoadingScreen } from '@lifeforge/ui'
 
 import { devModeImports, devModePkgs } from '@/core/utils/devModeImports'
 import forgeAPI from '@/core/utils/forgeAPI'
@@ -118,10 +117,6 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
     }),
     [federatedWidgets, loading]
   )
-
-  if (loading) {
-    return <LoadingScreen message="Loading widgets" />
-  }
 
   return <WidgetContext value={value}>{children}</WidgetContext>
 }

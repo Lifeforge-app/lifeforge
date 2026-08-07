@@ -12,7 +12,7 @@ import {
 import checkManifestProvider from './checkManifestProvider'
 import { moduleLoaderLogger } from './moduleLoaderLogger'
 import parseManifestSubsections from './parseManifestSubsections'
-import parseWidgetConfig from './parseWidgetConfig'
+import parseManifestWidgets from './parseManifestWidgets'
 
 /**
  * Reads a module's package.json and file structure to gather its metadata
@@ -84,33 +84,25 @@ export default function gatherModuleMetadata(
       }
     }
 
+    const manifestPath = path.join(appsDir, modDir, 'client', 'manifest.ts')
+
     // Discover widgets JIT at server load
     const widgets: ModuleWidget[] = []
-    const widgetsDir = path.join(appsDir, modDir, 'client/src/widgets')
+    const parsedWidgets = parseManifestWidgets(manifestPath)
 
-    if (fs.existsSync(widgetsDir)) {
-      for (const file of fs.readdirSync(widgetsDir)) {
-        if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-          const filePath = path.join(widgetsDir, file)
-          const config = parseWidgetConfig(filePath)
-
-          if (config) {
-            widgets.push({
-              id: config.id,
-              icon: config.icon,
-              minW: config.minW,
-              minH: config.minH,
-              maxW: config.maxW,
-              maxH: config.maxH,
-              moduleName: packageJSON.name,
-              componentName: path.basename(file, path.extname(file))
-            })
-          }
-        }
-      }
+    for (const pw of parsedWidgets) {
+      widgets.push({
+        id: pw.config.id,
+        icon: pw.config.icon,
+        minW: pw.config.minW,
+        minH: pw.config.minH,
+        maxW: pw.config.maxW,
+        maxH: pw.config.maxH,
+        moduleName: packageJSON.name,
+        componentName: path.basename(pw.filePath, path.extname(pw.filePath))
+      })
     }
 
-    const manifestPath = path.join(appsDir, modDir, 'client', 'manifest.ts')
     const hasProvider = checkManifestProvider(manifestPath)
     const subsection = parseManifestSubsections(manifestPath)
 
