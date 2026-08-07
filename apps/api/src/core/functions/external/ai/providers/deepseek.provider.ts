@@ -41,7 +41,8 @@ ${JSON.stringify(structure)}`
         },
         ...messages
       ] as any,
-      response_format: { type: 'json_object' }
+      response_format: { type: 'json_object' },
+      reasoning_effort: 'none'
     })
 
     const res = response.choices[0]?.message?.content
