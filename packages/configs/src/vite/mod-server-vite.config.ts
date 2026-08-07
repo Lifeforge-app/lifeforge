@@ -19,10 +19,7 @@ export function defineModuleServerConfig(dirname: string) {
     },
     plugins: [serverAliasResolver(dirname)],
     build: {
-      lib: {
-        entry: `${dirname}/index.ts`,
-        formats: ['es']
-      },
+      ssr: `${dirname}/index.ts`,
       outDir: `${dirname}/dist`,
       target: 'node22',
       rollupOptions: {
