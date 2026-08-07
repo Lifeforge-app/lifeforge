@@ -51,9 +51,11 @@ export function ContextMenu({
               iconProps={componentProps?.icon}
               tabIndex={0}
               variant="plain"
-              onClick={e => {
+              {...componentProps?.button}
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 e.preventDefault()
                 e.stopPropagation()
+                componentProps?.button?.onClick?.(e)
               }}
             />
           )}

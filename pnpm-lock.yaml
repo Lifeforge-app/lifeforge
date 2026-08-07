@@ -670,7 +670,7 @@ importers:
         specifier: ^0.21.0
         version: 0.21.0
       react-big-calendar:
-        specifier: ^1.19.4
+        specifier: ^1.20.0
         version: 1.20.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-markdown:
         specifier: ^10.1.0
