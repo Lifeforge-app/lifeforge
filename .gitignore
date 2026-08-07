@@ -3,35 +3,29 @@ node_modules
 .pnp
 .pnp.js
 
-# testing
-coverage
-
-# production
+# build outputs
 dist
 dist-docker
-modules/*/locales
-modules/*/package.json
 build
 tsbuild
 storybook-static
-**/storybook-static
-
 *.js
 !eslint.config.js
 *.tsbuildinfo
-pocketbase
-!packages/pocketbase
-pb_*/
-medium
-.temp
-apps/api/src/generated
 .turbo
 
-# system files
-Thumbs.db
-.DS_Store
+# testing
+coverage
 
-# logs
+# environment & credentials
+*.local
+.env
+.env.*
+!env/.env.example
+!env/.env.docker.example
+keys
+
+# runtime & logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -39,7 +33,17 @@ pnpm-debug.log*
 logs
 *.log
 
-# editor directories and files
+# generated code
+modules/*/locales
+modules/*/package.json
+apps/api/src/generated
+
+# user modules & locales
+modules/*
+locales/*
+!locales/lang-en
+
+# editor
 .idea
 .vscode/*
 !.vscode/extensions.json
@@ -50,17 +54,14 @@ logs
 *.sln
 *.sw?
 
-# environment variables & credentials
-*.local
-env/*
-.env
-.env.*
-!env/.env.example
-!env/.env.docker.example
-keys
+# OS
+Thumbs.db
+.DS_Store
 
-# user-generated files
-# modules
-modules/*
-locales/*
-!locales/lang-en
+# project-specific
+pocketbase
+!packages/pocketbase
+pb_*/
+medium
+.temp
+.opencode

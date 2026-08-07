@@ -17,7 +17,9 @@ export class ModuleRegistry {
   }
 
   static unregister(name: string): void {
-    ModuleRegistry.registeredModules = ModuleRegistry.registeredModules.filter(m => m.name !== name)
+    ModuleRegistry.registeredModules = ModuleRegistry.registeredModules.filter(
+      m => m.name !== name
+    )
     for (const [modPath, modName] of ModuleRegistry.modulePaths.entries()) {
       if (modName === name) {
         ModuleRegistry.modulePaths.delete(modPath)
@@ -98,7 +100,9 @@ export class ModuleRegistry {
     return undefined
   }
 
-  static getModuleByPath(filePath: string): { source: 'app'; id: string } | undefined {
+  static getModuleByPath(
+    filePath: string
+  ): { source: 'app'; id: string } | undefined {
     for (const [modPath, name] of ModuleRegistry.modulePaths.entries()) {
       if (filePath.startsWith(modPath)) {
         return { source: 'app', id: name }

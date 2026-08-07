@@ -52,4 +52,39 @@ describe('createForgeContractBuilder Type Constraints', () => {
       }
     })
   })
+
+  it('should default rateLimit to true', () => {
+    const forge = createForgeContractBuilder({})
+    const contract = forge
+      .query({
+        description: 'Test rateLimit default',
+        output: {
+          OK: z.string()
+        }
+      })
+      .callback(async function ({ response }) {
+        return response.ok('test')
+      })
+
+    const val = contract.getValue()
+    expect(val.rateLimit).toBe(true)
+  })
+
+  it('should set rateLimit to false if explicitly defined', () => {
+    const forge = createForgeContractBuilder({})
+    const contract = forge
+      .query({
+        description: 'Test rateLimit false',
+        rateLimit: false,
+        output: {
+          OK: z.string()
+        }
+      })
+      .callback(async function ({ response }) {
+        return response.ok('test')
+      })
+
+    const val = contract.getValue()
+    expect(val.rateLimit).toBe(false)
+  })
 })

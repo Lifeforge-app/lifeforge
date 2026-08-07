@@ -49,6 +49,7 @@ const status = forge
     description: 'Get server status',
     noAuth: true,
     encrypted: false,
+    rateLimit: false,
     input: {},
     output: {
       OK: z.object({
@@ -67,7 +68,7 @@ const getMedia = forge
     description: 'Retrieve media file from PocketBase',
     noAuth: true,
     encrypted: false,
-
+    rateLimit: false,
     input: {
       query: z.object({
         collectionId: z.string(),
@@ -100,6 +101,7 @@ const getMedia = forge
 
       if (!fileRes.ok) {
         res.status(fileRes.status).send(await fileRes.text())
+
         return
       }
 

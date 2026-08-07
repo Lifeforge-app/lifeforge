@@ -251,29 +251,29 @@ Here is the **correct Zod type to use for each form field type**, utilizing Zod'
 
 ##### Text/String Fields (`<TextField>`, `<TextAreaField>`)
 
-| Validation            | Zod Code                                                                                         |
-| --------------------- | ------------------------------------------------------------------------------------------------ |
-| Required, any string  | `z.string().min(1, 'Required')`                                                                  |
-| Optional string       | `z.string().optional()` or **better**: `z.string()` to keep default as `''` |
-| Min/max length        | `z.string().min(3).max(100)`                                                                     |
-| Exact length          | `z.string().length(10)`                                                                          |
-| Regex pattern         | `z.string().regex(/^[a-zA-Z0-9]+$/, 'Alphanumeric only')`                                        |
-| Email                 | `z.email('Invalid email')` (top-level factory)                                                   |
-| URL                   | `z.url('Invalid URL')`                                                                           |
-| UUID                  | `z.uuid()` - any UUID version                                                                    |
-| Color hex             | `z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Color must be a valid hex color (e.g. #FF0000)')`        |
-| Icon identifier       | `z.string().regex(/^[a-z]+:[a-z-]+$/)` - or just `z.string()` if you trust the icon picker       |
-| Lowercase / Uppercase | `z.string().lowercase()` / `z.string().uppercase()`                                              |
-| Trim whitespace       | `z.string().trim()` (overwrites value)                                                           |
-| Slug                  | `z.string().slugify()` (converts to URL slug)                                                    |
-| Starts/Ends with      | `z.string().startsWith('prefix')` / `.endsWith('suffix')`                                        |
-| Contains substring    | `z.string().includes('needle')`                                                                  |
-| Phone (E.164)         | `z.e164('Invalid phone number')`                                                                 |
-| JWT token             | `z.jwt('Invalid JWT')`                                                                           |
-| IP address            | `z.ipv4()` or `z.ipv6()`                                                                         |
-| Base64                | `z.base64()`                                                                                     |
-| Emoji                 | `z.emoji()`                                                                                      |
-| NanoID / CUID / ULID  | `z.nanoid()` / `z.cuid()` / `z.ulid()`                                                           |
+| Validation            | Zod Code                                                                                   |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| Required, any string  | `z.string().min(1, 'Required')`                                                            |
+| Optional string       | `z.string().optional()` or **better**: `z.string()` to keep default as `''`                |
+| Min/max length        | `z.string().min(3).max(100)`                                                               |
+| Exact length          | `z.string().length(10)`                                                                    |
+| Regex pattern         | `z.string().regex(/^[a-zA-Z0-9]+$/, 'Alphanumeric only')`                                  |
+| Email                 | `z.email('Invalid email')` (top-level factory)                                             |
+| URL                   | `z.url('Invalid URL')`                                                                     |
+| UUID                  | `z.uuid()` - any UUID version                                                              |
+| Color hex             | `z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Color must be a valid hex color (e.g. #FF0000)')`  |
+| Icon identifier       | `z.string().regex(/^[a-z]+:[a-z-]+$/)` - or just `z.string()` if you trust the icon picker |
+| Lowercase / Uppercase | `z.string().lowercase()` / `z.string().uppercase()`                                        |
+| Trim whitespace       | `z.string().trim()` (overwrites value)                                                     |
+| Slug                  | `z.string().slugify()` (converts to URL slug)                                              |
+| Starts/Ends with      | `z.string().startsWith('prefix')` / `.endsWith('suffix')`                                  |
+| Contains substring    | `z.string().includes('needle')`                                                            |
+| Phone (E.164)         | `z.e164('Invalid phone number')`                                                           |
+| JWT token             | `z.jwt('Invalid JWT')`                                                                     |
+| IP address            | `z.ipv4()` or `z.ipv6()`                                                                   |
+| Base64                | `z.base64()`                                                                               |
+| Emoji                 | `z.emoji()`                                                                                |
+| NanoID / CUID / ULID  | `z.nanoid()` / `z.cuid()` / `z.ulid()`                                                     |
 
 > **Important:** Color hex values must always be validated with this regex. The `ColorField` component returns a hex string, but the Zod schema must enforce it - otherwise any string would pass validation. Always use `/^#[0-9A-Fa-f]{6}$/`.
 >
@@ -398,10 +398,10 @@ return (
 
 ##### Recurrence Rule Fields (`<RRuleField>`)
 
-| Validation      | Zod Code                          |
-| --------------- | --------------------------------- |
-| String (rrule)  | `z.string()` |
-| Non-empty rrule | `z.string().min(1).default('')`   |
+| Validation      | Zod Code                        |
+| --------------- | ------------------------------- |
+| String (rrule)  | `z.string()`                    |
+| Non-empty rrule | `z.string().min(1).default('')` |
 
 ##### Array/Collection Fields
 

@@ -1,5 +1,4 @@
 import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
-import { ModuleRegistry } from '@lifeforge/server-utils'
 import z from 'zod'
 
 import {
@@ -7,6 +6,7 @@ import {
   moduleSchema,
   moduleWidgetSchema
 } from '@lifeforge/configs'
+import { ModuleRegistry } from '@lifeforge/server-utils'
 
 import forge from '../forge'
 
