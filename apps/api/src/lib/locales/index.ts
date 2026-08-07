@@ -3,12 +3,11 @@ import {
   ALLOWED_NAMESPACE,
   LocaleService
 } from '@functions/initialization/localeService'
-import { ModuleRegistry } from '@lifeforge/server-utils'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { createForge, forgeRouter } from '@lifeforge/server-utils'
+import { ModuleRegistry , createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'locales')
 
@@ -34,6 +33,7 @@ const listLanguages = forge
     description: 'List all languages',
     noAuth: true,
     encrypted: false,
+    rateLimit: false,
     input: {},
     output: {
       OK: z.array(
@@ -73,7 +73,8 @@ const getLocale = forge
     output: {
       OK: z.record(z.string(), z.any()),
       NOT_FOUND: true
-    }
+    },
+    rateLimit: false
   })
   .callback(async ({ query: { lang, namespace, subnamespace }, response }) => {
     const moduleApps = getModulesWithLocales()
@@ -201,7 +202,8 @@ const listUnsupportedModules = forge
     output: {
       OK: z.array(z.string()),
       NOT_FOUND: true
-    }
+    },
+    rateLimit: false
   })
   .callback(async ({ pb, response }) => {
     const userLanguage = pb.instance.authStore.record?.language

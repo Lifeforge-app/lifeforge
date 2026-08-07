@@ -45,6 +45,7 @@ export interface ForgeContract {
     media: MediaConfig | null
     noAuth: boolean
     encrypted: boolean
+    rateLimit: boolean
     callback: (
       context: ForgeExpressContext
     ) => Promise<{ $status: number; payload?: unknown }>

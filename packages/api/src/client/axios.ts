@@ -2,11 +2,7 @@
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
-import {
-  clearAccessToken,
-  getAccessToken,
-  setAccessToken
-} from './tokenStore'
+import { clearAccessToken, getAccessToken, setAccessToken } from './tokenStore'
 
 let isRefreshing = false
 let refreshPromise: Promise<boolean> | null = null

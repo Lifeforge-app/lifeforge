@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type {
-  ProxyTree,
-  UntypedEndpointType
-} from '../types/proxy'
+import type { ProxyTree, UntypedEndpointType } from '../types/proxy'
 import { ForgeEndpoint } from './forgeEndpoint'
 import { CORE_HELPERS } from './helpers/config'
 import { createCoreHelper } from './helpers/createCoreHelper'

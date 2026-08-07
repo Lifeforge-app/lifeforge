@@ -4,7 +4,6 @@ import fs from 'fs'
 import path from 'path'
 
 import type { ModuleEntry } from '@lifeforge/configs'
-
 import { ModuleRegistry } from '@lifeforge/server-utils'
 
 import gatherModuleMetadata from './gatherModuleMetadata'

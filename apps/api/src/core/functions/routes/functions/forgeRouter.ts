@@ -6,6 +6,7 @@ import {
   RouterInput
 } from '@lifeforge/server-utils'
 
+import { disableRateLimitForRoute } from '../../../middlewares/rateLimitingMiddleware'
 import { registerController } from './controllerLogic'
 
 function isRouter(value: unknown): value is Router {
@@ -107,6 +108,11 @@ function registerRoutes<T extends RouterInput>(
       const currentPath = `${parentPath}/${finalRoute}`
 
       if (isForgeController(controller)) {
+        const config = controller.getValue()
+
+        if (config.rateLimit === false) {
+          disableRateLimitForRoute(config.method, currentPath)
+        }
         registerController(controller, router, finalRoute)
       } else if (isRouter(controller)) {
         router.use(`/${finalRoute}`, controller)

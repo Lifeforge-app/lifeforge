@@ -1,4 +1,5 @@
 import z from 'zod'
+
 import { cleanSchemas } from '@lifeforge/pocketbase'
 
 export const schemas = {

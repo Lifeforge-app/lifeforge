@@ -116,6 +116,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
+      rateLimit?: boolean
     }
   ) {
     return {
@@ -177,6 +178,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
               media: (metadata.media ?? null) as TMedia,
               noAuth: metadata.noAuth ?? false,
               encrypted: metadata.encrypted ?? true,
+              rateLimit: metadata.rateLimit ?? true,
               callback: callbackWrapper,
               callerModule: actualCallerModule
             }
@@ -214,6 +216,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
+      rateLimit?: boolean
     }) {
       return buildRoute<'get', TOutput, TQuery, never, TMedia>(
         'get',
@@ -254,6 +257,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
+      rateLimit?: boolean
     }) {
       return buildRoute<'post', TOutput, TQuery, TBody, TMedia>(
         'post',
