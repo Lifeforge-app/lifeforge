@@ -1,3 +1,4 @@
+import { hash } from 'argon2'
 import z from 'zod'
 
 import {
@@ -37,6 +38,10 @@ export const createFirstUser = forge
       return response.badRequest('Users already exist')
     }
 
+    const passwordHash = await hash(password, {
+      type: 2 // argon2id
+    })
+
     await superPBInstance.collection('users').create({
       email,
       username,
@@ -44,6 +49,7 @@ export const createFirstUser = forge
       verified: true,
       password,
       passwordConfirm: password,
+      auth_password_hash: passwordHash,
       theme: 'system',
       language: 'en',
       fontScale: 1.0,
