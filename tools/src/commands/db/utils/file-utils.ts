@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import type { CollectionModel } from 'pocketbase'
 import prettier from 'prettier'
+import { pathToFileURL } from 'url'
 
 import { ROOT_DIR } from '@/constants/constants'
 import logger from '@/utils/logger'
@@ -86,7 +87,7 @@ export async function importSchemaModules(targetModule?: string): Promise<
 
   return Promise.all(
     schemaFiles.map(async schemaPath => {
-      const module = await import(path.resolve(schemaPath))
+      const module = await import(pathToFileURL(path.resolve(schemaPath)).href)
 
       return {
         moduleName: getModuleName(schemaPath) || 'unknown-module',

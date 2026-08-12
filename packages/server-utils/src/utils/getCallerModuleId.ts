@@ -13,7 +13,8 @@ export default function getCallerModuleId():
   const lines = obj.stack?.split('\n') || []
 
   for (let i = 2; i < lines.length; i++) {
-    const line = lines[i]
+    // Normalize Windows backslashes to forward slashes so the patterns below match
+    const line = lines[i].replace(/\\/g, '/')
 
     if (
       !line.includes('/apps/api/src/lib/') &&
@@ -26,7 +27,8 @@ export default function getCallerModuleId():
     const pathMatch =
       line.match(/\((.+):\d+:\d+\)/) || line.match(/at (.+):\d+:\d+/)
 
-    const filePath = pathMatch?.[1]
+    // Strip any file:// URL scheme prefix to get the filesystem path
+    const filePath = pathMatch?.[1]?.replace(/^file:\/\//, '')
 
     if (!filePath) continue
 

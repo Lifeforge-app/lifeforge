@@ -1,4 +1,5 @@
 import chalk from 'chalk'
+import net from 'node:net'
 import prompts from 'prompts'
 
 import executeCommand from './commands'
@@ -85,20 +86,16 @@ export function killExistingProcess(
       return
     }
 
-    const serverInstance = executeCommand(`pgrep -f "${processKeywordOrPID}"`, {
-      exitOnError: false
-    })
+    const pids = findProcessIdsByCommandLine(processKeywordOrPID)
 
-    if (serverInstance) {
-      executeCommand(`pkill -f "${processKeywordOrPID}"`, {
-        exitOnError: false
-      })
+    if (pids.length > 0) {
+      killProcessesByPids(pids)
 
       logger.debug(
-        `Killed process matching keyword: ${chalk.blue(processKeywordOrPID)} (PID: ${chalk.blue(serverInstance)})`
+        `Killed process matching keyword: ${chalk.blue(processKeywordOrPID)} (PID: ${chalk.blue(pids.join(', '))})`
       )
 
-      return parseInt(serverInstance, 10)
+      return parseInt(pids[0], 10)
     }
   } catch {
     // No existing server instance found
@@ -106,23 +103,99 @@ export function killExistingProcess(
 }
 
 /**
- * Checks if a specific port is currently in use.
+ * Finds the PIDs of running processes whose command line matches the given keyword.
+ *
+ * @param keyword - Regex keyword to match against process command lines
+ * @returns An array of matching PIDs
+ */
+export function findProcessIdsByCommandLine(keyword: string): string[] {
+  try {
+    if (process.platform === 'win32') {
+      const escaped = keyword.replace(/\\/g, '\\\\').replace(/'/g, "''")
+
+      const script = `Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match '${escaped}' } | Select-Object -ExpandProperty ProcessId`
+
+      const output = executeCommand(
+        'powershell',
+        { exitOnError: false },
+        ['-NoProfile', '-NonInteractive', '-Command', script]
+      )
+
+      return output
+        .split('\n')
+        .map(line => line.trim())
+        .filter(Boolean)
+    }
+
+    const output = executeCommand(`pgrep -f "${keyword}"`, {
+      exitOnError: false
+    })
+
+    return output
+      .trim()
+      .split('\n')
+      .map(line => line.trim())
+      .filter(Boolean)
+  } catch {
+    return []
+  }
+}
+
+/**
+ * Kills the processes with the given PIDs (cross-platform).
+ *
+ * @param pids - The PIDs to kill
+ */
+export function killProcessesByPids(pids: string[]): void {
+  if (process.platform === 'win32') {
+    executeCommand(
+      'powershell',
+      { exitOnError: false },
+      [
+        '-NoProfile',
+        '-NonInteractive',
+        '-Command',
+        `Stop-Process -Id ${pids.join(',')} -Force -ErrorAction SilentlyContinue`
+      ]
+    )
+
+    return
+  }
+
+  for (const pid of pids) {
+    try {
+      process.kill(Number(pid))
+    } catch {
+      // Process may have already exited
+    }
+  }
+}
+
+/**
+ * Checks if a port is currently in use by attempting to bind to it (cross-platform).
  *
  * @param port - The port number to check
+ * @param host - The host to bind to (defaults to 127.0.0.1)
  * @returns True if the port is in use, false otherwise
  */
-export function checkPortInUse(port: number): boolean {
-  try {
-    executeCommand('nc', { exitOnError: false }, [
-      '-zv',
-      'localhost',
-      port.toString()
-    ])
+export function isPortInUse(port: number, host = '127.0.0.1'): Promise<boolean> {
+  return new Promise(resolve => {
+    const server = net.createServer()
 
-    return true
-  } catch {
-    return false
-  }
+    server.unref()
+
+    server.once('error', error => {
+      const code = (error as NodeJS.ErrnoException).code
+
+      resolve(code === 'EADDRINUSE' || code === 'EACCES')
+    })
+
+    server.once('listening', () => {
+      server.close(() => resolve(false))
+    })
+
+    server.listen(port, host)
+  })
 }
 
 /**
@@ -131,44 +204,106 @@ export function checkPortInUse(port: number): boolean {
  * @param port - The port number to check
  * @returns True if the port is in use, false otherwise
  */
-export function checkAddressInUse(address: string, port: string): boolean {
+export async function checkPortInUse(port: number): Promise<boolean> {
+  return isPortInUse(port)
+}
+
+/**
+ * Returns a human-readable description of the process listening on a port.
+ *
+ * @param port - The port number
+ * @returns A string like "node.exe (PID: 1234)", or null if it cannot be determined
+ */
+export function getPortProcessInfo(port: number): string | null {
+  try {
+    if (process.platform === 'win32') {
+      const netstatOutput = executeCommand(
+        'netstat',
+        { exitOnError: false },
+        ['-ano', '-p', 'tcp']
+      )
+
+      const line = netstatOutput
+        .split('\n')
+        .find(l => l.includes(`:${port}`) && l.includes('LISTENING'))
+
+      if (!line) {
+        return null
+      }
+
+      const pid = line.trim().split(/\s+/).pop()
+
+      const tasklistOutput = executeCommand(
+        'tasklist',
+        { exitOnError: false },
+        ['/FO', 'CSV', '/NH']
+      )
+
+      const taskLine = tasklistOutput
+        .split('\n')
+        .find(l => l.split('","')[1]?.trim() === String(pid))
+
+      const name = taskLine
+        ? taskLine.replace(/^"/, '').split('","')[0]
+        : 'unknown'
+
+      return `${name} (PID: ${pid})`
+    }
+
+    const lsofOutput = executeCommand('lsof', { exitOnError: false }, [
+      '-i',
+      `:${port}`,
+      '-sTCP:LISTEN'
+    ])
+
+    const dataLine = lsofOutput
+      .split('\n')
+      .find(line => !line.startsWith('COMMAND'))
+
+    if (!dataLine) {
+      return null
+    }
+
+    const parts = dataLine.trim().split(/\s+/)
+
+    return `${parts[0]} (PID: ${parts[1]})`
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Checks if a specific address:port is currently in use.
+ *
+ * @param address - The address to check
+ * @param port - The port to check
+ * @returns True if the address is in use, false otherwise
+ */
+export async function checkAddressInUse(
+  address: string,
+  port: string
+): Promise<boolean> {
   logger.debug(
     `Checking if address ${chalk.blue(address)}:${chalk.blue(port)} is in use...`
   )
 
-  try {
-    executeCommand('nc', { exitOnError: false }, ['-zv', address, port])
+  const inUse = await isPortInUse(Number(port))
 
-    const lsofOutput = executeCommand('lsof', { exitOnError: false }, [
-      '-i',
-      `@${address}:${port}`,
-      '-sTCP:LISTEN'
-    ])
+  if (inUse) {
+    const info = getPortProcessInfo(Number(port))
 
-    const lines = lsofOutput.trim().split('\n')
-
-    const dataLine = lines.find(line => !line.startsWith('COMMAND'))
-
-    if (dataLine) {
-      const parts = dataLine.trim().split(/\s+/)
-
-      const processName = parts[0]
-
-      const pid = parts[1]
-
+    if (info) {
       logger.error(
-        `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(processName)} (PID: ${chalk.blue(pid)})`
+        `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(info)}`
       )
     } else {
       logger.error(
         `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but no process info found.`
       )
     }
-
-    return true
-  } catch {
-    return false
   }
+
+  return inUse
 }
 
 /**

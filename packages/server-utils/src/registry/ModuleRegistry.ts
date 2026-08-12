@@ -11,8 +11,12 @@ export class ModuleRegistry {
 
   static register(entry: ModuleEntry, absolutePath?: string): void {
     ModuleRegistry.registeredModules.push(entry)
+
     if (absolutePath) {
-      ModuleRegistry.modulePaths.set(absolutePath, entry.name)
+      ModuleRegistry.modulePaths.set(
+        absolutePath.replace(/\\/g, '/'),
+        entry.name
+      )
     }
   }
 
@@ -20,6 +24,7 @@ export class ModuleRegistry {
     ModuleRegistry.registeredModules = ModuleRegistry.registeredModules.filter(
       m => m.name !== name
     )
+
     for (const [modPath, modName] of ModuleRegistry.modulePaths.entries()) {
       if (modName === name) {
         ModuleRegistry.modulePaths.delete(modPath)
@@ -97,17 +102,21 @@ export class ModuleRegistry {
         return modPath
       }
     }
+
     return undefined
   }
 
   static getModuleByPath(
     filePath: string
   ): { source: 'app'; id: string } | undefined {
+    const normalizedPath = filePath.replace(/\\/g, '/')
+
     for (const [modPath, name] of ModuleRegistry.modulePaths.entries()) {
-      if (filePath.startsWith(modPath)) {
+      if (normalizedPath.startsWith(modPath)) {
         return { source: 'app', id: name }
       }
     }
+
     return undefined
   }
 }

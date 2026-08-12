@@ -20,7 +20,7 @@ import Code from "@/components/Code";
 `
 
 const CHANGELOG_PATH = path.resolve(
-  import.meta.dirname.split('tools')[0],
+  import.meta.dirname.split(/tools[\\/]/)[0],
   'docs/src/contents/04.progress/versions'
 )
 

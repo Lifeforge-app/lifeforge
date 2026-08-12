@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import fs from 'fs'
+import os from 'os'
 import path from 'path'
 
 import { getEnvVar, isDockerMode } from '@/utils/helpers'
@@ -23,7 +24,8 @@ export const PB_DATA_DIR = isDockerMode()
 export const PB_MIGRATIONS_DIR = path.resolve(`${PB_DATA_DIR}/pb_migrations`)
 
 export const PB_BINARY_PATH = path.resolve(
-  process.env.PB_BINARY_PATH || `${PB_DIR}/pocketbase`
+  process.env.PB_BINARY_PATH ||
+    `${PB_DIR}/pocketbase${os.platform() === 'win32' ? '.exe' : ''}`
 )
 
 // Remove http:// prefix if present
