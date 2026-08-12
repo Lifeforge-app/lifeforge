@@ -60,6 +60,7 @@ Thumbs.db
 
 # project-specific
 pocketbase
+pocketbase.exe
 !packages/pocketbase
 pb_*/
 medium
