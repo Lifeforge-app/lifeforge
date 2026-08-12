@@ -65,7 +65,7 @@ function DashboardGrid({
     return <LoadingScreen message={t('loading')} />
   }
 
-  if (Object.values(enabledWidgets).every(e => e.length === 0)) {
+  if (Object.values(enabledWidgets || {}).every(e => e.length === 0)) {
     return (
       <Box asChild flex="1">
         <EmptyStateScreen
@@ -104,7 +104,7 @@ function DashboardGrid({
       >
         {[
           ...new Set(
-            Object.values(enabledWidgets)
+            Object.values(enabledWidgets || {})
               .map(widgetArray => widgetArray.map(widget => widget.i))
               .flat()
           )

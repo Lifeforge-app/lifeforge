@@ -46,12 +46,12 @@ function ComponentListItem({
 
   const isEnabled = useMemo(() => {
     return Object.values(
-      JSON.stringify(enabledWidgets) !== '{}' ? enabledWidgets : { a: [] }
+      JSON.stringify(enabledWidgets || {}) !== '{}' ? enabledWidgets : { a: [] }
     ).some(e => e.find(i => i.i === id) !== undefined)
   }, [enabledWidgets, id])
 
   function addComponent() {
-    const newEnabledWidgets = JSON.parse(JSON.stringify(enabledWidgets))
+    const newEnabledWidgets = JSON.parse(JSON.stringify(enabledWidgets || {}))
 
     if (Object.keys(newEnabledWidgets).length === 0) {
       for (const breakpoint of ['lg', 'md', 'sm', 'xs', 'xxs']) {
@@ -95,7 +95,7 @@ function ComponentListItem({
   function removeComponent() {
     const newEnabledWidgets = Object.fromEntries(
       Object.entries(
-        JSON.parse(JSON.stringify(enabledWidgets)) as IDashboardLayout
+        JSON.parse(JSON.stringify(enabledWidgets || {})) as IDashboardLayout
       ).map(([k, value]) => [k, value.filter(i => i.i !== id)])
     )
 

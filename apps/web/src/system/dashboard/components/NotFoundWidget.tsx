@@ -24,7 +24,7 @@ function NotFoundWidget({
   async function removeWidget() {
     const newEnabledWidgets = Object.fromEntries(
       Object.entries(
-        JSON.parse(JSON.stringify(enabledWidgets)) as IDashboardLayout
+        JSON.parse(JSON.stringify(enabledWidgets || {})) as IDashboardLayout
       ).map(([k, value]) => [k, value.filter(i => i.i !== widgetId)])
     )
 
