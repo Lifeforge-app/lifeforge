@@ -1,7 +1,9 @@
+import { execSync } from 'child_process'
 import chalk from 'chalk'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
+import { Agent, fetch } from 'undici'
 
 import { PB_BINARY_PATH, PB_DIR } from '@/constants/db'
 import executeCommand from '@/utils/commands'
@@ -77,13 +79,15 @@ export async function downloadPocketBaseBinary(): Promise<void> {
   try {
     const zipPath = path.join(PB_DIR, 'pocketbase.zip')
 
-    // Download the zip file
-    const response = await fetch(downloadUrl)
+    // Download the zip file with undici (no timeouts, follows redirects)
+    const agent = new Agent({ connect: { timeout: 0 } })
+
+    const response = await fetch(downloadUrl, {
+      dispatcher: agent
+    })
 
     if (!response.ok) {
-      throw new Error(
-        `Failed to download: ${response.status} ${response.statusText}`
-      )
+      throw new Error(`Failed to download: HTTP ${response.status}`)
     }
 
     const arrayBuffer = await response.arrayBuffer()
@@ -92,8 +96,15 @@ export async function downloadPocketBaseBinary(): Promise<void> {
 
     logger.debug('Download complete, extracting...')
 
-    // Extract using unzip command
-    executeCommand(`unzip -o "${zipPath}" -d "${PB_DIR}"`)
+    // Extract using PowerShell Expand-Archive on Windows, unzip elsewhere
+    if (platform === 'win32') {
+      execSync(
+        `powershell -NoProfile -Command "Expand-Archive -Path '${zipPath}' -DestinationPath '${PB_DIR}' -Force"`,
+        { stdio: 'inherit' }
+      )
+    } else {
+      executeCommand(`unzip -o "${zipPath}" -d "${PB_DIR}"`)
+    }
 
     // Clean up zip file and unnecessary files
     fs.unlinkSync(zipPath)
