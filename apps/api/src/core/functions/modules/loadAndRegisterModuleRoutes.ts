@@ -2,6 +2,7 @@ import { ROOT_DIR } from '@constants'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
+import { pathToFileURL } from 'url'
 
 import type { ModuleEntry } from '@lifeforge/configs'
 import { ModuleRegistry } from '@lifeforge/server-utils'
@@ -83,7 +84,7 @@ export async function loadAndRegisterModuleRoutes(): Promise<
       const { hasServerRoutes: _, ...entry } = metadata
       ModuleRegistry.register(entry, path.join(appsDir, modDir))
 
-      const mod = await import(modulePath)
+      const mod = await import(pathToFileURL(modulePath).href)
 
       if (mod.default) {
         modules[metadata.moduleId] = mod.default

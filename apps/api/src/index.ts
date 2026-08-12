@@ -1,4 +1,4 @@
-import { PORT } from '@constants'
+import { PORT, ROOT_DIR } from '@constants'
 import ensureCredentials from '@functions/initialization/ensureCredentials'
 import { LocaleService } from '@functions/initialization/localeService'
 import {
@@ -14,16 +14,13 @@ import dotenv from 'dotenv'
 import fs from 'fs'
 import { createServer } from 'node:http'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
 import { checkDB } from '@lifeforge/pocketbase'
 import { traceRouteStack } from '@lifeforge/server-utils'
+import type { Express } from 'express'
 
-import app from './core/app'
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
 dotenv.config({
-  path: path.resolve(__dirname, '../../env/.env.local'),
+  path: path.join(ROOT_DIR, 'env/.env.local'),
   quiet: true
 })
 
@@ -59,7 +56,10 @@ function ensureDirectories(): void {
   }
 }
 
-function startServer(server: ReturnType<typeof createServer>): void {
+function startServer(
+  server: ReturnType<typeof createServer>,
+  app: Express
+): void {
   server.listen(PORT, () => {
     const routes = traceRouteStack(app._router.stack)
 
@@ -73,6 +73,10 @@ function startServer(server: ReturnType<typeof createServer>): void {
 }
 
 async function main(): Promise<void> {
+  // Import the app after loading env so module-level env reads (e.g. JWT secret)
+  // are populated regardless of how the server is spawned.
+  const { default: app } = await import('./core/app')
+
   LocaleService.validateAndLoad()
   ensureDirectories()
   ensureCredentials()
@@ -80,7 +84,7 @@ async function main(): Promise<void> {
 
   const server = createSocketServer(app)
 
-  startServer(server)
+  startServer(server, app)
 }
 
 main()
