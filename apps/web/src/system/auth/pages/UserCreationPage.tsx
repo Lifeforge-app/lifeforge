@@ -130,7 +130,8 @@ function UserCreationPage() {
           errorMsg={errors.email}
           icon="tabler:mail"
           inputMode="email"
-          label={t('inputs.email.label')}
+          label="email"
+          namespace="common.auth"
           placeholder={t('inputs.email.placeholder')}
           value={formData.email}
           onChange={updateField('email')}
@@ -138,7 +139,8 @@ function UserCreationPage() {
         <TextInput
           errorMsg={errors.username}
           icon="tabler:at"
-          label={t('inputs.username.label')}
+          label="username"
+          namespace="common.auth"
           placeholder={t('inputs.username.placeholder')}
           value={formData.username}
           onChange={updateField('username')}
@@ -146,7 +148,8 @@ function UserCreationPage() {
         <TextInput
           errorMsg={errors.name}
           icon="tabler:user"
-          label={t('inputs.name.label')}
+          label="name"
+          namespace="common.auth"
           placeholder={t('inputs.name.placeholder')}
           value={formData.name}
           onChange={updateField('name')}
@@ -155,7 +158,8 @@ function UserCreationPage() {
           isPassword
           errorMsg={errors.password}
           icon="tabler:lock"
-          label={t('inputs.password.label')}
+          label="password"
+          namespace="common.auth"
           placeholder={t('inputs.password.placeholder')}
           value={formData.password}
           onChange={updateField('password')}
@@ -164,7 +168,8 @@ function UserCreationPage() {
           isPassword
           errorMsg={errors.confirmPassword}
           icon="tabler:lock-check"
-          label={t('inputs.confirmPassword.label')}
+          label="confirmPassword"
+          namespace="common.auth"
           placeholder={t('inputs.confirmPassword.placeholder')}
           value={formData.confirmPassword}
           onChange={updateField('confirmPassword')}
