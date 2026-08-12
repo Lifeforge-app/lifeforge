@@ -24,7 +24,12 @@ function OAuthConfigColumn() {
     >
       <WithQueryData contract={forgeAPI.auth.oauth.providers.listOptions}>
         {data => (
-          <Flex align="center" gap="md">
+          <Flex
+            align={{ base: 'start', md: 'center' }}
+            direction={{ base: 'column', md: 'row' }}
+            gap="md"
+            width="100%"
+          >
             <Text color="muted">
               {t('misc.oauthStatus', {
                 confCount: data.filter(e => e.configured).length,
