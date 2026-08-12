@@ -2,7 +2,7 @@
   "name": "lifeforge-monorepo",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.13.0",
+  "packageManager": "pnpm@11.21.0",
   "description": "A comprehensive self-hosted all-in-one personal management system",
   "version": "0.0.0",
   "license": "CC BY-NC-SA 4.0",
@@ -22,7 +22,7 @@
     "./tools"
   ],
   "scripts": {
-    "forge": "tsx --tsconfig=$PWD/tools/tsconfig.json tools/src/index.ts",
+    "forge": "tsx --tsconfig=./tools/tsconfig.json tools/src/index.ts",
     "build": "turbo build --filter=\"./packages/*\" && turbo build --continue",
     "lint": "prettier --check . && eslint .",
     "fix": "prettier --write ./ && pnpm lint",
@@ -55,6 +55,7 @@
     "argon2": "^0.44.0",
     "bcryptjs": "^3.0.3",
     "concurrently": "^10.0.3",
+    "cross-env": "^7.0.3",
     "eslint": "^10.7.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.32.0",
@@ -68,6 +69,7 @@
     "jiti": "^2.7.0",
     "pocketbase": "^0.27.0",
     "prettier": "^3.8.0",
+    "rimraf": "^5.0.10",
     "turbo": "^2.0.4",
     "typescript": "^7.0.2",
     "typescript-eslint": "^8.31.1",
