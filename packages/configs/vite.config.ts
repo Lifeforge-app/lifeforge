@@ -1,6 +1,8 @@
 import path from 'node:path'
 import { defineConfig } from 'vite'
 
+import { externalDependencyRegex } from './src/constants/external-dependency-regex'
+
 export default defineConfig({
   build: {
     lib: {
@@ -12,7 +14,7 @@ export default defineConfig({
       fileName: '[name]'
     },
     rollupOptions: {
-      external: [/^node:/, /^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/]
+      external: [/^node:/, externalDependencyRegex]
     },
     outDir: 'dist',
     minify: false,

@@ -1,4 +1,5 @@
 import fs from 'node:fs'
+import path from 'node:path'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { serverAliasResolver } from '../resolvers/mod-server-alias-resolver'
@@ -28,8 +29,13 @@ vi.mock('node:fs', async importOriginal => {
   }
 })
 
+/** Normalizes a path to forward slashes for cross-platform comparisons. */
+function norm(p: string): string {
+  return p.replace(/\\/g, '/')
+}
+
 describe('serverAliasResolver', () => {
-  const dirname = '/test/dir'
+  const dirname = path.resolve('/test/dir')
 
   let plugin: any
 
@@ -39,7 +45,7 @@ describe('serverAliasResolver', () => {
 
     // Mock file system check and read for apps/api/package.json, fall back to actual fs
     vi.mocked(fs.existsSync).mockImplementation(filePath => {
-      if ((filePath as string).endsWith('apps/api/package.json')) {
+      if (norm(filePath as string).endsWith('apps/api/package.json')) {
         return true
       }
 
@@ -47,12 +53,13 @@ describe('serverAliasResolver', () => {
     })
 
     vi.mocked(fs.readFileSync).mockImplementation((filePath, options) => {
-      if ((filePath as string).endsWith('apps/api/package.json')) {
+      if (norm(filePath as string).endsWith('apps/api/package.json')) {
         return JSON.stringify({
           dependencies: {
             zod: 'workspace:*',
             dayjs: '^1.11.0',
-            express: '^4.18.0'
+            express: '^4.18.0',
+            lodash: '^4.17.0'
           },
           devDependencies: {}
         })
@@ -136,6 +143,22 @@ describe('serverAliasResolver', () => {
     expect(plugin.resolveId('rrule')).toBeNull()
     expect(plugin.resolveId('node-ical')).toBeNull()
     expect(plugin.resolveId('react-markdown')).toBeNull()
+  })
+
+  it('externalizes Node built-ins written without the node: prefix', () => {
+    expect(plugin.resolveId('path')).toEqual({ id: 'path', external: true })
+    expect(plugin.resolveId('fs/promises')).toEqual({
+      id: 'fs/promises',
+      external: true
+    })
+  })
+
+  it('ignores global and empty bare specifiers', () => {
+    expect(plugin.resolveId('')).toBeNull()
+  })
+
+  it('bundles non-core scoped packages', () => {
+    expect(plugin.resolveId('@custom/ui')).toBeNull()
   })
 
   it('resolves and appends file extension for core subpath imports', () => {

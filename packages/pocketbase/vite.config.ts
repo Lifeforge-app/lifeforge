@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite'
 
+import { externalDependencyRegex } from '@lifeforge/configs/vite'
+
 export default defineConfig({
   build: {
     lib: {
@@ -10,7 +12,7 @@ export default defineConfig({
     target: 'node22',
     rollupOptions: {
       output: { entryFileNames: 'index.js' },
-      external: [/^[^./]/]
+      external: [externalDependencyRegex]
     }
   }
 })

@@ -16,14 +16,15 @@ export function clientAliasResolver(
 
   let normalizedImporter = importer
 
+  // Strip Vite's /@fs/ prefix, which denotes an absolute filesystem path
+  normalizedImporter = normalizedImporter.replace(/^\/@fs\/?/, '')
+
   if (!path.isAbsolute(normalizedImporter)) {
     normalizedImporter = path.resolve(process.cwd(), normalizedImporter)
   }
-  normalizedImporter = normalizedImporter.replace(/^\/@fs\/?/, '')
 
-  if (!normalizedImporter.startsWith('/')) {
-    normalizedImporter = '/' + normalizedImporter
-  }
+  // Normalize backslashes to forward slashes so the regexes below work on Windows
+  normalizedImporter = normalizedImporter.replace(/\\/g, '/')
 
   let rootDir: string
 

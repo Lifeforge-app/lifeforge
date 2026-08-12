@@ -14,7 +14,7 @@
     }
   },
   "scripts": {
-    "build": "rm -rf dist && vite build && tsc --emitDeclarationOnly",
+    "build": "rimraf dist && vite build && tsc --emitDeclarationOnly",
     "typecheck": "tsc --emitDeclarationOnly"
   },
   "dependencies": {

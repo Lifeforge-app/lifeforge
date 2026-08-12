@@ -31,6 +31,7 @@
     "chalk": "^5.4.0"
   },
   "devDependencies": {
+    "@lifeforge/configs": "workspace:*",
     "@types/node": "^25.0.6"
   }
 }

@@ -1,3 +1,4 @@
+import { externalDependencyRegex } from '@lifeforge/configs/vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { defineConfig, esmExternalRequirePlugin } from 'vite'
@@ -14,7 +15,7 @@ export default defineConfig({
     }),
     esmExternalRequirePlugin({
       skipDuplicateCheck: true,
-      external: [/^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/]
+      external: [externalDependencyRegex]
     })
   ],
   resolve: {
@@ -29,7 +30,7 @@ export default defineConfig({
       fileName: format => `index.${format === 'es' ? 'mjs' : 'js'}`
     },
     rollupOptions: {
-      external: [/^([a-zA-Z0-9_-]+|@[a-zA-Z0-9_-]+\/)/],
+      external: [externalDependencyRegex],
       output: {
         globals: {
           react: 'React',

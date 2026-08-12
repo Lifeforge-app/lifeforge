@@ -5,3 +5,5 @@ export { defineModuleServerConfig } from './vite/mod-server-vite.config'
 export { defineCoreClientConfig } from './vite/core-client-vite.config'
 
 export { SHARED_PACKAGES } from './constants/shared-packages'
+
+export { externalDependencyRegex } from './constants/external-dependency-regex'

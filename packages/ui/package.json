@@ -25,7 +25,7 @@
   },
   "scripts": {
     "dev": "storybook dev -p 6006",
-    "build": "tsc -b && rm -rf dist && vite build",
+    "build": "tsc -b && rimraf dist && vite build",
     "build-storybook": "tsc -b && storybook build",
     "typecheck": "tsc -b"
   },
@@ -70,6 +70,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.2.1",
+    "@lifeforge/configs": "workspace:*",
     "@storybook/addon-docs": "10.5.2",
     "@storybook/react-vite": "10.5.2",
     "@types/culori": "^4.0.1",
