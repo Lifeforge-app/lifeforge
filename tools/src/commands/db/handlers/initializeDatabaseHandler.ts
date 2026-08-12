@@ -18,7 +18,7 @@ export async function initializeDatabaseHandler() {
 
   await downloadPocketBaseBinary()
 
-  checkRunningPBInstances()
+  await checkRunningPBInstances()
   validatePocketBaseNotInitialized()
 
   createPocketBaseSuperuser(PB_EMAIL, PB_PASSWORD)

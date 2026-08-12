@@ -29,7 +29,7 @@ interface ServiceConfig {
 export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
   db: {
     command: async () => {
-      if (checkAddressInUse(PB_HOST, PB_PORT)) {
+      if (await checkAddressInUse(PB_HOST, PB_PORT)) {
         logger.error(
           `Database address ${chalk.blue(`${PB_HOST}:${PB_PORT}`)} is already in use.`
         )
@@ -57,7 +57,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
 
       const PORT = process.env.PORT || '3636'
 
-      if (checkPortInUse(Number(PORT))) {
+      if (await checkPortInUse(Number(PORT))) {
         logger.error(`Port ${PORT} is already in use.`)
         process.exit(1)
       }

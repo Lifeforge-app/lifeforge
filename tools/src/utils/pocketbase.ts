@@ -2,7 +2,7 @@ import { spawn } from 'child_process'
 import PocketBase from 'pocketbase'
 
 import { downloadPocketBaseBinary } from '@/commands/db/functions/database-initialization/download-pocketbase'
-import { PB_BINARY_PATH, PB_KWARGS } from '@/constants/db'
+import { PB_BINARY_PATH, PB_KWARGS, PB_URL } from '@/constants/db'
 import { getEnvVars } from '@/utils/helpers'
 import logger from '@/utils/logger'
 
@@ -11,69 +11,29 @@ import { isContainerRunning, startService, stopService } from './docker'
 import { killExistingProcess } from './helpers'
 
 /**
- * Verifies if a PID is actually running and is a PocketBase process.
- *
- * @param pid - The process ID to verify
- * @returns True if the PID is a valid running PocketBase process, false otherwise
- */
-function isValidPocketbaseProcess(pid: number): boolean {
-  try {
-    // First check if process exists using kill -0 (doesn't actually kill)
-    process.kill(pid, 0)
-
-    // Verify it's actually a pocketbase process by checking the command
-    const psResult = executeCommand(`ps -p ${pid} -o comm=`, {
-      exitOnError: false
-    })
-
-    return psResult?.toLowerCase().includes('pocketbase') ?? false
-  } catch {
-    // Process doesn't exist or we don't have permission
-    return false
-  }
-}
-
-/**
- * Checks for running PocketBase instances.
+ * Checks for running PocketBase instances by querying its health endpoint.
  *
  * @param exitOnError - If true, exits the process when PocketBase is already running
  * @returns True if PocketBase instances are running, false otherwise
  */
-export function checkRunningPBInstances(exitOnError = true): boolean {
+export async function checkRunningPBInstances(
+  exitOnError = true
+): Promise<boolean> {
   try {
-    const result = executeCommand(`pgrep -f "pocketbase serve"`, {
-      exitOnError: false
-    })
+    const pb = new PocketBase(`http://${PB_URL}`)
 
-    if (!result?.trim()) {
-      return false
+    await pb.health.check()
+
+    if (exitOnError) {
+      logger.error('PocketBase is already running')
+      process.exit(1)
     }
 
-    // pgrep can return multiple PIDs (one per line)
-    const pids = result
-      .trim()
-      .split('\n')
-      .map(pid => parseInt(pid.trim(), 10))
-      .filter(pid => !isNaN(pid))
-
-    // Verify each PID is actually a running pocketbase process
-    const validPids = pids.filter(isValidPocketbaseProcess)
-
-    if (validPids.length > 0) {
-      if (exitOnError) {
-        logger.error(
-          `PocketBase is already running (PID: ${validPids.join(', ')})`
-        )
-        process.exit(1)
-      }
-
-      return true
-    }
+    return true
   } catch {
-    // No existing instance found, continue with the script
+    // No running instance found
+    return false
   }
-
-  return false
 }
 
 /**
@@ -138,7 +98,7 @@ export async function startPBServer(): Promise<number> {
  */
 export async function startPocketbase(): Promise<(() => void) | null> {
   try {
-    const pbRunning = checkRunningPBInstances(false)
+    const pbRunning = await checkRunningPBInstances(false)
 
     if (pbRunning) {
       logger.debug('PocketBase is already running')
