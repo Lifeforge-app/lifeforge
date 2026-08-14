@@ -230,11 +230,11 @@ LifeForge 的誕生，源於對一體化個人管理工具的渴望，並深受 
 增長曲線驚人。衷心感謝大家對本項目的支持！
 
 <div align="center">
-<a href="https://www.star-history.com/#lifeforge-app/lifeforge&type=date&legend=top-left">
+<a href="https://star-history.dera.page/#lifeforge-app/lifeforge&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=lifeforge-app/lifeforge&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=lifeforge-app/lifeforge&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=lifeforge-app/lifeforge&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=lifeforge-app/lifeforge&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=lifeforge-app/lifeforge&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=lifeforge-app/lifeforge&type=date&legend=top-left" />
  </picture>
 </a>
 </div>
