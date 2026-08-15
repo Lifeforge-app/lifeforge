@@ -1,3 +1,4 @@
+import { verify as argonVerify, hash } from 'argon2'
 import dayjs from 'dayjs'
 import z from 'zod'
 
@@ -110,18 +111,51 @@ export const updateProfile = forge
     return response.noContent()
   })
 
-export const requestPasswordReset = forge
+export const updatePassword = forge
   .mutation({
-    description: 'Request password reset email',
-    input: {},
+    description: 'Update user password directly',
+    input: {
+      body: z
+        .object({
+          oldPassword: z.string().min(1),
+          password: z.string().min(8),
+          passwordConfirm: z.string().min(8)
+        })
+        .refine(data => data.password === data.passwordConfirm, {
+          message: "Passwords don't match",
+          path: ['passwordConfirm']
+        })
+    },
     output: {
-      NO_CONTENT: true
+      NO_CONTENT: true,
+      BAD_REQUEST: z.string()
     }
   })
-  .callback(async ({ pb, response }) => {
-    await pb.instance
+  .callback(async ({ body: { oldPassword, password }, pb, response }) => {
+    const user = await pb.getFirstListItem.collection('users').execute()
+    const passwordHash = user.auth_password_hash
+
+    if (!passwordHash) {
+      return response.badRequest('User has no password set')
+    }
+
+    const valid = await argonVerify(passwordHash, oldPassword)
+
+    if (!valid) {
+      return response.badRequest('Incorrect old password')
+    }
+
+    const newPasswordHash = await hash(password, {
+      type: 2 // argon2id
+    })
+
+    await pb.update
       .collection('users')
-      .requestPasswordReset(pb.instance.authStore.record?.email)
+      .id(user.id)
+      .data({
+        auth_password_hash: newPasswordHash
+      })
+      .execute()
 
     return response.noContent()
   })

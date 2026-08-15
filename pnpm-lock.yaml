@@ -491,6 +491,18 @@ importers:
 
   locales/lang-en: {}
 
+  locales/lang-ja: {}
+
+  locales/lang-ko: {}
+
+  locales/lang-lzh: {}
+
+  locales/lang-ms: {}
+
+  locales/lang-zh-cn: {}
+
+  locales/lang-zh-tw: {}
+
   modules/lifeforge-module-invoiceMaker:
     dependencies:
       '@lifeforge/api':

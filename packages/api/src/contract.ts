@@ -212,18 +212,6 @@ export const contract = {
           "NO_CONTENT": true
         }
       },
-      "requestPasswordReset": {
-        "method": "post",
-        "description": "Request password reset email",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
       "updateAvatar": {
         "method": "post",
         "description": "Upload new user avatar",
@@ -238,6 +226,47 @@ export const contract = {
         "input": {},
         "output": {
           "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          }
+        }
+      },
+      "updatePassword": {
+        "method": "post",
+        "description": "Update user password directly",
+        "noAuth": false,
+        "encrypted": true,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "oldPassword": {
+                "type": "string",
+                "minLength": 1
+              },
+              "password": {
+                "type": "string",
+                "minLength": 8
+              },
+              "passwordConfirm": {
+                "type": "string",
+                "minLength": 8
+              }
+            },
+            "required": [
+              "oldPassword",
+              "password",
+              "passwordConfirm"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "NO_CONTENT": true,
+          "BAD_REQUEST": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "string"
           }
