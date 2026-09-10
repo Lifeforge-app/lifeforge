@@ -23,7 +23,7 @@ export function WeeklyForm({
           <NumberInput
             required
             icon="tabler:repeat"
-            label={t('inputs.weekly.inputs.every')}
+            label="weekly.inputs.every"
             value={data.every}
             onChange={every => setData({ ...data, every })}
           />
@@ -35,7 +35,7 @@ export function WeeklyForm({
         required
         customActive={data.onDays.length > 0}
         icon="tabler:calendar"
-        label={t('inputs.weekly.inputs.onDays')}
+        label="weekly.inputs.onDays"
         renderContent={() => (
           <>
             {data.onDays
