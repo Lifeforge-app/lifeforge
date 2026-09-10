@@ -1,13 +1,12 @@
-import _ from 'lodash'
 import {
   type Control,
   type FieldPathByValue,
   type FieldValues,
   useController
 } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
 
 import { Switch } from '@/components/inputs'
+import { useInputLabel } from '@/components/inputs/shared/hooks/useInputLabel'
 import { Flex, Icon, Text } from '@/components/primitives'
 
 import { useNamespace } from '../FormModal'
@@ -38,17 +37,7 @@ export function CheckboxField<TFieldValues extends FieldValues>({
 
   const activeNamespace = namespace ?? contextNamespace
 
-  const { t } = useTranslation(
-    activeNamespace === false ? undefined : activeNamespace
-  )
-
-  const labelText =
-    activeNamespace === false
-      ? label
-      : t([
-          ['inputs', _.camelCase(label), 'label'].filter(Boolean).join('.'),
-          ['inputs', _.camelCase(label)].filter(Boolean).join('.')
-        ])
+  const labelText = useInputLabel({ label, namespace: activeNamespace })
 
   function handleSwitchChange() {
     field.onChange(!field.value)
