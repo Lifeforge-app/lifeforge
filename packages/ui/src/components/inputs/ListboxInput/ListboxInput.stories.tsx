@@ -390,7 +390,7 @@ export const MultipleSelection: Story = {
             {value.length > 0 ? (
               value.map((v, index) => (
                 <>
-                  <Flex key={index} align="center" flexShrink="0" gap="sm">
+                  <Flex key={index} align="center" gap="sm" minWidth="0">
                     <Icon
                       icon={
                         OPTIONS.find(o => o.value === v)?.icon ?? 'tabler:cube'
@@ -401,17 +401,17 @@ export const MultipleSelection: Story = {
                           COLORS['bg-500']
                       }}
                     />
-                    <Text whiteSpace="nowrap">{v}</Text>
+                    <Text truncate>{v}</Text>
+                    {index !== value.length - 1 && (
+                      <Text
+                        asChild
+                        color={{ base: 'bg-400', dark: 'bg-600' }}
+                        style={{ height: '0.375rem', width: '0.375rem' }}
+                      >
+                        <Icon icon="tabler:circle-filled" />
+                      </Text>
+                    )}
                   </Flex>
-                  {index !== value.length - 1 && (
-                    <Text
-                      asChild
-                      color={{ base: 'bg-400', dark: 'bg-600' }}
-                      style={{ height: '0.375rem', width: '0.375rem' }}
-                    >
-                      <Icon icon="tabler:circle-filled" />
-                    </Text>
-                  )}
                 </>
               ))
             ) : (
