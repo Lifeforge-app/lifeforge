@@ -11,6 +11,7 @@ import {
   type FlexProps,
   type IconProps,
   Text,
+  type TextProps,
   Transition
 } from '@/components/primitives'
 
@@ -27,6 +28,8 @@ type ButtonOwnProps = {
   iconPosition?: 'start' | 'end'
   /** Additional CSS styles to apply to the icon. */
   iconProps?: Omit<IconProps, 'icon'>
+  /** Additional props to apply to the text content. */
+  textProps?: Omit<TextProps, 'children'>
   /** Callback function called when the button is clicked. */
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>
   /** Whether the button is in a loading state. When true, displays a spinner and disables interactions. */
@@ -70,6 +73,7 @@ export function Button<T extends ElementType = 'button'>({
   dangerous = false,
   namespace = 'common.buttons',
   iconProps,
+  textProps,
   tProps,
   style,
   ...props
@@ -124,7 +128,7 @@ export function Button<T extends ElementType = 'button'>({
           )}
           {children && typeof children === 'string' ? (
             <Box asChild minWidth="0">
-              <Text truncate>
+              <Text truncate {...textProps}>
                 {namespace === false
                   ? children
                   : t(

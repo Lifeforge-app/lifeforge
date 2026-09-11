@@ -60,7 +60,7 @@ export function ModalHeader({
           style={{ gap: '0.75rem' }}
           width="100%"
         >
-          <Icon icon={innerIcon} size="1.5em" />
+          <Icon icon={innerIcon} size="1.3em" />
           {typeof innerTitle === 'string' ? (
             <>
               <Text truncate as="span" style={{ minWidth: 0 }}>

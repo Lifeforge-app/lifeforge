@@ -17,8 +17,6 @@ type Story = StoryObj<typeof meta>
 
 /**
  * Default DateInput component.
- * <br/>
- * NOTE: The datepicker isn't displayed correctly due to how the Storybook docs page is styled. Please head to each individual story for proper rendering.
  */
 export const Default: Story = {
   args: {
@@ -40,8 +38,6 @@ export const Default: Story = {
 
 /**
  * DateInput component with time selection enabled.
- * <br />
- * NOTE: The datepicker isn't displayed correctly due to how the Storybook docs page is styled. Please head to each individual story for proper rendering.
  */
 export const WithTime: Story = {
   args: {

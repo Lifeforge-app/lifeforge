@@ -53,6 +53,11 @@
       "error": "Error deleting the item. Please try again."
     },
     "searchFilters": "Search Filters",
+    "datePicker": {
+      "title": "Select Date",
+      "titleWithTime": "Select Date Time",
+      "yearMonth": "Select Year & Month"
+    },
     "iconPicker": {
       "title": "Select Icon",
       "items": {

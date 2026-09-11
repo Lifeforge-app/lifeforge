@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import clsx from 'clsx'
 import { useCallback } from 'react'
 
-import { Box, Flex, Icon, Text, Transition } from '@/components/primitives'
+import {
+  Box,
+  Flex,
+  type FlexProps,
+  Icon,
+  Text,
+  Transition
+} from '@/components/primitives'
 import { colorWithOpacity } from '@/system'
 
 import { InputFocusProvider } from '../../contexts/InputFocusContext'
@@ -11,16 +19,7 @@ import {
   inputWrapperRecipe
 } from './InputWrapper.css'
 
-export function InputWrapper({
-  className = '',
-  variant = 'classic',
-  size = 'default',
-  disabled = false,
-  inputRef,
-  onFocus,
-  children,
-  errorMsg
-}: {
+export type InputWrapperProps = {
   variant?: InputVariant
   size?: InputSize
   className?: string
@@ -29,7 +28,20 @@ export function InputWrapper({
   onFocus?: () => void
   children: React.ReactNode
   errorMsg?: string
-}) {
+} & FlexProps
+
+export function InputWrapper({
+  className = '',
+  variant = 'classic',
+  size = 'default',
+  disabled = false,
+  inputRef,
+  onFocus,
+  children,
+  errorMsg,
+  style,
+  ...rest
+}: InputWrapperProps) {
   const focusInput = useCallback(
     (e: React.MouseEvent | React.FocusEvent) => {
       if ((e.target as HTMLElement).tagName === 'BUTTON') {
@@ -76,7 +88,6 @@ export function InputWrapper({
   return (
     <InputFocusProvider>
       <Flex
-        className={className}
         direction="column"
         gap="sm"
         minWidth="0"
@@ -93,21 +104,23 @@ export function InputWrapper({
               hover: 'bg-200',
               darkHover: 'bg-800'
             }}
-            className={wrapperClassName}
+            className={clsx(wrapperClassName, className)}
             flexShrink="0"
             minWidth="0"
             position="relative"
             role="button"
-            style={
-              variant === 'plain' && errorMsg
+            style={{
+              ...(variant === 'plain' && errorMsg
                 ? { outline: '2px solid var(--color-dangerous)' }
-                : {}
-            }
+                : {}),
+              ...style
+            }}
             tabIndex={0}
             width="100%"
             onClick={focusInput}
             onFocus={focusInput}
             onKeyDown={handleKeyDown}
+            {...rest}
           >
             {children}
             {errorMsg && (

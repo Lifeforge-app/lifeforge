@@ -10,11 +10,11 @@ const meta = {
     appendTitle: { control: false },
     className: { control: 'text' },
     hasAI: { control: 'boolean' },
-    trailing: { control: false },
     icon: { control: 'text' },
     namespace: { control: 'text' },
     onClose: { control: false },
-    title: { control: 'text' }
+    title: { control: 'text' },
+    trailing: { control: false }
   },
   component: ModalHeader,
   title: 'Overlays/ModalHeader'
@@ -142,10 +142,10 @@ export const WithAppendTitle: Story = {
  */
 export const WithActionButton: Story = {
   args: {
-    trailing: <Button icon="tabler:help" variant="plain" onClick={() => {}} />,
     icon: 'tabler:file-export',
     onClose: () => {},
-    title: 'Export Data'
+    title: 'Export Data',
+    trailing: <Button icon="tabler:help" variant="plain" onClick={() => {}} />
   },
   render: function (args) {
     return (
@@ -163,14 +163,14 @@ export const WithActionButton: Story = {
  */
 export const WithActionButtonVariant: Story = {
   args: {
+    icon: 'tabler:send',
+    onClose: () => {},
+    title: 'Publish Post',
     trailing: (
       <Button icon="tabler:eye" variant="secondary" onClick={() => {}}>
         Preview
       </Button>
-    ),
-    icon: 'tabler:send',
-    onClose: () => {},
-    title: 'Publish Post'
+    )
   },
   render: function (args) {
     return (
@@ -204,12 +204,12 @@ export const KitchenSink: Story = {
       </span>
     ),
     hasAI: true,
-    trailing: (
-      <Button icon="tabler:settings" variant="plain" onClick={() => {}} />
-    ),
     icon: 'tabler:sparkles',
     onClose: () => {},
-    title: 'AI Content Generator'
+    title: 'AI Content Generator',
+    trailing: (
+      <Button icon="tabler:settings" variant="plain" onClick={() => {}} />
+    )
   },
   render: function (args) {
     return (

@@ -1,10 +1,8 @@
 import dayjs from 'dayjs'
-import { useRef } from 'react'
-import DatePicker from 'react-datepicker'
-import tinycolor from 'tinycolor2'
+import { useCallback, useMemo, useRef } from 'react'
 
 import { Box, Flex } from '@/components/primitives'
-import { usePersonalization } from '@/providers'
+import { useModalStore } from '@/providers'
 
 import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
@@ -15,8 +13,9 @@ import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
 import { autoFocusableRef } from '../shared/utils/autoFocusableRef'
-import * as styles from './DateInput.css'
-import { CalendarHeader } from './components/CalendarHeader'
+import { DatePickerModal } from './DatePickerModal'
+
+export * from './DatePickerModal'
 
 /**
  * Props for the DateInput component.
@@ -37,7 +36,7 @@ export interface DateInputProps {
   disabled?: boolean
   /** Whether the input should automatically focus when rendered. */
   autoFocus?: boolean
-  /** Additional CSS class names to apply to the date input. Use `!` suffix for Tailwind CSS class overrides. */
+  /** Additional CSS class names to apply to the date input. */
   className?: string
   /** Whether the date input includes time selection. */
   hasTime?: boolean
@@ -54,7 +53,7 @@ export interface DateInputProps {
 }
 
 /**
- * DateInput component for selecting dates and times.
+ * DateInput component for selecting dates and times via a modal dialog.
  */
 export function DateInput({
   variant = 'classic',
@@ -73,20 +72,71 @@ export function DateInput({
   endDate,
   onEnter
 }: DateInputProps & InputVariants) {
+  const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
-  const { derivedThemeColor } = usePersonalization()
-  const ref = useRef<DatePicker | null>(null)
+  const ref = useRef<HTMLInputElement | null>(null)
+
+  const handleOpen = useCallback(() => {
+    if (disabled) {
+      return
+    }
+
+    open(DatePickerModal, {
+      value,
+      onChange,
+      label: inputLabel || label,
+      icon: icon || (hasTime ? 'tabler:clock' : 'tabler:calendar'),
+      hasTime,
+      startDate,
+      endDate,
+      required,
+      namespace
+    })
+  }, [
+    disabled,
+    open,
+    value,
+    onChange,
+    inputLabel,
+    label,
+    icon,
+    hasTime,
+    startDate,
+    endDate,
+    required,
+    namespace
+  ])
+
+  const formattedValue = useMemo(() => {
+    if (!value) {
+      return ''
+    }
+
+    return dayjs(value).format(hasTime ? 'MMMM D, YYYY h:mm A' : 'MMMM D, YYYY')
+  }, [value, hasTime])
+
+  const placeholderText = useMemo(() => {
+    return `August 7, ${dayjs().year()}${hasTime ? ' 08:07 AM' : ''}`
+  }, [hasTime])
 
   return (
     <InputWrapper
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}
+      inputRef={ref}
+      style={{
+        cursor: 'pointer'
+      }}
       variant={variant}
-      onFocus={() => ref.current?.input?.focus()}
+      onClick={handleOpen}
     >
-      {variant === 'classic' && icon && (
-        <InputIcon active={!!value} hasError={!!errorMsg} icon={icon} />
+      {variant === 'classic' && (
+        <InputIcon
+          active={!!value}
+          hasError={!!errorMsg}
+          icon={icon || (hasTime ? 'tabler:clock' : 'tabler:calendar')}
+        />
       )}
       <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
@@ -100,67 +150,55 @@ export function DateInput({
           </Box>
         )}
 
-        <InputInnerWrapper hasActionButton={!!value} variant={variant}>
+        <InputInnerWrapper hasActionButton variant={variant}>
           <Placeholder
             color={variant === 'classic' ? 'transparent' : 'default'}
             focusColor="default"
           >
-            <DatePicker
-              ref={autoFocusableRef(autoFocus, ref, e => {
-                e.input?.focus()
-              })}
+            <input
+              ref={autoFocusableRef(autoFocus, ref)}
+              readOnly
+              disabled={disabled}
+              placeholder={placeholderText}
+              style={{
+                cursor: disabled ? 'not-allowed' : 'pointer',
+                caretColor: 'transparent',
+                userSelect: 'none'
+              }}
+              tabIndex={disabled ? -1 : 0}
+              value={formattedValue}
               onKeyDown={e => {
-                if (e.key === 'Enter' && onEnter) {
-                  onEnter()
+                if (e.key === 'Enter') {
+                  if (onEnter) {
+                    onEnter()
+                  } else {
+                    handleOpen()
+                  }
+                } else if (e.key === ' ' || e.key === 'ArrowDown') {
+                  e.preventDefault()
+                  handleOpen()
                 }
               }}
-              shouldCloseOnSelect
-              calendarClassName={
-                tinycolor(derivedThemeColor).isLight()
-                  ? 'theme-light'
-                  : 'theme-dark'
-              }
-              dateFormat={hasTime ? 'MMMM d, yyyy h:mm aa' : 'MMMM d, yyyy'}
-              formatWeekDay={(date: string) => {
-                return date.slice(0, 3)
-              }}
-              maxDate={endDate ?? undefined}
-              minDate={startDate ?? undefined}
-              placeholderText={`August 7, ${dayjs().year()}${
-                hasTime ? ' 08:07 AM' : ''
-              }`}
-              popperPlacement="bottom-start"
-              portalId="app"
-              renderCustomHeader={(props: {
-                date: Date
-                changeYear: (year: number) => void
-                changeMonth: (month: number) => void
-                decreaseMonth: () => void
-                increaseMonth: () => void
-                prevMonthButtonDisabled: boolean
-                nextMonthButtonDisabled: boolean
-              }) => <CalendarHeader {...props} />}
-              selected={value || null}
-              showPopperArrow={false}
-              showTimeSelect={hasTime}
-              weekDayClassName={(date: Date) => {
-                const isWeekend = date.getDay() === 0
-
-                return isWeekend ? styles.weekDayRed : styles.weekDayMuted
-              }}
-              onChange={(value: Date | null) => onChange(value)}
             />
           </Placeholder>
         </InputInnerWrapper>
       </Flex>
-      {!!value && (
+      {!!value && !disabled ? (
         <InputActionButton
           hasError={!!errorMsg}
           icon="tabler:x"
           variant={variant}
-          onClick={() => {
+          onClick={e => {
+            e.stopPropagation()
             onChange(null)
           }}
+        />
+      ) : (
+        <InputActionButton
+          hasError={!!errorMsg}
+          icon={icon || (hasTime ? 'tabler:clock' : 'tabler:calendar')}
+          variant={variant}
+          onClick={handleOpen}
         />
       )}
     </InputWrapper>

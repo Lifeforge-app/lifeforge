@@ -11,13 +11,13 @@ import createSocketServer from '@functions/socketio/createSocketServer'
 import chalk from 'chalk'
 import { program } from 'commander'
 import dotenv from 'dotenv'
+import type { Express } from 'express'
 import fs from 'fs'
 import { createServer } from 'node:http'
 import path from 'node:path'
 
 import { checkDB } from '@lifeforge/pocketbase'
 import { traceRouteStack } from '@lifeforge/server-utils'
-import type { Express } from 'express'
 
 dotenv.config({
   path: path.join(ROOT_DIR, 'env/.env.local'),

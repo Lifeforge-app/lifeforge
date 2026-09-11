@@ -2,11 +2,11 @@ import { colorWithOpacity } from './color-with-opacity'
 
 export const surface = {
   light: {
-    base: 'bg-100',
+    base: colorWithOpacity('bg-200', '50%'),
     dark: colorWithOpacity('bg-800', '50%')
   },
   lightInteractive: {
-    base: 'bg-100',
+    base: colorWithOpacity('bg-200', '50%'),
     dark: colorWithOpacity('bg-800', '70%'),
     hover: colorWithOpacity('bg-200', '70%'),
     darkHover: colorWithOpacity('bg-700', '50%')
