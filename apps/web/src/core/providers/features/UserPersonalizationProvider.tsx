@@ -66,51 +66,63 @@ function UserPersonalizationProvider({
   } = usePersonalization()
 
   async function changeFontFamily(font: string) {
+    setFontFamily(font)
     await syncUserData({ fontFamily: font }, setUserData)
   }
 
   async function changeFontScale(scale: number) {
+    setFontScale(scale)
     await syncUserData({ fontScale: scale }, setUserData)
   }
 
   async function changeTheme(theme: 'light' | 'dark' | 'system') {
+    setTheme(theme)
     await syncUserData({ theme }, setUserData)
   }
 
   async function changeThemeColor(color: string) {
+    setRawThemeColor(color)
     await syncUserData({ color: color.replace('theme-', '') }, setUserData)
   }
 
   async function changeBgTemp(color: string) {
+    setBgTemp(color)
     await syncUserData({ bgTemp: color.replace('bg-', '') }, setUserData)
   }
 
   async function changeBackdropFilters(filters: IBackdropFilters) {
+    setBackdropFilters(filters)
     await syncUserData({ backdropFilters: filters }, setUserData)
   }
 
   async function changeLanguage(language: string) {
+    setLanguage(language)
     await syncUserData({ language }, setUserData)
   }
 
   async function changeDashboardLayout(layout: IDashboardLayout) {
+    setDashboardLayout(layout)
     await syncUserData({ dashboardLayout: layout }, setUserData)
   }
 
   async function changeBorderRadiusMultiplier(multiplier: number) {
+    setBorderRadiusMultiplier(multiplier)
     await syncUserData({ borderRadiusMultiplier: multiplier }, setUserData)
   }
 
   async function changeBordered(bordered: boolean) {
+    setBordered(bordered)
     await syncUserData({ bordered }, setUserData)
   }
 
   useEffect(() => {
     if (!userData) return
 
-    setTheme(userData.theme as 'light' | 'dark' | 'system')
+    if (userData.theme) {
+      setTheme(userData.theme as 'light' | 'dark' | 'system')
+    }
 
-    if (userData?.color !== '') {
+    if (userData.color) {
       setRawThemeColor(
         userData.color.startsWith('#')
           ? userData.color
@@ -118,7 +130,7 @@ function UserPersonalizationProvider({
       )
     }
 
-    if (userData?.bgTemp !== '') {
+    if (userData.bgTemp) {
       setBgTemp(
         userData.bgTemp.startsWith('#')
           ? userData.bgTemp
@@ -126,11 +138,11 @@ function UserPersonalizationProvider({
       )
     }
 
-    if (userData?.backdropFilters) {
+    if (userData.backdropFilters) {
       setBackdropFilters(userData.backdropFilters as IBackdropFilters)
     }
 
-    if (userData?.bgImage !== '') {
+    if (userData.bgImage) {
       setBgImage(
         forgeAPI.getMedia({
           collectionId: userData.collectionId,
@@ -140,27 +152,27 @@ function UserPersonalizationProvider({
       )
     }
 
-    if (userData?.language !== '') {
+    if (userData.language) {
       setLanguage(userData.language)
     }
 
-    if (userData?.dashboardLayout !== '') {
+    if (userData.dashboardLayout) {
       setDashboardLayout(userData.dashboardLayout as IDashboardLayout)
     }
 
-    if (userData?.fontFamily !== undefined) {
+    if (userData.fontFamily !== undefined) {
       setFontFamily(userData.fontFamily)
     }
 
-    if (userData?.fontScale !== undefined) {
+    if (userData.fontScale !== undefined) {
       setFontScale(userData.fontScale)
     }
 
-    if (userData?.borderRadiusMultiplier !== undefined) {
+    if (userData.borderRadiusMultiplier !== undefined) {
       setBorderRadiusMultiplier(userData.borderRadiusMultiplier)
     }
 
-    if (userData?.bordered !== undefined) {
+    if (userData.bordered !== undefined) {
       setBordered(userData.bordered)
     }
   }, [userData])

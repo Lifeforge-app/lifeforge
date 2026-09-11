@@ -12,10 +12,18 @@ function useThemeEffect(
   bgTemp: string
 ) {
   useEffect(() => {
-    if (theme === 'dark') {
-      rootElement.classList.add('dark')
-    } else {
-      rootElement.classList.remove('dark')
+    const isDark = theme === 'dark'
+    const bgColor = isDark ? '#09090b' : '#ffffff'
+
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', isDark)
+      document.documentElement.style.backgroundColor = bgColor
+      document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
+    }
+
+    if (rootElement) {
+      rootElement.classList.toggle('dark', isDark)
+      rootElement.style.backgroundColor = bgColor
     }
 
     clearCustomColorProperties(rootElement, 'theme')

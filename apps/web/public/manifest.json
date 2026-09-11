@@ -2,11 +2,13 @@
   "short_name": "LifeForge",
   "name": "Life Forge.",
   "description": "Your all-in-one solution to manage your life.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#09090b",
-  "theme_color": "#2dd4bf",
-  "start_url": "/",
+  "theme_color": "#09090b",
   "icons": [
     {
       "src": "/assets/icons/icon-72x72.png",
@@ -36,7 +38,8 @@
     {
       "src": "/assets/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/assets/icons/icon-256x256.png",
@@ -46,7 +49,14 @@
     {
       "src": "/assets/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

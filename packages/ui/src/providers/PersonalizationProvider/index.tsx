@@ -218,19 +218,7 @@ export function PersonalizationProvider({
 
   return (
     <PersonalizationContext value={value}>
-      <meta
-        content={
-          rawThemeColor.startsWith('#')
-            ? rawThemeColor
-            : THEME_COLOR_HEX[
-                rawThemeColor.replace(
-                  'theme-',
-                  ''
-                ) as keyof typeof THEME_COLOR_HEX
-              ]
-        }
-        name="theme-color"
-      />
+      <meta content="#09090b" name="theme-color" />
       {children}
     </PersonalizationContext>
   )

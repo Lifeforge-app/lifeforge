@@ -198,7 +198,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if (getAccessToken()) {
       setAuth(true)
-      setAuthLoading(false)
+      setAuthLoading(true)
+
+      forgeAPI.auth.me
+        .queryRaw()
+        .then(data => {
+          setUserData(data.userData)
+        })
+        .catch(() => {
+          clearAccessToken()
+          setAuth(false)
+          setUserData(null)
+        })
+        .finally(() => {
+          setAuthLoading(false)
+        })
 
       return
     }
