@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import {
   type Control,
   type FieldPathByValue,
@@ -85,20 +84,22 @@ function ListboxButtonContent<TOption>({
             })
 
             return (
-              <Fragment key={String(item)}>
-                <Flex align="center" gap="xs">
-                  <Icon
-                    icon={target?.icon ?? ''}
-                    style={{
-                      color: target?.color
-                    }}
-                  />
-                  <Text truncate>{target?.text ?? 'None'}</Text>
-                </Flex>
+              <Flex key={String(item)} align="center" gap="xs" minWidth="0">
+                <Icon
+                  icon={target?.icon ?? ''}
+                  style={{
+                    color: target?.color
+                  }}
+                />
+                <Text truncate>{target?.text ?? 'None'}</Text>
                 {i !== value.length - 1 && (
-                  <Icon icon="tabler:circle-filled" size="0.25em" />
+                  <Icon
+                    color="muted"
+                    icon="tabler:circle-filled"
+                    size="0.25em"
+                  />
                 )}
-              </Fragment>
+              </Flex>
             )
           })}
       </Flex>
