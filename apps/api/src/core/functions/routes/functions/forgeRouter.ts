@@ -12,7 +12,7 @@ import { registerController } from './controllerLogic'
 function isRouter(value: unknown): value is Router {
   return !!(
     value &&
-    typeof value === 'object' &&
+    (typeof value === 'object' || typeof value === 'function') &&
     'use' in value &&
     typeof (value as Record<string, unknown>).use === 'function'
   )
