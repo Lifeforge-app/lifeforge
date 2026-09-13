@@ -1,9 +1,12 @@
 {
-    "name": "@lifeforge/modules",
-    "private": true,
-    "description": "LifeForge modules",
-    "dependencies": {
-        "@lifeforge/lifeforge--todo-list": "workspace:*",
-        "@lifeforge/lifeforge--notes": "workspace:*"
-    }
+  "name": "@lifeforge/modules",
+  "private": true,
+  "description": "LifeForge modules",
+  "dependencies": {
+    "@lifeforge/lifeforge--todo-list": "workspace:*",
+    "@lifeforge/lifeforge--notes": "workspace:*",
+    "@lifeforge/lifeforge--pomodoro-timer": "workspace:*",
+    "@lifeforge/lifeforge--passwords": "workspace:*",
+    "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*"
+  }
 }
