@@ -1,3 +1,4 @@
+import { parseAsArrayOf, parseAsString, useQueryState } from 'nuqs'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useModuleTranslation } from '@lifeforge/localization'
@@ -142,13 +143,15 @@ function BoardColumn({
   )
 }
 
-function Lane({
+function AccordionLane({
   lane,
   items,
   onDrop,
   onDragStart,
   onPromote,
-  promotingId
+  promotingId,
+  expanded,
+  onToggle
 }: {
   lane: 'personal' | 'work'
   items: BoardItem[]
@@ -156,17 +159,23 @@ function Lane({
   onDragStart: (item: BoardItem) => void
   onPromote: (taskId: string) => void
   promotingId: string | null
+  expanded: boolean
+  onToggle: (expanded: boolean) => void
 }) {
   const { t } = useModuleTranslation()
 
   return (
-    <section className="space-y-3">
-      <div className="flex items-center gap-3">
+    <details
+      className="space-y-3"
+      open={expanded}
+      onToggle={event => onToggle(event.currentTarget.open)}
+    >
+      <summary className="flex cursor-pointer list-none items-center gap-3">
         <h2 className="text-base font-semibold text-zinc-900">
           {t(`board.lanes.${lane}`)}
         </h2>
         <div className="h-px flex-1 bg-zinc-200" />
-      </div>
+      </summary>
       <div className="flex gap-4 overflow-x-auto pb-2">
         {columns.map(column => (
           <BoardColumn
@@ -181,7 +190,7 @@ function Lane({
           />
         ))}
       </div>
-    </section>
+    </details>
   )
 }
 
@@ -191,6 +200,20 @@ export default function UnifiedKanban() {
   const [dragged, setDragged] = useState<BoardItem | null>(null)
   const [promotingId, setPromotingId] = useState<string | null>(null)
   const [error, setError] = useState(false)
+
+  const [collapsedLanes, setCollapsedLanes] = useQueryState(
+    'collapsed',
+    parseAsArrayOf(parseAsString)
+  )
+
+  const toggleLane = (lane: 'personal' | 'work', expanded: boolean) => {
+    const collapsed = collapsedLanes ?? []
+    const next = expanded
+      ? collapsed.filter(candidate => candidate !== lane)
+      : [...collapsed.filter(candidate => candidate !== lane), lane]
+
+    void setCollapsedLanes(next.length ? next : null)
+  }
 
   const refresh = useCallback(async () => {
     try {
@@ -305,21 +328,25 @@ export default function UnifiedKanban() {
           </p>
         )}
         <div className="space-y-8">
-          <Lane
+          <AccordionLane
+            expanded={!collapsedLanes?.includes('personal')}
             items={board.personal}
             lane="personal"
             promotingId={promotingId}
             onDragStart={setDragged}
             onDrop={onDrop}
             onPromote={onPromote}
+            onToggle={expanded => toggleLane('personal', expanded)}
           />
-          <Lane
+          <AccordionLane
+            expanded={!collapsedLanes?.includes('work')}
             items={board.work}
             lane="work"
             promotingId={promotingId}
             onDragStart={setDragged}
             onDrop={onDrop}
             onPromote={onPromote}
+            onToggle={expanded => toggleLane('work', expanded)}
           />
         </div>
       </main>

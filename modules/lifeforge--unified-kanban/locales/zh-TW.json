@@ -1,4 +1,6 @@
 {
+  "title": "統一看板",
+  "description": "在單一檢視中查看個人工作與 Squad 任務",
   "board": {
     "eyebrow": "指揮中心",
     "title": "統一看板",

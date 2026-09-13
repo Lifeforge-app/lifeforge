@@ -1,4 +1,6 @@
 {
+  "title": "统一看板",
+  "description": "在一个视图中查看个人任务和 Squad 任务",
   "board": {
     "eyebrow": "指挥中心",
     "title": "统一看板",

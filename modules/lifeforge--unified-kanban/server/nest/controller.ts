@@ -27,7 +27,7 @@ export class BoardController {
     private readonly squad: SquadMcpAdapter
   ) {}
 
-  @Get()
+  @Get('get')
   async get(@Req() request: Request) {
     const { pb } = await this.auth.authenticate(request)
 

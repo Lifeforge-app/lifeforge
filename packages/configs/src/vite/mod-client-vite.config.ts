@@ -60,6 +60,7 @@ export function defineModuleClientConfig(
             name: remoteName,
             filename: 'remoteEntry.js',
             dts: false,
+            bundleAllCSS: true,
             exposes: {
               './Manifest': './manifest.ts'
             },

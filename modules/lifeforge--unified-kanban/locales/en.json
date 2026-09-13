@@ -1,4 +1,6 @@
 {
+  "title": "Unified Kanban",
+  "description": "Personal tasks and Squad missions in one view",
   "board": {
     "eyebrow": "Command center",
     "title": "Unified Kanban",
