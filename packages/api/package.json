@@ -6,6 +6,17 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "typings": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.mjs"
+    },
+    "./dist/proxy/helpers/config": {
+      "types": "./dist/proxy/helpers/config.d.ts"
+    }
+  },
   "scripts": {
     "dev": "vite build --watch",
     "build": "rimraf dist && tsc -b --noEmit && vite build",
@@ -20,6 +31,18 @@
   },
   "devDependencies": {
     "@lifeforge/configs": "workspace:*",
-    "@types/crypto-js": "^4.2.2"
+    "@types/crypto-js": "^4.2.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "vite": "^8.1.5",
+    "vite-plugin-dts": "^5.0.3"
+  },
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.90.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-i18next": "^17.0.10",
+    "zod": "4.3.5"
   }
 }

@@ -4,6 +4,13 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "module": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
@@ -11,5 +18,13 @@
   },
   "dependencies": {
     "@lifeforge/federation": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.0"
+  },
+  "peerDependencies": {
+    "i18next": "^26.3.6",
+    "react": "^19.2.0",
+    "react-i18next": "^17.0.10"
   }
 }

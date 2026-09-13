@@ -630,6 +630,9 @@ importers:
 
   packages/api:
     dependencies:
+      '@tanstack/react-query':
+        specifier: ^5.90.2
+        version: 5.101.2(react@19.2.7)
       axios:
         specifier: ^1.12.2
         version: 1.18.1(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
@@ -639,9 +642,21 @@ importers:
       json-schema-to-ts:
         specifier: ^3.1.1
         version: 3.1.1
+      react:
+        specifier: ^19.2.0
+        version: 19.2.7
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.7(react@19.2.7)
+      react-i18next:
+        specifier: ^17.0.10
+        version: 17.0.10(i18next@26.3.6)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       socket.io-client:
         specifier: ^4.8.1
         version: 4.8.3(supports-color@10.2.2)
+      zod:
+        specifier: 4.3.5
+        version: 4.3.5
     devDependencies:
       '@lifeforge/configs':
         specifier: workspace:*
@@ -649,27 +664,93 @@ importers:
       '@types/crypto-js':
         specifier: ^4.2.2
         version: 4.2.2
-
-  packages/configs:
-    devDependencies:
       '@types/react':
         specifier: ^19.2.0
         version: 19.2.17
+      '@types/react-dom':
+        specifier: ^19.2.0
+        version: 19.2.3(@types/react@19.2.17)
+      '@vitejs/plugin-react':
+        specifier: ^6.0.3
+        version: 6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))(babel-plugin-react-compiler@1.0.0)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+      vite:
+        specifier: ^8.1.5
+        version: 8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+      vite-plugin-dts:
+        specifier: ^5.0.3
+        version: 5.0.3(esbuild@0.28.1)(rolldown@1.1.5)(rollup@4.62.2)(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+
+  packages/configs:
+    dependencies:
+      '@module-federation/vite':
+        specifier: ^1.18.2
+        version: 1.18.2(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+      '@rolldown/plugin-babel':
+        specifier: ^0.2.3
+        version: 0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+      '@vanilla-extract/vite-plugin':
+        specifier: ^5.2.2
+        version: 5.2.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))(yaml@2.9.0)
+      '@vitejs/plugin-react':
+        specifier: ^6.0.3
+        version: 6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))(babel-plugin-react-compiler@1.0.0)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+      react:
+        specifier: ^19.2.0
+        version: 19.2.7
+      vite:
+        specifier: ^8.1.5
+        version: 8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+      zod:
+        specifier: 4.3.5
+        version: 4.3.5
+    devDependencies:
+      '@types/node':
+        specifier: ^25.9.5
+        version: 25.9.5
+      '@types/react':
+        specifier: ^19.2.0
+        version: 19.2.17
+      vitest:
+        specifier: ^4.1.10
+        version: 4.1.10(@types/node@25.9.5)(@vitest/ui@4.1.10)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
 
   packages/federation:
     dependencies:
       '@lifeforge/api':
         specifier: workspace:*
         version: link:../api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../configs
       '@module-federation/runtime':
         specifier: ^2.8.0
         version: 2.8.0
+      react:
+        specifier: ^19.2.0
+        version: 19.2.7
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.0
+        version: 19.2.17
 
   packages/localization:
     dependencies:
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../federation
+      i18next:
+        specifier: ^26.3.6
+        version: 26.3.6
+      react:
+        specifier: ^19.2.0
+        version: 19.2.7
+      react-i18next:
+        specifier: ^17.0.10
+        version: 17.0.10(i18next@26.3.6)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.0
+        version: 19.2.17
 
   packages/log:
     dependencies:
@@ -692,24 +773,46 @@ importers:
       '@types/node':
         specifier: ^25.0.6
         version: 25.9.5
+      vite:
+        specifier: ^8.1.5
+        version: 8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+      vitest:
+        specifier: ^4.1.10
+        version: 4.1.10(@types/node@25.9.5)(@vitest/ui@4.1.10)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
 
   packages/pocketbase:
     dependencies:
-      '@lifeforge/configs':
-        specifier: workspace:*
-        version: link:../configs
       '@lifeforge/log':
         specifier: workspace:*
         version: link:../log
-      '@types/node':
-        specifier: ^25.9.5
-        version: 25.9.5
       chalk:
         specifier: ^5.6.2
         version: 5.6.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.18.1
       pocketbase:
         specifier: ^0.27.0
         version: 0.27.0
+      zod:
+        specifier: 4.3.5
+        version: 4.3.5
+    devDependencies:
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../configs
+      '@types/lodash':
+        specifier: ^4.17.21
+        version: 4.17.24
+      '@types/node':
+        specifier: ^25.9.5
+        version: 25.9.5
+      rimraf:
+        specifier: ^5.0.10
+        version: 5.0.10
+      vite:
+        specifier: ^8.1.5
+        version: 8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
 
   packages/server-utils:
     dependencies:
@@ -755,6 +858,9 @@ importers:
       uuid:
         specifier: ^11.1.0
         version: 11.1.1
+      zod:
+        specifier: 4.3.5
+        version: 4.3.5
     devDependencies:
       '@types/crypto-js':
         specifier: ^4.2.2
@@ -768,12 +874,27 @@ importers:
       '@types/multer':
         specifier: ^2.2.0
         version: 2.2.0
+      '@types/node':
+        specifier: ^25.9.5
+        version: 25.9.5
+      rimraf:
+        specifier: ^5.0.10
+        version: 5.0.10
+      vite:
+        specifier: ^8.1.5
+        version: 8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+      vitest:
+        specifier: ^4.1.10
+        version: 4.1.10(@types/node@25.9.5)(@vitest/ui@4.1.10)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
 
   packages/ui:
     dependencies:
       '@headlessui/react':
         specifier: ^2.2.9
         version: 2.2.10(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@hookform/resolvers':
+        specifier: ^5.4.0
+        version: 5.4.0(react-hook-form@7.81.0(react@19.2.7))
       '@iconify/collections':
         specifier: ^1.0.690
         version: 1.0.710
@@ -807,9 +928,18 @@ importers:
       '@radix-ui/react-select':
         specifier: ^2.2.6
         version: 2.3.3(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@tanstack/react-query':
+        specifier: ^5.90.2
+        version: 5.101.2(react@19.2.7)
+      '@uidotdev/usehooks':
+        specifier: ^2.4.1
+        version: 2.4.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       '@uiw/react-color':
         specifier: ^2.9.0
         version: 2.10.3(@babel/runtime@7.29.7)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@vanilla-extract/css':
+        specifier: ^1.20.1
+        version: 1.21.1
       '@vanilla-extract/recipes':
         specifier: ^0.5.7
         version: 0.5.7(@vanilla-extract/css@1.21.1)
@@ -819,21 +949,33 @@ importers:
       '@yudiel/react-qr-scanner':
         specifier: ^2.3.1
         version: 2.6.0(@types/emscripten@1.41.5)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       crypto-js:
         specifier: ^4.2.0
         version: 4.2.0
       culori:
         specifier: ^4.0.2
         version: 4.0.2
+      dayjs:
+        specifier: ^1.11.19
+        version: 1.11.21
       dom-css:
         specifier: ^2.1.0
         version: 2.1.0
       file-type-mime:
         specifier: ^0.4.7
         version: 0.4.7
+      i18next:
+        specifier: ^26.3.6
+        version: 26.3.6
       javascript-color-gradient:
         specifier: ^2.5.0
         version: 2.5.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.18.1
       nuqs:
         specifier: ^2.7.1
         version: 2.9.0(react-router@8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
@@ -843,15 +985,27 @@ importers:
       raf:
         specifier: ^3.4.1
         version: 3.4.1
+      react:
+        specifier: ^19.2.0
+        version: 19.2.7
       react-currency-input-field:
         specifier: ^4.0.6
         version: 4.0.6(react@19.2.7)
       react-datepicker:
         specifier: ^9.1.0
         version: 9.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.7(react@19.2.7)
       react-dropzone:
         specifier: ^17.0.0
         version: 17.0.0(react@19.2.7)
+      react-hook-form:
+        specifier: ^7.77.0
+        version: 7.81.0(react@19.2.7)
+      react-i18next:
+        specifier: ^17.0.10
+        version: 17.0.10(i18next@26.3.6)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-medium-image-zoom:
         specifier: ^5.4.0
         version: 5.4.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -864,6 +1018,9 @@ importers:
       react-photo-album:
         specifier: ^3.6.0
         version: 3.6.0(@types/react@19.2.17)(react@19.2.7)
+      react-router:
+        specifier: ^8.2.0
+        version: 8.2.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       react-toastify:
         specifier: ^11.0.5
         version: 11.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -879,6 +1036,9 @@ importers:
       uuid:
         specifier: ^14.0.1
         version: 14.0.1
+      zod:
+        specifier: 4.3.5
+        version: 4.3.5
       zustand:
         specifier: ^5.0.8
         version: 5.0.14(@types/react@19.2.17)(immer@11.1.15)(react@19.2.7)(use-sync-external-store@1.6.0(react@19.2.7))
@@ -907,6 +1067,12 @@ importers:
       '@types/javascript-color-gradient':
         specifier: ^2.4.2
         version: 2.4.2
+      '@types/lodash':
+        specifier: ^4.17.21
+        version: 4.17.24
+      '@types/node':
+        specifier: ^25.9.5
+        version: 25.9.5
       '@types/raf':
         specifier: ^3.4.3
         version: 3.4.3
@@ -922,12 +1088,21 @@ importers:
       '@types/tinycolor2':
         specifier: ^1.4.6
         version: 1.4.6
+      '@vanilla-extract/vite-plugin':
+        specifier: ^5.2.2
+        version: 5.2.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))(yaml@2.9.0)
+      '@vitejs/plugin-react':
+        specifier: ^6.0.3
+        version: 6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))(babel-plugin-react-compiler@1.0.0)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
       eslint-plugin-react-compiler:
         specifier: ^19.1.0-rc.2
         version: 19.1.0-rc.2(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(supports-color@10.2.2)
       eslint-plugin-storybook:
         specifier: 10.5.2
         version: 10.5.2(eslint@10.7.0(jiti@2.7.0)(supports-color@10.2.2))(storybook@10.5.2(@types/react@19.2.17)(prettier@3.9.5)(react@19.2.7))(supports-color@10.2.2)
+      rimraf:
+        specifier: ^5.0.10
+        version: 5.0.10
       storybook:
         specifier: 10.5.2
         version: 10.5.2(@types/react@19.2.17)(prettier@3.9.5)(react@19.2.7)
@@ -940,6 +1115,12 @@ importers:
       tsup:
         specifier: ^8.5.0
         version: 8.5.1(jiti@2.7.0)(postcss@8.5.19)(supports-color@10.2.2)(tsx@4.23.1)(yaml@2.9.0)
+      vite:
+        specifier: ^8.1.5
+        version: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+      vite-plugin-dts:
+        specifier: ^5.0.3
+        version: 5.0.3(esbuild@0.27.7)(rolldown@1.1.5)(rollup@4.62.2)(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
       vite-tsconfig-paths:
         specifier: ^6.1.1
         version: 6.1.1(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
@@ -9745,6 +9926,16 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.1.5':
     optional: true
 
+  '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))':
+    dependencies:
+      '@babel/core': 7.29.7(supports-color@10.2.2)
+      picomatch: 4.0.5
+      rolldown: 1.1.5
+    optionalDependencies:
+      '@babel/runtime': 7.29.7
+      vite: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+    optional: true
+
   '@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
       '@babel/core': 7.29.7(supports-color@10.2.2)
@@ -10981,6 +11172,28 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@vanilla-extract/compiler@0.7.2(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(yaml@2.9.0)':
+    dependencies:
+      '@vanilla-extract/css': 1.21.1
+      '@vanilla-extract/integration': 8.0.10(supports-color@10.2.2)
+      vite: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+      vite-node: 6.0.0(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@vitejs/devtools'
+      - babel-plugin-macros
+      - esbuild
+      - jiti
+      - less
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
   '@vanilla-extract/compiler@0.7.2(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(yaml@2.9.0)':
     dependencies:
       '@vanilla-extract/css': 1.21.1
@@ -11045,6 +11258,27 @@ snapshots:
     dependencies:
       '@vanilla-extract/css': 1.21.1
 
+  '@vanilla-extract/vite-plugin@5.2.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))(yaml@2.9.0)':
+    dependencies:
+      '@vanilla-extract/compiler': 0.7.2(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(yaml@2.9.0)
+      '@vanilla-extract/integration': 8.0.10(supports-color@10.2.2)
+      vite: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@vitejs/devtools'
+      - babel-plugin-macros
+      - esbuild
+      - jiti
+      - less
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - yaml
+
   '@vanilla-extract/vite-plugin@5.2.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))(yaml@2.9.0)':
     dependencies:
       '@vanilla-extract/compiler': 0.7.2(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(supports-color@10.2.2)(tsx@4.23.1)(yaml@2.9.0)
@@ -11065,6 +11299,14 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  '@vitejs/plugin-react@6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))(babel-plugin-react-compiler@1.0.0)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))':
+    dependencies:
+      '@rolldown/pluginutils': 1.0.1
+      vite: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+    optionalDependencies:
+      '@rolldown/plugin-babel': 0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+      babel-plugin-react-compiler: 1.0.0
 
   '@vitejs/plugin-react@6.0.3(@rolldown/plugin-babel@0.2.3(@babel/core@7.29.7(supports-color@10.2.2))(@babel/runtime@7.29.7)(rolldown@1.1.5)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)))(babel-plugin-react-compiler@1.0.0)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))':
     dependencies:
@@ -15959,6 +16201,25 @@ snapshots:
 
   unpipe@1.0.0: {}
 
+  unplugin-dts@1.0.3(esbuild@0.27.7)(rolldown@1.1.5)(rollup@4.62.2)(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)):
+    dependencies:
+      '@rollup/pluginutils': 5.4.0(rollup@4.62.2)
+      '@volar/typescript': 2.4.28
+      compare-versions: 6.1.1
+      debug: 4.4.3(supports-color@10.2.2)
+      kolorist: 1.8.0
+      local-pkg: 1.2.1
+      magic-string: 0.30.21
+      typescript: '@typescript/typescript6@6.0.2'
+      unplugin: 2.3.11
+    optionalDependencies:
+      esbuild: 0.27.7
+      rolldown: 1.1.5
+      rollup: 4.62.2
+      vite: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - supports-color
+
   unplugin-dts@1.0.3(esbuild@0.28.1)(rolldown@1.1.5)(rollup@4.62.2)(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)):
     dependencies:
       '@rollup/pluginutils': 5.4.0(rollup@4.62.2)
@@ -16036,6 +16297,27 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
+  vite-node@6.0.0(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0):
+    dependencies:
+      cac: 7.0.0
+      es-module-lexer: 2.3.1
+      obug: 2.1.4
+      pathe: 2.0.3
+      vite: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@vitejs/devtools'
+      - esbuild
+      - jiti
+      - less
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - terser
+      - tsx
+      - yaml
+
   vite-node@6.0.0(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0):
     dependencies:
       cac: 7.0.0
@@ -16056,6 +16338,20 @@ snapshots:
       - terser
       - tsx
       - yaml
+
+  vite-plugin-dts@5.0.3(esbuild@0.27.7)(rolldown@1.1.5)(rollup@4.62.2)(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)):
+    dependencies:
+      unplugin-dts: 1.0.3(esbuild@0.27.7)(rolldown@1.1.5)(rollup@4.62.2)(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0))
+    optionalDependencies:
+      rollup: 4.62.2
+      vite: 8.1.5(@types/node@25.9.5)(esbuild@0.27.7)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)
+    transitivePeerDependencies:
+      - '@rspack/core'
+      - '@vue/language-core'
+      - esbuild
+      - rolldown
+      - supports-color
+      - webpack
 
   vite-plugin-dts@5.0.3(esbuild@0.28.1)(rolldown@1.1.5)(rollup@4.62.2)(supports-color@10.2.2)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)(jiti@2.7.0)(tsx@4.23.1)(yaml@2.9.0)):
     dependencies:

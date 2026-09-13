@@ -4,18 +4,17 @@
   "description": "Unified logging package for LifeForge ecosystem",
   "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
       "default": "./dist/index.js"
     },
     "./cli": {
       "types": "./dist/loggers/cliLogger.d.ts",
       "import": "./dist/loggers/cliLogger.js",
-      "require": "./dist/loggers/cliLogger.js",
       "default": "./dist/loggers/cliLogger.js"
     }
   },
@@ -32,6 +31,8 @@
   },
   "devDependencies": {
     "@lifeforge/configs": "workspace:*",
-    "@types/node": "^25.0.6"
+    "@types/node": "^25.0.6",
+    "vite": "^8.1.5",
+    "vitest": "^4.1.10"
   }
 }
