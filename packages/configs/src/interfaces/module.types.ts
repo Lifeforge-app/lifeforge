@@ -37,6 +37,7 @@ export const moduleConfigSchema = z.object({
     .optional(),
   clearQueryOnUnmount: z.boolean().optional(),
   contract: z.any().optional(),
+  contractVersion: z.string().optional(),
   widgets: z
     .array(
       z.custom<

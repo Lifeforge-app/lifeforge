@@ -337,7 +337,7 @@ The `client/manifest.ts` file defines the client-side configuration for your mod
 
 ```typescript
 import { lazy } from 'react'
-import type { ModuleConfig } from '@lifeforge/shared'
+import type { ModuleConfig } from '@lifeforge/configs'
 
 export default {
   // Route definitions (REQUIRED)
@@ -408,8 +408,33 @@ interface ModuleConfig {
   
   // Clear React Query cache when navigating away
   clearQueryOnUnmount?: boolean
+
+  // Optional normalized operation catalog
+  contract?: Record<string, unknown>
+
+  // Optional normalized operation catalog version
+  contractVersion?: string
 }
 ```
+
+### Shared Host-Module Contract
+
+`ModuleConfig` is the shared host-module boundary exported by `@lifeforge/configs`. Its `contract` field is an optional, framework-neutral operation catalog. The catalog is normalized data consumed by clients and other hosts; it must not contain Forge or Nest request objects, callbacks, transport URLs, credentials, or route handlers. A Forge serializer and a future Nest-native emitter must produce the same catalog shape.
+
+Each operation record contains:
+
+| Field | Meaning |
+|-------|---------|
+| `method` | HTTP method, currently `get` or `post` |
+| `description` | Human-readable operation description |
+| `noAuth` | Whether authentication is not required |
+| `encrypted` | Whether the operation uses encrypted transport data |
+| `isDownloadable` | Whether the response is a download |
+| `media` | Media requirements, or `null` |
+| `input` | Optional JSON Schema definitions for `query` and `body` |
+| `output` | Response status map to JSON Schema, `true`, or `custom` |
+
+The optional `contractVersion` field identifies the normalized catalog version, for example `1.0.0`. Existing manifests may omit it and remain valid; an omitted value means the catalog is unversioned. When present, the value is part of federation cache-key semantics. Use semantic versioning: increment the major version for breaking changes, the minor version for additive catalog changes, and the patch version for compatible corrections.
 
 ### Route Patterns
 

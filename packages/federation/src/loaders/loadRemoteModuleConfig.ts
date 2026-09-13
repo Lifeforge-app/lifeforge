@@ -90,7 +90,8 @@ export async function loadRemoteModuleConfig(
     clearQueryOnUnmount: unwrapped.clearQueryOnUnmount,
     APIKeyAccess: mod.APIKeyAccess,
     widgets: unwrapped.widgets,
-    contract: unwrapped.contract
+    contract: unwrapped.contract,
+    contractVersion: unwrapped.contractVersion
   }
 
   if (unwrapped.contract) {
