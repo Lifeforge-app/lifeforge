@@ -67,7 +67,6 @@ services:
     ports:
       - '${API_PORT:-3636}:3636'
     volumes:
-      - ./modules:/lifeforge/modules
       - ./locales:/lifeforge/locales
     depends_on:
       db:

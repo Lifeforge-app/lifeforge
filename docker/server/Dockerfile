@@ -35,8 +35,9 @@ RUN pnpm install --frozen-lockfile --ignore-scripts
 # Copy source
 COPY . .
 
-# Turbo-filtered build: only @lifeforge/server and its transitive workspace deps
-RUN pnpm turbo build --filter=@lifeforge/server...
+# Build the API and module bundles used by the production image
+RUN pnpm turbo build --filter=@lifeforge/server... && \
+    pnpm --filter './modules/*' run build
 
 # ── Collect production node_modules for the API ──────────────────────
 # Create a clean package.json with only production dependencies,
@@ -75,8 +76,8 @@ COPY .npmrc pnpm-workspace.yaml ./
 # Install production dependencies only
 RUN pnpm install --prod
 
-# Directory for mounted modules
-RUN mkdir -p /lifeforge/modules
+# Copy bundled module server routes and metadata
+COPY --from=builder /lifeforge/modules ./modules
 
 COPY docker/server/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

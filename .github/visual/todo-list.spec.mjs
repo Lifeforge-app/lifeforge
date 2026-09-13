@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test'
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
 
 const screenshotDir = 'visual-results/screenshots'
+const manifestPath = `${screenshotDir}/manifest.json`
 const testUser = {
   email: 'visual-validation@example.com',
   name: 'Visual Validation',
@@ -10,6 +12,13 @@ const testUser = {
 
 async function isVisible(locator) {
   return locator.isVisible().catch(() => false)
+}
+
+async function recordCapture(filename, description, capture, usable = true) {
+  await capture()
+  const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
+  manifest.captures.push({ filename, description, usable })
+  await writeFile(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
 }
 
 async function setTheme(page, theme) {
@@ -27,6 +36,15 @@ async function setTheme(page, theme) {
     await expect(page.locator('body')).not.toHaveClass(/dark/)
   }
 }
+
+test.beforeAll(async () => {
+  await mkdir(screenshotDir, { recursive: true })
+  try {
+    await readFile(manifestPath, 'utf8')
+  } catch {
+    await writeFile(manifestPath, '{"captures":[]}\n')
+  }
+})
 
 test('captures the To-Do List layout in both themes', async ({ page }) => {
   page.on('console', message => {
@@ -52,26 +70,27 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
 
   await page.goto('/auth', { waitUntil: 'domcontentloaded' })
 
-  // Wait for the page to settle and check what state we're in
-  await page.waitForTimeout(2_000)
-
-  // Check if we can see the login/create account form
   const emailInput = page.getByPlaceholder('johndoe@gmail.com')
-  const loginFormVisible = await emailInput.isVisible().catch(() => false)
+  const loginFormVisible = await emailInput
+    .waitFor({ state: 'visible', timeout: 10_000 })
+    .then(() => true)
+    .catch(() => false)
 
   if (!loginFormVisible) {
-    // API may be unavailable - capture the error state for debugging but do not fail.
-    // Host 4xx/5xx responses are already logged via the response listener above.
     console.log('[visual] Login form not visible - API may be unavailable')
-    await page.screenshot({
-      fullPage: true,
-      path: `${screenshotDir}/00-auth-error-state.png`
-    })
-    console.log(
-      '[visual] Captured auth-error-state.png; skipping interactive walk. ' +
-        'Non-2xx host responses are listed above.'
+    await recordCapture(
+      '00-auth-error-state.png',
+      'Authentication error state: login form unavailable',
+      () =>
+        page.screenshot({
+          fullPage: true,
+          path: `${screenshotDir}/00-auth-error-state.png`
+        }),
+      false
     )
-    return
+    throw new Error(
+      'Visual validation not validated: authentication form was unavailable'
+    )
   }
 
   const createAccountHeading = page.getByRole('heading', { name: 'Welcome!' })
@@ -97,7 +116,6 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
   await page.getByPlaceholder('••••••••••••••••').fill(testUser.password)
   await page.getByRole('button', { name: 'Sign In' }).click()
 
-  // Detect login failure quickly instead of hanging on waitForURL
   const dashboardAppeared = await page
     .waitForURL(/\/dashboard/, { timeout: 10_000 })
     .then(() => true)
@@ -111,15 +129,19 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
       .textContent()
       .catch(() => null)
     const errorMsg = errorVisible ? ` Error: ${errorVisible}` : ''
-    await page.screenshot({
-      fullPage: true,
-      path: `${screenshotDir}/00-login-failed.png`
-    })
-    console.log(
-      `[visual] Login did not redirect to /dashboard. Current URL: ${currentUrl}.${errorMsg} ` +
-        'Non-2xx host responses are listed above. Skipping interactive walk.'
+    await recordCapture(
+      '00-login-failed.png',
+      `Authentication failed: login did not reach the dashboard (${currentUrl})`,
+      () =>
+        page.screenshot({
+          fullPage: true,
+          path: `${screenshotDir}/00-login-failed.png`
+        }),
+      false
     )
-    return
+    throw new Error(
+      `Visual validation not validated: login did not redirect to /dashboard.${errorMsg}`
+    )
   }
 
   await setTheme(page, 'dark')
@@ -134,43 +156,69 @@ test('captures the To-Do List layout in both themes', async ({ page }) => {
   await page.getByRole('button', { name: 'Create' }).click()
   await expect(page.getByText(taskSummary)).toBeVisible()
 
-  await page.screenshot({
-    fullPage: true,
-    path: `${screenshotDir}/01-task-list-dark.png`
-  })
-  await page
-    .locator('aside')
-    .nth(1)
-    .screenshot({
-      path: `${screenshotDir}/02-sidebar-dark.png`
-    })
+  await recordCapture(
+    '01-task-list-dark.png',
+    'To-Do List task list in dark theme with a created task',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/01-task-list-dark.png`
+      })
+  )
+  await recordCapture(
+    '02-sidebar-dark.png',
+    'To-Do List module sidebar in dark theme',
+    () =>
+      page
+        .locator('aside')
+        .nth(1)
+        .screenshot({ path: `${screenshotDir}/02-sidebar-dark.png` })
+  )
 
   await page.getByRole('button', { name: `Edit ${taskSummary}` }).click()
   await expect(page.getByText('Include Time')).toBeVisible()
-  await page.screenshot({
-    fullPage: true,
-    path: `${screenshotDir}/05-task-edit-drawer-dark.png`
-  })
+  await recordCapture(
+    '05-task-edit-drawer-dark.png',
+    'To-Do List edit drawer in dark theme with the Include Time field',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/05-task-edit-drawer-dark.png`
+      })
+  )
 
   await setTheme(page, 'light')
   await page.goto('/todo-list', { waitUntil: 'domcontentloaded' })
   await page.waitForTimeout(1_000)
   await expect(page.getByText(taskSummary)).toBeVisible()
-  await page.screenshot({
-    fullPage: true,
-    path: `${screenshotDir}/03-task-list-light.png`
-  })
-  await page
-    .locator('aside')
-    .nth(1)
-    .screenshot({
-      path: `${screenshotDir}/04-sidebar-light.png`
-    })
+  await recordCapture(
+    '03-task-list-light.png',
+    'To-Do List task list in light theme with a created task',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/03-task-list-light.png`
+      })
+  )
+  await recordCapture(
+    '04-sidebar-light.png',
+    'To-Do List module sidebar in light theme',
+    () =>
+      page
+        .locator('aside')
+        .nth(1)
+        .screenshot({ path: `${screenshotDir}/04-sidebar-light.png` })
+  )
 
   await page.getByRole('button', { name: `Edit ${taskSummary}` }).click()
   await expect(page.getByText('Include Time')).toBeVisible()
-  await page.screenshot({
-    fullPage: true,
-    path: `${screenshotDir}/06-task-edit-drawer-light.png`
-  })
+  await recordCapture(
+    '06-task-edit-drawer-light.png',
+    'To-Do List edit drawer in light theme with the Include Time field',
+    () =>
+      page.screenshot({
+        fullPage: true,
+        path: `${screenshotDir}/06-task-edit-drawer-light.png`
+      })
+  )
 })

@@ -33,12 +33,78 @@ jobs:
           cp env/.env.docker.example env/.env.docker
           docker compose down -v --remove-orphans
           docker compose up --build -d
+          echo 'Waiting for database initialization...'
+          db_init_status=''
+          for attempt in {1..60}; do
+            db_init_status=$(docker inspect --format '{{.State.Status}}' lifeforge-db-init 2>/dev/null || true)
+            if [ "$db_init_status" = 'exited' ]; then
+              db_init_exit_code=$(docker inspect --format '{{.State.ExitCode}}' lifeforge-db-init)
+              if [ "$db_init_exit_code" != '0' ]; then
+                echo "LifeForge database initialization failed (exit $db_init_exit_code)."
+                docker compose ps
+                docker compose logs
+                exit 1
+              fi
+              break
+            fi
+            if [ "$attempt" -eq 60 ]; then
+              echo "LifeForge database initialization did not finish (status: $db_init_status)."
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Restarting PocketBase to load the migrated schema...'
+          docker compose restart db
+          echo 'Restarting the API to reconnect to PocketBase...'
+          docker compose restart server
+          echo 'Waiting for client (port 5173)...'
           for attempt in {1..60}; do
             if curl --fail --silent http://localhost:5173/ >/dev/null; then
               break
             fi
             if [ "$attempt" -eq 60 ]; then
-              echo 'LifeForge did not become reachable on http://localhost:5173'
+              echo 'LifeForge client did not become reachable on http://localhost:5173'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for API server (port 3636)...'
+          for attempt in {1..60}; do
+            if curl --fail --silent http://localhost:3636/ >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 60 ]; then
+              echo 'LifeForge API did not become reachable on http://localhost:3636'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for API to initialize...'
+          for attempt in {1..30}; do
+            if curl --fail --silent http://localhost:3636/status >/dev/null 2>&1; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo 'LifeForge API did not become ready on http://localhost:3636/status'
+              docker compose ps
+              docker compose logs
+              exit 1
+            fi
+            sleep 2
+          done
+          echo 'Waiting for PocketBase (port 8090)...'
+          for attempt in {1..30}; do
+            if curl --fail --silent http://localhost:8090/api/health >/dev/null; then
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo 'PocketBase did not become ready on http://localhost:8090/api/health'
               docker compose ps
               docker compose logs
               exit 1
@@ -50,36 +116,37 @@ jobs:
 
       - name: Seed visual-validation test user
         run: |
-          # Create the test user directly via PocketBase so the visual test
-          # can log in without relying on the first-user registration UI.
-          # The login route verifies auth_password_hash (argon2), so we must
-          # compute that hash and include it in the record.
+          set -euo pipefail
+          PB_EMAIL=''
+          PB_PASSWORD=''
+          set -a
+          . env/.env.docker
+          set +a
+          if [ -z "$PB_EMAIL" ] || [ -z "$PB_PASSWORD" ]; then
+            echo 'PB_EMAIL and PB_PASSWORD must be configured for visual validation.'
+            exit 1
+          fi
           PB_URL="http://localhost:8090"
-          PB_EMAIL="${PB_EMAIL:-admin@example.com}"
-          PB_PASSWORD="${PB_PASSWORD:-changeme-at-least-8-chars}"
           VU_EMAIL="visual-validation@example.com"
           VU_PASSWORD="visual-validation-password"
           VU_USERNAME="visualvalidation"
           VU_NAME="Visual Validation"
 
-          # Compute argon2 hash of the password
           HASH=$(node -e "
             const { hash } = require('argon2');
             hash(process.argv[1], { type: 2 }).then(h => process.stdout.write(h));
           " "$VU_PASSWORD")
 
-          # Authenticate as superuser
           TOKEN=$(curl -sf -X POST "$PB_URL/api/collections/_superusers/auth-with-password" \
             -H 'Content-Type: application/json' \
             -d "{\"identity\":\"$PB_EMAIL\",\"password\":\"$PB_PASSWORD\"}" \
             | python3 -c 'import sys,json; print(json.load(sys.stdin)["token"])')
 
           if [ -z "$TOKEN" ]; then
-            echo 'Failed to authenticate as PocketBase superuser; skipping seed.'
-            exit 0
+            echo 'Failed to authenticate as PocketBase superuser; cannot seed the visual-validation user.'
+            exit 1
           fi
 
-          # Check if user already exists
           EXISTING=$(curl -sf "$PB_URL/api/collections/users/records?filter=(email='$VU_EMAIL')" \
             -H "Authorization: $TOKEN" \
             | python3 -c 'import sys,json; print(json.load(sys.stdin)["totalItems"])')
@@ -103,12 +170,71 @@ jobs:
               }"
             echo "Seeded visual-validation user ($VU_EMAIL)."
           else
-            echo "Visual-validation user ($VU_EMAIL) already exists; skipping seed."
+            echo "Visual-validation user ($VU_EMAIL) already exists; using it for visual validation."
           fi
+
+      - name: Prepare visual output
+        run: rm -rf visual-results visual-report
 
       - name: Run visual suite
         id: visual
         run: pnpm exec playwright test
+
+      - name: Validate visual evidence
+        id: evidence
+        if: always()
+        env:
+          VISUAL_OUTCOME: ${{ steps.visual.outcome }}
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs = require('node:fs');
+          const path = require('node:path');
+
+          const screenshotDir = path.resolve('visual-results/screenshots');
+          const manifestPath = path.join(screenshotDir, 'manifest.json');
+          const fail = message => {
+            console.error(message);
+            process.exit(1);
+          };
+
+          if (!fs.existsSync(manifestPath)) {
+            fail('Visual validation produced no evidence manifest.');
+          }
+
+          let manifest;
+          try {
+            manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+          } catch (error) {
+            fail(`Visual evidence manifest is invalid: ${error.message}`);
+          }
+
+          const captures = manifest?.captures;
+          if (!Array.isArray(captures) || captures.length === 0) {
+            fail('Visual validation produced no captures.');
+          }
+
+          for (const capture of captures) {
+            if (
+              typeof capture?.filename !== 'string' ||
+              path.basename(capture.filename) !== capture.filename ||
+              typeof capture?.description !== 'string' ||
+              typeof capture?.usable !== 'boolean'
+            ) {
+              fail('Visual evidence manifest contains an invalid capture entry.');
+            }
+            if (!fs.existsSync(path.join(screenshotDir, capture.filename))) {
+              fail(`Visual evidence is missing ${capture.filename}.`);
+            }
+          }
+
+          if (!captures.some(capture => capture.usable)) {
+            fail('Visual validation produced no usable captures.');
+          }
+          if (process.env.VISUAL_OUTCOME !== 'success') {
+            fail(`Visual suite did not pass (${process.env.VISUAL_OUTCOME}).`);
+          }
+          NODE
 
       - name: Upload Playwright report
         if: always()
@@ -131,74 +257,103 @@ jobs:
           retention-days: 7
 
       - name: Publish screenshots to evidence branch
+        id: publish
         if: always() && github.event.pull_request.head.repo.full_name == github.repository
-        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
           SCREENSHOTS: ${{ github.workspace }}/visual-results/screenshots
-          EVIDENCE_BRANCH: visual-validation-evidence
+          EVIDENCE_REF: visual-validation-evidence-pr-${{ github.event.pull_request.number }}-run-${{ github.run_id }}-attempt-${{ github.run_attempt }}
         run: |
           set -euo pipefail
+          if [ ! -f "$SCREENSHOTS/manifest.json" ]; then
+            echo 'No visual evidence manifest was produced; skipping evidence publication.'
+            exit 0
+          fi
           if ! compgen -G "$SCREENSHOTS/*.png" >/dev/null; then
-            echo 'No screenshots were produced; skipping evidence branch publication.'
+            echo 'No screenshots were produced; skipping evidence publication.'
+            exit 0
+          fi
+          USABLE=$(node -e "
+            const fs = require('fs');
+            const manifest = JSON.parse(fs.readFileSync(process.env.SCREENSHOTS + '/manifest.json', 'utf8'));
+            const hasUsable = (manifest.captures || []).some(c => c.usable === true);
+            process.stdout.write(hasUsable ? 'true' : 'false');
+          ")
+          if [ "$USABLE" != 'true' ]; then
+            echo 'No usable captures in manifest; skipping evidence publication.'
             exit 0
           fi
 
           pages_dir="$(mktemp -d)"
-          if ! git clone --quiet --depth 1 --branch "$EVIDENCE_BRANCH" \
-            "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-            "$pages_dir" 2>/dev/null; then
-            git clone --quiet --depth 1 \
-              "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-              "$pages_dir"
-            cd "$pages_dir"
-            git checkout --quiet -B "$EVIDENCE_BRANCH"
-          else
-            cd "$pages_dir"
-          fi
-
-          find . -maxdepth 1 -type f -name '*.png' -delete
+          git init --quiet "$pages_dir"
+          cd "$pages_dir"
+          git remote add origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git checkout --quiet --orphan evidence
           cp "$SCREENSHOTS"/*.png .
+          cp "$SCREENSHOTS/manifest.json" .
           git add -A
           git -c user.name='github-actions[bot]' \
             -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-            commit --quiet -m "visual validation screenshots (run ${GITHUB_RUN_ID})" || true
-          git push --quiet --force origin "HEAD:${EVIDENCE_BRANCH}"
+            commit --quiet -m "visual validation screenshots (run ${GITHUB_RUN_ID})"
+          git push --quiet origin "HEAD:${EVIDENCE_REF}"
 
       - name: Comment visual evidence on the pull request
         if: always() && github.event.pull_request.head.repo.full_name == github.repository
-        continue-on-error: true
         uses: actions/github-script@v7
         env:
           VISUAL_RESULT: ${{ steps.visual.outcome }}
-          EVIDENCE_BRANCH: visual-validation-evidence
+          EVIDENCE_RESULT: ${{ steps.evidence.outcome }}
+          EVIDENCE_PUBLISH_RESULT: ${{ steps.publish.outcome }}
+          EVIDENCE_REF: visual-validation-evidence-pr-${{ github.event.pull_request.number }}-run-${{ github.run_id }}-attempt-${{ github.run_attempt }}
         with:
           script: |
+            const fs = require('node:fs');
+            const path = require('node:path');
             const marker = '<!-- lifeforge-visual-validation -->';
             const { owner, repo, number } = context.issue;
-            const status = process.env.VISUAL_RESULT === 'success'
-              ? '✅ Passed'
-              : `❌ Failed (${process.env.VISUAL_RESULT})`;
-            const raw = `https://raw.githubusercontent.com/${owner}/${repo}/${process.env.EVIDENCE_BRANCH}`;
+            const screenshotDir = path.join(process.env.GITHUB_WORKSPACE, 'visual-results/screenshots');
+            const manifestPath = path.join(screenshotDir, 'manifest.json');
             const run = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
+            const passed =
+              process.env.VISUAL_RESULT === 'success' &&
+              process.env.EVIDENCE_RESULT === 'success' &&
+              process.env.EVIDENCE_PUBLISH_RESULT === 'success';
+            const status = passed ? '✅ Passed' : '❌ Not validated';
+            let entries = [];
+            if (fs.existsSync(manifestPath)) {
+              try {
+                entries = JSON.parse(fs.readFileSync(manifestPath, 'utf8'))?.captures ?? [];
+              } catch {
+                entries = [];
+              }
+            }
+            const raw = `https://raw.githubusercontent.com/${owner}/${repo}/${process.env.EVIDENCE_REF}`;
+            const rows = process.env.EVIDENCE_PUBLISH_RESULT === 'success'
+              ? entries.map(entry => {
+                  if (
+                    typeof entry?.filename !== 'string' ||
+                    path.basename(entry.filename) !== entry.filename ||
+                    typeof entry?.description !== 'string' ||
+                    !fs.existsSync(path.join(screenshotDir, entry.filename))
+                  ) {
+                    throw new Error('Visual evidence manifest contains a missing or invalid capture.');
+                  }
+                  return `| ${entry.description} | ![${entry.description}](${raw}/${entry.filename}) |`;
+                })
+              : [];
             const body = [
               marker,
               '## Visual validation (Playwright)',
               '',
               `**Status:** ${status}`,
               '',
-              'The job starts LifeForge with Docker Compose: client **http://localhost:5173**, API **http://localhost:3636**, and PocketBase **http://localhost:8090**. Browser output includes non-2xx host responses and page errors unchanged.',
+              'The job starts LifeForge with Docker Compose: client **http://localhost:5173**, API **http://localhost:3636**, and PocketBase **http://localhost:8090**.',
               '',
               `Screenshots: [workflow artifacts](${run}#artifacts) · [workflow run](${run})`,
               '',
-              '| Evidence | Screenshot |',
-              '| --- | --- |',
-              `| Dark task list: painted row and checkbox on the left | ![dark task list](${raw}/01-task-list-dark.png) |`,
-              `| Dark module sidebar | ![dark sidebar](${raw}/02-sidebar-dark.png) |`,
-              `| Light task list: painted row and checkbox on the left | ![light task list](${raw}/03-task-list-light.png) |`,
-              `| Light module sidebar | ![light sidebar](${raw}/04-sidebar-light.png) |`,
-              `| Dark edit drawer with corrected Include Time field | ![dark edit drawer](${raw}/05-task-edit-drawer-dark.png) |`,
-              `| Light edit drawer with corrected Include Time field | ![light edit drawer](${raw}/06-task-edit-drawer-light.png) |`
+              ...(rows.length
+                ? ['| Evidence | Screenshot |', '| --- | --- |', ...rows]
+                : ['No evidence images were published for this run. See the workflow artifacts for diagnostics.'])
             ].join('\n');
 
             const comments = await github.paginate(github.rest.issues.listComments, {
