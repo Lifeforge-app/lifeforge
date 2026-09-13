@@ -13,6 +13,7 @@ const item = {
     source: { type: 'string', enum: ['personal', 'mission'] },
     status: { type: 'string', enum: ['todo', 'doing', 'done'] },
     priority: { type: 'string' },
+    squadMissionId: { type: 'string' },
     repo: { type: 'string' },
     kind: { type: 'string' }
   },
@@ -62,6 +63,38 @@ export const contract = {
       input: { query: emptyQuery },
       output: { OK: board }
     },
+    promote: {
+      method: 'post',
+      description:
+        'Create or return the Squad mission linked to a personal task',
+      noAuth: false,
+      encrypted: false,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: emptyQuery,
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: { taskId: { type: 'string' } },
+          required: ['taskId'],
+          additionalProperties: false
+        }
+      },
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            taskId: { type: 'string' },
+            squadMissionId: { type: 'string' },
+            already: { type: 'boolean' }
+          },
+          required: ['taskId', 'squadMissionId', 'already'],
+          additionalProperties: false
+        }
+      }
+    },
     move: {
       method: 'post',
       description: 'Move an item to a lifecycle column',
@@ -80,6 +113,64 @@ export const contract = {
             status: { type: 'string', enum: ['todo', 'doing', 'done'] }
           },
           required: ['id', 'source', 'status'],
+          additionalProperties: false
+        }
+      }
+    },
+    undoPromote: {
+      method: 'post',
+      description:
+        'Remove the link between a personal task and its Squad mission',
+      noAuth: false,
+      encrypted: false,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: emptyQuery,
+        body: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: { taskId: { type: 'string' } },
+          required: ['taskId'],
+          additionalProperties: false
+        }
+      },
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: {
+            taskId: { type: 'string' },
+            squadMissionId: { type: ['string', 'null'] },
+            unlinked: { type: 'boolean' }
+          },
+          required: ['taskId', 'squadMissionId', 'unlinked'],
+          additionalProperties: false
+        }
+      }
+    },
+    deleteTask: {
+      method: 'delete',
+      description: 'Delete a personal task and clean up its Squad mission link',
+      noAuth: false,
+      encrypted: false,
+      isDownloadable: false,
+      media: null,
+      input: {
+        query: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: { taskId: { type: 'string' } },
+          required: ['taskId'],
+          additionalProperties: false
+        }
+      },
+      output: {
+        OK: {
+          $schema: 'https://json-schema.org/draft/2020-12/schema',
+          type: 'object',
+          properties: { taskId: { type: 'string' } },
+          required: ['taskId'],
           additionalProperties: false
         }
       }

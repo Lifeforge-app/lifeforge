@@ -8,6 +8,7 @@ export type BoardItem = {
   source: Source
   status: Column
   priority?: string
+  squadMissionId?: string
   repo?: string
   kind?: string
 }

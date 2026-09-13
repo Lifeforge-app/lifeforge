@@ -13,6 +13,7 @@ export type BoardItem = {
   source: BoardSource
   status: LifecycleStatus
   priority?: string
+  squadMissionId?: string
   repo?: string
   kind?: string
 }
@@ -22,6 +23,13 @@ export type PersonalTask = {
   summary: string
   status: LifecycleStatus
   priority?: string
+  squadMissionId?: string
+}
+
+export type MissionCreation = { taskId: string }
+
+export function missionIdForPersonalTask(taskId: string): string {
+  return `lifeforge-${taskId}`
 }
 
 export type SquadMission = {
@@ -151,7 +159,8 @@ export async function getUnifiedBoard(
         title: task.summary,
         source: 'personal',
         status: task.status,
-        priority: task.priority
+        priority: task.priority,
+        squadMissionId: task.squadMissionId
       })),
       work: missions.map(mission => ({
         id: mission.id,

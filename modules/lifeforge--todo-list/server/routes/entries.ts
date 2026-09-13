@@ -2,9 +2,9 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import z from 'zod'
 
+import { backfillEntryStatuses } from '../backfill'
 import forge from '../forge'
 import todoListSchemas from '../schema'
-import { backfillEntryStatuses } from '../backfill'
 
 dayjs.extend(utc)
 
@@ -199,6 +199,7 @@ export const create = forge
         completed_at: true,
         done: true,
         status: true,
+        squad_mission_id: true,
         created: true,
         updated: true
       })
@@ -245,6 +246,7 @@ export const update = forge
         completed_at: true,
         done: true,
         status: true,
+        squad_mission_id: true,
         created: true,
         updated: true
       })

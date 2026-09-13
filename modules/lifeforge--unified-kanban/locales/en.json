@@ -8,6 +8,8 @@
     "columns": { "todo": "To do", "doing": "Fazendo", "done": "Done" },
     "sources": { "personal": "Personal", "mission": "Squad mission" },
     "empty": "No items here",
+    "linkedMission": "Squad mission",
+    "actions": { "promote": "Promote to mission", "promoting": "Creating mission..." },
     "error": "The board could not be refreshed"
   }
 }

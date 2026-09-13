@@ -8,6 +8,8 @@
     "columns": { "todo": "Perlu dibuat", "doing": "Sedang dibuat", "done": "Selesai" },
     "sources": { "personal": "Peribadi", "mission": "Misi Squad" },
     "empty": "Tiada item di sini",
+    "linkedMission": "Misi Squad",
+    "actions": { "promote": "Naik taraf kepada misi", "promoting": "Mencipta misi..." },
     "error": "Papan tidak dapat disegarkan"
   }
 }

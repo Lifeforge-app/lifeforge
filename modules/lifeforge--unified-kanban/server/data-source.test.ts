@@ -1,8 +1,13 @@
 import { describe, expect, it } from 'vitest'
 
-import { missionStatus, parseSquadMissions } from './data-source'
+import { missionIdForPersonalTask, missionStatus, parseSquadMissions } from './data-source'
 
 describe('Squad mission adapter', () => {
+  it('derives a stable Squad mission id from a personal task id', () => {
+    expect(missionIdForPersonalTask('abc123')).toBe('lifeforge-abc123')
+    expect(missionIdForPersonalTask('abc123')).toBe(missionIdForPersonalTask('abc123'))
+  })
+
   it('maps supported lifecycle states to board columns', () => {
     expect(missionStatus('queued')).toBe('todo')
     expect(missionStatus('in_flight')).toBe('doing')

@@ -8,6 +8,8 @@
     "columns": { "todo": "待辦", "doing": "進行中", "done": "已完成" },
     "sources": { "personal": "個人", "mission": "Squad 任務" },
     "empty": "此處沒有項目",
+    "linkedMission": "Squad 任務",
+    "actions": { "promote": "提升為任務", "promoting": "正在建立任務..." },
     "error": "看板重新整理失敗"
   }
 }
