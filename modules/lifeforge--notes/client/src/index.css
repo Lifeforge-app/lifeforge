@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+@import '@lifeforge/ui/tailwind.css';
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background: #fafafa;
+  color: #18181b;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+button {
+  cursor: pointer;
+}

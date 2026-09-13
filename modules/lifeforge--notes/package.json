@@ -7,7 +7,10 @@
   "author": "Personal OS",
   "scripts": {"typecheck": "pnpm run typecheck:client && pnpm run typecheck:server", "typecheck:client": "cd client && tsc", "typecheck:server": "cd server && tsc", "build": "pnpm run build:client && pnpm run build:server", "build:client": "cd client && vite build", "build:server": "cd server && vite build"},
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.13",
+    "tailwindcss": "^4.1.13"
+  },
   "lifeforge": {"icon": "tabler:notebook", "category": "Productivity"},
   "peerDependencies": {"@lifeforge/api": "workspace:*", "@lifeforge/configs": "workspace:*", "@lifeforge/federation": "workspace:*", "@lifeforge/localization": "workspace:*", "@lifeforge/pocketbase": "workspace:*", "@lifeforge/server-utils": "workspace:*", "@lifeforge/ui": "workspace:*"}
 }
