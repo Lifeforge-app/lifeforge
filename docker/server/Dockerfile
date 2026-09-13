@@ -27,6 +27,12 @@ COPY modules/package.json               modules/package.json
 COPY modules/lifeforge--notes/package.json           modules/lifeforge--notes/package.json
 COPY modules/lifeforge--squad-backlog/package.json modules/lifeforge--squad-backlog/package.json
 COPY modules/lifeforge--todo-list/package.json      modules/lifeforge--todo-list/package.json
+COPY modules/lifeforge--books-library/package.json  modules/lifeforge--books-library/package.json
+COPY modules/lifeforge--code-time/package.json      modules/lifeforge--code-time/package.json
+COPY modules/lifeforge--moment-vault/package.json   modules/lifeforge--moment-vault/package.json
+COPY modules/lifeforge--movies/package.json         modules/lifeforge--movies/package.json
+COPY modules/lifeforge--music/package.json          modules/lifeforge--music/package.json
+COPY modules/lifeforge--youtube-summarizer/package.json modules/lifeforge--youtube-summarizer/package.json
 COPY locales/lang-en/package.json                   locales/lang-en/package.json
 
 # Install deps only (skip postinstall build – source not copied yet)

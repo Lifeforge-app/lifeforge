@@ -1,0 +1,10 @@
+{
+  "extends": "@lifeforge/configs/tsconfig/module-server.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["./**/*"]
+}
+

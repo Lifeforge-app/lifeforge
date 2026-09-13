@@ -1,0 +1,44 @@
+{
+  "name": "@lifeforge/lifeforge--moment-vault",
+  "displayName": "Moment Vault",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Capture and organize audio, photo, and text moments.",
+  "author": "LifeForge",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@wavesurfer/react": "^1.0.11",
+    "fluent-ffmpeg": "^2.1.3",
+    "groq-sdk": "^0.33.0",
+    "openai": "^6.9.0",
+    "react-medium-image-zoom": "^5.4.0",
+    "react-photo-album": "^3.1.0",
+    "request": "^2.88.2",
+    "wavesurfer.js": "^7.11.0"
+  },
+  "devDependencies": {
+    "@types/fluent-ffmpeg": "^2.1.27",
+    "@types/request": "^2.48.13"
+  },
+  "lifeforge": {
+    "icon": "tabler:bolt",
+    "category": "Productivity"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

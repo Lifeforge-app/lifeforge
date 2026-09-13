@@ -9,6 +9,12 @@
     "@lifeforge/lifeforge--passwords": "workspace:*",
     "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*",
     "@lifeforge/lifeforge--wallet": "workspace:*",
-    "@lifeforge/lifeforge--calendar": "workspace:*"
+    "@lifeforge/lifeforge--calendar": "workspace:*",
+    "@lifeforge/lifeforge--music": "workspace:*",
+    "@lifeforge/lifeforge--youtube-summarizer": "workspace:*",
+    "@lifeforge/lifeforge--code-time": "workspace:*",
+    "@lifeforge/lifeforge--movies": "workspace:*",
+    "@lifeforge/lifeforge--books-library": "workspace:*",
+    "@lifeforge/lifeforge--moment-vault": "workspace:*"
   }
 }

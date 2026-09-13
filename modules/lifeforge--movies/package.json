@@ -1,0 +1,39 @@
+{
+  "name": "@lifeforge/lifeforge--movies",
+  "displayName": "Movies",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Movie collection and theatre ticket tracker.",
+  "author": "LifeForge",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "jsdom": "^29.1.1",
+    "language-name-map": "^0.3.0",
+    "qrcode.react": "^4.2.0",
+    "react-virtualized": "^9.22.6"
+  },
+  "devDependencies": {
+    "@types/language-name-map": "^0.3.4",
+    "@types/react-virtualized": "^9.22.3"
+  },
+  "lifeforge": {
+    "icon": "tabler:movie",
+    "category": "Entertainment"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

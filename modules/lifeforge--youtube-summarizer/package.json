@@ -1,0 +1,41 @@
+{
+  "name": "@lifeforge/lifeforge--youtube-summarizer",
+  "displayName": "YouTube Summarizer",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Summarize YouTube video transcripts using AI.",
+  "author": "LifeForge",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "@iconify/react": "^5.2.0",
+    "@tanstack/react-query": "^5.90.5",
+    "@uidotdev/usehooks": "^2.4.1",
+    "human-number": "^2.0.6",
+    "react-markdown": "^10.1.0",
+    "react-toastify": "^11.0.5",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@types/human-number": "^1.0.2"
+  },
+  "lifeforge": {
+    "icon": "tabler:brand-youtube",
+    "category": "Entertainment"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

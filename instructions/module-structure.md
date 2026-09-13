@@ -262,8 +262,9 @@ queryClient.invalidateQueries({ queryKey: forgeAPI.transactions.key })
 ```
 
 > Older modules (e.g. `books-library`) still use `useMutation(...mutationOptions())`
-> with hardcoded keys like `['booksLibrary']` - this is legacy and must not be
-> replicated. They will be refactored soon. Always use the `forgeAPI.*.key` pattern above.
+> instead of `useForgeMutation` — this is legacy and must not be replicated. They
+> will be refactored soon. Always use the `useForgeMutation` + `forgeAPI.*.key`
+> pattern above.
 
 Types are inferred from the contract with helpers from `@lifeforge/api`:
 

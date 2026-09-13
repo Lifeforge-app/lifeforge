@@ -1,0 +1,18 @@
+{
+  "extends": "@lifeforge/configs/tsconfig/module.json",
+  "compilerOptions": {
+    "paths": {
+      "@/manifest": ["./manifest.ts"],
+      "@": ["./src/index"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": [
+    "./src/**/*",
+    "./components/**/*",
+    "./utils/**/*",
+    "./manifest.ts",
+    "./vite.config.ts",
+    "./contract.ts"
+  ]
+}

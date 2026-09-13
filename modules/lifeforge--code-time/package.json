@@ -1,0 +1,36 @@
+{
+  "name": "@lifeforge/lifeforge--code-time",
+  "displayName": "Code Time",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Track and visualize coding activity and time.",
+  "author": "LifeForge",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "chart.js": "^4.5.0",
+    "puppeteer-core": "^24.23.0",
+    "react-activity-calendar": "^2.7.14",
+    "react-tooltip": "^5.30.0",
+    "recharts": "^2.15.0"
+  },
+  "lifeforge": {
+    "icon": "tabler:clock-code",
+    "category": "Productivity"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

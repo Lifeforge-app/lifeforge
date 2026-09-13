@@ -1,0 +1,46 @@
+{
+  "name": "@lifeforge/lifeforge--books-library",
+  "displayName": "Books Library",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Personal book library and reading tracker.",
+  "author": "LifeForge",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "epub-wordcount": "^2.1.3",
+    "epub2": "^3.0.2",
+    "human-number": "^2.0.6",
+    "jsdom": "^27.0.0",
+    "nodemailer": "^7.0.9",
+    "pdf-page-counter": "^1.0.3",
+    "pretty-bytes": "^7.1.0",
+    "react-virtualized": "^9.22.6",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/human-number": "^1.0.2",
+    "@types/jsdom": "^27.0.0",
+    "@types/nodemailer": "^7.0.2",
+    "@types/react-virtualized": "^9.22.3"
+  },
+  "lifeforge": {
+    "icon": "tabler:book",
+    "category": "Productivity"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}
