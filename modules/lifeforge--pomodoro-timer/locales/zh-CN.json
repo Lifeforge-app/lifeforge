@@ -1,0 +1,91 @@
+{
+  "title": "番茄钟",
+  "description": "通过定时工作会话和内置休息提醒保持专注。",
+  "items": {
+    "session": "会话"
+  },
+  "modals": {
+    "session": {
+      "create": "创建会话",
+      "update": "更新会话"
+    },
+    "settings": "设置",
+    "endSession": {
+      "title": "结束会话",
+      "description": "您确定要结束会话“{{sessionName}}”吗？此操作无法撤销。"
+    }
+  },
+  "inputs": {
+    "sessionName": "会话名称",
+    "timerDurations": "计时器时长",
+    "workDuration": "工作时长",
+    "shortBreakDuration": "短休息时长",
+    "longBreakDuration": "长休息时长",
+    "sessionsUntilLongBreak": "长休息前的番茄钟数",
+    "minutes": "分钟",
+    "automation": "自动化",
+    "autoStartBreaks": "自动开始休息",
+    "autoStartBreaksDesc": "工作结束后自动开始休息计时器",
+    "autoStartWork": "自动开始工作",
+    "autoStartWorkDesc": "休息结束后自动开始工作计时器",
+    "notificationSound": "通知声音",
+    "workColor": "工作颜色",
+    "shortBreakColor": "短休息颜色",
+    "longBreakColor": "长休息颜色"
+  },
+  "statuses": {
+    "new": "新建",
+    "active": "进行中",
+    "completed": "已完成"
+  },
+  "buttons": {
+    "startPomodoro": "开始番茄钟",
+    "start": "开始",
+    "pause": "暂停",
+    "resume": "继续",
+    "reset": "重置",
+    "skip": "跳过休息",
+    "endSession": "结束会话",
+    "settings": "设置"
+  },
+  "timer": {
+    "work": "工作",
+    "shortBreak": "短休息",
+    "longBreak": "长休息",
+    "cycleCount": "第 {{current}} 个循环",
+    "pomodoroCount": "第 {{current}} 个番茄钟，共 {{total}} 个",
+    "completedToday": "今天完成了 {{count}} 个番茄钟",
+    "sessionCompleted": "会话完成",
+    "sessionConfig": "{{durations}} 分钟 | 每个循环 {{perCycle}} 个番茄钟",
+    "sessionCompletedDesc": "干得好！您已完成 {{name}} 会话！",
+    "readyPrompt": "准备好专注了吗？点击下面的按钮开始吧！",
+    "pomodoroDone": "已完成 {{count}} 个番茄钟 / {{total}}",
+    "pomodoroCompleted": "番茄钟已完成",
+    "todayPomodoros": "今日番茄钟",
+    "focusTime": "专注时间",
+    "breakTime": "休息时间",
+    "breakingTime": "休息时间",
+    "messages": {
+      "readyToFocus": "准备好专注了吗？开始吧！",
+      "stayFocused": "保持专注，你做得很棒！",
+      "paused": "计时器已暂停。准备好了就继续。",
+      "takeBreak": "休息时间到。放松一下充充电！"
+    }
+  },
+  "stats": {
+    "title": "统计",
+    "today": "今天",
+    "thisWeek": "本周",
+    "thisMonth": "本月",
+    "recentSessions": "最近的会话",
+    "noSessions": "尚未记录会话",
+    "minutes": "{{minutes}} 分钟",
+    "hoursMinutes": "{{hours}}小时 {{minutes}}分钟"
+  },
+  "empty": {
+    "session": {
+      "title": "还没有会话",
+      "description": "您还没有创建任何番茄钟会话。点击上方按钮开始您的第一个会话吧！"
+    }
+  }
+}

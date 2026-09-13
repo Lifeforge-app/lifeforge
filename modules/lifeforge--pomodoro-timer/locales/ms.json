@@ -1,0 +1,91 @@
+{
+  "title": "Pemasa Pomodoro",
+  "description": "Kekal fokus dengan sesi kerja bermasa dan peringatan rehat terbina.",
+  "items": {
+    "session": "Sesi"
+  },
+  "modals": {
+    "session": {
+      "create": "Cipta Sesi",
+      "update": "Kemas Kini Sesi"
+    },
+    "settings": "Tetapan",
+    "endSession": {
+      "title": "Tamatkan Sesi",
+      "description": "Adakah anda pasti mahu menamatkan sesi \"{{sessionName}}\"? Tindakan ini tidak boleh dibatalkan."
+    }
+  },
+  "inputs": {
+    "sessionName": "Nama Sesi",
+    "timerDurations": "Tempoh Pemasa",
+    "workDuration": "Tempoh Kerja",
+    "shortBreakDuration": "Tempoh Rehat Pendek",
+    "longBreakDuration": "Tempoh Rehat Panjang",
+    "sessionsUntilLongBreak": "Pomodoro Sebelum Rehat Panjang",
+    "minutes": "minit",
+    "automation": "Automasi",
+    "autoStartBreaks": "Auto-mula Rehat",
+    "autoStartBreaksDesc": "Mulakan pemasa rehat secara automatik selepas sesi kerja",
+    "autoStartWork": "Auto-mula Kerja",
+    "autoStartWorkDesc": "Mulakan pemasa kerja secara automatik selepas rehat",
+    "notificationSound": "Bunyi Notifikasi",
+    "workColor": "Warna Kerja",
+    "shortBreakColor": "Warna Rehat Pendek",
+    "longBreakColor": "Warna Rehat Panjang"
+  },
+  "statuses": {
+    "new": "Baru",
+    "active": "Aktif",
+    "completed": "Selesai"
+  },
+  "buttons": {
+    "startPomodoro": "Mula Pomodoro",
+    "start": "Mula",
+    "pause": "Jeda",
+    "resume": "Sambung",
+    "reset": "Set Semula",
+    "skip": "Langkau Rehat",
+    "endSession": "Tamatkan Sesi",
+    "settings": "Tetapan"
+  },
+  "timer": {
+    "work": "Kerja",
+    "shortBreak": "Rehat Pendek",
+    "longBreak": "Rehat Panjang",
+    "cycleCount": "Kitaran #{{current}}",
+    "pomodoroCount": "Pomodoro {{current}} daripada {{total}}",
+    "completedToday": "{{count}} pomodoro selesai hari ini",
+    "sessionCompletedDesc": "Syabas! Anda telah menyelesaikan sesi {{name}} anda!",
+    "readyPrompt": "Sedia untuk fokus? Klik butang di bawah untuk mula!",
+    "sessionCompleted": "Sesi selesai",
+    "pomodoroCompleted": "Pomodoro Selesai",
+    "todayPomodoros": "Pomodoro Hari Ini",
+    "pomodoroDone": "{{count}} pomodoro selesai / {{total}}",
+    "sessionConfig": "{{durations}} min | {{perCycle}} pomodoro setiap kitaran",
+    "focusTime": "Masa Fokus",
+    "breakTime": "Masa Rehat",
+    "breakingTime": "Masa Rehat",
+    "messages": {
+      "readyToFocus": "Sedia untuk fokus? Jom mula!",
+      "stayFocused": "Terus fokus, anda hebat!",
+      "paused": "Pemasa dijeda. Sedia bila anda sedia.",
+      "takeBreak": "Masa untuk rehat. Relaks dan cas semula!"
+    }
+  },
+  "stats": {
+    "title": "Statistik",
+    "today": "Hari Ini",
+    "thisWeek": "Minggu Ini",
+    "thisMonth": "Bulan Ini",
+    "recentSessions": "Sesi Terkini",
+    "noSessions": "Tiada sesi direkodkan lagi",
+    "minutes": "{{minutes}} min",
+    "hoursMinutes": "{{hours}}j {{minutes}}m"
+  },
+  "empty": {
+    "session": {
+      "title": "Tiada Sesi Lagi",
+      "description": "Anda belum mencipta sebarang sesi pomodoro lagi. Klik butang di atas untuk memulakan sesi pertama anda!"
+    }
+  }
+}

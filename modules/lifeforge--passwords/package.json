@@ -1,0 +1,40 @@
+{
+  "name": "@lifeforge/lifeforge--passwords",
+  "displayName": "Passwords",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifeforge-app/lifeforge-module-passwords.git"
+  },
+  "version": "0.0.5",
+  "type": "module",
+  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "description": "Protect your secrets, sometimes even from yourself.",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.2.0",
+    "copy-to-clipboard": "^3.3.3"
+  },
+  "devDependencies": {
+    "pocketbase": "^0.27.0"
+  },
+  "lifeforge": {
+    "icon": "tabler:key",
+    "category": "Confidential"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

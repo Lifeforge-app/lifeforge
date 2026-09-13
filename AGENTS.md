@@ -15,6 +15,7 @@
 ## Package Manager
 
 1. **pnpm is the only allowed package manager for this project.** All project commands (install, build, lint, typecheck, dev, etc.) must be executed via `pnpm`. Never use `npx`, `bun`, `yarn`, `npm`, or any other package manager.
+2. **When vendoring a module, force-add its `package.json` and entire `locales/` tree because `.gitignore` excludes them.**
 
 ## Import Conventions
 

@@ -1,0 +1,91 @@
+{
+  "title": "Pomodoro Timer",
+  "description": "Stay focused with timed work sessions and built-in break reminders.",
+  "items": {
+    "session": "Session"
+  },
+  "modals": {
+    "session": {
+      "create": "Create Session",
+      "update": "Update Session"
+    },
+    "settings": "Settings",
+    "endSession": {
+      "title": "End Session",
+      "description": "Are you sure you want to end the session \"{{sessionName}}\"? This action cannot be undone."
+    }
+  },
+  "inputs": {
+    "sessionName": "Session Name",
+    "timerDurations": "Timer Durations",
+    "workDuration": "Work Duration",
+    "shortBreakDuration": "Short Break Duration",
+    "longBreakDuration": "Long Break Duration",
+    "sessionsUntilLongBreak": "Pomodoros Until Long Break",
+    "minutes": "minutes",
+    "automation": "Automation",
+    "autoStartBreaks": "Auto-start Breaks",
+    "autoStartBreaksDesc": "Automatically start break timers after work sessions",
+    "autoStartWork": "Auto-start Work",
+    "autoStartWorkDesc": "Automatically start work timers after breaks",
+    "notificationSound": "Notification Sound",
+    "workColor": "Work Color",
+    "shortBreakColor": "Short Break Color",
+    "longBreakColor": "Long Break Color"
+  },
+  "buttons": {
+    "startPomodoro": "Start Pomodoro",
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "reset": "Reset",
+    "skip": "Skip Break",
+    "endSession": "End Session",
+    "settings": "Settings"
+  },
+  "statuses": {
+    "new": "New",
+    "active": "Active",
+    "completed": "Completed"
+  },
+  "timer": {
+    "work": "Work",
+    "shortBreak": "Short Break",
+    "longBreak": "Long Break",
+    "cycleCount": "Cycle #{{current}}",
+    "pomodoroCount": "Pomodoro {{current}} of {{total}}",
+    "completedToday": "{{count}} pomodoros completed today",
+    "sessionCompleted": "Session completed",
+    "sessionCompletedDesc": "Great job! You've completed your {{name}} session! ",
+    "readyPrompt": "Ready to focus? Click the button below to get started!",
+    "pomodoroCompleted": "Pomodoros Completed",
+    "todayPomodoros": "Today's Pomodoros",
+    "pomodoroDone": "{{count}} pomodoros done / {{total}}",
+    "sessionConfig": "{{durations}} mins | {{perCycle}} pomodoros per cycle",
+    "focusTime": "Focus Time",
+    "breakTime": "Break Time",
+    "breakingTime": "Breaking Time",
+    "messages": {
+      "readyToFocus": "Ready to focus? Let's get started!",
+      "stayFocused": "Stay focused, you're doing great!",
+      "paused": "Timer paused. Ready when you are.",
+      "takeBreak": "Time for a break. Relax and recharge!"
+    }
+  },
+  "stats": {
+    "title": "Statistics",
+    "today": "Today",
+    "thisWeek": "This Week",
+    "thisMonth": "This Month",
+    "recentSessions": "Recent Sessions",
+    "noSessions": "No sessions recorded yet",
+    "minutes": "{{minutes}} min",
+    "hoursMinutes": "{{hours}}h {{minutes}}m"
+  },
+  "empty": {
+    "session": {
+      "title": "No Sessions Yet",
+      "description": "You haven't created any pomodoro sessions yet. Click the button above to start your first session!"
+    }
+  }
+}

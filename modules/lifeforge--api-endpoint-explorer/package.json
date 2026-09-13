@@ -1,0 +1,32 @@
+{
+  "name": "@lifeforge/lifeforge--api-endpoint-explorer",
+  "displayName": "API Endpoint Explorer",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifeforge-app/lifeforge-module-apiEndpointExplorer.git"
+  },
+  "version": "0.0.5",
+  "type": "module",
+  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "description": "Discover and test all API endpoints in your LifeForge system.",
+  "scripts": {
+    "typecheck": "cd client && tsc",
+    "build": "pnpm run build:client",
+    "build:client": "cd client && vite build"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "lifeforge": {
+    "icon": "mynaui:api",
+    "category": "Development"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

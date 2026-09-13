@@ -1,0 +1,103 @@
+{
+  "title": "密碼",
+  "description": "保護您的秘密，甚至有時連自己都不知道。",
+  "modals": {
+    "password": {
+      "create": "創建密碼",
+      "update": "更新密碼"
+    },
+    "category": {
+      "create": "創建分類",
+      "update": "更新分類"
+    },
+    "masterPassword": {
+      "rotate": "更換主密碼"
+    },
+    "recovery": {
+      "generate": "生成恢復金鑰",
+      "display": "恢復金鑰",
+      "recover": "恢復帳戶"
+    }
+  },
+  "inputs": {
+    "password": {
+      "serviceColor": "服務顏色",
+      "serviceName": "服務名稱",
+      "website": "網站",
+      "password": "密碼",
+      "usernameOrEmail": "用戶名或電子郵件",
+      "serviceIcon": "服務圖標",
+      "category": "分類",
+      "rotationInterval": "密碼更換間隔（天）"
+    },
+    "category": {
+      "name": "分類名稱",
+      "color": "分類顏色",
+      "icon": "分類圖標"
+    },
+    "masterPassword": {
+      "existingPassword": "現有密碼",
+      "newPassword": "新密碼",
+      "confirmPassword": "確認新密碼"
+    },
+    "recovery": {
+      "password": "主密碼",
+      "recoveryKey": "恢復金鑰",
+      "newPassword": "新的主密碼",
+      "confirmPassword": "確認新的主密碼"
+    }
+  },
+  "items": {
+    "password": "密碼"
+  },
+  "sidebar": {
+    "all": "全部密碼",
+    "categories": "分類",
+    "allCategories": "全部分類",
+    "filtered": "篩選後的密碼"
+  },
+  "empty": {
+    "categories": {
+      "title": "暫無分類",
+      "description": "您還沒有創建任何分類。"
+    },
+    "passwords": {
+      "title": "沒有密碼",
+      "description": "您還沒有添加任何密碼。點擊上面的按鈕添加一個。"
+    },
+    "search": {
+      "title": "未找到條目",
+      "description": "未找到您搜索查詢的任何條目。請再試一次。"
+    }
+  },
+  "alerts": {
+    "saveRecoveryKey": "將此金鑰保存在安全的地方。它不會再被顯示。"
+  },
+  "toasts": {
+    "accountRecovered": "帳戶恢復成功",
+    "recoverAccountFailed": "帳戶恢復失敗",
+    "recoveryKeyCopied": "恢復金鑰已複製",
+    "masterPasswordRotated": "主密碼更換成功",
+    "rotateFailed": "主密碼更換失敗",
+    "exportFailed": "匯出密碼失敗",
+    "entryModifyFailed": "修改密碼條目失敗",
+    "passwordCopied": "密碼已複製",
+    "decryptFailed": "無法解密密碼。請重試。",
+    "entryDeleteFailed": "刪除密碼失敗。請重試。",
+    "categoryDeleteFailed": "刪除分類失敗。請重試。"
+  },
+  "lastUpdated": "最後更新",
+  "buttons": {
+    "copyPassword": "複製密碼",
+    "rotatePassword": "旋轉密碼",
+    "showPassword": "顯示密碼",
+    "hidePassword": "隱藏密碼",
+    "exportToCsv": "導出為CSV",
+    "rotateMasterPassword": "更換主密碼",
+    "generateRecoveryKey": "生成恢復金鑰",
+    "recoverAccount": "恢復帳戶",
+    "copyRecoveryKey": "複製",
+    "downloadRecoveryKey": "下載",
+    "closeRecoveryKey": "完成"
+  }
+}

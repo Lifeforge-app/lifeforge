@@ -1,0 +1,103 @@
+{
+  "title": "Kata Laluan",
+  "description": "Lindungi rahsia anda, kadang-kadang walaupun dari diri sendiri.",
+  "modals": {
+    "password": {
+      "create": "Cipta Kata Laluan",
+      "update": "Kemas Kini Kata Laluan"
+    },
+    "category": {
+      "create": "Cipta Kategori",
+      "update": "Kemas Kini Kategori"
+    },
+    "masterPassword": {
+      "rotate": "Putar Kata Laluan Utama"
+    },
+    "recovery": {
+      "generate": "Jana Kunci Pemulihan",
+      "display": "Kunci Pemulihan",
+      "recover": "Pulihkan Akaun"
+    }
+  },
+  "inputs": {
+    "password": {
+      "serviceColor": "Warna Perkhidmatan",
+      "serviceName": "Nama Perkhidmatan",
+      "website": "Laman Web",
+      "password": "Kata Laluan",
+      "usernameOrEmail": "Nama Pengguna atau E-mel",
+      "serviceIcon": "Ikon Perkhidmatan",
+      "category": "Kategori",
+      "rotationInterval": "Selang Putaran Kata Laluan (Hari)"
+    },
+    "category": {
+      "name": "Nama Kategori",
+      "color": "Warna Kategori",
+      "icon": "Ikon Kategori"
+    },
+    "masterPassword": {
+      "existingPassword": "Kata Laluan Sedia Ada",
+      "newPassword": "Kata Laluan Baharu",
+      "confirmPassword": "Sahkan Kata Laluan Baharu"
+    },
+    "recovery": {
+      "password": "Kata Laluan Utama",
+      "recoveryKey": "Kunci Pemulihan",
+      "newPassword": "Kata Laluan Utama Baharu",
+      "confirmPassword": "Sahkan Kata Laluan Utama Baharu"
+    }
+  },
+  "items": {
+    "password": "Kata Laluan"
+  },
+  "sidebar": {
+    "all": "Semua Kata Laluan",
+    "categories": "Kategori",
+    "allCategories": "Semua Kategori",
+    "filtered": "Kata Laluan Ditapis"
+  },
+  "empty": {
+    "categories": {
+      "title": "Tiada Kategori",
+      "description": "Anda belum membuat sebarang kategori lagi."
+    },
+    "passwords": {
+      "title": "Tiada Kata Laluan",
+      "description": "Anda belum menambah sebarang kata laluan lagi. Klik butang di atas untuk menambah satu."
+    },
+    "search": {
+      "title": "Tiada Entri Ditemui",
+      "description": "Tiada entri ditemukan untuk carian anda. Sila cuba lagi."
+    }
+  },
+  "alerts": {
+    "saveRecoveryKey": "Simpan kunci ini di tempat yang selamat. Ia tidak akan dipaparkan lagi."
+  },
+  "toasts": {
+    "accountRecovered": "Akaun berjaya dipulihkan",
+    "recoverAccountFailed": "Gagal memulihkan akaun",
+    "recoveryKeyCopied": "Kunci pemulihan disalin",
+    "masterPasswordRotated": "Kata laluan utama berjaya diputar",
+    "rotateFailed": "Gagal memutar kata laluan utama",
+    "exportFailed": "Gagal mengeksport kata laluan",
+    "entryModifyFailed": "Gagal mengubah suai entri kata laluan",
+    "passwordCopied": "Kata laluan disalin",
+    "decryptFailed": "Tidak dapat menyahsulit kata laluan. Sila cuba lagi.",
+    "entryDeleteFailed": "Gagal memadam kata laluan. Sila cuba lagi.",
+    "categoryDeleteFailed": "Gagal memadam kategori. Sila cuba lagi."
+  },
+  "lastUpdated": "Terakhir Dikemas kini",
+  "buttons": {
+    "copyPassword": "Salin Kata Laluan",
+    "rotatePassword": "Putar Kata Laluan",
+    "showPassword": "Tunjukkan Kata Laluan",
+    "hidePassword": "Sembunyikan Kata Laluan",
+    "exportToCsv": "Eksport ke CSV",
+    "rotateMasterPassword": "Putar Kata Laluan Utama",
+    "generateRecoveryKey": "Jana Kunci Pemulihan",
+    "recoverAccount": "Pulihkan Akaun",
+    "copyRecoveryKey": "Salin",
+    "downloadRecoveryKey": "Muat Turun",
+    "closeRecoveryKey": "Selesai"
+  }
+}
