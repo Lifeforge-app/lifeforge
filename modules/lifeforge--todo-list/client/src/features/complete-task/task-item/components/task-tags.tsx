@@ -6,6 +6,7 @@ import * as styles from '../task-item.css'
 
 export function TaskTags({ entry }: { entry: Task }) {
   const { tagsListQuery } = useTodoListContext()
+
   const tags = tagsListQuery.data ?? []
   const taskTags = entry.tags ?? []
   const visibleTags = taskTags.slice(0, 3)
@@ -15,7 +16,7 @@ export function TaskTags({ entry }: { entry: Task }) {
     const tagName = tags.find(item => item.id === tag)?.name
 
     return (
-      <Text className={styles.tag} key={tag}>
+      <Text key={tag} className={styles.tag}>
         <Box aria-hidden="true" as="span" className={styles.tagBackground} />#
         {tagName}
       </Text>

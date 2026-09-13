@@ -1,0 +1,40 @@
+{
+  "name": "@lifeforge/lifeforge--wishlist",
+  "version": "0.0.5",
+  "description": "Dream big, plan to achieve it.",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@iconify/react": "^5.2.0",
+    "@uidotdev/usehooks": "^2.4.1",
+    "jsdom": "^25.0.0",
+    "open-graph-scraper": "^6.11.0",
+    "react-medium-image-zoom": "^5.4.0",
+    "react-toastify": "^10.0.4",
+    "sharp": "^0.34.4"
+  },
+  "devDependencies": {},
+  "displayName": "Wishlist",
+  "type": "module",
+  "license": "CC BY-NC-SA 4.0",
+  "lifeforge": {
+    "icon": "tabler:heart",
+    "category": "Finance"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

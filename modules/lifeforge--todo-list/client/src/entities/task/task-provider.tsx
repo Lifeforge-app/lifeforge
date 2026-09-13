@@ -48,6 +48,7 @@ export function TodoListProvider({ children }: { children: ReactNode }) {
   const [tag, setTag] = useQueryState('tag', parseAsString)
   const [list, setList] = useQueryState('list', parseAsString)
   const [priority, setPriority] = useQueryState('priority', parseAsString)
+
   const filter: TaskFilter = { status, tag, list, priority }
   const filterSetters = {
     status: setStatus,
@@ -76,6 +77,7 @@ export function TodoListProvider({ children }: { children: ReactNode }) {
   )
 
   const [taskWindow, setTaskWindow] = useQueryState('task', parseAsString)
+
   const modifyTaskWindowOpenType: 'create' | 'update' | null =
     taskWindow === 'create' || taskWindow === 'update'
       ? (taskWindow as 'create' | 'update')
@@ -95,7 +97,9 @@ export function TodoListProvider({ children }: { children: ReactNode }) {
       queryKey: [...forgeAPI.entries.getById.key, selectedTaskId]
     })
   )
+
   const [selectedTaskState, setSelectedTaskState] = useState<Task | null>(null)
+
   const selectedTask =
     selectedTaskState?.id === selectedTaskId
       ? selectedTaskState

@@ -11,6 +11,7 @@ export const rules = {
       return {
         ImportDeclaration(node) {
           const source = node.source.value
+
           if (typeof source !== 'string' || !source.startsWith('@/')) return
 
           const current = layerOrder.find(layer =>
@@ -39,6 +40,7 @@ export const rules = {
       return {
         ImportDeclaration(node) {
           const source = node.source.value
+
           if (typeof source !== 'string' || !source.startsWith('@/')) return
 
           const slicePath = source.match(

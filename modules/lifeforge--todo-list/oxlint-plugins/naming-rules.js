@@ -5,6 +5,7 @@ export const rules = {
       return {
         Program(node) {
           const filename = context.filename.split('/').pop() ?? ''
+
           if (!/^[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+)*$/.test(filename)) {
             context.report({
               node,

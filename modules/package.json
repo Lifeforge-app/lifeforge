@@ -15,6 +15,10 @@
     "@lifeforge/lifeforge--code-time": "workspace:*",
     "@lifeforge/lifeforge--movies": "workspace:*",
     "@lifeforge/lifeforge--books-library": "workspace:*",
-    "@lifeforge/lifeforge--moment-vault": "workspace:*"
+    "@lifeforge/lifeforge--moment-vault": "workspace:*",
+    "@lifeforge/lifeforge--blog": "workspace:*",
+    "@lifeforge/lifeforge--idea-box": "workspace:*",
+    "@lifeforge/lifeforge--local-ip-widget": "workspace:*",
+    "@lifeforge/lifeforge--wishlist": "workspace:*"
   }
 }

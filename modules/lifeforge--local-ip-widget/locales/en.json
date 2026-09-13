@@ -1,0 +1,21 @@
+{
+  "title": "Utility Widgets",
+  "widgets": {
+    "localIpWidget": {
+      "title": "Local IP Address",
+      "description": "A small widget that tells you the local IP of your server"
+    },
+    "date": {
+      "title": "Date",
+      "description": "A simple decorative widget showing today's date."
+    },
+    "clock": {
+      "title": "Clock",
+      "description": "A small clock to help you keep track of time."
+    },
+    "quotes": {
+      "title": "Quotes",
+      "description": "A random quote to inspire you through the day."
+    }
+  }
+}

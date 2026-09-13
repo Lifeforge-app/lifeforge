@@ -1,0 +1,44 @@
+{
+  "name": "@lifeforge/lifeforge--idea-box",
+  "displayName": "Idea Box",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifeforge-app/lifeforge-module-ideaBox.git"
+  },
+  "version": "0.0.5",
+  "type": "module",
+  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "description": "Capture them before the inspiration flies away!",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "open-graph-scraper": "^6.10.0",
+    "react-columns": "^1.2.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-markdown": "^10.1.0",
+    "react-medium-image-zoom": "^5.4.0"
+  },
+  "devDependencies": {},
+  "lifeforge": {
+    "icon": "tabler:bulb",
+    "category": "Productivity"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  },
+  "license": "CC BY-NC-SA 4.0"
+}

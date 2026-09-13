@@ -1,0 +1,34 @@
+{
+  "name": "@lifeforge/lifeforge--blog",
+  "version": "0.0.5",
+  "description": "Cherish every moments in your life through the power of blogging.",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "@iconify/react": "^5.2.0",
+    "react-quilljs": "^2.0.5"
+  },
+  "devDependencies": {},
+  "displayName": "Blog",
+  "type": "module",
+  "license": "CC BY-NC-SA 4.0",
+  "lifeforge": {
+    "icon": "tabler:pencil-heart",
+    "category": "Lifestyle"
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

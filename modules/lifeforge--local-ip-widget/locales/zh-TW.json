@@ -1,0 +1,21 @@
+{
+  "title": "實用小工具",
+  "widgets": {
+    "localIpWidget": {
+      "title": "本地IP地址",
+      "description": "一個可以告訴您伺服器的本地IP的小部件"
+    },
+    "date": {
+      "title": "日期",
+      "description": "一個顯示今天日期的簡單裝飾微件。"
+    },
+    "clock": {
+      "title": "時鐘",
+      "description": "一個幫助您記錄時間的小時鐘。"
+    },
+    "quotes": {
+      "title": "名言",
+      "description": "一句隨機名言，啟發您度過美好的一天。"
+    }
+  }
+}

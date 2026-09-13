@@ -20,5 +20,7 @@ export function filterTasksBySummary<T extends { summary: string }>(
 
   if (normalizedQuery === '') return tasks
 
-  return tasks.filter(task => task.summary.toLowerCase().includes(normalizedQuery))
+  return tasks.filter(task =>
+    task.summary.toLowerCase().includes(normalizedQuery)
+  )
 }

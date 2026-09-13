@@ -21,6 +21,7 @@ export function TaskItem({
   isInDashboardWidget?: boolean
 }) {
   const queryClient = useQueryClient()
+
   const { listsQuery, setSelectedTask, setModifyTaskWindowOpenType } =
     useTodoListContext()
   const lists = listsQuery.data ?? []
@@ -52,12 +53,12 @@ export function TaskItem({
 
   return (
     <Card
-      align="center"
-      direction="row"
-      gap="lg"
       isInteractive
+      align="center"
       as="li"
       className={clsx(styles.item, className)}
+      direction="row"
+      gap="lg"
       justify="between"
     >
       <Checkbox

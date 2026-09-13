@@ -1,0 +1,16 @@
+{
+  "extends": "@lifeforge/configs/tsconfig/module.json",
+  "compilerOptions": {
+    "paths": {
+      "@/manifest": ["./manifest.ts"],
+      "@": ["./index"],
+      "@/*": ["./*"]
+    }
+  },
+  "include": ["./**/*"],
+  "references": [
+    {
+      "path": "../server/tsconfig.json"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "title": "Wishlist",
+  "description": "Dream big, plan to achieve it.",
+  "modals": {
+    "wishlist": {
+      "create": "Create Wishlist",
+      "update": "Edit Wishlist"
+    },
+    "entry": {
+      "create": "Add Item",
+      "update": "Edit Item"
+    },
+    "importFromOtherApps": "Import from Other Apps"
+  },
+  "buttons": {
+    "visitWebsite": "Visit Website",
+    "addManually": "Add Manually",
+    "fromOtherApps": "From Other Apps",
+    "markAsBought": "Mark as Bought"
+  },
+  "inputs": {
+    "wishlistName": "Wishlist Name",
+    "wishlistDescription": "Wishlist Description",
+    "wishlistIcon": "Wishlist Icon",
+    "wishlistColor": "Wishlist Color",
+    "productUrl": "Product URL",
+    "productPrice": "Product Price",
+    "productName": "Product Name",
+    "productImage": "Product Image",
+    "provider": "Provider"
+  },
+  "items": {
+    "wishlist": "Wishlist",
+    "entry": "Entry"
+  },
+  "empty": {
+    "wishlists": {
+      "title": "No Wishlists",
+      "description": "You haven't added any wishlists yet. Click the button above to add one."
+    },
+    "entries": {
+      "title": "No Items",
+      "description": "You haven't added any items yet. Click the button above to add one."
+    },
+    "search": {
+      "title": "Nothing Found",
+      "description": "No items found in your wishlist. Please try a different search."
+    }
+  },
+  "tabs": {
+    "wishlist": "Wishlist",
+    "bought": "Bought"
+  }
+}

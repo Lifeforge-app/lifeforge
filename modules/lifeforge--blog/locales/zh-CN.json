@@ -1,0 +1,20 @@
+{
+  "title": "博客",
+  "description": "通过博客的力量珍惜你生活中的每一个瞬间。",
+  "items": {
+    "post": "发布"
+  },
+  "inputs": {
+    "excerpt": "摘录",
+    "visibility": "可见性",
+    "featuredImage": "特色图片",
+    "category": "类别",
+    "labels": "标签"
+  },
+  "empty": {
+    "entries": {
+      "title": "没有可用的帖子",
+      "description": "未找到帖子。请使用上面的按钮创建一个。"
+    }
+  }
+}

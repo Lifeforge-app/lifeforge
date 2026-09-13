@@ -1,6 +1,7 @@
 function walk(node, callback, root = node, seen = new Set()) {
   if (!node || typeof node !== 'object' || seen.has(node)) return
   if (node !== root && node.type === 'JSXExpressionContainer') return
+
   if (
     node !== root &&
     [
@@ -45,6 +46,7 @@ function hasBooleanLogical(node) {
   walk(node, child => {
     if (isBooleanLogical(child)) found = true
   })
+
   return found
 }
 
@@ -83,6 +85,7 @@ export const rules = {
         JSXExpressionContainer(node) {
           let conditionalCount = 0
           let logicalCount = 0
+
           const conditionalExpressions = []
 
           walk(node.expression, child => {
@@ -90,6 +93,7 @@ export const rules = {
               conditionalCount++
               conditionalExpressions.push(child)
             }
+
             if (isBooleanLogical(child)) {
               logicalCount++
             }
@@ -99,6 +103,7 @@ export const rules = {
           const compoundTernaryCondition = conditionalExpressions.some(
             conditional => hasBooleanLogical(conditional.test)
           )
+
           if (
             nestedOrMultipleTernaries ||
             compoundTernaryCondition ||

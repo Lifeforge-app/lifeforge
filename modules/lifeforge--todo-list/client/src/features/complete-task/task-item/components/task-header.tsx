@@ -6,6 +6,7 @@ import * as styles from '../task-item.css'
 
 export function TaskHeader({ entry }: { entry: Task }) {
   const { prioritiesQuery } = useTodoListContext()
+
   const priorities = prioritiesQuery.data ?? []
   const priority = priorities.find(item => item.id === entry.priority)
   const hasPriority = entry.priority !== ''

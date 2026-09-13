@@ -1,0 +1,21 @@
+{
+  "title": "Widget Utiliti",
+  "widgets": {
+    "localIpWidget": {
+      "title": "Alamat IP Tempatan",
+      "description": "Sebuah widget kecil yang memberitahu anda IP tempatan pelayan anda"
+    },
+    "date": {
+      "title": "Tarikh",
+      "description": "Widget hiasan ringkas yang menunjukkan tarikh hari ini."
+    },
+    "clock": {
+      "title": "Jam",
+      "description": "Jam kecil untuk membantu anda menjejaki masa."
+    },
+    "quotes": {
+      "title": "Petikan",
+      "description": "Petikan rawak untuk memberi inspirasi kepada anda sepanjang hari."
+    }
+  }
+}

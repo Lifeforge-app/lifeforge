@@ -1,1 +1,4 @@
-export { SPICINESS_COLOR, SPICINESS_NAME } from './todo-subtasks-generation-spiciness'
+export {
+  SPICINESS_COLOR,
+  SPICINESS_NAME
+} from './todo-subtasks-generation-spiciness'
