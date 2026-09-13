@@ -7,6 +7,8 @@
     "@lifeforge/lifeforge--notes": "workspace:*",
     "@lifeforge/lifeforge--pomodoro-timer": "workspace:*",
     "@lifeforge/lifeforge--passwords": "workspace:*",
-    "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*"
+    "@lifeforge/lifeforge--api-endpoint-explorer": "workspace:*",
+    "@lifeforge/lifeforge--wallet": "workspace:*",
+    "@lifeforge/lifeforge--calendar": "workspace:*"
   }
 }

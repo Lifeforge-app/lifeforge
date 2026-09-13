@@ -1,0 +1,98 @@
+{
+  "title": "Kalendar",
+  "description": "Jangan terlepas janji temu dengan takdir (atau doktor gigi).",
+  "widgets": {
+    "miniCalendar": {
+      "title": "Kalendar Mini",
+      "description": "Lihat acara yang akan datang dalam kalendar kecil."
+    },
+    "todaysEvent": {
+      "title": "Acara Hari Ini",
+      "description": "Mengingatkan anda tentang aktiviti hari ini.",
+      "empty": {
+        "event": {
+          "title": "Tiada Acara",
+          "description": "Anda tiada aktiviti hari ini."
+        }
+      }
+    }
+  },
+  "view": {
+    "day": "Harian",
+    "month": "Bulanan",
+    "week": "Mingguan",
+    "agenda": "Agenda"
+  },
+  "sidebar": {
+    "categories": "Kategori",
+    "calendars": "Kalendar"
+  },
+  "modals": {
+    "event": {
+      "create": "Cipta Acara",
+      "update": "Kemas Kini Acara"
+    },
+    "category": {
+      "create": "Cipta Kategori",
+      "update": "Kemas Kini Kategori"
+    },
+    "scanImage": {
+      "title": "Imbas Imej"
+    },
+    "calendar": {
+      "create": "Cipta Kalendar",
+      "update": "Kemaskini Kalendar"
+    },
+    "confirmAddException": {
+      "title": "Sahkan Tambah Pengecualian",
+      "description": "Adakah anda pasti ingin menambah pengecualian untuk acara ini?"
+    },
+    "subscribeToIcsCalendar": "Langgan Kalendar ICS",
+    "selectYearAndMonth": "Pilih Tahun dan Bulan"
+  },
+  "inputs": {
+    "startTime": "Masa Mula",
+    "endTime": "Masa Tamat",
+    "eventCategory": "Kategori Acara",
+    "eventTitle": "Tajuk Acara",
+    "categoryName": "Nama Kategori",
+    "categoryColor": "Warna Kategori",
+    "categoryIcon": "Ikon Kategori",
+    "location": "Lokasi",
+    "referenceLink": "Pautan Rujukan",
+    "description": "Deskripsi",
+    "image": "Imej",
+    "eventType": "Jenis Acara",
+    "eventTime": "Waktu Acara",
+    "useGoogleMap": "Gunakan Peta Google",
+    "calendar": "Kalendar",
+    "calendarName": "Nama Kalendar",
+    "calendarColor": "Warna Kalendar",
+    "icsUrl": "Pautan ICS"
+  },
+  "items": {
+    "event": "Acara",
+    "category": "Kategori"
+  },
+  "buttons": {
+    "inputManually": "Masukkan Secara Manual",
+    "scanFromImage": "Imbas dari Imej",
+    "today": "Hari Ini",
+    "exceptThisTime": "Kecuali Kali Ini",
+    "viewReference": "Lihat Rujukan"
+  },
+  "eventTypes": {
+    "single": "Acara Tunggal",
+    "recurring": "Acara Berulang"
+  },
+  "empty": {
+    "calendars": {
+      "title": "Tiada Kalendar Dijumpai",
+      "description": "Anda boleh mencipta kalendar dengan mengklik butang tambah di atas."
+    },
+    "categories": {
+      "title": "Tiada Kategori Dijumpai",
+      "description": "Anda boleh mencipta kategori dengan mengklik butang tambah di atas."
+    }
+  }
+}

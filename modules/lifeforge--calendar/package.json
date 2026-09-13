@@ -1,0 +1,54 @@
+{
+  "name": "@lifeforge/lifeforge--calendar",
+  "displayName": "Calendar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifeforge-app/lifeforge-module-calendar.git"
+  },
+  "version": "0.0.5",
+  "type": "module",
+  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "description": "Don't miss appointments with destiny (or the dentist).",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "node-ical": "^0.21.0",
+    "react-big-calendar": "^1.20.0",
+    "react-markdown": "^10.1.0",
+    "react-tooltip": "^5.30.0",
+    "rrule": "^2.8.1",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/react-big-calendar": "^1.16.3"
+  },
+  "lifeforge": {
+    "icon": "tabler:calendar",
+    "category": "Productivity",
+    "APIKeyAccess": {
+      "openai": {
+        "usage": "Create event from natural language and images using llm",
+        "required": false
+      },
+      "gcloud": {
+        "usage": "Retrieve location during natural language processing for event creation",
+        "required": false
+      }
+    }
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

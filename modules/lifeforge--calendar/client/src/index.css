@@ -1,0 +1,194 @@
+@import 'react-big-calendar/lib/css/react-big-calendar.css';
+@import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+
+.rbc-off-range-bg {
+  background-color: color-mix(in srgb, var(--color-bg-200) 50%, transparent);
+}
+
+:is(.dark) .rbc-off-range-bg {
+  background-color: color-mix(in srgb, var(--color-bg-900) 50%, transparent);
+}
+
+.rbc-off-range > .rbc-button-link {
+  color: var(--color-bg-500);
+}
+
+.rbc-today {
+  background-color: color-mix(
+    in srgb,
+    var(--color-custom-500) 10%,
+    transparent
+  ) !important;
+}
+
+.rbc-now {
+  color: var(--color-custom-500);
+}
+
+.rbc-row-content {
+  z-index: auto !important;
+}
+
+.rbc-date-cell {
+  padding: 0.5rem !important;
+  text-align: center;
+  font-size: var(--text-base);
+}
+
+.rbc-header {
+  padding: 0.5rem;
+}
+
+.rbc-show-more {
+  color: var(--color-custom-500);
+  background-color: transparent !important;
+}
+
+.rbc-show-more:hover {
+  color: var(--color-custom-600);
+}
+
+.rbc-event {
+  border: none !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  font-size: var(--text-sm);
+  box-shadow: var(--custom-shadow);
+  transition: all 150ms;
+}
+
+.rbc-event.rbc-selected button {
+  background-color: var(--category-color) !important;
+}
+
+.rbc-event.rbc-selected button * {
+  color: var(--color-bg-800) !important;
+}
+
+.rbc-event.rbc-selected button.dark-category * {
+  color: var(--color-bg-100) !important;
+}
+
+.rbc-event button {
+  height: 100%;
+}
+
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td {
+  vertical-align: middle;
+}
+
+.rbc-selected-cell {
+  background-color: color-mix(
+    in srgb,
+    var(--color-bg-500) 20%,
+    transparent
+  ) !important;
+}
+
+.rbc-selected-cell.rbc-today {
+  background-color: color-mix(
+    in srgb,
+    var(--color-custom-700) 20%,
+    transparent
+  ) !important;
+}
+
+.rbc-event-label {
+  display: none;
+}
+
+.rbc-time-header-cell {
+  min-height: auto !important;
+}
+
+.rbc-calendar *:not(button, a),
+.rbc-day-bg + .rbc-day-bg,
+.rbc-month-row + .rbc-month-row,
+.rbc-time-content > * + * > *,
+.rbc-timeslot-group,
+.rbc-day-slot .rbc-time-slot,
+.rbc-agenda-view table.rbc-agenda-table thead > tr > th,
+.rbc-agenda-view table.rbc-agenda-table,
+.rbc-agenda-view table.rbc-agenda-table tbody > tr > td + td,
+.rbc-agenda-table tr {
+  border-color: var(--color-bg-200);
+
+  :is(.dark) & {
+    border-color: var(--color-bg-800);
+  }
+}
+
+.rbc-current-time-indicator {
+  background-color: var(--color-custom-500);
+  height: 0.125rem;
+}
+
+.rbc-current-time-indicator::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -0.25rem;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--color-custom-500);
+  transform: translateY(-50%);
+  border-radius: 9999px;
+}
+
+.rbc-day-slot .rbc-time-slot {
+  border-top: 0;
+}
+
+.rbc-timeslot-group .rbc-label {
+  color: var(--color-bg-500);
+  position: relative;
+  top: 50%;
+}
+
+.rbc-header {
+  height: auto !important;
+  padding: 0.5rem !important;
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+.rbc-month-row {
+  min-height: 7rem;
+}
+
+.rbc-addons-dnd-resize-ns-icon {
+  border-color: var(--color-bg-800);
+}
+
+:is(.dark) .rbc-addons-dnd-resize-ns-icon {
+  border-color: var(--color-bg-100);
+}
+
+.rbc-agenda-table tr:has(th) {
+  display: none;
+}
+
+.calendar-prose h1,
+.calendar-prose h2,
+.calendar-prose h3,
+.calendar-prose h4,
+.calendar-prose h5,
+.calendar-prose h6 {
+  margin-top: 1rem;
+}
+
+.calendar-prose img {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  border-radius: 0.375rem;
+}
+
+.calendar-prose p {
+  color: var(--color-bg-600);
+  margin-top: 0.5rem;
+}
+
+:is(.dark) .calendar-prose p {
+  color: var(--color-bg-400);
+}

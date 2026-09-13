@@ -1,0 +1,58 @@
+{
+  "name": "@lifeforge/lifeforge--wallet",
+  "displayName": "Wallet",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifeforge-app/lifeforge-module-wallet.git"
+  },
+  "version": "0.0.5",
+  "type": "module",
+  "author": "Melvin Chia <melvinchia623600@gmail.com>",
+  "description": "Become your own financial superhero.",
+  "scripts": {
+    "typecheck": "pnpm run typecheck:client && pnpm run typecheck:server",
+    "typecheck:client": "cd client && tsc",
+    "typecheck:server": "cd server && tsc",
+    "build": "pnpm run build:client && pnpm run build:server",
+    "build:client": "cd client && vite build",
+    "build:server": "cd server && vite build"
+  },
+  "dependencies": {
+    "@vis.gl/react-google-maps": "^1.5.5",
+    "chart.js": "^4.5.0",
+    "moment": "^2.30.1",
+    "moment-range": "^4.0.2",
+    "react-chartjs-2": "^5.3.0",
+    "react-to-print": "^3.1.1",
+    "react-virtualized": "^9.22.6",
+    "recharts": "^3.9.2",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@types/google.maps": "^3.65.2",
+    "@types/react-virtualized": "^9.22.3"
+  },
+  "lifeforge": {
+    "icon": "tabler:currency-dollar",
+    "category": "Finance",
+    "APIKeyAccess": {
+      "deepseek": {
+        "usage": "Create transactions from natural language and images using llm",
+        "required": false
+      },
+      "gcloud": {
+        "usage": "To fetch location from google map api",
+        "required": false
+      }
+    }
+  },
+  "peerDependencies": {
+    "@lifeforge/api": "workspace:*",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/federation": "workspace:*",
+    "@lifeforge/localization": "workspace:*",
+    "@lifeforge/pocketbase": "workspace:*",
+    "@lifeforge/server-utils": "workspace:*",
+    "@lifeforge/ui": "workspace:*"
+  }
+}

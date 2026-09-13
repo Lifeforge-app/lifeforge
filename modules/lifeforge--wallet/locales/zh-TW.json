@@ -1,0 +1,291 @@
+{
+  "title": "錢包",
+  "description": "成為您自己的財務超級英雄。",
+  "subsections": {
+    "dashboard": {
+      "title": "儀表板"
+    },
+    "assets": {
+      "title": "資產",
+      "description": "在您的錢包中安全高效地管理您的資產。"
+    },
+    "ledgers": {
+      "title": "分類帳",
+      "description": "管理和查看您在賬本中的財務交易和帳戶。"
+    },
+    "transactions": {
+      "title": "交易紀錄",
+      "description": "查看您的交易歷史和詳情。"
+    },
+    "financialStatements": {
+      "title": "財務報表",
+      "description": "查看詳細的財務報表，以了解您帳戶的交易和餘額情況。"
+    },
+    "spendingHeatmap": {
+      "title": "消費熱力圖",
+      "description": "顯示您隨時間變化的消費習慣的可視化圖形。"
+    }
+  },
+  "header": {
+    "allTransactions": "所有交易",
+    "filteredTransactions": "篩選後的交易"
+  },
+  "widgets": {
+    "categoriesBreakdown": {
+      "title": "收支類別分析",
+      "thisMonthsExpenses": "本月支出總額",
+      "thisMonthsIncome": "本月收入總額"
+    },
+    "income": {
+      "title": "收入"
+    },
+    "assetsBalance": {
+      "title": "資產餘額",
+      "description": "追蹤資產餘額。",
+      "empty": {
+        "assets": {
+          "title": "未找到資產",
+          "description": "您尚未創建任何資產。"
+        }
+      }
+    },
+    "statistics": {
+      "title": "統計"
+    },
+    "expenses": {
+      "title": "支出"
+    },
+    "recentTransactions": {
+      "title": "最近交易"
+    },
+    "transactionsCount": {
+      "title": "交易筆數"
+    },
+    "totalAssets": "總資產"
+  },
+  "transactionCount": "筆交易",
+  "receiptUploadInfo": "僅接受 PDF 和圖片文件",
+  "empty": {
+    "transactions": {
+      "title": "未找到交易",
+      "description": "您尚未紀錄任何交易。點擊上面的按鈕添加一個。"
+    },
+    "categories": {
+      "title": "未找到類別",
+      "description": "您尚未創建任何類別。點擊下面的按鈕添加一個。"
+    },
+    "results": {
+      "title": "未找到結果",
+      "description": "找不到交易, 請嘗試其他關鍵字。"
+    },
+    "assets": {
+      "title": "未找到資產",
+      "description": "您尚未創建任何資產。點擊上面的按鈕添加一個。"
+    },
+    "ledger": {
+      "title": "未找到帳本",
+      "description": "您尚未創建任何帳本。點擊上面的按鈕添加一個。"
+    },
+    "location": {
+      "title": "沒有可用的位置",
+      "description": "在任何交易中找不到位置數據。請添加包含位置的交易。"
+    },
+    "templates": {
+      "title": "未找到模板",
+      "description": "您尚未創建任何交易模板。點擊上面的按鈕添加一個。"
+    },
+    "mapKey": {
+      "description": "需要一個 Google 地圖 API 密鑰才能正確顯示地圖。請在您的 API 密鑰庫中添加它，密鑰為 \"gcloud\"。",
+      "title": "缺少 Google 地圖 API 金鑰"
+    },
+    "statements": {
+      "title": "財務報表無數據",
+      "description": "找不到用於生成財務報表的交易。請先添加一些交易。"
+    }
+  },
+  "sidebar": {
+    "allTransactions": "所有交易",
+    "allType": "所有類型",
+    "allLedgers": "所有帳本",
+    "allAssets": "所有資產",
+    "allCategories": "所有類別",
+    "allTypes": "所有類型",
+    "transactionTypes": "交易類型",
+    "ledgers": "帳本",
+    "assets": "資產",
+    "categories": "類別",
+    "dateRange": "日期範圍",
+    "calendarHeatmap": "日曆熱圖"
+  },
+  "table": {
+    "date": "日期",
+    "type": "類型",
+    "asset": "資產",
+    "ledger": "帳本",
+    "particulars": "摘要",
+    "category": "類別",
+    "amount": "金額",
+    "receipt": "收據",
+    "location": "地點"
+  },
+  "buttons": {
+    "scanReceipt": "掃描收據",
+    "removeReceipt": "移除收據",
+    "uploadReceipt": "上傳收據",
+    "viewTransactions": "查看交易",
+    "hideAmount": "隱藏金額",
+    "showStatement": "查看報表",
+    "hideStatement": "隱藏報表",
+    "addManually": "手動添加",
+    "manageCategories": "管理類別",
+    "viewBalanceChart": "查看餘額圖表",
+    "viewReceipt": "查看收據",
+    "manageTemplates": "管理模板",
+    "fromTemplate": "從模板",
+    "autoGenerate": "自動生成",
+    "savePrompts": "保存提示",
+    "fromNaturalLanguage": "從自然語言",
+    "createTemplateFrom": "從交易創建模板"
+  },
+  "modals": {
+    "transactions": {
+      "create": "建立交易",
+      "update": "更新交易",
+      "view": "交易詳情"
+    },
+    "assets": {
+      "create": "建立資產",
+      "update": "更新資產"
+    },
+    "ledgers": {
+      "create": "建立帳本",
+      "update": "更新帳本"
+    },
+    "categories": {
+      "create": "建立類別",
+      "update": "更新類別",
+      "manage": "管理類別"
+    },
+    "receipts": {
+      "scan": "掃描收據",
+      "view": "查看收據"
+    },
+    "assetsBalanceChart": "資產餘額圖表",
+    "templates": {
+      "create": "建立模板",
+      "update": "更新模板",
+      "manage": "管理模板",
+      "choose": "選擇模板"
+    },
+    "managePrompts": "管理提示",
+    "naturalLanguage": {
+      "title": "從自然語言",
+      "description": "用自然語言描述您的交易，AI 將為您自動填充詳細資訊。",
+      "confirmTitle": "確認交易",
+      "confirmDescription": "審查並確認從您的描述中提取的交易。"
+    }
+  },
+  "transactionTypes": {
+    "income": "收入",
+    "expenses": "支出",
+    "transfer": "轉帳"
+  },
+  "inputs": {
+    "startDate": "開始日期",
+    "endDate": "結束日期",
+    "assetIcon": "資產圖示",
+    "ledgerIcon": "帳本圖示",
+    "date": "日期",
+    "amount": "金額",
+    "transactionType": "交易類型",
+    "location": "交易地點",
+    "asset": "資產",
+    "ledger": "帳本",
+    "category": "類別",
+    "receipt": "收據",
+    "balance": "餘額",
+    "particulars": "摘要",
+    "ledgerColor": "帳本顏色",
+    "assetName": "資產名稱",
+    "ledgerName": "帳本名稱",
+    "categoryName": {
+      "label": "類別名稱",
+      "placeholder": "例如：雜貨，薪水，租金"
+    },
+    "categoryIcon": "類別圖示",
+    "categoryColor": "類別顏色",
+    "categoryType": "類別類型",
+    "initialBalance": "初始餘額",
+    "fromAsset": "轉出資產",
+    "toAsset": "轉入資產",
+    "month": "月份",
+    "year": "年份",
+    "templateName": "模板名稱",
+    "incomePrompt": "收入提示",
+    "expensesPrompt": "支出提示",
+    "rangeMode": "範圍模式",
+    "description": {
+      "label": "交易描述",
+      "placeholder": "上週日使用 MAE 錢包在 The Library 花了 RM39 買了一本書"
+    },
+    "keepAfterScan": "掃描後保留收據",
+    "createAnother": "再創建一個"
+  },
+  "items": {
+    "transaction": "交易",
+    "asset": "資產",
+    "ledger": "帳本",
+    "category": "類別",
+    "receipt": "收據",
+    "template": "模板"
+  },
+  "timeRanges": {
+    "week": "本週",
+    "month": "本月",
+    "ytd": "年至今"
+  },
+  "messages": {
+    "aiAccuracy": "使用 AI 掃描收據時，AI 會在適當情況下嘗試使用您創建的這些模板。因此，隨著您創建更多模板，AI 在掃描收據時的準確性將得到提高。",
+    "promptAutoGeneration": "當您點擊“自動生成”按鈕時，AI 將分析您現有的交易摘要，並生成一個提示信息，該信息將在掃描收據時使用，以提高準確性。"
+  },
+  "rangeModes": {
+    "week": "過去7天",
+    "month": "過去30天",
+    "year": "過去365天",
+    "all": "所有時間",
+    "custom": "自訂範圍",
+    "quarter": "過去90天"
+  },
+  "toasts": {
+    "createMultipleTransactions": {
+      "success": "成功創建所有交易",
+      "error": "創建交易失敗"
+    },
+    "missingRequiredFields": "部分交易缺少必填欄位",
+    "noTransactionsExtracted": "未提取到任何交易",
+    "copyParticulars": "交易詳情已複製到剪貼簿",
+    "selectFile": "請選擇檔案",
+    "savePrompts": {
+      "success": "提示詞保存成功",
+      "error": "保存提示詞失敗"
+    },
+    "autoGeneratePrompt": {
+      "error": "AI 自動生成提示詞失敗"
+    }
+  },
+  "actions": {
+    "convert": "轉換"
+  },
+  "spendingHeatmap": {
+    "controls": {
+      "title": "熱力圖控制",
+      "metric": "指標",
+      "byAmount": "按金額",
+      "byCount": "按次數",
+      "layers": "圖層",
+      "showHeatmap": "顯示熱力圖",
+      "showMarkers": "顯示標記",
+      "autoHiddenZoom": "(高縮放級別下自動隱藏)"
+    }
+  }
+}

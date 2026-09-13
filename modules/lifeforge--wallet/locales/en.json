@@ -1,0 +1,291 @@
+{
+  "title": "Wallet",
+  "description": "Become your own financial superhero.",
+  "subsections": {
+    "dashboard": {
+      "title": "Dashboard"
+    },
+    "assets": {
+      "title": "Assets",
+      "description": "Manage your assets securely and efficiently in your wallet."
+    },
+    "ledgers": {
+      "title": "Ledgers",
+      "description": "Manage and view your financial transactions and accounts in the ledger."
+    },
+    "transactions": {
+      "title": "Transactions",
+      "description": "View your transaction history and details."
+    },
+    "financialStatements": {
+      "title": "Financial Statements",
+      "description": "View detailed financial statements that provide insights into your account's transactions and balances."
+    },
+    "spendingHeatmap": {
+      "title": "Spending Heatmap",
+      "description": "Visual representation of your spending habits over time."
+    }
+  },
+  "header": {
+    "allTransactions": "All Transactions",
+    "filteredTransactions": "Filtered Transactions"
+  },
+  "widgets": {
+    "categoriesBreakdown": {
+      "title": "Categories Breakdown",
+      "thisMonthsExpenses": "This Month's Spending",
+      "thisMonthsIncome": "This Month's Income"
+    },
+    "income": {
+      "title": "Income"
+    },
+    "assetsBalance": {
+      "title": "Assets Balance",
+      "description": "Track your assets balance.",
+      "empty": {
+        "assets": {
+          "title": "No Assets Found",
+          "description": "You haven't created any assets yet."
+        }
+      }
+    },
+    "statistics": {
+      "title": "Statistics"
+    },
+    "expenses": {
+      "title": "Expenses"
+    },
+    "recentTransactions": {
+      "title": "Recent Transactions"
+    },
+    "transactionsCount": {
+      "title": "Transactions Count"
+    },
+    "totalAssets": "Total Assets"
+  },
+  "transactionCount": "Transactions",
+  "receiptUploadInfo": "Only PDF and image files are accepted",
+  "empty": {
+    "transactions": {
+      "title": "No Transactions Found",
+      "description": "You haven't recorded any transactions yet. Click the button above to add one."
+    },
+    "categories": {
+      "title": "No Categories Found",
+      "description": "You haven't created any categories yet. Click the button below to add one."
+    },
+    "results": {
+      "title": "No Results Found",
+      "description": "No transactions found, please try other keywords."
+    },
+    "assets": {
+      "title": "No Assets Found",
+      "description": "You haven't created any assets yet. Click the button above to add one."
+    },
+    "ledger": {
+      "title": "No Ledgers Found",
+      "description": "You haven't created any ledgers yet. Click the button above to add one."
+    },
+    "location": {
+      "title": "No Location Available",
+      "description": "No location data found in any transactions. Please add a transaction with a location."
+    },
+    "templates": {
+      "title": "No Templates Found",
+      "description": "You haven't created any transaction templates yet. Click the button below to add one."
+    },
+    "mapKey": {
+      "description": "A Google Map API key is required for the map to display properly. Please add it to your API key vault under the key \"gcloud\".",
+      "title": "Missing Google Map API Key"
+    },
+    "statements": {
+      "title": "No Data for Financial Statement",
+      "description": "No transactions found to generate the financial statement. Please add some transactions first."
+    }
+  },
+  "sidebar": {
+    "allTransactions": "All Transactions",
+    "allType": "All Types",
+    "allLedgers": "All Ledgers",
+    "allAssets": "All Assets",
+    "allCategories": "All Categories",
+    "allTypes": "All Types",
+    "transactionTypes": "Transaction Types",
+    "ledgers": "Ledgers",
+    "assets": "Assets",
+    "categories": "Categories",
+    "dateRange": "Date Range",
+    "calendarHeatmap": "Calendar Heatmap"
+  },
+  "table": {
+    "date": "Date",
+    "type": "Type",
+    "asset": "Asset",
+    "ledger": "Ledger",
+    "particulars": "Particulars",
+    "category": "Category",
+    "amount": "Amount",
+    "receipt": "Receipt",
+    "location": "Location"
+  },
+  "buttons": {
+    "scanReceipt": "Scan Receipt",
+    "removeReceipt": "Remove Receipt",
+    "uploadReceipt": "Upload Receipt",
+    "viewTransactions": "View Transactions",
+    "hideAmount": "Hide Amount",
+    "showStatement": "Show Statement",
+    "hideStatement": "Hide Statement",
+    "addManually": "Add Manually",
+    "manageCategories": "Manage Categories",
+    "viewBalanceChart": "View Balance Chart",
+    "viewReceipt": "View Receipt",
+    "manageTemplates": "Manage Templates",
+    "fromTemplate": "From Template",
+    "autoGenerate": "Auto Generate",
+    "savePrompts": "Save Prompts",
+    "fromNaturalLanguage": "From Natural Language",
+    "createTemplateFrom": "Create Template From..."
+  },
+  "modals": {
+    "transactions": {
+      "create": "Create Transaction",
+      "update": "Update Transaction",
+      "view": "Transaction Details"
+    },
+    "assets": {
+      "create": "Create Asset",
+      "update": "Update Asset"
+    },
+    "ledgers": {
+      "create": "Create Ledger",
+      "update": "Update Ledger"
+    },
+    "categories": {
+      "create": "Create Category",
+      "update": "Update Category",
+      "manage": "Manage Categories"
+    },
+    "receipts": {
+      "scan": "Scan Receipt",
+      "view": "View Receipt"
+    },
+    "assetsBalanceChart": "Assets Balance Chart",
+    "templates": {
+      "create": "Create Template",
+      "update": "Update Template",
+      "manage": "Manage Templates",
+      "choose": "Choose Template"
+    },
+    "managePrompts": "Manage Prompts",
+    "naturalLanguage": {
+      "title": "From Natural Language",
+      "description": "Describe your transaction in natural language, and the AI will auto-populate the details for you.",
+      "confirmTitle": "Confirm Transactions",
+      "confirmDescription": "Review and confirm the transactions extracted from your description."
+    }
+  },
+  "transactionTypes": {
+    "income": "Income",
+    "expenses": "Expenses",
+    "transfer": "Transfer"
+  },
+  "inputs": {
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "assetIcon": "Asset Icon",
+    "ledgerIcon": "Ledger Icon",
+    "date": "Date",
+    "amount": "Amount",
+    "transactionType": "Transaction Type",
+    "location": "Location",
+    "asset": "Asset",
+    "ledger": "Ledger",
+    "category": "Category",
+    "receipt": "Receipt",
+    "balance": "Balance",
+    "particulars": "Particulars",
+    "ledgerColor": "Ledger Color",
+    "assetName": "Asset Name",
+    "ledgerName": "Ledger Name",
+    "keepAfterScan": "Keep Receipt After Scan",
+    "categoryName": {
+      "label": "Category Name",
+      "placeholder": "e.g. Groceries, Salary, Rent"
+    },
+    "categoryIcon": "Category Icon",
+    "categoryColor": "Category Color",
+    "categoryType": "Category Type",
+    "initialBalance": "Initial Balance",
+    "fromAsset": "From Asset",
+    "toAsset": "To Asset",
+    "month": "Month",
+    "year": "Year",
+    "templateName": "Template Name",
+    "incomePrompt": "Income Prompt",
+    "expensesPrompt": "Expenses Prompt",
+    "rangeMode": "Range Mode",
+    "description": {
+      "label": "Transaction Description",
+      "placeholder": "Spent RM39 at The Library last sunday using MAE Wallet for a book"
+    },
+    "createAnother": "Create Another"
+  },
+  "items": {
+    "transaction": "Transaction",
+    "asset": "Asset",
+    "ledger": "Ledger",
+    "category": "Category",
+    "receipt": "Receipt",
+    "template": "Template"
+  },
+  "timeRanges": {
+    "week": "This Week",
+    "month": "This Month",
+    "ytd": "Year To Date"
+  },
+  "messages": {
+    "aiAccuracy": "When scanning receipt using AI, the AI will attempt to use these templates that you have created when deemed appropriate. Therefore, the accuracy of the AI in scanning receipts will improve as you create more templates.",
+    "promptAutoGeneration": "When you click on the 'Auto Generate' button, the AI will analyze your existing transaction particulars and generate a prompt message that will be used during receipt scanning to enhance accuracy."
+  },
+  "rangeModes": {
+    "week": "Last 7 Days",
+    "month": "Last 30 Days",
+    "year": "Last 365 Days",
+    "all": "All Time",
+    "custom": "Custom Range",
+    "quarter": "Last 90 Days"
+  },
+  "toasts": {
+    "createMultipleTransactions": {
+      "success": "Successfully created all transactions",
+      "error": "Failed to create transactions"
+    },
+    "missingRequiredFields": "Some transactions are missing required fields",
+    "noTransactionsExtracted": "No transactions extracted",
+    "copyParticulars": "Transaction particulars copied to clipboard",
+    "selectFile": "Please select a file",
+    "savePrompts": {
+      "success": "Prompts saved successfully",
+      "error": "Failed to save prompts"
+    },
+    "autoGeneratePrompt": {
+      "error": "Failed to auto-generate prompt using AI"
+    }
+  },
+  "actions": {
+    "convert": "converted"
+  },
+  "spendingHeatmap": {
+    "controls": {
+      "title": "Heatmap Controls",
+      "metric": "Metric",
+      "byAmount": "By Amount",
+      "byCount": "By Count",
+      "layers": "Layers",
+      "showHeatmap": "Show Heatmap",
+      "showMarkers": "Show Markers",
+      "autoHiddenZoom": "(Auto-hidden at high zoom)"
+    }
+  }
+}

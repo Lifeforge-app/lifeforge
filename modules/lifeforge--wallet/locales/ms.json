@@ -1,0 +1,291 @@
+{
+  "title": "Dompet",
+  "description": "Jadilah wira kewangan anda sendiri.",
+  "subsections": {
+    "dashboard": {
+      "title": "Papan Pemuka"
+    },
+    "assets": {
+      "title": "Aset",
+      "description": "Urus aset anda dengan selamat dan cekap dalam dompet anda."
+    },
+    "ledgers": {
+      "title": "Buku Tunai",
+      "description": "Urus dan lihat transaksi kewangan dan akaun anda dalam lejer."
+    },
+    "transactions": {
+      "title": "Transaksi",
+      "description": "Lihat sejarah transaksi dan butiran."
+    },
+    "financialStatements": {
+      "title": "Penyata Kewangan",
+      "description": "Lihat penyata kewangan terperinci yang memberikan pandangan mengenai transaksi dan baki akaun anda."
+    },
+    "spendingHeatmap": {
+      "title": "Peta Panas Perbelanjaan",
+      "description": "Representasi visual tentang tabiat perbelanjaan anda dari semasa ke semasa."
+    }
+  },
+  "header": {
+    "allTransactions": "Semua Transaksi",
+    "filteredTransactions": "Transaksi Ditapis"
+  },
+  "widgets": {
+    "categoriesBreakdown": {
+      "title": "Pecahan Kategori",
+      "thisMonthsExpenses": "Perbelanjaan Bulan Ini",
+      "thisMonthsIncome": "Pendapatan Bulan Ini"
+    },
+    "income": {
+      "title": "Pendapatan"
+    },
+    "assetsBalance": {
+      "title": "Baki Aset",
+      "description": "Jejak baki aset an.",
+      "empty": {
+        "assets": {
+          "title": "Tiada Aset Dijumpai",
+          "description": "Anda belum mencipta sebarang aset lagi."
+        }
+      }
+    },
+    "statistics": {
+      "title": "Statistik"
+    },
+    "expenses": {
+      "title": "Perbelanjaan"
+    },
+    "recentTransactions": {
+      "title": "Transaksi Terkini"
+    },
+    "transactionsCount": {
+      "title": "Bilangan Transaksi"
+    },
+    "totalAssets": "Jumlah Aset"
+  },
+  "transactionCount": "Transaksi",
+  "receiptUploadInfo": "Hanya fail PDF dan imej diterima",
+  "empty": {
+    "transactions": {
+      "title": "Tiada Transaksi Dijumpai",
+      "description": "Anda belum merekodkan sebarang transaksi lagi. Klik butang di atas untuk menambah satu."
+    },
+    "categories": {
+      "title": "Tiada Kategori Dijumpai",
+      "description": "Anda belum mencipta sebarang kategori lagi. Klik butang di bawah untuk menambah satu."
+    },
+    "results": {
+      "title": "Tiada Keputusan Dijumpai",
+      "description": "Tiada transaksi dijumpai, sila cuba kata kunci lain."
+    },
+    "assets": {
+      "title": "Tiada Aset Dijumpai",
+      "description": "Anda belum mencipta sebarang aset lagi. Klik butang di atas untuk menambah satu."
+    },
+    "ledger": {
+      "title": "Tiada Lejar Dijumpai",
+      "description": "Anda belum mencipta sebarang lejar lagi. Klik butang di atas untuk menambah satu."
+    },
+    "location": {
+      "title": "Tiada Lokasi Tersedia",
+      "description": "Tiada data lokasi dijumpai dalam mana-mana transaksi. Sila tambah transaksi dengan lokasi."
+    },
+    "templates": {
+      "title": "Tiada Templat Dijumpai",
+      "description": "Anda belum mencipta sebarang templat transaksi lagi. Klik butang di atas untuk menambah satu."
+    },
+    "mapKey": {
+      "description": "Kunci API Google Map diperlukan untuk paparan peta yang betul. Sila tambahkan ke dalam peti kunci API anda di bawah kunci \"gcloud\".",
+      "title": "Kunci API Peta Google Hilang"
+    },
+    "statements": {
+      "title": "Tiada Data untuk Penyata Kewangan",
+      "description": "Tiada transaksi dijumpai untuk menjana penyata kewangan. Sila tambah beberapa transaksi terlebih dahulu."
+    }
+  },
+  "sidebar": {
+    "allTransactions": "Semua Transaksi",
+    "allType": "Semua Jenis",
+    "allLedgers": "Semua Lejar",
+    "allAssets": "Semua Aset",
+    "allCategories": "Semua Kategori",
+    "allTypes": "Semua Jenis",
+    "transactionTypes": "Jenis Transaksi",
+    "ledgers": "Lejar",
+    "assets": "Aset",
+    "categories": "Kategori",
+    "dateRange": "Julat Tarikh",
+    "calendarHeatmap": "Peta Panas Kalendar"
+  },
+  "table": {
+    "date": "Tarikh",
+    "type": "Jenis",
+    "asset": "Aset",
+    "ledger": "Lejar",
+    "particulars": "Butiran",
+    "category": "Kategori",
+    "amount": "Jumlah",
+    "receipt": "Resit",
+    "location": "Lokasi"
+  },
+  "buttons": {
+    "scanReceipt": "Imbas Resit",
+    "removeReceipt": "Buang Resit",
+    "uploadReceipt": "Muat Naik Resit",
+    "viewTransactions": "Lihat Transaksi",
+    "hideAmount": "Sembunyikan Jumlah",
+    "showStatement": "Tunjukkan Penyata",
+    "hideStatement": "Sembunyikan Penyata",
+    "addManually": "Tambah Secara Manual",
+    "manageCategories": "Urus Kategori",
+    "viewBalanceChart": "Lihat Carta Saldo",
+    "viewReceipt": "Lihat Resit",
+    "manageTemplates": "Urus Templat",
+    "fromTemplate": "Dari Templat",
+    "autoGenerate": "Jana Automatik",
+    "savePrompts": "Simpan Petunjuk",
+    "fromNaturalLanguage": "Dari Bahasa Tabii",
+    "createTemplateFrom": "Cipta Templat Daripada..."
+  },
+  "modals": {
+    "transactions": {
+      "create": "Cipta Transaksi",
+      "update": "Kemas Kini Transaksi",
+      "view": "Butiran Transaksi"
+    },
+    "assets": {
+      "create": "Cipta Aset",
+      "update": "Kemas Kini Aset"
+    },
+    "ledgers": {
+      "create": "Cipta Lejar",
+      "update": "Kemas Kini Lejar"
+    },
+    "categories": {
+      "create": "Cipta Kategori",
+      "update": "Kemas Kini Kategori",
+      "manage": "Urus Kategori"
+    },
+    "receipts": {
+      "scan": "Imbas Resit",
+      "view": "Lihat Resit"
+    },
+    "assetsBalanceChart": "Carta Baki Asset",
+    "templates": {
+      "create": "Cipta Templat",
+      "update": "Kemas Kini Templat",
+      "manage": "Urus Templat",
+      "choose": "Pilih Templat"
+    },
+    "managePrompts": "Urus Petunjuk",
+    "naturalLanguage": {
+      "title": "Dari Bahasa Tabii",
+      "description": "Terangkan transaksi anda dalam bahasa tabii, dan AI akan mengisi butiran secara automatik untuk anda.",
+      "confirmTitle": "Sahkan Transaksi",
+      "confirmDescription": "Semak dan sahkan transaksi yang diekstrak daripada huraian anda."
+    }
+  },
+  "transactionTypes": {
+    "income": "Pendapatan",
+    "expenses": "Perbelanjaan",
+    "transfer": "Pindahan"
+  },
+  "inputs": {
+    "startDate": "Tarikh Mula",
+    "endDate": "Tarikh Tamat",
+    "assetIcon": "Ikon Aset",
+    "ledgerIcon": "Ikon Lejar",
+    "date": "Tarikh",
+    "amount": "Jumlah",
+    "transactionType": "Jenis Transaksi",
+    "location": "Lokasi",
+    "asset": "Aset",
+    "ledger": "Lejar",
+    "category": "Kategori",
+    "receipt": "Resit",
+    "balance": "Baki",
+    "particulars": "Butiran",
+    "ledgerColor": "Warna Lejar",
+    "assetName": "Nama Aset",
+    "ledgerName": "Nama Lejar",
+    "categoryName": {
+      "label": "Nama Kategori",
+      "placeholder": "cth. Barangan Runcit, Gaji, Sewa"
+    },
+    "categoryIcon": "Ikon Kategori",
+    "categoryColor": "Warna Kategori",
+    "categoryType": "Jenis Kategori",
+    "initialBalance": "Baki Permulaan",
+    "fromAsset": "Dari Aset",
+    "toAsset": "Ke Aset",
+    "month": "Bulan",
+    "year": "Tahun",
+    "templateName": "Nama Templat",
+    "incomePrompt": "Petunjuk Pendapatan",
+    "expensesPrompt": "Petunjuk Perbelanjaan",
+    "rangeMode": "Mod Susunan",
+    "description": {
+      "label": "Penerangan Transaksi",
+      "placeholder": "Belanja RM39 di Perpustakaan pada hari Ahad lepas menggunakan Dompet MAE untuk sebuah buku"
+    },
+    "createAnother": "Buat Satu Lagi",
+    "keepAfterScan": "Simpan Resit Selepas Imbasan"
+  },
+  "items": {
+    "transaction": "Transaksi",
+    "asset": "Aset",
+    "ledger": "Lejar",
+    "category": "Kategori",
+    "receipt": "Resit",
+    "template": "Templat"
+  },
+  "timeRanges": {
+    "week": "Minggu Ini",
+    "month": "Bulan Ini",
+    "ytd": "Tahun Hingga Kini"
+  },
+  "messages": {
+    "aiAccuracy": "Apabila mengimbas resit menggunakan AI, AI akan cuba menggunakan templat yang telah anda cipta apabila dianggap sesuai. Oleh itu, ketepatan AI dalam mengimbas resit akan bertambah baik apabila anda mencipta lebih banyak templat.",
+    "promptAutoGeneration": "Apabila anda mengklik butang 'Jana Automatik', AI akan menganalisis butiran transaksi sedia ada anda dan menjana mesej arahan yang akan digunakan semasa pengimbasan resit untuk meningkatkan ketepatan."
+  },
+  "rangeModes": {
+    "week": "7 Hari Terakhir",
+    "month": "30 Hari Lalu",
+    "year": "365 Hari Terakhir",
+    "all": "Sepanjang Masa",
+    "custom": "Julat Tersuai",
+    "quarter": "90 Hari Terakhir"
+  },
+  "toasts": {
+    "createMultipleTransactions": {
+      "success": "Berjaya mencipta semua transaksi",
+      "error": "Gagal mencipta transaksi"
+    },
+    "missingRequiredFields": "Beberapa transaksi tidak mempunyai maklumat yang diperlukan",
+    "noTransactionsExtracted": "Tiada transaksi diekstrak",
+    "copyParticulars": "Butiran transaksi disalin ke papan klip",
+    "selectFile": "Sila pilih fail",
+    "savePrompts": {
+      "success": "Prompt berjaya disimpan",
+      "error": "Gagal menyimpan prompt"
+    },
+    "autoGeneratePrompt": {
+      "error": "Gagal menjana prompt secara automatik menggunakan AI"
+    }
+  },
+  "actions": {
+    "convert": "menukar"
+  },
+  "spendingHeatmap": {
+    "controls": {
+      "title": "Kawalan Peta Panas",
+      "metric": "Metrik",
+      "byAmount": "Mengikut Jumlah",
+      "byCount": "Mengikut Bilangan",
+      "layers": "Lapisan",
+      "showHeatmap": "Tunjuk Peta Panas",
+      "showMarkers": "Tunjuk Penanda",
+      "autoHiddenZoom": "(Disembunyikan secara automatik pada zum tinggi)"
+    }
+  }
+}
