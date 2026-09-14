@@ -23,7 +23,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
     "@lifeforge/configs": "workspace:*",
@@ -31,6 +34,7 @@
     "@lifeforge/pocketbase": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",
     "@types/multer": "^2.2.0",
+    "@typescript/typescript6": "^6.0.2",
     "arctic": "^3.7.0",
     "argon2": "^0.44.0",
     "bcryptjs": "^3.0.2",
@@ -51,11 +55,11 @@
     "openai": "^6.7.0",
     "pdf2pic": "^3.2.0",
     "pocketbase": "^0.27.0",
+    "postgres": "^3.4.9",
     "socket.io": "^4.8.1",
     "speakeasy": "^2.0.0",
     "tesseract.js": "^7.0.0",
-    "uuid": "^14.0.1",
-    "@typescript/typescript6": "^6.0.2"
+    "uuid": "^14.0.1"
   },
   "devDependencies": {
     "@lifeforge/api": "workspace:*",

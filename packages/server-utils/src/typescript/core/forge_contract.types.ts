@@ -2,7 +2,8 @@ import type { Request, RequestHandler, Response } from 'express'
 import type { Server } from 'socket.io'
 import type { z } from 'zod'
 
-import { type CleanedSchemas, type IPBService } from '@lifeforge/pocketbase'
+import { type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
+import { type AnyRelations } from 'drizzle-orm'
 
 import {
   OutputDefinition,
@@ -12,12 +13,12 @@ import { ConvertMedia, MediaConfig } from '../standalone/media.types'
 import { CoreContext } from './core_context.types'
 
 export interface ForgeExpressContext<
-  TSchemas extends CleanedSchemas = CleanedSchemas
+  TSchema extends AnyRelations = any
 > {
   req: Request
   res: Response
   io: Server
-  pb: IPBService<TSchemas>
+  db: PostgresJsDatabase<TSchema>
   body: unknown
   query: unknown
   media: unknown
@@ -36,10 +37,6 @@ export interface ForgeContract {
     }
     output: OutputDefinition | 'custom'
     noDefaultResponse: boolean
-    existenceCheck: {
-      body?: Record<string, string>
-      query?: Record<string, string>
-    }
     description: string
     isDownloadable: boolean
     media: MediaConfig | null
@@ -47,18 +44,18 @@ export interface ForgeContract {
     encrypted: boolean
     rateLimit: boolean
     callback: (
-      context: ForgeExpressContext
+      context: ForgeExpressContext<any>
     ) => Promise<{ $status: number; payload?: unknown }>
     callerModule?: { source: string; id: string }
   }
 }
 
 export type ForgeContext<
-  TSchemas extends CleanedSchemas,
   TQuery extends z.ZodTypeAny | undefined,
   TBody extends z.ZodTypeAny | undefined,
   TOutput extends OutputDefinition | 'custom',
-  TMedia extends MediaConfig | null
+  TMedia extends MediaConfig | null,
+  TSchema extends AnyRelations = any
 > = {
   response: OutputHelpers<TOutput>
   body: TBody extends z.ZodTypeAny ? z.infer<TBody> : undefined
@@ -67,6 +64,6 @@ export type ForgeContext<
   req: Request
   res: Response
   io: Server
-  pb: IPBService<TSchemas>
+  db: PostgresJsDatabase<TSchema>
   core: CoreContext
 }

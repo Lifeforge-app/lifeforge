@@ -73,6 +73,8 @@ function startServer(
 }
 
 async function main(): Promise<void> {
+  createServiceLogger('Database').info(`DB initialization successful`)
+
   // Import the app after loading env so module-level env reads (e.g. JWT secret)
   // are populated regardless of how the server is spawned.
   const { default: app } = await import('./core/app')
