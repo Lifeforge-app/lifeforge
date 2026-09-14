@@ -1,0 +1,38 @@
+{
+  "name": "@lifeforge/file-storage",
+  "version": "0.0.1",
+  "description": "File Storage SDK for LifeForge",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "rimraf dist && vite build && tsc --emitDeclarationOnly",
+    "typecheck": "tsc --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.758.0",
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/log": "workspace:*",
+    "mime-types": "^2.1.35",
+    "path-is-inside": "^1.0.2",
+    "sharp": "^0.33.5",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.23",
+    "@types/express-serve-static-core": "4",
+    "@types/mime-types": "^2.1.4",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^22.13.10",
+    "@types/path-is-inside": "^1.0.3",
+    "express": "^4.21.2"
+  }
+}
