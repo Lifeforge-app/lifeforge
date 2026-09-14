@@ -1,45 +1,24 @@
 services:
   db:
-    build:
-      context: .
-      dockerfile: docker/db/Dockerfile
+    image: postgres:16-alpine
     container_name: lifeforge-db
     restart: unless-stopped
     env_file:
       - ./env/.env.docker
     environment:
-      - DOCKER_MODE=true
-      - PB_BINARY_PATH=/usr/local/bin/pocketbase
-      - PB_DIR=/pb_data
+      - POSTGRES_DB=lifeforge
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     expose:
-      - '8090'
+      - '5432'
     volumes:
-      - ./database/pb_data:/pb_data
+      - ./database/postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:8090/api/health || exit 1
+      test: pg_isready -U postgres || exit 1
       interval: 5s
       timeout: 5s
       retries: 5
       start_period: 10s
-
-  db-init:
-    build:
-      context: .
-      dockerfile: docker/db-init/Dockerfile
-    container_name: lifeforge-db-init
-    env_file:
-      - ./env/.env.docker
-    environment:
-      - DOCKER_MODE=true
-      - PB_DIR=/pb_data
-      - PB_HOST=http://0.0.0.0:8090
-    volumes:
-      - ./database/pb_data:/pb_data
-      - ./modules:/app/modules
-      - ./locales:/app/locales
-    depends_on:
-      db:
-        condition: service_healthy
 
   server:
     build:
@@ -52,15 +31,15 @@ services:
     environment:
       - DOCKER_MODE=true
       - NODE_ENV=production
-      - PB_HOST=http://db:8090
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/lifeforge
     expose:
       - '3636'
     volumes:
       - ./modules:/lifeforge/modules
       - ./locales:/lifeforge/locales
     depends_on:
-      db-init:
-        condition: service_completed_successfully
+      db:
+        condition: service_healthy
 
   client:
     build:

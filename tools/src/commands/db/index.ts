@@ -1,8 +1,7 @@
 import type { Command } from 'commander'
 
-import { generateMigrationsHandler } from './handlers/generateMigrationsHandler'
-import { generateSchemaHandler } from './handlers/generateSchemasHandler'
-import { initializeDatabaseHandler } from './handlers/initializeDatabaseHandler'
+import { ROOT_DIR } from '@/constants/constants'
+import executeCommand from '@/utils/commands'
 
 export default function setup(program: Command): void {
   const command = program
@@ -10,19 +9,32 @@ export default function setup(program: Command): void {
     .description('Manage database schemas and migrations')
 
   command
-    .command('init')
-    .description('Initialize the PocketBase database')
-    .action(initializeDatabaseHandler)
-
-  command
-    .command('pull')
-    .description('Pull schema from PocketBase into local schema files')
-    .argument('[module]', 'Optional module name to pull schema for')
-    .action(generateSchemaHandler)
-
-  command
     .command('push')
-    .description('Push local schemas to PocketBase as migrations')
-    .argument('[module]', 'Optional module name to push migrations for')
-    .action(generateMigrationsHandler)
+    .description('Push local Drizzle schemas to PostgreSQL database')
+    .action(() => {
+      executeCommand('pnpm --filter @lifeforge/server db:push', {
+        cwd: ROOT_DIR,
+        stdio: 'inherit'
+      })
+    })
+
+  command
+    .command('generate')
+    .description('Generate SQL migrations from Drizzle schemas')
+    .action(() => {
+      executeCommand('pnpm --filter @lifeforge/server db:generate', {
+        cwd: ROOT_DIR,
+        stdio: 'inherit'
+      })
+    })
+
+  command
+    .command('migrate')
+    .description('Apply generated SQL migrations')
+    .action(() => {
+      executeCommand('pnpm --filter @lifeforge/server db:migrate', {
+        cwd: ROOT_DIR,
+        stdio: 'inherit'
+      })
+    })
 }
