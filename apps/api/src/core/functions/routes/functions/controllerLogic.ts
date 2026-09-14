@@ -47,7 +47,6 @@ function createHandler(
   const {
     schema: input,
     noDefaultResponse,
-    existenceCheck,
     isDownloadable,
     media,
     noAuth,
@@ -71,15 +70,6 @@ function createHandler(
 
       parseBodyPayload(req, (media || {}) as MediaConfig, encrypted, input.body)
 
-      for (const type of ['query', 'body'] as const) {
-        await checkRecordExistence({
-          type,
-          req,
-          existenceCheck,
-          module: callerModule || { id: '' }
-        })
-      }
-
       if (isDownloadable) {
         res.setHeader('X-LifeForge-Downloadable', 'true')
         res.setHeader(
@@ -91,12 +81,11 @@ function createHandler(
       if (!callback) {
         throw new Error('No callback defined for this controller')
       }
-
       const result = await callback({
         req,
         res,
         io: req.io,
-        pb: req.pb(callerModule || { id: '' }),
+        db: req.db,
         body: req.body,
         query: req.query,
         media: req.media || {},
@@ -105,7 +94,6 @@ function createHandler(
           module: callerModule as never
         })
       })
-
       if (res.headersSent) {
         return
       }

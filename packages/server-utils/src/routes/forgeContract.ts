@@ -1,11 +1,6 @@
 import type { RequestHandler } from 'express'
 import type { z } from 'zod'
-
-import {
-  type CleanedSchemas,
-  type CollectionKey,
-  type IPBService
-} from '@lifeforge/pocketbase'
+import { type AnyRelations } from 'drizzle-orm'
 
 import { getCallerModuleId } from '..'
 import type {
@@ -23,8 +18,6 @@ import type {
   MediaConfig
 } from '../typescript/standalone/media.types'
 import { Output, OutputType } from '../utils/outputStatus'
-
-type KeysOf<T> = T extends any ? keyof T : never
 
 export function snakeCaseToCamelCase(str: string): string {
   return str
@@ -67,8 +60,9 @@ export function createOutputHelpers<
   return helpers as unknown as OutputHelpers<TOutput>
 }
 
-export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
-  _schemas: TSchemas,
+export function createForgeContractBuilder<
+  TSchema extends AnyRelations = any
+>(
   callerModuleOrOptions?: string | { modulePathAlias?: string }
 ) {
   const callerModule =
@@ -98,22 +92,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
-        ? {
-            body?: Partial<
-              Record<
-                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-            query?: Partial<
-              Record<
-                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-          }
-        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
       rateLimit?: boolean
@@ -122,7 +100,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
     return {
       callback: function (
         cb: (
-          context: ForgeContext<TSchemas, TQuery, TBody, TOutput, TMedia>
+          context: ForgeContext<TQuery, TBody, TOutput, TMedia, TSchema>
         ) => Promise<ResponseObject<TOutput>>
       ): ForgeContract {
         const caller = getCallerModuleId()
@@ -139,7 +117,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
           modulePathAlias,
           getValue() {
             const callbackWrapper = async function (
-              ctx: ForgeExpressContext
+              ctx: ForgeExpressContext<TSchema>
             ): Promise<{ $status: number; payload?: unknown }> {
               const responseHelpers = createOutputHelpers(metadata.output)
 
@@ -155,7 +133,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
                 req: ctx.req,
                 res: ctx.res,
                 io: ctx.io,
-                pb: ctx.pb as IPBService<TSchemas>,
+                db: ctx.db,
                 core: ctx.core
               })) as any
             }
@@ -169,10 +147,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
               },
               output: metadata.output as OutputDefinition | 'custom',
               noDefaultResponse: false,
-              existenceCheck: (metadata.existenceCheck ?? {}) as {
-                body?: Record<string, string>
-                query?: Record<string, string>
-              },
               description: metadata.description,
               isDownloadable: metadata.isDownloadable ?? false,
               media: (metadata.media ?? null) as TMedia,
@@ -203,17 +177,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
-        ? {
-            body?: never
-            query?: Partial<
-              Record<
-                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-          }
-        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
       rateLimit?: boolean
@@ -239,22 +202,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
-        ? {
-            body?: Partial<
-              Record<
-                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-            query?: Partial<
-              Record<
-                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-          }
-        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
       rateLimit?: boolean
