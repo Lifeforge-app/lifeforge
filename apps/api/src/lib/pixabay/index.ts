@@ -2,7 +2,7 @@ import z from 'zod'
 
 import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
-const forge = createForge({}, 'pixabay')
+const forge = createForge('pixabay')
 
 const searchImages = forge
   .query({
@@ -79,13 +79,12 @@ const searchImages = forge
   .callback(
     async ({
       query: { q, page, type, category, colors, editors_choice },
-      pb,
       core: {
         api: { getAPIKey }
       },
       response
     }) => {
-      const key = await getAPIKey('pixabay', pb)
+      const key = await getAPIKey('pixabay')
 
       if (!key) {
         return response.badRequest('Pixabay API key is not set')
@@ -119,8 +118,8 @@ const searchImages = forge
 
       return response.ok({
         total: data.totalHits,
-        hits: data.hits.map((hit: any) => ({
-          id: hit.id,
+        hits: data.hits.map((hit: { id: string | number; webformatURL: string; webformatWidth: number; webformatHeight: number; largeImageURL: string }) => ({
+          id: String(hit.id),
           thumbnail: {
             url: hit.webformatURL,
             width: hit.webformatWidth,

@@ -5,7 +5,10 @@ import path from 'path'
 dotenv.config({ path: path.resolve(__dirname, '../../env/.env.local') })
 
 export default defineConfig({
-  schema: '../../modules/**/schema.drizzle.ts',
+  schema: [
+    './src/lib/**/schema.drizzle.ts',
+    '../../modules/**/schema.drizzle.ts'
+  ],
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {

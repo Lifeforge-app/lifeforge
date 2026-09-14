@@ -16,7 +16,6 @@ import fetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'
 import convertPDFToImage from '@functions/media/convertPDFToImage'
-import retrieveMedia from '@functions/media/retrieveMedia'
 import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import {
   addToTaskPool,
@@ -25,9 +24,11 @@ import {
 } from '@functions/socketio/taskPool'
 import TempFileManager from '@functions/utils/tempFileManager'
 
+import { FileStorage } from '@lifeforge/file-storage'
 import { type Logger, createLogger } from '@lifeforge/log'
-import { IPBService, checkExistence } from '@lifeforge/pocketbase'
 import { CoreContext } from '@lifeforge/server-utils'
+
+import { storageProvider } from '../../../storage'
 
 const loggerCache = createCache<Logger>('loggers')
 
@@ -44,28 +45,34 @@ function getOrCreateLogger(moduleId: string): Logger {
  * Automatically detects the calling module using stack trace analysis.
  */
 export function createCoreContext({
-  pb,
-  module
+  module,
+  schemas
 }: {
-  pb: IPBService<any>
   module?: { source: 'app' | 'core'; id: string }
-}): CoreContext {
+  schemas?: Record<string, unknown>
+} = {}): CoreContext<any> {
+  const logging = getOrCreateLogger(
+    module ? `${module.source}:${module.id}` : 'unknown-module'
+  )
+
   return {
-    logging: getOrCreateLogger(
-      module ? `${module.source}:${module.id}` : 'unknown-module'
+    logging,
+    storage: new FileStorage(
+      storageProvider,
+      module ?? { source: 'core', id: 'unknown' },
+      schemas,
+      logging
     ),
     api: {
       fetchAI,
       searchLocations,
-      getAPIKey: getAPIKeyFactory(pb, module)
+      getAPIKey: getAPIKeyFactory(module)
     },
     tempFile: TempFileManager,
     validation: {
-      checkRecordExistence: checkExistence,
       checkModulesAvailability
     },
     media: {
-      retrieveMedia,
       convertPDFToImage,
       parseOCR
     },

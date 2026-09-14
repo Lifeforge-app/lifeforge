@@ -1,10 +1,17 @@
 import { decrypt2, encrypt2 } from '@functions/auth/encryption'
+import { eq } from 'drizzle-orm'
+import { createSelectSchema } from 'drizzle-orm/zod'
 import z from 'zod'
 
 import { forgeRouter } from '@lifeforge/server-utils'
 
 import forge from '../forge'
-import schema from '../schema'
+import { apiKeysEntries } from '../schema.drizzle'
+
+const entrySchema = createSelectSchema(apiKeysEntries).extend({
+  created: z.string(),
+  updated: z.string()
+})
 
 const get = forge
   .query({
@@ -20,18 +27,10 @@ const get = forge
       FORBIDDEN: true
     }
   })
-  .callback(async ({ pb, query: { keyId }, response }) => {
-    const entry = await pb.getFirstListItem
-      .collection('entries')
-      .filter([
-        {
-          field: 'keyId',
-          operator: '=',
-          value: keyId
-        }
-      ])
-      .execute()
-      .catch(() => null)
+  .callback(async ({ db, query: { keyId }, response }) => {
+    const entry = await db.query.apiKeysEntries.findFirst({
+      where: { keyId }
+    })
 
     if (!entry) {
       return response.ok(null)
@@ -58,22 +57,28 @@ const list = forge
     description: 'Retrieve all API key entries',
     input: {},
     output: {
-      OK: z.array(schema.entries)
+      OK: z.array(entrySchema)
     }
   })
-  .callback(async ({ pb, response }) => {
-    const entries = await pb.getFullList
-      .collection('entries')
-      .sort(['name'])
-      .execute()
-
-    entries.forEach(entry => {
-      entry.key = decrypt2(entry.key, process.env.MASTER_KEY!)
-        .toString()
-        .slice(-4)
+  .callback(async ({ db, response }) => {
+    const entries = await db.query.apiKeysEntries.findMany({
+      orderBy: { name: 'asc' }
     })
 
-    return response.ok(entries)
+    const mappedEntries = entries.map(entry => ({
+      id: entry.id,
+      keyId: entry.keyId,
+      name: entry.name,
+      icon: entry.icon,
+      key: decrypt2(entry.key, process.env.MASTER_KEY!)
+        .toString()
+        .slice(-4),
+      exposable: entry.exposable,
+      created: entry.created.toISOString(),
+      updated: entry.updated.toISOString()
+    }))
+
+    return response.ok(mappedEntries)
   })
 
 const checkKeys = forge
@@ -88,10 +93,10 @@ const checkKeys = forge
       OK: z.boolean()
     }
   })
-  .callback(async ({ pb, query: { keys }, core: { api }, response }) => {
+  .callback(async ({ query: { keys }, core: { api }, response }) => {
     for (const key of keys.split(',')) {
       try {
-        await api.getAPIKey(key, pb)
+        await api.getAPIKey(key)
       } catch {
         return response.ok(false)
       }
@@ -113,27 +118,30 @@ const create = forge
       })
     },
     output: {
-      CREATED: schema.entries
+      CREATED: entrySchema
     }
   })
   .callback(
-    async ({ pb, body: { keyId, name, icon, key, exposable }, response }) => {
+    async ({ db, body: { keyId, name, icon, key, exposable }, response }) => {
       const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
 
-      const entry = await pb.create
-        .collection('entries')
-        .data({
+      const [entry] = await db
+        .insert(apiKeysEntries)
+        .values({
           keyId,
           name,
           icon,
           exposable,
           key: encryptedKey
         })
-        .execute()
+        .returning()
 
-      entry.key = key.slice(-4)
-
-      return response.created(entry)
+      return response.created({
+        ...entry,
+        key: key.slice(-4),
+        created: entry.created.toISOString(),
+        updated: entry.updated.toISOString()
+      })
     }
   )
 
@@ -153,40 +161,43 @@ const update = forge
         overrideKey: z.boolean()
       })
     },
-    existenceCheck: {
-      query: {
-        id: 'entries'
-      }
-    },
     output: {
-      OK: schema.entries,
+      OK: entrySchema,
       NOT_FOUND: true
     }
   })
   .callback(
     async ({
-      pb,
+      db,
       query: { id },
       body: { keyId, name, icon, key, exposable, overrideKey },
       response
     }) => {
       const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
 
-      const updatedEntry = await pb.update
-        .collection('entries')
-        .id(id)
-        .data({
+      const [updatedEntry] = await db
+        .update(apiKeysEntries)
+        .set({
           keyId,
           name,
           icon,
           exposable,
-          key: overrideKey ? encryptedKey : undefined
+          ...(overrideKey ? { key: encryptedKey } : {}),
+          updated: new Date()
         })
-        .execute()
+        .where(eq(apiKeysEntries.id, id))
+        .returning()
 
-      updatedEntry.key = key.slice(-4)
+      if (!updatedEntry) {
+        return response.notFound()
+      }
 
-      return response.ok(updatedEntry)
+      return response.ok({
+        ...updatedEntry,
+        key: key.slice(-4),
+        created: updatedEntry.created.toISOString(),
+        updated: updatedEntry.updated.toISOString()
+      })
     }
   )
 
@@ -198,18 +209,20 @@ const remove = forge
         id: z.string()
       })
     },
-    existenceCheck: {
-      query: {
-        id: 'entries'
-      }
-    },
     output: {
       NO_CONTENT: true,
       NOT_FOUND: true
     }
   })
-  .callback(async ({ pb, query: { id }, response }) => {
-    await pb.delete.collection('entries').id(id).execute()
+  .callback(async ({ db, query: { id }, response }) => {
+    const [deleted] = await db
+      .delete(apiKeysEntries)
+      .where(eq(apiKeysEntries.id, id))
+      .returning()
+
+    if (!deleted) {
+      return response.notFound()
+    }
 
     return response.noContent()
   })

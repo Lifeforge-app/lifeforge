@@ -1,22 +1,10 @@
 import z from 'zod'
-
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@lifeforge/pocketbase'
 import { forgeRouter } from '@lifeforge/server-utils'
 
 import forge from './forge'
 import * as authRoutes from './routes/auth'
 import * as personalizationRoutes from './routes/personalization'
 import * as settingsRoutes from './routes/settings'
-
-export const currentSession = {
-  token: '',
-  tokenId: '',
-  tokenExpireAt: '',
-  otpId: ''
-}
 
 export default forgeRouter({
   exists: forge
@@ -28,14 +16,10 @@ export default forgeRouter({
         OK: z.boolean()
       }
     })
-    .callback(async ({ response }) => {
-      const config = validateEnvironmentVariables()
+    .callback(async ({ db, response }) => {
+      const user = await db.query.users.findFirst()
 
-      const superPBInstance = await connectToPocketBase(config)
-
-      const users = await superPBInstance.collection('users').getFullList()
-
-      return response.ok(users.length > 0)
+      return response.ok(Boolean(user))
     }),
   auth: authRoutes,
   settings: settingsRoutes,

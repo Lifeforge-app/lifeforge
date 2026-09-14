@@ -1,11 +1,11 @@
 import { decrypt } from '@functions/auth/encryption'
 import { OAuth2Tokens } from 'arctic'
 
+import { db } from '../../../core/drizzle'
 import {
   OAUTH_PROVIDER_CONFIGS,
   ProviderConfig
 } from '../constants/oauth_providers'
-import { getPB } from '../constants/pb'
 
 const MASTER_KEY = process.env.MASTER_KEY!
 
@@ -17,30 +17,19 @@ export async function getProvider(
   redirectUri: string
   config: ProviderConfig
 } | null> {
-  const pb = await getPB()
+  const record = await db.query.authOAuthProviders.findFirst({
+    where: {
+      provider: providerName,
+      enabled: true
+    }
+  })
 
-  const record = await pb.getFirstListItem
-    .collection('oauth_providers')
-    .filter([
-      {
-        field: 'provider',
-        operator: '=',
-        value: providerName
-      },
-      {
-        field: 'enabled',
-        operator: '=',
-        value: true
-      }
-    ])
-    .execute()
-    .catch(() => null)
-
-  if (!record) {
+  if (!record || !record.client_id || !record.client_secret) {
     return null
   }
 
-  let clientId, clientSecret: string
+  let clientId: string
+  let clientSecret: string
 
   try {
     clientId = decrypt(
@@ -57,6 +46,10 @@ export async function getProvider(
   }
 
   const providerConfig = OAUTH_PROVIDER_CONFIGS[record.provider]
+
+  if (!providerConfig) {
+    return null
+  }
 
   const redirectUri = `${origin}/auth`
 

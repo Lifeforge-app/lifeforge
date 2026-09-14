@@ -1,31 +1,7 @@
-import { createCache } from '@functions/cache'
 import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
-import Pocketbase from 'pocketbase'
-
-import {
-  PBService,
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@lifeforge/pocketbase'
 
 const JWT_SECRET = process.env.JWT_SIGNING_KEY!
-
-const superUserPBCache = createCache<Pocketbase>('superuser-pb', {
-  stdTTL: 3600
-})
-
-async function getSuperUserPB(): Promise<Pocketbase> {
-  const cached = superUserPBCache.get('instance')
-
-  if (cached) return cached
-
-  const pb = await connectToPocketBase(validateEnvironmentVariables())
-
-  superUserPBCache.set('instance', pb)
-
-  return pb
-}
 
 export default async function isAuthTokenValid(
   req: Request<unknown, unknown, unknown, unknown>,
@@ -33,10 +9,6 @@ export default async function isAuthTokenValid(
   noAuth: boolean
 ): Promise<boolean> {
   if (req.url === '/' || noAuth) {
-    const pb = await getSuperUserPB()
-
-    req.pb = (module: { id: string }) => new PBService(pb, module)
-
     return true
   }
 
@@ -61,10 +33,6 @@ export default async function isAuthTokenValid(
 
     return false
   }
-
-  const pb = await getSuperUserPB()
-
-  req.pb = (module: { id: string }) => new PBService(pb, module)
 
   return true
 }

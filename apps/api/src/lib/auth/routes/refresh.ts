@@ -1,10 +1,5 @@
 import z from 'zod'
 
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@lifeforge/pocketbase'
-
 import { getCookieOptions } from '../constants/cookie'
 import forge from '../forge'
 import {
@@ -13,14 +8,6 @@ import {
   rotateToken
 } from '../utils/refreshTokenStore'
 import { generateRefreshToken, signAccessToken } from '../utils/tokens'
-
-async function getFirstUserId(): Promise<string> {
-  const config = validateEnvironmentVariables()
-  const pb = await connectToPocketBase(config)
-  const users = await pb.collection('users').getFullList({ fields: 'id' })
-
-  return users[0]?.id || ''
-}
 
 export const refresh = forge
   .mutation({
@@ -35,7 +22,7 @@ export const refresh = forge
       UNAUTHORIZED: true
     }
   })
-  .callback(async ({ req, res, response }) => {
+  .callback(async ({ db, req, res, response }) => {
     const refreshToken = req.cookies?.refresh_token as string | undefined
 
     if (!refreshToken) {
@@ -68,9 +55,13 @@ export const refresh = forge
       return response.unauthorized()
     }
 
-    const userId = await getFirstUserId()
+    const user = await db.query.users.findFirst()
 
-    const accessToken = signAccessToken(userId)
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const accessToken = signAccessToken(user.id)
     const newRefreshToken = generateRefreshToken()
 
     await rotateToken({

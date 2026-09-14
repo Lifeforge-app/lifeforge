@@ -8,7 +8,6 @@ interface CustomFontData {
   family: string
   weight: number
   file: string
-  collectionId: string
 }
 
 function useFontFamily(
@@ -67,11 +66,8 @@ function useFontFamily(
             return
           }
 
-          // Construct the PocketBase file URL
           const fileUrl = forgeAPI.getMedia({
-            collectionId: fontData.collectionId,
-            recordId: fontData.id,
-            fieldId: fontData.file
+            key: fontData.file
           })
 
           // Create @font-face rule for the custom font

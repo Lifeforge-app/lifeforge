@@ -3,7 +3,7 @@ import z from 'zod'
 
 import { createForge } from '@lifeforge/server-utils'
 
-const forge = createForge({}, 'ai')
+const forge = createForge('ai')
 
 export const generateImage = forge
   .mutation({
@@ -20,14 +20,13 @@ export const generateImage = forge
   })
   .callback(
     async ({
-      pb,
       body: { prompt },
       core: {
         api: { getAPIKey }
       },
       response
     }) => {
-      const key = await getAPIKey('openai', pb)
+      const key = await getAPIKey('openai')
 
       if (!key) {
         return response.badRequest('OpenAI API key not found')

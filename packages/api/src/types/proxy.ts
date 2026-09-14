@@ -16,9 +16,7 @@ import type {
 
 type ProxyTreeLeaf = {
   getMedia: (params: {
-    collectionId: string
-    recordId: string
-    fieldId: string
+    key: string
     thumb?: string
     token?: string
   }) => string

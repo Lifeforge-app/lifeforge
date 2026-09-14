@@ -1,12 +1,8 @@
 import { hash } from 'argon2'
 import z from 'zod'
 
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@lifeforge/pocketbase'
-
 import forge from '../forge'
+import { users } from '../schema.drizzle'
 
 export const createFirstUser = forge
   .mutation({
@@ -27,36 +23,32 @@ export const createFirstUser = forge
       BAD_REQUEST: z.string()
     }
   })
-  .callback(async ({ body: { email, username, name, password }, response }) => {
-    const config = validateEnvironmentVariables()
+  .callback(
+    async ({ db, body: { email, username, name, password }, response }) => {
+      const existingUser = await db.query.users.findFirst()
 
-    const superPBInstance = await connectToPocketBase(config)
+      if (existingUser) {
+        return response.badRequest('Users already exist')
+      }
 
-    const users = await superPBInstance.collection('users').getFullList()
+      const passwordHash = await hash(password, {
+        type: 2 // argon2id
+      })
 
-    if (users.length > 0) {
-      return response.badRequest('Users already exist')
+      await db.insert(users).values({
+        email,
+        username,
+        name,
+        verified: true,
+        auth_password_hash: passwordHash,
+        theme: 'system',
+        language: 'en',
+        fontScale: 1.0,
+        borderRadiusMultiplier: 1.0
+      })
+
+      return response.created({
+        state: 'success' as const
+      })
     }
-
-    const passwordHash = await hash(password, {
-      type: 2 // argon2id
-    })
-
-    await superPBInstance.collection('users').create({
-      email,
-      username,
-      name,
-      verified: true,
-      password,
-      passwordConfirm: password,
-      auth_password_hash: passwordHash,
-      theme: 'system',
-      language: 'en',
-      fontScale: 1.0,
-      borderRadiusMultiplier: 1.0
-    })
-
-    return response.created({
-      state: 'success' as const
-    })
-  })
+  )

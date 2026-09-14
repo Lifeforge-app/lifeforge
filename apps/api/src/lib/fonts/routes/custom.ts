@@ -1,6 +1,9 @@
+import { eq } from 'drizzle-orm'
+import { createSelectSchema } from 'drizzle-orm/zod'
 import z from 'zod'
 
 import forge from '../forge'
+import { userFontFamilyUpload } from '../schema.drizzle'
 
 const VALID_FONT_EXTENSIONS = ['.ttf', '.otf', '.woff', '.woff2']
 
@@ -10,36 +13,31 @@ function isValidFontFile(filename: string): boolean {
   return VALID_FONT_EXTENSIONS.includes(ext)
 }
 
+const fontUploadSchema = createSelectSchema(userFontFamilyUpload).extend({
+  created: z.string(),
+  updated: z.string()
+})
+
 export const list = forge
   .query({
     description: 'List all custom uploaded fonts',
     input: {},
     output: {
-      OK: z.array(
-        z.object({
-          id: z.string(),
-          displayName: z.string(),
-          family: z.string(),
-          weight: z.number(),
-          file: z.string(),
-          collectionId: z.string()
-        })
-      )
+      OK: z.array(fontUploadSchema)
     }
   })
-  .callback(async ({ pb, response }) => {
-    const records = await pb.getFullList
-      .collection('font_family_upload')
-      .execute()
+  .callback(async ({ db, response }) => {
+    const records = await db.query.userFontFamilyUpload.findMany()
 
     return response.ok(
       records.map(record => ({
         id: record.id,
         displayName: record.displayName,
         family: record.family,
-        weight: record.weight,
         file: record.file,
-        collectionId: record.collectionId
+        weight: record.weight,
+        created: record.created.toISOString(),
+        updated: record.updated.toISOString()
       }))
     )
   })
@@ -52,36 +50,28 @@ export const get = forge
         id: z.string()
       })
     },
-    existenceCheck: {
-      query: {
-        id: 'font_family_upload'
-      }
-    },
     output: {
-      OK: z.object({
-        id: z.string(),
-        displayName: z.string(),
-        family: z.string(),
-        weight: z.number(),
-        file: z.string(),
-        collectionId: z.string()
-      }),
+      OK: fontUploadSchema,
       NOT_FOUND: true
     }
   })
-  .callback(async ({ pb, query: { id }, response }) => {
-    const record = await pb.getOne
-      .collection('font_family_upload')
-      .id(id)
-      .execute()
+  .callback(async ({ db, query: { id }, response }) => {
+    const record = await db.query.userFontFamilyUpload.findFirst({
+      where: { id }
+    })
+
+    if (!record) {
+      return response.notFound()
+    }
 
     return response.ok({
       id: record.id,
       displayName: record.displayName,
       family: record.family,
-      weight: record.weight,
       file: record.file,
-      collectionId: record.collectionId
+      weight: record.weight,
+      created: record.created.toISOString(),
+      updated: record.updated.toISOString()
     })
   })
 
@@ -103,73 +93,100 @@ export const upload = forge
         optional: false
       }
     },
-    existenceCheck: {
-      query: {
-        id: '[font_family_upload]'
-      }
-    },
     output: {
-      OK: z.object({
-        id: z.string(),
-        displayName: z.string(),
-        family: z.string(),
-        weight: z.number(),
-        file: z.string(),
-        collectionId: z.string()
-      }),
+      OK: fontUploadSchema,
       BAD_REQUEST: z.string(),
       NOT_FOUND: true
     }
   })
   .callback(
     async ({
-      pb,
+      db,
       query: { id },
       body: { displayName, family, weight },
       media: { file },
-      core: {
-        media: { retrieveMedia }
-      },
+      core,
       response
     }) => {
       if (!file || typeof file === 'string') {
         return response.badRequest('A valid font file must be uploaded')
       }
 
-      if (!isValidFontFile(file.filename)) {
+      const originalname =
+        'originalname' in file && typeof file.originalname === 'string'
+          ? file.originalname
+          : ''
+
+      if (!isValidFontFile(originalname)) {
         return response.badRequest(
           'Invalid file type. Only TTF, OTF, WOFF, and WOFF2 files are allowed.'
         )
       }
 
-      const record = id
-        ? await pb.update
-            .collection('font_family_upload')
-            .id(id)
-            .data({
-              displayName,
-              family,
-              weight,
-              ...(await retrieveMedia('file', file))
-            })
-            .execute()
-        : await pb.create
-            .collection('font_family_upload')
-            .data({
-              displayName,
-              family,
-              weight,
-              ...(await retrieveMedia('file', file))
-            })
-            .execute()
+      let existingFileKey: string | undefined
+      if (id) {
+        const existing = await db.query.userFontFamilyUpload.findFirst({
+          where: { id }
+        })
+        if (!existing) {
+          return response.notFound()
+        }
+        existingFileKey = existing.file
+      }
+
+      const fileKey = await core.storage.save({
+        file,
+        currentKey: existingFileKey,
+        table: 'userFontFamilyUpload',
+        field: 'file'
+      })
+
+      if (!fileKey) {
+        return response.badRequest('Failed to save font file')
+      }
+
+      if (id) {
+        const [updated] = await db
+          .update(userFontFamilyUpload)
+          .set({
+            displayName,
+            family,
+            weight,
+            file: fileKey,
+            updated: new Date()
+          })
+          .where(eq(userFontFamilyUpload.id, id))
+          .returning()
+
+        return response.ok({
+          id: updated.id,
+          displayName: updated.displayName,
+          family: updated.family,
+          file: updated.file,
+          weight: updated.weight,
+          created: updated.created.toISOString(),
+          updated: updated.updated.toISOString()
+        })
+      }
+
+      const [created] = await db
+        .insert(userFontFamilyUpload)
+        .values({
+          displayName,
+          family,
+          weight,
+          file: fileKey
+        })
+        .returning()
 
       return response.ok({
-        id: record.id,
-        displayName: record.displayName,
-        family: record.family,
-        weight: record.weight,
-        file: record.file,
-        collectionId: record.collectionId
+        id: created.id,
+        displayName: created.displayName,
+        family: created.family,
+        file: created.file,
+        weight: created.weight,
+        created: created.created.toISOString(),
+        updated: created.updated.toISOString()
       })
     }
   )
@@ -187,8 +204,22 @@ export const remove = forge
       NOT_FOUND: true
     }
   })
-  .callback(async ({ pb, query: { id }, response }) => {
-    await pb.delete.collection('font_family_upload').id(id).execute()
+  .callback(async ({ db, core, query: { id }, response }) => {
+    const record = await db.query.userFontFamilyUpload.findFirst({
+      where: { id }
+    })
+
+    if (!record) {
+      return response.notFound()
+    }
+
+    if (record.file) {
+      await core.storage.delete(record.file)
+    }
+
+    await db
+      .delete(userFontFamilyUpload)
+      .where(eq(userFontFamilyUpload.id, id))
 
     return response.noContent()
   })

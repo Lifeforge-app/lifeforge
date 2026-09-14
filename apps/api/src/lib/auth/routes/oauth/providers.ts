@@ -1,10 +1,10 @@
 import { encrypt } from '@functions/auth/encryption'
 import { OAUTH_PROVIDER_CONFIGS } from '@lib/auth/constants/oauth_providers'
-import { getPB } from '@lib/auth/constants/pb'
 import forge from '@lib/auth/forge'
+import { eq } from 'drizzle-orm'
 import { z } from 'zod'
 
-import schema from '../../schema'
+import { authOAuthProviders } from '../../schema.drizzle'
 
 const MASTER_KEY = process.env.MASTER_KEY!
 
@@ -16,29 +16,18 @@ export const listEnabled = forge
     input: {},
     output: {
       OK: z.array(
-        schema.oauth_providers
-          .pick({
-            provider: true
-          })
-          .extend({
-            icon: z.string(),
-            name: z.string()
-          })
+        z.object({
+          provider: z.string(),
+          icon: z.string(),
+          name: z.string()
+        })
       )
     }
   })
-  .callback(async ({ response }) => {
-    const pb = await getPB()
-    const records = await pb.getFullList
-      .collection('oauth_providers')
-      .filter([
-        {
-          field: 'enabled',
-          operator: '=',
-          value: true
-        }
-      ])
-      .execute()
+  .callback(async ({ db, response }) => {
+    const records = await db.query.authOAuthProviders.findMany({
+      where: { enabled: true }
+    })
 
     return response.ok(
       records.map(record => {
@@ -46,8 +35,8 @@ export const listEnabled = forge
 
         return {
           provider: record.provider,
-          icon: config.icon,
-          name: config.name
+          icon: config?.icon || '',
+          name: config?.name || record.provider
         }
       })
     )
@@ -70,8 +59,8 @@ export const listOptions = forge
       )
     }
   })
-  .callback(async ({ response, pb }) => {
-    const records = await pb.getFullList.collection('oauth_providers').execute()
+  .callback(async ({ db, response }) => {
+    const records = await db.query.authOAuthProviders.findMany()
 
     return response.ok(
       Object.entries(OAUTH_PROVIDER_CONFIGS).map(([provider, config]) => {
@@ -82,7 +71,7 @@ export const listOptions = forge
           provider,
           configured: !!record,
           enabled: record?.enabled || false,
-          updated: record?.updated || null,
+          updated: record?.updated ? record.updated.toISOString() : null,
           icon: config.icon,
           name: config.name
         }
@@ -108,42 +97,39 @@ export const upsert = forge
       NOT_FOUND: true
     }
   })
-  .callback(async ({ query: { provider }, body, response, pb }) => {
+  .callback(async ({ db, query: { provider }, body, response }) => {
     if (!(provider in OAUTH_PROVIDER_CONFIGS)) {
       return response.badRequest('Unsupported provider')
     }
 
-    const record = await pb.getFirstListItem
-      .collection('oauth_providers')
-      .filter([
-        {
-          field: 'provider',
-          operator: '=',
-          value: provider
-        }
-      ])
-      .execute()
-      .catch(() => null)
+    const record = await db.query.authOAuthProviders.findFirst({
+      where: { provider }
+    })
 
-    const data = {
-      provider,
-      enabled: true,
-      client_id: body.clientId
-        ? encrypt(Buffer.from(body.clientId), MASTER_KEY).toString('base64')
-        : undefined,
-      client_secret: body.clientSecret
-        ? encrypt(Buffer.from(body.clientSecret), MASTER_KEY).toString('base64')
-        : undefined
-    }
+    const encryptedClientId = body.clientId
+      ? encrypt(Buffer.from(body.clientId), MASTER_KEY).toString('base64')
+      : undefined
+    const encryptedClientSecret = body.clientSecret
+      ? encrypt(Buffer.from(body.clientSecret), MASTER_KEY).toString('base64')
+      : undefined
 
     if (record) {
-      await pb.update
-        .collection('oauth_providers')
-        .id(record.id)
-        .data(data)
-        .execute()
+      await db
+        .update(authOAuthProviders)
+        .set({
+          enabled: true,
+          client_id: encryptedClientId,
+          client_secret: encryptedClientSecret,
+          updated: new Date()
+        })
+        .where(eq(authOAuthProviders.id, record.id))
     } else {
-      await pb.create.collection('oauth_providers').data(data).execute()
+      await db.insert(authOAuthProviders).values({
+        provider,
+        enabled: true,
+        client_id: encryptedClientId,
+        client_secret: encryptedClientSecret
+      })
     }
 
     return response.noContent()
@@ -157,27 +143,24 @@ export const toggle = forge
         id: z.string()
       })
     },
-    existenceCheck: {
-      query: {
-        id: 'oauth_providers'
-      }
-    },
     output: {
       NO_CONTENT: true,
       NOT_FOUND: true
     }
   })
-  .callback(async ({ query: { id }, response, pb }) => {
-    const record = await pb.getOne
-      .collection('oauth_providers')
-      .id(id)
-      .execute()
+  .callback(async ({ db, query: { id }, response }) => {
+    const record = await db.query.authOAuthProviders.findFirst({
+      where: { id }
+    })
 
-    await pb.update
-      .collection('oauth_providers')
-      .id(id)
-      .data({ enabled: !record.enabled })
-      .execute()
+    if (!record) {
+      return response.notFound()
+    }
+
+    await db
+      .update(authOAuthProviders)
+      .set({ enabled: !record.enabled, updated: new Date() })
+      .where(eq(authOAuthProviders.id, id))
 
     return response.noContent()
   })
@@ -190,18 +173,20 @@ export const remove = forge
         id: z.string()
       })
     },
-    existenceCheck: {
-      query: {
-        id: 'oauth_providers'
-      }
-    },
     output: {
       NO_CONTENT: true,
       NOT_FOUND: true
     }
   })
-  .callback(async ({ query: { id }, response, pb }) => {
-    await pb.delete.collection('oauth_providers').id(id).execute()
+  .callback(async ({ db, query: { id }, response }) => {
+    const [deleted] = await db
+      .delete(authOAuthProviders)
+      .where(eq(authOAuthProviders.id, id))
+      .returning()
+
+    if (!deleted) {
+      return response.notFound()
+    }
 
     return response.noContent()
   })

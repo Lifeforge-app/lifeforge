@@ -13,7 +13,7 @@ import {
   forgeRouter
 } from '@lifeforge/server-utils'
 
-const forge = createForge({}, 'locales')
+const forge = createForge('locales')
 
 const appsDir = path.join(ROOT_DIR, 'modules')
 
@@ -214,8 +214,9 @@ const listUnsupportedModules = forge
     },
     rateLimit: false
   })
-  .callback(async ({ pb, response }) => {
-    const userLanguage = pb.instance.authStore.record?.language
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
+    const userLanguage = user?.language
 
     if (!userLanguage) {
       return response.notFound()

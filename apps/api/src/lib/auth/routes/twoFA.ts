@@ -1,15 +1,11 @@
 import { decrypt, encrypt } from '@functions/auth/encryption'
+import { eq } from 'drizzle-orm'
 import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
 import z from 'zod'
 
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@lifeforge/pocketbase'
-
+import { users } from '../../user/schema.drizzle'
 import { getCookieOptions } from '../constants/cookie'
-import { getPB } from '../constants/pb'
 import forge from '../forge'
 import { pending2FASessions, pendingTOTPSetups } from '../utils/2fa'
 import { storeRefreshToken } from '../utils/refreshTokenStore'
@@ -30,12 +26,16 @@ export const generate = forge
       OK: z.object({
         tid: z.string(),
         link: z.string()
-      })
+      }),
+      UNAUTHORIZED: true
     }
   })
-  .callback(async ({ response }) => {
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
 
     const secret = speakeasy.generateSecret({
       name: user.email,
@@ -70,7 +70,7 @@ export const enable = forge
       UNAUTHORIZED: true
     }
   })
-  .callback(async ({ body: { otp, tid }, response }) => {
+  .callback(async ({ db, body: { otp, tid }, response }) => {
     const pending = pendingTOTPSetups.get(tid)
 
     if (!pending) {
@@ -89,18 +89,21 @@ export const enable = forge
       return response.unauthorized()
     }
 
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+    const user = await db.query.users.findFirst()
 
-    await pb.update
-      .collection('users')
-      .id(user.id)
-      .data({
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    await db
+      .update(users)
+      .set({
         twoFASecret: encrypt(Buffer.from(pending.secret), MASTER_KEY).toString(
           'base64'
-        )
+        ),
+        updated: new Date()
       })
-      .execute()
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -111,18 +114,21 @@ export const disable = forge
     encrypted: false,
     input: {},
     output: {
-      NO_CONTENT: true
+      NO_CONTENT: true,
+      UNAUTHORIZED: true
     }
   })
-  .callback(async ({ response }) => {
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
 
-    await pb.update
-      .collection('users')
-      .id(user.id)
-      .data({ twoFASecret: '' })
-      .execute()
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    await db
+      .update(users)
+      .set({ twoFASecret: null, updated: new Date() })
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -145,7 +151,7 @@ export const verify = forge
       UNAUTHORIZED: true
     }
   })
-  .callback(async ({ body: { otp, tid }, req, res, response }) => {
+  .callback(async ({ db, body: { otp, tid }, req, res, response }) => {
     const pending = pending2FASessions.get(tid)
 
     if (!pending) {
@@ -154,10 +160,11 @@ export const verify = forge
 
     pending2FASessions.del(tid)
 
-    const config = validateEnvironmentVariables()
-    const pb = await connectToPocketBase(config)
-    const user = await pb.collection('users').getOne(pending.userId)
-    const encryptedSecret = user.twoFASecret as string | undefined
+    const user = await db.query.users.findFirst({
+      where: { id: pending.userId }
+    })
+
+    const encryptedSecret = user?.twoFASecret
 
     if (!encryptedSecret) {
       return response.unauthorized()

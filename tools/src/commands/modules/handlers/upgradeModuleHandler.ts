@@ -3,8 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import semver from 'semver'
 
-import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
-import { installPackage } from '@/utils/commands'
+import executeCommand, { installPackage } from '@/utils/commands'
 import { smartReloadServer } from '@/utils/docker'
 import { isDockerMode } from '@/utils/helpers'
 import logger from '@/utils/logger'
@@ -151,14 +150,18 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     await buildModuleHandler(mod, { docker: true })
   }
 
-  // Generate migrations for upgraded modules (skip in Docker environment)
+  // Push database schema for upgraded modules (skip in Docker environment)
   if (!isDockerMode()) {
     for (const mod of upgraded) {
       const { targetDir } = normalizePackage(mod)
 
-      if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
-        logger.debug(`Generating database migrations for ${mod}...`)
-        generateMigrationsHandler(mod)
+      if (
+        fs.existsSync(path.join(targetDir, 'server', 'schema.drizzle.ts')) ||
+        fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))
+      ) {
+        logger.debug(`Pushing database schema for ${mod}...`)
+        executeCommand('pnpm --filter @lifeforge/server db:push')
+        break
       }
     }
   }

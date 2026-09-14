@@ -1,5 +1,4 @@
 import type { AxiosResponse } from 'axios'
-import PocketBase from 'pocketbase'
 
 import {
   type ResponseWrapper,
@@ -43,29 +42,4 @@ export function expectNo2FA<T>(
   }
 
   return data as any
-}
-
-let pbInstance: PocketBase | null = null
-
-export async function authenticateSuperuser(
-  pbHost: string,
-  email: string,
-  password: string
-): Promise<PocketBase> {
-  const pb = new PocketBase(pbHost)
-  pb.autoCancellation(false)
-
-  await pb.collection('_superusers').authWithPassword(email, password)
-
-  pbInstance = pb
-
-  return pb
-}
-
-export function getPB(): PocketBase {
-  if (!pbInstance) {
-    throw new Error('PB not authenticated. Call authenticateSuperuser() first.')
-  }
-
-  return pbInstance
 }

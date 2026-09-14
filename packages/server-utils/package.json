@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@lifeforge/configs": "workspace:*",
+    "@lifeforge/file-storage": "workspace:*",
     "@lifeforge/log": "workspace:*",
-    "@lifeforge/pocketbase": "workspace:*",
     "chalk": "^5.6.2",
     "crypto-js": "^4.2.0",
     "express": "^4.21.2",

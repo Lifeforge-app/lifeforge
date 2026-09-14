@@ -5,10 +5,12 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { IPBService, PBService } from '@lifeforge/pocketbase'
 import { ModuleRegistry } from '@lifeforge/server-utils'
+import { db } from '../../drizzle'
 
 const logger = createServiceLogger('API Key Vault')
+
+const apiKeyCache = new Map<string, { key: string; exposable: boolean }>()
 
 export async function validateCallerAccess(
   callerModule: { source: 'app' | 'core'; id: string },
@@ -43,7 +45,6 @@ export async function validateCallerAccess(
 
 async function getAPIKey(
   id: string,
-  pb: PBService<{ entries: any }>,
   callerModule?: { source: 'app' | 'core'; id: string }
 ): Promise<string> {
   try {
@@ -53,15 +54,7 @@ async function getAPIKey(
       )
     }
 
-    const rawPb = pb.instance as unknown as {
-      _apiKeyCache?: Map<string, { key: string; exposable: boolean }>
-    }
-
-    if (!rawPb._apiKeyCache) {
-      rawPb._apiKeyCache = new Map()
-    }
-
-    const cached = rawPb._apiKeyCache.get(id)
+    const cached = apiKeyCache.get(id)
 
     if (cached !== undefined) {
       if (!cached.exposable) {
@@ -71,12 +64,13 @@ async function getAPIKey(
       return cached.key
     }
 
-    const record = await pb.instance
-      .collection('api_keys__entries')
-      .getFirstListItem(`keyId = "${id}"`)
-      .catch(err => {
-        throw new Error(`Failed to retrieve API key for ${id}: ${err.message}`)
-      })
+    const record = await db.query.apiKeysEntries.findFirst({
+      where: { keyId: id }
+    })
+
+    if (!record) {
+      throw new Error(`API key for ${id} not found`)
+    }
 
     if (!record.exposable) {
       await validateCallerAccess(callerModule, id)
@@ -88,7 +82,7 @@ async function getAPIKey(
       )
 
       const decrypted = decrypt2(record.key, process.env.MASTER_KEY!)
-      rawPb._apiKeyCache.set(id, {
+      apiKeyCache.set(id, {
         key: decrypted,
         exposable: record.exposable
       })
@@ -105,9 +99,7 @@ async function getAPIKey(
 }
 
 export default function getAPIKeyFactory(
-  pb: IPBService<any>,
   callerModule?: { source: 'app' | 'core'; id: string }
 ): (id: string) => Promise<string> {
-  return (id: string) =>
-    getAPIKey(id, pb as PBService<{ entries: any }>, callerModule)
+  return (id: string) => getAPIKey(id, callerModule)
 }

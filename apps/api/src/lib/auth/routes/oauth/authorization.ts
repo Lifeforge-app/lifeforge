@@ -1,6 +1,5 @@
 import { createCache } from '@functions/cache'
 import { getCookieOptions } from '@lib/auth/constants/cookie'
-import { getPB } from '@lib/auth/constants/pb'
 import forge from '@lib/auth/forge'
 import { create2FASession } from '@lib/auth/utils/2fa'
 import { fetchUserEmail, getProvider } from '@lib/auth/utils/oauth'
@@ -113,6 +112,7 @@ export const verify = forge
   })
   .callback(
     async ({
+      db,
       body: { provider: providerName, code, state },
       req,
       res,
@@ -160,18 +160,9 @@ export const verify = forge
         return response.unauthorized()
       }
 
-      const pb = await getPB('user')
-      const user = await pb.getFirstListItem
-        .collection('users')
-        .filter([
-          {
-            field: 'email',
-            operator: '=',
-            value: email
-          }
-        ])
-        .execute()
-        .catch(() => null)
+      const user = await db.query.users.findFirst({
+        where: { email }
+      })
 
       if (!user) {
         return response.unauthorized()

@@ -47,7 +47,6 @@ export type {
   Encrypt2Func,
   EncryptFunc,
   ParseOCRFunc,
-  RetrieveMediaFunc,
   FetchAIFunc,
   SearchLocationsFunc
 } from './typescript/core/core_context.types'
@@ -72,3 +71,4 @@ export {
 } from './routes/traceRouteStack'
 
 export { ModuleRegistry } from './registry/ModuleRegistry'
+

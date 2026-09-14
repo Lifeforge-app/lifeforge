@@ -2,8 +2,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { generateMigrationsHandler } from '@/commands/db/handlers/generateMigrationsHandler'
-import { installPackage } from '@/utils/commands'
+import executeCommand, { installPackage } from '@/utils/commands'
 import { smartReloadServer } from '@/utils/docker'
 import initGitRepository from '@/utils/initGitRepository'
 import logger from '@/utils/logger'
@@ -95,13 +94,17 @@ export async function installModuleHandler(
     await buildModuleHandler(moduleName, { docker: true, buildServer: false })
   }
 
-  // Generate migrations for new modules
+  // Push database schema for new modules if schema exists
   for (const moduleName of installed) {
     const { targetDir } = normalizePackage(moduleName)
 
-    if (fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))) {
-      logger.debug(`Generating database migrations for ${moduleName}...`)
-      await generateMigrationsHandler(moduleName)
+    if (
+      fs.existsSync(path.join(targetDir, 'server', 'schema.drizzle.ts')) ||
+      fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))
+    ) {
+      logger.debug(`Pushing database schema for ${moduleName}...`)
+      executeCommand('pnpm --filter @lifeforge/server db:push')
+      break
     }
   }
 

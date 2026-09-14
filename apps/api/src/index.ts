@@ -16,7 +16,6 @@ import fs from 'fs'
 import { createServer } from 'node:http'
 import path from 'node:path'
 
-import { checkDB } from '@lifeforge/pocketbase'
 import { traceRouteStack } from '@lifeforge/server-utils'
 
 dotenv.config({
@@ -82,7 +81,6 @@ async function main(): Promise<void> {
   LocaleService.validateAndLoad()
   ensureDirectories()
   ensureCredentials()
-  await checkDB()
 
   const server = createSocketServer(app)
 
