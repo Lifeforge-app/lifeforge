@@ -392,7 +392,13 @@ const eventLog = forge
     encrypted: false,
     rateLimit: false,
     input: {
-      body: z.object({}).passthrough()
+      body: z
+        .object({
+          project: z.string().min(1),
+          relativeFile: z.string().min(1),
+          language: z.string().min(1)
+        })
+        .passthrough()
     },
     output: {
       OK: z.object({

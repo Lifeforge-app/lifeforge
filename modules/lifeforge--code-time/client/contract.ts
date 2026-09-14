@@ -335,7 +335,25 @@ export const contract = {
       "body": {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
-        "properties": {},
+        "properties": {
+          "project": {
+            "type": "string",
+            "minLength": 1
+          },
+          "relativeFile": {
+            "type": "string",
+            "minLength": 1
+          },
+          "language": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "project",
+          "relativeFile",
+          "language"
+        ],
         "additionalProperties": {}
       }
     },
