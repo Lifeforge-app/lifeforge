@@ -39,6 +39,10 @@ COPY modules/lifeforge--calendar/package.json       modules/lifeforge--calendar/
 COPY modules/lifeforge--passwords/package.json      modules/lifeforge--passwords/package.json
 COPY modules/lifeforge--pomodoro-timer/package.json modules/lifeforge--pomodoro-timer/package.json
 COPY modules/lifeforge--wallet/package.json         modules/lifeforge--wallet/package.json
+COPY modules/lifeforge--blog/package.json           modules/lifeforge--blog/package.json
+COPY modules/lifeforge--idea-box/package.json       modules/lifeforge--idea-box/package.json
+COPY modules/lifeforge--local-ip-widget/package.json modules/lifeforge--local-ip-widget/package.json
+COPY modules/lifeforge--wishlist/package.json       modules/lifeforge--wishlist/package.json
 COPY locales/lang-en/package.json                   locales/lang-en/package.json
 
 # Install deps only (skip postinstall build – source not copied yet)
@@ -48,13 +52,16 @@ RUN pnpm install --frozen-lockfile --ignore-scripts
 COPY . .
 
 # Build the API and module bundles used by the production image
-RUN pnpm turbo build --filter=@lifeforge/server... && \
+RUN pnpm turbo build --filter=@lifeforge/server... \
+      --filter=@lifeforge/federation \
+      --filter=@lifeforge/localization \
+      --filter=@lifeforge/ui && \
     pnpm --filter './modules/*' run build
 
 # ── Collect production node_modules for the API ──────────────────────
 # Create a clean package.json with only production dependencies,
 # including transitive deps from bundled workspace packages
-RUN node -e "const fs=require('fs'),pkg=JSON.parse(fs.readFileSync('./apps/api/package.json','utf8')),ws=new Set(['@lifeforge/configs','@lifeforge/log','@lifeforge/pocketbase','@lifeforge/server-utils']);for(const d of Object.keys(pkg.dependencies||{}))if(ws.has(d))delete pkg.dependencies[d];delete pkg.devDependencies;for(const w of['./packages/pocketbase/package.json','./packages/log/package.json','./packages/server-utils/package.json']){try{const wp=JSON.parse(fs.readFileSync(w,'utf8'));for(const[k,v]of Object.entries(wp.dependencies||{})){if(!ws.has(k))pkg.dependencies[k]=v}}catch{}}pkg.dependencies.zod='^4.0.0';pkg.dependencies.lodash='^4.17.21';pkg.dependencies.dayjs='^1.11.19';fs.writeFileSync('./apps/api/package.docker.json',JSON.stringify(pkg,null,2));"
+RUN node -e "const fs=require('fs'),pkg=JSON.parse(fs.readFileSync('./apps/api/package.json','utf8')),ws=new Set(['@lifeforge/configs','@lifeforge/log','@lifeforge/pocketbase','@lifeforge/server-utils']);for(const d of Object.keys(pkg.dependencies||{}))if(ws.has(d))delete pkg.dependencies[d];delete pkg.devDependencies;for(const w of['./packages/pocketbase/package.json','./packages/log/package.json','./packages/server-utils/package.json']){try{const wp=JSON.parse(fs.readFileSync(w,'utf8'));for(const[k,v]of Object.entries(wp.dependencies||{})){if(!ws.has(k))pkg.dependencies[k]=v}}catch{}}for(const d of fs.readdirSync('./modules')){try{const mp=JSON.parse(fs.readFileSync('./modules/'+d+'/package.json','utf8'));for(const[k,v]of Object.entries(mp.dependencies||{}))if(!k.startsWith('@lifeforge/'))pkg.dependencies[k]??=v}catch{}}pkg.dependencies.zod='^4.0.0';pkg.dependencies.lodash='^4.17.21';pkg.dependencies.dayjs='^1.11.19';fs.writeFileSync('./apps/api/package.docker.json',JSON.stringify(pkg,null,2));"
 
 # ============================================
 # Production stage – runtime only

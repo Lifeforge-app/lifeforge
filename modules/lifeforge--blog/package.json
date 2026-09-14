@@ -16,6 +16,7 @@
   },
   "devDependencies": {},
   "displayName": "Blog",
+  "author": "LifeForge",
   "type": "module",
   "license": "CC BY-NC-SA 4.0",
   "lifeforge": {
