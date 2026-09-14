@@ -1,7 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 
-export const ROOT_DIR = import.meta.dirname.split(/tools[\\/]/)[0]
+import { findProjectRoot } from '@lifeforge/configs/node'
+
+export const ROOT_DIR = findProjectRoot()
 
 export const LOCALES_DIR = path.join(ROOT_DIR, 'locales')
 

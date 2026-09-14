@@ -23,7 +23,6 @@ import {
   getStatusMessage
 } from '@lifeforge/server-utils'
 
-import checkRecordExistence from '../utils/checkRecordExistence'
 import { createCoreContext } from '../utils/coreContext'
 import getAESKey from '../utils/getAESKey'
 import parseBodyPayload from '../utils/parsePayload'
@@ -89,7 +88,6 @@ function createHandler(
         query: req.query,
         media: req.media || {},
         core: createCoreContext({
-          pb: req.pb(callerModule || { id: '' }),
           module: callerModule as never
         })
       })

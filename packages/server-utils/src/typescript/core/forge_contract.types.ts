@@ -22,7 +22,7 @@ export interface ForgeExpressContext<
   body: unknown
   query: unknown
   media: unknown
-  core: CoreContext
+  core: CoreContext<TSchema>
 }
 
 export interface ForgeContract {
@@ -65,5 +65,5 @@ export type ForgeContext<
   res: Response
   io: Server
   db: PostgresJsDatabase<TSchema>
-  core: CoreContext
+  core: CoreContext<TSchema>
 }

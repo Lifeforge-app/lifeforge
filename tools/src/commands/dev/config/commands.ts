@@ -1,16 +1,7 @@
-import chalk from 'chalk'
 import fs from 'fs'
 
-import {
-  PB_BINARY_PATH,
-  PB_DIR,
-  PB_HOST,
-  PB_KWARGS,
-  PB_PORT
-} from '@/constants/db'
 import executeCommand from '@/utils/commands'
 import {
-  checkAddressInUse,
   checkPortInUse,
   delay,
   killExistingProcess
@@ -27,26 +18,6 @@ interface ServiceConfig {
 }
 
 export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
-  db: {
-    command: async () => {
-      if (await checkAddressInUse(PB_HOST, PB_PORT)) {
-        logger.error(
-          `Database address ${chalk.blue(`${PB_HOST}:${PB_PORT}`)} is already in use.`
-        )
-        process.exit(1)
-      }
-
-      if (!fs.existsSync(PB_BINARY_PATH)) {
-        logger.error(
-          `PocketBase binary does not exist: ${chalk.blue(PB_BINARY_PATH)}. Please run "pnpm forge db init" to initialize the database.`
-        )
-        process.exit(1)
-      }
-
-      return `${PB_BINARY_PATH} serve ${PB_KWARGS.join(' ')}`
-    },
-    cwd: PB_DIR
-  },
   server: {
     command: async () => {
       const killedProcess = killExistingProcess('tsx.*apps/api.*src/index.ts')

@@ -6,7 +6,6 @@ import chalk from 'chalk'
 import OpenAI from 'openai'
 import z from 'zod'
 
-import { IPBService } from '@lifeforge/pocketbase'
 import {
   ClientError,
   FetchAIFunc,
@@ -27,13 +26,11 @@ registerProvider('ollama', ollamaProvider)
 registerProvider('deepseek', deepseekProvider)
 
 async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
-  pb,
   provider,
   model,
   messages,
   structure
 }: {
-  pb: IPBService<any>
   provider: 'groq' | 'openai' | 'ollama' | 'deepseek'
   model: string
   messages: OpenAI.ChatCompletionMessageParam[]
@@ -56,7 +53,7 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
   if (aiProvider.requireAPIKey) {
     await validateCallerAccess(callerModule, provider)
 
-    const fetchedKey = await getAPIKeyFactory(pb, callerModule)(provider)
+    const fetchedKey = await getAPIKeyFactory(callerModule)(provider)
 
     if (!fetchedKey) {
       throw new ClientError(`API key for ${provider} not found.`)

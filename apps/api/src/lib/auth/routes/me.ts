@@ -1,8 +1,10 @@
-import schema from '@lib/user/schema'
+import { createSelectSchema } from 'drizzle-orm/zod'
 import z from 'zod'
 
-import { getPB } from '../constants/pb'
+import { users } from '../../user/schema.drizzle'
 import forge from '../forge'
+
+const userSelectSchema = createSelectSchema(users)
 
 export const me = forge
   .query({
@@ -11,7 +13,7 @@ export const me = forge
     input: {},
     output: {
       OK: z.object({
-        userData: schema.users
+        userData: userSelectSchema
           .omit({
             APIKeysMasterPasswordHash: true,
             twoFASecret: true,
@@ -28,14 +30,8 @@ export const me = forge
       UNAUTHORIZED: true
     }
   })
-  .callback(async ({ response }) => {
-    const pb = await getPB('user')
-    const users = await pb.getList
-      .collection('users')
-      .page(1)
-      .perPage(1)
-      .execute()
-    const user = users.items[0]
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
 
     if (!user) {
       return response.unauthorized()
@@ -43,13 +39,11 @@ export const me = forge
 
     const sanitized = {
       id: user.id,
-      collectionId: user.collectionId || '',
-      collectionName: user.collectionName || '',
       email: user.email,
       emailVisibility: user.emailVisibility,
       verified: user.verified,
       username: user.username,
-      name: user.name,
+      name: user.name || '',
       avatar: user.avatar || '',
       dateOfBirth: user.dateOfBirth || '',
       theme: user.theme || 'system',
@@ -64,7 +58,7 @@ export const me = forge
       dashboardLayout: user.dashboardLayout ?? null,
       hasAPIKeysMasterPassword: Boolean(user.APIKeysMasterPasswordHash),
       twoFAEnabled: Boolean(user.twoFASecret),
-      backdropFilters: user.backdropFilters
+      backdropFilters: user.backdropFilters ?? null
     }
 
     return response.ok({ userData: sanitized })

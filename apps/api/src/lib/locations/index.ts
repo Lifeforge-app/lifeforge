@@ -3,7 +3,7 @@ import z from 'zod'
 
 import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
-const forge = createForge({}, 'locations')
+const forge = createForge('locations')
 
 const search = forge
   .query({
@@ -30,13 +30,12 @@ const search = forge
   .callback(
     async ({
       query: { q },
-      pb,
       core: {
         api: { getAPIKey }
       },
       response
     }) => {
-      const key = await getAPIKey('gcloud', pb)
+      const key = await getAPIKey('gcloud')
 
       if (!key) {
         return response.badRequest('API key not found')

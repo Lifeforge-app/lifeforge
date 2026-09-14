@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@lifeforge/configs": "workspace:*",
+    "@lifeforge/file-storage": "workspace:*",
     "@lifeforge/log": "workspace:*",
-    "@lifeforge/pocketbase": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",
     "@types/multer": "^2.2.0",
     "@typescript/typescript6": "^6.0.2",
@@ -54,7 +54,6 @@
     "node-cache": "^5.1.2",
     "openai": "^6.7.0",
     "pdf2pic": "^3.2.0",
-    "pocketbase": "^0.27.0",
     "postgres": "^3.4.9",
     "socket.io": "^4.8.1",
     "speakeasy": "^2.0.0",

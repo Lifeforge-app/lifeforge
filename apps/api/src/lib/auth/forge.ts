@@ -1,7 +1,6 @@
-import { createForge } from '@lifeforge/server-utils'
+import { createForgeContractBuilder } from '@lifeforge/server-utils'
+import type { AppRelations } from '@/core/drizzle'
 
-import schema from './schema'
-
-const forge = createForge(schema, 'auth')
+const forge = createForgeContractBuilder<AppRelations>('auth')
 
 export default forge

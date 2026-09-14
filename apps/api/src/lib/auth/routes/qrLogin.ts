@@ -2,7 +2,6 @@ import { v4 } from 'uuid'
 import z from 'zod'
 
 import { getCookieOptions } from '../constants/cookie'
-import { getPB } from '../constants/pb'
 import forge from '../forge'
 import { sessions } from '../utils/qrLogin'
 import { storeRefreshToken } from '../utils/refreshTokenStore'
@@ -61,10 +60,11 @@ export const approve = forge
         browserInfo: z.string()
       }),
       NOT_FOUND: true,
-      BAD_REQUEST: z.string()
+      BAD_REQUEST: z.string(),
+      UNAUTHORIZED: true
     }
   })
-  .callback(async ({ body: { sessionId }, req, response }) => {
+  .callback(async ({ db, body: { sessionId }, req, response }) => {
     const session = sessions.get(sessionId)
 
     if (!session) {
@@ -75,8 +75,11 @@ export const approve = forge
       return response.badRequest('Session already approved')
     }
 
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
 
     const accessToken = signAccessToken(user.id)
     const refreshToken = generateRefreshToken()

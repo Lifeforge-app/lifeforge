@@ -1,7 +1,9 @@
 import { createCache } from '@functions/cache'
+import { eq } from 'drizzle-orm'
 import z from 'zod'
 
 import forge from '../forge'
+import { users } from '../schema.drizzle'
 
 const googleFontItemSchema = z.object({
   family: z.string(),
@@ -65,7 +67,6 @@ export const listGoogleFonts = forge
   })
   .callback(
     async ({
-      pb,
       core: {
         api: { getAPIKey }
       },
@@ -77,7 +78,7 @@ export const listGoogleFonts = forge
         return response.ok(cached)
       }
 
-      const key = await getAPIKey('gcloud', pb)
+      const key = await getAPIKey('gcloud').catch(() => null)
 
       if (!key) {
         return response.ok({
@@ -120,7 +121,6 @@ export const getGoogleFont = forge
   })
   .callback(
     async ({
-      pb,
       query: { family },
       core: {
         api: { getAPIKey }
@@ -135,7 +135,7 @@ export const getGoogleFont = forge
         return response.ok(cached)
       }
 
-      const key = await getAPIKey('gcloud', pb).catch(() => null)
+      const key = await getAPIKey('gcloud').catch(() => null)
 
       if (!key) {
         return response.ok({
@@ -169,19 +169,14 @@ export const listGoogleFontsPin = forge
       UNAUTHORIZED: true
     }
   })
-  .callback(async ({ pb, response }) => {
-    if (!pb.instance.authStore.record) {
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
       return response.unauthorized()
     }
 
-    const userRecord = await pb.getFirstListItem.collection('users').execute()
-
-    const record = await pb.getOne
-      .collection('users')
-      .id(userRecord.id)
-      .execute()
-
-    return response.ok((record.pinnedFontFamilies || []) as string[])
+    return response.ok((user.pinnedFontFamilies || []) as string[])
   })
 
 export const toggleGoogleFontsPin = forge
@@ -197,31 +192,27 @@ export const toggleGoogleFontsPin = forge
       UNAUTHORIZED: true
     }
   })
-  .callback(async ({ pb, body: { family }, response }) => {
-    if (!pb.instance.authStore.record) {
+  .callback(async ({ db, body: { family }, response }) => {
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
       return response.unauthorized()
     }
 
-    const userRecord = await pb.getFirstListItem.collection('users').execute()
-
-    const record = await pb.getOne
-      .collection('users')
-      .id(userRecord.id)
-      .execute()
-
-    const pinnedFontFamilies: string[] = record.pinnedFontFamilies || []
+    const pinnedFontFamilies: string[] = (user.pinnedFontFamilies ||
+      []) as string[]
 
     const updatedPinnedFontFamilies = pinnedFontFamilies.includes(family)
       ? pinnedFontFamilies.filter(f => f !== family)
       : [...pinnedFontFamilies, family]
 
-    await pb.update
-      .collection('users')
-      .id(userRecord.id)
-      .data({
-        pinnedFontFamilies: updatedPinnedFontFamilies
+    await db
+      .update(users)
+      .set({
+        pinnedFontFamilies: updatedPinnedFontFamilies,
+        updated: new Date()
       })
-      .execute()
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -237,64 +228,81 @@ export const updateBgImage = forge
     },
     output: {
       OK: z.object({
-        collectionId: z.string(),
-        recordId: z.string(),
-        fieldId: z.string()
-      })
+        key: z.string()
+      }),
+      BAD_REQUEST: z.string(),
+      UNAUTHORIZED: true
     }
   })
-  .callback(
-    async ({
-      pb,
-      media: { file },
-      core: {
-        media: { retrieveMedia }
-      },
-      response
-    }) => {
-      const userRecord = await pb.getFirstListItem.collection('users').execute()
-
-      const newRecord = await pb.update
-        .collection('users')
-        .id(userRecord.id)
-        .data({
-          ...(await retrieveMedia('bgImage', file)),
-          backdropFilters: {
-            brightness: 100,
-            blur: 'none',
-            contrast: 100,
-            saturation: 100,
-            overlayOpacity: 50
-          }
-        })
-        .execute()
-
-      return response.ok({
-        collectionId: newRecord.collectionId,
-        recordId: newRecord.id,
-        fieldId: newRecord.bgImage
-      })
+  .callback(async ({ db, media: { file }, core, response }) => {
+    if (typeof file === 'string') {
+      return response.badRequest('A valid background image must be uploaded')
     }
-  )
+
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const bgImageKey = await core.storage.save({
+      file,
+      currentKey: user.bgImage || undefined,
+      table: 'users',
+      field: 'bgImage'
+    })
+
+    if (!bgImageKey) {
+      return response.badRequest('Failed to save background image')
+    }
+
+    await db
+      .update(users)
+      .set({
+        bgImage: bgImageKey,
+        backdropFilters: {
+          brightness: 100,
+          blur: 'none',
+          contrast: 100,
+          saturation: 100,
+          overlayOpacity: 50
+        },
+        updated: new Date()
+      })
+      .where(eq(users.id, user.id))
+
+    return response.ok({
+      key: bgImageKey
+    })
+  })
 
 export const deleteBgImage = forge
   .mutation({
     description: 'Remove background image',
     input: {},
     output: {
-      NO_CONTENT: true
+      NO_CONTENT: true,
+      UNAUTHORIZED: true
     }
   })
-  .callback(async ({ pb, response }) => {
-    const userRecord = await pb.getFirstListItem.collection('users').execute()
+  .callback(async ({ db, core, response }) => {
+    const user = await db.query.users.findFirst()
 
-    await pb.update
-      .collection('users')
-      .id(userRecord.id)
-      .data({
-        bgImage: null
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    if (user.bgImage) {
+      await core.storage.delete(user.bgImage)
+    }
+
+    await db
+      .update(users)
+      .set({
+        bgImage: null,
+        updated: new Date()
       })
-      .execute()
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -320,11 +328,18 @@ export const updatePersonalization = forge
     },
     output: {
       NO_CONTENT: true,
-      BAD_REQUEST: z.string()
+      BAD_REQUEST: z.string(),
+      UNAUTHORIZED: true
     }
   })
-  .callback(async ({ pb, body: { data }, response }) => {
-    const toBeUpdated: { [key: string]: unknown } = {}
+  .callback(async ({ db, body: { data }, response }) => {
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const toBeUpdated: Record<string, unknown> = {}
 
     for (const item of [
       'fontFamily',
@@ -347,13 +362,9 @@ export const updatePersonalization = forge
       return response.badRequest('No data to update')
     }
 
-    const userRecord = await pb.getFirstListItem.collection('users').execute()
+    toBeUpdated.updated = new Date()
 
-    await pb.update
-      .collection('users')
-      .id(userRecord.id)
-      .data(toBeUpdated)
-      .execute()
+    await db.update(users).set(toBeUpdated).where(eq(users.id, user.id))
 
     return response.noContent()
   })

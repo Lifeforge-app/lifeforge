@@ -177,23 +177,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUserData(userResponse.userData)
       setAuth(true)
 
-      return userResponse.userData.name
+      return userResponse.userData.name || ''
     },
     []
   )
 
   const getAvatarURL = useCallback((): string => {
-    if (userData) {
-      return (forgeAPI as any).getMedia({
-        collectionId: userData.collectionId,
-        recordId: userData.id,
-        fieldId: userData.avatar,
+    if (userData?.avatar) {
+      return forgeAPI.getMedia({
+        key: userData.avatar,
         thumb: '256x0'
       })
     }
 
     return ''
-  }, [userData, forgeAPI])
+  }, [userData])
 
   useEffect(() => {
     if (getAccessToken()) {

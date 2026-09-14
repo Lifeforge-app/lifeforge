@@ -8,6 +8,7 @@ export default defineConfig({
       '@functions': path.resolve(__dirname, 'src/core/functions'),
       '@schema': path.resolve(__dirname, 'src/core/schema'),
       '@lib': path.resolve(__dirname, 'src/lib'),
+      '@modules': path.resolve(__dirname, '../../modules'),
       crypto: 'node:crypto'
     }
   },
@@ -19,8 +20,6 @@ export default defineConfig({
     rollupOptions: {
       output: { entryFileNames: 'server.js' },
       external: [
-        'pocketbase',
-        '@lifeforge/pocketbase',
         '@lifeforge/server-utils'
       ]
     }

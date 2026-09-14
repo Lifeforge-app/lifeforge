@@ -5,6 +5,8 @@ import { pipeline } from 'node:stream/promises'
 
 import pathIsInside from 'path-is-inside'
 
+import { findProjectRoot } from '@lifeforge/configs/node'
+
 import type { FileStream, ProviderSaveOptions, StorageProvider } from '../types'
 import { extensionToMime } from '../utils'
 
@@ -12,7 +14,9 @@ export class LocalStorageProvider implements StorageProvider {
   private basePath: string
 
   constructor(basePath: string = './storage') {
-    this.basePath = path.resolve(process.cwd(), basePath)
+    this.basePath = path.isAbsolute(basePath)
+      ? path.resolve(basePath)
+      : path.resolve(findProjectRoot(), basePath)
   }
 
   private getFilePath(key: string): string | null {
