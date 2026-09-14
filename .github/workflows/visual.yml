@@ -32,7 +32,8 @@ jobs:
         run: |
           cp env/.env.docker.example env/.env.docker
           docker compose down -v --remove-orphans
-          docker compose up --build -d
+          docker compose build
+          docker compose up -d || true
           echo 'Waiting for database initialization...'
           db_init_status=''
           for attempt in {1..60}; do

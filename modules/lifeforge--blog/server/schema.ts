@@ -1,6 +1,8 @@
 import z from 'zod'
 
-const blogSchemas = {
+import { cleanSchemas } from '@lifeforge/pocketbase'
+
+export const schemas = {
   entries: {
     schema: z.object({
       content: z.string(),
@@ -237,4 +239,4 @@ const blogSchemas = {
   }
 }
 
-export default blogSchemas
+export default cleanSchemas(schemas)

@@ -1,6 +1,8 @@
 import z from 'zod'
 
-const wishlistSchemas = {
+import { cleanSchemas } from '@lifeforge/pocketbase'
+
+export const schemas = {
   lists: {
     schema: z.object({
       name: z.string(),
@@ -366,4 +368,4 @@ const wishlistSchemas = {
   }
 }
 
-export default wishlistSchemas
+export default cleanSchemas(schemas)
