@@ -24,7 +24,7 @@ export class S3StorageProvider implements StorageProvider {
   constructor(config: NonNullable<StorageConfig['s3']>) {
     this.bucket = config.bucket
     this.client = new S3Client({
-      region: config.region ?? 'us-east-1',
+      region: config.region,
       endpoint: config.endpoint,
       forcePathStyle: config.forcePathStyle ?? false,
       credentials:
