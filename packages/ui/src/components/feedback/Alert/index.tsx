@@ -1,5 +1,6 @@
 import type { CSSProperties } from '@vanilla-extract/css'
 import clsx from 'clsx'
+import _ from 'lodash'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -62,7 +63,7 @@ export function Alert({
       <Flex align="center" gap="sm" style={{ color: STYLES[type].color }}>
         <Icon icon={STYLES[type].icon} size="1.5rem" />
         <Text as="h4" size="lg" weight="medium">
-          {t(`alert.${type}`)}
+          {t(`alert.${type}`, _.startCase(type))}
         </Text>
       </Flex>
       <Text as="p" size="base" style={{ marginTop: '-0.5rem' }}>
