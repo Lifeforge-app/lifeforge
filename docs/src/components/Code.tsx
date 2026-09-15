@@ -1,8 +1,9 @@
-import { Icon } from '@iconify/react'
 import copy from 'copy-to-clipboard'
 import { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+
+import { Bordered, Button, Flex, Icon, colorWithOpacity } from '@lifeforge/ui'
 
 import MermaidChart from './MermaidChart'
 
@@ -14,29 +15,70 @@ function Code({ language, children }: { language?: string; children: string }) {
   }
 
   return (
-    <div className="code bg-bg-200/30! dark:bg-bg-800/50! border-bg-200 dark:border-bg-700/30 mt-6 rounded-md border shadow-sm">
-      <div className="border-bg-200 dark:border-bg-700/30 flex items-center justify-between border-b-[1.5px] px-4 py-2">
-        <div className="text-bg-500 flex items-center gap-2 font-mono text-base">
-          <Icon className="mt-0.5 size-4" icon="tabler:code" />
-          <span>{language}</span>
-        </div>
-        <button
-          className="text-bg-500 hover:text-bg-800 dark:hover:text-bg-100 flex items-center gap-2 font-mono text-sm transition-all"
-          onClick={() => {
-            copy(children)
-            setCopied(true)
-            setTimeout(() => {
-              setCopied(false)
-            }, 2000)
-          }}
-        >
-          <Icon
-            className="mt-0.5 size-4"
+    <Bordered
+      shadow
+      bg={{
+        base: colorWithOpacity('bg-200', '30%'),
+        dark: colorWithOpacity('bg-800', '50%')
+      }}
+      borderColor={{
+        base: 'bg-200',
+        dark: colorWithOpacity('bg-700', '30%')
+      }}
+      className="code"
+      mt="lg"
+      r="md"
+    >
+      <Bordered
+        asChild
+        borderColor={{
+          base: 'bg-200',
+          dark: colorWithOpacity('bg-700', '30%')
+        }}
+        borderSide="bottom"
+        borderWidth="1.5px"
+        px="md"
+        py="sm"
+      >
+        <Flex align="center" justify="between">
+          <Flex
+            align="center"
+            color="muted"
+            gap="sm"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '1rem'
+            }}
+          >
+            <Icon
+              icon="tabler:code"
+              size="1rem"
+              style={{ marginTop: '0.125rem' }}
+            />
+            <span>{language}</span>
+          </Flex>
+          <Button
             icon={copied ? 'tabler:check' : 'tabler:copy'}
-          />
-          <span>{copied ? 'Copied!' : 'Copy'}</span>
-        </button>
-      </div>
+            iconPosition="start"
+            p="sm"
+            style={{
+              fontFamily: "'JetBrains Mono', monospace",
+              fontSize: '0.875rem'
+            }}
+            variant="plain"
+            width="min-content"
+            onClick={() => {
+              copy(children)
+              setCopied(true)
+              setTimeout(() => {
+                setCopied(false)
+              }, 2000)
+            }}
+          >
+            {copied ? 'Copied!' : 'Copy'}
+          </Button>
+        </Flex>
+      </Bordered>
       <SyntaxHighlighter
         language={language}
         lineProps={{ style: { paddingBottom: 8 } }}
@@ -45,7 +87,7 @@ function Code({ language, children }: { language?: string; children: string }) {
       >
         {children}
       </SyntaxHighlighter>
-    </div>
+    </Bordered>
   )
 }
 

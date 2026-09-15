@@ -1,9 +1,16 @@
-import { Icon } from '@iconify/react'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import { useState } from 'react'
 
-import { Card } from '@lifeforge/ui'
+import {
+  Box,
+  Card,
+  Flex,
+  Grid,
+  Icon,
+  Text,
+  colorWithOpacity
+} from '@lifeforge/ui'
 
 dayjs.extend(weekOfYear)
 
@@ -35,46 +42,75 @@ function Version({
   const endOfWeek = weekDate.endOf('week').format('DD MMM YYYY')
 
   return (
-    <div>
-      <Card
-        className="p-0!"
-        id={`${prefix}-${dayjs().year(year).format('YY')}-w-${week.toString().padStart(2, '0')}`}
+    <Card
+      id={`${prefix}-${dayjs().year(year).format('YY')}-w-${week.toString().padStart(2, '0')}`}
+      p="none"
+    >
+      <Flex
+        align="center"
+        bg={{
+          hover: 'bg-100',
+          darkHover: colorWithOpacity('bg-800', '50%')
+        }}
+        gap="md"
+        justify="between"
+        p="md"
+        style={{
+          userSelect: 'none',
+          transition: 'background-color 150ms ease'
+        }}
+        onClick={() => setCollapsed(!collapsed)}
       >
-        <header
-          className="hover:bg-bg-100 dark:hover:bg-bg-800/50 flex cursor-pointer items-center justify-between gap-4 p-4 transition-colors select-none"
-          onClick={() => setCollapsed(!collapsed)}
-        >
-          <div className="flex items-center gap-4">
-            <div className="bg-bg-500/10 text-bg-500 flex-center size-13 rounded-lg">
-              <Icon className="size-8 shrink-0" icon="tabler:history" />
-            </div>
-            <div>
-              <h2 className="text-xl font-medium sm:text-2xl">{version}</h2>
-              <span className="text-bg-500 text-sm">{liCount} entries</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="text-bg-500 hidden text-sm sm:block">
-              {startOfWeek} - {endOfWeek}
-            </span>
-            <Icon
-              className={`text-bg-500 size-5 shrink-0 transition-transform duration-500 ${
-                !collapsed ? 'rotate-180' : ''
-              }`}
-              icon="tabler:chevron-down"
-            />
-          </div>
-        </header>
-        <div
-          className="grid px-4 transition-[grid-template-rows] duration-200"
-          style={{ gridTemplateRows: collapsed ? '0fr' : '1fr' }}
-        >
-          <div className="min-h-0" style={{ clipPath: 'inset(0)' }}>
-            <div className="pb-8">{children}</div>
-          </div>
-        </div>
-      </Card>
-    </div>
+        <Flex align="center" gap="md">
+          <Flex
+            align="center"
+            bg={colorWithOpacity('bg-500', '10%')}
+            color="muted"
+            justify="center"
+            r="lg"
+            style={{
+              height: '3.25rem',
+              width: '3.25rem'
+            }}
+          >
+            <Icon color="muted" icon="tabler:history" size="2rem" />
+          </Flex>
+          <Box>
+            <Text as="h2" size={{ base: 'xl', sm: '2xl' }} weight="medium">
+              {version}
+            </Text>
+            <Text color="muted" size="sm">
+              {liCount} entries
+            </Text>
+          </Box>
+        </Flex>
+        <Flex align="center" gap="sm">
+          <Text color="muted" display={{ base: 'none', sm: 'block' }} size="sm">
+            {startOfWeek} - {endOfWeek}
+          </Text>
+          <Icon
+            color="muted"
+            icon="tabler:chevron-down"
+            size="1.25rem"
+            style={{
+              transform: collapsed ? 'rotate(0deg)' : 'rotate(180deg)',
+              transition: 'transform 500ms ease'
+            }}
+          />
+        </Flex>
+      </Flex>
+      <Grid
+        px="md"
+        style={{
+          gridTemplateRows: collapsed ? '0fr' : '1fr',
+          transition: 'grid-template-rows 200ms ease'
+        }}
+      >
+        <Box minHeight="0" style={{ clipPath: 'inset(0)' }}>
+          <Box pb="xl">{children}</Box>
+        </Box>
+      </Grid>
+    </Card>
   )
 }
 
