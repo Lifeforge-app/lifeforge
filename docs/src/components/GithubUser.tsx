@@ -1,5 +1,6 @@
-import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
+
+import { Box, Flex, Icon, Text, Transition } from '@lifeforge/ui'
 
 function GithubUser({ username }: { username: string }) {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(
@@ -27,30 +28,51 @@ function GithubUser({ username }: { username: string }) {
   }, [username])
 
   return (
-    <div className="inline-flex translate-y-[5.5px] items-center gap-2">
-      <div className="bg-bg-200 dark:bg-bg-800 relative h-6 w-6 rounded-full">
-        {avatarUrl ? (
-          <img
-            alt={`${username}'s avatar`}
-            className="h-6 w-6 rounded-full"
-            src={avatarUrl}
-          />
-        ) : (
-          <Icon
-            className="text-bg-500 absolute inset-0 size-4"
-            icon="tabler:user"
-          />
-        )}
-      </div>
-      <a
-        className="text-bg-900 dark:text-bg-100 hover:text-custom-500! font-medium underline-offset-2 transition-all hover:underline"
-        href={`https://github.com/${username}`}
-        rel="noreferrer"
-        target="_blank"
+    <Flex
+      align="center"
+      display="inline-flex"
+      gap="sm"
+      style={{
+        transform: 'translateY(5.5px)'
+      }}
+    >
+      <Flex
+        centered
+        bg={{
+          base: 'bg-200',
+          dark: 'bg-800'
+        }}
+        height="1.5em"
+        overflow="hidden"
+        position="relative"
+        r="full"
+        width="1.5em"
       >
-        {username}
-      </a>
-    </div>
+        {avatarUrl ? (
+          <Box asChild>
+            <img alt={`${username}'s avatar`} src={avatarUrl} />
+          </Box>
+        ) : (
+          <Icon color="muted" icon="tabler:user" size="1em" />
+        )}
+      </Flex>
+      <Transition>
+        <Text
+          as="a"
+          color={{
+            base: 'bg-900',
+            dark: 'bg-100',
+            hover: 'custom-500'
+          }}
+          href={`https://github.com/${username}`}
+          rel="noreferrer"
+          target="_blank"
+          weight="medium"
+        >
+          {username}
+        </Text>
+      </Transition>
+    </Flex>
   )
 }
 

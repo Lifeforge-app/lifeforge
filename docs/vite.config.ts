@@ -1,5 +1,6 @@
 import mdx, { Options } from '@mdx-js/rollup'
 import { federation } from '@module-federation/vite'
+import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import remarkGfm from 'remark-gfm'
@@ -12,51 +13,54 @@ const options: Options = {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => {
-  const isDev = command === 'serve'
-  return {
-    plugins: [
-      react(),
-      mdx(options),
-      mdxListCountsPlugin(),
-      !isDev &&
-        federation({
-          name: 'docs-host',
-          remotes: {
-            None: ''
-          },
-          shared: ['react', 'react-dom']
-        })
-    ].filter(Boolean),
-    resolve: {
-      alias: {
-        '@': path.resolve(__dirname, './src')
-      }
-    },
-    build: {
-      commonjsOptions: {
-        transformMixedEsModules: true
+export default defineConfig({
+  plugins: [
+    react(),
+    vanillaExtractPlugin(),
+    mdx(options),
+    mdxListCountsPlugin(),
+    federation({
+      name: 'docs-host',
+      remotes: {
+        None: ''
       },
-      target: 'esnext',
-      sourcemap: false,
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('node_modules')) {
-              return id
-                .toString()
-                .split('node_modules/')
-                .pop()!
-                .split('/')[0]
-                .toString()
-            } else if (id.endsWith('.mdx')) {
-              const mdxPath = id.toString().split('src/')[1]
+      shared: ['react', 'react-dom']
+    })
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src')
+    }
+  },
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true
+    },
+    target: 'esnext',
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            return id
+              .toString()
+              .split('node_modules/')
+              .pop()!
+              .split('/')[0]
+              .toString()
+          } else if (id.endsWith('.mdx')) {
+            const mdxPath = id.toString().split('src/')[1]
 
-              return `mdx-${mdxPath.replace(/\//g, '-').replace('.mdx', '')}`
-            }
+            return `mdx-${mdxPath.replace(/\//g, '-').replace('.mdx', '')}`
           }
         }
       }
+    }
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      sourcemap: false,
+      target: 'esnext'
     }
   }
 })
