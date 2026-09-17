@@ -6,18 +6,14 @@ import type { Logger } from '@lifeforge/log'
 
 import type {
   FileStream,
-  GetOptions,
-  GetURLOptions,
   SaveOptions,
+  StorageGetOptions,
   StorageProvider,
-  TableKey,
-  ThumbnailInfo,
-  UploadableFile
+  TableKey
 } from './types'
 import {
   generateKey,
   generateThumbKey,
-  isImageMime,
   resizeImage
 } from './utils'
 
@@ -106,7 +102,7 @@ export class FileStorage<
     return key
   }
 
-  async get(key: string, options?: GetOptions): Promise<FileStream | null> {
+  async get(key: string, options?: StorageGetOptions): Promise<FileStream | null> {
     if (!this.checkKeyOwnership(key)) {
       return null
     }
@@ -126,9 +122,6 @@ export class FileStorage<
     }
 
     await this.provider.delete(key)
-    const lastDot = key.lastIndexOf('.')
-    const baseKey = lastDot !== -1 ? key.slice(0, lastDot) : key
-    await this.provider.deletePrefix(`${baseKey}-thumb-`)
   }
 
   async exists(key: string): Promise<boolean> {
@@ -139,15 +132,7 @@ export class FileStorage<
     return this.provider.exists(key)
   }
 
-  getURL(key: string, options?: GetURLOptions): string | null {
-    if (!this.checkKeyOwnership(key)) {
-      return null
-    }
-
-    return this.provider.getURL(key, options)
-  }
-
-  private checkKeyOwnership(key: string): boolean {
+  private checkKeyOwnership(key: string) {
     if (!key.startsWith(`${this.moduleId}/`)) {
       this.logger?.warn(
         `Key ownership mismatch: "${key}" does not belong to module "${this.moduleId}"`
@@ -159,7 +144,7 @@ export class FileStorage<
     return true
   }
 
-  private validateTarget(tableName: string, fieldName: string): boolean {
+  private validateTarget(tableName: string, fieldName: string) {
     if (Object.keys(this.schemas).length === 0) {
       return true
     }
@@ -193,12 +178,7 @@ export class FileStorage<
     return true
   }
 
-  private async normalizeUpload(file: UploadableFile): Promise<{
-    buffer: Buffer
-    filename: string
-    mimeType: string
-    tempPath?: string
-  } | null> {
+  private async normalizeUpload(file: Express.Multer.File | Buffer) {
     if (Buffer.isBuffer(file)) {
       return {
         buffer: file,
@@ -208,7 +188,15 @@ export class FileStorage<
     }
 
     if (file && typeof file === 'object') {
-      if ('path' in file && typeof file.path === 'string') {
+      if ('buffer' in file && Buffer.isBuffer(file.buffer)) {
+        return {
+          buffer: file.buffer,
+          filename: file.originalname || 'file.bin',
+          mimeType: file.mimetype || 'application/octet-stream'
+        }
+      }
+
+      if ('path' in file && typeof file.path === 'string' && file.path) {
         const buffer = await fs.readFile(file.path)
 
         return {
@@ -216,14 +204,6 @@ export class FileStorage<
           filename: file.originalname || 'file.bin',
           mimeType: file.mimetype || 'application/octet-stream',
           tempPath: file.path
-        }
-      }
-
-      if ('buffer' in file && Buffer.isBuffer(file.buffer)) {
-        return {
-          buffer: file.buffer,
-          filename: file.originalname || 'file.bin',
-          mimeType: file.mimetype || 'application/octet-stream'
         }
       }
     }
@@ -238,12 +218,14 @@ export class FileStorage<
     buffer: Buffer,
     mimeType: string,
     thumbSizes?: string[]
-  ): Promise<ThumbnailInfo[]> {
-    if (!thumbSizes?.length || !isImageMime(mimeType)) {
-      return []
+  ) {
+    if (
+      !thumbSizes?.length ||
+      !mimeType.startsWith('image/') ||
+      mimeType.includes('svg')
+    ) {
+      return
     }
-
-    const thumbs: ThumbnailInfo[] = []
 
     for (const sizeStr of thumbSizes) {
       try {
@@ -253,19 +235,11 @@ export class FileStorage<
           mimeType,
           size: resized.buffer.length
         })
-        thumbs.push({
-          size: sizeStr,
-          key: thumbKey,
-          width: resized.width,
-          height: resized.height
-        })
       } catch (err) {
         this.logger?.warn(
           `Failed to generate thumbnail ${sizeStr} for ${key}: ${String(err)}`
         )
       }
     }
-
-    return thumbs
   }
 }

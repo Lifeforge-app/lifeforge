@@ -1,14 +1,17 @@
+import mime from 'mime-types'
 import { createReadStream, createWriteStream, promises as fs } from 'node:fs'
 import path from 'node:path'
 import { Readable } from 'node:stream'
 import { pipeline } from 'node:stream/promises'
-
 import pathIsInside from 'path-is-inside'
 
 import { findProjectRoot } from '@lifeforge/configs/node'
 
-import type { FileStream, ProviderSaveOptions, StorageProvider } from '../types'
-import { extensionToMime } from '../utils'
+import type {
+  ProviderSaveOptions,
+  StorageGetOptions,
+  StorageProvider
+} from '../types'
 
 export class LocalStorageProvider implements StorageProvider {
   private basePath: string
@@ -19,7 +22,7 @@ export class LocalStorageProvider implements StorageProvider {
       : path.resolve(findProjectRoot(), basePath)
   }
 
-  private getFilePath(key: string): string | null {
+  private getFilePath(key: string) {
     const resolvedPath = path.resolve(this.basePath, key)
 
     if (
@@ -36,7 +39,7 @@ export class LocalStorageProvider implements StorageProvider {
     key: string,
     data: Buffer | Readable,
     _options?: ProviderSaveOptions
-  ): Promise<void> {
+  ) {
     const filePath = this.getFilePath(key)
 
     if (!filePath) {
@@ -53,7 +56,10 @@ export class LocalStorageProvider implements StorageProvider {
     }
   }
 
-  async get(key: string): Promise<FileStream | null> {
+  async get(
+    key: string,
+    _options?: StorageGetOptions
+  ) {
     const filePath = this.getFilePath(key)
 
     if (!filePath) {
@@ -69,7 +75,7 @@ export class LocalStorageProvider implements StorageProvider {
 
       return {
         stream: createReadStream(filePath),
-        mimeType: extensionToMime(filePath),
+        mimeType: mime.lookup(filePath) || 'application/octet-stream',
         size: stat.size
       }
     } catch {
@@ -77,7 +83,7 @@ export class LocalStorageProvider implements StorageProvider {
     }
   }
 
-  async delete(key: string): Promise<void> {
+  async delete(key: string) {
     const filePath = this.getFilePath(key)
 
     if (!filePath) {
@@ -89,31 +95,17 @@ export class LocalStorageProvider implements StorageProvider {
     } catch {
       // Ignore if file does not exist
     }
-  }
 
-  async deletePrefix(prefix: string): Promise<void> {
-    const targetPath = this.getFilePath(prefix)
-
-    if (!targetPath) {
-      return
-    }
-
-    const dir = path.dirname(targetPath)
-    const prefixBase = path.basename(targetPath)
+    const dir = path.dirname(filePath)
+    const lastDot = key.lastIndexOf('.')
+    const baseName = path.basename(lastDot !== -1 ? key.slice(0, lastDot) : key)
+    const thumbPrefix = `${baseName}-thumb-`
 
     try {
-      // If it's a directory, remove it
-      await fs.rm(targetPath, { recursive: true, force: true })
-    } catch {
-      // Ignore
-    }
-
-    try {
-      // Also clean up any sibling files matching the prefix
       const files = await fs.readdir(dir)
 
       for (const file of files) {
-        if (file.startsWith(prefixBase)) {
+        if (file.startsWith(thumbPrefix)) {
           await fs.unlink(path.join(dir, file)).catch(() => {})
         }
       }
@@ -122,7 +114,7 @@ export class LocalStorageProvider implements StorageProvider {
     }
   }
 
-  async exists(key: string): Promise<boolean> {
+  async exists(key: string) {
     const filePath = this.getFilePath(key)
 
     if (!filePath) {
@@ -136,16 +128,5 @@ export class LocalStorageProvider implements StorageProvider {
     } catch {
       return false
     }
-  }
-
-  getURL(key: string, options?: { thumb?: string }): string | null {
-    const params = new URLSearchParams()
-    params.set('key', key)
-
-    if (options?.thumb) {
-      params.set('thumb', options.thumb)
-    }
-
-    return `/files?${params.toString()}`
   }
 }

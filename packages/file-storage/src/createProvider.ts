@@ -3,9 +3,7 @@ import { S3StorageProvider } from './providers/s3'
 import type { StorageProvider } from './types'
 
 export function createProvider(): StorageProvider {
-  const providerType = process.env.FILE_STORAGE_PROVIDER || 'local'
-
-  if (providerType === 's3') {
+  if (process.env.FILE_STORAGE_PROVIDER === 's3') {
     const bucket = process.env.FILE_STORAGE_S3_BUCKET
 
     if (!bucket) {
@@ -24,7 +22,7 @@ export function createProvider(): StorageProvider {
     })
   }
 
-  const localPath = process.env.FILE_STORAGE_LOCAL_PATH || './storage'
-
-  return new LocalStorageProvider(localPath)
+  return new LocalStorageProvider(
+    process.env.FILE_STORAGE_LOCAL_PATH || './storage'
+  )
 }

@@ -1,6 +1,6 @@
-export * from './types'
+export type { StorageProvider } from './types'
 
-export * from './utils'
+export { generateThumbKey } from './utils'
 
 export * from './providers/local'
 

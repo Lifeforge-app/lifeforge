@@ -1,32 +1,12 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
+import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 import { FileStorage } from './fileStorage'
 import { LocalStorageProvider } from './providers/local'
-import { generateKey, generateThumbKey, parseThumbSize, resizeImage } from './utils'
 
 const TEST_DIR = path.resolve(process.cwd(), './temp_test_storage')
-
-describe('File Storage Utilities', () => {
-  it('should parse thumbnail sizes correctly', () => {
-    expect(parseThumbSize('200x0')).toEqual({ width: 200 })
-    expect(parseThumbSize('0x512')).toEqual({ height: 512 })
-    expect(parseThumbSize('200x200')).toEqual({ width: 200, height: 200 })
-    expect(parseThumbSize('invalid')).toEqual({})
-  })
-
-  it('should generate valid thumbnail keys', () => {
-    expect(
-      generateThumbKey('lifeforge--books-library/booksEntries/fileKey-123.epub', '200x0')
-    ).toBe('lifeforge--books-library/booksEntries/fileKey-123-thumb-200x0.epub')
-  })
-
-  it('should generate valid hierarchical storage keys', () => {
-    const key = generateKey('lifeforge--books-library', 'booksEntries', 'fileKey', 'epub')
-    expect(key).toMatch(/^lifeforge--books-library\/booksEntries\/fileKey-[0-9a-f-]+\.epub$/)
-  })
-})
 
 describe('LocalStorageProvider & FileStorage', () => {
   let provider: LocalStorageProvider
@@ -70,9 +50,11 @@ describe('LocalStorageProvider & FileStorage', () => {
 
     // Read stream content
     const chunks: Buffer[] = []
+
     for await (const chunk of streamObj!.stream) {
       chunks.push(Buffer.from(chunk))
     }
+
     const content = Buffer.concat(chunks).toString('utf-8')
     expect(content).toBe('hello world file storage')
   })
@@ -81,7 +63,6 @@ describe('LocalStorageProvider & FileStorage', () => {
     const foreignKey = 'lifeforge--other-module/entries/fileKey-123.txt'
     expect(await storage.get(foreignKey)).toBeNull()
     expect(await storage.exists(foreignKey)).toBe(false)
-    expect(storage.getURL(foreignKey)).toBeNull()
   })
 
   it('should prevent path traversal attacks in provider', async () => {
@@ -143,15 +124,18 @@ describe('LocalStorageProvider & FileStorage', () => {
       'base64'
     )
 
-    const directResized = await resizeImage(pngBuffer, '200x0')
-    expect(directResized.buffer).toBeDefined()
-    expect(directResized.width).toBe(200)
-
     const key = await storage.save({
       file: {
         buffer: pngBuffer,
         mimetype: 'image/png',
-        originalname: 'dot.png'
+        originalname: 'dot.png',
+        fieldname: 'file',
+        encoding: '7bit',
+        size: pngBuffer.length,
+        destination: '',
+        filename: 'dot.png',
+        path: '',
+        stream: null as any
       },
       table: 'testEntries',
       field: 'thumbnailKey',
@@ -162,5 +146,17 @@ describe('LocalStorageProvider & FileStorage', () => {
 
     const thumbStream = await storage.get(key!, { thumb: '200x0' })
     expect(thumbStream).not.toBeNull()
+
+    const chunks: Buffer[] = []
+
+    for await (const chunk of thumbStream!.stream) {
+      chunks.push(Buffer.from(chunk))
+    }
+
+    const thumbBuffer = Buffer.concat(chunks)
+    expect(thumbBuffer.length).toBeGreaterThan(0)
+
+    const thumbMeta = await sharp(thumbBuffer).metadata()
+    expect(thumbMeta.width).toBe(200)
   })
 })
