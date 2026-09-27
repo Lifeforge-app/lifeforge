@@ -163,7 +163,10 @@ export function DateInput({
               style={{
                 cursor: disabled ? 'not-allowed' : 'pointer',
                 caretColor: 'transparent',
-                userSelect: 'none'
+                userSelect: 'none',
+                width: '100%',
+                minWidth: 0,
+                textOverflow: 'ellipsis'
               }}
               tabIndex={disabled ? -1 : 0}
               value={formattedValue}
