@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useAuth } from '@lifeforge/api'
 import { toast } from '@lifeforge/ui'
@@ -10,18 +10,7 @@ import {
 
 import forgeAPI from '@/core/utils/forgeAPI'
 
-const UserPersonalizationContext = createContext<{
-  changeFontFamily: (font: string) => Promise<void>
-  changeFontScale: (scale: number) => Promise<void>
-  changeTheme: (theme: 'light' | 'dark' | 'system') => Promise<void>
-  changeThemeColor: (color: string) => Promise<void>
-  changeBgTemp: (color: string) => Promise<void>
-  changeBackdropFilters: (filters: IBackdropFilters) => Promise<void>
-  changeLanguage: (language: string) => Promise<void>
-  changeDashboardLayout: (layout: IDashboardLayout) => Promise<void>
-  changeBorderRadiusMultiplier: (multiplier: number) => Promise<void>
-  changeBordered: (bordered: boolean) => Promise<void>
-}>({} as any)
+import { UserPersonalizationContext } from './UserPersonalizationContext'
 
 async function syncUserData(
   data: Record<string, unknown>,
@@ -199,14 +188,4 @@ function UserPersonalizationProvider({
 
 export default UserPersonalizationProvider
 
-export function useUserPersonalization() {
-  const context = useContext(UserPersonalizationContext)
-
-  if (!context) {
-    throw new Error(
-      'useUserPersonalization must be used within a UserPersonalizationProvider'
-    )
-  }
-
-  return context
-}
+export { useUserPersonalization } from './UserPersonalizationContext'
