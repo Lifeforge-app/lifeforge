@@ -1,12 +1,5 @@
 import type { Readable } from 'node:stream'
 
-export interface ThumbnailInfo {
-  size: string
-  key: string
-  width: number
-  height: number
-}
-
 export interface FileStream {
   stream: Readable
   mimeType: string
@@ -18,79 +11,57 @@ export interface ProviderSaveOptions {
   size?: number
 }
 
-export interface StorageProvider {
-  save(key: string, data: Buffer | Readable, options?: ProviderSaveOptions): Promise<void>
-  get(key: string): Promise<FileStream | null>
-  delete(key: string): Promise<void>
-  deletePrefix(prefix: string): Promise<void>
-  exists(key: string): Promise<boolean>
-  getURL(key: string, options?: { thumb?: string }): string | null
+export interface StorageGetOptions {
+  thumb?: string
 }
 
-export type DrizzleTableColumns<TTable> = TTable extends { $inferSelect: infer TInfer }
+export interface StorageProvider {
+  save(
+    key: string,
+    data: Buffer | Readable,
+    options?: ProviderSaveOptions
+  ): Promise<void>
+  get(key: string, options?: StorageGetOptions): Promise<FileStream | null>
+  delete(key: string): Promise<void>
+  exists(key: string): Promise<boolean>
+}
+
+export type DrizzleTableColumns<TTable> = TTable extends {
+  $inferSelect: infer TInfer
+}
   ? Extract<keyof TInfer, string>
   : TTable extends { _: { columns: infer TCols } }
     ? Extract<keyof TCols, string>
     : string
 
-export type TableKey<TSchema> = TSchema extends Record<string, unknown>
-  ? Extract<keyof TSchema, string>
-  : string
-
-export type FieldKey<TSchema, TTable extends TableKey<TSchema>> = TSchema extends Record<string, unknown>
-  ? TTable extends keyof TSchema
-    ? DrizzleTableColumns<TSchema[TTable]>
+export type TableKey<TSchema> =
+  TSchema extends Record<string, unknown>
+    ? Extract<keyof TSchema, string>
     : string
-  : string
 
-export type UploadableFile =
-  | Express.Multer.File
-  | Buffer
-  | {
-      buffer: Buffer
-      originalname?: string
-      mimetype?: string
-    }
-
-export type IncomingFile =
-  | UploadableFile
-  | 'keep'
-  | 'removed'
-  | undefined
-  | null
+export type FieldKey<TSchema, TTable extends TableKey<TSchema>> =
+  TSchema extends Record<string, unknown>
+    ? TTable extends keyof TSchema
+      ? DrizzleTableColumns<TSchema[TTable]>
+      : string
+    : string
 
 export interface SaveOptions<
   TSchema extends Record<string, unknown> = Record<string, unknown>,
   TTable extends TableKey<TSchema> = TableKey<TSchema>
 > {
-  file: IncomingFile
+  file: Express.Multer.File | Buffer | 'keep' | 'removed' | null | undefined
   currentKey?: string | null
   table: TTable
   field: FieldKey<TSchema, TTable>
   thumbs?: string[]
 }
 
-export interface GetOptions {
-  thumb?: string
-}
-
-export interface GetURLOptions {
-  thumb?: string
-}
-
-export type StorageProviderType = 'local' | 's3'
-
-export interface StorageConfig {
-  provider: StorageProviderType
-  local?: {
-    path: string
-  }
-  s3?: {
-    bucket: string
-    region?: string
-    endpoint?: string
-    accessKeyId?: string
-    secretAccessKey?: string
-    forcePathStyle?: boolean
-  }
+export interface S3ProviderConfig {
+  bucket: string
+  region?: string
+  endpoint?: string
+  accessKeyId?: string
+  secretAccessKey?: string
+  forcePathStyle?: boolean
 }

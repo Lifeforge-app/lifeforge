@@ -7,21 +7,20 @@ import {
   PutObjectCommand,
   S3Client
 } from '@aws-sdk/client-s3'
+import mime from 'mime-types'
 import { Readable } from 'node:stream'
 
 import type {
-  FileStream,
   ProviderSaveOptions,
-  StorageConfig,
+  S3ProviderConfig,
   StorageProvider
 } from '../types'
-import { extensionToMime } from '../utils'
 
 export class S3StorageProvider implements StorageProvider {
   private client: S3Client
   private bucket: string
 
-  constructor(config: NonNullable<StorageConfig['s3']>) {
+  constructor(config: S3ProviderConfig) {
     this.bucket = config.bucket
     this.client = new S3Client({
       region: config.region,
@@ -41,41 +40,40 @@ export class S3StorageProvider implements StorageProvider {
     key: string,
     data: Buffer | Readable,
     options?: ProviderSaveOptions
-  ): Promise<void> {
-    let body: Buffer | Uint8Array | Readable = data
-
-    if (!Buffer.isBuffer(data) && !(data instanceof Readable)) {
-      body = Buffer.from(data)
-    }
-
-    const command = new PutObjectCommand({
-      Bucket: this.bucket,
-      Key: key,
-      Body: body,
-      ContentType: options?.mimeType ?? extensionToMime(key),
-      ContentLength: options?.size
-    })
-
-    await this.client.send(command)
+  ) {
+    await this.client.send(
+      new PutObjectCommand({
+        Bucket: this.bucket,
+        Key: key,
+        Body:
+          Buffer.isBuffer(data) || data instanceof Readable
+            ? data
+            : Buffer.from(data),
+        ContentType:
+          options?.mimeType ?? (mime.lookup(key) || 'application/octet-stream'),
+        ContentLength: options?.size
+      })
+    )
   }
 
-  async get(key: string): Promise<FileStream | null> {
+  async get(key: string) {
     try {
-      const command = new GetObjectCommand({
-        Bucket: this.bucket,
-        Key: key
-      })
-      const response = await this.client.send(command)
+      const response = await this.client.send(
+        new GetObjectCommand({
+          Bucket: this.bucket,
+          Key: key
+        })
+      )
 
       if (!response.Body) {
         return null
       }
 
-      const stream = response.Body as Readable
-
       return {
-        stream,
-        mimeType: response.ContentType ?? extensionToMime(key),
+        stream: response.Body as Readable,
+        mimeType:
+          response.ContentType ??
+          (mime.lookup(key) || 'application/octet-stream'),
         size: response.ContentLength ?? 0
       }
     } catch {
@@ -83,70 +81,60 @@ export class S3StorageProvider implements StorageProvider {
     }
   }
 
-  async delete(key: string): Promise<void> {
+  async delete(key: string) {
     try {
-      const command = new DeleteObjectCommand({
-        Bucket: this.bucket,
-        Key: key
-      })
-      await this.client.send(command)
-    } catch {
-      // Ignore deletion errors
-    }
-  }
+      await this.client.send(
+        new DeleteObjectCommand({
+          Bucket: this.bucket,
+          Key: key
+        })
+      )
 
-  async deletePrefix(prefix: string): Promise<void> {
-    try {
+      const lastDot = key.lastIndexOf('.')
+      const baseKey = lastDot !== -1 ? key.slice(0, lastDot) : key
+      const thumbPrefix = `${baseKey}-thumb-`
+
       let continuationToken: string | undefined
 
       do {
-        const listCommand = new ListObjectsV2Command({
-          Bucket: this.bucket,
-          Prefix: prefix,
-          ContinuationToken: continuationToken
-        })
-
-        const listResult = await this.client.send(listCommand)
+        const listResult = await this.client.send(
+          new ListObjectsV2Command({
+            Bucket: this.bucket,
+            Prefix: thumbPrefix,
+            ContinuationToken: continuationToken
+          })
+        )
 
         if (listResult.Contents && listResult.Contents.length > 0) {
-          const deleteCommand = new DeleteObjectsCommand({
-            Bucket: this.bucket,
-            Delete: {
-              Objects: listResult.Contents.map(obj => ({ Key: obj.Key }))
-            }
-          })
-          await this.client.send(deleteCommand)
+          await this.client.send(
+            new DeleteObjectsCommand({
+              Bucket: this.bucket,
+              Delete: {
+                Objects: listResult.Contents.map(obj => ({ Key: obj.Key }))
+              }
+            })
+          )
         }
 
         continuationToken = listResult.NextContinuationToken
       } while (continuationToken)
     } catch {
-      // Ignore errors
+      // Ignore deletion errors
     }
   }
 
-  async exists(key: string): Promise<boolean> {
+  async exists(key: string) {
     try {
-      const command = new HeadObjectCommand({
-        Bucket: this.bucket,
-        Key: key
-      })
-      await this.client.send(command)
+      await this.client.send(
+        new HeadObjectCommand({
+          Bucket: this.bucket,
+          Key: key
+        })
+      )
 
       return true
     } catch {
       return false
     }
-  }
-
-  getURL(key: string, options?: { thumb?: string }): string | null {
-    const params = new URLSearchParams()
-    params.set('key', key)
-
-    if (options?.thumb) {
-      params.set('thumb', options.thumb)
-    }
-
-    return `/api/files?${params.toString()}`
   }
 }
