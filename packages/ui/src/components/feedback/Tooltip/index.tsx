@@ -1,6 +1,5 @@
 import _ from 'lodash'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
-import tinycolor from 'tinycolor2'
 
 import { Box, Icon, type IconProps, Text } from '@/components/primitives'
 import { usePersonalization } from '@/providers'
@@ -26,7 +25,7 @@ export function Tooltip({
   children: React.ReactNode
   /** Additional properties to pass to the underlying ReactTooltip component. */
 } & React.ComponentProps<typeof ReactTooltip>) {
-  const { derivedTheme, bgTempPalette } = usePersonalization()
+  const { derivedTheme } = usePersonalization()
 
   return (
     <>
@@ -35,33 +34,24 @@ export function Tooltip({
       </span>
       <Box
         asChild
-        shadow
-        // Intentionally kept as inline style due to the styling limitation
-        // of react-tooltip
+        // Intentionally kept as inline style due to the styling limitation of react-tooltip
         style={{
-          background:
-            derivedTheme === 'light'
-              ? 'var(--color-bg-50)'
-              : 'var(--color-bg-800)',
-          borderRadius: '0.5em',
+          padding: '0',
           zIndex: '9999'
         }}
       >
         <ReactTooltip
-          border={`1px solid ${
-            derivedTheme === 'light'
-              ? bgTempPalette[200]
-              : tinycolor(bgTempPalette[700]).setAlpha(0.5).toRgbString()
-          }`}
           id={`tooltip-${_.kebabCase(id)}`}
           opacity={1}
           place="top-start"
           positionStrategy="fixed"
           {...tooltipProps}
         >
-          <Text as="div" color={{ base: 'bg-600', dark: 'bg-400' }} py="sm">
-            {children}
-          </Text>
+          <Box shadow bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" r="md">
+            <Text as="div" color={{ base: 'bg-600', dark: 'bg-400' }} py="sm">
+              {children}
+            </Text>
+          </Box>
         </ReactTooltip>
       </Box>
     </>
