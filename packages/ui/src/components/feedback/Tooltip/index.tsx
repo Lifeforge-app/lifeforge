@@ -2,7 +2,6 @@ import _ from 'lodash'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 import { Box, Icon, type IconProps, Text } from '@/components/primitives'
-import { usePersonalization } from '@/providers'
 
 /**
  * A tooltip component that displays informational content when hovering over an icon.
@@ -25,8 +24,6 @@ export function Tooltip({
   children: React.ReactNode
   /** Additional properties to pass to the underlying ReactTooltip component. */
 } & React.ComponentProps<typeof ReactTooltip>) {
-  const { derivedTheme } = usePersonalization()
-
   return (
     <>
       <span data-tooltip-id={`tooltip-${_.kebabCase(id)}`}>
@@ -47,7 +44,13 @@ export function Tooltip({
           positionStrategy="fixed"
           {...tooltipProps}
         >
-          <Box shadow bg={{ base: 'bg-50', dark: 'bg-800' }} p="md" r="md">
+          <Box
+            shadow
+            bg={{ base: 'bg-50', dark: 'bg-800' }}
+            px="md"
+            py="sm"
+            r="md"
+          >
             <Text as="div" color={{ base: 'bg-600', dark: 'bg-400' }} py="sm">
               {children}
             </Text>

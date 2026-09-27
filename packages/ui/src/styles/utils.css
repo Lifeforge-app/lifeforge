@@ -139,7 +139,3 @@ aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
     left 0.3s ease,
     z-index 0s linear 0.3s;
 }
-
-.react-tooltip {
-  background: inherit !important;
-}
