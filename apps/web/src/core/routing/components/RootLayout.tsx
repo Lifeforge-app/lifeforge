@@ -1,5 +1,5 @@
 import { ErrorBoundary } from 'react-error-boundary'
-import { Outlet } from 'react-router'
+import { Outlet, useLocation } from 'react-router'
 
 import { ErrorScreen, Flex } from '@lifeforge/ui'
 
@@ -7,6 +7,7 @@ import useTitleEffect from '../hooks/useTitleEffect'
 import Sidebar from './Sidebar/Sidebar'
 
 function RootLayout() {
+  const location = useLocation()
   useTitleEffect()
 
   return (
@@ -27,7 +28,9 @@ function RootLayout() {
         width="100%"
       >
         <ErrorBoundary
+          key={location.pathname}
           fallback={<ErrorScreen message="An unexpected error occurred." />}
+          resetKeys={[location.pathname]}
         >
           <Outlet />
         </ErrorBoundary>

@@ -1,9 +1,11 @@
 import { Suspense } from 'react'
+import { ErrorBoundary } from 'react-error-boundary'
 import type { RouteObject } from 'react-router'
 
 import type { ModuleConfig, ModuleGroup } from '@lifeforge/configs'
 import type { FederatedModule } from '@lifeforge/federation'
 import {
+  ErrorScreen,
   LoadingScreen,
   ModalManager,
   ModuleWrapper,
@@ -44,10 +46,24 @@ export function buildChildRoutes({
             key={`route-${path.startsWith('/') ? path.slice(1) : path}`}
             fallback={<LoadingScreen message={loadingMessage} />}
           >
-            <ModuleWrapper config={config}>
-              <Component />
-              <ModalManager />
-            </ModuleWrapper>
+            <ErrorBoundary
+              fallbackRender={({ error }) => (
+                <ErrorScreen
+                  message={
+                    error instanceof Error
+                      ? error.message
+                      : 'An unexpected error occurred in this module.'
+                  }
+                  showRetryButton
+                />
+              )}
+              resetKeys={[path]}
+            >
+              <ModuleWrapper config={config}>
+                <Component />
+                <ModalManager />
+              </ModuleWrapper>
+            </ErrorBoundary>
           </Suspense>
         </APIKeyStatusProvider>
       )
