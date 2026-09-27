@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { ContextMenu, ContextMenuItem } from '@/components/overlays'
+import { ContextMenuItem } from '@/components/overlays'
 import { Box, Flex, Text } from '@/components/primitives'
 
 import { FAB as Fab } from './index'
@@ -40,14 +40,7 @@ export const WithContextMenu: Story = {
   render: props => {
     return (
       <Box style={{ height: '12rem' }}>
-        <ContextMenu
-          bottom="1.5em"
-          buttonComponent={<Fab {...props} style={{ position: 'static' }} />}
-          position="fixed"
-          right="1.5em"
-          side="top"
-          width="min-content"
-        >
+        <Fab {...props}>
           <ContextMenuItem
             icon="tabler:pencil"
             label="Edit"
@@ -59,7 +52,7 @@ export const WithContextMenu: Story = {
             label="Delete"
             onClick={() => {}}
           />
-        </ContextMenu>
+        </Fab>
       </Box>
     )
   }
