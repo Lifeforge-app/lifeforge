@@ -44,7 +44,13 @@ function AuthSideImage() {
         <Text color="primary" mb="lg" size="2xl" tracking="wider">
           {t('sideImageDesc.part1')}
         </Text>
-        <Text color="bg-50" size="5xl" tracking="wide" weight="semibold">
+        <Text
+          align="center"
+          color="bg-50"
+          size="5xl"
+          tracking="wide"
+          weight="semibold"
+        >
           {t('sideImageDesc.part2')}
         </Text>
       </Flex>
