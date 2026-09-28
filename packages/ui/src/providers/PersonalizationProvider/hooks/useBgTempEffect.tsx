@@ -32,7 +32,7 @@ function useBgTempEffect(
     if (bgTemp.startsWith('#')) {
       interpolateColors(rootElement, theme, bgTemp, 'bg')
     }
-  }, [bgTemp])
+  }, [bgTemp, theme])
 }
 
 export default useBgTempEffect

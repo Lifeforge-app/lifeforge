@@ -53,7 +53,7 @@ function useRawThemeColorEffect(
         interpolateColors(rootElement, theme, rawThemeColor, 'theme')
       }
     }
-  }, [rawThemeColor])
+  }, [rawThemeColor, theme, bgTemp])
 }
 
 export default useRawThemeColorEffect

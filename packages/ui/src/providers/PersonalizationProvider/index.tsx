@@ -140,7 +140,7 @@ export function PersonalizationProvider({
     return !bgTemp.startsWith('#')
       ? BG_THEME[bgTemp.replace('bg-', '') as keyof typeof BG_THEME]
       : getColorPalette(bgTemp, 'bg', derivedTheme)
-  }, [bgTemp])
+  }, [bgTemp, derivedTheme])
   const getMostReadableColor = useMemo(
     () =>
       (bg?: string): string =>
