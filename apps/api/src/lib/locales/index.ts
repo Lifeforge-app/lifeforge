@@ -7,7 +7,11 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { ModuleRegistry , createForge, forgeRouter } from '@lifeforge/server-utils'
+import {
+  ModuleRegistry,
+  createForge,
+  forgeRouter
+} from '@lifeforge/server-utils'
 
 const forge = createForge({}, 'locales')
 
@@ -97,7 +101,12 @@ const getLocale = forge
           if (fs.existsSync(pkgPath)) {
             const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
 
-            return pkg.name === subnamespace
+            return (
+              pkg.name ===
+              (subnamespace.startsWith('@lifeforge/')
+                ? subnamespace
+                : `@lifeforge/${subnamespace}`)
+            )
           }
         } catch {
           return false
