@@ -2,9 +2,9 @@ import fs from 'fs'
 import path from 'path'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import parseManifestWidgets from '../parseManifestWidgets'
+import parseManifest from '../parseManifest'
 
-describe('parseManifestWidgets AST parser', () => {
+describe('parseManifest AST parser', () => {
   const tempDir = path.join(__dirname, 'temp-module')
   const tempFilePath = path.join(tempDir, 'manifest.ts')
   const widgetDir = path.join(tempDir, 'src', 'widgets')
@@ -29,11 +29,14 @@ describe('parseManifestWidgets AST parser', () => {
     }
   })
 
-  it('returns empty array for non-existent file', () => {
-    expect(parseManifestWidgets('non-existent-file.ts')).toEqual([])
+  it('returns empty result for non-existent file', () => {
+    expect(parseManifest('non-existent-file.ts')).toEqual({
+      hasProvider: false,
+      widgets: []
+    })
   })
 
-  it('returns empty array if createForgeModule is not found', () => {
+  it('returns empty result if createForgeModule is not found', () => {
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir, { recursive: true })
     }
@@ -45,10 +48,33 @@ describe('parseManifestWidgets AST parser', () => {
       }
     `
     )
-    expect(parseManifestWidgets(tempFilePath)).toEqual([])
+
+    expect(parseManifest(tempFilePath)).toEqual({
+      hasProvider: false,
+      widgets: []
+    })
   })
 
-  it('returns empty array if widgets is not defined', () => {
+  it('returns empty result if the argument is not an object', () => {
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir, { recursive: true })
+    }
+    fs.writeFileSync(
+      tempFilePath,
+      `
+      import { createForgeModule } from '@lifeforge/federation'
+      const manifest = createForgeModule('invalid')
+      export default manifest
+    `
+    )
+
+    expect(parseManifest(tempFilePath)).toEqual({
+      hasProvider: false,
+      widgets: []
+    })
+  })
+
+  it('parses provider, hidden, and subsections successfully', () => {
     if (!fs.existsSync(tempDir)) {
       fs.mkdirSync(tempDir, { recursive: true })
     }
@@ -57,12 +83,31 @@ describe('parseManifestWidgets AST parser', () => {
       `
       import { createForgeModule } from '@lifeforge/federation'
       const manifest = createForgeModule({
+        provider: () => import('@/providers/ModuleProvider'),
+        hidden: true,
+        subsection: [
+          { label: 'Dashboard', icon: 'tabler:dashboard', path: '' },
+          { label: 'Transactions', icon: 'tabler:arrows-exchange', path: 'transactions' }
+        ],
         routes: {}
       })
       export default manifest
     `
     )
-    expect(parseManifestWidgets(tempFilePath)).toEqual([])
+
+    expect(parseManifest(tempFilePath)).toEqual({
+      hasProvider: true,
+      hidden: true,
+      subsection: [
+        { label: 'Dashboard', icon: 'tabler:dashboard', path: '' },
+        {
+          label: 'Transactions',
+          icon: 'tabler:arrows-exchange',
+          path: 'transactions'
+        }
+      ],
+      widgets: []
+    })
   })
 
   it('parses valid manifest and resolves widgets successfully', () => {
@@ -94,10 +139,14 @@ describe('parseManifestWidgets AST parser', () => {
     `
     )
 
-    const result = parseManifestWidgets(tempFilePath)
-    expect(result).toHaveLength(1)
-    expect(result[0].filePath).toBe(widgetFilePath)
-    expect(result[0].config).toEqual({
+    const result = parseManifest(tempFilePath)
+
+    expect(result.hasProvider).toBe(false)
+    expect(result.hidden).toBeUndefined()
+    expect(result.subsection).toBeUndefined()
+    expect(result.widgets).toHaveLength(1)
+    expect(result.widgets[0].filePath).toBe(widgetFilePath)
+    expect(result.widgets[0].config).toEqual({
       id: 'iss-tracker',
       icon: 'tabler:satellite',
       minW: 2,

@@ -2714,6 +2714,9 @@ export const contract = {
                   "hasProvider": {
                     "type": "boolean"
                   },
+                  "hidden": {
+                    "type": "boolean"
+                  },
                   "subsection": {
                     "type": "array",
                     "items": {

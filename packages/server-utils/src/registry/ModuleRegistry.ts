@@ -59,6 +59,7 @@ export class ModuleRegistry {
         remoteEntryUrl: mod.remoteEntryUrl,
         APIKeyAccess: mod.APIKeyAccess,
         hasProvider: mod.hasProvider,
+        hidden: mod.hidden,
         subsection: mod.subsection,
         isDevMode
       })

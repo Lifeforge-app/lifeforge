@@ -100,6 +100,7 @@ export const moduleEntrySchema = z.object({
     .optional(),
   hasDist: z.boolean(),
   hasProvider: z.boolean(),
+  hidden: z.boolean().optional(),
   supportedLangs: z.array(z.string()),
   widgets: z.array(moduleWidgetSchema)
 })
@@ -114,6 +115,7 @@ export const moduleManifestSchema = moduleEntrySchema
     remoteEntryUrl: true,
     APIKeyAccess: true,
     hasProvider: true,
+    hidden: true,
     subsection: true
   })
   .extend({

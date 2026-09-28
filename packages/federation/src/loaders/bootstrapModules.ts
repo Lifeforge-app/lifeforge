@@ -95,6 +95,7 @@ export async function bootstrapModules(
       category: mod.category,
       routes: {},
       widgets: [],
+      hidden: mod.hidden,
       APIKeyAccess: mod.APIKeyAccess,
       subsection: mod.subsection,
       rawModule: mod

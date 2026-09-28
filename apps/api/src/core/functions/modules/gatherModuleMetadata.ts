@@ -9,10 +9,8 @@ import {
   modulePackageJSONSchema
 } from '@lifeforge/configs'
 
-import checkManifestProvider from './checkManifestProvider'
 import { moduleLoaderLogger } from './moduleLoaderLogger'
-import parseManifestSubsections from './parseManifestSubsections'
-import parseManifestWidgets from './parseManifestWidgets'
+import parseManifest from './parseManifest'
 
 /**
  * Reads a module's package.json and file structure to gather its metadata
@@ -85,10 +83,11 @@ export default function gatherModuleMetadata(
     }
 
     const manifestPath = path.join(appsDir, modDir, 'client', 'manifest.ts')
+    const { hasProvider, hidden, subsection, widgets: parsedWidgets } =
+      parseManifest(manifestPath)
 
     // Discover widgets JIT at server load
     const widgets: ModuleWidget[] = []
-    const parsedWidgets = parseManifestWidgets(manifestPath)
 
     for (const pw of parsedWidgets) {
       widgets.push({
@@ -102,9 +101,6 @@ export default function gatherModuleMetadata(
         componentName: path.basename(pw.filePath, path.extname(pw.filePath))
       })
     }
-
-    const hasProvider = checkManifestProvider(manifestPath)
-    const subsection = parseManifestSubsections(manifestPath)
 
     return {
       moduleId,
@@ -121,6 +117,7 @@ export default function gatherModuleMetadata(
       subsection,
       hasDist: isDistValid,
       hasProvider,
+      hidden,
       widgets,
       hasServerRoutes
     }

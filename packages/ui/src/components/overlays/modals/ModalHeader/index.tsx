@@ -52,13 +52,8 @@ export function ModalHeader({
       mb="md"
       style={{ gap: '0.75rem' }}
     >
-      <Flex
-        align="center"
-        minWidth="0"
-        style={{ gap: '0.75rem' }}
-        width="100%"
-      >
-        <Icon icon={innerIcon} size={subtitle ? '2em' : '1.3em'} />
+      <Flex align="center" minWidth="0" style={{ gap: '0.75rem' }} width="100%">
+        <Icon icon={innerIcon} size={subtitle ? '2em' : '1.5em'} />
         <Flex direction="column" minWidth="0" width="100%">
           <Text asChild size="xl" weight="semibold">
             <Flex
