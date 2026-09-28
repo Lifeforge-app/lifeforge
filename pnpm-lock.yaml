@@ -682,8 +682,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.2.17)(react@19.2.7)(supports-color@10.2.2)
       react-tooltip:
-        specifier: ^5.30.0
-        version: 5.30.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^6.0.8
+        version: 6.0.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       rrule:
         specifier: ^2.8.1
         version: 2.8.1
@@ -783,8 +783,8 @@ importers:
         specifier: ^2.7.14
         version: 2.7.15(react@19.2.7)
       react-tooltip:
-        specifier: ^5.30.0
-        version: 5.30.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^6.0.8
+        version: 6.0.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       recharts:
         specifier: ^2.15.0
         version: 2.15.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1293,8 +1293,8 @@ importers:
         specifier: ^3.1.1
         version: 3.3.0(react@19.2.7)
       react-tooltip:
-        specifier: ^5.28.0
-        version: 5.30.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+        specifier: ^6.0.8
+        version: 6.0.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
 
   modules/lifeforge--todoList:
     dependencies:
@@ -5464,9 +5464,6 @@ packages:
   ci-info@2.0.0:
     resolution: {integrity: sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==}
 
-  classnames@2.5.1:
-    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
-
   cldrjs@0.5.5:
     resolution: {integrity: sha512-KDwzwbmLIPfCgd8JERVDpQKrUUM1U4KpFJJg2IROv89rF172lLufoJnqJ/Wea6fXL5bO6WjuLMzY8V52UWPvkA==}
 
@@ -8863,12 +8860,6 @@ packages:
     peerDependencies:
       react: ^18 || ^19
       react-dom: ^18 || ^19
-
-  react-tooltip@5.30.1:
-    resolution: {integrity: sha512-1lSPLQXuVooePxadUpmcwLgOsF1mIty7UZTJ9XnyfX4drOzStYs4JMXnazcDLguQr41W5OUZddOp9kfvArdpEQ==}
-    peerDependencies:
-      react: '>=16.14.0'
-      react-dom: '>=16.14.0'
 
   react-tooltip@6.0.8:
     resolution: {integrity: sha512-VPjtBPyoFwq72QVE6GYB/LtfEg/mnFBHqL0nD0oNNmjH8EZYFyBwgnFKNCOp5zCte45k1weXjKc0wXE6NICpfg==}
@@ -13917,8 +13908,6 @@ snapshots:
 
   ci-info@2.0.0: {}
 
-  classnames@2.5.1: {}
-
   cldrjs@0.5.5: {}
 
   cli-boxes@2.2.1: {}
@@ -18143,13 +18132,6 @@ snapshots:
   react-toastify@11.1.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
     dependencies:
       clsx: 2.1.1
-      react: 19.2.7
-      react-dom: 19.2.7(react@19.2.7)
-
-  react-tooltip@5.30.1(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
-    dependencies:
-      '@floating-ui/dom': 1.8.0
-      classnames: 2.5.1
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
 
