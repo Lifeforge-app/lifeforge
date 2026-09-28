@@ -571,6 +571,9 @@ importers:
       '@vis.gl/react-google-maps':
         specifier: ^1.8.3
         version: 1.10.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      dompurify:
+        specifier: ^3.4.12
+        version: 3.4.12
       satellite.js:
         specifier: ^7.0.1
         version: 7.1.0
@@ -681,9 +684,6 @@ importers:
       react-markdown:
         specifier: ^10.1.0
         version: 10.1.0(@types/react@19.2.17)(react@19.2.7)(supports-color@10.2.2)
-      react-tooltip:
-        specifier: ^6.0.8
-        version: 6.0.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       rrule:
         specifier: ^2.8.1
         version: 2.8.1
@@ -782,9 +782,6 @@ importers:
       react-activity-calendar:
         specifier: ^2.7.14
         version: 2.7.15(react@19.2.7)
-      react-tooltip:
-        specifier: ^6.0.8
-        version: 6.0.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       recharts:
         specifier: ^2.15.0
         version: 2.15.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -1292,9 +1289,6 @@ importers:
       react-to-print:
         specifier: ^3.1.1
         version: 3.3.0(react@19.2.7)
-      react-tooltip:
-        specifier: ^6.0.8
-        version: 6.0.8(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
 
   modules/lifeforge--todoList:
     dependencies:

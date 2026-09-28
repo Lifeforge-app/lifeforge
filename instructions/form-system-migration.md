@@ -1344,3 +1344,36 @@ submissionConfig={{
 ### 9. Old `defineForm` with `any` type
 
 Some modals (like `CreateBackupModal`) use `defineForm<any>(...)`. These must be migrated to a properly constructed Zod schema that matches the API shape, just like any other modal. Avoid `z.any()` - the whole point of the new system is type safety. If the schema is complex, break it down field by field matching the actual expected types from `InferInput<typeof forgeAPI.x.create>['body']`.
+
+### 10. `hidden` fields still submit their defaults
+
+The old builder had a per-field `hidden: <condition>` flag. In the new system you
+conditionally render the field component instead. But `defaultValues` still
+contain a value for every schema field, and `handleSubmit` submits them even for
+un-rendered fields. So the schema can keep them **required** as long as the
+default/initial values are valid. Example (`ModifySessionModal`): the duration
+sliders are only rendered for `create`, yet the schema keeps
+`work_duration: z.number().min(1)` and the values come from `initialData` on
+update.
+
+### 11. Not every old field prop has an input equivalent
+
+The old `.setupFields` config inconsistently accepted props the underlying input
+does not support. Check the field's `*InputProps` before carrying them over:
+
+- `SliderField` has no `placeholder` (old slider fields often passed one - drop it).
+- `ListboxField`/`CheckboxField`/`FileField` don't take `hidden` (use conditional rendering).
+- `FileField` uses `mimeTypes`, not `acceptedMimeTypes`.
+- Labels resolve through `useInputLabel`, which lower-camel-cases the label and
+  looks up `inputs.<camelCase(label)>` - so `label="Text Content"` finds
+  `inputs.textContent`.
+
+### 12. File fields backed by a media endpoint
+
+When the route declares `media: { field }` (see the generated contract's
+`media`), build the schema with `fieldValueSchema`, seed
+`defaultValues` with `getFormFileFieldInitialData(forgeAPI, initialData, initialData.field)`,
+and convert on submit with `convertFormFileFieldData(formData.field)`. The
+mutation body still receives the `field` key; forgeAPI serializes it as the
+multipart field.
+

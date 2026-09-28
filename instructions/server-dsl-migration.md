@@ -171,6 +171,21 @@ output: {
   OK: z.any()  // PROHIBITED
 }
 
+> [!WARNING]
+> **Runtime values must be JSON-serializable, not just schema-valid.** Zod only
+> describes the shape; `NaN`/`Infinity` are not representable in JSON and are
+> serialized as `null`. A computed numeric field (e.g. a coordinate returned by
+> `satellite.js`) can therefore arrive on the client as `null` even though the
+> output says `z.number()`. Guard computed numbers before responding:
+>
+> ```typescript
+> if (![lat, lng, altitude, velocity].every(Number.isFinite)) {
+>   return response.ok(EMPTY_RESULT)
+> }
+> ```
+>
+> Filter array items the same way, and keep the client defensive
+> (`Number.isFinite(value) ? value.toFixed(4) : '—'`).
 
 ### 4. Input schemas must be plain - no `.transform()` in zod
 

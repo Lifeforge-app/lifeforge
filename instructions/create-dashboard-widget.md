@@ -334,6 +334,21 @@ The `Widget` component from `@lifeforge/ui` accepts:
 | `variant`         | `'default' \| 'large-icon'` | Visual variant                                       |
 | `children`        | `ReactNode`                 | Widget content                                       |
 
+> [!IMPORTANT]
+> `iconColor` accepts a **design token** (e.g. `red-500`), not a raw hex/oklch
+> value. `Widget` computes the badge background via `colorWithOpacity(iconColor)`.
+> For data-driven colors (e.g. user-configured hex values), do not pass them to
+> `iconColor` - render the tile with `Box`/`Icon` and inline `style` instead.
+>
+> Use `variant="large-icon"` for stat tiles (large badge + title + value). Any
+> `Flex` prop (`flex`, `width`, `direction`, `gap`, …) can be passed directly to
+> `Widget` since it extends `FlexProps`.
+
+> [!TIP]
+> Widgets are just `Flex` containers - when laying out several in a row, put them
+> in a wrapping `Flex` and toggle their size per breakpoint with responsive props
+> (`width={{ base: '100%', sm: '16.6667%' }}`) rather than reaching for Tailwind.
+
 ---
 
 ## Common UI Components for Widgets

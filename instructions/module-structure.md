@@ -279,6 +279,37 @@ type CreateBody = InferInput<typeof forgeAPI.collections.create>['body']
 > in sync with the server. Manually writing `interface`/`type` shapes that mirror
 > an endpoint's payload is forbidden.
 
+### Moving client-side fetching to the backend
+
+Client components must not `fetch` external APIs directly - proxy them through a
+forge route. When a module has no server yet, scaffold one (mirror
+`modules/lifeforge--sin-chew-daily`):
+
+1. `server/forge.ts` - `export default createForge({})` (no schema needed for
+   stateless proxying).
+2. `server/index.ts` - define the routes and register the contract:
+   ```typescript
+   const routes = forgeRouter({ getCurrencies, getRatesHistory })
+   writeContractFileToClient(routes, import.meta.dirname)
+   export default routes
+   ```
+3. `server/tsconfig.json` (`extends @lifeforge/configs/tsconfig/module-server.json`)
+   and `server/vite.config.ts` (`defineModuleServerConfig(__dirname)`).
+4. `package.json` scripts: `typecheck:client`/`typecheck:server`,
+   `build:client`/`build:server` (both run in `typecheck`/`build`).
+5. **Generate `client/contract.ts`** by executing the server entry once:
+   `pnpm exec tsx modules/<module>/server/index.ts` (it writes `../client/contract.ts`
+   as a side effect). Never hand-write the contract.
+6. `client/manifest.ts` - `import contract from './contract'` and pass `contract`
+   to `createForgeModule({ routes, contract })`.
+
+Then in the client replace `fetch(...)` effects with
+`useQuery(forgeAPI.<ns>.<endpoint>.input({...}).queryOptions())` and build derived
+data with `useMemo`.
+
+and filter array items the same way. On the client, still treat contract-typed
+numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '—'`).
+
 ### Other client conventions
 
 - **Forms**: use the composition pattern - `useForm()` (react-hook-form) +
@@ -297,6 +328,20 @@ type CreateBody = InferInput<typeof forgeAPI.collections.create>['body']
 - **Localization**: `useModuleTranslation()` + `t()`. Many `@lifeforge/ui`
   components (`Button`, `ModuleHeader`, form fields, `ContextMenuItem` with
   `label`) auto-resolve i18n internally - only use `t()` where they don't.
+  **Never prefix keys with `apps.<module>:`** - `useModuleTranslation()` already
+  scopes to the module namespace, so use `t('inputs.audio')`, not
+  `t('apps.momentVault:inputs.audio')`. When adding a key, add it to **all**
+  locale files (`en`, `ms`, `zh-CN`, `zh-TW`).
+- **Styling**: Tailwind is prohibited. Use the `@lifeforge/ui` primitives and
+  see `packages/ui/DESIGN.md` (section 14, "Migration Guide: Tailwind → UI
+  Primitives") for the full mapping and gotchas (inline style exceptions,
+  `.css.ts` cases, responsive props).
+- **Third-party dependencies**: do not import raw third-party UI libraries in a
+  module when the library already re-exports the component. e.g. import
+  `ReactTooltip` from `@lifeforge/ui` rather than `react-tooltip`. When a new
+  cross-cutting library is needed, re-export it from `@lifeforge/ui` (see
+  `components/feedback/index.ts`) and consume it from there, so the dependency
+  lives in one place.
 
 ## Server Side (`server/`)
 
@@ -442,6 +487,45 @@ The full DSL and migration notes live in
 - `utils/` - server-only helpers (thumbnail generation, downloads, date ranges,
   external API scraping) imported by routes.
 - `constants/` - static data such as AI prompt templates.
+
+### Output serialization pitfalls
+
+Output schemas do **not** guarantee runtime JSON safety. `NaN`/`Infinity`
+serialize to `null`, so a computed numeric field (e.g. a coordinate from a math
+library such as `satellite.js`) can reach the client as `null` even though the
+schema says `z.number()`. Guard computed values before returning:
+
+```typescript
+if (![lat, lng, altitude, velocity].every(Number.isFinite)) {
+  return response.ok(EMPTY_RESULT)
+}
+```
+
+Filter array items the same way. On the client, still treat contract-typed
+numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '—'`). See
+[`server-dsl-migration.md`](./server-dsl-migration.md) for the DSL-side rule.
+
+### Sanitizing scraped / external HTML
+
+When a route returns HTML that the client renders with
+`dangerouslySetInnerHTML`, sanitize it in the route with `sanitize-html`
+(add it to the module `dependencies`). Use `allowedTags`/`allowedAttributes`,
+a `textFilter` for boilerplate strings, and `exclusiveFilter` to drop whole
+elements (e.g. hidden tracking links):
+
+```typescript
+const sanitized = sanitizeHtml(html, {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+  allowedAttributes: { ...sanitizeHtml.defaults.allowedAttributes, img: ['src', 'alt'] },
+  textFilter: text => (['ADVERTISEMENT', '打开全文'].includes(text) ? '' : text.trim()),
+  exclusiveFilter: frame =>
+    frame.tag === 'a' && frame.text.replace(/\s/g, '').toLowerCase() === 'hidden'
+})
+```
+
+For HTML that reaches the client unsanitized (e.g. a third-party JSON API),
+sanitize on the client with `dompurify` (`DOMPurify.sanitize(html)`) before
+passing it to `dangerouslySetInnerHTML`.
 
 ## `locales/`
 

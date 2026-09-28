@@ -28,6 +28,16 @@
 
 3. **Before adding `useModuleTranslation` / `t()` for localization, check if the component already handles it internally.** Components like `Button`, `ModalHeader`, `ModuleHeader`, `ContextMenuItem` (with `label` prop), and form fields auto-resolve their text via i18n. Only use `t()` explicitly when the component does not support internal localization (e.g. `Tabs` item names, raw `Text` elements).
 
+4. **Localization keys must not include the module prefix.** `useModuleTranslation()` already scopes keys to the module namespace - use `t('inputs.audio')`, never `t('apps.momentVault:inputs.audio')`. When adding a locale key, add it to ALL locale files (`en.json`, `ms.json`, `zh-CN.json`, `zh-TW.json`).
+
+5. **Third-party UI dependencies are centralized in the UI library.** If a third-party component is already re-exported by `@lifeforge/ui` (e.g. the raw `react-tooltip` component as `ReactTooltip`), import it from `@lifeforge/ui` - never from the raw package. When a new cross-cutting library is needed, re-export it from `@lifeforge/ui` (e.g. `components/feedback/index.ts`) so the dependency lives in one place.
+
+6. **UI architecture/usage documentation lives in `packages/ui/DESIGN.md`.** That file is the single source of truth for frontend/UI rules - amend it there rather than creating separate UI docs.
+
+## Data Fetching & API
+
+1. **Always use contract-derived query keys.** Use `forgeAPI.<entity>.key` / `forgeAPI.<entity>.list.key` / `forgeAPI.key` for query keys and invalidation - never hardcode arrays like `['moduleName', 'entities']`. When refactoring a file, replace any hardcoded query-key arrays you touch, even if that part is otherwise out of scope.
+
 ## Context Provider Pattern
 
 1. **When replacing prop drilling with a context provider, move all state, effects, and derived functions into the provider itself.** The provider should own `useState`, `useEffect`, `useRef`, and any `update*` functions so that child components remain stateless and only consume values via `useContext`.

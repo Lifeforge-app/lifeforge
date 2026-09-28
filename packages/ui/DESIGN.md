@@ -1134,7 +1134,7 @@ Renders the top panel header block of a workspace module.
 
 - **`APIOnlineStatusWrapper`:** Wraps page routes to verify API availability, showing a connection error screen if the server is offline.
 - **`EncryptionWrapper`:** Displays loader screens while E2E encryption initializes.
-- **`Tooltip`:** Trigger overlay utilizing `react-tooltip` and matching theme outlines.
+- **`Tooltip`:** Trigger overlay utilizing `react-tooltip` and matching theme outlines. The raw `react-tooltip` component is also re-exported as **`ReactTooltip`** from `@lifeforge/ui` - import it from there (never from `react-tooltip` directly) when you need to attach it to arbitrary elements via `data-tooltip-id`.
 - **`PrintArea`:** Formats viewport sections for printing, copying global CSS variable scopes into a `@media print` style block.
 
 ---
@@ -1542,7 +1542,149 @@ import { Icon } from '@lifeforge/ui'
 
 ---
 
-## 14. Developer Quick-Reference Checklist
+## 14. Migration Guide: Tailwind → UI Primitives
+
+Sections 12 and 13 cover specific legacy classes. This section is the general
+playbook for removing **any** Tailwind from a component.
+
+### Ground rules
+
+1. **No Tailwind, ever.** No utility classes, `@apply`, `@reference`, `@layer`,
+   `theme()`, or `className` strings containing utilities - in any file type.
+2. **Primitives first.** `Box`, `Flex`, `Stack`, `Grid`, `Text`, `Icon`, `Card`,
+   `Bordered`, `TagChip`, `Widget`. Use `asChild` to flatten DOM.
+3. **Inline `style` only for what has no prop**: truly dynamic runtime values,
+   negative margins, `transform`, `fontFamily`, `objectFit`, `whiteSpace`,
+   `wordBreak`, `aspect-ratio` on raw elements, etc.
+4. **`.css.ts` only when primitives and inline style cannot do it**: raw
+   `<table>`/`<svg>`/`<canvas>`, arbitrary breakpoints (`min-[400px]`), keyframes,
+   `:has()`/`::before` selectors, dark-mode color overrides.
+5. **Plain CSS class names are allowed as hooks** for CSS not applied through JSX
+   props (e.g. `.loader`, `.music`, `.pagination`, `.news-article`, range-input
+   pseudo-elements). Keep them.
+6. **Never add `clsx`** just to join props-derived classes.
+
+### Token mapping
+
+Spacing tokens: `xs`=4px, `sm`=8px, `md`=16px, `lg`=24px, `xl`=32px, `2xl`=48px,
+`3xl`=64px. There is **no token for 2px/12px/20px/96px** - pick the nearest token
+or fall back to inline/`.css.ts`.
+
+| Tailwind | Replace with |
+| --- | --- |
+| `p-2` / `m-2` | `p="sm"` / `m="sm"` |
+| `p-4` / `mt-4` | `p="md"` / `mt="md"` |
+| `gap-3` (12px) | `gap="sm"` (nearest) |
+| `gap-6` / `p-6` / `mt-6` | `gap="lg"` / `p="lg"` / `mt="lg"` |
+| `p-8` / `gap-8` / `pb-8` | `p="xl"` / `gap="xl"` / `pb="xl"` |
+| `pb-12` (48px) | `pb="2xl"` |
+| `mr-16` / `mt-16` (64px) | `mr="3xl"` / `mt="3xl"` |
+| `mt-0.5` / `gap-0.5` (2px) | no token → inline `{ marginTop: '0.125rem' }` / `{ gap: '0.125rem' }` |
+| `mx-auto` / `mt-auto` | `style={{ marginLeft: 'auto', marginRight: 'auto' }}` / `{ marginTop: 'auto' }` |
+| `flex` / `flex-col` / `flex-row` | `Flex` (`direction="column"`/`"row"`) |
+| `flex-center` | `centered` |
+| `flex-between` / `justify-between` | `justify="between"` |
+| `flex-1` | `flex="1"`; `flex-1 shrink-0` → `flex="1 0 0%"` |
+| `shrink-0` | `flexShrink="0"` |
+| `w-full` / `h-full` / `size-full` | `width="100%"` / `height="100%"` |
+| `w-5/12` / `w-2/12` | `width="41.6667%"` / `"16.6667%"` |
+| `max-w-md` | `maxWidth="28rem"` |
+| `h-96` / `w-32` / `size-16` | `height="24rem"` / `width="8rem"` / `height="4rem" width="4rem"` |
+| `size-5` / `size-6` / `size-7` | `size="1.25rem"` / `"1.5rem"` / `"1.75rem"` (Icon) |
+| `aspect-video` / `aspect-square` | `aspectRatio="16 / 9"` / `aspectRatio="1"` |
+| `rounded-lg` / `rounded-md` / `rounded-full` | `r="lg"` / `r="md"` / `r="full"` |
+| `shadow-custom` / `shadow-lg` | `shadow` |
+| `overflow-hidden` | `overflow="hidden"` |
+| `relative` / `absolute` / `static` | `position="relative"` / `"absolute"` / `"static"` |
+| `top-4 right-4` / `inset-0` | `top="1rem" right="1rem"` / `inset="0"` (raw strings, **not** tokens) |
+| `text-bg-500` / `text-custom-500` | `color="muted"` / `color="primary"` |
+| `text-sm` / `text-lg` / `text-2xl` | `size="sm"` / `"lg"` / `"2xl"` |
+| `font-medium` / `font-semibold` / `font-bold` | `weight="medium"` / `"semibold"` / `"bold"` |
+| `truncate` / `line-clamp-N` | `truncate` / `lineClamp={N}` |
+| `whitespace-nowrap` / `whitespace-pre-wrap` | `whiteSpace="nowrap"` / `"pre-wrap"` |
+| `text-center` / `text-right` | `align="center"` / `"right"` (Text/Icon only) |
+| `tracking-wide` / `leading-tight` | `tracking="wide"` / `leading="tight"` |
+| `animate-spin` | inline `style={{ animation: 'rotation 1s linear infinite' }}` |
+
+Replace breakpoints with responsive props: `hidden md:flex` →
+`display={{ base: 'none', md: 'flex' }}`, `flex-col sm:flex-row` →
+`direction={{ base: 'column', sm: 'row' }}`.
+
+### Colors
+
+- Legacy `component-bg-*` → `surface` presets (see section 12).
+- Opacity (`bg-500/20`, `bg-800/50`) → `colorWithOpacity('bg-500', '20%')` in the
+  `bg` prop or `.css.ts`.
+- Interactive states: `color={{ base: 'bg-500', hover: 'bg-800', darkHover: 'bg-50' }}`.
+- Data-driven colors (from API): inline `style={{ color, backgroundColor: color + '20' }}`.
+- Colored label chips → `TagChip` (`color`, `icon`, `label`, `size="sm"`) instead
+  of a hand-rolled pill.
+- No `white`/`black` token - use `bg-50` / `bg-950`.
+
+### Primitive limitations
+
+- **`Text` (and `Icon`) have no layout props** (`width`, `minWidth`, `flex`,
+  `flexShrink`). Wrap with `Box asChild flex="1"` or use `style={{ width: '100%' }}`.
+  They **do** accept spacing/position/overflow/rounded.
+- **`Box`/`Flex` have `bg` but not `color`.** Put text color on the `Text`/`Icon`
+  children, or use `Bordered` (which accepts `color`).
+- **`Icon` defaults to `1.25em`** - only set `size` when different.
+- **`Card` extends `FlexProps`** (`direction="column"` default) - pass layout
+  props directly, don't wrap children in another `Flex`.
+- **`Widget` `iconColor` is a design token** (e.g. `red-500`), not a hex value. Use
+  `variant="large-icon"` for stat tiles.
+- **Inputs only accept `className`** for layout - wrap in `Box`/`Flex` to control
+  width/flex.
+- **`ContextMenu` has no `classNames` prop** - position its trigger with Box props
+  (`position`, `top`, `right`).
+
+### Third-party & raw elements
+
+- **`<table>`** → sibling `.css.ts` using `COLORS[...]` + `colorWithOpacity(...).toString()`
+  and `.dark &` selectors.
+- **`<svg>`/`<canvas>`/`<circle>`** → `.css.ts` for size/transform and dark colors.
+- **Arbitrary breakpoints** → `.css.ts` `'@media': { '(min-width: 400px)': { … } }`.
+- **Custom animations** → prefer the existing `rotation` keyframe, else
+  `keyframes({...})` in `.css.ts`.
+- **Imperatively-created DOM** → set `el.style.*`; never a Tailwind `className`.
+- **`img`** → inline style for `objectFit`/`width`/`height`.
+- **Third-party `className` overrides** → plain CSS class or inline `style`.
+- **Raw HTML** (`dangerouslySetInnerHTML`) → sanitize first (server
+  `sanitize-html`, or client `dompurify`).
+
+### Recurring layout fixes
+
+- **Lists**: `space-y-N` → `<Stack>`; `flex flex-col gap-N` → `<Flex direction="column" gap="…">`.
+- **Grids**: `grid grid-cols-1 md:grid-cols-3` → `<Grid templateCols={{ base: 1, md: 3 }}>`.
+- **Overlay buttons**: `<Box as="button" inset="0" position="absolute" />`.
+- **Accent bars** (`border-l-4` / `before:` pseudo bars) → a relative `Box` with an
+  absolute rounded bar (`bg="primary" r="full" width="0.25rem" top="0" bottom="0" left="0"`).
+- **`*:first-child` / `[&>*:nth-child(2)]`** → usually redundant once the child
+  already sets `width="100%"`; otherwise use `.css.ts`.
+- **Modal double-scrollbar**: `ModalWrapper` is `maxHeight="calc(100dvh - 8rem)"`
+  with `p="lg"` (1.5rem), so its content box is `calc(100dvh - 11rem)`. Give the
+  modal's outer container `minHeight="calc(100dvh - 11rem)"` so only the inner
+  `Scrollbar`/`AutoSizer` scrolls.
+
+### Overlay API notes
+
+- `ModalHeader` uses **`trailing`** (ReactNode), not `actionButton`/`headerActions`.
+  `FormModal` maps `uiConfig.headerActions` → `trailing`.
+- Mobile `FAB` + desktop header button: hide the button with
+  `display={{ base: 'none', md: 'flex' }}` and render
+  `<FAB visibilityBreakpoint="md" onClick={…} />`.
+
+### Component hygiene while migrating
+
+- Extract conceptual blocks into their own files; move state/hooks/derived values
+  that only they use.
+- Co-locate a modal's private components under `<ModalName>/components/` with the
+  modal as `<ModalName>/index.tsx`.
+- Update hardcoded `queryKey` arrays you touch to the `forgeAPI.*.key` convention.
+
+---
+
+## 15. Developer Quick-Reference Checklist
 
 Before submitting a pull request, verify that you have adhered to all core design patterns:
 
