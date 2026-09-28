@@ -9,7 +9,6 @@ const meta = {
   argTypes: {
     appendTitle: { control: false },
     className: { control: 'text' },
-    hasAI: { control: 'boolean' },
     icon: { control: 'text' },
     namespace: { control: 'text' },
     onClose: { control: false },
@@ -73,26 +72,6 @@ export const UntranslatedTitle: Story = {
     icon: 'tabler:file-unknown',
     onClose: () => {},
     title: 'untranslated_modal_key_xyz'
-  },
-  render: function (args) {
-    return (
-      <Shell>
-        <ModalHeader {...args} />
-      </Shell>
-    )
-  }
-}
-
-/**
- * `hasAI` appends a yellow star icon after the title to signal that the modal
- * contains AI-assisted functionality.
- */
-export const WithAIBadge: Story = {
-  args: {
-    hasAI: true,
-    icon: 'tabler:brain',
-    onClose: () => {},
-    title: 'Smart Suggestions'
   },
   render: function (args) {
     return (
@@ -182,8 +161,8 @@ export const WithActionButtonVariant: Story = {
 }
 
 /**
- * All optional features active simultaneously - AI badge, appendTitle, and an
- * action button - to confirm they compose without layout issues.
+ * All optional features active simultaneously - appendTitle and an action
+ * button - to confirm they compose without layout issues.
  */
 export const KitchenSink: Story = {
   args: {
@@ -203,7 +182,6 @@ export const KitchenSink: Story = {
         Beta
       </span>
     ),
-    hasAI: true,
     icon: 'tabler:sparkles',
     onClose: () => {},
     title: 'AI Content Generator',

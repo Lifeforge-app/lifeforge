@@ -19,7 +19,21 @@ function TailwindCSSColorsModal({
     <Box style={{ minWidth: '70vw' }}>
       <ModalHeader
         icon="tabler:brand-tailwind"
-        title="colorPicker.modals.morandiColorPalette"
+        subtitle={
+          <>
+            powered by&nbsp;
+            <Text asChild decoration="underline">
+              <a
+                href="https://tailwindcss.com/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Tailwind CSS
+              </a>
+            </Text>
+          </>
+        }
+        title="colorPicker.modals.tailwindCssColorPalette"
         onClose={onClose}
       />
       <Flex direction="column" style={{ gap: '0.75rem' }}>

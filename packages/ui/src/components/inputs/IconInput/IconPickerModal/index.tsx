@@ -89,8 +89,9 @@ export function IconPickerModal({
         </Flex>
       ) : (
         <ModalHeader
-          appendTitle={
-            <Text align="right" color="muted" size={{ base: 'sm', sm: 'base' }}>
+          icon="tabler:icons"
+          subtitle={
+            <>
               powered by&nbsp;
               <Text asChild decoration="underline">
                 <a
@@ -101,9 +102,8 @@ export function IconPickerModal({
                   Iconify
                 </a>
               </Text>
-            </Text>
+            </>
           }
-          icon="tabler:icons"
           title="iconPicker.title"
           onClose={onClose}
         />

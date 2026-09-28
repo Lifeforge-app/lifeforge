@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
-import { AutoSizer, List } from 'react-virtualized'
 
-import { EmptyStateScreen, LoadingScreen } from '@/components/feedback'
+import { LoadingScreen } from '@/components/feedback'
 import { SearchInput } from '@/components/inputs'
-import { Flex, Text } from '@/components/primitives'
+import { Text } from '@/components/primitives'
 
 import { ChipSelector } from '../components/ChipSelector'
-import { IconEntry } from '../components/IconEntry'
+import { IconList } from '../components/IconList'
 
 interface IIconSetData {
   title: string
@@ -59,6 +58,7 @@ export function IconSet({
       icon.toLowerCase().includes(searchTerm.toLowerCase())
     )
   }, [searchTerm, currentTag, iconData])
+
   useEffect(() => {
     getIconSet(iconSet)
       .then(data => {
@@ -91,7 +91,7 @@ export function IconSet({
           darkHover: 'bg-700'
         }}
         namespace="common.modals"
-        searchTarget="iconPicker.icon"
+        searchTarget="iconPicker.items.icon"
         value={searchTerm}
         onChange={setSearchTerm}
       />
@@ -100,64 +100,10 @@ export function IconSet({
         value={currentTag}
         onChange={setCurrentTag}
       />
-      {filteredIconList.length ? (
-        <Flex direction="column" flex="1" minHeight="0" mt="md">
-          <AutoSizer>
-            {({ width, height }: { width: number; height: number }) => {
-              const itemsPerRow = Math.floor(width / 160) || 1
-
-              return (
-                <List
-                  height={height - 12}
-                  itemsPerRow={Math.floor(width / filteredIconList.length) || 1}
-                  rowCount={Math.ceil(filteredIconList.length / itemsPerRow)}
-                  rowHeight={120}
-                  rowRenderer={({
-                    index,
-                    key,
-                    style
-                  }: {
-                    index: number
-                    key: string
-                    style: React.CSSProperties
-                  }) => {
-                    const fromIndex = index * itemsPerRow
-
-                    const toIndex = fromIndex + itemsPerRow
-
-                    return (
-                      <Flex key={key} gap="sm" style={style} width="100%">
-                        {filteredIconList
-                          .slice(fromIndex, toIndex)
-                          .map(icon => (
-                            <IconEntry
-                              key={icon}
-                              icon={icon}
-                              iconSet={iconSet}
-                              onIconSelected={onIconSelected}
-                            />
-                          ))}
-                      </Flex>
-                    )
-                  }}
-                  width={width}
-                />
-              )
-            }}
-          </AutoSizer>
-        </Flex>
-      ) : (
-        <Flex align="center" flex="1" height="100%" justify="center">
-          <EmptyStateScreen
-            icon="tabler:icons-off"
-            message={{
-              id: 'icon',
-              namespace: 'common.modals',
-              tKey: 'iconPicker'
-            }}
-          />
-        </Flex>
-      )}
+      <IconList
+        iconList={filteredIconList.map(icon => `${iconSet}:${icon}`)}
+        onIconSelected={onIconSelected}
+      />
     </>
   )
 }

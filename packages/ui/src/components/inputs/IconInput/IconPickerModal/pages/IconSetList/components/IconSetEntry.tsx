@@ -27,35 +27,40 @@ function _IconSetEntry({
         dark: 'bg-800',
         darkHover: 'bg-700'
       }}
+      minWidth="0"
     >
       <Text asChild align="left">
-        <Box as="button" type="button" width="100%" onClick={handleClick}>
+        <Box
+          as="button"
+          minWidth="0"
+          type="button"
+          width="100%"
+          onClick={handleClick}
+        >
           <Flex
             align="center"
-            gap="lg"
+            gap={{ base: 'md', sm: 'lg' }}
             justify="center"
+            minWidth="0"
             py="lg"
             width="100%"
             wrap="wrap"
           >
             {iconSet.samples?.map(sampleIcon => (
-              <Text
+              <Icon
                 key={sampleIcon}
-                asChild
                 color={{ base: 'bg-600', dark: 'bg-400' }}
-                style={{ height: '2rem', width: '2rem' }}
-              >
-                <Icon
-                  icon={`${iconSet.prefix}:${sampleIcon}`}
-                  style={{ height: '2rem', width: '2rem' }}
-                />
-              </Text>
+                icon={`${iconSet.prefix}:${sampleIcon}`}
+                size={{ base: '1.5rem', sm: '2rem' }}
+              />
             ))}
           </Flex>
-          <Flex direction="column" justify="between">
-            <Text truncate as="h3" size="xl" weight="semibold">
-              {iconSet.name}
-            </Text>
+          <Flex direction="column" justify="between" minWidth="0">
+            <Box asChild minWidth="0">
+              <Text truncate as="h3" size="xl" weight="semibold">
+                {iconSet.name}
+              </Text>
+            </Box>
             <Text truncate as="p" color="primary" size="sm">
               {iconSet.author.name}
             </Text>

@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
-    "@iconify/collections": "^1.0.690",
+    "@iconify/collections": "^1.0.742",
     "@iconify/react": "^6.0.2",
     "@iconify/tools": "^5.0.12",
     "@iconify/types": "^2.0.0",

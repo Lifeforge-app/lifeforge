@@ -20,8 +20,8 @@ function _CategoryEntry({
   >
 }) {
   return (
-    <Box as="section" mb="lg" width="100%">
-      <Box as="header" mb="xl" position="relative" r="lg">
+    <Box as="section" mb="lg" minWidth="0" width="100%">
+      <Box as="header" mb="xl" minWidth="0" position="relative" r="lg">
         <Text align="center" as="h2" size="3xl" weight="semibold">
           {category}
           <Bordered
@@ -41,6 +41,7 @@ function _CategoryEntry({
       </Box>
       <Grid
         gap="sm"
+        minWidth="0"
         templateCols={{
           base: '1',
           sm: 'repeat(auto-fill, minmax(320px, 1fr))'

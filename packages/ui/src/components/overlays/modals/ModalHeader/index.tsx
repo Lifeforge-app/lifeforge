@@ -4,7 +4,7 @@ import _ from 'lodash'
 import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 function getLocaleKeys(innerTitle: string, namespace?: string) {
   return [
@@ -21,18 +21,18 @@ function getLocaleKeys(innerTitle: string, namespace?: string) {
 
 export function ModalHeader({
   title,
+  subtitle,
   icon,
   onClose,
   className = '',
-  hasAI = false,
   appendTitle,
   namespace = 'common.modals',
   trailing
 }: {
   title: string | React.ReactNode
+  subtitle?: React.ReactNode
   icon: string
   onClose: () => void
-  hasAI?: boolean
   className?: string
   appendTitle?: React.ReactElement
   namespace?: string | false
@@ -52,53 +52,54 @@ export function ModalHeader({
       mb="md"
       style={{ gap: '0.75rem' }}
     >
-      <Text asChild size="xl" weight="semibold">
-        <Flex
-          align="center"
-          as="h1"
-          minWidth="0"
-          style={{ gap: '0.75rem' }}
-          width="100%"
-        >
-          <Icon icon={innerIcon} size="1.3em" />
-          {typeof innerTitle === 'string' ? (
-            <>
-              <Text truncate as="span" style={{ minWidth: 0 }}>
-                {namespace === false
-                  ? innerTitle
-                  : t(
-                      [
-                        ...getLocaleKeys(innerTitle),
-                        ...(namespace
-                          ? getLocaleKeys(innerTitle, namespace)
-                          : []),
-                        ...getLocaleKeys(innerTitle, 'common.modals')
-                      ],
-                      {
-                        defaultValue: innerTitle
-                      }
-                    )}
-              </Text>
-              {appendTitle}
-              {hasAI && (
-                <Box
-                  asChild
-                  flexShrink="0"
-                  style={{
-                    color: '#eab308',
-                    height: '1.25rem',
-                    width: '1.25rem'
-                  }}
-                >
-                  <Icon icon="mage:stars-c" />
-                </Box>
+      <Flex
+        align="center"
+        minWidth="0"
+        style={{ gap: '0.75rem' }}
+        width="100%"
+      >
+        <Icon icon={innerIcon} size={subtitle ? '2em' : '1.3em'} />
+        <Flex direction="column" minWidth="0" width="100%">
+          <Text asChild size="xl" weight="semibold">
+            <Flex
+              align="center"
+              as="h1"
+              minWidth="0"
+              style={{ gap: '0.75rem' }}
+              width="100%"
+            >
+              {typeof innerTitle === 'string' ? (
+                <>
+                  <Text truncate as="span" style={{ minWidth: 0 }}>
+                    {namespace === false
+                      ? innerTitle
+                      : t(
+                          [
+                            ...getLocaleKeys(innerTitle),
+                            ...(namespace
+                              ? getLocaleKeys(innerTitle, namespace)
+                              : []),
+                            ...getLocaleKeys(innerTitle, 'common.modals')
+                          ],
+                          {
+                            defaultValue: innerTitle
+                          }
+                        )}
+                  </Text>
+                  {appendTitle}
+                </>
+              ) : (
+                innerTitle
               )}
-            </>
-          ) : (
-            innerTitle
+            </Flex>
+          </Text>
+          {subtitle && (
+            <Text color="muted" size={{ base: 'sm', sm: 'base' }}>
+              {subtitle}
+            </Text>
           )}
         </Flex>
-      </Text>
+      </Flex>
       <Flex align="center" gap="sm">
         {trailing}
         <Button

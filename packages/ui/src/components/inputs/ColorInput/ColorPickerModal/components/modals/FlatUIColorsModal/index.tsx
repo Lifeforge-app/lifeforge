@@ -21,6 +21,20 @@ function FlatUIColorsModal({
     <Box style={{ minWidth: '60vw' }}>
       <ModalHeader
         icon="tabler:palette"
+        subtitle={
+          <>
+            powered by&nbsp;
+            <Text asChild decoration="underline">
+              <a
+                href="https://flatuicolors.com/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Flat UI Colors
+              </a>
+            </Text>
+          </>
+        }
         title="colorPicker.modals.flatUiColors"
         onClose={onClose}
       />
