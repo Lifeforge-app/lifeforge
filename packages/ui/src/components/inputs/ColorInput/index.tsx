@@ -17,6 +17,8 @@ import { ColorPickerModal } from './ColorPickerModal'
 export interface ColorInputProps {
   /** The label text displayed above the color input field. Required for 'classic' style. */
   label?: string
+  /** The icon to display in the input field. Defaults to 'tabler:palette'. */
+  icon?: string
   /** The current color value in hex format (e.g., "#FF0000"). */
   value: string
   /** Callback function called when the color value changes. */
@@ -40,6 +42,7 @@ export interface ColorInputProps {
 export function ColorInput({
   variant = 'classic',
   label,
+  icon = 'tabler:palette',
   value,
   onChange,
   required = false,
@@ -67,7 +70,7 @@ export function ColorInput({
         <InputIcon
           active={value !== ''}
           hasError={!!errorMsg}
-          icon="tabler:palette"
+          icon={icon}
         />
       )}
       <Flex align="center" gap="sm" position="relative" width="100%">
