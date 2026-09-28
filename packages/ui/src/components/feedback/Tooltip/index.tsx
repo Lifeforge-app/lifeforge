@@ -3,6 +3,8 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 import { Box, Icon, type IconProps, Text } from '@/components/primitives'
 
+import { tooltip } from './Tooltip.css'
+
 /**
  * A tooltip component that displays informational content when hovering over an icon.
  * For all available props, refer to the ReactTooltip documentation: https://react-tooltip.com/docs/getting-started
@@ -38,9 +40,11 @@ export function Tooltip({
         }}
       >
         <ReactTooltip
+          className={tooltip}
           id={`tooltip-${_.kebabCase(id)}`}
           opacity={1}
           place="top-start"
+          portalRoot={document.body}
           positionStrategy="fixed"
           {...tooltipProps}
         >
