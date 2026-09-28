@@ -64,6 +64,7 @@ export function Widget({
       direction="column"
       gap="lg"
       height="100%"
+      minWidth="0"
       p="md"
       r="lg"
       width="100%"

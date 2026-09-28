@@ -16,7 +16,7 @@ export function DatePickerModalContent({
   namespace?: string | false
   onClose: () => void
 }) {
-  const { onConfirm, hasTime } = useDatePicker()
+  const { onConfirm, hasTime, selectedDate } = useDatePicker()
 
   return (
     <Box minWidth={{ base: '100%', sm: '24rem' }}>
@@ -41,7 +41,13 @@ export function DatePickerModalContent({
         {hasTime && <TimeSelector />}
       </Flex>
 
-      <Button icon="tabler:check" mt="lg" width="100%" onClick={onConfirm}>
+      <Button
+        disabled={!selectedDate}
+        icon="tabler:check"
+        mt="lg"
+        width="100%"
+        onClick={onConfirm}
+      >
         Confirm
       </Button>
     </Box>
