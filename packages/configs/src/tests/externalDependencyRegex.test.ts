@@ -62,9 +62,12 @@ describe('externalDependencyRegex', () => {
   })
 
   describe('rejects POSIX absolute paths', () => {
-    it.each(['/repo/src/index.ts', '/a/b/c', '/index'])('rejects %s', specifier => {
-      expect(externalDependencyRegex.test(specifier)).toBe(false)
-    })
+    it.each(['/repo/src/index.ts', '/a/b/c', '/index'])(
+      'rejects %s',
+      specifier => {
+        expect(externalDependencyRegex.test(specifier)).toBe(false)
+      }
+    )
   })
 
   describe('rejects Windows absolute paths', () => {

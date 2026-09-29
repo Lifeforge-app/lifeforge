@@ -1570,41 +1570,41 @@ Spacing tokens: `xs`=4px, `sm`=8px, `md`=16px, `lg`=24px, `xl`=32px, `2xl`=48px,
 `3xl`=64px. There is **no token for 2px/12px/20px/96px** - pick the nearest token
 or fall back to inline/`.css.ts`.
 
-| Tailwind | Replace with |
-| --- | --- |
-| `p-2` / `m-2` | `p="sm"` / `m="sm"` |
-| `p-4` / `mt-4` | `p="md"` / `mt="md"` |
-| `gap-3` (12px) | `gap="sm"` (nearest) |
-| `gap-6` / `p-6` / `mt-6` | `gap="lg"` / `p="lg"` / `mt="lg"` |
-| `p-8` / `gap-8` / `pb-8` | `p="xl"` / `gap="xl"` / `pb="xl"` |
-| `pb-12` (48px) | `pb="2xl"` |
-| `mr-16` / `mt-16` (64px) | `mr="3xl"` / `mt="3xl"` |
-| `mt-0.5` / `gap-0.5` (2px) | no token → inline `{ marginTop: '0.125rem' }` / `{ gap: '0.125rem' }` |
-| `mx-auto` / `mt-auto` | `style={{ marginLeft: 'auto', marginRight: 'auto' }}` / `{ marginTop: 'auto' }` |
-| `flex` / `flex-col` / `flex-row` | `Flex` (`direction="column"`/`"row"`) |
-| `flex-center` | `centered` |
-| `flex-between` / `justify-between` | `justify="between"` |
-| `flex-1` | `flex="1"`; `flex-1 shrink-0` → `flex="1 0 0%"` |
-| `shrink-0` | `flexShrink="0"` |
-| `w-full` / `h-full` / `size-full` | `width="100%"` / `height="100%"` |
-| `w-5/12` / `w-2/12` | `width="41.6667%"` / `"16.6667%"` |
-| `max-w-md` | `maxWidth="28rem"` |
-| `h-96` / `w-32` / `size-16` | `height="24rem"` / `width="8rem"` / `height="4rem" width="4rem"` |
-| `size-5` / `size-6` / `size-7` | `size="1.25rem"` / `"1.5rem"` / `"1.75rem"` (Icon) |
-| `aspect-video` / `aspect-square` | `aspectRatio="16 / 9"` / `aspectRatio="1"` |
-| `rounded-lg` / `rounded-md` / `rounded-full` | `r="lg"` / `r="md"` / `r="full"` |
-| `shadow-custom` / `shadow-lg` | `shadow` |
-| `overflow-hidden` | `overflow="hidden"` |
-| `relative` / `absolute` / `static` | `position="relative"` / `"absolute"` / `"static"` |
-| `top-4 right-4` / `inset-0` | `top="1rem" right="1rem"` / `inset="0"` (raw strings, **not** tokens) |
-| `text-bg-500` / `text-custom-500` | `color="muted"` / `color="primary"` |
-| `text-sm` / `text-lg` / `text-2xl` | `size="sm"` / `"lg"` / `"2xl"` |
-| `font-medium` / `font-semibold` / `font-bold` | `weight="medium"` / `"semibold"` / `"bold"` |
-| `truncate` / `line-clamp-N` | `truncate` / `lineClamp={N}` |
-| `whitespace-nowrap` / `whitespace-pre-wrap` | `whiteSpace="nowrap"` / `"pre-wrap"` |
-| `text-center` / `text-right` | `align="center"` / `"right"` (Text/Icon only) |
-| `tracking-wide` / `leading-tight` | `tracking="wide"` / `leading="tight"` |
-| `animate-spin` | inline `style={{ animation: 'rotation 1s linear infinite' }}` |
+| Tailwind                                      | Replace with                                                                    |
+| --------------------------------------------- | ------------------------------------------------------------------------------- |
+| `p-2` / `m-2`                                 | `p="sm"` / `m="sm"`                                                             |
+| `p-4` / `mt-4`                                | `p="md"` / `mt="md"`                                                            |
+| `gap-3` (12px)                                | `gap="sm"` (nearest)                                                            |
+| `gap-6` / `p-6` / `mt-6`                      | `gap="lg"` / `p="lg"` / `mt="lg"`                                               |
+| `p-8` / `gap-8` / `pb-8`                      | `p="xl"` / `gap="xl"` / `pb="xl"`                                               |
+| `pb-12` (48px)                                | `pb="2xl"`                                                                      |
+| `mr-16` / `mt-16` (64px)                      | `mr="3xl"` / `mt="3xl"`                                                         |
+| `mt-0.5` / `gap-0.5` (2px)                    | no token → inline `{ marginTop: '0.125rem' }` / `{ gap: '0.125rem' }`           |
+| `mx-auto` / `mt-auto`                         | `style={{ marginLeft: 'auto', marginRight: 'auto' }}` / `{ marginTop: 'auto' }` |
+| `flex` / `flex-col` / `flex-row`              | `Flex` (`direction="column"`/`"row"`)                                           |
+| `flex-center`                                 | `centered`                                                                      |
+| `flex-between` / `justify-between`            | `justify="between"`                                                             |
+| `flex-1`                                      | `flex="1"`; `flex-1 shrink-0` → `flex="1 0 0%"`                                 |
+| `shrink-0`                                    | `flexShrink="0"`                                                                |
+| `w-full` / `h-full` / `size-full`             | `width="100%"` / `height="100%"`                                                |
+| `w-5/12` / `w-2/12`                           | `width="41.6667%"` / `"16.6667%"`                                               |
+| `max-w-md`                                    | `maxWidth="28rem"`                                                              |
+| `h-96` / `w-32` / `size-16`                   | `height="24rem"` / `width="8rem"` / `height="4rem" width="4rem"`                |
+| `size-5` / `size-6` / `size-7`                | `size="1.25rem"` / `"1.5rem"` / `"1.75rem"` (Icon)                              |
+| `aspect-video` / `aspect-square`              | `aspectRatio="16 / 9"` / `aspectRatio="1"`                                      |
+| `rounded-lg` / `rounded-md` / `rounded-full`  | `r="lg"` / `r="md"` / `r="full"`                                                |
+| `shadow-custom` / `shadow-lg`                 | `shadow`                                                                        |
+| `overflow-hidden`                             | `overflow="hidden"`                                                             |
+| `relative` / `absolute` / `static`            | `position="relative"` / `"absolute"` / `"static"`                               |
+| `top-4 right-4` / `inset-0`                   | `top="1rem" right="1rem"` / `inset="0"` (raw strings, **not** tokens)           |
+| `text-bg-500` / `text-custom-500`             | `color="muted"` / `color="primary"`                                             |
+| `text-sm` / `text-lg` / `text-2xl`            | `size="sm"` / `"lg"` / `"2xl"`                                                  |
+| `font-medium` / `font-semibold` / `font-bold` | `weight="medium"` / `"semibold"` / `"bold"`                                     |
+| `truncate` / `line-clamp-N`                   | `truncate` / `lineClamp={N}`                                                    |
+| `whitespace-nowrap` / `whitespace-pre-wrap`   | `whiteSpace="nowrap"` / `"pre-wrap"`                                            |
+| `text-center` / `text-right`                  | `align="center"` / `"right"` (Text/Icon only)                                   |
+| `tracking-wide` / `leading-tight`             | `tracking="wide"` / `leading="tight"`                                           |
+| `animate-spin`                                | inline `style={{ animation: 'rotation 1s linear infinite' }}`                   |
 
 Replace breakpoints with responsive props: `hidden md:flex` →
 `display={{ base: 'none', md: 'flex' }}`, `flex-col sm:flex-row` →

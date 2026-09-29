@@ -6,9 +6,7 @@ import {
   interpolateColors
 } from './themeColors'
 
-const EXPECTED_SHADES = [
-  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950
-]
+const EXPECTED_SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
 
 function createMockElement(): HTMLElement {
   const styles: Record<string, string> = {}
@@ -142,12 +140,10 @@ describe('themeColors', () => {
 
       clearCustomColorProperties(element, 'bg')
       EXPECTED_SHADES.forEach(shade => {
-        expect(
-          element.style.getPropertyValue(`--color-bg-${shade}`)
-        ).toBe('')
-        expect(
-          element.style.getPropertyValue(`--color-bg-${shade}-ch`)
-        ).toBe('')
+        expect(element.style.getPropertyValue(`--color-bg-${shade}`)).toBe('')
+        expect(element.style.getPropertyValue(`--color-bg-${shade}-ch`)).toBe(
+          ''
+        )
         expect(
           element.style.getPropertyValue(`--color-custom-${shade}`)
         ).not.toBe('')
@@ -155,9 +151,9 @@ describe('themeColors', () => {
 
       clearCustomColorProperties(element, 'theme')
       EXPECTED_SHADES.forEach(shade => {
-        expect(
-          element.style.getPropertyValue(`--color-custom-${shade}`)
-        ).toBe('')
+        expect(element.style.getPropertyValue(`--color-custom-${shade}`)).toBe(
+          ''
+        )
         expect(
           element.style.getPropertyValue(`--color-custom-${shade}-ch`)
         ).toBe('')

@@ -1376,4 +1376,3 @@ When the route declares `media: { field }` (see the generated contract's
 and convert on submit with `convertFormFileFieldData(formData.field)`. The
 mutation body still receives the `field` key; forgeAPI serializes it as the
 multipart field.
-

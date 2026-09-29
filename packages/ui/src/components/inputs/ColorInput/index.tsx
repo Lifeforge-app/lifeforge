@@ -67,11 +67,7 @@ export function ColorInput({
       variant={variant}
     >
       {variant === 'classic' && (
-        <InputIcon
-          active={value !== ''}
-          hasError={!!errorMsg}
-          icon={icon}
-        />
+        <InputIcon active={value !== ''} hasError={!!errorMsg} icon={icon} />
       )}
       <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (

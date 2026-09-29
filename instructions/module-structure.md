@@ -515,10 +515,15 @@ elements (e.g. hidden tracking links):
 ```typescript
 const sanitized = sanitizeHtml(html, {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
-  allowedAttributes: { ...sanitizeHtml.defaults.allowedAttributes, img: ['src', 'alt'] },
-  textFilter: text => (['ADVERTISEMENT', '打开全文'].includes(text) ? '' : text.trim()),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    img: ['src', 'alt']
+  },
+  textFilter: text =>
+    ['ADVERTISEMENT', '打开全文'].includes(text) ? '' : text.trim(),
   exclusiveFilter: frame =>
-    frame.tag === 'a' && frame.text.replace(/\s/g, '').toLowerCase() === 'hidden'
+    frame.tag === 'a' &&
+    frame.text.replace(/\s/g, '').toLowerCase() === 'hidden'
 })
 ```
 

@@ -14,16 +14,21 @@ describe('parseManifest AST parser', () => {
     if (fs.existsSync(widgetFilePath)) {
       fs.unlinkSync(widgetFilePath)
     }
+
     if (fs.existsSync(widgetDir)) {
       fs.rmdirSync(widgetDir)
     }
+
     const srcDir = path.join(tempDir, 'src')
+
     if (fs.existsSync(srcDir)) {
       fs.rmdirSync(srcDir)
     }
+
     if (fs.existsSync(tempFilePath)) {
       fs.unlinkSync(tempFilePath)
     }
+
     if (fs.existsSync(tempDir)) {
       fs.rmdirSync(tempDir)
     }

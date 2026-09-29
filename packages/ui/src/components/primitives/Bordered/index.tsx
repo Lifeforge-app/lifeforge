@@ -31,14 +31,7 @@ import {
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
 
 export type BorderSide =
-  | 'all'
-  | 'top'
-  | 'right'
-  | 'bottom'
-  | 'left'
-  | 'x'
-  | 'y'
-  | 'none'
+  'all' | 'top' | 'right' | 'bottom' | 'left' | 'x' | 'y' | 'none'
 
 export type BorderStyleValue = 'solid' | 'dashed' | 'dotted' | 'double' | 'none'
 

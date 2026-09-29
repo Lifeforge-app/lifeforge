@@ -83,8 +83,12 @@ export default function gatherModuleMetadata(
     }
 
     const manifestPath = path.join(appsDir, modDir, 'client', 'manifest.ts')
-    const { hasProvider, hidden, subsection, widgets: parsedWidgets } =
-      parseManifest(manifestPath)
+    const {
+      hasProvider,
+      hidden,
+      subsection,
+      widgets: parsedWidgets
+    } = parseManifest(manifestPath)
 
     // Discover widgets JIT at server load
     const widgets: ModuleWidget[] = []

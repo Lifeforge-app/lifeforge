@@ -49,12 +49,12 @@ export function buildChildRoutes({
             <ErrorBoundary
               fallbackRender={({ error }) => (
                 <ErrorScreen
+                  showRetryButton
                   message={
                     error instanceof Error
                       ? error.message
                       : 'An unexpected error occurred in this module.'
                   }
-                  showRetryButton
                 />
               )}
               resetKeys={[path]}

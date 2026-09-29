@@ -115,11 +115,12 @@ export function findProcessIdsByCommandLine(keyword: string): string[] {
 
       const script = `Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match '${escaped}' } | Select-Object -ExpandProperty ProcessId`
 
-      const output = executeCommand(
-        'powershell',
-        { exitOnError: false },
-        ['-NoProfile', '-NonInteractive', '-Command', script]
-      )
+      const output = executeCommand('powershell', { exitOnError: false }, [
+        '-NoProfile',
+        '-NonInteractive',
+        '-Command',
+        script
+      ])
 
       return output
         .split('\n')
@@ -148,16 +149,12 @@ export function findProcessIdsByCommandLine(keyword: string): string[] {
  */
 export function killProcessesByPids(pids: string[]): void {
   if (process.platform === 'win32') {
-    executeCommand(
-      'powershell',
-      { exitOnError: false },
-      [
-        '-NoProfile',
-        '-NonInteractive',
-        '-Command',
-        `Stop-Process -Id ${pids.join(',')} -Force -ErrorAction SilentlyContinue`
-      ]
-    )
+    executeCommand('powershell', { exitOnError: false }, [
+      '-NoProfile',
+      '-NonInteractive',
+      '-Command',
+      `Stop-Process -Id ${pids.join(',')} -Force -ErrorAction SilentlyContinue`
+    ])
 
     return
   }
@@ -178,7 +175,10 @@ export function killProcessesByPids(pids: string[]): void {
  * @param host - The host to bind to (defaults to 127.0.0.1)
  * @returns True if the port is in use, false otherwise
  */
-export function isPortInUse(port: number, host = '127.0.0.1'): Promise<boolean> {
+export function isPortInUse(
+  port: number,
+  host = '127.0.0.1'
+): Promise<boolean> {
   return new Promise(resolve => {
     const server = net.createServer()
 
@@ -217,11 +217,11 @@ export async function checkPortInUse(port: number): Promise<boolean> {
 export function getPortProcessInfo(port: number): string | null {
   try {
     if (process.platform === 'win32') {
-      const netstatOutput = executeCommand(
-        'netstat',
-        { exitOnError: false },
-        ['-ano', '-p', 'tcp']
-      )
+      const netstatOutput = executeCommand('netstat', { exitOnError: false }, [
+        '-ano',
+        '-p',
+        'tcp'
+      ])
 
       const line = netstatOutput
         .split('\n')
