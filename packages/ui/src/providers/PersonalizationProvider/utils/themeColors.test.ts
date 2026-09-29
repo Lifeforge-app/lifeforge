@@ -40,7 +40,7 @@ describe('themeColors', () => {
       })
     })
 
-    it('generates all 11 shades for theme palettes', () => {
+    it('generates all 11 shades for theme palettes and anchors shade 500 to the selected color', () => {
       const palette = getColorPalette('#10b981', 'theme')
       const keys = Object.keys(palette).map(Number)
 
@@ -48,6 +48,10 @@ describe('themeColors', () => {
       EXPECTED_SHADES.forEach(shade => {
         expect(palette[shade]).toMatch(/^#[0-9a-f]{6}$/i)
       })
+      expect(palette[500]?.toLowerCase()).toBe('#10b981')
+
+      const bluePalette = getColorPalette('#3b82f6', 'theme')
+      expect(bluePalette[500]?.toLowerCase()).toBe('#3b82f6')
     })
 
     it('dampens chroma for vibrant background colors', () => {
