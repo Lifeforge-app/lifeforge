@@ -44,10 +44,9 @@ export function Tooltip({
             return node ? (
               <Box
                 shadow
-                bg={{ base: 'bg-50', dark: 'bg-800' }}
+                bg={{ base: 'bg-50', dark: 'bg-700' }}
                 maxHeight="24rem"
                 maxWidth="24rem"
-                minWidth="16rem"
                 overflowY="auto"
                 p="md"
                 position="relative"
@@ -55,7 +54,7 @@ export function Tooltip({
                 style={{ whiteSpace: 'normal' }}
                 {...contentProps}
               >
-                <Text as="div" color="muted">
+                <Text as="div" color={{ base: 'bg-800', dark: 'bg-100' }}>
                   {node}
                 </Text>
               </Box>
