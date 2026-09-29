@@ -42,7 +42,7 @@ export const CORE_HELPERS = {
     }
   },
   getGoogleFont: {
-    path: 'user/personalization/getGoogleFont',
+    path: 'fonts/google/get',
     schema: {
       input: z.object({ family: z.string() }),
       output: GetGoogleFontResponseSchema

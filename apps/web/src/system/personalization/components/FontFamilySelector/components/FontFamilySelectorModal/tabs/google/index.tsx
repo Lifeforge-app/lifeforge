@@ -10,7 +10,7 @@ import GoogleFontList from './components/GoogleFontList'
 import { GoogleFontProvider, useGoogleFont } from './contexts/GoogleFontContext'
 
 export type FontFamily = InferOutput<
-  typeof forgeAPI.user.personalization.listGoogleFonts
+  typeof forgeAPI.fonts.google.list
 >['items'][number]
 
 function GoogleFontSelectorContent() {

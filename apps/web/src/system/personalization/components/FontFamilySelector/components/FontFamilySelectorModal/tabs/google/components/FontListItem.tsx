@@ -37,10 +37,10 @@ function FontListItem({
   const queryClient = useQueryClient()
 
   const togglePinMutation = useMutation(
-    forgeAPI.user.personalization.toggleGoogleFontsPin.mutationOptions({
+    forgeAPI.fonts.pins.toggle.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ['user', 'personalization', 'listGoogleFontsPin']
+          queryKey: forgeAPI.fonts.pins.list.key
         })
       },
       onError: () => {

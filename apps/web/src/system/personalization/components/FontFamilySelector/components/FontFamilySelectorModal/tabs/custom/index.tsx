@@ -29,7 +29,7 @@ function CustomFontSelector() {
   const { open } = useModalStore()
 
   const customFontsQuery = useQuery(
-    forgeAPI.user.customFonts.list.queryOptions()
+    forgeAPI.fonts.custom.list.queryOptions()
   )
 
   const handleUploadClick = () => {

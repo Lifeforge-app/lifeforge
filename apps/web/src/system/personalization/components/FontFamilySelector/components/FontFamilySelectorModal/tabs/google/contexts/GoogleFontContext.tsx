@@ -46,9 +46,9 @@ function GoogleFontProvider({ children }: { children: ReactNode }) {
   const fontsQuery = useQuery<{
     enabled: boolean
     items: FontFamily[]
-  }>(forgeAPI.user.personalization.listGoogleFonts.queryOptions())
+  }>(forgeAPI.fonts.google.list.queryOptions())
   const pinnedFontsQuery = useQuery<string[]>(
-    forgeAPI.user.personalization.listGoogleFontsPin.queryOptions()
+    forgeAPI.fonts.pins.list.queryOptions()
   )
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)

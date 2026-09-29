@@ -52,14 +52,14 @@ function CustomFontUploadModal({
   const queryClient = useQueryClient()
 
   const uploadMutation = useMutation(
-    forgeAPI.user.customFonts.upload
+    forgeAPI.fonts.custom.upload
       .input({
         id: openType === 'edit' && initialData ? initialData.id : undefined
       })
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['user', 'customFonts', 'list']
+            queryKey: forgeAPI.fonts.custom.list.key
           })
           toast.success('Custom font uploaded successfully!')
           onClose()

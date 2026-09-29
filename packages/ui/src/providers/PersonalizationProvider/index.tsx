@@ -2,8 +2,9 @@ import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
 import tinycolor from 'tinycolor2'
 
-import type { ProxyTree } from '@lifeforge/api'
 import { useLanguageEffect } from '@lifeforge/localization'
+
+import { forgeAPI as coreForgeAPI } from '@/utils/forgeAPI'
 
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
@@ -66,7 +67,7 @@ export function PersonalizationProvider({
   defaultValueOverride = {},
   children
 }: {
-  forgeAPI: ProxyTree<any>
+  forgeAPI: typeof coreForgeAPI
   defaultValueOverride?: Partial<IPersonalizationData>
   children: React.ReactNode
 }) {

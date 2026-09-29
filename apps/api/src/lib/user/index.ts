@@ -8,7 +8,6 @@ import { forgeRouter } from '@lifeforge/server-utils'
 
 import forge from './forge'
 import * as authRoutes from './routes/auth'
-import * as customFontsRoutes from './routes/customFonts'
 import * as personalizationRoutes from './routes/personalization'
 import * as settingsRoutes from './routes/settings'
 
@@ -40,6 +39,5 @@ export default forgeRouter({
     }),
   auth: authRoutes,
   settings: settingsRoutes,
-  personalization: personalizationRoutes,
-  customFonts: customFontsRoutes
+  personalization: personalizationRoutes
 })

@@ -5,11 +5,7 @@ import { Readable } from 'node:stream'
 import path from 'path'
 import z from 'zod'
 
-import {
-  forgeRouter,
-  traceRouteStack,
-  writeContractFileToClient
-} from '@lifeforge/server-utils'
+import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
 
 import forge from './forge'
 
@@ -131,38 +127,11 @@ const encryptionPublicKey = forge
   })
   .callback(async ({ response }) => response.ok(getPublicKey()))
 
-const listRoutes = forge
-  .query({
-    description: 'List all registered routes',
-    noAuth: true,
-    encrypted: false,
-    input: {},
-    output: {
-      OK: z.array(
-        z.object({
-          method: z.string(),
-          path: z.string(),
-          description: z.string()
-        })
-      )
-    }
-  })
-  .callback(async ({ req, response }) =>
-    response.ok(
-      traceRouteStack(req.app._router.stack).map(
-        ({ method, path, description }) => ({
-          method,
-          path,
-          description
-        })
-      )
-    )
-  )
-
 const coreRoutes = forgeRouter({
   '': welcome,
   locales: (await import('@lib/locales')).default,
   user: (await import('@lib/user')).default,
+  fonts: (await import('@lib/fonts')).default,
   apiKeys: (await import('@lib/apiKeys')).default,
   auth: (await import('@lib/auth')).default,
   pixabay: (await import('@lib/pixabay')).default,
@@ -171,9 +140,9 @@ const coreRoutes = forgeRouter({
   database: (await import('@lib/database')).default,
   modules: (await import('@lib/modules')).default,
   ai: (await import('@lib/ai')).default,
+  routes: (await import('@lib/routes')).default,
   ping,
   status,
-  listRoutes,
   media: getMedia,
   corsAnywhere,
   encryptionPublicKey
