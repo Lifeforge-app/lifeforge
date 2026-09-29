@@ -1,7 +1,7 @@
 import { createPortal } from 'react-dom'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
-import { Box } from '@/components/primitives'
+import { Box, Text } from '@/components/primitives'
 import { useMainSidebarState } from '@/providers'
 
 import { tooltip } from './Tooltip.css'
@@ -43,6 +43,7 @@ export function Tooltip({
 
             return node ? (
               <Box
+                asChild
                 shadow
                 bg={{ base: 'bg-50', dark: 'bg-800' }}
                 maxHeight="24rem"
@@ -55,7 +56,7 @@ export function Tooltip({
                 style={{ whiteSpace: 'normal' }}
                 {...contentProps}
               >
-                {node}
+                <Text color="muted">{node}</Text>
               </Box>
             ) : null
           })

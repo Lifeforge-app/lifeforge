@@ -1,9 +1,16 @@
-import { Bordered, Flex, Icon, Text, Transition } from '@/components/primitives'
+import {
+  Bordered,
+  Flex,
+  type FlexProps,
+  Icon,
+  Text,
+  Transition
+} from '@/components/primitives'
 
 export interface TabsProps<
   T,
   TKey = T extends ReadonlyArray<{ readonly id: infer U }> ? U : never
-> {
+> extends FlexProps {
   /** List of tab items to display. */
   items: T
   /** List of enabled tab IDs. */
@@ -28,9 +35,9 @@ export function Tabs<
     readonly amount?: number | ((currentTab: string) => number)
   }>,
   TKey = T extends ReadonlyArray<{ readonly id: infer U }> ? U : never
->({ items, enabled, currentTab, onTabChange, className }: TabsProps<T, TKey>) {
+>({ items, enabled, currentTab, onTabChange, ...props }: TabsProps<T, TKey>) {
   return (
-    <Flex align="center" className={className} gapY="sm" wrap="wrap">
+    <Flex align="center" gapY="sm" wrap="wrap" {...props}>
       {items
         .filter(({ id }) => enabled.includes(id as TKey))
         .map(({ name, icon, id, color, amount }) => {
