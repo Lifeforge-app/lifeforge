@@ -337,8 +337,7 @@ numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '—'`).
   Primitives") for the full mapping and gotchas (inline style exceptions,
   `.css.ts` cases, responsive props).
 - **Third-party dependencies**: do not import raw third-party UI libraries in a
-  module when the library already re-exports the component. e.g. import
-  `ReactTooltip` from `@lifeforge/ui` rather than `react-tooltip`. When a new
+  module when the library already re-exports the component. When a new
   cross-cutting library is needed, re-export it from `@lifeforge/ui` (see
   `components/feedback/index.ts`) and consume it from there, so the dependency
   lives in one place.

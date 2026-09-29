@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import { Tooltip } from '@/components/feedback'
+import { IconTooltip } from '@/components/feedback/IconTooltip'
 import { SliderInput, Switch } from '@/components/inputs'
 import { Flex, Text } from '@/components/primitives'
 
@@ -157,11 +157,11 @@ export const NAColumn: Story = {
       <div style={{ width: '60vw' }}>
         <OptionsColumn {...args}>
           <Text color="muted">N/A</Text>
-          <Tooltip icon="tabler:info-circle" id="data-sync-na">
+          <IconTooltip icon="tabler:info-circle" id="data-sync-na">
             Google Cloud API key (<code>gcloud</code>) is required for this
             feature, but it is not found in your API key vault. <br />
             Please add it to enable data sync.
-          </Tooltip>
+          </IconTooltip>
         </OptionsColumn>
       </div>
     )

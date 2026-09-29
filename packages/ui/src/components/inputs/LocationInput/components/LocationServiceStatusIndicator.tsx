@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { Tooltip } from '@/components/feedback'
+import { IconTooltip } from '@/components/feedback/IconTooltip'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 export function LocationServiceStatusIndicator({
@@ -24,7 +24,7 @@ export function LocationServiceStatusIndicator({
 
   return (
     <Flex centered height="100%">
-      <Tooltip
+      <IconTooltip
         clickable={true}
         icon="tabler:info-circle"
         id="location-disabled"
@@ -48,7 +48,7 @@ export function LocationServiceStatusIndicator({
             </Text>
           </Text>
         </Box>
-      </Tooltip>
+      </IconTooltip>
     </Flex>
   )
 }

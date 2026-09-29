@@ -1,66 +1,71 @@
-import _ from 'lodash'
+import { createPortal } from 'react-dom'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
-import { Box, Icon, type IconProps, Text } from '@/components/primitives'
+import { Box } from '@/components/primitives'
+import { useMainSidebarState } from '@/providers'
 
 import { tooltip } from './Tooltip.css'
 
 /**
- * A tooltip component that displays informational content when hovering over an icon.
+ * A general-purpose tooltip rendered into a portal. Attach it to any trigger
+ * element by giving the trigger a matching `data-tooltip-id`.
  * For all available props, refer to the ReactTooltip documentation: https://react-tooltip.com/docs/getting-started
  */
 export function Tooltip({
   id,
-  icon,
-  iconProps,
   children,
+  contentProps,
+  render,
   ...tooltipProps
 }: {
-  /** The unique identifier for the tooltip element. */
+  /** The unique identifier for the tooltip element. Must match the `data-tooltip-id` of its trigger. */
   id: string
-  /** The icon to display as the tooltip trigger. Should be a valid icon name from Iconify. */
-  icon: string
-  /** Optional additional class name(s) to apply to the icon element. */
-  iconProps?: Omit<IconProps, 'icon'>
-  /** The content to display inside the tooltip when triggered. */
-  children: React.ReactNode
+  /** The content to display inside the tooltip when triggered. Falls back to the trigger's `data-tooltip-content`. */
+  children?: React.ReactNode
+  /** Optional additional props to apply to the tooltip's content container. */
+  contentProps?: React.ComponentProps<typeof Box>
   /** Additional properties to pass to the underlying ReactTooltip component. */
 } & React.ComponentProps<typeof ReactTooltip>) {
-  return (
-    <>
-      <span data-tooltip-id={`tooltip-${_.kebabCase(id)}`}>
-        <Icon color="muted" icon={icon} {...iconProps} />
-      </span>
-      <Box
-        asChild
-        // Intentionally kept as inline style due to the styling limitation of react-tooltip
+  const { sidebarExpanded } = useMainSidebarState()
+
+  return createPortal(
+    <Box zIndex={{ base: sidebarExpanded ? '-1' : '9999', lg: '9999' }}>
+      <ReactTooltip
+        noArrow
+        className={tooltip}
+        id={id}
+        opacity={1}
+        positionStrategy="fixed"
+        render={
+          render ??
+          (({ content }) => {
+            const node = children ?? content
+
+            return node ? (
+              <Box
+                shadow
+                bg={{ base: 'bg-50', dark: 'bg-800' }}
+                maxHeight="24rem"
+                maxWidth="24rem"
+                minWidth="16rem"
+                overflowY="auto"
+                p="md"
+                position="relative"
+                r="md"
+                style={{ whiteSpace: 'normal' }}
+                {...contentProps}
+              >
+                {node}
+              </Box>
+            ) : null
+          })
+        }
         style={{
-          padding: '0',
-          zIndex: '9999'
+          background: 'transparent'
         }}
-      >
-        <ReactTooltip
-          className={tooltip}
-          id={`tooltip-${_.kebabCase(id)}`}
-          opacity={1}
-          place="top-start"
-          portalRoot={document.body}
-          positionStrategy="fixed"
-          {...tooltipProps}
-        >
-          <Box
-            shadow
-            bg={{ base: 'bg-50', dark: 'bg-800' }}
-            px="md"
-            py="sm"
-            r="md"
-          >
-            <Text as="div" color={{ base: 'bg-600', dark: 'bg-400' }} py="sm">
-              {children}
-            </Text>
-          </Box>
-        </ReactTooltip>
-      </Box>
-    </>
-  )
+        {...tooltipProps}
+      />
+    </Box>,
+    document.getElementById('app') ?? document.body
+  ) as React.ReactPortal
 }

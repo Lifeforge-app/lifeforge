@@ -8,6 +8,6 @@ export * from './LoadingScreen'
 
 export * from './NotFoundScreen'
 
-export * from './Tooltip'
+export * from './IconTooltip'
 
-export { Tooltip as ReactTooltip } from 'react-tooltip'
+export * from './Tooltip'

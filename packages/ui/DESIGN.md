@@ -1134,7 +1134,7 @@ Renders the top panel header block of a workspace module.
 
 - **`APIOnlineStatusWrapper`:** Wraps page routes to verify API availability, showing a connection error screen if the server is offline.
 - **`EncryptionWrapper`:** Displays loader screens while E2E encryption initializes.
-- **`Tooltip`:** Trigger overlay utilizing `react-tooltip` and matching theme outlines. The raw `react-tooltip` component is also re-exported as **`ReactTooltip`** from `@lifeforge/ui` - import it from there (never from `react-tooltip` directly) when you need to attach it to arbitrary elements via `data-tooltip-id`.
+- **`Tooltip`:** General-purpose overlay rendered into a portal and attached to any element via a matching `data-tooltip-id`, styled with theme-matching outlines.
 - **`PrintArea`:** Formats viewport sections for printing, copying global CSS variable scopes into a `@media print` style block.
 
 ---

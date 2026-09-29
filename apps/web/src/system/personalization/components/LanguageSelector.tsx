@@ -5,11 +5,11 @@ import {
   Box,
   Flex,
   Icon,
+  IconTooltip,
   Listbox,
   ListboxOption,
   OptionsColumn,
   Text,
-  Tooltip,
   WithQuery,
   surface,
   usePersonalization
@@ -72,7 +72,10 @@ function LanguageSelector() {
               ))}
             </Listbox>
             {unsupportedQuery.data && unsupportedQuery.data.length > 0 && (
-              <Tooltip icon="tabler:alert-triangle" id="unsupported-modules">
+              <IconTooltip
+                icon="tabler:alert-triangle"
+                id="unsupported-modules"
+              >
                 {t(
                   'unsupportedModulesWarning',
                   'The following modules do not support the selected language:'
@@ -89,7 +92,7 @@ function LanguageSelector() {
                     <li key={name}>{name}</li>
                   ))}
                 </Box>
-              </Tooltip>
+              </IconTooltip>
             )}
           </Flex>
         )}

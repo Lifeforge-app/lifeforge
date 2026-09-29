@@ -30,7 +30,7 @@
 
 4. **Localization keys must not include the module prefix.** `useModuleTranslation()` already scopes keys to the module namespace - use `t('inputs.audio')`, never `t('apps.momentVault:inputs.audio')`. When adding a locale key, add it to ALL locale files (`en.json`, `ms.json`, `zh-CN.json`, `zh-TW.json`).
 
-5. **Third-party UI dependencies are centralized in the UI library.** If a third-party component is already re-exported by `@lifeforge/ui` (e.g. the raw `react-tooltip` component as `ReactTooltip`), import it from `@lifeforge/ui` - never from the raw package. When a new cross-cutting library is needed, re-export it from `@lifeforge/ui` (e.g. `components/feedback/index.ts`) so the dependency lives in one place.
+5. **Third-party UI dependencies are centralized in the UI library.** If a third-party component is already re-exported by `@lifeforge/ui`, import it from `@lifeforge/ui` - never from the raw package. When a new cross-cutting library is needed, re-export it from `@lifeforge/ui` (e.g. `components/feedback/index.ts`) so the dependency lives in one place.
 
 6. **UI architecture/usage documentation lives in `packages/ui/DESIGN.md`.** That file is the single source of truth for frontend/UI rules - amend it there rather than creating separate UI docs.
 
