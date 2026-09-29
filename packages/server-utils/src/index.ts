@@ -60,6 +60,7 @@ export {
 } from './typescript/standalone/location.types'
 
 export {
+  serializeEndpointValue,
   serializeRoutes,
   writeContractFileToClient
 } from './utils/writeContractFile'

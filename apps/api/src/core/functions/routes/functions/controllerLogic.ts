@@ -20,7 +20,8 @@ import {
   BaseResponse,
   ForgeContract,
   MediaConfig,
-  getStatusMessage
+  getStatusMessage,
+  serializeEndpointValue
 } from '@lifeforge/server-utils'
 
 import checkRecordExistence from '../utils/checkRecordExistence'
@@ -188,7 +189,12 @@ export function registerController(
     process.exit(1)
   }
 
-  const handler = createHandler(config)
+  const handler = Object.assign(createHandler(config), {
+    meta: {
+      ...serializeEndpointValue(config),
+      callerModule: config.callerModule
+    }
+  })
 
   router[config.method](
     `/${routeName}`,

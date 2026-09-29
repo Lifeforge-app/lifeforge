@@ -330,7 +330,112 @@ export const contract = {
           "NO_CONTENT": true
         }
       },
-      "getGoogleFont": {
+      "updateBgImage": {
+        "method": "post",
+        "description": "Upload new background image",
+        "noAuth": false,
+        "encrypted": true,
+        "isDownloadable": false,
+        "media": {
+          "file": {
+            "optional": false
+          }
+        },
+        "input": {},
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "collectionId": {
+                "type": "string"
+              },
+              "recordId": {
+                "type": "string"
+              },
+              "fieldId": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "collectionId",
+              "recordId",
+              "fieldId"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "updatePersonalization": {
+        "method": "post",
+        "description": "Update user personalization preferences",
+        "noAuth": false,
+        "encrypted": true,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object",
+                "properties": {
+                  "fontFamily": {
+                    "type": "string"
+                  },
+                  "theme": {
+                    "type": "string"
+                  },
+                  "color": {
+                    "type": "string"
+                  },
+                  "bgTemp": {
+                    "type": "string"
+                  },
+                  "language": {
+                    "type": "string"
+                  },
+                  "fontScale": {
+                    "type": "number"
+                  },
+                  "borderRadiusMultiplier": {
+                    "type": "number"
+                  },
+                  "bordered": {
+                    "type": "boolean"
+                  },
+                  "dashboardLayout": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  },
+                  "backdropFilters": {
+                    "type": "object",
+                    "additionalProperties": {}
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "data"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "NO_CONTENT": true,
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "fonts": {
+    "google": {
+      "get": {
         "method": "get",
         "description": "Get details of a specific Google Font",
         "noAuth": false,
@@ -360,7 +465,135 @@ export const contract = {
               "enabled": {
                 "type": "boolean"
               },
-              "items": {}
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "family": {
+                      "type": "string"
+                    },
+                    "variants": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "subsets": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "lastModified": {
+                      "type": "string"
+                    },
+                    "files": {
+                      "type": "object",
+                      "properties": {
+                        "100": {
+                          "type": "string"
+                        },
+                        "200": {
+                          "type": "string"
+                        },
+                        "300": {
+                          "type": "string"
+                        },
+                        "500": {
+                          "type": "string"
+                        },
+                        "600": {
+                          "type": "string"
+                        },
+                        "700": {
+                          "type": "string"
+                        },
+                        "800": {
+                          "type": "string"
+                        },
+                        "900": {
+                          "type": "string"
+                        },
+                        "regular": {
+                          "type": "string"
+                        },
+                        "italic": {
+                          "type": "string"
+                        },
+                        "100italic": {
+                          "type": "string"
+                        },
+                        "200italic": {
+                          "type": "string"
+                        },
+                        "300italic": {
+                          "type": "string"
+                        },
+                        "500italic": {
+                          "type": "string"
+                        },
+                        "600italic": {
+                          "type": "string"
+                        },
+                        "700italic": {
+                          "type": "string"
+                        },
+                        "800italic": {
+                          "type": "string"
+                        },
+                        "900italic": {
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    },
+                    "category": {
+                      "type": "string",
+                      "enum": [
+                        "display",
+                        "handwriting",
+                        "monospace",
+                        "sans-serif",
+                        "serif"
+                      ]
+                    },
+                    "kind": {
+                      "type": "string",
+                      "const": "webfonts#webfont"
+                    },
+                    "menu": {
+                      "type": "string"
+                    },
+                    "colorCapabilities": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "enum": [
+                          "COLRv0",
+                          "COLRv1",
+                          "SVG"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "family",
+                    "variants",
+                    "subsets",
+                    "version",
+                    "lastModified",
+                    "files",
+                    "category",
+                    "kind",
+                    "menu"
+                  ],
+                  "additionalProperties": false
+                }
+              }
             },
             "required": [
               "enabled"
@@ -369,7 +602,7 @@ export const contract = {
           }
         }
       },
-      "listGoogleFonts": {
+      "list": {
         "method": "get",
         "description": "Retrieve available Google Fonts",
         "noAuth": false,
@@ -522,156 +755,9 @@ export const contract = {
             "additionalProperties": false
           }
         }
-      },
-      "listGoogleFontsPin": {
-        "method": "get",
-        "description": "Retrieve pinned Google Fonts",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "UNAUTHORIZED": true
-        }
-      },
-      "toggleGoogleFontsPin": {
-        "method": "post",
-        "description": "Pin or unpin a Google Font",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "family": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "family"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
-        }
-      },
-      "updateBgImage": {
-        "method": "post",
-        "description": "Upload new background image",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": {
-          "file": {
-            "optional": false
-          }
-        },
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "collectionId": {
-                "type": "string"
-              },
-              "recordId": {
-                "type": "string"
-              },
-              "fieldId": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "collectionId",
-              "recordId",
-              "fieldId"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "updatePersonalization": {
-        "method": "post",
-        "description": "Update user personalization preferences",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "object",
-                "properties": {
-                  "fontFamily": {
-                    "type": "string"
-                  },
-                  "theme": {
-                    "type": "string"
-                  },
-                  "color": {
-                    "type": "string"
-                  },
-                  "bgTemp": {
-                    "type": "string"
-                  },
-                  "language": {
-                    "type": "string"
-                  },
-                  "fontScale": {
-                    "type": "number"
-                  },
-                  "borderRadiusMultiplier": {
-                    "type": "number"
-                  },
-                  "bordered": {
-                    "type": "boolean"
-                  },
-                  "dashboardLayout": {
-                    "type": "object",
-                    "additionalProperties": {}
-                  },
-                  "backdropFilters": {
-                    "type": "object",
-                    "additionalProperties": {}
-                  }
-                },
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "data"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
       }
     },
-    "customFonts": {
+    "custom": {
       "get": {
         "method": "get",
         "description": "Get a specific custom font by ID",
@@ -893,6 +979,54 @@ export const contract = {
             "type": "string"
           },
           "NOT_FOUND": true
+        }
+      }
+    },
+    "pins": {
+      "list": {
+        "method": "get",
+        "description": "Retrieve pinned Google Fonts",
+        "noAuth": false,
+        "encrypted": true,
+        "isDownloadable": false,
+        "media": null,
+        "input": {},
+        "output": {
+          "OK": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "UNAUTHORIZED": true
+        }
+      },
+      "toggle": {
+        "method": "post",
+        "description": "Pin or unpin a Google Font",
+        "noAuth": false,
+        "encrypted": true,
+        "isDownloadable": false,
+        "media": null,
+        "input": {
+          "body": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "object",
+            "properties": {
+              "family": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "family"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "output": {
+          "NO_CONTENT": true,
+          "UNAUTHORIZED": true
         }
       }
     }
@@ -2976,6 +3110,88 @@ export const contract = {
       }
     }
   },
+  "routes": {
+    "list": {
+      "method": "get",
+      "description": "List all registered routes",
+      "noAuth": false,
+      "encrypted": true,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "displayName": {
+                "type": "string"
+              },
+              "icon": {
+                "type": "string"
+              },
+              "routes": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "method": {
+                      "type": "string"
+                    },
+                    "path": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "noAuth": {
+                      "type": "boolean"
+                    },
+                    "encrypted": {
+                      "type": "boolean"
+                    },
+                    "isDownloadable": {
+                      "type": "boolean"
+                    },
+                    "media": {
+                      "anyOf": [
+                        {},
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "input": {},
+                    "output": {}
+                  },
+                  "required": [
+                    "method",
+                    "path",
+                    "description",
+                    "noAuth",
+                    "encrypted",
+                    "isDownloadable",
+                    "media",
+                    "input",
+                    "output"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "displayName",
+              "icon",
+              "routes"
+            ],
+            "additionalProperties": false
+          }
+        }
+      }
+    }
+  },
   "ping": {
     "method": "post",
     "description": "Ping the server",
@@ -3027,41 +3243,6 @@ export const contract = {
           "environment"
         ],
         "additionalProperties": false
-      }
-    }
-  },
-  "listRoutes": {
-    "method": "get",
-    "description": "List all registered routes",
-    "noAuth": true,
-    "encrypted": false,
-    "isDownloadable": false,
-    "media": null,
-    "input": {},
-    "output": {
-      "OK": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "method": {
-              "type": "string"
-            },
-            "path": {
-              "type": "string"
-            },
-            "description": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "method",
-            "path",
-            "description"
-          ],
-          "additionalProperties": false
-        }
       }
     }
   },

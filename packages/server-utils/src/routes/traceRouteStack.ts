@@ -10,6 +10,19 @@ export type Route = {
     body?: unknown
     query?: unknown
   }
+  noAuth?: boolean
+  encrypted?: boolean
+  isDownloadable?: boolean
+  media?: unknown
+  input?: {
+    query?: unknown
+    body?: unknown
+  }
+  output?: unknown
+  callerModule?: {
+    source: string
+    id: string
+  }
 }
 
 export interface RouteStackLayer {
@@ -80,6 +93,13 @@ export default function traceRouteStack(
       }
 
       route.description = controllerLayerMeta.description
+      route.noAuth = controllerLayerMeta.noAuth
+      route.encrypted = controllerLayerMeta.encrypted
+      route.isDownloadable = controllerLayerMeta.isDownloadable
+      route.media = controllerLayerMeta.media
+      route.input = controllerLayerMeta.input
+      route.output = controllerLayerMeta.output
+      route.callerModule = controllerLayerMeta.callerModule
     }
   }
 

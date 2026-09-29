@@ -82,49 +82,63 @@ function fixJSONSchemaRecord(schema: any): any {
   return result
 }
 
+export function serializeEndpointValue(val: any): {
+  method: any
+  description: any
+  noAuth: any
+  encrypted: any
+  isDownloadable: any
+  media: any
+  input: {
+    query: any
+    body: any
+  }
+  output: any
+} {
+  return {
+    method: val.method,
+    description: val.description,
+    noAuth: val.noAuth,
+    encrypted: val.encrypted,
+    isDownloadable: val.isDownloadable,
+    media: val.media ?? null,
+    input: {
+      query:
+        val.schema?.query &&
+        typeof val.schema.query.toJSONSchema === 'function'
+          ? fixJSONSchemaRecord(val.schema.query.toJSONSchema())
+          : undefined,
+      body:
+        val.schema?.body &&
+        typeof val.schema.body.toJSONSchema === 'function'
+          ? fixJSONSchemaRecord(val.schema.body.toJSONSchema())
+          : undefined
+    },
+    output:
+      typeof val.output === 'string'
+        ? val.output
+        : val.output
+          ? Object.fromEntries(
+              Object.entries(val.output).map(([k, v]) => [
+                k,
+                v === true
+                  ? true
+                  : v && typeof (v as any).toJSONSchema === 'function'
+                    ? fixJSONSchemaRecord((v as any).toJSONSchema())
+                    : v
+              ])
+            )
+          : undefined
+  }
+}
+
 export function serializeRoutes(node: any): any {
   if (node && typeof node === 'object') {
     if (
       node.__isForgeContract === true ||
       typeof node.getValue === 'function'
     ) {
-      const val = node.getValue()
-
-      return {
-        method: val.method,
-        description: val.description,
-        noAuth: val.noAuth,
-        encrypted: val.encrypted,
-        isDownloadable: val.isDownloadable,
-        media: val.media ?? null,
-        input: {
-          query:
-            val.schema?.query &&
-            typeof val.schema.query.toJSONSchema === 'function'
-              ? fixJSONSchemaRecord(val.schema.query.toJSONSchema())
-              : undefined,
-          body:
-            val.schema?.body &&
-            typeof val.schema.body.toJSONSchema === 'function'
-              ? fixJSONSchemaRecord(val.schema.body.toJSONSchema())
-              : undefined
-        },
-        output:
-          typeof val.output === 'string'
-            ? val.output
-            : val.output
-              ? Object.fromEntries(
-                  Object.entries(val.output).map(([k, v]) => [
-                    k,
-                    v === true
-                      ? true
-                      : v && typeof (v as any).toJSONSchema === 'function'
-                        ? fixJSONSchemaRecord((v as any).toJSONSchema())
-                        : v
-                  ])
-                )
-              : undefined
-      }
+      return serializeEndpointValue(node.getValue())
     }
 
     const result: any = {}
