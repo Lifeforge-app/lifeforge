@@ -30,11 +30,11 @@ function useThemeEffect(
     clearCustomColorProperties(rootElement, 'bg')
 
     if (rawThemeColor.startsWith('#')) {
-      interpolateColors(rootElement, theme, rawThemeColor, 'theme')
+      interpolateColors(rootElement, rawThemeColor, 'theme')
     }
 
     if (bgTemp.startsWith('#')) {
-      interpolateColors(rootElement, theme, bgTemp, 'bg')
+      interpolateColors(rootElement, bgTemp, 'bg')
     }
   }, [theme])
 }

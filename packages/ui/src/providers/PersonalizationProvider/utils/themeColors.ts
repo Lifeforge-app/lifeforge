@@ -1,4 +1,4 @@
-import { clampRgb, converter, formatHex, type Oklch } from 'culori'
+import { type Oklch, clampRgb, converter, formatHex } from 'culori'
 
 const toOklch = converter('oklch')
 const toRgb = converter('rgb')
@@ -7,7 +7,7 @@ const SHADES = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
 
 const BG_LIGHTNESS: Record<(typeof SHADES)[number], number> = {
   50: 0.985,
-  100: 0.960,
+  100: 0.96,
   200: 0.922,
   300: 0.865,
   400: 0.711,
@@ -22,42 +22,42 @@ const BG_LIGHTNESS: Record<(typeof SHADES)[number], number> = {
 const BG_CHROMA_WEIGHTS: Record<(typeof SHADES)[number], number> = {
   50: 0.08,
   100: 0.12,
-  200: 0.20,
+  200: 0.2,
   300: 0.38,
-  400: 0.60,
-  500: 1.00,
+  400: 0.6,
+  500: 1.0,
   600: 0.85,
   700: 0.75,
-  800: 0.60,
-  900: 0.40,
-  950: 0.20
+  800: 0.6,
+  900: 0.4,
+  950: 0.2
 }
 
 const THEME_LIGHTNESS: Record<(typeof SHADES)[number], number> = {
-  50: 0.970,
-  100: 0.930,
-  200: 0.860,
-  300: 0.760,
-  400: 0.640,
-  500: 0.550,
-  600: 0.460,
-  700: 0.380,
-  800: 0.300,
-  900: 0.220,
-  950: 0.150
+  50: 0.97,
+  100: 0.93,
+  200: 0.86,
+  300: 0.76,
+  400: 0.64,
+  500: 0.55,
+  600: 0.46,
+  700: 0.38,
+  800: 0.3,
+  900: 0.22,
+  950: 0.15
 }
 
 const THEME_CHROMA_WEIGHTS: Record<(typeof SHADES)[number], number> = {
-  50: 0.20,
-  100: 0.40,
+  50: 0.2,
+  100: 0.4,
   200: 0.65,
   300: 0.85,
   400: 0.95,
-  500: 1.00,
+  500: 1.0,
   600: 0.95,
   700: 0.85,
   800: 0.75,
-  900: 0.60,
+  900: 0.6,
   950: 0.45
 }
 
@@ -65,8 +65,7 @@ const MAX_BG_CHROMA = 0.034
 
 export function getColorPalette(
   color: string,
-  type: 'bg' | 'theme',
-  theme: 'dark' | 'light'
+  type: 'bg' | 'theme'
 ): Record<number, string> {
   const parsed = toOklch(color)
   const isBg = type === 'bg'
@@ -90,20 +89,22 @@ export function getColorPalette(
 
 export function interpolateColors(
   rootElement: HTMLElement,
-  theme: 'light' | 'dark',
   color: string,
   type: 'bg' | 'theme'
 ) {
-  const colorPalette = getColorPalette(color, type, theme)
+  const colorPalette = getColorPalette(color, type)
 
   Object.entries(colorPalette).forEach(([key, value]) => {
     const prefix = type === 'bg' ? 'bg' : 'custom'
-    const rgb = clampRgb(toRgb(value))
+    const rgb = toRgb(value)
+
     if (!rgb) return
 
-    const r = Math.round((rgb.r ?? 0) * 255)
-    const g = Math.round((rgb.g ?? 0) * 255)
-    const b = Math.round((rgb.b ?? 0) * 255)
+    const clamped = clampRgb(rgb)
+
+    const r = Math.round((clamped.r ?? 0) * 255)
+    const g = Math.round((clamped.g ?? 0) * 255)
+    const b = Math.round((clamped.b ?? 0) * 255)
 
     rootElement.style.setProperty(
       `--color-${prefix}-${key}`,

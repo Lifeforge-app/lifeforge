@@ -31,7 +31,7 @@ function createMockElement(): HTMLElement {
 describe('themeColors', () => {
   describe('getColorPalette', () => {
     it('generates all 11 shades for background palettes', () => {
-      const palette = getColorPalette('#3b82f6', 'bg', 'light')
+      const palette = getColorPalette('#3b82f6', 'bg')
       const keys = Object.keys(palette).map(Number)
 
       expect(keys).toEqual(EXPECTED_SHADES)
@@ -41,7 +41,7 @@ describe('themeColors', () => {
     })
 
     it('generates all 11 shades for theme palettes', () => {
-      const palette = getColorPalette('#10b981', 'theme', 'dark')
+      const palette = getColorPalette('#10b981', 'theme')
       const keys = Object.keys(palette).map(Number)
 
       expect(keys).toEqual(EXPECTED_SHADES)
@@ -51,8 +51,8 @@ describe('themeColors', () => {
     })
 
     it('dampens chroma for vibrant background colors', () => {
-      const vibrantPalette = getColorPalette('#ff0000', 'bg', 'dark')
-      const pureGrayPalette = getColorPalette('#808080', 'bg', 'dark')
+      const vibrantPalette = getColorPalette('#ff0000', 'bg')
+      const pureGrayPalette = getColorPalette('#808080', 'bg')
 
       expect(vibrantPalette[50]).toMatch(/^#[0-9a-f]{6}$/i)
       expect(vibrantPalette[950]).toMatch(/^#[0-9a-f]{6}$/i)
@@ -61,8 +61,8 @@ describe('themeColors', () => {
     })
 
     it('handles pure black, pure white, and neutral hex inputs without errors', () => {
-      const blackPalette = getColorPalette('#000000', 'bg', 'dark')
-      const whitePalette = getColorPalette('#ffffff', 'bg', 'light')
+      const blackPalette = getColorPalette('#000000', 'bg')
+      const whitePalette = getColorPalette('#ffffff', 'bg')
 
       EXPECTED_SHADES.forEach(shade => {
         expect(blackPalette[shade]).toBeDefined()
@@ -73,7 +73,7 @@ describe('themeColors', () => {
     })
 
     it('ensures monotonic lightness progression from shade 50 to shade 950', () => {
-      const palette = getColorPalette('#6366f1', 'bg', 'light')
+      const palette = getColorPalette('#6366f1', 'bg')
 
       for (let i = 0; i < EXPECTED_SHADES.length - 1; i++) {
         const lighterShade = EXPECTED_SHADES[i]!
@@ -99,7 +99,7 @@ describe('themeColors', () => {
     it('sets CSS variables and channel variables for bg palette on rootElement', () => {
       const element = createMockElement()
 
-      interpolateColors(element, 'light', '#3b82f6', 'bg')
+      interpolateColors(element, '#3b82f6', 'bg')
 
       EXPECTED_SHADES.forEach(shade => {
         const varValue = element.style.getPropertyValue(`--color-bg-${shade}`)
@@ -113,7 +113,7 @@ describe('themeColors', () => {
     it('sets CSS variables and channel variables for custom theme palette on rootElement', () => {
       const element = createMockElement()
 
-      interpolateColors(element, 'dark', '#ec4899', 'theme')
+      interpolateColors(element, '#ec4899', 'theme')
 
       EXPECTED_SHADES.forEach(shade => {
         const varValue = element.style.getPropertyValue(
@@ -133,8 +133,8 @@ describe('themeColors', () => {
     it('removes custom properties for bg and theme', () => {
       const element = createMockElement()
 
-      interpolateColors(element, 'light', '#3b82f6', 'bg')
-      interpolateColors(element, 'dark', '#ec4899', 'theme')
+      interpolateColors(element, '#3b82f6', 'bg')
+      interpolateColors(element, '#ec4899', 'theme')
 
       clearCustomColorProperties(element, 'bg')
       EXPECTED_SHADES.forEach(shade => {

@@ -50,7 +50,7 @@ function useRawThemeColorEffect(
       )
 
       if (rawThemeColor.startsWith('#')) {
-        interpolateColors(rootElement, theme, rawThemeColor, 'theme')
+        interpolateColors(rootElement, rawThemeColor, 'theme')
       }
     }
   }, [rawThemeColor, theme, bgTemp])

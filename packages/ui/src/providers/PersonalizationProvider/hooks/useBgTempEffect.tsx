@@ -30,7 +30,7 @@ function useBgTempEffect(
     clearCustomColorProperties(rootElement, 'bg')
 
     if (bgTemp.startsWith('#')) {
-      interpolateColors(rootElement, theme, bgTemp, 'bg')
+      interpolateColors(rootElement, bgTemp, 'bg')
     }
   }, [bgTemp, theme])
 }
