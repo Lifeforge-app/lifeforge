@@ -53,10 +53,9 @@ export function Listbox<T>({
           align="center"
           bg={rest.bg ?? surface.defaultInteractive}
           gap="lg"
-          height="4em"
           justify="between"
           minWidth="0"
-          px="md"
+          p="md"
           r="lg"
           style={disabled ? { opacity: 0.5 } : undefined}
           {...rest}
