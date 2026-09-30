@@ -18,7 +18,8 @@ export function MonthlyExactDateForm({
       <NumberInput
         required
         icon="tabler:calendar"
-        label={t('inputs.monthly.exactDate.inputs.date')}
+        namespace="common.recurring"
+        label="monthly.exactDate.inputs.date"
         value={data.onDate}
         onChange={date => setData({ ...data, onDate: date })}
       />

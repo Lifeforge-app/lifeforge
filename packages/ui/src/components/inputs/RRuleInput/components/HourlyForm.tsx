@@ -20,7 +20,8 @@ export function HourlyForm({
         <NumberInput
           required
           icon="tabler:repeat"
-          label={t('inputs.hourly.inputs.every')}
+          namespace="common.recurring"
+          label="hourly.inputs.every"
           value={data.every}
           onChange={every => setData({ ...data, every })}
         />

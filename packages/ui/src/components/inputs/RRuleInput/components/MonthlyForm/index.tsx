@@ -36,7 +36,8 @@ export function MonthlyForm({
         <Box flex="1">
           <NumberInput
             icon="tabler:repeat"
-            label={t('inputs.monthly.inputs.every')}
+            namespace="common.recurring"
+            label="monthly.inputs.every"
             value={data.every}
             onChange={every => setData({ ...data, every })}
           />

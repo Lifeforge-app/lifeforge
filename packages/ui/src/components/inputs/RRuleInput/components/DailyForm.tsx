@@ -19,8 +19,9 @@ export function DailyForm({
       <Box flex="1">
         <NumberInput
           required
+          namespace="common.recurring"
           icon="tabler:repeat"
-          label={t('inputs.daily.inputs.every')}
+          label="daily.inputs.every"
           value={data.every}
           onChange={every => setData({ ...data, every })}
         />

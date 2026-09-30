@@ -21,17 +21,14 @@ export function MonthlyRelativeDayForm({
         <ListboxInput
           required
           icon="tabler:calendar"
-          label={t('inputs.monthly.relativeDay.inputs.onThe')}
-          renderContent={() => <>{t(`recurring.onThe.${data.onThe}`)}</>}
+          namespace="common.recurring"
+          label="monthly.relativeDay.inputs.onThe"
+          renderContent={() => <>{t(`onThe.${data.onThe}`)}</>}
           value={data.onThe}
           onChange={onThe => setData({ ...data, onThe })}
         >
           {['first', 'second', 'third', 'fourth', 'last'].map(day => (
-            <ListboxOption
-              key={day}
-              label={t(`recurring.onThe.${day}`)}
-              value={day}
-            />
+            <ListboxOption key={day} label={t(`onThe.${day}`)} value={day} />
           ))}
         </ListboxInput>
       </Box>
@@ -39,13 +36,14 @@ export function MonthlyRelativeDayForm({
         <ListboxInput
           required
           icon="tabler:calendar"
-          label={t('inputs.monthly.relativeDay.inputs.onTheDay')}
+          namespace="common.recurring"
+          label="monthly.relativeDay.inputs.onTheDay"
           renderContent={() => (
             <>
               {t(
                 data.onTheDay.length === 3 && data.onTheDay !== 'day'
                   ? `common.misc:dates.days.${DAYS.indexOf(data.onTheDay as (typeof DAYS)[number])}`
-                  : `recurring.onTheDay.${data.onTheDay}`
+                  : `onTheDay.${data.onTheDay}`
               )}
             </>
           )}
@@ -58,7 +56,7 @@ export function MonthlyRelativeDayForm({
               label={t(
                 idx < 7
                   ? `common.misc:dates.days.${DAYS.indexOf(day as (typeof DAYS)[number])}`
-                  : `recurring.onTheDay.${day}`
+                  : `onTheDay.${day}`
               )}
               value={day}
             />
