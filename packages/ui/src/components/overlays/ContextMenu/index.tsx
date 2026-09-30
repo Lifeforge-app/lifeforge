@@ -16,7 +16,7 @@ interface MenuProps extends BoxProps {
   /** Optional props for styling different parts of the menu component. */
   componentProps?: {
     button?: React.ComponentProps<typeof Button>
-    icon?: IconProps
+    icon?: Omit<IconProps, 'icon'>
     menu?: BorderedProps
   }
   /** The icon identifier from Iconify to replace the default hamburger menu icon. */
