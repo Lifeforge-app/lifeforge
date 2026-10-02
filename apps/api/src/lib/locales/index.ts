@@ -75,8 +75,7 @@ const getLocale = forge
       })
     },
     output: {
-      OK: z.record(z.string(), z.any()),
-      NOT_FOUND: true
+      OK: z.record(z.string(), z.any())
     },
     rateLimit: false
   })
@@ -209,8 +208,7 @@ const listUnsupportedModules = forge
     description:
       "List modules that do not support the user's currently selected language",
     output: {
-      OK: z.array(z.string()),
-      NOT_FOUND: true
+      OK: z.array(z.string())
     },
     rateLimit: false
   })

@@ -23,8 +23,7 @@ const search = forge
             longitude: z.number()
           })
         })
-      ),
-      BAD_REQUEST: z.string()
+      )
     }
   })
   .callback(

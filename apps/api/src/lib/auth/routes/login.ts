@@ -36,8 +36,7 @@ export const login = forge
           state: z.literal('2fa_required'),
           tid: z.string()
         })
-      ]),
-      UNAUTHORIZED: true
+      ])
     }
   })
   .callback(async ({ db, body: { email, password }, req, res, response }) => {

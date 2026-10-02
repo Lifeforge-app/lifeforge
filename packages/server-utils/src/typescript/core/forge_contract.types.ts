@@ -4,10 +4,7 @@ import type { z } from 'zod'
 
 import { type AnyRelations, type PostgresJsDatabase } from '@lifeforge/drizzle'
 
-import {
-  OutputDefinition,
-  OutputHelpers
-} from '../response/response_helpers.types'
+import { OutputDefinition, OutputHelpers } from '../../response'
 import { ConvertMedia, MediaConfig } from '../standalone/media.types'
 import { CoreContext } from './core_context.types'
 

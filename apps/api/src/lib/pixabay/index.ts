@@ -72,8 +72,7 @@ const searchImages = forge
             imageURL: z.string()
           })
         )
-      }),
-      BAD_REQUEST: z.string()
+      })
     }
   })
   .callback(

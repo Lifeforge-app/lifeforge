@@ -16,9 +16,7 @@ export const updateBgImage = forge
       }
     },
     output: {
-      OK: fileReferenceSchema,
-      BAD_REQUEST: z.string(),
-      UNAUTHORIZED: true
+      OK: fileReferenceSchema
     }
   })
   .callback(async ({ db, media: { file }, core, response }) => {
@@ -64,8 +62,7 @@ export const deleteBgImage = forge
     description: 'Remove background image',
     input: {},
     output: {
-      NO_CONTENT: true,
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, core, response }) => {
@@ -110,9 +107,7 @@ export const updatePersonalization = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      BAD_REQUEST: z.string(),
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, body: { data }, response }) => {

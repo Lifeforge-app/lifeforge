@@ -23,8 +23,7 @@ const get = forge
       })
     },
     output: {
-      OK: z.string().nullable(),
-      FORBIDDEN: true
+      OK: z.string().nullable()
     }
   })
   .callback(async ({ db, query: { keyId }, response }) => {
@@ -70,9 +69,7 @@ const list = forge
       keyId: entry.keyId,
       name: entry.name,
       icon: entry.icon,
-      key: decrypt2(entry.key, process.env.MASTER_KEY!)
-        .toString()
-        .slice(-4),
+      key: decrypt2(entry.key, process.env.MASTER_KEY!).toString().slice(-4),
       exposable: entry.exposable,
       created: entry.created.toISOString(),
       updated: entry.updated.toISOString()
@@ -162,8 +159,7 @@ const update = forge
       })
     },
     output: {
-      OK: entrySchema,
-      NOT_FOUND: true
+      OK: entrySchema
     }
   })
   .callback(
@@ -210,8 +206,7 @@ const remove = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      NOT_FOUND: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, query: { id }, response }) => {

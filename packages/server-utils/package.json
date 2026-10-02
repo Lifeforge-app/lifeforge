@@ -15,6 +15,8 @@
   },
   "scripts": {
     "build": "rimraf dist && vite build && tsc --emitDeclarationOnly",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --emitDeclarationOnly"
   },
   "dependencies": {

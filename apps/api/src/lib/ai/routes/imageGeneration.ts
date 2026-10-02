@@ -14,8 +14,7 @@ export const generateImage = forge
       })
     },
     output: {
-      OK: z.string(),
-      BAD_REQUEST: z.string()
+      OK: z.string()
     }
   })
   .callback(

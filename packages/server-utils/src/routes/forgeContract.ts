@@ -9,62 +9,20 @@ import {
 } from '@lifeforge/drizzle'
 
 import { getCallerModuleId } from '..'
+import {
+  type OutputDefinition,
+  type ResponseObject,
+  createOutputHelpers
+} from '../response'
 import type {
   ForgeContext,
   ForgeContract,
   ForgeExpressContext
 } from '../typescript/core/forge_contract.types'
 import type {
-  OutputDefinition,
-  OutputHelpers,
-  ResponseObject
-} from '../typescript/response/response_helpers.types'
-import type {
   ConvertMedia,
   MediaConfig
 } from '../typescript/standalone/media.types'
-import { Output, OutputType } from '../utils/outputStatus'
-
-export function snakeCaseToCamelCase(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/_([a-z])/g, (_, letter) => letter.toUpperCase())
-}
-
-export function createOutputHelpers<
-  TOutput extends OutputDefinition | 'custom'
->(output: TOutput): OutputHelpers<TOutput> {
-  const helpers = {} as Record<
-    string,
-    (payload?: unknown) => { $status: number; payload?: unknown }
-  >
-
-  if (output === 'custom') {
-    return helpers as unknown as OutputHelpers<TOutput>
-  }
-
-  for (const key of Object.keys(output)) {
-    const camelKey = snakeCaseToCamelCase(key)
-
-    const outputDef = Output[key as keyof OutputType]
-
-    const status = outputDef?.$status ?? 200
-
-    const hasPayload =
-      outputDef && 'hasPayload' in outputDef
-        ? (outputDef as { hasPayload: boolean }).hasPayload
-        : false
-
-    helpers[camelKey] = function (payload?: unknown) {
-      return {
-        $status: status,
-        ...(hasPayload ? { payload } : {})
-      }
-    }
-  }
-
-  return helpers as unknown as OutputHelpers<TOutput>
-}
 
 export interface ForgeContractOptions<
   TModuleSchema extends ModuleSchema = ModuleSchema

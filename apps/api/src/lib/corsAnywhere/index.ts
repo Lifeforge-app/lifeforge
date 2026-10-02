@@ -13,8 +13,7 @@ const corsAnywhere = forge
       })
     },
     output: {
-      OK: z.any(),
-      BAD_REQUEST: z.string()
+      OK: z.any()
     }
   })
   .callback(async ({ query: { url }, core: { logging }, response }) => {

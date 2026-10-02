@@ -26,8 +26,7 @@ export const generate = forge
       OK: z.object({
         tid: z.string(),
         link: z.string()
-      }),
-      UNAUTHORIZED: true
+      })
     }
   })
   .callback(async ({ db, response }) => {
@@ -66,8 +65,7 @@ export const enable = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, body: { otp, tid }, response }) => {
@@ -117,8 +115,7 @@ export const disable = forge
     encrypted: false,
     input: {},
     output: {
-      NO_CONTENT: true,
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, response }) => {
@@ -150,8 +147,7 @@ export const verify = forge
     output: {
       OK: z.object({
         accessToken: z.string()
-      }),
-      UNAUTHORIZED: true
+      })
     }
   })
   .callback(async ({ db, body: { otp, tid }, req, res, response }) => {

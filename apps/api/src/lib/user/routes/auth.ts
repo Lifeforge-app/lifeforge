@@ -19,8 +19,7 @@ export const createFirstUser = forge
     output: {
       CREATED: z.object({
         state: z.literal('success')
-      }),
-      BAD_REQUEST: z.string()
+      })
     }
   })
   .callback(

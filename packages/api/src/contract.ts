@@ -97,8 +97,7 @@ export const contract = {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "object",
           "additionalProperties": {}
-        },
-        "NOT_FOUND": true
+        }
       }
     },
     "listUnsupportedModules": {
@@ -116,8 +115,7 @@ export const contract = {
           "items": {
             "type": "string"
           }
-        },
-        "NOT_FOUND": true
+        }
       }
     }
   },
@@ -191,10 +189,6 @@ export const contract = {
               "state"
             ],
             "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
           }
         }
       }
@@ -535,8 +529,7 @@ export const contract = {
             "userData"
           ],
           "additionalProperties": false
-        },
-        "UNAUTHORIZED": true
+        }
       }
     },
     "settings": {
@@ -549,8 +542,7 @@ export const contract = {
         "media": null,
         "input": {},
         "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       },
       "updateAvatar": {
@@ -618,12 +610,7 @@ export const contract = {
               "thumbs"
             ],
             "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "UNAUTHORIZED": true
+          }
         }
       },
       "updatePassword": {
@@ -660,12 +647,7 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       },
       "updateProfile": {
@@ -709,8 +691,7 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       }
     },
@@ -724,8 +705,7 @@ export const contract = {
         "media": null,
         "input": {},
         "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       },
       "updateBgImage": {
@@ -793,12 +773,7 @@ export const contract = {
               "thumbs"
             ],
             "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "UNAUTHORIZED": true
+          }
         }
       },
       "updatePersonalization": {
@@ -859,12 +834,7 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       }
     }
@@ -1315,8 +1285,7 @@ export const contract = {
               "file"
             ],
             "additionalProperties": false
-          },
-          "NOT_FOUND": true
+          }
         }
       },
       "list": {
@@ -1455,8 +1424,7 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true,
-          "NOT_FOUND": true
+          "NO_CONTENT": true
         }
       },
       "upload": {
@@ -1607,12 +1575,7 @@ export const contract = {
               "file"
             ],
             "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "NOT_FOUND": true
+          }
         }
       }
     },
@@ -1698,8 +1661,7 @@ export const contract = {
                 "type": "null"
               }
             ]
-          },
-          "FORBIDDEN": true
+          }
         }
       },
       "list": {
@@ -1982,8 +1944,7 @@ export const contract = {
               "updated"
             ],
             "additionalProperties": false
-          },
-          "NOT_FOUND": true
+          }
         }
       },
       "remove": {
@@ -2009,8 +1970,7 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true,
-          "NOT_FOUND": true
+          "NO_CONTENT": true
         }
       }
     }
@@ -2026,8 +1986,7 @@ export const contract = {
         "media": null,
         "input": {},
         "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       },
       "enable": {
@@ -2057,8 +2016,7 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       },
       "generate": {
@@ -2086,8 +2044,7 @@ export const contract = {
               "link"
             ],
             "additionalProperties": false
-          },
-          "UNAUTHORIZED": true
+          }
         }
       },
       "verify": {
@@ -2129,8 +2086,7 @@ export const contract = {
               "accessToken"
             ],
             "additionalProperties": false
-          },
-          "UNAUTHORIZED": true
+          }
         }
       }
     },
@@ -2197,8 +2153,7 @@ export const contract = {
               "additionalProperties": false
             }
           ]
-        },
-        "UNAUTHORIZED": true
+        }
       }
     },
     "logout": {
@@ -2213,8 +2168,7 @@ export const contract = {
         "OK": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "boolean"
-        },
-        "UNAUTHORIZED": true
+        }
       }
     },
     "oauth": {
@@ -2257,10 +2211,6 @@ export const contract = {
               "state"
             ],
             "additionalProperties": false
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
           }
         }
       },
@@ -2328,11 +2278,6 @@ export const contract = {
                 "additionalProperties": false
               }
             ]
-          },
-          "UNAUTHORIZED": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
           }
         }
       },
@@ -2460,8 +2405,7 @@ export const contract = {
             }
           },
           "output": {
-            "NO_CONTENT": true,
-            "NOT_FOUND": true
+            "NO_CONTENT": true
           }
         },
         "toggle": {
@@ -2487,8 +2431,7 @@ export const contract = {
             }
           },
           "output": {
-            "NO_CONTENT": true,
-            "NOT_FOUND": true
+            "NO_CONTENT": true
           }
         },
         "upsert": {
@@ -2531,12 +2474,7 @@ export const contract = {
             }
           },
           "output": {
-            "NO_CONTENT": true,
-            "BAD_REQUEST": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "type": "string"
-            },
-            "NOT_FOUND": true
+            "NO_CONTENT": true
           }
         }
       }
@@ -2579,13 +2517,7 @@ export const contract = {
               "browserInfo"
             ],
             "additionalProperties": false
-          },
-          "NOT_FOUND": true,
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          },
-          "UNAUTHORIZED": true
+          }
         }
       },
       "claim": {
@@ -2625,8 +2557,7 @@ export const contract = {
               "accessToken"
             ],
             "additionalProperties": false
-          },
-          "NOT_FOUND": true
+          }
         }
       },
       "register": {
@@ -2785,8 +2716,7 @@ export const contract = {
             "accessToken"
           ],
           "additionalProperties": false
-        },
-        "UNAUTHORIZED": true
+        }
       }
     }
   },
@@ -2944,10 +2874,6 @@ export const contract = {
             "hits"
           ],
           "additionalProperties": false
-        },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
         }
       }
     }
@@ -3012,10 +2938,6 @@ export const contract = {
             ],
             "additionalProperties": false
           }
-        },
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
         }
       }
     }
@@ -3417,10 +3339,6 @@ export const contract = {
           "OK": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "string"
-          },
-          "BAD_REQUEST": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
           }
         }
       }
@@ -3538,10 +3456,6 @@ export const contract = {
     "output": {
       "OK": {
         "$schema": "https://json-schema.org/draft/2020-12/schema"
-      },
-      "BAD_REQUEST": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "string"
       }
     }
   },

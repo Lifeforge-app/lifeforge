@@ -31,8 +31,7 @@ export const me = forge
             twoFAEnabled: z.boolean(),
             hasAPIKeysMasterPassword: z.boolean()
           })
-      }),
-      UNAUTHORIZED: true
+      })
     }
   })
   .callback(async ({ db, core, response }) => {
@@ -54,7 +53,9 @@ export const me = forge
       theme: user.theme || 'system',
       color: user.color || '',
       bgTemp: user.bgTemp || '',
-      bgImage: user.bgImage ? await core.storage.getReference(user.bgImage) : null,
+      bgImage: user.bgImage
+        ? await core.storage.getReference(user.bgImage)
+        : null,
       fontFamily: user.fontFamily || '',
       fontScale: user.fontScale || 1,
       borderRadiusMultiplier: user.borderRadiusMultiplier || 1,

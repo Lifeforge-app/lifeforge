@@ -92,9 +92,7 @@ export const upsert = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      BAD_REQUEST: z.string(),
-      NOT_FOUND: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, query: { provider }, body, response }) => {
@@ -144,8 +142,7 @@ export const toggle = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      NOT_FOUND: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, query: { id }, response }) => {
@@ -174,8 +171,7 @@ export const remove = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      NOT_FOUND: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, query: { id }, response }) => {

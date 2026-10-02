@@ -18,54 +18,44 @@ export const updateAvatar = forge
       }
     },
     output: {
-      OK: fileReferenceSchema,
-      BAD_REQUEST: z.string(),
-      UNAUTHORIZED: true
+      OK: fileReferenceSchema
     }
   })
-  .callback(
-    async ({
-      media: { file: rawFile },
-      db,
-      core,
-      response
-    }) => {
-      if (!rawFile || typeof rawFile === 'string') {
-        return response.badRequest('A valid avatar image must be uploaded')
-      }
-
-      const user = await db.query.users.findFirst()
-
-      if (!user) {
-        return response.unauthorized()
-      }
-
-      const avatarRef = await core.storage.save({
-        file: rawFile,
-        currentKey: user.avatar || undefined,
-        thumbs: ['256x0']
-      })
-
-      if (!avatarRef) {
-        return response.badRequest('Failed to save avatar')
-      }
-
-      await db
-        .update(users)
-        .set({ avatar: avatarRef.key, updated: new Date() })
-        .where(eq(users.id, user.id))
-
-      return response.ok(avatarRef)
+  .callback(async ({ media: { file: rawFile }, db, core, response }) => {
+    if (!rawFile || typeof rawFile === 'string') {
+      return response.badRequest('A valid avatar image must be uploaded')
     }
-  )
+
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const avatarRef = await core.storage.save({
+      file: rawFile,
+      currentKey: user.avatar || undefined,
+      thumbs: ['256x0']
+    })
+
+    if (!avatarRef) {
+      return response.badRequest('Failed to save avatar')
+    }
+
+    await db
+      .update(users)
+      .set({ avatar: avatarRef.key, updated: new Date() })
+      .where(eq(users.id, user.id))
+
+    return response.ok(avatarRef)
+  })
 
 export const deleteAvatar = forge
   .mutation({
     description: 'Remove user avatar',
     input: {},
     output: {
-      NO_CONTENT: true,
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, core, response }) => {
@@ -107,8 +97,7 @@ export const updateProfile = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ body: { data }, db, response }) => {
@@ -158,9 +147,7 @@ export const updatePassword = forge
         })
     },
     output: {
-      NO_CONTENT: true,
-      BAD_REQUEST: z.string(),
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ body: { oldPassword, password }, db, response }) => {

@@ -43,8 +43,7 @@ export const authorize = forge
       OK: z.object({
         url: z.string(),
         state: z.string()
-      }),
-      BAD_REQUEST: z.string()
+      })
     }
   })
   .callback(async ({ query: { provider }, req, response }) => {
@@ -105,9 +104,7 @@ export const verify = forge
           state: z.literal('2fa_required'),
           tid: z.string()
         })
-      ]),
-      UNAUTHORIZED: true,
-      BAD_REQUEST: z.string()
+      ])
     }
   })
   .callback(

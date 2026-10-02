@@ -58,10 +58,7 @@ export const approve = forge
     output: {
       OK: z.object({
         browserInfo: z.string()
-      }),
-      NOT_FOUND: true,
-      BAD_REQUEST: z.string(),
-      UNAUTHORIZED: true
+      })
     }
   })
   .callback(async ({ db, body: { sessionId }, req, response }) => {
@@ -176,8 +173,7 @@ export const claim = forge
     output: {
       OK: z.object({
         accessToken: z.string()
-      }),
-      NOT_FOUND: true
+      })
     }
   })
   .callback(async ({ body: { sessionId }, req, res, response }) => {

@@ -60,8 +60,7 @@ export const get = forge
       })
     },
     output: {
-      OK: fontUploadSchema,
-      NOT_FOUND: true
+      OK: fontUploadSchema
     }
   })
   .callback(async ({ db, core, query: { id }, response }) => {
@@ -103,9 +102,7 @@ export const upload = forge
       }
     },
     output: {
-      OK: fontUploadSchema,
-      BAD_REQUEST: z.string(),
-      NOT_FOUND: true
+      OK: fontUploadSchema
     }
   })
   .callback(
@@ -204,8 +201,7 @@ export const remove = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      NOT_FOUND: true
+      NO_CONTENT: true
     }
   })
   .callback(async ({ db, core, query: { id }, response }) => {

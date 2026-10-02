@@ -18,8 +18,7 @@ export const refresh = forge
     output: {
       OK: z.object({
         accessToken: z.string()
-      }),
-      UNAUTHORIZED: true
+      })
     }
   })
   .callback(async ({ db, req, res, response }) => {

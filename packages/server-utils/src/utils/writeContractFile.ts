@@ -2,6 +2,8 @@
 import fs from 'fs'
 import path from 'path'
 
+import { isSuccessOutputKey } from '../response'
+
 function cleanAdditionalProperties(schema: any): any {
   if (!schema || typeof schema !== 'object') {
     return schema
@@ -104,13 +106,11 @@ export function serializeEndpointValue(val: any): {
     media: val.media ?? null,
     input: {
       query:
-        val.schema?.query &&
-        typeof val.schema.query.toJSONSchema === 'function'
+        val.schema?.query && typeof val.schema.query.toJSONSchema === 'function'
           ? fixJSONSchemaRecord(val.schema.query.toJSONSchema())
           : undefined,
       body:
-        val.schema?.body &&
-        typeof val.schema.body.toJSONSchema === 'function'
+        val.schema?.body && typeof val.schema.body.toJSONSchema === 'function'
           ? fixJSONSchemaRecord(val.schema.body.toJSONSchema())
           : undefined
     },
@@ -119,14 +119,16 @@ export function serializeEndpointValue(val: any): {
         ? val.output
         : val.output
           ? Object.fromEntries(
-              Object.entries(val.output).map(([k, v]) => [
-                k,
-                v === true
-                  ? true
-                  : v && typeof (v as any).toJSONSchema === 'function'
-                    ? fixJSONSchemaRecord((v as any).toJSONSchema())
-                    : v
-              ])
+              Object.entries(val.output)
+                .filter(([k]) => isSuccessOutputKey(k))
+                .map(([k, v]) => [
+                  k,
+                  v === true
+                    ? true
+                    : v && typeof (v as any).toJSONSchema === 'function'
+                      ? fixJSONSchemaRecord((v as any).toJSONSchema())
+                      : v
+                ])
             )
           : undefined
   }
