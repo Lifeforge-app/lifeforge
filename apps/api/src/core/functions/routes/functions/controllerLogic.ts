@@ -16,6 +16,7 @@ import { encryptResponse } from '@functions/encryption'
 import { coreLogger } from '@functions/logging'
 import type { Request, Response, Router } from 'express'
 
+import { fieldsUploadMiddleware } from '@lifeforge/file-storage/server'
 import {
   BaseResponse,
   ForgeContract,
@@ -24,13 +25,12 @@ import {
   serializeEndpointValue
 } from '@lifeforge/server-utils'
 
+import authMiddleware from '../../../middlewares/authMiddleware'
 import { createCoreContext } from '../utils/coreContext'
 import getAESKey from '../utils/getAESKey'
 import parseBodyPayload from '../utils/parsePayload'
 import parseQuery from '../utils/parseQuery'
 import { clientError, serverError, success } from '../utils/response'
-import fieldsUploadMiddleware from '../utils/uploadMiddleware'
-import isAuthTokenValid from '../utils/validateAuthToken'
 
 function isClientError(err: unknown): err is Error & { code: number } {
   return err instanceof Error && err.name === 'ClientError' && 'code' in err
@@ -48,7 +48,6 @@ function createHandler(
     noDefaultResponse,
     isDownloadable,
     media,
-    noAuth,
     encrypted,
     callback,
     callerModule,
@@ -59,8 +58,6 @@ function createHandler(
     const callerModuleId = callerModule
       ? `${callerModule.source}:${callerModule.id}`
       : undefined
-
-    if (!(await isAuthTokenValid(req, res, noAuth))) return
 
     const aesKey = getAESKey(req, res, encrypted, callerModuleId)
 
@@ -80,6 +77,7 @@ function createHandler(
       if (!callback) {
         throw new Error('No callback defined for this controller')
       }
+
       const result = await callback({
         req,
         res,
@@ -89,9 +87,11 @@ function createHandler(
         query: req.query,
         media: req.media || {},
         core: createCoreContext({
-          module: callerModule as never
+          module: callerModule as never,
+          db: req.db
         })
       })
+
       if (res.headersSent) {
         return
       }
@@ -185,6 +185,7 @@ export function registerController(
   router[config.method](
     `/${routeName}`,
     [
+      authMiddleware(config.noAuth),
       ...(Object.keys(config.media ?? {}).length > 0
         ? [
             fieldsUploadMiddleware(

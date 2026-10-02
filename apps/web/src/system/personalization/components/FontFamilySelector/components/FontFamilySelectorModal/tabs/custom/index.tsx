@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 import { AutoSizer } from 'react-virtualized'
 
+import type { FileReference } from '@lifeforge/api'
+
 import {
   Button,
   EmptyStateScreen,
@@ -21,8 +23,7 @@ export type CustomFont = {
   displayName: string
   family: string
   weight: number
-  file: string
-  collectionId: string
+  file: FileReference | null
 }
 
 function CustomFontSelector() {

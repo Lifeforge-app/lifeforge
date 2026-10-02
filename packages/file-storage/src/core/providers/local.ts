@@ -11,7 +11,7 @@ import type {
   ProviderSaveOptions,
   StorageGetOptions,
   StorageProvider
-} from '../types'
+} from './types'
 
 export class LocalStorageProvider implements StorageProvider {
   private basePath: string
@@ -37,7 +37,7 @@ export class LocalStorageProvider implements StorageProvider {
 
   async save(
     key: string,
-    data: Buffer | Readable,
+    data: Readable,
     _options?: ProviderSaveOptions
   ) {
     const filePath = this.getFilePath(key)
@@ -48,12 +48,7 @@ export class LocalStorageProvider implements StorageProvider {
 
     await fs.mkdir(path.dirname(filePath), { recursive: true })
 
-    if (Buffer.isBuffer(data)) {
-      await fs.writeFile(filePath, data)
-    } else {
-      const writeStream = createWriteStream(filePath)
-      await pipeline(data, writeStream)
-    }
+    await pipeline(data, createWriteStream(filePath))
   }
 
   async get(
@@ -111,22 +106,6 @@ export class LocalStorageProvider implements StorageProvider {
       }
     } catch {
       // Ignore errors
-    }
-  }
-
-  async exists(key: string) {
-    const filePath = this.getFilePath(key)
-
-    if (!filePath) {
-      return false
-    }
-
-    try {
-      const stat = await fs.stat(filePath)
-
-      return stat.isFile()
-    } catch {
-      return false
     }
   }
 }

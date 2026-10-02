@@ -39,10 +39,10 @@ async function main(): Promise<void> {
   const tables = introspectModule(info)
   const pb = openPb()
 
-  // Only needed when the module has file fields:
-  // const storage = createModuleStorage(info.storageId)
-
   const { db, client } = createMigrationDb()
+
+  // Only needed when the module has file fields:
+  // const storage = createModuleStorage(info.storageId, db)
 
   try {
     // Order tables from `inspect.ts` (parents before children).

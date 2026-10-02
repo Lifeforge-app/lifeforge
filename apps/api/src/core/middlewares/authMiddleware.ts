@@ -1,13 +1,13 @@
-import { Request, Response } from 'express'
+import type { NextFunction, Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 
 const JWT_SECRET = process.env.JWT_SIGNING_KEY!
 
-export default async function isAuthTokenValid(
+function isAuthTokenValid(
   req: Request<unknown, unknown, unknown, unknown>,
   res: Response,
   noAuth: boolean
-): Promise<boolean> {
+): boolean {
   if (req.url === '/' || noAuth) {
     return true
   }
@@ -35,4 +35,20 @@ export default async function isAuthTokenValid(
   }
 
   return true
+}
+
+/**
+ * Runs authentication before the upload middleware so nothing is staged for
+ * unauthenticated requests.
+ */
+export default function authMiddleware(noAuth: boolean) {
+  return async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> => {
+    if (isAuthTokenValid(req, res, noAuth)) {
+      next()
+    }
+  }
 }

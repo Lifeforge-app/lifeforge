@@ -2,6 +2,8 @@ import { eq } from 'drizzle-orm'
 import { createSelectSchema } from 'drizzle-orm/zod'
 import z from 'zod'
 
+import { fileReferenceSchema } from '@lifeforge/file-storage'
+
 import forge from '../forge'
 import { fontsFontFamilyUpload } from '../schema.drizzle'
 
@@ -13,10 +15,13 @@ function isValidFontFile(filename: string): boolean {
   return VALID_FONT_EXTENSIONS.includes(ext)
 }
 
-const fontUploadSchema = createSelectSchema(fontsFontFamilyUpload).extend({
-  created: z.string(),
-  updated: z.string()
-})
+const fontUploadSchema = createSelectSchema(fontsFontFamilyUpload)
+  .omit({ file: true })
+  .extend({
+    file: fileReferenceSchema.nullable(),
+    created: z.string(),
+    updated: z.string()
+  })
 
 export const list = forge
   .query({
@@ -26,19 +31,23 @@ export const list = forge
       OK: z.array(fontUploadSchema)
     }
   })
-  .callback(async ({ db, response }) => {
+  .callback(async ({ db, core, response }) => {
     const records = await db.query.fontsFontFamilyUpload.findMany()
 
     return response.ok(
-      records.map(record => ({
-        id: record.id,
-        displayName: record.displayName,
-        family: record.family,
-        file: record.file,
-        weight: record.weight,
-        created: record.created.toISOString(),
-        updated: record.updated.toISOString()
-      }))
+      await Promise.all(
+        records.map(async record => ({
+          id: record.id,
+          displayName: record.displayName,
+          family: record.family,
+          file: record.file
+            ? await core.storage.getReference(record.file)
+            : null,
+          weight: record.weight,
+          created: record.created.toISOString(),
+          updated: record.updated.toISOString()
+        }))
+      )
     )
   })
 
@@ -55,7 +64,7 @@ export const get = forge
       NOT_FOUND: true
     }
   })
-  .callback(async ({ db, query: { id }, response }) => {
+  .callback(async ({ db, core, query: { id }, response }) => {
     const record = await db.query.fontsFontFamilyUpload.findFirst({
       where: { id }
     })
@@ -68,7 +77,7 @@ export const get = forge
       id: record.id,
       displayName: record.displayName,
       family: record.family,
-      file: record.file,
+      file: record.file ? await core.storage.getReference(record.file) : null,
       weight: record.weight,
       created: record.created.toISOString(),
       updated: record.updated.toISOString()
@@ -112,12 +121,7 @@ export const upload = forge
         return response.badRequest('A valid font file must be uploaded')
       }
 
-      const originalname =
-        'originalname' in file && typeof file.originalname === 'string'
-          ? file.originalname
-          : ''
-
-      if (!isValidFontFile(originalname)) {
+      if (!isValidFontFile(file.originalName)) {
         return response.badRequest(
           'Invalid file type. Only TTF, OTF, WOFF, and WOFF2 files are allowed.'
         )
@@ -138,9 +142,7 @@ export const upload = forge
 
       const fileKey = await core.storage.save({
         file,
-        currentKey: existingFileKey,
-        table: 'fontsFontFamilyUpload',
-        field: 'file'
+        currentKey: existingFileKey
       })
 
       if (!fileKey) {
@@ -154,7 +156,7 @@ export const upload = forge
             displayName,
             family,
             weight,
-            file: fileKey,
+            file: fileKey.key,
             updated: new Date()
           })
           .where(eq(fontsFontFamilyUpload.id, id))
@@ -164,7 +166,7 @@ export const upload = forge
           id: updated.id,
           displayName: updated.displayName,
           family: updated.family,
-          file: updated.file,
+          file: fileKey,
           weight: updated.weight,
           created: updated.created.toISOString(),
           updated: updated.updated.toISOString()
@@ -177,7 +179,7 @@ export const upload = forge
           displayName,
           family,
           weight,
-          file: fileKey
+          file: fileKey.key
         })
         .returning()
 
@@ -185,7 +187,7 @@ export const upload = forge
         id: created.id,
         displayName: created.displayName,
         family: created.family,
-        file: created.file,
+        file: fileKey,
         weight: created.weight,
         created: created.created.toISOString(),
         updated: created.updated.toISOString()

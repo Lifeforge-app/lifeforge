@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+import type { FileReference } from '@lifeforge/api'
+
 import { forgeAPI as fAPI } from '@/utils/forgeAPI'
 
 interface CustomFontData {
@@ -7,7 +9,7 @@ interface CustomFontData {
   displayName: string
   family: string
   weight: number
-  file: string
+  file: FileReference | null
 }
 
 function useFontFamily(
@@ -66,8 +68,12 @@ function useFontFamily(
             return
           }
 
+          if (!fontData.file) {
+            return
+          }
+
           const fileUrl = forgeAPI.getMedia({
-            key: fontData.file
+            key: fontData.file.key
           })
 
           // Create @font-face rule for the custom font

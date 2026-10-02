@@ -1,11 +1,11 @@
-export type { StorageProvider } from './types'
+export { FileStorage } from './core/fileStorage'
 
-export { generateThumbKey } from './utils'
+export { createProvider } from './core/createProvider'
 
-export * from './providers/local'
+export { generateThumbKey } from './core/utils'
 
-export * from './providers/s3'
+export { fileReferenceSchema } from './core/contract/fileReference'
 
-export * from './createProvider'
+export type { StorageProvider } from './core/providers/types'
 
-export * from './fileStorage'
+export type { StagedFile } from './core/types'

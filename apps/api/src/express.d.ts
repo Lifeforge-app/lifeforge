@@ -1,10 +1,7 @@
-import {
-  ConvertMedia,
-  MediaConfig
-} from '@functions/routes/typescript/forge_controller.types'
-import { ITaskPoolTask } from '@functions/socketio/taskPool'
+import type { ITaskPoolTask } from '@functions/socketio/taskPool'
 
 import { type PostgresJsDatabase } from '@lifeforge/drizzle'
+import type { ConvertMedia, MediaConfig } from '@lifeforge/server-utils'
 
 declare global {
   namespace Express {

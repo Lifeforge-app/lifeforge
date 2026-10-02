@@ -4,27 +4,25 @@ import { describe, expect, it } from 'vitest'
 import { generateKey, generateThumbKey, resizeImage } from './utils'
 
 describe('generateKey', () => {
-  it('should generate valid hierarchical storage key with clean extension', () => {
-    const key = generateKey(
-      'lifeforge--books-library',
-      'booksEntries',
-      'fileKey',
-      'epub'
-    )
-    expect(key).toMatch(
-      /^lifeforge--books-library\/booksEntries\/fileKey-[0-9a-f-]{36}\.epub$/
-    )
+  it('should generate an opaque key scoped to the module', () => {
+    const key = generateKey('lifeforge--books-library', 'epub')
+    expect(key).toMatch(/^lifeforge--books-library\/[0-9a-f-]{36}\.epub$/)
   })
 
   it('should strip leading dot from extension if present', () => {
-    const key = generateKey('test-module', 'photos', 'avatar', '.png')
-    expect(key).toMatch(/^test-module\/photos\/avatar-[0-9a-f-]{36}\.png$/)
+    const key = generateKey('test-module', '.png')
+    expect(key).toMatch(/^test-module\/[0-9a-f-]{36}\.png$/)
     expect(key).not.toContain('..')
   })
 
+  it('should fall back to a bin extension when missing', () => {
+    const key = generateKey('mod', '')
+    expect(key).toMatch(/^mod\/[0-9a-f-]{36}\.bin$/)
+  })
+
   it('should generate unique keys on consecutive calls', () => {
-    const key1 = generateKey('mod', 'tbl', 'fld', 'jpg')
-    const key2 = generateKey('mod', 'tbl', 'fld', 'jpg')
+    const key1 = generateKey('mod', 'jpg')
+    const key2 = generateKey('mod', 'jpg')
     expect(key1).not.toBe(key2)
   })
 })
@@ -32,17 +30,15 @@ describe('generateKey', () => {
 describe('generateThumbKey', () => {
   it('should generate valid thumbnail key with extension', () => {
     const thumbKey = generateThumbKey(
-      'lifeforge--books-library/booksEntries/fileKey-123.epub',
+      'lifeforge--books-library/123.epub',
       '200x0'
     )
-    expect(thumbKey).toBe(
-      'lifeforge--books-library/booksEntries/fileKey-123-thumb-200x0.epub'
-    )
+    expect(thumbKey).toBe('lifeforge--books-library/123-thumb-200x0.epub')
   })
 
   it('should generate thumbnail key when key has no extension', () => {
-    const thumbKey = generateThumbKey('module/table/file-123', '100x100')
-    expect(thumbKey).toBe('module/table/file-123-thumb-100x100')
+    const thumbKey = generateThumbKey('module/file-123', '100x100')
+    expect(thumbKey).toBe('module/file-123-thumb-100x100')
   })
 
   it('should handle keys with multiple dots', () => {
@@ -55,7 +51,6 @@ describe('generateThumbKey', () => {
 })
 
 describe('resizeImage', () => {
-  // 100x50 test PNG image
   async function createTestImage(width: number, height: number) {
     return sharp({
       create: {

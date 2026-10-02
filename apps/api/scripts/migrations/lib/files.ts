@@ -1,6 +1,7 @@
 import path from 'node:path'
 
 import { FileStorage, createProvider } from '@lifeforge/file-storage'
+import { createFileMetadataStore } from '@lifeforge/file-storage/server'
 
 import { requireEnv } from './env'
 
@@ -21,6 +22,7 @@ const MIME_BY_EXT: Record<string, string> = {
   m4a: 'audio/mp4',
   wav: 'audio/wav',
   ogg: 'audio/ogg',
+  opus: 'audio/opus',
   flac: 'audio/flac',
   mp4: 'video/mp4',
   webm: 'video/webm',
@@ -38,11 +40,15 @@ function mimeFor(filename: string): string {
   return MIME_BY_EXT[ext] ?? 'application/octet-stream'
 }
 
-/** Creates a FileStorage scoped to a module id (matches runtime storage keys). */
-export function createModuleStorage(moduleId: string): FileStorage {
+/**
+ * Creates a `FileStorage` scoped to a module id (matches runtime storage keys)
+ * and backed by the migration db, so migrated files also get metadata rows in
+ * the `files` table.
+ */
+export function createModuleStorage(moduleId: string, db: any): FileStorage {
   const provider = createProvider()
 
-  return new FileStorage(provider, { id: moduleId })
+  return new FileStorage(provider, createFileMetadataStore(db), moduleId)
 }
 
 /** Fetches a single file from the running PocketBase instance. */
@@ -64,34 +70,33 @@ export async function fetchPbFile(
 }
 
 /**
- * Fetches a PB file and stores it through the new file-storage SDK, returning
- * the new storage key. `field` should be the target column's DB name so the
- * generated key is stable and readable.
+ * Fetches a file from PocketBase and stores it through the file-storage SDK
+ * (new key + thumbnails + `files` metadata row), returning the new storage key.
  */
 export async function migrateFileField(options: {
   storage: FileStorage
   pbCollection: string
   recordId: string
   filename: string
-  table: string
-  field: string
   thumbs?: string[] | null
+  currentKey?: string | null
 }): Promise<string | null> {
-  const { storage, pbCollection, recordId, filename, table, field, thumbs } =
+  const { storage, pbCollection, recordId, filename, thumbs, currentKey } =
     options
 
   const buffer = await fetchPbFile(pbCollection, recordId, filename)
 
   const file = {
     buffer,
-    originalname: filename,
-    mimetype: mimeFor(filename)
-  } as unknown as Express.Multer.File
+    originalName: filename,
+    mimeType: mimeFor(filename)
+  }
 
-  return storage.save({
+  const ref = await storage.save({
     file,
-    table,
-    field,
+    currentKey: currentKey ?? undefined,
     thumbs: thumbs && thumbs.length > 0 ? thumbs : undefined
   })
+
+  return ref?.key ?? null
 }

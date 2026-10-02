@@ -1,37 +1,36 @@
 # File Storage SDK
 
-**Status**: Implemented (`packages/file-storage/`)
+How to store and serve files from a module. Every forge callback has a
+`core.storage` bound to the calling module: you hand it an uploaded file, it
+writes bytes to the configured provider (local filesystem or S3) and records
+metadata in the shared `files` table. Clients fetch files via `GET /files/get`.
 
-A pluggable file storage layer for LifeForge, replacing PocketBase's built-in
-file fields. Files are stored under deterministic, module-owned keys, with
-optional thumbnails, and served through a single `GET /files` endpoint.
-Providers: local filesystem and S3-compatible.
+Two entry points:
+
+- **`@lifeforge/file-storage`** — the `core.storage` API, `FileReference`/
+  `fileReferenceSchema`, and the provider factory.
+- **`@lifeforge/file-storage/server`** — server wiring used by `apps/api`
+  (upload middleware, `files` table/store, staging sweep).
 
 ---
 
-## Package layout
+## Concepts
 
-```
-packages/file-storage/
-└── src/
-    ├── index.ts            # public exports
-    ├── types.ts            # StorageProvider, SaveOptions, TableKey/FieldKey, ...
-    ├── utils.ts            # generateKey, generateThumbKey, resizeImage (sharp)
-    ├── fileStorage.ts      # FileStorage<TSchema> (validation + key logic + thumbs)
-    ├── createProvider.ts   # env-driven provider factory
-    └── providers/
-        ├── local.ts        # LocalStorageProvider
-        └── s3.ts           # S3StorageProvider (@aws-sdk/client-s3)
-```
-
-Public exports (`index.ts`): `StorageProvider` (type), `generateThumbKey`,
-`LocalStorageProvider`, `S3StorageProvider`, `createProvider`, `FileStorage`.
+- **`core.storage`** — scoped to the calling module. It will only read, write,
+  or delete keys under `{moduleId}/`, so modules can't touch each other's files.
+- **Staging** — an HTTP upload lands in a temp staging area first and is handed
+  to your callback as a `StagedFile`, so you can validate or pre-process it
+  before committing.
+- **Keys** — opaque: `{moduleId}/{uuid}.{ext}`. The original name, mime type,
+  size, and thumbnails live in the `files` table, not in the key.
+- **`FileReference`** — what `save`/`getReference` return; store its `key` in
+  your column and return the whole object from routes.
 
 ---
 
 ## Configuration
 
-Environment variables, read by `createProvider()`:
+Read from the environment when the provider is created:
 
 ```bash
 # Provider selection (defaults to local)
@@ -49,302 +48,153 @@ FILE_STORAGE_S3_SECRET_KEY=...
 FILE_STORAGE_S3_FORCE_PATH_STYLE=false               # MinIO compatibility
 ```
 
-The provider is a process-wide singleton:
-
-```typescript
-// apps/api/src/core/storage.ts
-import { type StorageProvider, createProvider } from '@lifeforge/file-storage'
-
-export const storageProvider: StorageProvider = createProvider()
-```
+In-flight uploads are staged in `<FILE_STORAGE_LOCAL_PATH>/.staging`
+(`./storage/.staging` by default).
 
 ---
 
-## Types (`types.ts`)
+## Uploading
+
+Declare the file fields on the route with `media`. The callback receives each
+as a `StagedFile`:
 
 ```typescript
-export interface FileStream {
-  stream: Readable
+export const updateAvatar = forge
+  .mutation({
+    input: {},
+    media: { file: { optional: false } },
+    output: { OK: fileReferenceSchema, UNAUTHORIZED: true }
+  })
+  .callback(async ({ media: { file }, core, db, response }) => {
+    const record = await db.query.users.findFirst()
+
+    const ref = await core.storage.save({
+      file,
+      currentKey: record?.avatar ?? undefined, // replace the previous file
+      thumbs: ['256x0']                        // image thumbnails (optional)
+    })
+
+    await db.update(users).set({ avatar: ref?.key ?? null })
+
+    return response.ok(ref)
+  })
+```
+
+### The `StagedFile`
+
+- `file.originalName`, `file.mimeType`, `file.size`
+- `await file.read()` → `Buffer`
+- `file.stream()` → `Readable`
+- `file.path` → absolute temp path (in-process convenience)
+
+Use these to validate (e.g. extension/type checks) or pre-process (resize,
+parse, OCR, transcode) before committing.
+
+### `save` state machine
+
+| `file` value | Effect |
+| --- | --- |
+| a `StagedFile` | writes a new file; deletes `currentKey` if provided |
+| `'keep'` | keeps `currentKey` as-is |
+| `'removed'` | deletes `currentKey` |
+| `null` / `undefined` | same as `'keep'` |
+
+`save` returns a `FileReference` (or `null`). Always persist `ref.key` in your
+column — the key is what the client fetches by.
+
+`thumbs` are generated only for images (non-SVG) and returned in
+`ref.thumbs`.
+
+---
+
+## Serving files
+
+Return a `FileReference` from any route that exposes a file. Use the shared
+schema so the contract and client types stay in sync:
+
+```typescript
+import { fileReferenceSchema } from '@lifeforge/file-storage'
+
+const output = {
+  OK: z.object({ file: fileReferenceSchema })
+}
+```
+
+On the client, build a URL with the API helper:
+
+```typescript
+forgeAPI.getMedia({ key: ref.key, thumb: '256x0' })
+// => '<apiHost>/files/get?key=...&thumb=256x0'
+```
+
+### `GET /files/get`
+
+- `?key=<key>&thumb=<size>&download=<bool>`
+- **Public** (no auth) — access is gated only by the opaque key. Keys are
+  `{moduleId}/{uuid}.{ext}` and effectively unguessable.
+- Streams the file or thumbnail with the correct `Content-Type`,
+  `Content-Disposition`, and immutable cache headers.
+- Returns **404 unless the key is registered** in the `files` table.
+
+---
+
+## `FileReference`
+
+```typescript
+interface FileReference {
+  key: string
+  originalName: string
   mimeType: string
   size: number
-}
-
-export interface StorageProvider {
-  save(
-    key: string,
-    data: Buffer | Readable,
-    options?: { mimeType?: string; size?: number }
-  ): Promise<void>
-  get(key: string, options?: { thumb?: string }): Promise<FileStream | null>
-  delete(key: string): Promise<void>
-  exists(key: string): Promise<boolean>
-}
-
-export type DrizzleTableColumns<TTable> = /* columns of a Drizzle table */
-export type TableKey<TSchema> = Extract<keyof TSchema, string>
-export type FieldKey<TSchema, TTable extends TableKey<TSchema>> =
-  DrizzleTableColumns<TSchema[TTable]>
-
-export interface SaveOptions<
-  TSchema extends Record<string, unknown> = Record<string, unknown>,
-  TTable extends TableKey<TSchema> = TableKey<TSchema>
-> {
-  file: Express.Multer.File | Buffer | 'keep' | 'removed' | null | undefined
-  currentKey?: string | null
-  table: TTable
-  field: FieldKey<TSchema, TTable>
-  thumbs?: string[]
+  thumbs: { size: string; key: string; width: number; height: number }[]
 }
 ```
 
-`TSchema` is the module's Drizzle relations type (the same type bound to the
-`forge` builder). `table` is a relation-map key and `field` a column of that
-table, so both are autocompleted and runtime-checked.
+The client-side `FileReference` type is exported from `@lifeforge/api`, and
+form file fields map it to an `existing` value via
+`getFormFileFieldInitialData`.
 
 ---
 
-## `FileStorage<TSchema>`
+## Reading and deleting
 
 ```typescript
-import { FileStorage } from '@lifeforge/file-storage'
-
-new FileStorage(provider, module, schemas?, logger?)
+const ref = await core.storage.getReference(key) // FileReference | null
+const file = await core.storage.get(key, { thumb: '256x0' }) // { stream, mimeType, size } | null
+await core.storage.delete(key)
 ```
 
-- `provider` - the singleton `StorageProvider`.
-- `module` - `{ source?: string; id: string }`; `id` is the module id used as the
-  key prefix (`lifeforge--<module>` for federation modules, or the core lib name).
-- `schemas?` - the module's relations object for runtime validation. When empty,
-  validation is skipped.
-- `logger?` - optional logger for warnings.
-
-### `save(options): Promise<string | null>`
-
-Saves a file and returns its **storage key** (or `null` on failure).
-
-```typescript
-const key = await core.storage.save({
-  file, // Multer file | Buffer | 'keep' | 'removed' | null
-  currentKey: existing?.avatar ?? undefined,
-  table: 'users',
-  field: 'avatar',
-  thumbs: ['256x0']
-})
-```
-
-Behaviour:
-
-- `file === 'keep'` → returns `currentKey` unchanged.
-- `file === 'removed'` → deletes `currentKey` (if any) and returns `null`.
-- `file` falsy → returns `currentKey` unchanged.
-- Otherwise: validates `table`/`field`, deletes `currentKey` (replacement),
-  writes the file, generates thumbnails, removes the multer temp file, and
-  returns the new key.
-
-This covers the whole "keep / removed / replace" update flow — there is no
-separate `resolveField` helper; `save()` itself handles those states.
-
-### `get(key, options?): Promise<FileStream | null>`
-
-Returns a readable stream + mime type + size. With `{ thumb }`, returns the
-matching thumbnail. Returns `null` on key-ownership mismatch (logged).
-
-### `delete(key): Promise<void>`
-
-Deletes the original and its thumbnails. No-op (with a warning) on ownership
-mismatch.
-
-### `exists(key): Promise<boolean>`
-
-Returns `false` on ownership mismatch (logged).
-
-### Runtime validation
-
-`save()` checks `table` and `field` against the instance's `schemas` and logs a
-warning + returns `null` when invalid. This is defense-in-depth behind the
-compile-time `TableKey`/`FieldKey` types. If `schemas` is empty, the check is
-skipped — which is the current runtime state, because `controllerLogic` does not
-yet pass the contract's `schemas` to `createCoreContext`.
-
-### Key ownership
-
-Every key-accepting method (`get`, `delete`, `exists`) verifies
-`key.startsWith(moduleId + '/')` and refuses keys from other modules (warning +
-null/void/false). `save()` is exempt because it always constructs the key with
-the caller's own module prefix.
-
----
-
-## Storage path convention
-
-### Key format
-
-```
-{module-id}/{table}/{field}-{uuid}.{ext}
-```
-
-- `{module-id}` is the caller module id, derived from `createCoreContext`'s `module`:
-  `lifeforge--<module>` for federation modules, or the core lib name (`user`,
-  `fonts`, ...).
-- `{table}` and `{field}` are the strings passed to
-  `core.storage.save({ table, field })` - normally the module's Drizzle table key
-  and the target column/field.
-- `{uuid}` guarantees uniqueness; `{ext}` comes from the uploaded filename
-  (`generateKey` in `packages/file-storage/src/utils.ts`).
-
-Examples (real, from the core migration):
-
-```
-user/users/avatar-a1b2c3d4.png
-fonts/fontsFontFamilyUpload/file-e5f6g7h8.ttf
-```
-
-### Rationale
-
-- **No record ID needed** - avoids circular dependency (record doesn't exist yet at save time)
-- **UUID ensures uniqueness** - no collisions
-- **Module prefix auto-inferred** from `createCoreContext`'s `module.id` (e.g., `lifeforge--books-library`)
-- **Listable**: all files for a target = prefix `{module-id}/{table}/`
-- **S3-native**: `/` renders as folder hierarchy in S3 console
-- **Local filesystem**: `/` creates real directories for browsing with `find`, `du`, etc.
-
-### Thumbnail storage
-
-Thumbnails live next to the original, with `-thumb-{size}` appended before the
-extension (`generateThumbKey` in `packages/file-storage/src/utils.ts`):
-
-```
-{base}-thumb-{size}{ext}
-```
-
-Examples:
-
-```
-user/users/avatar-a1b2c3d4-thumb-256x0.png
-fonts/fontsFontFamilyUpload/file-e5f6g7h8-thumb-200x0.png
-```
-
-`GET /files?key=<original-key>&thumb=<size>` resolves the thumbnail via
-`generateThumbKey(key, thumb)` (see `apps/api/src/core/routes/core.routes.ts`).
-
-Thumbnails are generated with `sharp` (`resizeImage`), only for `image/*`
-uploads that are not SVG. Sizes are `WxH` strings (e.g. `256x0`, `0x512`,
-`200x200`); a zero dimension means "no constraint on that axis".
-
----
-
-## Module usage
-
-```typescript
-// Upload / replace an avatar (apps/api/src/lib/user/routes/settings.ts)
-const avatarKey = await core.storage.save({
-  file: rawFile,
-  currentKey: user.avatar || undefined,
-  table: 'users',
-  field: 'avatar',
-  thumbs: ['256x0']
-})
-
-await db.update(users).set({ avatar: avatarKey, updated: new Date() })
-```
-
-```typescript
-// Delete a file (apps/api/src/lib/user/routes/personalization.ts)
-if (user.bgImage) {
-  await core.storage.delete(user.bgImage)
-}
-```
-
-```typescript
-// Save a non-image file (apps/api/src/lib/fonts/routes/custom.ts)
-const fileKey = await core.storage.save({
-  file,
-  currentKey: existingFileKey,
-  table: 'fontsFontFamilyUpload',
-  field: 'file'
-})
-```
-
-`core.storage` is typed with the same `TSchema` as the module's `forge` builder,
-so `table`/`field` are checked at compile time.
-
----
-
-## Wiring
-
-- `apps/api/src/core/storage.ts` - the provider singleton.
-- `apps/api/src/core/functions/routes/utils/coreContext.ts` - creates a
-  `FileStorage` per request from `(storageProvider, module, schemas, logging)`.
-- Forge contracts expose `getValue().schemas` (the module's tables) so
-  `createCoreContext` can receive them. **Note:** `controllerLogic` currently
-  calls `createCoreContext({ module })` without `schemas`, so runtime
-  `table`/`field` validation is a no-op today; type safety comes from
-  `TableKey`/`FieldKey`.
-- `apps/api/src/core/routes/core.routes.ts` - the public `GET /files` endpoint.
-
----
-
-## Backend file endpoint
-
-`GET /files?key=<key>&thumb=<size>` (no auth, no encryption, no rate limit):
-
-```typescript
-const targetKey = thumb ? generateThumbKey(key, thumb) : key
-const fileStream = await storageProvider.get(targetKey)
-
-if (!fileStream) {
-  res.status(404).json({ error: 'File not found' })
-  return
-}
-
-res.setHeader('Content-Type', fileStream.mimeType)
-if (fileStream.size > 0) res.setHeader('Content-Length', fileStream.size)
-res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
-fileStream.stream.pipe(res)
-```
-
-The endpoint serves any key; per-module access control is not enforced here
-(files are public). Keys are unguessable (uuid) but not secret.
-
----
-
-## Frontend
-
-`forgeAPI.getMedia({ key, thumb? })` builds the URL via
-`packages/api/src/proxy/helpers/getMediaHelper.ts`:
-
-```typescript
-forgeAPI.getMedia({ key: record.thumbnailKey, thumb: '200x0' })
-// => '<apiHost>/files?key=lifeforge--books-library/booksEntries/file-123.epub&thumb=200x0'
-```
-
-`key` is the storage key stored on the record (e.g. `record.avatarKey`), not a
-PocketBase id.
-
----
-
-## Providers
-
-### LocalStorageProvider
-
-- Root is `FILE_STORAGE_LOCAL_PATH` (default `./storage`), resolved against the
-  project root (`findProjectRoot`).
-- `save` writes the file (creating directories); `get` streams it; `exists` stats
-  it; `delete` unlinks the file and any `{base}-thumb-*` siblings.
-
-### S3StorageProvider
-
-- Uses `@aws-sdk/client-s3` with the `FILE_STORAGE_S3_*` config.
-- `save` → `PutObject`, `get` → `GetObject` (returns `null` on error), `exists` →
-  `HeadObject`, `delete` → `DeleteObject` + lists/deletes the `{base}-thumb-`
-  prefix.
+All three are scoped to the calling module.
 
 ---
 
 ## Migrating PocketBase files
 
-PB `file` fields become text columns holding a storage key. To move existing PB
-files into storage, fetch them from `{PB_HOST}/api/files/{collection}/{recordId}/{filename}`
-and store them with `FileStorage.save` so keys and thumbnails are generated
-consistently. See the `database-migration` skill and
-`apps/api/scripts/migrations/` for the tooling and worked examples.
+Migration scripts fetch files from the running PocketBase and store them through
+the SDK, which generates the key, thumbnails, and `files` row:
+
+```typescript
+const storage = createModuleStorage(info.storageId, db)
+
+const key = await migrateFileField({
+  storage,
+  pbCollection: 'users',
+  recordId: pbRow.id,
+  filename: pbRow.avatar,
+  thumbs: ['256x0']
+})
+```
+
+See the `database-migration` skill and `apps/api/scripts/migrations/` for the
+full workflow.
+
+---
+
+## Behavior notes
+
+- Staged temp files are deleted when committed, and any leftovers are reclaimed
+  by a TTL sweep on boot.
+- Replacing a file deletes the previous object immediately. Consistent with the
+  usual object-storage model, a failed request can therefore leave an orphaned
+  object (or a briefly-missing replaced file); this is accepted, not
+  reconciled.

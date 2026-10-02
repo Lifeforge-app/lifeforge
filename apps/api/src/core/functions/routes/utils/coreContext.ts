@@ -24,7 +24,9 @@ import {
 } from '@functions/socketio/taskPool'
 import TempFileManager from '@functions/utils/tempFileManager'
 
+import type { PostgresJsDatabase } from '@lifeforge/drizzle'
 import { FileStorage } from '@lifeforge/file-storage'
+import { createFileMetadataStore } from '@lifeforge/file-storage/server'
 import { type Logger, createLogger } from '@lifeforge/log'
 import { CoreContext } from '@lifeforge/server-utils'
 
@@ -46,11 +48,11 @@ function getOrCreateLogger(moduleId: string): Logger {
  */
 export function createCoreContext({
   module,
-  schemas
+  db
 }: {
   module?: { source: 'app' | 'core'; id: string }
-  schemas?: Record<string, unknown>
-} = {}): CoreContext<any> {
+  db: PostgresJsDatabase
+}): CoreContext {
   const logging = getOrCreateLogger(
     module ? `${module.source}:${module.id}` : 'unknown-module'
   )
@@ -59,8 +61,8 @@ export function createCoreContext({
     logging,
     storage: new FileStorage(
       storageProvider,
-      module ?? { source: 'core', id: 'unknown' },
-      schemas,
+      createFileMetadataStore(db),
+      module?.id || 'unknown',
       logging
     ),
     api: {

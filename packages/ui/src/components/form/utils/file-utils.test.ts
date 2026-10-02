@@ -99,9 +99,7 @@ describe('file-utils', () => {
       )
 
       expect(mockGetMedia).toHaveBeenCalledWith({
-        collectionId: 'col',
-        recordId: 'rec',
-        fieldId: 'existing-pic.png'
+        key: 'existing-pic.png'
       })
 
       expect(result).toEqual({

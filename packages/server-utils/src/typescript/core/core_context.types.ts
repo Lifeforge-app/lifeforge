@@ -70,11 +70,9 @@ export type EncryptFunc = (data: Buffer, key: string) => Buffer
 
 export type Encrypt2Func = (data: string, key: string) => string
 
-export interface CoreContext<
-  TSchema extends Record<string, unknown> = Record<string, unknown>
-> {
+export interface CoreContext {
   logging: Logger
-  storage: FileStorage<TSchema>
+  storage: FileStorage
   api: {
     fetchAI: FetchAIFunc
     searchLocations: SearchLocationsFunc

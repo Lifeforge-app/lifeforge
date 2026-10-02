@@ -2,19 +2,27 @@ import {
   DeleteObjectCommand,
   DeleteObjectsCommand,
   GetObjectCommand,
-  HeadObjectCommand,
   ListObjectsV2Command,
-  PutObjectCommand,
   S3Client
 } from '@aws-sdk/client-s3'
+import { Upload } from '@aws-sdk/lib-storage'
 import mime from 'mime-types'
 import { Readable } from 'node:stream'
 
 import type {
   ProviderSaveOptions,
-  S3ProviderConfig,
+  StorageGetOptions,
   StorageProvider
-} from '../types'
+} from './types'
+
+export interface S3ProviderConfig {
+  bucket: string
+  region?: string
+  endpoint?: string
+  accessKeyId?: string
+  secretAccessKey?: string
+  forcePathStyle?: boolean
+}
 
 export class S3StorageProvider implements StorageProvider {
   private client: S3Client
@@ -36,27 +44,29 @@ export class S3StorageProvider implements StorageProvider {
     })
   }
 
-  async save(
-    key: string,
-    data: Buffer | Readable,
-    options?: ProviderSaveOptions
-  ) {
-    await this.client.send(
-      new PutObjectCommand({
-        Bucket: this.bucket,
-        Key: key,
-        Body:
-          Buffer.isBuffer(data) || data instanceof Readable
-            ? data
-            : Buffer.from(data),
-        ContentType:
-          options?.mimeType ?? (mime.lookup(key) || 'application/octet-stream'),
-        ContentLength: options?.size
-      })
-    )
+  private contentType(key: string, options?: ProviderSaveOptions): string {
+    return options?.mimeType || mime.lookup(key) || 'application/octet-stream'
   }
 
-  async get(key: string) {
+  async save(
+    key: string,
+    data: Readable,
+    options?: ProviderSaveOptions
+  ) {
+    const upload = new Upload({
+      client: this.client,
+      params: {
+        Bucket: this.bucket,
+        Key: key,
+        Body: data,
+        ContentType: this.contentType(key, options)
+      }
+    })
+
+    await upload.done()
+  }
+
+  async get(key: string, _options?: StorageGetOptions) {
     try {
       const response = await this.client.send(
         new GetObjectCommand({
@@ -123,18 +133,4 @@ export class S3StorageProvider implements StorageProvider {
     }
   }
 
-  async exists(key: string) {
-    try {
-      await this.client.send(
-        new HeadObjectCommand({
-          Bucket: this.bucket,
-          Key: key
-        })
-      )
-
-      return true
-    } catch {
-      return false
-    }
-  }
 }

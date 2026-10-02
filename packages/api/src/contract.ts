@@ -199,6 +199,346 @@ export const contract = {
         }
       }
     },
+    "me": {
+      "method": "get",
+      "description": "Get current user data",
+      "noAuth": false,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {},
+      "output": {
+        "OK": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "userData": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
+                "email": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "emailVisibility": {
+                  "type": "boolean"
+                },
+                "verified": {
+                  "type": "boolean"
+                },
+                "username": {
+                  "type": "string",
+                  "maxLength": 150
+                },
+                "name": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "dateOfBirth": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "theme": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "color": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "bgTemp": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "backdropFilters": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": {}
+                        },
+                        {
+                          "type": "array",
+                          "items": {}
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "fontFamily": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "dashboardLayout": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": {}
+                        },
+                        {
+                          "type": "array",
+                          "items": {}
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "fontScale": {
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
+                },
+                "borderRadiusMultiplier": {
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
+                },
+                "bordered": {
+                  "type": "boolean"
+                },
+                "language": {
+                  "type": "string",
+                  "maxLength": 50
+                },
+                "avatar": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "originalName": {
+                          "type": "string"
+                        },
+                        "mimeType": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "thumbs": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "size": {
+                                "type": "string"
+                              },
+                              "key": {
+                                "type": "string"
+                              },
+                              "width": {
+                                "type": "number"
+                              },
+                              "height": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "size",
+                              "key",
+                              "width",
+                              "height"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "originalName",
+                        "mimeType",
+                        "size",
+                        "thumbs"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "bgImage": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "originalName": {
+                          "type": "string"
+                        },
+                        "mimeType": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "thumbs": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "size": {
+                                "type": "string"
+                              },
+                              "key": {
+                                "type": "string"
+                              },
+                              "width": {
+                                "type": "number"
+                              },
+                              "height": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "size",
+                              "key",
+                              "width",
+                              "height"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "originalName",
+                        "mimeType",
+                        "size",
+                        "thumbs"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "twoFAEnabled": {
+                  "type": "boolean"
+                },
+                "hasAPIKeysMasterPassword": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "email",
+                "emailVisibility",
+                "verified",
+                "username",
+                "name",
+                "dateOfBirth",
+                "theme",
+                "color",
+                "bgTemp",
+                "backdropFilters",
+                "fontFamily",
+                "dashboardLayout",
+                "fontScale",
+                "borderRadiusMultiplier",
+                "bordered",
+                "language",
+                "avatar",
+                "bgImage",
+                "twoFAEnabled",
+                "hasAPIKeysMasterPassword"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "userData"
+          ],
+          "additionalProperties": false
+        },
+        "UNAUTHORIZED": true
+      }
+    },
     "settings": {
       "deleteAvatar": {
         "method": "post",
@@ -228,7 +568,56 @@ export const contract = {
         "output": {
           "OK": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
+            "type": "object",
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "originalName": {
+                "type": "string"
+              },
+              "mimeType": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
+              },
+              "thumbs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "size": {
+                      "type": "string"
+                    },
+                    "key": {
+                      "type": "string"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "size",
+                    "key",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "key",
+              "originalName",
+              "mimeType",
+              "size",
+              "thumbs"
+            ],
+            "additionalProperties": false
           },
           "BAD_REQUEST": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -358,10 +747,50 @@ export const contract = {
             "properties": {
               "key": {
                 "type": "string"
+              },
+              "originalName": {
+                "type": "string"
+              },
+              "mimeType": {
+                "type": "string"
+              },
+              "size": {
+                "type": "number"
+              },
+              "thumbs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "size": {
+                      "type": "string"
+                    },
+                    "key": {
+                      "type": "string"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "size",
+                    "key",
+                    "width",
+                    "height"
+                  ],
+                  "additionalProperties": false
+                }
               }
             },
             "required": [
-              "key"
+              "key",
+              "originalName",
+              "mimeType",
+              "size",
+              "thumbs"
             ],
             "additionalProperties": false
           },
@@ -805,10 +1234,6 @@ export const contract = {
                 "type": "string",
                 "maxLength": 255
               },
-              "file": {
-                "type": "string",
-                "maxLength": 255
-              },
               "weight": {
                 "type": "number",
                 "minimum": -8388608,
@@ -819,16 +1244,75 @@ export const contract = {
               },
               "updated": {
                 "type": "string"
+              },
+              "file": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string"
+                      },
+                      "originalName": {
+                        "type": "string"
+                      },
+                      "mimeType": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "number"
+                      },
+                      "thumbs": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "size": {
+                              "type": "string"
+                            },
+                            "key": {
+                              "type": "string"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "height": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "size",
+                            "key",
+                            "width",
+                            "height"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "originalName",
+                      "mimeType",
+                      "size",
+                      "thumbs"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             },
             "required": [
               "id",
               "displayName",
               "family",
-              "file",
               "weight",
               "created",
-              "updated"
+              "updated",
+              "file"
             ],
             "additionalProperties": false
           },
@@ -863,10 +1347,6 @@ export const contract = {
                   "type": "string",
                   "maxLength": 255
                 },
-                "file": {
-                  "type": "string",
-                  "maxLength": 255
-                },
                 "weight": {
                   "type": "number",
                   "minimum": -8388608,
@@ -877,16 +1357,75 @@ export const contract = {
                 },
                 "updated": {
                   "type": "string"
+                },
+                "file": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "type": "string"
+                        },
+                        "originalName": {
+                          "type": "string"
+                        },
+                        "mimeType": {
+                          "type": "string"
+                        },
+                        "size": {
+                          "type": "number"
+                        },
+                        "thumbs": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "size": {
+                                "type": "string"
+                              },
+                              "key": {
+                                "type": "string"
+                              },
+                              "width": {
+                                "type": "number"
+                              },
+                              "height": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "size",
+                              "key",
+                              "width",
+                              "height"
+                            ],
+                            "additionalProperties": false
+                          }
+                        }
+                      },
+                      "required": [
+                        "key",
+                        "originalName",
+                        "mimeType",
+                        "size",
+                        "thumbs"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 }
               },
               "required": [
                 "id",
                 "displayName",
                 "family",
-                "file",
                 "weight",
                 "created",
-                "updated"
+                "updated",
+                "file"
               ],
               "additionalProperties": false
             }
@@ -987,10 +1526,6 @@ export const contract = {
                 "type": "string",
                 "maxLength": 255
               },
-              "file": {
-                "type": "string",
-                "maxLength": 255
-              },
               "weight": {
                 "type": "number",
                 "minimum": -8388608,
@@ -1001,16 +1536,75 @@ export const contract = {
               },
               "updated": {
                 "type": "string"
+              },
+              "file": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "key": {
+                        "type": "string"
+                      },
+                      "originalName": {
+                        "type": "string"
+                      },
+                      "mimeType": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "number"
+                      },
+                      "thumbs": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "size": {
+                              "type": "string"
+                            },
+                            "key": {
+                              "type": "string"
+                            },
+                            "width": {
+                              "type": "number"
+                            },
+                            "height": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "size",
+                            "key",
+                            "width",
+                            "height"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "key",
+                      "originalName",
+                      "mimeType",
+                      "size",
+                      "thumbs"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             },
             "required": [
               "id",
               "displayName",
               "family",
-              "file",
               "weight",
               "created",
-              "updated"
+              "updated",
+              "file"
             ],
             "additionalProperties": false
           },
@@ -1619,250 +2213,6 @@ export const contract = {
         "OK": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "boolean"
-        },
-        "UNAUTHORIZED": true
-      }
-    },
-    "me": {
-      "method": "get",
-      "description": "Get current user data",
-      "noAuth": false,
-      "encrypted": false,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "userData": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-                },
-                "email": {
-                  "type": "string",
-                  "maxLength": 255
-                },
-                "emailVisibility": {
-                  "type": "boolean"
-                },
-                "verified": {
-                  "type": "boolean"
-                },
-                "username": {
-                  "type": "string",
-                  "maxLength": 150
-                },
-                "name": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "avatar": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "dateOfBirth": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 50
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "theme": {
-                  "type": "string",
-                  "maxLength": 50
-                },
-                "color": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 50
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "bgTemp": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "bgImage": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "backdropFilters": {
-                  "anyOf": [
-                    {
-                      "anyOf": [
-                        {
-                          "anyOf": [
-                            {
-                              "type": "string"
-                            },
-                            {
-                              "type": "number"
-                            },
-                            {
-                              "type": "boolean"
-                            },
-                            {
-                              "type": "null"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": {}
-                        },
-                        {
-                          "type": "array",
-                          "items": {}
-                        }
-                      ]
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "fontFamily": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "dashboardLayout": {
-                  "anyOf": [
-                    {
-                      "anyOf": [
-                        {
-                          "anyOf": [
-                            {
-                              "type": "string"
-                            },
-                            {
-                              "type": "number"
-                            },
-                            {
-                              "type": "boolean"
-                            },
-                            {
-                              "type": "null"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": {}
-                        },
-                        {
-                          "type": "array",
-                          "items": {}
-                        }
-                      ]
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "fontScale": {
-                  "type": "number",
-                  "minimum": -8388608,
-                  "maximum": 8388607
-                },
-                "borderRadiusMultiplier": {
-                  "type": "number",
-                  "minimum": -8388608,
-                  "maximum": 8388607
-                },
-                "bordered": {
-                  "type": "boolean"
-                },
-                "language": {
-                  "type": "string",
-                  "maxLength": 50
-                },
-                "twoFAEnabled": {
-                  "type": "boolean"
-                },
-                "hasAPIKeysMasterPassword": {
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "id",
-                "email",
-                "emailVisibility",
-                "verified",
-                "username",
-                "name",
-                "avatar",
-                "dateOfBirth",
-                "theme",
-                "color",
-                "bgTemp",
-                "bgImage",
-                "backdropFilters",
-                "fontFamily",
-                "dashboardLayout",
-                "fontScale",
-                "borderRadiusMultiplier",
-                "bordered",
-                "language",
-                "twoFAEnabled",
-                "hasAPIKeysMasterPassword"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "required": [
-            "userData"
-          ],
-          "additionalProperties": false
         },
         "UNAUTHORIZED": true
       }
@@ -3076,6 +3426,38 @@ export const contract = {
       }
     }
   },
+  "files": {
+    "get": {
+      "method": "get",
+      "description": "Retrieve a stored file or thumbnail",
+      "noAuth": true,
+      "encrypted": false,
+      "isDownloadable": false,
+      "media": null,
+      "input": {
+        "query": {
+          "$schema": "https://json-schema.org/draft/2020-12/schema",
+          "type": "object",
+          "properties": {
+            "key": {
+              "type": "string"
+            },
+            "thumb": {
+              "type": "string"
+            },
+            "download": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "key"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "output": "custom"
+    }
+  },
   "ping": {
     "method": "post",
     "description": "Ping the server",
@@ -3129,33 +3511,6 @@ export const contract = {
         "additionalProperties": false
       }
     }
-  },
-  "files": {
-    "method": "get",
-    "description": "Retrieve stored file or thumbnail from storage provider",
-    "noAuth": true,
-    "encrypted": false,
-    "isDownloadable": false,
-    "media": null,
-    "input": {
-      "query": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "object",
-        "properties": {
-          "key": {
-            "type": "string"
-          },
-          "thumb": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "key"
-        ],
-        "additionalProperties": false
-      }
-    },
-    "output": "custom"
   },
   "corsAnywhere": {
     "method": "get",

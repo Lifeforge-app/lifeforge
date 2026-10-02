@@ -2,6 +2,7 @@ import { decryptPayload } from '@functions/encryption'
 import { Request } from 'express'
 import z from 'zod'
 
+import type { StagedFile } from '@lifeforge/file-storage'
 import { ClientError, ConvertMedia, MediaConfig } from '@lifeforge/server-utils'
 
 import restoreFormDataType from './restoreDataType'
@@ -22,7 +23,7 @@ export default function parseBodyPayload<TMedia extends MediaConfig>(
   const { data, media } = splitMediaAndData(
     mediaConfig,
     req.body,
-    (req.files || {}) as Record<string, Express.Multer.File[]>
+    (req.files || {}) as unknown as Record<string, StagedFile[]>
   )
 
   const finalMedia = media as ConvertMedia<TMedia>

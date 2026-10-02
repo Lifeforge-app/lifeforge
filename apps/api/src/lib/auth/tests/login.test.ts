@@ -34,11 +34,11 @@ describe('POST /auth/login', () => {
     expect(cookies).toContain('refresh_token=')
   })
 
-  it('returns the correct user data via /auth/me after login', async () => {
+  it('returns the correct user data via /user/me after login', async () => {
     const login = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
     setAccessToken(expectNo2FA(unwrap(login)).accessToken)
 
-    const meRes = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const meRes = await forgeAPI.user.me.queryRaw({ raw: true })
     const meData = unwrap(meRes)
 
     expect(meRes.status).toBe(200)
@@ -135,10 +135,10 @@ describe('POST /auth/login', () => {
     const login2 = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
 
     setAccessToken(expectNo2FA(unwrap(login1)).accessToken)
-    const me1 = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const me1 = await forgeAPI.user.me.queryRaw({ raw: true })
 
     setAccessToken(expectNo2FA(unwrap(login2)).accessToken)
-    const me2 = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const me2 = await forgeAPI.user.me.queryRaw({ raw: true })
 
     expect(me1.status).toBe(200)
     expect(me2.status).toBe(200)

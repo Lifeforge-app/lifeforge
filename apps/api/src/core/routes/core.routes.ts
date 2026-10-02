@@ -4,10 +4,8 @@ import dayjs from 'dayjs'
 import path from 'path'
 import z from 'zod'
 
-import { generateThumbKey } from '@lifeforge/file-storage'
 import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
 
-import { storageProvider } from '../storage'
 import forge from './forge'
 
 const welcome = forge
@@ -60,40 +58,6 @@ const status = forge
     })
   )
 
-const getFiles = forge
-  .query({
-    description: 'Retrieve stored file or thumbnail from storage provider',
-    noAuth: true,
-    encrypted: false,
-    rateLimit: false,
-    input: {
-      query: z.object({
-        key: z.string(),
-        thumb: z.string().optional()
-      })
-    },
-    output: 'custom'
-  })
-  .callback(async ({ query: { key, thumb }, res }) => {
-    const targetKey = thumb ? generateThumbKey(key, thumb) : key
-    const fileStream = await storageProvider.get(targetKey)
-
-    if (!fileStream) {
-      res.status(404).json({ error: 'File not found' })
-
-      return
-    }
-
-    res.setHeader('Content-Type', fileStream.mimeType)
-
-    if (fileStream.size > 0) {
-      res.setHeader('Content-Length', fileStream.size)
-    }
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
-
-    fileStream.stream.pipe(res)
-  })
-
 const encryptionPublicKey = forge
   .query({
     description: 'Get server public key for end-to-end encryption',
@@ -117,9 +81,9 @@ const coreRoutes = forgeRouter({
   locations: (await import('@lib/locations')).default,
   modules: (await import('@lib/modules')).default,
   ai: (await import('@lib/ai')).default,
+  files: (await import('@lib/files')).default,
   ping,
   status,
-  files: getFiles,
   corsAnywhere,
   encryptionPublicKey
 })

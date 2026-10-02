@@ -3,6 +3,7 @@ import { type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
 
 import { composeRelations, defineModuleSchema } from '@lifeforge/drizzle'
+import { filesSchema } from '@lifeforge/file-storage/server'
 
 import * as apiKeysSchema from '../lib/apiKeys/schema.drizzle'
 import * as authSchema from '../lib/auth/schema.drizzle'
@@ -17,7 +18,8 @@ const coreTables = {
   ...userSchema.tables,
   ...authSchema.tables,
   ...apiKeysSchema.tables,
-  ...fontsSchema.tables
+  ...fontsSchema.tables,
+  ...filesSchema.tables
 }
 
 const coreRelations = defineModuleSchema(coreTables, r =>
@@ -26,7 +28,8 @@ const coreRelations = defineModuleSchema(coreTables, r =>
     userSchema.relations(r),
     authSchema.relations(r),
     apiKeysSchema.relations(r),
-    fontsSchema.relations(r)
+    fontsSchema.relations(r),
+    filesSchema.relations(r)
   )
 )
 

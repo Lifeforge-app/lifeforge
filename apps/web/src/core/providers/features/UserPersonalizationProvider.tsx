@@ -134,7 +134,7 @@ function UserPersonalizationProvider({
     if (userData.bgImage) {
       setBgImage(
         forgeAPI.getMedia({
-          key: userData.bgImage
+          key: userData.bgImage.key
         })
       )
     }
@@ -147,7 +147,7 @@ function UserPersonalizationProvider({
       setDashboardLayout(userData.dashboardLayout as IDashboardLayout)
     }
 
-    if (userData.fontFamily !== undefined) {
+    if (userData.fontFamily) {
       setFontFamily(userData.fontFamily)
     }
 

@@ -1,6 +1,6 @@
 import { LocalStorageProvider } from './providers/local'
 import { S3StorageProvider } from './providers/s3'
-import type { StorageProvider } from './types'
+import type { StorageProvider } from './providers/types'
 
 export function createProvider(): StorageProvider {
   if (process.env.FILE_STORAGE_PROVIDER === 's3') {

@@ -1,6 +1,8 @@
 import { eq } from 'drizzle-orm'
 import z from 'zod'
 
+import { fileReferenceSchema } from '@lifeforge/file-storage'
+
 import forge from '../forge'
 import { users } from '../schema.drizzle'
 
@@ -14,9 +16,7 @@ export const updateBgImage = forge
       }
     },
     output: {
-      OK: z.object({
-        key: z.string()
-      }),
+      OK: fileReferenceSchema,
       BAD_REQUEST: z.string(),
       UNAUTHORIZED: true
     }
@@ -32,21 +32,19 @@ export const updateBgImage = forge
       return response.unauthorized()
     }
 
-    const bgImageKey = await core.storage.save({
+    const bgImageRef = await core.storage.save({
       file,
-      currentKey: user.bgImage || undefined,
-      table: 'users',
-      field: 'bgImage'
+      currentKey: user.bgImage || undefined
     })
 
-    if (!bgImageKey) {
+    if (!bgImageRef) {
       return response.badRequest('Failed to save background image')
     }
 
     await db
       .update(users)
       .set({
-        bgImage: bgImageKey,
+        bgImage: bgImageRef.key,
         backdropFilters: {
           brightness: 100,
           blur: 'none',
@@ -58,9 +56,7 @@ export const updateBgImage = forge
       })
       .where(eq(users.id, user.id))
 
-    return response.ok({
-      key: bgImageKey
-    })
+    return response.ok(bgImageRef)
   })
 
 export const deleteBgImage = forge

@@ -3,6 +3,8 @@ import dayjs from 'dayjs'
 import { eq } from 'drizzle-orm'
 import z from 'zod'
 
+import { fileReferenceSchema } from '@lifeforge/file-storage'
+
 import forge from '../forge'
 import { users } from '../schema.drizzle'
 
@@ -16,7 +18,7 @@ export const updateAvatar = forge
       }
     },
     output: {
-      OK: z.string(),
+      OK: fileReferenceSchema,
       BAD_REQUEST: z.string(),
       UNAUTHORIZED: true
     }
@@ -38,24 +40,22 @@ export const updateAvatar = forge
         return response.unauthorized()
       }
 
-      const avatarKey = await core.storage.save({
+      const avatarRef = await core.storage.save({
         file: rawFile,
         currentKey: user.avatar || undefined,
-        table: 'users',
-        field: 'avatar',
         thumbs: ['256x0']
       })
 
-      if (!avatarKey) {
+      if (!avatarRef) {
         return response.badRequest('Failed to save avatar')
       }
 
       await db
         .update(users)
-        .set({ avatar: avatarKey, updated: new Date() })
+        .set({ avatar: avatarRef.key, updated: new Date() })
         .where(eq(users.id, user.id))
 
-      return response.ok(avatarKey)
+      return response.ok(avatarRef)
     }
   )
 

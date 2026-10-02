@@ -5,13 +5,16 @@ export default defineConfig({
   build: {
     ssr: true,
     lib: {
-      entry: './src/index.ts',
+      entry: {
+        index: './src/index.ts',
+        'server/index': './src/server/index.ts'
+      },
       formats: ['es']
     },
     outDir: 'dist',
     target: 'node22',
     rollupOptions: {
-      output: { entryFileNames: 'index.js' },
+      output: { entryFileNames: '[name].js' },
       external: [externalDependencyRegex, /^node:/]
     }
   }

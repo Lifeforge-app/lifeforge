@@ -14,7 +14,7 @@
  *   key: 'lifeforge--books-library/booksEntries/file-123.epub',
  *   thumb: '200x0'
  * })
- * // => 'https://api.example.com/files?key=lifeforge--books-library/booksEntries/file-123.epub&thumb=200x0'
+ * // => 'https://api.example.com/files/get?key=lifeforge--books-library/booksEntries/123/my-book.epub&thumb=200x0'
  * ```
  */
 export function createGetMediaHelper(apiHost: string | undefined) {
@@ -23,16 +23,13 @@ export function createGetMediaHelper(apiHost: string | undefined) {
     key: string
     /** Optional thumbnail size (e.g., '200x0', '200x200') */
     thumb?: string
-    /** Optional access token */
-    token?: string
   }): string => {
     const searchParams = new URLSearchParams()
 
     searchParams.append('key', params.key)
     if (params.thumb) searchParams.append('thumb', params.thumb)
-    if (params.token) searchParams.append('token', params.token)
 
-    const fullPath = `files?${searchParams.toString()}`
+    const fullPath = `files/get?${searchParams.toString()}`
 
     if (apiHost?.startsWith('/')) {
       const origin = typeof window !== 'undefined' ? window.location.origin : ''

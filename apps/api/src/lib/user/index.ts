@@ -3,6 +3,7 @@ import { forgeRouter } from '@lifeforge/server-utils'
 
 import forge from './forge'
 import * as authRoutes from './routes/auth'
+import * as meRoutes from './routes/me'
 import * as personalizationRoutes from './routes/personalization'
 import * as settingsRoutes from './routes/settings'
 
@@ -22,6 +23,7 @@ export default forgeRouter({
       return response.ok(Boolean(user))
     }),
   auth: authRoutes,
+  me: meRoutes.me,
   settings: settingsRoutes,
   personalization: personalizationRoutes
 })

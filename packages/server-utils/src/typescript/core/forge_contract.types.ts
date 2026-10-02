@@ -19,7 +19,7 @@ export interface ForgeExpressContext<TSchema extends AnyRelations = any> {
   body: unknown
   query: unknown
   media: unknown
-  core: CoreContext<TSchema>
+  core: CoreContext
 }
 
 export interface ForgeContract {
@@ -44,7 +44,6 @@ export interface ForgeContract {
       context: ForgeExpressContext<any>
     ) => Promise<{ $status: number; payload?: unknown }>
     callerModule?: { source: string; id: string }
-    schemas?: Record<string, unknown>
   }
 }
 
@@ -63,5 +62,5 @@ export type ForgeContext<
   res: Response
   io: Server
   db: PostgresJsDatabase<TSchema>
-  core: CoreContext<TSchema>
+  core: CoreContext
 }

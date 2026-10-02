@@ -88,9 +88,8 @@ type ForgeBuilderFor<
 function makeBuilder<TSchema extends AnyRelations = any>(config: {
   callerModule?: string
   modulePathAlias?: string
-  schemas?: Record<string, unknown>
 }) {
-  const { callerModule, modulePathAlias, schemas } = config
+  const { callerModule, modulePathAlias } = config
 
   function buildRoute<
     TMethod extends 'get' | 'post',
@@ -172,8 +171,7 @@ function makeBuilder<TSchema extends AnyRelations = any>(config: {
               encrypted: metadata.encrypted ?? true,
               rateLimit: metadata.rateLimit ?? true,
               callback: callbackWrapper,
-              callerModule: actualCallerModule,
-              schemas
+              callerModule: actualCallerModule
             }
           }
         }
@@ -245,8 +243,7 @@ export function createForgeContractBuilder<
 
   return makeBuilder({
     callerModule: moduleId,
-    modulePathAlias,
-    schemas: schema?.tables
+    modulePathAlias
   }) as unknown as ForgeBuilderFor<TSchema, TOptions>
 }
 
