@@ -1,14 +1,17 @@
-import { promises as fs } from 'node:fs'
+import { createReadStream, promises as fs } from 'node:fs'
 import path from 'node:path'
 import { Readable } from 'node:stream'
 
 import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
+import {
+  fileReferenceSchema,
+  type FileReference
+} from './contract/fileReference'
 import { FileStorage } from './fileStorage'
 import { LocalStorageProvider } from './providers/local'
-import type { FileReference } from './contract/fileReference'
-import type { FileMetadataStore } from './types'
+import type { FileMetadataStore, StagedFile } from './types'
 
 class MemoryStore implements FileMetadataStore {
   private map = new Map<string, FileReference & { moduleId: string }>()
@@ -27,6 +30,34 @@ class MemoryStore implements FileMetadataStore {
 }
 
 const TEST_DIR = path.resolve(process.cwd(), './temp_test_storage')
+
+const PNG_BUFFER = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+  'base64'
+)
+
+async function makeStagedFile(
+  data: Buffer,
+  originalName: string,
+  mimeType: string
+): Promise<StagedFile> {
+  const filePath = path.join(
+    TEST_DIR,
+    `${crypto.randomUUID()}-${originalName}`
+  )
+
+  await fs.writeFile(filePath, data)
+
+  return {
+    __staged: true,
+    originalName,
+    mimeType,
+    size: data.length,
+    path: filePath,
+    read: () => fs.readFile(filePath),
+    stream: () => createReadStream(filePath)
+  }
+}
 
 describe('LocalStorageProvider & FileStorage', () => {
   let provider: LocalStorageProvider
@@ -78,20 +109,6 @@ describe('LocalStorageProvider & FileStorage', () => {
     )
   })
 
-  it('should return file metadata via getReference', async () => {
-    const ref = await storage.save({
-      file: {
-        buffer: Buffer.from('meta'),
-        originalName: 'meta.bin',
-        mimeType: 'application/octet-stream'
-      }
-    })
-
-    const meta = await storage.getReference(ref!.key)
-    expect(meta?.originalName).toBe('meta.bin')
-    expect(meta?.size).toBe(4)
-  })
-
   it('should prevent access to other modules files (ownership check)', async () => {
     const foreignKey = 'lifeforge--other-module/123.txt'
     expect(await storage.get(foreignKey)).toBeNull()
@@ -133,7 +150,18 @@ describe('LocalStorageProvider & FileStorage', () => {
     expect(ref2).not.toBeNull()
     expect(ref2!.key).not.toBe(ref1!.key)
     expect(await storage.get(ref1!.key)).toBeNull()
-    expect(await storage.get(ref2!.key)).not.toBeNull()
+
+    const liveStream = await storage.get(ref2!.key)
+
+    expect(liveStream).not.toBeNull()
+
+    const liveChunks: Buffer[] = []
+
+    for await (const chunk of liveStream!.stream) {
+      liveChunks.push(Buffer.from(chunk))
+    }
+
+    expect(Buffer.concat(liveChunks).toString()).toBe('second file')
     expect(await storage.getReference(ref1!.key)).toBeNull()
 
     const removed = await storage.save({
@@ -173,5 +201,134 @@ describe('LocalStorageProvider & FileStorage', () => {
 
     const thumbMeta = await sharp(Buffer.concat(chunks)).metadata()
     expect(thumbMeta.width).toBe(200)
+  })
+
+  it('saves a staged file and removes the staged temp after commit', async () => {
+    const staged = await makeStagedFile(
+      Buffer.from('staged content'),
+      'staged.txt',
+      'text/plain'
+    )
+
+    const ref = await storage.save({ file: staged })
+
+    expect(ref).not.toBeNull()
+    expect(ref!.originalName).toBe('staged.txt')
+
+    const got = await storage.get(ref!.key)
+    const chunks: Buffer[] = []
+
+    for await (const chunk of got!.stream) {
+      chunks.push(Buffer.from(chunk))
+    }
+
+    expect(Buffer.concat(chunks).toString()).toBe('staged content')
+    await expect(fs.stat(staged.path)).rejects.toThrow()
+  })
+
+  it('generates thumbnails from a staged image', async () => {
+    const staged = await makeStagedFile(PNG_BUFFER, 'big.png', 'image/png')
+
+    const ref = await storage.save({ file: staged, thumbs: ['100x0'] })
+
+    expect(ref!.thumbs).toHaveLength(1)
+
+    const thumb = await storage.get(ref!.key, { thumb: '100x0' })
+    const chunks: Buffer[] = []
+
+    for await (const chunk of thumb!.stream) {
+      chunks.push(Buffer.from(chunk))
+    }
+
+    expect((await sharp(Buffer.concat(chunks)).metadata()).width).toBe(100)
+  })
+
+  it('does not generate thumbnails for non-images', async () => {
+    const ref = await storage.save({
+      file: {
+        buffer: Buffer.from('<svg></svg>'),
+        originalName: 'icon.svg',
+        mimeType: 'image/svg+xml'
+      },
+      thumbs: ['100x0']
+    })
+
+    expect(ref!.thumbs).toEqual([])
+  })
+
+  it('returns the existing reference when no new file is supplied', async () => {
+    const ref = await storage.save({
+      file: {
+        buffer: Buffer.from('keep me'),
+        originalName: 'keep.txt',
+        mimeType: 'text/plain'
+      }
+    })
+
+    expect(
+      (await storage.save({ file: 'keep', currentKey: ref!.key }))?.key
+    ).toBe(ref!.key)
+    expect(
+      (await storage.save({ file: null, currentKey: ref!.key }))?.key
+    ).toBe(ref!.key)
+    expect(await storage.save({ file: null })).toBeNull()
+  })
+
+  it('returns null when removing without a current key', async () => {
+    expect(await storage.save({ file: 'removed' })).toBeNull()
+  })
+
+  it('derives the key extension from the mime type or falls back to bin', async () => {
+    const fromMime = await storage.save({
+      file: {
+        buffer: Buffer.from('x'),
+        originalName: 'noext',
+        mimeType: 'image/png'
+      }
+    })
+    expect(fromMime!.key.endsWith('.png')).toBe(true)
+
+    const fallback = await storage.save({
+      file: {
+        buffer: Buffer.from('x'),
+        originalName: 'noext',
+        mimeType: 'application/x-unknown-xyz'
+      }
+    })
+    expect(fallback!.key.endsWith('.bin')).toBe(true)
+  })
+
+  it('produces references that satisfy the contract schema', async () => {
+    const withThumbs = await storage.save({
+      file: {
+        buffer: PNG_BUFFER,
+        originalName: 'contract.png',
+        mimeType: 'image/png'
+      },
+      thumbs: ['64x0']
+    })
+
+    expect(fileReferenceSchema.safeParse(withThumbs).success).toBe(true)
+
+    const plain = await storage.save({
+      file: {
+        buffer: Buffer.from('plain'),
+        originalName: 'plain.txt',
+        mimeType: 'text/plain'
+      }
+    })
+
+    expect(fileReferenceSchema.safeParse(plain).success).toBe(true)
+
+    expect(
+      fileReferenceSchema.safeParse({
+        ...withThumbs,
+        thumbs: [{ size: '64x0' }]
+      }).success
+    ).toBe(false)
+  })
+
+  it('is a no-op when deleting a foreign key', async () => {
+    await expect(storage.delete('lifeforge--other-module/1.txt')).resolves.not.toThrow()
   })
 })
