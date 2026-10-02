@@ -1,3 +1,4 @@
+import { type RelationsBuilder } from 'drizzle-orm'
 import {
   boolean,
   json,
@@ -7,8 +8,6 @@ import {
   uuid,
   varchar
 } from 'drizzle-orm/pg-core'
-
-import { type RelationsBuilder } from '@lifeforge/drizzle'
 
 export const users = pgTable('users', {
   id: uuid('id').defaultRandom().primaryKey(),

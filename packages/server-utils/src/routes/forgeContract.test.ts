@@ -1,3 +1,4 @@
+import { pgTable, uuid } from 'drizzle-orm/pg-core'
 import { describe, expect, it } from 'vitest'
 import z from 'zod'
 
@@ -66,5 +67,16 @@ describe('createForgeContractBuilder', () => {
 
     const val = contract.getValue()
     expect(val.rateLimit).toBe(false)
+  })
+
+  it('should expose a typed existsIn bound to the module schema', () => {
+    const users = pgTable('users', { id: uuid('id').primaryKey() })
+    const forge = createForgeContractBuilder({
+      schema: { tables: { users }, relations: () => ({}) }
+    })
+
+    const schema = z.string()
+
+    expect(forge.existsIn(schema, users)).toBe(schema)
   })
 })

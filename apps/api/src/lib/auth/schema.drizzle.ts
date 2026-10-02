@@ -1,6 +1,5 @@
+import { type RelationsBuilder } from 'drizzle-orm'
 import { boolean, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
-
-import { type RelationsBuilder } from '@lifeforge/drizzle'
 
 export const authRefreshTokens = pgTable('auth__refresh_tokens', {
   id: uuid('id').defaultRandom().primaryKey(),

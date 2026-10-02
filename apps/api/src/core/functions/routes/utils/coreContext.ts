@@ -23,8 +23,8 @@ import {
   updateTaskInPool
 } from '@functions/socketio/taskPool'
 import TempFileManager from '@functions/utils/tempFileManager'
+import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
-import type { PostgresJsDatabase } from '@lifeforge/drizzle'
 import { FileStorage } from '@lifeforge/file-storage'
 import { createFileMetadataStore } from '@lifeforge/file-storage/server'
 import { type Logger, createLogger } from '@lifeforge/log'

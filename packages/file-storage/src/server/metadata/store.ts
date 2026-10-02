@@ -1,14 +1,13 @@
 import { type TablesRelationalConfig, eq } from 'drizzle-orm'
-
-import type { PostgresJsDatabase } from '@lifeforge/drizzle'
+import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
 import type { FileMetadataStore, StoredFileReference } from '../../core/types'
 import { files } from './schema.drizzle'
 
 /** Drizzle-backed metadata store for the file-storage SDK. */
-export function createFileMetadataStore<
-  TSchema extends TablesRelationalConfig
->(db: PostgresJsDatabase<TSchema>): FileMetadataStore {
+export function createFileMetadataStore<TSchema extends TablesRelationalConfig>(
+  db: PostgresJsDatabase<TSchema>
+): FileMetadataStore {
   return {
     async upsert(ref: StoredFileReference) {
       const values = {

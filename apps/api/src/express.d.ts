@@ -1,6 +1,6 @@
 import type { ITaskPoolTask } from '@functions/socketio/taskPool'
+import { type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
-import { type PostgresJsDatabase } from '@lifeforge/drizzle'
 import type { ConvertMedia, MediaConfig } from '@lifeforge/server-utils'
 
 declare global {

@@ -1,14 +1,16 @@
+import { type AnyRelations } from 'drizzle-orm'
+import { type PgTable } from 'drizzle-orm/pg-core'
 import type { RequestHandler } from 'express'
 import type { z } from 'zod'
 
 import {
-  type AnyRelations,
   type BuiltModuleSchema,
   type ModuleSchema,
   defineModuleSchema
 } from '@lifeforge/drizzle'
 
 import { getCallerModuleId } from '..'
+import { type ExistsInFor, existsIn } from '../database'
 import {
   type OutputDefinition,
   type ResponseObject,
@@ -32,6 +34,8 @@ export interface ForgeContractOptions<
   modulePathAlias?: string
 }
 
+type TablesOf<T> = T extends { tables: infer TT } ? TT : Record<string, PgTable>
+
 type ForgeBuilderFor<
   TSchema extends AnyRelations,
   TOptions extends ForgeContractOptions
@@ -39,14 +43,15 @@ type ForgeBuilderFor<
   typeof makeBuilder<
     TOptions['schema'] extends ModuleSchema
       ? BuiltModuleSchema<TOptions['schema']>
-      : TSchema
+      : TSchema,
+    TablesOf<TOptions['schema']>
   >
 >
 
-function makeBuilder<TSchema extends AnyRelations = any>(config: {
-  callerModule?: string
-  modulePathAlias?: string
-}) {
+function makeBuilder<
+  TSchema extends AnyRelations = any,
+  TTables extends Record<string, PgTable> = Record<string, PgTable>
+>(config: { callerModule?: string; modulePathAlias?: string }) {
   const { callerModule, modulePathAlias } = config
 
   function buildRoute<
@@ -185,7 +190,9 @@ function makeBuilder<TSchema extends AnyRelations = any>(config: {
         'post',
         metadata
       )
-    }
+    },
+
+    existsIn: existsIn as unknown as ExistsInFor<TTables>
   }
 }
 

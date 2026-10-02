@@ -21,7 +21,9 @@ import {
   BaseResponse,
   ForgeContract,
   MediaConfig,
+  checkRecordExistence,
   getStatusMessage,
+  mapDatabaseError,
   serializeEndpointValue
 } from '@lifeforge/server-utils'
 
@@ -65,6 +67,14 @@ function createHandler(
       parseQuery(req, input.query)
 
       parseBodyPayload(req, (media || {}) as MediaConfig, encrypted, input.body)
+
+      await checkRecordExistence({
+        db: req.db,
+        querySchema: input.query,
+        query: req.query,
+        bodySchema: input.body,
+        body: req.body
+      })
 
       if (isDownloadable) {
         res.setHeader('X-LifeForge-Downloadable', 'true')
@@ -124,6 +134,17 @@ function createHandler(
         status
       )
     } catch (err) {
+      const databaseError = mapDatabaseError(err)
+
+      if (databaseError) {
+        return clientError({
+          res,
+          message: databaseError.message,
+          code: databaseError.code,
+          moduleName: callerModuleId
+        })
+      }
+
       if (isClientError(err)) {
         return clientError({
           res,
@@ -133,9 +154,15 @@ function createHandler(
         })
       }
 
+      const cause = err instanceof Error ? err.cause : undefined
+
       serverError(
         res,
-        err instanceof Error ? err.message : String(err),
+        err instanceof Error
+          ? cause instanceof Error
+            ? `${err.message} — ${cause.message}`
+            : err.message
+          : String(err),
         callerModule ? `${callerModule.source}:${callerModule.id}` : undefined
       )
     }

@@ -1,8 +1,8 @@
+import { type AnyRelations } from 'drizzle-orm'
+import { type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import type { Request, RequestHandler, Response } from 'express'
 import type { Server } from 'socket.io'
 import type { z } from 'zod'
-
-import { type AnyRelations, type PostgresJsDatabase } from '@lifeforge/drizzle'
 
 import { OutputDefinition, OutputHelpers } from '../../response'
 import { ConvertMedia, MediaConfig } from '../standalone/media.types'

@@ -1,3 +1,4 @@
+import { type RelationsBuilder } from 'drizzle-orm'
 import {
   integer,
   jsonb,
@@ -5,8 +6,6 @@ import {
   timestamp,
   varchar
 } from 'drizzle-orm/pg-core'
-
-import { type RelationsBuilder } from '@lifeforge/drizzle'
 
 import type { ThumbnailInfo } from '../../core/contract/fileReference'
 

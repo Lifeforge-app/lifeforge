@@ -1,6 +1,5 @@
+import { type RelationsBuilder } from 'drizzle-orm'
 import { pgTable, real, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
-
-import { type RelationsBuilder } from '@lifeforge/drizzle'
 
 export const fontsFontFamilyUpload = pgTable('fonts__font_family_upload', {
   id: uuid('id').defaultRandom().primaryKey(),
