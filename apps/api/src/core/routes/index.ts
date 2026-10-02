@@ -7,11 +7,14 @@ import path from 'path'
 
 import { forgeRouter } from '@lifeforge/server-utils'
 
+import { initDrizzle } from '../drizzle'
 import coreRoutes from './core.routes'
 
 const router = express.Router()
 
 const appRoutes = await loadAndRegisterModuleRoutes()
+
+initDrizzle()
 
 const mainRoutes = forgeRouter({
   ...coreRoutes,

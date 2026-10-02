@@ -65,7 +65,6 @@ export const list = forge
   })
   .callback(
     async ({
-      pb,
       core: {
         api: { getAPIKey }
       },
@@ -77,7 +76,7 @@ export const list = forge
         return response.ok(cached)
       }
 
-      const key = await getAPIKey('gcloud', pb)
+      const key = await getAPIKey('gcloud')
 
       if (!key) {
         return response.ok({
@@ -120,7 +119,6 @@ export const get = forge
   })
   .callback(
     async ({
-      pb,
       query: { family },
       core: {
         api: { getAPIKey }
@@ -135,7 +133,7 @@ export const get = forge
         return response.ok(cached)
       }
 
-      const key = await getAPIKey('gcloud', pb).catch(() => null)
+      const key = await getAPIKey('gcloud').catch(() => null)
 
       if (!key) {
         return response.ok({

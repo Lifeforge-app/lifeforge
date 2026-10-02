@@ -209,7 +209,8 @@ export const contract = {
         "media": null,
         "input": {},
         "output": {
-          "NO_CONTENT": true
+          "NO_CONTENT": true,
+          "UNAUTHORIZED": true
         }
       },
       "updateAvatar": {
@@ -228,7 +229,12 @@ export const contract = {
           "OK": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "string"
-          }
+          },
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          },
+          "UNAUTHORIZED": true
         }
       },
       "updatePassword": {
@@ -269,7 +275,8 @@ export const contract = {
           "BAD_REQUEST": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "string"
-          }
+          },
+          "UNAUTHORIZED": true
         }
       },
       "updateProfile": {
@@ -313,7 +320,8 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true
+          "NO_CONTENT": true,
+          "UNAUTHORIZED": true
         }
       }
     },
@@ -327,7 +335,8 @@ export const contract = {
         "media": null,
         "input": {},
         "output": {
-          "NO_CONTENT": true
+          "NO_CONTENT": true,
+          "UNAUTHORIZED": true
         }
       },
       "updateBgImage": {
@@ -347,23 +356,20 @@ export const contract = {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "object",
             "properties": {
-              "collectionId": {
-                "type": "string"
-              },
-              "recordId": {
-                "type": "string"
-              },
-              "fieldId": {
+              "key": {
                 "type": "string"
               }
             },
             "required": [
-              "collectionId",
-              "recordId",
-              "fieldId"
+              "key"
             ],
             "additionalProperties": false
-          }
+          },
+          "BAD_REQUEST": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "type": "string"
+          },
+          "UNAUTHORIZED": true
         }
       },
       "updatePersonalization": {
@@ -428,7 +434,8 @@ export const contract = {
           "BAD_REQUEST": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "string"
-          }
+          },
+          "UNAUTHORIZED": true
         }
       }
     }
@@ -786,21 +793,31 @@ export const contract = {
             "type": "object",
             "properties": {
               "id": {
-                "type": "string"
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
               },
               "displayName": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "family": {
-                "type": "string"
-              },
-              "weight": {
-                "type": "number"
+                "type": "string",
+                "maxLength": 255
               },
               "file": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "weight": {
+                "type": "number",
+                "minimum": -8388608,
+                "maximum": 8388607
+              },
+              "created": {
                 "type": "string"
               },
-              "collectionId": {
+              "updated": {
                 "type": "string"
               }
             },
@@ -808,9 +825,10 @@ export const contract = {
               "id",
               "displayName",
               "family",
-              "weight",
               "file",
-              "collectionId"
+              "weight",
+              "created",
+              "updated"
             ],
             "additionalProperties": false
           },
@@ -833,21 +851,31 @@ export const contract = {
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
                 },
                 "displayName": {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 255
                 },
                 "family": {
-                  "type": "string"
-                },
-                "weight": {
-                  "type": "number"
+                  "type": "string",
+                  "maxLength": 255
                 },
                 "file": {
+                  "type": "string",
+                  "maxLength": 255
+                },
+                "weight": {
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
+                },
+                "created": {
                   "type": "string"
                 },
-                "collectionId": {
+                "updated": {
                   "type": "string"
                 }
               },
@@ -855,9 +883,10 @@ export const contract = {
                 "id",
                 "displayName",
                 "family",
-                "weight",
                 "file",
-                "collectionId"
+                "weight",
+                "created",
+                "updated"
               ],
               "additionalProperties": false
             }
@@ -946,21 +975,31 @@ export const contract = {
             "type": "object",
             "properties": {
               "id": {
-                "type": "string"
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
               },
               "displayName": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "family": {
-                "type": "string"
-              },
-              "weight": {
-                "type": "number"
+                "type": "string",
+                "maxLength": 255
               },
               "file": {
+                "type": "string",
+                "maxLength": 255
+              },
+              "weight": {
+                "type": "number",
+                "minimum": -8388608,
+                "maximum": 8388607
+              },
+              "created": {
                 "type": "string"
               },
-              "collectionId": {
+              "updated": {
                 "type": "string"
               }
             },
@@ -968,9 +1007,10 @@ export const contract = {
               "id",
               "displayName",
               "family",
-              "weight",
               "file",
-              "collectionId"
+              "weight",
+              "created",
+              "updated"
             ],
             "additionalProperties": false
           },
@@ -998,8 +1038,7 @@ export const contract = {
             "items": {
               "type": "string"
             }
-          },
-          "UNAUTHORIZED": true
+          }
         }
       },
       "toggle": {
@@ -1025,8 +1064,7 @@ export const contract = {
           }
         },
         "output": {
-          "NO_CONTENT": true,
-          "UNAUTHORIZED": true
+          "NO_CONTENT": true
         }
       }
     }
@@ -1085,17 +1123,26 @@ export const contract = {
             "items": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
                 "keyId": {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 255
                 },
                 "name": {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 255
                 },
                 "icon": {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 255
                 },
                 "key": {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 500
                 },
                 "exposable": {
                   "type": "boolean"
@@ -1105,28 +1152,17 @@ export const contract = {
                 },
                 "updated": {
                   "type": "string"
-                },
-                "id": {
-                  "type": "string"
-                },
-                "collectionId": {
-                  "type": "string"
-                },
-                "collectionName": {
-                  "type": "string"
                 }
               },
               "required": [
+                "id",
                 "keyId",
                 "name",
                 "icon",
                 "key",
                 "exposable",
                 "created",
-                "updated",
-                "id",
-                "collectionId",
-                "collectionName"
+                "updated"
               ],
               "additionalProperties": false
             }
@@ -1205,17 +1241,26 @@ export const contract = {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "object",
             "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              },
               "keyId": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "name": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "icon": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "key": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 500
               },
               "exposable": {
                 "type": "boolean"
@@ -1225,28 +1270,17 @@ export const contract = {
               },
               "updated": {
                 "type": "string"
-              },
-              "id": {
-                "type": "string"
-              },
-              "collectionId": {
-                "type": "string"
-              },
-              "collectionName": {
-                "type": "string"
               }
             },
             "required": [
+              "id",
               "keyId",
               "name",
               "icon",
               "key",
               "exposable",
               "created",
-              "updated",
-              "id",
-              "collectionId",
-              "collectionName"
+              "updated"
             ],
             "additionalProperties": false
           }
@@ -1312,17 +1346,26 @@ export const contract = {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "object",
             "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid",
+                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+              },
               "keyId": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "name": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "icon": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 255
               },
               "key": {
-                "type": "string"
+                "type": "string",
+                "maxLength": 500
               },
               "exposable": {
                 "type": "boolean"
@@ -1332,28 +1375,17 @@ export const contract = {
               },
               "updated": {
                 "type": "string"
-              },
-              "id": {
-                "type": "string"
-              },
-              "collectionId": {
-                "type": "string"
-              },
-              "collectionName": {
-                "type": "string"
               }
             },
             "required": [
+              "id",
               "keyId",
               "name",
               "icon",
               "key",
               "exposable",
               "created",
-              "updated",
-              "id",
-              "collectionId",
-              "collectionName"
+              "updated"
             ],
             "additionalProperties": false
           },
@@ -1400,7 +1432,8 @@ export const contract = {
         "media": null,
         "input": {},
         "output": {
-          "NO_CONTENT": true
+          "NO_CONTENT": true,
+          "UNAUTHORIZED": true
         }
       },
       "enable": {
@@ -1459,7 +1492,8 @@ export const contract = {
               "link"
             ],
             "additionalProperties": false
-          }
+          },
+          "UNAUTHORIZED": true
         }
       },
       "verify": {
@@ -1605,10 +1639,14 @@ export const contract = {
             "userData": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                },
                 "email": {
                   "type": "string",
-                  "format": "email",
-                  "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+                  "maxLength": 255
                 },
                 "emailVisibility": {
                   "type": "boolean"
@@ -1617,59 +1655,176 @@ export const contract = {
                   "type": "boolean"
                 },
                 "username": {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 150
                 },
                 "name": {
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "avatar": {
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "dateOfBirth": {
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "theme": {
                   "type": "string",
-                  "enum": [
-                    "system",
-                    "light",
-                    "dark"
-                  ]
+                  "maxLength": 50
                 },
                 "color": {
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 50
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "bgTemp": {
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
                 "bgImage": {
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
-                "backdropFilters": {},
+                "backdropFilters": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": {}
+                        },
+                        {
+                          "type": "array",
+                          "items": {}
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "fontFamily": {
-                  "type": "string"
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "maxLength": 255
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
                 },
-                "dashboardLayout": {},
+                "dashboardLayout": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "number"
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": {}
+                        },
+                        {
+                          "type": "array",
+                          "items": {}
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
                 "fontScale": {
-                  "type": "number"
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
                 },
                 "borderRadiusMultiplier": {
-                  "type": "number"
+                  "type": "number",
+                  "minimum": -8388608,
+                  "maximum": 8388607
                 },
                 "bordered": {
                   "type": "boolean"
                 },
                 "language": {
-                  "type": "string"
-                },
-                "id": {
-                  "type": "string"
-                },
-                "collectionId": {
-                  "type": "string"
-                },
-                "collectionName": {
-                  "type": "string"
+                  "type": "string",
+                  "maxLength": 50
                 },
                 "twoFAEnabled": {
                   "type": "boolean"
@@ -1679,6 +1834,7 @@ export const contract = {
                 }
               },
               "required": [
+                "id",
                 "email",
                 "emailVisibility",
                 "verified",
@@ -1697,9 +1853,6 @@ export const contract = {
                 "borderRadiusMultiplier",
                 "bordered",
                 "language",
-                "id",
-                "collectionId",
-                "collectionName",
                 "twoFAEnabled",
                 "hasAPIKeysMasterPassword"
               ],
@@ -2081,7 +2234,8 @@ export const contract = {
           "BAD_REQUEST": {
             "$schema": "https://json-schema.org/draft/2020-12/schema",
             "type": "string"
-          }
+          },
+          "UNAUTHORIZED": true
         }
       },
       "claim": {
@@ -2512,194 +2666,6 @@ export const contract = {
         "BAD_REQUEST": {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "string"
-        }
-      }
-    }
-  },
-  "backups": {
-    "list": {
-      "method": "get",
-      "description": "Retrieve all database backups",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "modified": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "key",
-              "size",
-              "modified"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "download": {
-      "method": "get",
-      "description": "Download a database backup file",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": true,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "key": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "key"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "NO_CONTENT": true,
-        "BAD_REQUEST": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "string"
-        }
-      }
-    },
-    "create": {
-      "method": "post",
-      "description": "Create a new database backup",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "backupName": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "CREATED": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "null"
-        }
-      }
-    },
-    "remove": {
-      "method": "post",
-      "description": "Delete a database backup",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "key": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "key"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "NO_CONTENT": true
-      }
-    }
-  },
-  "database": {
-    "collections": {
-      "list": {
-        "method": "get",
-        "description": "Retrieve all database collections",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "type": {
-                  "type": "string",
-                  "enum": [
-                    "base",
-                    "view"
-                  ]
-                },
-                "fields": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "optional": {
-                        "type": "boolean"
-                      },
-                      "options": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      }
-                    },
-                    "required": [
-                      "name",
-                      "type",
-                      "optional"
-                    ],
-                    "additionalProperties": false
-                  }
-                }
-              },
-              "required": [
-                "name",
-                "type",
-                "fields"
-              ],
-              "additionalProperties": false
-            }
-          }
         }
       }
     }
@@ -3164,9 +3130,9 @@ export const contract = {
       }
     }
   },
-  "media": {
+  "files": {
     "method": "get",
-    "description": "Retrieve media file from PocketBase",
+    "description": "Retrieve stored file or thumbnail from storage provider",
     "noAuth": true,
     "encrypted": false,
     "isDownloadable": false,
@@ -3176,26 +3142,15 @@ export const contract = {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "type": "object",
         "properties": {
-          "collectionId": {
-            "type": "string"
-          },
-          "recordId": {
-            "type": "string"
-          },
-          "fieldId": {
+          "key": {
             "type": "string"
           },
           "thumb": {
             "type": "string"
-          },
-          "token": {
-            "type": "string"
           }
         },
         "required": [
-          "collectionId",
-          "recordId",
-          "fieldId"
+          "key"
         ],
         "additionalProperties": false
       }

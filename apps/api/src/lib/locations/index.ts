@@ -3,7 +3,7 @@ import z from 'zod'
 
 import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
-const forge = createForge('locations')
+const forge = createForge({ moduleId: 'locations' })
 
 const search = forge
   .query({

@@ -3,7 +3,7 @@ import { createSelectSchema } from 'drizzle-orm/zod'
 import z from 'zod'
 
 import forge from '../forge'
-import { userFontFamilyUpload } from '../schema.drizzle'
+import { fontsFontFamilyUpload } from '../schema.drizzle'
 
 const VALID_FONT_EXTENSIONS = ['.ttf', '.otf', '.woff', '.woff2']
 
@@ -13,7 +13,7 @@ function isValidFontFile(filename: string): boolean {
   return VALID_FONT_EXTENSIONS.includes(ext)
 }
 
-const fontUploadSchema = createSelectSchema(userFontFamilyUpload).extend({
+const fontUploadSchema = createSelectSchema(fontsFontFamilyUpload).extend({
   created: z.string(),
   updated: z.string()
 })
@@ -27,7 +27,7 @@ export const list = forge
     }
   })
   .callback(async ({ db, response }) => {
-    const records = await db.query.userFontFamilyUpload.findMany()
+    const records = await db.query.fontsFontFamilyUpload.findMany()
 
     return response.ok(
       records.map(record => ({
@@ -56,7 +56,7 @@ export const get = forge
     }
   })
   .callback(async ({ db, query: { id }, response }) => {
-    const record = await db.query.userFontFamilyUpload.findFirst({
+    const record = await db.query.fontsFontFamilyUpload.findFirst({
       where: { id }
     })
 
@@ -124,10 +124,12 @@ export const upload = forge
       }
 
       let existingFileKey: string | undefined
+
       if (id) {
-        const existing = await db.query.userFontFamilyUpload.findFirst({
+        const existing = await db.query.fontsFontFamilyUpload.findFirst({
           where: { id }
         })
+
         if (!existing) {
           return response.notFound()
         }
@@ -137,7 +139,7 @@ export const upload = forge
       const fileKey = await core.storage.save({
         file,
         currentKey: existingFileKey,
-        table: 'userFontFamilyUpload',
+        table: 'fontsFontFamilyUpload',
         field: 'file'
       })
 
@@ -147,7 +149,7 @@ export const upload = forge
 
       if (id) {
         const [updated] = await db
-          .update(userFontFamilyUpload)
+          .update(fontsFontFamilyUpload)
           .set({
             displayName,
             family,
@@ -155,7 +157,7 @@ export const upload = forge
             file: fileKey,
             updated: new Date()
           })
-          .where(eq(userFontFamilyUpload.id, id))
+          .where(eq(fontsFontFamilyUpload.id, id))
           .returning()
 
         return response.ok({
@@ -170,7 +172,7 @@ export const upload = forge
       }
 
       const [created] = await db
-        .insert(userFontFamilyUpload)
+        .insert(fontsFontFamilyUpload)
         .values({
           displayName,
           family,
@@ -205,7 +207,7 @@ export const remove = forge
     }
   })
   .callback(async ({ db, core, query: { id }, response }) => {
-    const record = await db.query.userFontFamilyUpload.findFirst({
+    const record = await db.query.fontsFontFamilyUpload.findFirst({
       where: { id }
     })
 
@@ -218,8 +220,8 @@ export const remove = forge
     }
 
     await db
-      .delete(userFontFamilyUpload)
-      .where(eq(userFontFamilyUpload.id, id))
+      .delete(fontsFontFamilyUpload)
+      .where(eq(fontsFontFamilyUpload.id, id))
 
     return response.noContent()
   })

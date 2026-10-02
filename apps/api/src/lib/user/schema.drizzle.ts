@@ -1,4 +1,3 @@
-import { defineRelations } from 'drizzle-orm'
 import {
   boolean,
   json,
@@ -8,6 +7,8 @@ import {
   uuid,
   varchar
 } from 'drizzle-orm/pg-core'
+
+import { type RelationsBuilder } from '@lifeforge/drizzle'
 
 export const users = pgTable('users', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -30,8 +31,9 @@ export const users = pgTable('users', {
   }),
   twoFASecret: varchar('two_fa_secret', { length: 255 }),
   fontScale: real('font_scale').default(1.0).notNull(),
-  pinnedFontFamilies: json('pinned_font_families').$type<string[]>(),
-  borderRadiusMultiplier: real('border_radius_multiplier').default(1.0).notNull(),
+  borderRadiusMultiplier: real('border_radius_multiplier')
+    .default(1.0)
+    .notNull(),
   bordered: boolean('bordered').default(false).notNull(),
   language: varchar('language', { length: 50 }).default('en').notNull(),
   auth_password_hash: varchar('auth_password_hash', { length: 255 }),
@@ -39,17 +41,5 @@ export const users = pgTable('users', {
   updated: timestamp('updated', { mode: 'date' }).defaultNow().notNull()
 })
 
-export const userFontFamilyUpload = pgTable('user__font_family_upload', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  displayName: varchar('display_name', { length: 255 }).notNull(),
-  family: varchar('family', { length: 255 }).notNull(),
-  file: varchar('file', { length: 255 }).notNull(),
-  weight: real('weight').default(400).notNull(),
-  created: timestamp('created', { mode: 'date' }).defaultNow().notNull(),
-  updated: timestamp('updated', { mode: 'date' }).defaultNow().notNull()
-})
-
-export const userRelations = defineRelations(
-  { users, userFontFamilyUpload },
-  () => ({})
-)
+export const tables = { users }
+export const relations = (_r: RelationsBuilder<typeof tables>) => ({})

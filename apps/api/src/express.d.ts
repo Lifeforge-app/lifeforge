@@ -4,7 +4,7 @@ import {
 } from '@functions/routes/typescript/forge_controller.types'
 import { ITaskPoolTask } from '@functions/socketio/taskPool'
 
-import { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
+import { type PostgresJsDatabase } from '@lifeforge/drizzle'
 
 declare global {
   namespace Express {

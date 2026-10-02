@@ -17,7 +17,6 @@ export const me = forge
           .omit({
             APIKeysMasterPasswordHash: true,
             twoFASecret: true,
-            pinnedFontFamilies: true,
             auth_password_hash: true,
             created: true,
             updated: true

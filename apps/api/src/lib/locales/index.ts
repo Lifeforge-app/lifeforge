@@ -13,7 +13,7 @@ import {
   forgeRouter
 } from '@lifeforge/server-utils'
 
-const forge = createForge('locales')
+const forge = createForge({ moduleId: 'locales' })
 
 const appsDir = path.join(ROOT_DIR, 'modules')
 

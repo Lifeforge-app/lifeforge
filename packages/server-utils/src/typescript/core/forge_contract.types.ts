@@ -2,8 +2,7 @@ import type { Request, RequestHandler, Response } from 'express'
 import type { Server } from 'socket.io'
 import type { z } from 'zod'
 
-import { type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import { type AnyRelations } from 'drizzle-orm'
+import { type AnyRelations, type PostgresJsDatabase } from '@lifeforge/drizzle'
 
 import {
   OutputDefinition,
@@ -12,9 +11,7 @@ import {
 import { ConvertMedia, MediaConfig } from '../standalone/media.types'
 import { CoreContext } from './core_context.types'
 
-export interface ForgeExpressContext<
-  TSchema extends AnyRelations = any
-> {
+export interface ForgeExpressContext<TSchema extends AnyRelations = any> {
   req: Request
   res: Response
   io: Server
@@ -47,6 +44,7 @@ export interface ForgeContract {
       context: ForgeExpressContext<any>
     ) => Promise<{ $status: number; payload?: unknown }>
     callerModule?: { source: string; id: string }
+    schemas?: Record<string, unknown>
   }
 }
 

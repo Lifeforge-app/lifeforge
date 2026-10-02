@@ -1,6 +1,12 @@
 import type { RequestHandler } from 'express'
 import type { z } from 'zod'
-import { type AnyRelations } from 'drizzle-orm'
+
+import {
+  type AnyRelations,
+  type BuiltModuleSchema,
+  type ModuleSchema,
+  defineModuleSchema
+} from '@lifeforge/drizzle'
 
 import { getCallerModuleId } from '..'
 import type {
@@ -60,19 +66,31 @@ export function createOutputHelpers<
   return helpers as unknown as OutputHelpers<TOutput>
 }
 
-export function createForgeContractBuilder<
-  TSchema extends AnyRelations = any
->(
-  callerModuleOrOptions?: string | { modulePathAlias?: string }
-) {
-  const callerModule =
-    typeof callerModuleOrOptions === 'string'
-      ? callerModuleOrOptions
-      : undefined
-  const modulePathAlias =
-    typeof callerModuleOrOptions === 'object'
-      ? callerModuleOrOptions.modulePathAlias
-      : undefined
+export interface ForgeContractOptions<
+  TModuleSchema extends ModuleSchema = ModuleSchema
+> {
+  schema?: TModuleSchema
+  moduleId?: string
+  modulePathAlias?: string
+}
+
+type ForgeBuilderFor<
+  TSchema extends AnyRelations,
+  TOptions extends ForgeContractOptions
+> = ReturnType<
+  typeof makeBuilder<
+    TOptions['schema'] extends ModuleSchema
+      ? BuiltModuleSchema<TOptions['schema']>
+      : TSchema
+  >
+>
+
+function makeBuilder<TSchema extends AnyRelations = any>(config: {
+  callerModule?: string
+  modulePathAlias?: string
+  schemas?: Record<string, unknown>
+}) {
+  const { callerModule, modulePathAlias, schemas } = config
 
   function buildRoute<
     TMethod extends 'get' | 'post',
@@ -154,7 +172,8 @@ export function createForgeContractBuilder<
               encrypted: metadata.encrypted ?? true,
               rateLimit: metadata.rateLimit ?? true,
               callback: callbackWrapper,
-              callerModule: actualCallerModule
+              callerModule: actualCallerModule,
+              schemas
             }
           }
         }
@@ -212,6 +231,23 @@ export function createForgeContractBuilder<
       )
     }
   }
+}
+
+export function createForgeContractBuilder<
+  TSchema extends AnyRelations = any,
+  TOptions extends ForgeContractOptions = ForgeContractOptions
+>(options?: TOptions): ForgeBuilderFor<TSchema, TOptions> {
+  const { schema, moduleId, modulePathAlias } = options ?? {}
+
+  if (schema) {
+    defineModuleSchema(schema.tables, schema.relations as any)
+  }
+
+  return makeBuilder({
+    callerModule: moduleId,
+    modulePathAlias,
+    schemas: schema?.tables
+  }) as unknown as ForgeBuilderFor<TSchema, TOptions>
 }
 
 export default createForgeContractBuilder

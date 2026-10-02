@@ -12,7 +12,8 @@ export { default as getCallerModuleId } from './utils/getCallerModuleId'
 
 export {
   default as createForgeContractBuilder,
-  default as createForge
+  default as createForge,
+  type ForgeContractOptions
 } from './routes/forgeContract'
 
 export type {
@@ -71,4 +72,3 @@ export {
 } from './routes/traceRouteStack'
 
 export { ModuleRegistry } from './registry/ModuleRegistry'
-

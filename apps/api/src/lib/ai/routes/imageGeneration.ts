@@ -3,7 +3,7 @@ import z from 'zod'
 
 import { createForge } from '@lifeforge/server-utils'
 
-const forge = createForge('ai')
+const forge = createForge({ moduleId: 'ai' })
 
 export const generateImage = forge
   .mutation({

@@ -77,17 +77,20 @@ export const enable = forge
       return response.unauthorized()
     }
 
-    pendingTOTPSetups.del(tid)
-
     const verified = speakeasy.totp.verify({
       secret: pending.secret,
       encoding: 'base32',
-      token: otp
+      token: otp,
+      window: 1
     })
 
     if (!verified) {
       return response.unauthorized()
     }
+
+    // Only consume the setup session once verification succeeds, so a wrong or
+    // late code can be retried within the TTL.
+    pendingTOTPSetups.del(tid)
 
     const user = await db.query.users.findFirst()
 
@@ -158,8 +161,6 @@ export const verify = forge
       return response.unauthorized()
     }
 
-    pending2FASessions.del(tid)
-
     const user = await db.query.users.findFirst({
       where: { id: pending.userId }
     })
@@ -178,12 +179,17 @@ export const verify = forge
     const verified = speakeasy.totp.verify({
       secret,
       encoding: 'base32',
-      token: otp
+      token: otp,
+      window: 1
     })
 
     if (!verified) {
       return response.unauthorized()
     }
+
+    // Only consume the login session once verification succeeds, so a wrong or
+    // late code can be retried within the TTL.
+    pending2FASessions.del(tid)
 
     const userId = pending.userId
     const ip = req.ip || req.socket.remoteAddress || '127.0.0.1'

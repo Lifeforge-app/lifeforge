@@ -1,11 +1,6 @@
-import { defineRelations } from 'drizzle-orm'
-import {
-  boolean,
-  pgTable,
-  timestamp,
-  uuid,
-  varchar
-} from 'drizzle-orm/pg-core'
+import { boolean, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+
+import { type RelationsBuilder } from '@lifeforge/drizzle'
 
 export const apiKeysEntries = pgTable('api_keys__entries', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -18,7 +13,5 @@ export const apiKeysEntries = pgTable('api_keys__entries', {
   updated: timestamp('updated', { mode: 'date' }).defaultNow().notNull()
 })
 
-export const apiKeysRelations = defineRelations(
-  { apiKeysEntries },
-  () => ({})
-)
+export const tables = { apiKeysEntries }
+export const relations = (_r: RelationsBuilder<typeof tables>) => ({})

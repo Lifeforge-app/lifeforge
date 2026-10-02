@@ -1,11 +1,6 @@
-import { defineRelations } from 'drizzle-orm'
-import {
-  boolean,
-  pgTable,
-  timestamp,
-  uuid,
-  varchar
-} from 'drizzle-orm/pg-core'
+import { boolean, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+
+import { type RelationsBuilder } from '@lifeforge/drizzle'
 
 export const authRefreshTokens = pgTable('auth__refresh_tokens', {
   id: uuid('id').defaultRandom().primaryKey(),
@@ -15,7 +10,9 @@ export const authRefreshTokens = pgTable('auth__refresh_tokens', {
   last_ip: varchar('last_ip', { length: 255 }).notNull(),
   expires_at: timestamp('expires_at', { mode: 'date' }).notNull(),
   revoked: boolean('revoked').default(false).notNull(),
-  last_used_at: timestamp('last_used_at', { mode: 'date' }).defaultNow().notNull(),
+  last_used_at: timestamp('last_used_at', { mode: 'date' })
+    .defaultNow()
+    .notNull(),
   created: timestamp('created', { mode: 'date' }).defaultNow().notNull(),
   updated: timestamp('updated', { mode: 'date' }).defaultNow().notNull()
 })
@@ -30,7 +27,5 @@ export const authOAuthProviders = pgTable('auth__oauth_providers', {
   updated: timestamp('updated', { mode: 'date' }).defaultNow().notNull()
 })
 
-export const authRelations = defineRelations(
-  { authRefreshTokens, authOAuthProviders },
-  () => ({})
-)
+export const tables = { authRefreshTokens, authOAuthProviders }
+export const relations = (_r: RelationsBuilder<typeof tables>) => ({})

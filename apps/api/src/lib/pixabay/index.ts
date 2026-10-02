@@ -2,7 +2,7 @@ import z from 'zod'
 
 import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
-const forge = createForge('pixabay')
+const forge = createForge({ moduleId: 'pixabay' })
 
 const searchImages = forge
   .query({
@@ -118,15 +118,23 @@ const searchImages = forge
 
       return response.ok({
         total: data.totalHits,
-        hits: data.hits.map((hit: { id: string | number; webformatURL: string; webformatWidth: number; webformatHeight: number; largeImageURL: string }) => ({
-          id: String(hit.id),
-          thumbnail: {
-            url: hit.webformatURL,
-            width: hit.webformatWidth,
-            height: hit.webformatHeight
-          },
-          imageURL: hit.largeImageURL
-        }))
+        hits: data.hits.map(
+          (hit: {
+            id: string | number
+            webformatURL: string
+            webformatWidth: number
+            webformatHeight: number
+            largeImageURL: string
+          }) => ({
+            id: String(hit.id),
+            thumbnail: {
+              url: hit.webformatURL,
+              width: hit.webformatWidth,
+              height: hit.webformatHeight
+            },
+            imageURL: hit.largeImageURL
+          })
+        )
       })
     }
   )

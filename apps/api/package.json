@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@lifeforge/configs": "workspace:*",
+    "@lifeforge/drizzle": "workspace:*",
     "@lifeforge/file-storage": "workspace:*",
     "@lifeforge/log": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",
