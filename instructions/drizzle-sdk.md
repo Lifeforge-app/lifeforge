@@ -22,7 +22,7 @@ route DSL see [`server-dsl-migration.md`](./server-dsl-migration.md).
   (`db.select/insert/update/delete`) for joins and aggregates.
 
 ```typescript
-const entries = await db.query.achievementsEntries.findMany({
+const entries = await db.query.entries.findMany({
   where: { difficulty: 'hard' },
   orderBy: { created: 'desc' }
 })
@@ -30,17 +30,19 @@ const entries = await db.query.achievementsEntries.findMany({
 
 ### Packages and scripts
 
-| Package              | Role                                          |
-| -------------------- | --------------------------------------------- |
-| `drizzle-orm`        | schema, relations, query builder, zod         |
-| `drizzle-kit`        | push / generate / migrate (dev)               |
-| `postgres`           | `postgres-js` driver                          |
-| `@lifeforge/drizzle` | LifeForge glue (registry, schema composition) |
+| Package              | Role                                                                  |
+| -------------------- | --------------------------------------------------------------------- |
+| `drizzle-orm`        | schema, relations, query builder, zod                                 |
+| `drizzle-kit`        | push / generate / migrate (dev)                                       |
+| `postgres`           | `postgres-js` driver                                                  |
+| `@lifeforge/drizzle` | LifeForge glue (table namespacing, schema composition, query scoping) |
 
 `drizzle-orm` is imported directly (`pgTable`, `eq`, `sql`, `defineRelations`,
-`createSelectSchema`, `RelationsBuilder`, `PostgresJsDatabase`, ...).
-`@lifeforge/drizzle` only exports LifeForge-owned helpers — `defineModuleSchema`,
-`composeRelations`, `ModuleSchema`, `BuiltModuleSchema`.
+`RelationsBuilder`, `PostgresJsDatabase`, ...); zod-derived schemas come from
+`drizzle-orm/zod` (`createSelectSchema`, `createInsertSchema`).
+`@lifeforge/drizzle` only exports LifeForge-owned helpers — `createModuleTable`,
+`defineModuleSchema`, `composeRelations`, `scopeDbForModule`, `ModuleSchema`,
+`BuiltModuleSchema`.
 
 ```bash
 pnpm db:push      # push schema straight to the DB (development)
@@ -57,14 +59,13 @@ tables and a `relations` callback.
 
 ```typescript
 // modules/lifeforge--achievements/server/schema.drizzle.ts
-import {
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  uuid,
-  varchar
-} from 'drizzle-orm/pg-core'
+import { pgEnum, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
+
+import { createModuleTable } from '@lifeforge/drizzle'
+
+// Auto-prefixes DB table names with the calling module's namespace
+// (`achievements__categories`), so declare bare names below.
+const pgTable = createModuleTable()
 
 export const difficultyEnum = pgEnum('difficulty', [
   'easy',
@@ -73,14 +74,14 @@ export const difficultyEnum = pgEnum('difficulty', [
   'impossible'
 ])
 
-export const achievementsCategories = pgTable('achievements__categories', {
+export const achievementsCategories = pgTable('categories', {
   id: uuid('id').defaultRandom().primaryKey(),
   name: varchar('name', { length: 255 }).notNull(),
   color: varchar('color', { length: 255 }).notNull(),
   icon: varchar('icon', { length: 255 }).notNull()
 })
 
-export const achievementsEntries = pgTable('achievements__entries', {
+export const achievementsEntries = pgTable('entries', {
   id: uuid('id').defaultRandom().primaryKey(),
   title: varchar('title', { length: 255 }).notNull(),
   thoughts: text('thoughts').notNull(),
@@ -90,22 +91,27 @@ export const achievementsEntries = pgTable('achievements__entries', {
   updated: timestamp('updated', { mode: 'date' }).defaultNow().notNull()
 })
 
-export const tables = { achievementsCategories, achievementsEntries }
+export const tables = {
+  categories: achievementsCategories,
+  entries: achievementsEntries
+}
 ```
 
 ### Conventions
 
-- **DB table names are namespaced with the module prefix** using `__`
-  (`achievements__categories`). All modules share one namespace, so the
-  `tables` keys must be module-namespaced too (`achievementsEntries`, never
-  `entries`).
+- **Table names are auto-namespaced.** Use `const pgTable = createModuleTable()`
+  and declare **bare** names (`pgTable('entries', ...)`) - the helper prefixes
+  them with the calling module's namespace (`achievements__entries`). Keep the
+  `tables` keys bare too (`entries`, not `achievementsEntries`) so
+  `db.query.entries` resolves.
 - **JS property names use snake_case, matching the DB column.** Pass the column
   name explicitly: `category_id: uuid('category_id')`. (camelCase JS keys were
   the previous convention; snake_case is now the default.)
 - **IDs**: `uuid('id').defaultRandom().primaryKey()`.
 - **Timestamps**: `timestamp('created', { mode: 'date' }).defaultNow().notNull()`.
-  They deserialize to `Date`, so convert with `.toISOString()` before returning
-  them from a route.
+  They deserialize to `Date`. Return them as-is from routes — output schemas
+  declare `z.date()`, and the framework serializes them to ISO strings on the
+  wire (see [Output Serialization](#output-serialization)).
 - **Foreign keys**: `.references(() => target.id)` creates the DB constraint.
   It does not power `db.query` relations — those need an entry in the
   `relations` callback (below).
@@ -121,22 +127,29 @@ passes its schema to the forge builder.
 
 ```typescript
 // modules/lifeforge--achievements/server/schema.drizzle.ts
-import { pgTable, ... } from 'drizzle-orm/pg-core'
 import { type RelationsBuilder } from 'drizzle-orm'
+import { ... } from 'drizzle-orm/pg-core'
 
-export const achievementsCategories = pgTable('achievements__categories', { ... })
-export const achievementsEntries = pgTable('achievements__entries', { ... })
+import { createModuleTable } from '@lifeforge/drizzle'
 
-export const tables = { achievementsCategories, achievementsEntries }
+const pgTable = createModuleTable()
+
+export const achievementsCategories = pgTable('categories', { ... })
+export const achievementsEntries = pgTable('entries', { ... })
+
+export const tables = {
+  categories: achievementsCategories,
+  entries: achievementsEntries
+}
 
 export const relations = (r: RelationsBuilder<typeof tables>) => ({
-  achievementsCategories: {
-    entries: r.many.achievementsEntries()
+  categories: {
+    entries: r.many.entries()
   },
-  achievementsEntries: {
-    category: r.one.achievementsCategories({
-      from: r.achievementsEntries.category_id,
-      to: r.achievementsCategories.id
+  entries: {
+    category: r.one.categories({
+      from: r.entries.category_id,
+      to: r.categories.id
     })
   }
 })
@@ -190,7 +203,7 @@ The default for CRUD. Fully typed from the registered relations; supports
 ```typescript
 const user = await db.query.users.findFirst({ where: { id: userId } })
 
-const entries = await db.query.achievementsEntries.findMany({
+const entries = await db.query.entries.findMany({
   orderBy: { created: 'desc' }
 })
 ```
@@ -245,7 +258,7 @@ const filters: TableFilter<typeof achievementsEntries>[] = [
     : [])
 ]
 
-const result = await db.query.achievementsEntries.findMany({
+const result = await db.query.entries.findMany({
   where: filters.length > 0 ? { AND: filters } : undefined,
   orderBy: { created: 'desc' }
 })
@@ -254,7 +267,7 @@ const result = await db.query.achievementsEntries.findMany({
 ### Selecting a subset of columns / eager loading
 
 ```typescript
-const rows = await db.query.achievementsEntries.findMany({
+const rows = await db.query.entries.findMany({
   columns: { id: true, title: true, difficulty: true },
   with: { category: true }, // loads the related `one` relation
   orderBy: { created: 'desc' },
@@ -365,9 +378,7 @@ const entryDto = createSelectSchema(achievementsEntries)
   .omit({ category_id: true })
   .extend({
     difficulty: entryDifficultyDto,
-    category: z.string().optional().nullable(),
-    created: z.string(),
-    updated: z.string()
+    category: z.string().optional().nullable()
   })
 
 const entryInputDto = createInsertSchema(achievementsEntries)
@@ -388,9 +399,10 @@ input: {
 
 ### Rules and gotchas
 
-- **Timestamps must be re-declared as `z.string()`** in output schemas
-  (`created: z.string()`), because `createSelectSchema` yields `z.date()` for
-  `mode: 'date'` columns. Serialize with `.toISOString()` when mapping rows.
+- **Leave timestamp columns as `z.date()`** in output schemas. Don't override
+  them to `z.string()`, and don't call `.toISOString()` in the route: contract
+  generation renders `z.date()` as a `date-time` string and the framework
+  serializes the value to ISO on the wire (client sees `string`).
 - **`.pick()` the exposed fields** for mutation bodies so clients cannot set
   server-managed columns (ids, timestamps, relation keys).
 - **Output contracts are success-only** and JSON-Schema-serializable: no
@@ -405,8 +417,10 @@ input: {
 
 ## Output Serialization
 
-`db` returns `Date` objects for timestamp columns. Route outputs are JSON, so
-convert:
+`db` returns `Date` objects for timestamp columns, and DTOs keep them as
+`z.date()`. Return the values untouched — the framework JSON-serializes `Date`
+to an ISO string on the wire, and the generated client contract types the field
+as `string`. Don't hand-convert:
 
 ```typescript
 return response.ok(
@@ -416,14 +430,14 @@ return response.ok(
     thoughts: entry.thoughts,
     difficulty: entry.difficulty,
     category: entry.category_id ?? null,
-    created: entry.created.toISOString(),
-    updated: entry.updated.toISOString()
+    created: entry.created,
+    updated: entry.updated
   }))
 )
 ```
 
-Never leak sensitive columns (`users.auth_password_hash`, token hashes) — map
-only the fields the contract declares.
+Map only the fields the contract declares. Never leak sensitive columns
+(`users.auth_password_hash`, token hashes).
 
 ---
 
@@ -538,10 +552,12 @@ See [`file-storage-sdk.md`](./file-storage-sdk.md) for the full API.
 
 - **Registration lives in `forge.ts`.** `db.query.*` only sees tables registered
   when the module was loaded. Pass the schema to `createForgeContractBuilder({ schema })`.
-- **Namespace registry keys**: prefix `tables` keys with the module name.
+- **Keep `tables` keys bare** (`entries`); `createModuleTable()` handles the
+  DB-name namespace prefix.
 - **Use `eq(column, value)` in builder `.where()`**, not the object filter syntax.
-- **Convert `Date` to ISO strings** before returning; output schemas declare
-  `z.string()` for timestamps.
+- **Return `Date` objects as-is**; output schemas keep `z.date()` and the
+  framework serializes them to ISO strings for the client. Never override
+  timestamp columns to `z.string()` or call `.toISOString()` in a route.
 - **Set `updated` manually** on every update — there is no trigger.
 - **Never expose** password/token/secret columns in outputs.
 - **One connection pool**: don't create additional `drizzle()`/`postgres()`

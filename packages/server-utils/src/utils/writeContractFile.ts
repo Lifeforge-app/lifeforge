@@ -84,6 +84,22 @@ function fixJSONSchemaRecord(schema: any): any {
   return result
 }
 
+/**
+ * Params for `toJSONSchema` that let DTOs use `z.date()` on the server while
+ * still emitting a `date-time` string schema for the client. Dates are
+ * unrepresentable in JSON Schema (zod throws), so we fall back to `any` and
+ * rewrite date nodes ourselves.
+ */
+const jsonSchemaParams = {
+  unrepresentable: 'any' as const,
+  override: (ctx: { zodSchema: any; jsonSchema: any }) => {
+    if (ctx.zodSchema?._zod?.def?.type === 'date') {
+      ctx.jsonSchema.type = 'string'
+      ctx.jsonSchema.format = 'date-time'
+    }
+  }
+}
+
 export function serializeEndpointValue(val: any): {
   method: any
   description: any
@@ -107,11 +123,11 @@ export function serializeEndpointValue(val: any): {
     input: {
       query:
         val.schema?.query && typeof val.schema.query.toJSONSchema === 'function'
-          ? fixJSONSchemaRecord(val.schema.query.toJSONSchema())
+          ? fixJSONSchemaRecord(val.schema.query.toJSONSchema(jsonSchemaParams))
           : undefined,
       body:
         val.schema?.body && typeof val.schema.body.toJSONSchema === 'function'
-          ? fixJSONSchemaRecord(val.schema.body.toJSONSchema())
+          ? fixJSONSchemaRecord(val.schema.body.toJSONSchema(jsonSchemaParams))
           : undefined
     },
     output:
@@ -126,7 +142,9 @@ export function serializeEndpointValue(val: any): {
                   v === true
                     ? true
                     : v && typeof (v as any).toJSONSchema === 'function'
-                      ? fixJSONSchemaRecord((v as any).toJSONSchema())
+                      ? fixJSONSchemaRecord(
+                          (v as any).toJSONSchema(jsonSchemaParams)
+                        )
                       : v
                 ])
             )

@@ -54,7 +54,7 @@ export const listOptions = forge
           enabled: z.boolean(),
           icon: z.string(),
           name: z.string(),
-          updated: z.string().nullable()
+          updated: z.date().nullable()
         })
       )
     }
@@ -71,7 +71,7 @@ export const listOptions = forge
           provider,
           configured: !!record,
           enabled: record?.enabled || false,
-          updated: record?.updated ? record.updated.toISOString() : null,
+          updated: record?.updated ?? null,
           icon: config.icon,
           name: config.name
         }

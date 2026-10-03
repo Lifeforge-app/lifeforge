@@ -48,4 +48,24 @@ describe('serializeEndpointValue', () => {
     ])
     expect(serialized.output.NO_CONTENT).toBe(true)
   })
+
+  it('should serialize date outputs as date-time strings', () => {
+    const serialized = serializeEndpointValue(
+      makeValue({
+        OK: z.object({
+          created: z.date(),
+          updated: z.date().nullable()
+        })
+      })
+    )
+
+    expect(serialized.output.OK.properties.created).toEqual({
+      type: 'string',
+      format: 'date-time'
+    })
+    expect(serialized.output.OK.properties.updated.anyOf).toEqual([
+      { type: 'string', format: 'date-time' },
+      { type: 'null' }
+    ])
+  })
 })

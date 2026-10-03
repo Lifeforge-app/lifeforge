@@ -18,9 +18,7 @@ function isValidFontFile(filename: string): boolean {
 const fontUploadSchema = createSelectSchema(fontsFontFamilyUpload)
   .omit({ file: true })
   .extend({
-    file: fileReferenceSchema.nullable(),
-    created: z.string(),
-    updated: z.string()
+    file: fileReferenceSchema.nullable()
   })
 
 export const list = forge
@@ -44,8 +42,8 @@ export const list = forge
             ? await core.storage.getReference(record.file)
             : null,
           weight: record.weight,
-          created: record.created.toISOString(),
-          updated: record.updated.toISOString()
+          created: record.created,
+          updated: record.updated
         }))
       )
     )
@@ -78,8 +76,8 @@ export const get = forge
       family: record.family,
       file: record.file ? await core.storage.getReference(record.file) : null,
       weight: record.weight,
-      created: record.created.toISOString(),
-      updated: record.updated.toISOString()
+      created: record.created,
+      updated: record.updated
     })
   })
 
@@ -165,8 +163,8 @@ export const upload = forge
           family: updated.family,
           file: fileKey,
           weight: updated.weight,
-          created: updated.created.toISOString(),
-          updated: updated.updated.toISOString()
+          created: updated.created,
+          updated: updated.updated
         })
       }
 
@@ -186,8 +184,8 @@ export const upload = forge
         family: created.family,
         file: fileKey,
         weight: created.weight,
-        created: created.created.toISOString(),
-        updated: created.updated.toISOString()
+        created: created.created,
+        updated: created.updated
       })
     }
   )

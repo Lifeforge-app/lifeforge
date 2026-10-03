@@ -100,6 +100,12 @@ When the return shape comes from an external API or complex join, define the zod
 
 Do NOT use `z.custom()`, `z.void()`, `z.undefined()`, `z.unknown()`, `z.any()`, or `z.object({}).passthrough()` - these are not serializable to JSON Schema.
 
+> [!NOTE]
+> `z.date()` is the exception: contract generation renders it as a
+> `{ type: 'string', format: 'date-time' }` schema, and the framework serializes
+> `Date` values to ISO strings on the wire (the client sees `string`). Use
+> `z.date()` - not `z.string()` - for timestamp columns in output schemas.
+
 **`z.any()` and `.passthrough()` are ABSOLUTELY PROHIBITED in output schemas.** Every payload status must have an explicitly defined zod schema that accurately describes the return shape.
 
 ```typescript

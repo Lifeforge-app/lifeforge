@@ -507,6 +507,11 @@ Filter array items the same way. On the client, still treat contract-typed
 numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '—'`). See
 [`server-dsl-migration.md`](./server-dsl-migration.md) for the DSL-side rule.
 
+Timestamps are handled for you: DTOs keep `z.date()`, routes return the `Date`
+objects as-is, and the framework serializes them to ISO strings on the wire.
+Never re-declare timestamp columns as `z.string()` or call `.toISOString()` in a
+route.
+
 ### Sanitizing scraped / external HTML
 
 When a route returns HTML that the client renders with

@@ -1210,10 +1210,12 @@ export const contract = {
                 "maximum": 8388607
               },
               "created": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               },
               "updated": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               },
               "file": {
                 "anyOf": [
@@ -1322,10 +1324,12 @@ export const contract = {
                   "maximum": 8388607
                 },
                 "created": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "updated": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "file": {
                   "anyOf": [
@@ -1500,10 +1504,12 @@ export const contract = {
                 "maximum": 8388607
               },
               "created": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               },
               "updated": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               },
               "file": {
                 "anyOf": [
@@ -1704,10 +1710,12 @@ export const contract = {
                   "type": "boolean"
                 },
                 "created": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date-time"
                 },
                 "updated": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "date-time"
                 }
               },
               "required": [
@@ -1822,10 +1830,12 @@ export const contract = {
                 "type": "boolean"
               },
               "created": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               },
               "updated": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               }
             },
             "required": [
@@ -1927,10 +1937,12 @@ export const contract = {
                 "type": "boolean"
               },
               "created": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               },
               "updated": {
-                "type": "string"
+                "type": "string",
+                "format": "date-time"
               }
             },
             "required": [
@@ -2360,7 +2372,8 @@ export const contract = {
                   "updated": {
                     "anyOf": [
                       {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                       },
                       {
                         "type": "null"

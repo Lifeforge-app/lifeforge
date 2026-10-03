@@ -8,10 +8,7 @@ import { forgeRouter } from '@lifeforge/server-utils'
 import forge from '../forge'
 import { apiKeysEntries } from '../schema.drizzle'
 
-const entrySchema = createSelectSchema(apiKeysEntries).extend({
-  created: z.string(),
-  updated: z.string()
-})
+const entrySchema = createSelectSchema(apiKeysEntries)
 
 const get = forge
   .query({
@@ -71,8 +68,8 @@ const list = forge
       icon: entry.icon,
       key: decrypt2(entry.key, process.env.MASTER_KEY!).toString().slice(-4),
       exposable: entry.exposable,
-      created: entry.created.toISOString(),
-      updated: entry.updated.toISOString()
+      created: entry.created,
+      updated: entry.updated
     }))
 
     return response.ok(mappedEntries)
@@ -136,8 +133,8 @@ const create = forge
       return response.created({
         ...entry,
         key: key.slice(-4),
-        created: entry.created.toISOString(),
-        updated: entry.updated.toISOString()
+        created: entry.created,
+        updated: entry.updated
       })
     }
   )
@@ -191,8 +188,8 @@ const update = forge
       return response.ok({
         ...updatedEntry,
         key: key.slice(-4),
-        created: updatedEntry.created.toISOString(),
-        updated: updatedEntry.updated.toISOString()
+        created: updatedEntry.created,
+        updated: updatedEntry.updated
       })
     }
   )
