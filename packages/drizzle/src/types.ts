@@ -2,8 +2,12 @@ import type {
   AnyRelationsBuilderConfig,
   ExtractTablesFromSchema,
   ExtractTablesWithRelations,
-  Schema
+  Schema,
+  Table,
+  View
 } from 'drizzle-orm'
+
+export type SchemaEntry = Table | View
 
 /**
  * A module's schema declaration: its tables plus the raw `defineRelations`
@@ -15,6 +19,22 @@ export interface ModuleSchema<
 > {
   tables: TTables
   relations: (r: any) => Record<string, any>
+}
+
+/**
+ * A resolved schema definition as stored in `ModuleRegistry`. `tables`/`keyMap`
+ * are namespaced when a module id was provided; `relations` is the (possibly
+ * proxied) callback. `schemaParts` are composed into the global `db`.
+ */
+export interface ModuleSchemaDefinition<
+  TTables = Record<string, SchemaEntry>,
+  TRelations = (r: any) => Record<string, any>
+> {
+  moduleId?: string
+  tables: TTables
+  relations: TRelations
+  /** Bare table key -> namespaced registry key. */
+  keyMap?: Record<string, string>
 }
 
 /**

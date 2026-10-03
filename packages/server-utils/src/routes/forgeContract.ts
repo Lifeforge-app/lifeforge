@@ -11,6 +11,7 @@ import {
 
 import { getCallerModuleId } from '..'
 import { type ExistsInFor, existsIn } from '../database'
+import { ModuleRegistry } from '../registry/ModuleRegistry'
 import {
   type OutputDefinition,
   type ResponseObject,
@@ -203,7 +204,19 @@ export function createForgeContractBuilder<
   const { schema, moduleId, modulePathAlias } = options ?? {}
 
   if (schema) {
-    defineModuleSchema(schema.tables, schema.relations as any)
+    const caller = getCallerModuleId()
+
+    const moduleId = caller?.source === 'app' ? caller.id : undefined
+
+    const definition = defineModuleSchema(
+      schema.tables,
+      schema.relations as any,
+      moduleId
+    )
+
+    if (moduleId) {
+      ModuleRegistry.registerSchemaPart(moduleId, definition)
+    }
   }
 
   return makeBuilder({

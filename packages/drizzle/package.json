@@ -15,9 +15,12 @@
   },
   "scripts": {
     "build": "vite build && tsc --project tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@lifeforge/configs": "workspace:*",
     "@types/node": "^25.0.6"
   }

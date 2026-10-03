@@ -63,7 +63,7 @@ export const updateAvatar = forge
   .mutation({
     input: {},
     media: { file: { optional: false } },
-    output: { OK: fileReferenceSchema, UNAUTHORIZED: true }
+    output: { OK: fileReferenceSchema }
   })
   .callback(async ({ media: { file }, core, db, response }) => {
     const record = await db.query.users.findFirst()
@@ -71,7 +71,7 @@ export const updateAvatar = forge
     const ref = await core.storage.save({
       file,
       currentKey: record?.avatar ?? undefined, // replace the previous file
-      thumbs: ['256x0']                        // image thumbnails (optional)
+      thumbs: ['256x0'] // image thumbnails (optional)
     })
 
     await db.update(users).set({ avatar: ref?.key ?? null })
@@ -92,12 +92,12 @@ parse, OCR, transcode) before committing.
 
 ### `save` state machine
 
-| `file` value | Effect |
-| --- | --- |
-| a `StagedFile` | writes a new file; deletes `currentKey` if provided |
-| `'keep'` | keeps `currentKey` as-is |
-| `'removed'` | deletes `currentKey` |
-| `null` / `undefined` | same as `'keep'` |
+| `file` value         | Effect                                              |
+| -------------------- | --------------------------------------------------- |
+| a `StagedFile`       | writes a new file; deletes `currentKey` if provided |
+| `'keep'`             | keeps `currentKey` as-is                            |
+| `'removed'`          | deletes `currentKey`                                |
+| `null` / `undefined` | same as `'keep'`                                    |
 
 `save` returns a `FileReference` (or `null`). Always persist `ref.key` in your
 column — the key is what the client fetches by.

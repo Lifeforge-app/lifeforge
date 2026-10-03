@@ -1,11 +1,16 @@
-export {
-  DrizzleSchemaRegistry,
-  type DrizzleSchemaPart,
-  type SchemaEntry
-} from './registry/DrizzleSchemaRegistry'
-
 export { defineModuleSchema } from './defineModuleSchema'
 
-export { type BuiltModuleSchema, type ModuleSchema } from './types'
+export { createModuleTable } from './createModuleTable'
+
+export { deriveModuleNamespace, detectCallerModuleId } from './moduleNamespace'
+
+export { proxyDbQuery, scopeDbForModule } from './proxyDbQuery'
+
+export {
+  type BuiltModuleSchema,
+  type ModuleSchema,
+  type ModuleSchemaDefinition,
+  type SchemaEntry
+} from './types'
 
 export { composeRelations } from './composeRelations'

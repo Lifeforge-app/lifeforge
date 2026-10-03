@@ -1,80 +1,46 @@
 # Drizzle SDK Guide
 
-**Status**: Implemented
+How to define tables, relations, and queries on the LifeForge server with
+Drizzle ORM (`drizzle-orm@1.0.0-rc.4`) and the `postgres-js` driver. This is a
+**usage** guide for module/core authors; implementation lives in the source of
+`@lifeforge/drizzle` and `@lifeforge/server-utils`.
 
-How to define database schemas, relations, and queries on the Lifeforge server
-using the Drizzle ORM (v1, `drizzle-orm@1.0.0-rc.4`) with the `postgres-js`
-driver. This guide reflects the current state of the core server
-(`apps/api/src`) and the reference module `modules/lifeforge--achievements`.
-Other modules still on PocketBase are migration targets and are intentionally
-out of scope.
-
-For file uploads, `core.storage` uses the Drizzle table/column types. See
-[`file-storage-sdk.md`](./file-storage-sdk.md) for the storage side.
+For file uploads see [`file-storage-sdk.md`](./file-storage-sdk.md); for the
+route DSL see [`server-dsl-migration.md`](./server-dsl-migration.md).
 
 ---
 
 ## Overview
 
-Drizzle replaces PocketBase as the data layer. Instead of declaring collections
-with a `raw` PocketBase definition and a parallel Zod schema, a module declares
-plain TypeScript tables and relations:
+- Each module declares its tables in `server/schema.drizzle.ts` and registers
+  them by passing the schema to the forge builder in `server/forge.ts`
+  (`createForgeContractBuilder({ schema })`).
+- Route callbacks receive a fully-typed `db` (and `core`) scoped to the module's
+  schema. You never build your own `drizzle()`/`postgres()` client — use the
+  injected `db`.
+- Use the **relational API** (`db.query.*`) for CRUD, and the **SQL builder**
+  (`db.select/insert/update/delete`) for joins and aggregates.
 
-```
-PostgreSQL
-   ^
-   |  postgres-js client (one pool)
-   |
-apps/api/src/core/drizzle.ts  ──  single `db` instance with ALL relations merged
-   |
-   |  req.db middleware (core/app.ts)
-   v
-registerController ──> callback({ db, core, body, query, media, response, ... })
-   |
-   |  `db` is typed PostgresJsDatabase<TSchema>
-   v
-module route file: db.query.<table>.findFirst(...), db.select()..., etc.
+```typescript
+const entries = await db.query.achievementsEntries.findMany({
+  where: { difficulty: 'hard' },
+  orderBy: { created: 'desc' }
+})
 ```
 
-Key ideas:
+### Packages and scripts
 
-- **One `db` instance for the whole server**, built in
-  `apps/api/src/core/drizzle.ts`. It is attached to every request as `req.db`
-  by the middleware in `apps/api/src/core/app.ts:16`, then handed to route
-  callbacks by `registerController`.
-- **Schemas live per module** in `server/schema.drizzle.ts` as
-  `pgTable(...)` definitions plus a raw `relations` callback.
-- **Modules register by passing their schema to the forge builder** in
-  `server/forge.ts`: `createForgeContractBuilder({ schema })`. That records the
-  schema in a shared `DrizzleSchemaRegistry`. Core registers its own merged
-  schema once in `core/drizzle.ts` and no longer imports module schemas by name.
-  After the module loader finishes discovering and importing modules,
-  `initDrizzle()` composes every registered part into the single `db`.
-- **The forge builder is generic over the relations type**
-  (`createForgeContractBuilder<TSchema>`), which is what gives each callback a
-  fully typed `db`.
+| Package              | Role                                          |
+| -------------------- | --------------------------------------------- |
+| `drizzle-orm`        | schema, relations, query builder, zod         |
+| `drizzle-kit`        | push / generate / migrate (dev)               |
+| `postgres`           | `postgres-js` driver                          |
+| `@lifeforge/drizzle` | LifeForge glue (registry, schema composition) |
 
----
-
-## Dependencies and Scripts
-
-| Package              | Version      | Role                                          |
-| -------------------- | ------------ | --------------------------------------------- |
-| `drizzle-orm`        | `1.0.0-rc.4` | Schema, relations, query builder, zod         |
-| `drizzle-kit`        | `1.0.0-rc.4` | Migration generation / push (dev only)        |
-| `postgres`           | `^3.4.x`     | `postgres-js` driver used by core             |
-| `@lifeforge/drizzle` | `0.0.1`      | Registry + `defineModuleSchema` + composition |
-
-`drizzle-orm` is declared **once**, in the repo root `package.json`
-(`dependencies`), and is imported directly for context-free helpers
-(`pgTable`, `eq`, `sql`, `defineRelations`, `createSelectSchema`, ...).
-Context-aware glue (the schema registry, `defineModuleSchema`,
-`composeRelations`, and the `AnyRelations` / `PostgresJsDatabase` /
-`RelationsBuilder` types) is re-exported from `@lifeforge/drizzle` so the rest
-of the codebase never imports `drizzle-orm` for those.
-
-Migrations are run from the repo root; the root scripts delegate to the
-`@lifeforge/server` workspace:
+`drizzle-orm` is imported directly (`pgTable`, `eq`, `sql`, `defineRelations`,
+`createSelectSchema`, `RelationsBuilder`, `PostgresJsDatabase`, ...).
+`@lifeforge/drizzle` only exports LifeForge-owned helpers — `defineModuleSchema`,
+`composeRelations`, `ModuleSchema`, `BuiltModuleSchema`.
 
 ```bash
 pnpm db:push      # push schema straight to the DB (development)
@@ -82,79 +48,15 @@ pnpm db:generate  # generate SQL migration files into apps/api/drizzle
 pnpm db:migrate   # apply generated migrations
 ```
 
-which map to `drizzle-kit push | generate | migrate` inside `apps/api`.
-
----
-
-## Where Things Live
-
-```
-packages/drizzle/                     # @lifeforge/drizzle
-└── src/
-    ├── registry/DrizzleSchemaRegistry.ts   # shared schema registry
-    ├── defineModuleSchema.ts               # register + build local relations
-    └── composeRelations.ts                 # merge all registered parts
-
-apps/api/
-├── drizzle.config.ts                 # drizzle-kit config (schema globs, out dir)
-├── drizzle/                          # generated migrations (output)
-└── src/
-    ├── core/
-    │   ├── drizzle.ts                # client + core-only db + initDrizzle()
-    │   ├── app.ts                    # req.db = db middleware
-    │   └── functions/routes/
-    │       ├── functions/controllerLogic.ts   # injects db into callbacks
-    │       └── utils/coreContext.ts           # builds core.storage etc.
-    └── lib/
-        ├── user/schema.drizzle.ts
-        ├── auth/schema.drizzle.ts
-        └── apiKeys/schema.drizzle.ts
-
-modules/<module>/server/
-├── schema.drizzle.ts                 # pure declaration: tables + relations callback
-├── forge.ts                          # createForgeContractBuilder({ schema }) - registers
-└── routes/*.ts                       # queries against `db`
-```
-
-`core/drizzle.ts` only imports the **core** schemas. Module schemas register
-themselves as a side effect of being imported by
-`loadAndRegisterModuleRoutes()`. `core/routes/index.ts` then calls
-`initDrizzle()` to rebuild `db` from the full registry:
-
-```typescript
-// apps/api/src/core/routes/index.ts
-const appRoutes = await loadAndRegisterModuleRoutes()
-initDrizzle()
-```
-
-`drizzle.config.ts` discovers schemas automatically:
-
-```typescript
-// apps/api/drizzle.config.ts
-export default defineConfig({
-  schema: [
-    './src/lib/**/schema.drizzle.ts',
-    '../../modules/**/schema.drizzle.ts'
-  ],
-  out: './drizzle',
-  dialect: 'postgresql',
-  dbCredentials: { url: process.env.DATABASE_URL! }
-})
-```
-
-It reads env from `env/.env.local` (loaded via `dotenv`). `DATABASE_URL` is
-required by both `drizzle.config.ts` and `core/drizzle.ts`.
-
 ---
 
 ## Defining Tables (`schema.drizzle.ts`)
 
-Import table builders from `drizzle-orm/pg-core`. A module schema exports the
-tables plus a `defineRelations(...)` result used for typing.
+Import table builders from `drizzle-orm/pg-core`. A schema file exports the
+tables and a `relations` callback.
 
 ```typescript
 // modules/lifeforge--achievements/server/schema.drizzle.ts
-import { defineRelations } from 'drizzle-orm'
 import {
   pgEnum,
   pgTable,
@@ -183,50 +85,44 @@ export const achievementsEntries = pgTable('achievements__entries', {
   title: varchar('title', { length: 255 }).notNull(),
   thoughts: text('thoughts').notNull(),
   difficulty: difficultyEnum('difficulty').notNull(),
-  categoryId: uuid('category_id').references(() => achievementsCategories.id),
+  category_id: uuid('category_id').references(() => achievementsCategories.id),
   created: timestamp('created', { mode: 'date' }).defaultNow().notNull(),
   updated: timestamp('updated', { mode: 'date' }).defaultNow().notNull()
 })
+
+export const tables = { achievementsCategories, achievementsEntries }
 ```
 
 ### Conventions
 
-- **DB table names are namespaced with the module prefix** using `__` as the
-  separator, e.g. `achievements__categories`, `achievements__entries`. Core
-  tables use their own prefixes: `users`, `user__font_family_upload`,
-  `auth__refresh_tokens`, `auth__oauth_providers`, `api_keys__entries`.
-- **JS property is camelCase; the DB column is snake_case.** Pass the column
-  name explicitly as the first argument to the builder:
-  `categoryId: uuid('category_id')`, `emailVisibility: boolean('email_visibility')`.
-  This matches `apps/api/src/lib/user/schema.drizzle.ts`. (Note:
-  `auth/schema.drizzle.ts` uses snake_case property names directly - this is
-  legacy and should not be replicated.)
-- **Timestamps use `{ mode: 'date' }`** and `.defaultNow().notNull()`:
-  `created` / `updated`. Because they deserialize to `Date`, they must be
-  converted with `.toISOString()` before being returned from a route (see
-  [Zod integration](#zod-integration--dtos)).
-- **IDs are `uuid('id').defaultRandom().primaryKey()`**.
-- **Foreign keys use `.references(() => target.id)`**. This creates the actual
-  DB constraint. It does **not** power the relational query API - that needs a
-  `defineRelations` entry (see below).
-- **Enums use `pgEnum(...)`** and are referenced by column name.
-- **JSON columns use `json('col').$type<T>()`**, e.g.
-  `dashboardLayout: json('dashboard_layout').$type<Record<string, unknown>>()`.
-- Nullable columns simply omit `.notNull()`. Unique columns add `.unique()`.
+- **DB table names are namespaced with the module prefix** using `__`
+  (`achievements__categories`). All modules share one namespace, so the
+  `tables` keys must be module-namespaced too (`achievementsEntries`, never
+  `entries`).
+- **JS property names use snake_case, matching the DB column.** Pass the column
+  name explicitly: `category_id: uuid('category_id')`. (camelCase JS keys were
+  the previous convention; snake_case is now the default.)
+- **IDs**: `uuid('id').defaultRandom().primaryKey()`.
+- **Timestamps**: `timestamp('created', { mode: 'date' }).defaultNow().notNull()`.
+  They deserialize to `Date`, so convert with `.toISOString()` before returning
+  them from a route.
+- **Foreign keys**: `.references(() => target.id)` creates the DB constraint.
+  It does not power `db.query` relations — those need an entry in the
+  `relations` callback (below).
+- **Enums** use `pgEnum(...)`; **JSON** uses `json('col').$type<T>()`.
+- Nullable columns omit `.notNull()`; unique columns add `.unique()`.
 
 ---
 
 ## Defining Relations
 
-Relations are declared **once**, in the schema file, and **registered in
-`forge.ts`** when the module's `createForgeContractBuilder` is created. A schema
-file is a pure declaration - it never registers and never imports the registry
-at runtime.
+Relations are declared once, in the schema file, and registered when the module
+passes its schema to the forge builder.
 
 ```typescript
 // modules/lifeforge--achievements/server/schema.drizzle.ts
 import { pgTable, ... } from 'drizzle-orm/pg-core'
-import { type RelationsBuilder } from '@lifeforge/drizzle'
+import { type RelationsBuilder } from 'drizzle-orm'
 
 export const achievementsCategories = pgTable('achievements__categories', { ... })
 export const achievementsEntries = pgTable('achievements__entries', { ... })
@@ -239,7 +135,7 @@ export const relations = (r: RelationsBuilder<typeof tables>) => ({
   },
   achievementsEntries: {
     category: r.one.achievementsCategories({
-      from: r.achievementsEntries.categoryId,
+      from: r.achievementsEntries.category_id,
       to: r.achievementsCategories.id
     })
   }
@@ -256,145 +152,18 @@ const forge = createForgeContractBuilder({ schema })
 export default forge
 ```
 
-`createForgeContractBuilder` (aliased as `createForge`) takes a single config
-object - never positional arguments:
+`createForgeContractBuilder` (aliased `createForge`) takes a single config
+object: `{ schema?, moduleId?, modulePathAlias? }`. Passing `schema` registers
+the tables/relations and infers the module's `db` type, so callbacks get
+`db.query.<moduleTable>` typed. Modules without a schema use `createForge({})`;
+core libs pass an explicit generic
+(`createForgeContractBuilder<CoreRelations>({ moduleId: 'user' })`).
 
-```typescript
-interface ForgeContractOptions<TSchema extends ModuleSchema = ModuleSchema> {
-  schema?: TSchema // the schema.drizzle namespace
-  moduleId?: string // caller module id (core libs); app modules are stack-detected
-  modulePathAlias?: string // e.g. 'codeTime'
-}
-```
-
-Stateless modules (no Drizzle schema) simply pass `createForge({})`. When a
-`schema` is given, the builder:
-
-1. Registers `{ tables, relations }` in the shared `DrizzleSchemaRegistry`
-   (internally via `defineModuleSchema`).
-2. Builds the relations and infers the module's `db` type from them, so
-   callbacks get typed `db.query.<moduleTable>`.
-3. Attaches the tables to the contract (`getValue().schemas`), reserved for
-   `core.storage` field/collection validation.
-
-Without a `schema`, the `db` type comes from an explicit generic (core libs use
-`createForgeContractBuilder<CoreRelations>({ moduleId: 'user' })`) or defaults
-to `any`.
-
-`r.one.targetTable({ from, to })` and `r.many.targetTable()` are the v1
-`defineRelations` builders. `from` is the column on the source table, `to` is
-the column on the target table.
-
-> The `RelationsBuilder` import is **type-only**, so it is erased at runtime and
-> `drizzle-kit` never loads `@lifeforge/drizzle` through a schema file.
-
-### How the registry becomes the `db`
-
-Core is one owner, so it registers its merged schema **once** in
-`apps/api/src/core/drizzle.ts` (via `defineModuleSchema`) and builds a core-only
-`db` immediately so direct importers and tests have a working instance:
-
-```typescript
-// apps/api/src/core/drizzle.ts
-import { drizzle } from 'drizzle-orm/postgres-js'
-import { type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
-import postgres from 'postgres'
-
-import { composeRelations, defineModuleSchema } from '@lifeforge/drizzle'
-
-import * as apiKeysSchema from '../lib/apiKeys/schema.drizzle'
-import * as authSchema from '../lib/auth/schema.drizzle'
-import * as userSchema from '../lib/user/schema.drizzle'
-
-const client = postgres(process.env.DATABASE_URL!, { max: 1 })
-
-const coreTables = {
-  ...userSchema.tables,
-  ...authSchema.tables,
-  ...apiKeysSchema.tables
-}
-
-const coreRelations = defineModuleSchema(coreTables, r =>
-  Object.assign(
-    {},
-    userSchema.relations(r),
-    authSchema.relations(r),
-    apiKeysSchema.relations(r)
-  )
-)
-
-export type CoreRelations = typeof coreRelations
-
-let db: PostgresJsDatabase<CoreRelations> = drizzle({
-  client,
-  relations: coreRelations
-})
-export { db }
-
-export function initDrizzle(): void {
-  db = drizzle({
-    client,
-    relations: composeRelations()
-  }) as unknown as PostgresJsDatabase<CoreRelations>
-}
-```
-
-After module discovery, `core/routes/index.ts` calls `initDrizzle()`, which
-reads every registered part (core + modules) and rebuilds `db`:
-
-```typescript
-// composeRelations() (inside @lifeforge/drizzle)
-const parts = DrizzleSchemaRegistry.parts
-const tables = Object.assign({}, ...parts.map(p => p.tables))
-return defineRelations(tables as any, (r: any) =>
-  Object.assign({}, ...parts.map(p => p.relations(r)))
-)
-```
-
-**Key naming.** The keys in a schema's `tables` object are the names used to
-address the table in `db.query.<key>`. They must be **module-namespaced**
-(`achievementsEntries`, never `entries`) because all modules share one registry
-and therefore one namespace.
-
-> **Deployment note.** `@lifeforge/drizzle` must stay **external** in the core
-> API build (`apps/api/vite.config.ts`) and in module builds (handled
-> automatically by `serverAliasResolver`). Bundling it into either side would
-> create two separate `DrizzleSchemaRegistry` instances and schemas would not be
-> discovered.
-
-### Typing the builder
-
-- **Core libs** type against `CoreRelations`:
-
-  ```typescript
-  // apps/api/src/lib/user/forge.ts
-  import type { CoreRelations } from '@/core/drizzle'
-
-  const forge = createForgeContractBuilder<CoreRelations>({ moduleId: 'user' })
-  ```
-
-- **Modules** pass their schema and the type is inferred:
-
-  ```typescript
-  // modules/lifeforge--achievements/server/forge.ts
-  import * as schema from './schema.drizzle'
-
-  const forge = createForgeContractBuilder({ schema })
-  ```
-
-The generic parameter flows into `ForgeContext.db` and `ForgeContext.core`,
-both typed `PostgresJsDatabase<TSchema>` / `CoreContext<TSchema>`.
-
-At runtime the injected `db` knows every registered table, but the **types** of
-a module's `db` are limited to that module's own relations. A module cannot
-type-reference another module's table (this enforces module isolation). The
-runtime composition supports cross-module relations; a typed collaboration
-mechanism is deferred.
+`r.one.targetTable({ from, to })` / `r.many.targetTable()` are the relation
+builders: `from` is the column on the source table, `to` is the column on the
+target.
 
 ### Many-to-many and optional relations
-
-The v1 builder also supports junction (`through`) relations and optional `one`
-relations:
 
 ```typescript
 // many-to-many via a junction table
@@ -407,28 +176,22 @@ r.many.posts({
 r.one.profiles({ from: r.users.id, to: r.profiles.userId })
 ```
 
-`r.one` is treated as nullable in query results unless configured otherwise
-(`RelationResultKind` returns `TResult | null` for optional `one`). Foreign
-keys declared nullable with `.references()` should always get a matching
-optional `r.one`.
+`r.one` is treated as nullable in results unless configured otherwise. A
+nullable FK (`category_id: uuid('category_id').references(...)` without
+`.notNull()`) should always get a matching optional `r.one`.
 
 ---
 
 ## Querying: Relational Query API (`db.query`)
 
-The relational API is the default for CRUD. It is fully typed from the
-registered relations and supports `where`, `columns`, `orderBy`, `limit`,
-`offset`, `with`, and `extras`.
+The default for CRUD. Fully typed from the registered relations; supports
+`where`, `columns`, `orderBy`, `limit`, `offset`, `with`, `extras`.
 
 ```typescript
-// find one
-const user = await db.query.users.findFirst({
-  where: { id: userId }
-})
+const user = await db.query.users.findFirst({ where: { id: userId } })
 
-// find many, ordered
-const entries = await db.query.apiKeysEntries.findMany({
-  orderBy: { name: 'asc' }
+const entries = await db.query.achievementsEntries.findMany({
+  orderBy: { created: 'desc' }
 })
 ```
 
@@ -437,26 +200,19 @@ const entries = await db.query.apiKeysEntries.findMany({
 The `where` object accepts equality by default and nested operators:
 
 ```typescript
-// equality
 where: {
   id: category
 }
-
-// operators on a column
 where: {
   id: {
     ne: currentId
   }
 }
-
-// case-insensitive search
 where: {
   title: {
     ilike: `%${query}%`
   }
 }
-
-// combine with AND / OR (arrays)
 where: {
   OR: [
     { title: { ilike: `%${query}%` } },
@@ -464,25 +220,19 @@ where: {
   ]
 }
 where: {
-  AND: [{ difficulty }, { categoryId: category }]
+  AND: [{ difficulty }, { category_id: category }]
 }
-
-// empty => no filter
-where: filters.length > 0 ? { AND: filters } : undefined
+where: filters.length > 0 ? { AND: filters } : undefined // empty => no filter
 ```
 
 ### Building filters incrementally with `TableFilter`
 
-For dynamic filters, type an array with `TableFilter<typeof table>` and spread
-predicates conditionally, then pass as `AND`:
-
 ```typescript
-// modules/lifeforge--achievements/server/routes/entries.ts
 import { type TableFilter } from 'drizzle-orm'
 
 const filters: TableFilter<typeof achievementsEntries>[] = [
   ...(difficulty ? [{ difficulty }] : []),
-  ...(category ? [{ categoryId: category }] : []),
+  ...(category ? [{ category_id: category }] : []),
   ...(query
     ? [
         {
@@ -506,40 +256,33 @@ const result = await db.query.achievementsEntries.findMany({
 ```typescript
 const rows = await db.query.achievementsEntries.findMany({
   columns: { id: true, title: true, difficulty: true },
-  with: {
-    category: true // loads the related `one` relation
-  },
+  with: { category: true }, // loads the related `one` relation
   orderBy: { created: 'desc' },
   limit: 20,
   offset: 0
 })
 ```
 
-`with` is only available for relations registered in the central
-`defineRelations` map. Tables with no relations still support `db.query`, but
-`with` will be empty.
+`with` is only available for relations declared in the `relations` callback.
 
 ### Operator reference
 
-Available operators (imported from `drizzle-orm`, or used inside the `where`
-object): `eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `like`, `ilike`, `notLike`,
-`notIlike`, `inArray`, `notInArray`, `isNull`, `isNotNull`, `between`,
-`notBetween`, `exists`, `notExists`, `and`, `or`, `not`, plus array helpers
-(`arrayContains`, `arrayContained`, `arrayOverlaps`) and `sql`. `AND`, `OR`,
-`NOT` are built into the object filter syntax.
+`eq`, `ne`, `gt`, `gte`, `lt`, `lte`, `like`, `ilike`, `notLike`, `notIlike`,
+`inArray`, `notInArray`, `isNull`, `isNotNull`, `between`, `notBetween`,
+`exists`, `notExists`, `and`, `or`, `not`, array helpers
+(`arrayContains`, `arrayContained`, `arrayOverlaps`) and `sql`. `AND`/`OR`/`NOT`
+are built into the object filter syntax.
 
 ---
 
 ## Querying: SQL-Style Query Builder
 
-For joins, aggregations, and anything the relational API does not express, use
-the classic builder: `db.select()`, `db.insert()`, `db.update()`,
-`db.delete()`.
+For joins, aggregations, and anything the relational API does not express:
+`db.select()`, `db.insert()`, `db.update()`, `db.delete()`.
 
 ### `select` with joins and aggregates
 
 ```typescript
-// modules/lifeforge--achievements/server/routes/categories.ts
 import { eq, sql } from 'drizzle-orm'
 
 import { achievementsCategories, achievementsEntries } from '../schema.drizzle'
@@ -558,16 +301,13 @@ const result = await db
   .from(achievementsCategories)
   .leftJoin(
     achievementsEntries,
-    eq(achievementsCategories.id, achievementsEntries.categoryId)
+    eq(achievementsCategories.id, achievementsEntries.category_id)
   )
   .groupBy(achievementsCategories.id)
 ```
 
-`sql<number>` templating interpolates columns safely; `CAST(... AS INTEGER)`
-is required because Postgres `COUNT(*)` comes back as `bigint` (a string over
-the wire), and `.mapWith(Number)` coerces it. Grouped counts follow the same
-shape as `difficultiesCount` in
-`modules/lifeforge--achievements/server/routes/entries.ts`.
+`sql<number>` interpolates columns safely; `CAST(... AS INTEGER)` + `.mapWith(Number)`
+is needed because Postgres `COUNT(*)` comes back as `bigint` (a string).
 
 ### `insert` with `returning`
 
@@ -575,7 +315,7 @@ shape as `difficultiesCount` in
 const [entry] = await db
   .insert(apiKeysEntries)
   .values({ keyId, name, icon, exposable, key: encryptedKey })
-  .returning() // returns all columns; pass { id: true } etc. to narrow
+  .returning() // all columns; pass { id: true } etc. to narrow
 ```
 
 ### `update` with `eq` and `returning`
@@ -583,24 +323,14 @@ const [entry] = await db
 ```typescript
 const [updated] = await db
   .update(achievementsEntries)
-  .set({
-    title: body.title,
-    thoughts: body.thoughts ?? '',
-    difficulty: body.difficulty,
-    categoryId: body.category || null,
-    updated: new Date()
-  })
+  .set({ title: body.title, updated: new Date() })
   .where(eq(achievementsEntries.id, id))
   .returning()
-
-if (!updated) {
-  return response.notFound()
-}
 ```
 
-`eq` (and friends) compare columns, not object filters. Always use them in
-`where()` for the builder API. `updated` timestamps are set manually with
-`new Date()` on update (there is no DB trigger).
+Use `eq(column, value)` (and friends) in builder `.where()` — the object filter
+syntax is for `db.query.*` / `TableFilter`, not the builder. Set `updated`
+manually (`new Date()`); there is no DB trigger.
 
 ### `delete` with `returning`
 
@@ -609,26 +339,17 @@ const [deleted] = await db
   .delete(achievementsEntries)
   .where(eq(achievementsEntries.id, id))
   .returning()
-
-if (!deleted) {
-  return response.notFound()
-}
-
-return response.noContent()
 ```
 
-Using `.returning()` is the idiomatic way to distinguish "row existed and was
-affected" from "not found", returning `response.notFound()` when the array is
-empty.
+Prefer `forge.existsIn(...)` (below) over `.returning()`-based existence checks.
 
 ---
 
 ## Zod Integration (DTOs)
 
-`drizzle-orm/zod` derives Zod schemas directly from tables, keeping DTOs in
-sync with the DB. Use `createSelectSchema` (for reads) and `createInsertSchema`
-(for writes), then `.pick()`, `.omit()`, and `.extend()` to shape the contract
-input/output.
+`drizzle-orm/zod` derives Zod schemas from tables, keeping DTOs in sync. Use
+`createSelectSchema` (reads) and `createInsertSchema` (writes), then `.pick()`,
+`.omit()`, `.extend()`.
 
 ```typescript
 // modules/lifeforge--achievements/server/routes/entries.ts
@@ -641,7 +362,7 @@ const entryDifficultyDto =
   createSelectSchema(achievementsEntries).shape.difficulty
 
 const entryDto = createSelectSchema(achievementsEntries)
-  .omit({ categoryId: true })
+  .omit({ category_id: true })
   .extend({
     difficulty: entryDifficultyDto,
     category: z.string().optional().nullable(),
@@ -651,42 +372,41 @@ const entryDto = createSelectSchema(achievementsEntries)
 
 const entryInputDto = createInsertSchema(achievementsEntries)
   .pick({ title: true, thoughts: true, difficulty: true })
-  .extend({
-    category: z.string().optional().nullable()
-  })
+  .extend({ category: z.string().optional().nullable() })
 ```
 
-Then use them in the DSL:
+Then use them in the DSL (output is **success-only**):
 
 ```typescript
-output: { OK: z.array(entryDto), NOT_FOUND: true }
-input: { body: entryInputDto }
+output: {
+  OK: z.array(entryDto)
+}
+input: {
+  body: entryInputDto
+}
 ```
 
 ### Rules and gotchas
 
 - **Timestamps must be re-declared as `z.string()`** in output schemas
-  (`created: z.string(), updated: z.string()`) because `createSelectSchema`
-  yields `z.date()` for `mode: 'date'` columns. Serialize with
-  `.toISOString()` when mapping the row.
-- **Select the exposed fields explicitly with `.pick()`** for mutation bodies
-  rather than accepting the whole insert schema - this prevents clients from
-  setting server-managed columns (ids, timestamps, relation keys).
-- **Reuse schemas for both input and output** where the shape matches, but keep
-  output contracts per the [server DSL rules](./server-dsl-migration.md):
-  no `z.any()`, `.passthrough()`, `z.custom()`, `z.void()`, or `z.unknown()`.
-- **Enums**: pull the enum schema from `createSelectSchema(table).shape.<enumCol>`
-  and reuse it (see `entryDifficultyDto`) instead of re-declaring the union.
-- **`$inferSelect` / `$inferInsert`** (from `drizzle-orm`) give the plain
-  TypeScript row types when a Zod schema is overkill:
-  `type Entry = typeof achievementsEntries.$inferSelect`.
+  (`created: z.string()`), because `createSelectSchema` yields `z.date()` for
+  `mode: 'date'` columns. Serialize with `.toISOString()` when mapping rows.
+- **`.pick()` the exposed fields** for mutation bodies so clients cannot set
+  server-managed columns (ids, timestamps, relation keys).
+- **Output contracts are success-only** and JSON-Schema-serializable: no
+  `z.any()`, `.passthrough()`, `z.custom()`, `z.void()`, `z.unknown()`. See
+  [`server-dsl-migration.md`](./server-dsl-migration.md).
+- **Enums**: reuse `createSelectSchema(table).shape.<enumCol>` instead of
+  re-declaring the union.
+- **Plain row types**: `typeof table.$inferSelect` / `$inferInsert` when a Zod
+  schema is overkill.
 
 ---
 
 ## Output Serialization
 
-The relational and builder APIs return `Date` objects for timestamp columns.
-Route outputs are JSON-serialized, so convert manually:
+`db` returns `Date` objects for timestamp columns. Route outputs are JSON, so
+convert:
 
 ```typescript
 return response.ok(
@@ -695,61 +415,72 @@ return response.ok(
     title: entry.title,
     thoughts: entry.thoughts,
     difficulty: entry.difficulty,
-    category: entry.categoryId ?? null,
+    category: entry.category_id ?? null,
     created: entry.created.toISOString(),
     updated: entry.updated.toISOString()
   }))
 )
 ```
 
-`json`-typed columns return parsed objects as-is. Never leak sensitive columns
-(e.g. `users.auth_password_hash`, `authRefreshTokens.token_hash`) into outputs -
-select or map only the fields the contract declares.
+Never leak sensitive columns (`users.auth_password_hash`, token hashes) — map
+only the fields the contract declares.
+
+---
+
+## Existence Checks and Errors
+
+- **Referenced records**: annotate the input field with `forge.existsIn`. The
+  framework verifies it before the callback and returns a `404` if missing.
+
+  ```typescript
+  import { achievementsCategories } from '../schema.drizzle'
+
+  input: {
+    body: z.object({
+      category: forge.existsIn(
+        z.string().optional().nullable(),
+        achievementsCategories
+      )
+    })
+  }
+  ```
+
+- **Errors**: return the universal `response.*` helpers
+  (`badRequest`/`unauthorized`/`forbidden`/`notFound`/`conflict`) — they are not
+  declared in `output`. Unique violations (`23505`) map to `409` and FK
+  violations (`23503`) to `404` automatically; don't pre-check uniqueness by hand.
 
 ---
 
 ## Migrations
 
 1. Edit/create `schema.drizzle.ts` files.
-2. During development, sync the DB directly:
+2. During development, sync the DB directly: `pnpm db:push`.
+3. For versioned migrations: `pnpm db:generate` then `pnpm db:migrate`.
 
-   ```bash
-   pnpm db:push
-   ```
-
-3. For versioned migrations (production), generate then apply:
-
-   ```bash
-   pnpm db:generate   # writes SQL into apps/api/drizzle
-   pnpm db:migrate    # applies pending migrations
-   ```
-
-The config globs `apps/api/src/lib/**/schema.drizzle.ts` and
-`modules/**/schema.drizzle.ts`, so a new module schema is picked up
-automatically once it is named `schema.drizzle.ts` and lives under
-`server/`. `dotenv` loads `env/.env.local`, which must define
-`DATABASE_URL`.
+The drizzle config globs every `schema.drizzle.ts` under `apps/api/src/lib/**`
+and `modules/**/server`, plus the file-storage schema
+(`packages/file-storage/src/server/metadata/schema.drizzle.ts`). `dotenv` loads
+`env/.env.local`, which must define `DATABASE_URL`.
 
 ---
 
-## Adding a New Module Table - Checklist
+## Adding a New Module Table — Checklist
 
 1. Create `modules/<module>/server/schema.drizzle.ts` with `pgTable(...)`
-   definition(s). Prefix table names with the module namespace (`module__table`).
-2. Export the schema declaration: `tables` (module-namespaced keys) and a
-   `relations` callback typed by `RelationsBuilder`:
+   definition(s), namespacing table names (`module__table`).
+2. Export `tables` (module-namespaced keys) and a `relations` callback:
 
    ```typescript
-   import { type RelationsBuilder } from '@lifeforge/drizzle'
+   import { type RelationsBuilder } from 'drizzle-orm'
 
    export const tables = { myModuleEntries }
    export const relations = (_r: RelationsBuilder<typeof tables>) => ({})
    ```
 
-   Use `() => ({})` when the module has no relations.
+   Use `() => ({})` when there are no relations.
 
-3. Pass the schema object to the forge builder in `server/forge.ts` - this
-   registers it and infers the `db` type:
+3. Register it in `server/forge.ts`:
 
    ```typescript
    import * as schema from './schema.drizzle'
@@ -757,79 +488,62 @@ automatically once it is named `schema.drizzle.ts` and lives under
    const forge = createForgeContractBuilder({ schema })
    ```
 
-4. Write routes using `db.query.*` (CRUD) or `db.select/insert/update/delete`
-   (joins/aggregates), deriving input/output with `drizzle-orm/zod`.
-5. Add `@lifeforge/drizzle` to the module's `peerDependencies`.
-6. Run `pnpm db:push` (dev) or `pnpm db:generate` + `pnpm db:migrate`.
-7. Restart the dev server. `initDrizzle()` runs after module discovery; there is
-   **no core file to edit**. If `db.query.<table>` is missing, the schema file
-   was not imported (or the module failed to load).
+4. Write routes with `db.query.*` (CRUD) or `db.select/insert/update/delete`
+   (joins/aggregates), deriving DTOs with `drizzle-orm/zod`.
+5. Run `pnpm db:push` (dev) or `pnpm db:generate` + `pnpm db:migrate`.
+6. Restart the dev server — module schemas register automatically; there is no
+   central file to edit. If `db.query.<table>` is missing, the schema file was
+   not imported (or the module failed to load).
 
 ---
 
 ## File Storage Integration
 
-`core.storage` is typed by the same Drizzle table types. From
-`packages/file-storage/src/types.ts`:
+`core.storage` handles uploads against the `media` fields declared on the route.
+The callback receives each file as a `StagedFile`:
 
 ```typescript
-export type TableKey<TSchema> = Extract<keyof TSchema, string>
-export type FieldKey<TSchema, TTable extends TableKey<TSchema>> = /* columns of TTable */
+import { fileReferenceSchema } from '@lifeforge/file-storage'
 
-export interface SaveOptions<TSchema, TTable> {
-  file: Express.Multer.File | Buffer | 'keep' | 'removed' | null | undefined
-  currentKey?: string | null
-  table: TTable
-  field: FieldKey<TSchema, TTable>
-  thumbs?: string[]
-}
+export const updateAvatar = forge
+  .mutation({
+    input: {},
+    media: { file: { optional: false } },
+    output: { OK: fileReferenceSchema }
+  })
+  .callback(async ({ media: { file }, core, db, response }) => {
+    const record = await db.query.users.findFirst()
+
+    const ref = await core.storage.save({
+      file,
+      currentKey: record?.avatar ?? undefined, // replace the previous file
+      thumbs: ['256x0'] // regenerate thumbnails (optional)
+    })
+
+    await db.update(users).set({ avatar: ref?.key ?? null })
+
+    return response.ok(ref)
+  })
 ```
 
-`TableKey` is the key of the table in the relations map, and `FieldKey` is one
-of its `$inferSelect` column names. This is why the `forge` builder must be
-typed with the relations object - the same `TSchema` flows into
-`core.storage.save({ table, field })`, giving compile-time validation that the
-table/field pair exists. Example:
+Other `core.storage` methods: `getReference(key)` (metadata),
+`get(key, { thumb })` (server-side stream), `delete(key)`. The client fetches
+via `forgeAPI.getMedia({ key, thumb })`, served at `/files/get?key=&thumb=`.
 
-```typescript
-const bgImageKey = await core.storage.save({
-  file,
-  currentKey: user.bgImage || undefined,
-  table: 'users',
-  field: 'bgImage'
-})
-```
-
-See [`file-storage-sdk.md`](./file-storage-sdk.md) for the full storage API
-(providers, key ownership, thumbnails, and runtime validation).
+See [`file-storage-sdk.md`](./file-storage-sdk.md) for the full API.
 
 ---
 
 ## Pitfalls and Rules
 
-- **Registration lives in `forge.ts`.** Pass the schema object to
-  `createForgeContractBuilder({ schema })`; `db.query.*` only sees tables
-  registered when the module was loaded. Schema files stay pure declarations,
-  and there is no central file to keep in sync. (Core registers once in
-  `core/drizzle.ts`.)
-- **Namespace registry keys.** `db.query.<key>` uses the `tables` object keys,
-  which are shared across all modules. Always prefix them with the module name
-  (`achievementsEntries`, not `entries`).
-- **Use `eq(column, value)` in `select`/`update`/`delete` `.where()`.** The
-  object filter syntax (`{ OR: [...] }`, `{ field: { ilike } }`) is for
-  `db.query.*` and `TableFilter`, not for builder `.where()`.
+- **Registration lives in `forge.ts`.** `db.query.*` only sees tables registered
+  when the module was loaded. Pass the schema to `createForgeContractBuilder({ schema })`.
+- **Namespace registry keys**: prefix `tables` keys with the module name.
+- **Use `eq(column, value)` in builder `.where()`**, not the object filter syntax.
 - **Convert `Date` to ISO strings** before returning; output schemas declare
   `z.string()` for timestamps.
-- **Set `updated` manually** (`updated: new Date()`) on every update - there is
-  no automatic trigger.
-- **Never expose** password/token/secret columns in route outputs.
-- **Do not hand-write migration SQL** unless generated migrations need manual
-  adjustment; use `drizzle-kit`.
-- **One connection pool**: `postgres(connectionString, { max: 1 })`. Do not
-  create additional `drizzle()`/`postgres()` instances in modules - import and
-  use the injected `db`.
-- **Naming**: namespaced snake_case DB tables, camelCase JS properties,
-  explicit snake_case column names, `__` module separator.
-- **Keep output schemas JSON-Schema-serializable** (no `z.any()` /
-  `.passthrough()`), per
-  [`server-dsl-migration.md`](./server-dsl-migration.md).
+- **Set `updated` manually** on every update — there is no trigger.
+- **Never expose** password/token/secret columns in outputs.
+- **One connection pool**: don't create additional `drizzle()`/`postgres()`
+  instances in modules — use the injected `db`.
+- **Keep output schemas success-only and JSON-Schema-serializable.**

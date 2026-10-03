@@ -1,9 +1,12 @@
 import { defineRelations } from 'drizzle-orm'
 
-import { DrizzleSchemaRegistry } from './registry/DrizzleSchemaRegistry'
+import type { ModuleSchemaDefinition } from './types'
 
-export function composeRelations() {
-  const parts = DrizzleSchemaRegistry.parts
+/**
+ * Merges every registered schema part into the single global relations config
+ * used by `drizzle({ relations })`.
+ */
+export function composeRelations(parts: readonly ModuleSchemaDefinition[]) {
   const tables = Object.assign({}, ...parts.map(part => part.tables))
 
   return defineRelations(tables as any, (r: any) =>

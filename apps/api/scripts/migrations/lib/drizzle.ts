@@ -1,9 +1,12 @@
-import { type Table, getTableColumns, getTableName } from 'drizzle-orm'
+import {
+  type Table,
+  defineRelations,
+  getTableColumns,
+  getTableName
+} from 'drizzle-orm'
 import fs from 'node:fs'
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
-
-import { defineModuleSchema } from '@lifeforge/drizzle'
 
 import { ROOT_DIR } from './constants'
 
@@ -95,7 +98,7 @@ export async function loadModuleSchema(
   }
 
   const builtRelations = mod.relations
-    ? (defineModuleSchema(mod.tables, mod.relations) as unknown as Record<
+    ? (defineRelations(mod.tables, mod.relations) as unknown as Record<
         string,
         { table: Table; name: string; relations: Record<string, any> }
       >)

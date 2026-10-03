@@ -16,11 +16,13 @@ import { encryptResponse } from '@functions/encryption'
 import { coreLogger } from '@functions/logging'
 import type { Request, Response, Router } from 'express'
 
+import { scopeDbForModule } from '@lifeforge/drizzle'
 import { fieldsUploadMiddleware } from '@lifeforge/file-storage/server'
 import {
   BaseResponse,
   ForgeContract,
   MediaConfig,
+  ModuleRegistry,
   checkRecordExistence,
   getStatusMessage,
   mapDatabaseError,
@@ -92,7 +94,12 @@ function createHandler(
         req,
         res,
         io: req.io,
-        db: req.db,
+        db: scopeDbForModule(
+          req.db,
+          callerModule
+            ? ModuleRegistry.getModuleKeyMap(callerModule.id)
+            : undefined
+        ),
         body: req.body,
         query: req.query,
         media: req.media || {},
