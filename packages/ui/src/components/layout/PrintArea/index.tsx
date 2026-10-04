@@ -59,7 +59,19 @@ export function PrintArea({
     .filter(Boolean)
     .join(' ')
 
-  const rootStylesCss = Object.entries(bodyStyles)
+  const isBackgroundStyle = (key: string) =>
+    key === 'background' || key === 'background-color'
+
+  const nonBackgroundStyles = Object.fromEntries(
+    Object.entries(bodyStyles).filter(([key]) => !isBackgroundStyle(key))
+  )
+
+  const backgroundStylesCss = Object.entries(bodyStyles)
+    .filter(([key]) => isBackgroundStyle(key))
+    .map(([key, value]) => `${key}: ${value} !important;`)
+    .join('\n')
+
+  const rootStylesCss = Object.entries(nonBackgroundStyles)
     .map(([key, value]) => `${key}: ${value} !important;`)
     .join('\n')
 
@@ -68,7 +80,7 @@ export function PrintArea({
       ref={contentRef}
       className={`${themeClasses} ${className} lf-statement-print-wrapper`}
       style={{
-        ...bodyStyles,
+        ...nonBackgroundStyles,
         width: '100%',
         ...style
       }}
@@ -80,6 +92,9 @@ export function PrintArea({
           ${rootStylesCss}
         }
         @media print {
+          :root {
+            ${backgroundStylesCss}
+          }
           .lf-statement-print-wrapper {
             display: block !important;
           }
