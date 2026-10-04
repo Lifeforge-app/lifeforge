@@ -25,16 +25,20 @@ forge
 ### New API (object)
 
 ```typescript
+import z from 'zod'
+
+import forge from '../forge'
+import { entries } from '../schema.drizzle'
+
 forge
   .query({
     description: '...',
     noAuth: true,
     encrypted: false,
     input: {
-      query: z.object({ ... })
-    },
-    existenceCheck: {
-      query: { id: 'collection' }
+      query: z.object({
+        id: forge.existsIn(z.string(), entries)
+      })
     },
     media: {
       file: { optional: false }
@@ -42,12 +46,10 @@ forge
     isDownloadable: true,
     output: {
       OK: z.string(),
-      CREATED: z.object({ ... }),
-      BAD_REQUEST: z.string(),
-      NOT_FOUND: true
+      CREATED: z.object({ ... })
     }
   })
-  .callback(async ({ pb, body, query, response }) => {
+  .callback(async ({ db, body, query, response }) => {
     return response.ok(result)
   })
 ```
@@ -58,52 +60,39 @@ forge
 
 All configuration moves inside `query({...})` / `mutation({...})`:
 
-| Old method                        | New property                              |
-| --------------------------------- | ----------------------------------------- |
-| `.description('...')`             | `description: '...'`                      |
-| `.noAuth()`                       | `noAuth: true`                            |
-| `.noEncryption()`                 | `encrypted: false`                        |
-| `.input({...})`                   | `input: {...}`                            |
-| `.media({...})`                   | `media: {...}`                            |
-| `.isDownloadable()`               | `isDownloadable: true`                    |
-| `.statusCode(N)`                  | ❌ Removed - status comes from output key |
-| `.existenceCheck('query', {...})` | `existenceCheck: { query: {...} }`        |
+| Old method                        | New property                                   |
+| --------------------------------- | ---------------------------------------------- |
+| `.description('...')`             | `description: '...'`                           |
+| `.noAuth()`                       | `noAuth: true`                                 |
+| `.noEncryption()`                 | `encrypted: false`                             |
+| `.input({...})`                   | `input: {...}`                                 |
+| `.media({...})`                   | `media: {...}`                                 |
+| `.isDownloadable()`               | `isDownloadable: true`                         |
+| `.statusCode(N)`                  | ❌ Removed - success status comes from the key |
+| `.existenceCheck('query', {...})` | Inline `forge.existsIn(...)` in the input (9.) |
 
-When there were multiple `.existenceCheck()` calls in the old API (e.g. one for `query` and one for `body`), merge them into a single `existenceCheck` object:
+### 2. Output is success-only
 
-```typescript
-// ❌ Old
-.existenceCheck('query', { id: 'transaction_templates' })
-.existenceCheck('body', { asset: 'assets', category: 'categories' })
+Every route **must** declare an `output` object with at least one **success**
+status key. The status table lives in
+`packages/server-utils/src/response/status.ts`:
 
-// ✅ New
-existenceCheck: {
-  query: { id: 'transaction_templates' },
-  body: { asset: 'assets', category: 'categories' }
-}
-```
-
-### 2. Add `output` configuration
-
-Every route **must** declare an `output` object with at least one status key. The available status keys and their HTTP status codes are defined in `packages/lifeforge-server-utils/src/utils/outputStatus.ts`:
-
-| Status         | Code | Has Payload     |
-| -------------- | ---- | --------------- |
-| `OK`           | 200  | ✅ `z.schema()` |
-| `CREATED`      | 201  | ✅ `z.schema()` |
-| `ACCEPTED`     | 202  | ❌ `true`       |
-| `NO_CONTENT`   | 204  | ❌ `true`       |
-| `BAD_REQUEST`  | 400  | ✅ `z.string()` |
-| `UNAUTHORIZED` | 401  | ❌ `true`       |
-| `FORBIDDEN`    | 403  | ❌ `true`       |
-| `NOT_FOUND`    | 404  | ❌ `true`       |
-| `CONFLICT`     | 409  | ❌ `true`       |
+| Success key  | Code | Payload         |
+| ------------ | ---- | --------------- |
+| `OK`         | 200  | ✅ `z.schema()` |
+| `CREATED`    | 201  | ✅ `z.schema()` |
+| `ACCEPTED`   | 202  | ❌ `true`       |
+| `NO_CONTENT` | 204  | ❌ `true`       |
 
 **Rules:**
 
-- If `hasPayload: true` → value must be a `z.ZodTypeAny` schema (NEVER `z.any()` or `.passthrough()`)
-- If `hasPayload` is absent → value must be `true`
-- `BAD_REQUEST` payload is `z.string()` (error message)
+- A payload status → value must be a `z.ZodTypeAny` schema (NEVER `z.any()` or `.passthrough()`)
+- A no-payload status → value must be `true`
+
+Error statuses (`BAD_REQUEST`, `UNAUTHORIZED`, `FORBIDDEN`, `NOT_FOUND`,
+`CONFLICT`) are **not** declared in `output`. They are provided by the universal
+error helpers (see step 6) and will be rejected by the type if you try to list
+them.
 
 When the return shape comes from an external API or complex join, define the zod schema explicitly inline or at the top of the file - do NOT fall back to `z.any()`.
 
@@ -111,7 +100,13 @@ When the return shape comes from an external API or complex join, define the zod
 
 Do NOT use `z.custom()`, `z.void()`, `z.undefined()`, `z.unknown()`, `z.any()`, or `z.object({}).passthrough()` - these are not serializable to JSON Schema.
 
-**`z.any()` and `.passthrough()` are ABSOLUTELY PROHIBITED in output schemas.** Every status key with a payload must have an explicitly defined zod schema that accurately describes the return shape.
+> [!NOTE]
+> `z.date()` is the exception: contract generation renders it as a
+> `{ type: 'string', format: 'date-time' }` schema, and the framework serializes
+> `Date` values to ISO strings on the wire (the client sees `string`). Use
+> `z.date()` - not `z.string()` - for timestamp columns in output schemas.
+
+**`z.any()` and `.passthrough()` are ABSOLUTELY PROHIBITED in output schemas.** Every payload status must have an explicitly defined zod schema that accurately describes the return shape.
 
 ```typescript
 // ❌ Bad - not serializable
@@ -120,19 +115,19 @@ output: {
   CREATED: z.void()
 }
 
-// ✅ Good - use actual zod schema or the schema from cleanSchemas
+// ✅ Good - use actual zod schema or the schema from the table
 output: {
-  OK: walletSchemas.transaction_templates,
+  OK: createSelectSchema(transactionTemplates),
   CREATED: z.object({ id: z.string(), name: z.string() })
 }
 ```
 
-When the output shape matches a database collection schema, use the schema directly from `cleanSchemas`:
+When the output shape matches a database table, derive the schema from it with `createSelectSchema`:
 
 ```typescript
 output: {
-  OK: walletSchemas.transaction_templates,
-  CREATED: walletSchemas.transaction_templates
+  OK: createSelectSchema(transactionTemplates),
+  CREATED: createSelectSchema(transactionTemplates)
 }
 ```
 
@@ -142,7 +137,7 @@ For complex grouped/transformed responses, build the zod schema explicitly:
 output: {
   OK: z.record(
     z.enum(['income', 'expenses']),
-    z.array(walletSchemas.transaction_templates)
+    z.array(createSelectSchema(transactionTemplates))
   )
 }
 ```
@@ -262,22 +257,31 @@ For routes that delete a resource, the output must be `NO_CONTENT` (204), not `O
 ```typescript
 // ❌ Bad
 output: {
-  OK: z.void(),
-  NOT_FOUND: true
+  OK: z.void()
 }
 
 // ✅ Correct
 output: {
-  NO_CONTENT: true,
-  NOT_FOUND: true
+  NO_CONTENT: true
 }
 ```
 
 The callback returns `response.noContent()` with no arguments.
 
-### 6. Replace `throw new ClientError(...)` / `throw new Error(...)`
+### 6. Errors use the universal `response` helpers
 
-Instead of throwing errors, use `response.<status>()` and return it:
+Error responses are **not** tied to `output`. The framework exposes five error
+helpers on every route, regardless of what `output` declares:
+
+| Response method            | HTTP code |
+| -------------------------- | --------- |
+| `response.badRequest(msg)` | 400       |
+| `response.unauthorized()`  | 401       |
+| `response.forbidden()`     | 403       |
+| `response.notFound()`      | 404       |
+| `response.conflict()`      | 409       |
+
+Return them directly from the callback — do **not** declare the matching status in `output`:
 
 ```typescript
 // ❌ Old
@@ -290,43 +294,51 @@ throw new Error('Something went wrong')
 if (!record) {
   return response.notFound()
 }
+if (taken) {
+  return response.conflict()
+}
 return response.badRequest('Something went wrong')
 ```
 
-Each `response.<status>()` corresponds to an output key declared in the config. If the status has a payload, pass the payload as an argument; otherwise call it with no arguments.
+`throw new ClientError(message, code)` is still supported for errors raised inside
+helper functions; the framework turns it into the same error response. Use it for
+helpers that don't have access to `response` (e.g. `decryptPayload`, `parseQuery`).
 
-### 7. The response helper must match an output key
+Foreign-key violations (`23503`) are automatically surfaced as `404` and unique
+violations (`23505`) as `409`, so you don't need to pre-check uniqueness manually.
 
-Each `response.<method>()` call must correspond to a key declared in the `output` object. The method name determines which HTTP status code is returned:
+### 7. Success helpers must match the declared output keys
 
-| Output key     | Response method             | HTTP code |
-| -------------- | --------------------------- | --------- |
-| `OK`           | `response.ok(payload)`      | 200       |
-| `CREATED`      | `response.created(payload)` | 201       |
-| `ACCEPTED`     | `response.accepted()`       | 202       |
-| `NO_CONTENT`   | `response.noContent()`      | 204       |
-| `BAD_REQUEST`  | `response.badRequest(msg)`  | 400       |
-| `UNAUTHORIZED` | `response.unauthorized()`   | 401       |
-| `FORBIDDEN`    | `response.forbidden()`      | 403       |
-| `NOT_FOUND`    | `response.notFound()`       | 404       |
-| `CONFLICT`     | `response.conflict()`       | 409       |
+The success helpers are generated from the keys you declare in `output`. The
+method name determines the HTTP status code:
+
+| Output key   | Response method             | HTTP code |
+| ------------ | --------------------------- | --------- |
+| `OK`         | `response.ok(payload)`      | 200       |
+| `CREATED`    | `response.created(payload)` | 201       |
+| `ACCEPTED`   | `response.accepted()`       | 202       |
+| `NO_CONTENT` | `response.noContent()`      | 204       |
 
 ```typescript
 // ✅ Correct - NO_CONTENT in output, response.noContent() in callback
-output: { NO_CONTENT: true, NOT_FOUND: true }
+output: {
+  NO_CONTENT: true
+}
 // ...
 return response.noContent()
 
 // ❌ Wrong - output has NO_CONTENT but callback uses response.ok()
-// This will cause a runtime error because the response type doesn't match
-output: { NO_CONTENT: true }
+output: {
+  NO_CONTENT: true
+}
 // ...
-return response.ok(someValue)  // Error!
+return response.ok(someValue) // Error!
 ```
 
-For statuses with a payload (OK, CREATED, BAD_REQUEST), pass the payload as an argument. For statuses without a payload (NO_CONTENT, NOT_FOUND, etc.), call with no arguments.
+For statuses with a payload (`OK`, `CREATED`), pass the payload as an argument.
+For statuses without a payload (`NO_CONTENT`, `ACCEPTED`), call with no arguments.
 
-### 8. Wrap return values in `response.ok(...)` / `response.created(...)`
+### 8. Return values wrapped in `response.ok(...)` / `response.created(...)`
 
 ```typescript
 // ❌ Old
@@ -338,7 +350,7 @@ return response.ok(result)
 return response.created(result)
 ```
 
-### 8. Replace `.statusCode(N)` with the correct output key
+### 9. Replace `.statusCode(N)` with the correct success output key
 
 | Old `.statusCode(N)` | New output key |
 | -------------------- | -------------- |
@@ -351,75 +363,106 @@ For `.statusCode(204)`:
 - Output Config: `{ NO_CONTENT: true }`
 - Return: `return response.noContent()`
 
-### 9. Use `existenceCheck` with the same format as the new API
+### 10. Replace `.existenceCheck(...)` with `forge.existsIn(...)`
+
+Existence checks are now declared **inside the input schema**, on the field that
+holds the reference. `forge.existsIn` annotates the field with the target table
+(and optionally a column other than the primary key). Before the callback runs,
+the framework verifies that every referenced record exists and returns a `404`
+with a field-targeted message if any is missing — so `NOT_FOUND` no longer needs
+to be declared.
 
 ```typescript
 // ❌ Old
 .existenceCheck('query', { id: 'entries' })
 
 // ✅ New
-existenceCheck: {
-  query: { id: 'entries' }
+import { entries, categories, users } from '../schema.drizzle'
+
+input: {
+  query: z.object({
+    id: forge.existsIn(z.string(), entries)
+  })
 }
 ```
 
-`NOT_FOUND` must be declared in the output when `existenceCheck` is present:
+Rules:
+
+- The target is the **table object** from `schema.drizzle` — not a string name.
+- The checked column defaults to the table's primary key. Pass a column key to
+  reference another unique column: `forge.existsIn(z.string(), users, 'email')`.
+- Optional fields are skipped when absent:
+  `forge.existsIn(z.string().optional(), categories)`.
+- Array fields check every value:
+  `forge.existsIn(z.array(z.string()), categories)`.
+- Multiple checks (query + body, or several fields) are all supported and batched.
 
 ```typescript
-output: {
-  OK: z.string(),
-  NOT_FOUND: true
+input: {
+  query: z.object({
+    id: forge.existsIn(z.string(), transactionTemplates)
+  }),
+  body: z.object({
+    asset: forge.existsIn(z.string(), assets),
+    category: forge.existsIn(z.string(), categories)
+  })
 }
 ```
 
-### 10. Callbacks that use `await` must be `async`
+### 11. Callbacks that use `await` must be `async`
 
-If the callback body uses `await` (e.g. awaiting a PocketBase call), the callback itself must be declared `async`:
+If the callback body uses `await`, the callback itself must be declared `async`:
 
 ```typescript
 // ❌ Bad - missing async/await
-.callback(({ pb, query: { id }, response }) =>
-  response.ok(pb.getOne.collection('calendars').id(id).execute())
+.callback(({ db, query: { id }, response }) =>
+  response.ok(db.query.entries.findFirst({ where: { id } }))
 )
 
 // ✅ Good - async with await
-.callback(async ({ pb, query: { id }, response }) =>
-  response.ok(await pb.getOne.collection('calendars').id(id).execute())
+.callback(async ({ db, query: { id }, response }) =>
+  response.ok(await db.query.entries.findFirst({ where: { id } }))
 )
 ```
 
 This includes one-liner arrow functions that perform async operations - they must use `async`/`await` just like any other async function.
 
-### 11. Get `response` from context destructuring
+### 12. Get `response` from context destructuring
 
 The `response` helpers object is available in the callback context:
 
 ```typescript
 // ❌ Old callback
-.callback(async ({ pb, body }) => { ... })
+.callback(async ({ db, body }) => { ... })
 
 // ✅ New callback
-.callback(async ({ pb, body, response }) => { ... })
+.callback(async ({ db, body, response }) => { ... })
 ```
 
-### 11. Use `.pick()` for mutation input bodies
+### 13. Use `.pick()` for mutation input bodies
 
-For `create` and `update` mutations, use `.pick()` on the schema to explicitly select only the fields the user should provide:
+For `create` and `update` mutations, use `.pick()` on the derived insert schema to
+explicitly select only the fields the user should provide:
 
 ```typescript
+import { createInsertSchema } from 'drizzle-orm/zod'
+
+const categoryInputDto = createInsertSchema(categories).pick({
+  name: true,
+  icon: true,
+  color: true
+})
+
 input: {
-  body: walletSchemas.categories.pick({
-    name: true,
-    icon: true,
-    color: true,
-    type: true
-  })
+  body: categoryInputDto
 }
 ```
 
-### 12. Remove `ClientError` import
+### 14. Remove the `ClientError` import when it becomes unused
 
-After replacing all `throw new ClientError(...)`, the `ClientError` import can be removed.
+After replacing expected `throw new ClientError(...)` with `response.<status>()`,
+remove the import. Keep it only where a helper genuinely throws (e.g. payload
+decryption or validation utilities).
 
 ## Full Example
 
@@ -475,70 +518,65 @@ export const remove = forge
 ### After
 
 ```typescript
+import { eq } from 'drizzle-orm'
+import { createInsertSchema, createSelectSchema } from 'drizzle-orm/zod'
+import z from 'zod'
+
 import forge from '../forge'
+import { items } from '../schema.drizzle'
+
+const itemDto = createSelectSchema(items)
+const itemInputDto = createInsertSchema(items).pick({ name: true })
 
 export const list = forge
   .query({
     description: 'Get all items',
     output: {
-      OK: z.array(
-        z.object({
-          id: z.string(),
-          name: z.string()
-        })
-      )
+      OK: z.array(itemDto)
     }
   })
-  .callback(async ({ pb, response }) =>
-    response.ok(await pb.getFullList.collection('items').execute())
+  .callback(async ({ db, response }) =>
+    response.ok(await db.select().from(items))
   )
 
 export const create = forge
   .mutation({
     description: 'Create an item',
     input: {
-      body: z.object({ name: z.string() })
+      body: itemInputDto
     },
     output: {
-      CREATED: z.object({
-        id: z.string(),
-        name: z.string()
-      }),
-      CONFLICT: true
+      CREATED: itemDto
     }
   })
-  .callback(async ({ pb, body, response }) => {
-    const existing = await pb.getFirstListItem
-      .collection('items')
-      .filter([{ field: 'name', operator: '=', value: body.name }])
-      .execute()
-      .catch(() => null)
+  .callback(async ({ db, body, response }) => {
+    const existing = await db.query.items.findFirst({
+      where: { name: body.name }
+    })
 
     if (existing) {
       return response.conflict()
     }
 
-    return response.created(
-      await pb.create.collection('items').data(body).execute()
-    )
+    const [created] = await db.insert(items).values(body).returning()
+
+    return response.created(created)
   })
 
 export const remove = forge
   .mutation({
     description: 'Delete an item',
     input: {
-      query: z.object({ id: z.string() })
-    },
-    existenceCheck: {
-      query: { id: 'items' }
+      query: z.object({
+        id: forge.existsIn(z.string(), items)
+      })
     },
     output: {
-      NO_CONTENT: true,
-      NOT_FOUND: true
+      NO_CONTENT: true
     }
   })
-  .callback(async ({ pb, query: { id }, response }) => {
-    await pb.delete.collection('items').id(id).execute()
+  .callback(async ({ db, query: { id }, response }) => {
+    await db.delete(items).where(eq(items.id, id))
 
     return response.noContent()
   })

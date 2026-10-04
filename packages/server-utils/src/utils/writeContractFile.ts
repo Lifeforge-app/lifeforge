@@ -2,6 +2,8 @@
 import fs from 'fs'
 import path from 'path'
 
+import { isSuccessOutputKey } from '../response'
+
 function cleanAdditionalProperties(schema: any): any {
   if (!schema || typeof schema !== 'object') {
     return schema
@@ -82,6 +84,22 @@ function fixJSONSchemaRecord(schema: any): any {
   return result
 }
 
+/**
+ * Params for `toJSONSchema` that let DTOs use `z.date()` on the server while
+ * still emitting a `date-time` string schema for the client. Dates are
+ * unrepresentable in JSON Schema (zod throws), so we fall back to `any` and
+ * rewrite date nodes ourselves.
+ */
+const jsonSchemaParams = {
+  unrepresentable: 'any' as const,
+  override: (ctx: { zodSchema: any; jsonSchema: any }) => {
+    if (ctx.zodSchema?._zod?.def?.type === 'date') {
+      ctx.jsonSchema.type = 'string'
+      ctx.jsonSchema.format = 'date-time'
+    }
+  }
+}
+
 export function serializeEndpointValue(val: any): {
   method: any
   description: any
@@ -104,14 +122,12 @@ export function serializeEndpointValue(val: any): {
     media: val.media ?? null,
     input: {
       query:
-        val.schema?.query &&
-        typeof val.schema.query.toJSONSchema === 'function'
-          ? fixJSONSchemaRecord(val.schema.query.toJSONSchema())
+        val.schema?.query && typeof val.schema.query.toJSONSchema === 'function'
+          ? fixJSONSchemaRecord(val.schema.query.toJSONSchema(jsonSchemaParams))
           : undefined,
       body:
-        val.schema?.body &&
-        typeof val.schema.body.toJSONSchema === 'function'
-          ? fixJSONSchemaRecord(val.schema.body.toJSONSchema())
+        val.schema?.body && typeof val.schema.body.toJSONSchema === 'function'
+          ? fixJSONSchemaRecord(val.schema.body.toJSONSchema(jsonSchemaParams))
           : undefined
     },
     output:
@@ -119,14 +135,18 @@ export function serializeEndpointValue(val: any): {
         ? val.output
         : val.output
           ? Object.fromEntries(
-              Object.entries(val.output).map(([k, v]) => [
-                k,
-                v === true
-                  ? true
-                  : v && typeof (v as any).toJSONSchema === 'function'
-                    ? fixJSONSchemaRecord((v as any).toJSONSchema())
-                    : v
-              ])
+              Object.entries(val.output)
+                .filter(([k]) => isSuccessOutputKey(k))
+                .map(([k, v]) => [
+                  k,
+                  v === true
+                    ? true
+                    : v && typeof (v as any).toJSONSchema === 'function'
+                      ? fixJSONSchemaRecord(
+                          (v as any).toJSONSchema(jsonSchemaParams)
+                        )
+                      : v
+                ])
             )
           : undefined
   }

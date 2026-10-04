@@ -17,6 +17,11 @@
       "import": "./dist/vite.js",
       "require": "./dist/vite.js"
     },
+    "./node": {
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js",
+      "require": "./dist/node.js"
+    },
     "./tsconfig/*": "./tsconfig/*",
     "./package.json": "./package.json"
   },

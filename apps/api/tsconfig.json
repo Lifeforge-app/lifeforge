@@ -10,13 +10,15 @@
     "noEmit": true,
     "rootDir": "../../",
     "paths": {
+      "@/*": ["./src/*"],
       "@constants": ["./src/core/constants"],
       "@functions/*": ["./src/core/functions/*"],
       "@schema": ["./src/core/schema"],
-      "@lib/*": ["./src/lib/*", "../../modules/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@modules/*": ["../../modules/*"],
       "@tests/*": ["./src/tests/*"]
     },
     "types": ["multer"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "../../modules/*/server/**/*"]
 }

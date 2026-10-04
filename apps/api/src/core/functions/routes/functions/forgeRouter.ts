@@ -27,31 +27,49 @@ function isForgeController(value: unknown): value is ForgeContract {
   )
 }
 
-function collectAliases(routes: RouterInput, set: Set<string>): void {
+interface AliasScan {
+  aliases: Set<string>
+  hasUnAliasedController: boolean
+}
+
+function collectAliases(routes: RouterInput, scan: AliasScan): void {
   for (const value of Object.values(routes)) {
     if (isForgeController(value)) {
       if (value.modulePathAlias) {
-        set.add(value.modulePathAlias)
+        scan.aliases.add(value.modulePathAlias)
+      } else {
+        scan.hasUnAliasedController = true
       }
     } else if (
       typeof value === 'object' &&
       value !== null &&
       !isRouter(value)
     ) {
-      collectAliases(value as RouterInput, set)
+      collectAliases(value as RouterInput, scan)
     }
   }
 }
 
+/**
+ * Returns the module path alias for a route tree only when **every** controller
+ * in the tree shares the same alias. Ancestor trees (the core routes plus the
+ * `modules` container) also contain unaliased core controllers, so they resolve
+ * to `undefined` and each module's alias is mounted at the module's own level
+ * instead of the whole app being nested under it.
+ */
 function extractAlias(routes: RouterInput): string | undefined {
-  const aliases = new Set<string>()
-  collectAliases(routes, aliases)
-
-  if (aliases.size === 1) {
-    return aliases.values().next().value
+  const scan: AliasScan = {
+    aliases: new Set<string>(),
+    hasUnAliasedController: false
   }
 
-  return undefined
+  collectAliases(routes, scan)
+
+  if (scan.hasUnAliasedController || scan.aliases.size !== 1) {
+    return undefined
+  }
+
+  return scan.aliases.values().next().value
 }
 
 /**

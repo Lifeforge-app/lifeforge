@@ -71,16 +71,22 @@ export type InferContractInput<T> = 0 extends 1 & T
         query: undefined
       }
 
+type InferSuccessPayload<O> =
+  | (O extends { readonly OK: infer S } ? InferFromJSONSchema<S> : never)
+  | (O extends { readonly CREATED: infer S } ? InferFromJSONSchema<S> : never)
+  | (O extends { readonly ACCEPTED: infer S } ? InferFromJSONSchema<S> : never)
+  | (O extends { readonly NO_CONTENT: true } ? void : never)
+
 export type InferContractOutput<T> = 0 extends 1 & T
   ? any
   : T extends {
         readonly output: infer O
       }
-    ? O extends { readonly OK: infer OKSchema }
-      ? InferFromJSONSchema<OKSchema>
-      : O extends { readonly CREATED: infer CreatedSchema }
-        ? InferFromJSONSchema<CreatedSchema>
-        : any
+    ? O extends 'custom'
+      ? any
+      : InferSuccessPayload<O> extends never
+        ? any
+        : InferSuccessPayload<O>
     : never
 
 export type InferContractMedia<T> = 0 extends 1 & T

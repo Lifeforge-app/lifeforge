@@ -3,6 +3,8 @@ import { builtinModules, createRequire } from 'node:module'
 import path from 'node:path'
 import { type Plugin } from 'vite'
 
+import { findProjectRoot } from '../utils/projectRoot'
+
 const cjsRequire = createRequire(import.meta.url)
 
 /**
@@ -10,29 +12,23 @@ const cjsRequire = createRequire(import.meta.url)
  */
 function getCoreDependencies(dirname: string): Set<string> {
   const deps = new Set<string>()
+  const root = findProjectRoot(dirname)
+  const apiPkgPath = path.join(root, 'apps/api/package.json')
 
-  let currentDir = dirname
-
-  while (currentDir !== path.dirname(currentDir)) {
-    const apiPkgPath = path.join(currentDir, 'apps/api/package.json')
-
-    if (fs.existsSync(apiPkgPath)) {
-      try {
-        const pkg = JSON.parse(fs.readFileSync(apiPkgPath, 'utf8'))
-        const allDeps = {
-          ...pkg.dependencies,
-          ...pkg.devDependencies
-        }
-
-        for (const dep of Object.keys(allDeps)) {
-          deps.add(dep)
-        }
-        break
-      } catch {
-        // Ignore read/parse errors and fallback
+  if (fs.existsSync(apiPkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(apiPkgPath, 'utf8'))
+      const allDeps = {
+        ...pkg.dependencies,
+        ...pkg.devDependencies
       }
+
+      for (const dep of Object.keys(allDeps)) {
+        deps.add(dep)
+      }
+    } catch {
+      // Ignore read/parse errors and fallback
     }
-    currentDir = path.dirname(currentDir)
   }
 
   return deps

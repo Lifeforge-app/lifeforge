@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   type RefObject,
   createContext,
@@ -23,7 +22,9 @@ let bootstrapped = false
 
 const forgeAPI = createForgeProxy(contract)
 
-export type UserData = InferOutput<typeof forgeAPI.auth.me>['userData']
+export type UserData = InferOutput<typeof forgeAPI.user.me>['userData']
+
+export type FileReference = NonNullable<UserData['avatar']>
 
 interface AuthData {
   auth: boolean
@@ -82,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         setAccessToken(loginData.accessToken)
 
-        const userResponse = await forgeAPI.auth.me.queryRaw()
+        const userResponse = await forgeAPI.user.me.queryRaw()
 
         setUserData(userResponse.userData)
         setAuth(true)
@@ -145,7 +146,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         setAccessToken(oauthData.accessToken)
 
-        const userResponse = await forgeAPI.auth.me.queryRaw()
+        const userResponse = await forgeAPI.user.me.queryRaw()
 
         setUserData(userResponse.userData)
         setAuth(true)
@@ -172,35 +173,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       setAccessToken(data.accessToken)
 
-      const userResponse = await forgeAPI.auth.me.queryRaw()
+      const userResponse = await forgeAPI.user.me.queryRaw()
 
       setUserData(userResponse.userData)
       setAuth(true)
 
-      return userResponse.userData.name
+      return userResponse.userData.name || ''
     },
     []
   )
 
   const getAvatarURL = useCallback((): string => {
-    if (userData) {
-      return (forgeAPI as any).getMedia({
-        collectionId: userData.collectionId,
-        recordId: userData.id,
-        fieldId: userData.avatar,
+    if (userData?.avatar) {
+      return forgeAPI.getMedia({
+        key: userData.avatar.key,
         thumb: '256x0'
       })
     }
 
     return ''
-  }, [userData, forgeAPI])
+  }, [userData])
 
   useEffect(() => {
     if (getAccessToken()) {
       setAuth(true)
       setAuthLoading(true)
 
-      forgeAPI.auth.me
+      forgeAPI.user.me
         .queryRaw()
         .then(data => {
           setUserData(data.userData)
@@ -227,7 +226,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .then((data: { accessToken: string }) => {
         setAccessToken(data.accessToken)
 
-        return forgeAPI.auth.me.queryRaw()
+        return forgeAPI.user.me.queryRaw()
       })
       .then(data => {
         setUserData(data.userData)

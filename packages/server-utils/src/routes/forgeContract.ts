@@ -1,84 +1,59 @@
+import { type AnyRelations } from 'drizzle-orm'
+import { type PgTable } from 'drizzle-orm/pg-core'
 import type { RequestHandler } from 'express'
 import type { z } from 'zod'
 
 import {
-  type CleanedSchemas,
-  type CollectionKey,
-  type IPBService
-} from '@lifeforge/pocketbase'
+  type BuiltModuleSchema,
+  type ModuleSchema,
+  defineModuleSchema
+} from '@lifeforge/drizzle'
 
 import { getCallerModuleId } from '..'
+import { type ExistsInFor, existsIn } from '../database'
+import { ModuleRegistry } from '../registry/ModuleRegistry'
+import {
+  type OutputDefinition,
+  type ResponseObject,
+  createOutputHelpers
+} from '../response'
 import type {
   ForgeContext,
   ForgeContract,
   ForgeExpressContext
 } from '../typescript/core/forge_contract.types'
 import type {
-  OutputDefinition,
-  OutputHelpers,
-  ResponseObject
-} from '../typescript/response/response_helpers.types'
-import type {
   ConvertMedia,
   MediaConfig
 } from '../typescript/standalone/media.types'
-import { Output, OutputType } from '../utils/outputStatus'
 
-type KeysOf<T> = T extends any ? keyof T : never
-
-export function snakeCaseToCamelCase(str: string): string {
-  return str
-    .toLowerCase()
-    .replace(/_([a-z])/g, (_, letter) => letter.toUpperCase())
+export interface ForgeContractOptions<
+  TModuleSchema extends ModuleSchema = ModuleSchema
+> {
+  schema?: TModuleSchema
+  moduleId?: string
+  modulePathAlias?: string
 }
 
-export function createOutputHelpers<
-  TOutput extends OutputDefinition | 'custom'
->(output: TOutput): OutputHelpers<TOutput> {
-  const helpers = {} as Record<
-    string,
-    (payload?: unknown) => { $status: number; payload?: unknown }
+type TablesOf<T> = T extends { tables: infer TT } ? TT : Record<string, PgTable>
+
+type ForgeBuilderFor<
+  TSchema extends AnyRelations,
+  TOptions extends ForgeContractOptions
+> = ReturnType<
+  typeof makeBuilder<
+    TOptions['schema'] extends ModuleSchema
+      ? BuiltModuleSchema<TOptions['schema']>
+      : TSchema,
+    TablesOf<TOptions['schema']>
   >
+>
 
-  if (output === 'custom') {
-    return helpers as unknown as OutputHelpers<TOutput>
-  }
-
-  for (const key of Object.keys(output)) {
-    const camelKey = snakeCaseToCamelCase(key)
-
-    const outputDef = Output[key as keyof OutputType]
-
-    const status = outputDef?.$status ?? 200
-
-    const hasPayload =
-      outputDef && 'hasPayload' in outputDef
-        ? (outputDef as { hasPayload: boolean }).hasPayload
-        : false
-
-    helpers[camelKey] = function (payload?: unknown) {
-      return {
-        $status: status,
-        ...(hasPayload ? { payload } : {})
-      }
-    }
-  }
-
-  return helpers as unknown as OutputHelpers<TOutput>
-}
-
-export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
-  _schemas: TSchemas,
-  callerModuleOrOptions?: string | { modulePathAlias?: string }
-) {
-  const callerModule =
-    typeof callerModuleOrOptions === 'string'
-      ? callerModuleOrOptions
-      : undefined
-  const modulePathAlias =
-    typeof callerModuleOrOptions === 'object'
-      ? callerModuleOrOptions.modulePathAlias
-      : undefined
+function makeBuilder<
+  TSchema extends AnyRelations = any,
+  TTables extends Record<string, PgTable> = Record<string, PgTable>
+>(config: { callerModule?: string; modulePathAlias?: string }) {
+  const { callerModule, modulePathAlias } = config
 
   function buildRoute<
     TMethod extends 'get' | 'post',
@@ -98,22 +73,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
-        ? {
-            body?: Partial<
-              Record<
-                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-            query?: Partial<
-              Record<
-                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-          }
-        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
       rateLimit?: boolean
@@ -122,7 +81,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
     return {
       callback: function (
         cb: (
-          context: ForgeContext<TSchemas, TQuery, TBody, TOutput, TMedia>
+          context: ForgeContext<TQuery, TBody, TOutput, TMedia, TSchema>
         ) => Promise<ResponseObject<TOutput>>
       ): ForgeContract {
         const caller = getCallerModuleId()
@@ -139,7 +98,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
           modulePathAlias,
           getValue() {
             const callbackWrapper = async function (
-              ctx: ForgeExpressContext
+              ctx: ForgeExpressContext<TSchema>
             ): Promise<{ $status: number; payload?: unknown }> {
               const responseHelpers = createOutputHelpers(metadata.output)
 
@@ -155,7 +114,7 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
                 req: ctx.req,
                 res: ctx.res,
                 io: ctx.io,
-                pb: ctx.pb as IPBService<TSchemas>,
+                db: ctx.db,
                 core: ctx.core
               })) as any
             }
@@ -169,10 +128,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
               },
               output: metadata.output as OutputDefinition | 'custom',
               noDefaultResponse: false,
-              existenceCheck: (metadata.existenceCheck ?? {}) as {
-                body?: Record<string, string>
-                query?: Record<string, string>
-              },
               description: metadata.description,
               isDownloadable: metadata.isDownloadable ?? false,
               media: (metadata.media ?? null) as TMedia,
@@ -203,17 +158,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
-        ? {
-            body?: never
-            query?: Partial<
-              Record<
-                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-          }
-        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
       rateLimit?: boolean
@@ -239,22 +183,6 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
       noAuth?: boolean
       encrypted?: boolean
       isDownloadable?: boolean
-      existenceCheck?: 'NOT_FOUND' extends keyof TOutput
-        ? {
-            body?: Partial<
-              Record<
-                TBody extends z.ZodTypeAny ? KeysOf<z.infer<TBody>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-            query?: Partial<
-              Record<
-                TQuery extends z.ZodTypeAny ? KeysOf<z.infer<TQuery>> : string,
-                CollectionKey<TSchemas> | `[${CollectionKey<TSchemas>}]`
-              >
-            >
-          }
-        : 'Error: If existenceCheck is defined, NOT_FOUND must be present in the output definition'
       media?: TMedia
       middlewares?: RequestHandler[]
       rateLimit?: boolean
@@ -263,8 +191,38 @@ export function createForgeContractBuilder<TSchemas extends CleanedSchemas>(
         'post',
         metadata
       )
+    },
+
+    existsIn: existsIn as unknown as ExistsInFor<TTables>
+  }
+}
+
+export function createForgeContractBuilder<
+  TSchema extends AnyRelations = any,
+  TOptions extends ForgeContractOptions = ForgeContractOptions
+>(options?: TOptions): ForgeBuilderFor<TSchema, TOptions> {
+  const { schema, moduleId, modulePathAlias } = options ?? {}
+
+  if (schema) {
+    const caller = getCallerModuleId()
+
+    const moduleId = caller?.source === 'app' ? caller.id : undefined
+
+    const definition = defineModuleSchema(
+      schema.tables,
+      schema.relations as any,
+      moduleId
+    )
+
+    if (moduleId) {
+      ModuleRegistry.registerSchemaPart(moduleId, definition)
     }
   }
+
+  return makeBuilder({
+    callerModule: moduleId,
+    modulePathAlias
+  }) as unknown as ForgeBuilderFor<TSchema, TOptions>
 }
 
 export default createForgeContractBuilder

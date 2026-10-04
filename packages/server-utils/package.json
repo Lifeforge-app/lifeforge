@@ -15,12 +15,15 @@
   },
   "scripts": {
     "build": "rimraf dist && vite build && tsc --emitDeclarationOnly",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "typecheck": "tsc --emitDeclarationOnly"
   },
   "dependencies": {
     "@lifeforge/configs": "workspace:*",
+    "@lifeforge/drizzle": "workspace:*",
+    "@lifeforge/file-storage": "workspace:*",
     "@lifeforge/log": "workspace:*",
-    "@lifeforge/pocketbase": "workspace:*",
     "chalk": "^5.6.2",
     "crypto-js": "^4.2.0",
     "express": "^4.21.2",
@@ -34,6 +37,7 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
     "@types/crypto-js": "^4.2.2",
     "@types/express": "^4.17.23",
     "@types/express-serve-static-core": "4",

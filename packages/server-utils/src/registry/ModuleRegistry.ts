@@ -4,10 +4,15 @@ import type {
   ModuleManifest,
   ModuleWidget
 } from '@lifeforge/configs'
+import type { ModuleSchemaDefinition } from '@lifeforge/drizzle'
 
 export class ModuleRegistry {
   private static registeredModules: ModuleEntry[] = []
   private static modulePaths = new Map<string, string>()
+  private static registeredSchemaParts = new Map<
+    string,
+    ModuleSchemaDefinition
+  >()
 
   static register(entry: ModuleEntry, absolutePath?: string): void {
     ModuleRegistry.registeredModules.push(entry)
@@ -119,5 +124,19 @@ export class ModuleRegistry {
     }
 
     return undefined
+  }
+
+  /** Registers a module's drizzle schema part (keyed by module id / 'core'). */
+  static registerSchemaPart(id: string, part: ModuleSchemaDefinition): void {
+    ModuleRegistry.registeredSchemaParts.set(id, part)
+  }
+
+  /** Bare table key -> namespaced key for a module, if it registered one. */
+  static getModuleKeyMap(id: string): Record<string, string> | undefined {
+    return ModuleRegistry.registeredSchemaParts.get(id)?.keyMap
+  }
+
+  static get schemaParts(): readonly ModuleSchemaDefinition[] {
+    return [...ModuleRegistry.registeredSchemaParts.values()]
   }
 }

@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react'
 
+import type { FileReference } from '@lifeforge/api'
+
 import { forgeAPI as fAPI } from '@/utils/forgeAPI'
 
 interface CustomFontData {
@@ -7,8 +9,7 @@ interface CustomFontData {
   displayName: string
   family: string
   weight: number
-  file: string
-  collectionId: string
+  file: FileReference | null
 }
 
 function useFontFamily(
@@ -67,11 +68,12 @@ function useFontFamily(
             return
           }
 
-          // Construct the PocketBase file URL
+          if (!fontData.file) {
+            return
+          }
+
           const fileUrl = forgeAPI.getMedia({
-            collectionId: fontData.collectionId,
-            recordId: fontData.id,
-            fieldId: fontData.file
+            key: fontData.file.key
           })
 
           // Create @font-face rule for the custom font

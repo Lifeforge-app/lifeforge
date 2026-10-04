@@ -59,10 +59,6 @@ Thumbs.db
 .DS_Store
 
 # project-specific
-pocketbase
-pocketbase.exe
-!packages/pocketbase
-pb_*/
+storage
 medium
 .temp
-.opencode

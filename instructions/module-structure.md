@@ -426,8 +426,9 @@ export default cleanSchemas(schemas)
 Each file exports named endpoints built with the `forge` DSL. Endpoints are
 `forge.query(...)` (reads) or `forge.mutation(...)` (writes), followed by
 `.callback(...)`. The config object declares `description`, `input` (zod
-`query`/`body`), `existenceCheck`, `media`, and `output` (a status→schema map;
-`true` means an empty-body status like `NOT_FOUND` / `NO_CONTENT`).
+`query`/`body`), `media`, and `output` (a success-only status→schema map; `true`
+means a no-payload status like `NO_CONTENT`). Referenced records are validated
+with `forge.existsIn(...)` inside the input schema.
 
 ```typescript
 import z from 'zod'
@@ -474,9 +475,11 @@ The callback receives a context object, commonly destructuring:
   `convertPDFToImage`, `core.api.getAPIKey`, `core.tasks`.
 - `io` - Socket.IO server for pushing progress updates.
 
-`existenceCheck` validates that referenced records exist before running the
-callback: `{ query: { id: 'entries' }, body: { collection: '[collections]' } }`
-(brackets indicate relation/array fields).
+`forge.existsIn(z.string(), entries)` marks an input field as a reference; before
+running the callback the framework verifies the record exists and returns a `404`
+if not. It accepts optional (`existsIn(z.string().optional(), …)`) and array
+(`existsIn(z.array(z.string()), …)`) fields, and a non-primary-key column
+(`existsIn(z.string(), users, 'email')`).
 
 The full DSL and migration notes live in
 [`server-dsl-migration.md`](./server-dsl-migration.md).
@@ -503,6 +506,11 @@ if (![lat, lng, altitude, velocity].every(Number.isFinite)) {
 Filter array items the same way. On the client, still treat contract-typed
 numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '—'`). See
 [`server-dsl-migration.md`](./server-dsl-migration.md) for the DSL-side rule.
+
+Timestamps are handled for you: DTOs keep `z.date()`, routes return the `Date`
+objects as-is, and the framework serializes them to ISO strings on the wire.
+Never re-declare timestamp columns as `z.string()` or call `.toISOString()` in a
+route.
 
 ### Sanitizing scraped / external HTML
 

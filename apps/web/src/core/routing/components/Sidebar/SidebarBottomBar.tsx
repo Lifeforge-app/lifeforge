@@ -62,7 +62,7 @@ function SidebarBottomBar() {
                   r="full"
                   width="2.5rem"
                 >
-                  {userData.avatar !== '' ? (
+                  {userData.avatar ? (
                     <Box
                       asChild
                       height="100%"

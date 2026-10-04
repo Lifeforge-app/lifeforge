@@ -13,7 +13,7 @@ import {
   forgeRouter
 } from '@lifeforge/server-utils'
 
-const forge = createForge({}, 'locales')
+const forge = createForge({ moduleId: 'locales' })
 
 const appsDir = path.join(ROOT_DIR, 'modules')
 
@@ -75,8 +75,7 @@ const getLocale = forge
       })
     },
     output: {
-      OK: z.record(z.string(), z.any()),
-      NOT_FOUND: true
+      OK: z.record(z.string(), z.any())
     },
     rateLimit: false
   })
@@ -209,13 +208,13 @@ const listUnsupportedModules = forge
     description:
       "List modules that do not support the user's currently selected language",
     output: {
-      OK: z.array(z.string()),
-      NOT_FOUND: true
+      OK: z.array(z.string())
     },
     rateLimit: false
   })
-  .callback(async ({ pb, response }) => {
-    const userLanguage = pb.instance.authStore.record?.language
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
+    const userLanguage = user?.language
 
     if (!userLanguage) {
       return response.notFound()

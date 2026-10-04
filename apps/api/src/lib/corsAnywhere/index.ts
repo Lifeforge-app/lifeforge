@@ -2,7 +2,7 @@ import z from 'zod'
 
 import { createForge } from '@lifeforge/server-utils'
 
-const forge = createForge({}, 'cors_anywhere')
+const forge = createForge({ moduleId: 'cors_anywhere' })
 
 const corsAnywhere = forge
   .query({
@@ -13,8 +13,7 @@ const corsAnywhere = forge
       })
     },
     output: {
-      OK: z.any(),
-      BAD_REQUEST: z.string()
+      OK: z.any()
     }
   })
   .callback(async ({ query: { url }, core: { logging }, response }) => {

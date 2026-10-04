@@ -1,16 +1,12 @@
+import { pgTable, uuid } from 'drizzle-orm/pg-core'
 import { describe, expect, it } from 'vitest'
 import z from 'zod'
 
 import { createForgeContractBuilder } from './forgeContract'
 
-describe('createForgeContractBuilder Type Constraints', () => {
-  it('should construct query contract and allow existenceCheck when NOT_FOUND is declared', () => {
-    const forge = createForgeContractBuilder({
-      categories: {
-        schema: z.object({}),
-        raw: {}
-      }
-    })
+describe('createForgeContractBuilder', () => {
+  it('should construct query contract and register a callback', () => {
+    const forge = createForgeContractBuilder()
 
     const contract = forge
       .query({
@@ -23,20 +19,10 @@ describe('createForgeContractBuilder Type Constraints', () => {
         output: {
           OK: z.object({
             message: z.string()
-          }),
-          NOT_FOUND: true
-        },
-        existenceCheck: {
-          query: {
-            id: 'categories'
-          }
+          })
         }
       })
-      .callback(async function ({ query, response }) {
-        if (query?.id === '404') {
-          return response.notFound()
-        }
-
+      .callback(async ({ query, response }) => {
         return response.ok({ message: `Hello ${query?.id}` })
       })
 
@@ -46,15 +32,10 @@ describe('createForgeContractBuilder Type Constraints', () => {
 
     expect(val.method).toBe('get')
     expect(val.description).toBe('Test Query')
-    expect(val.existenceCheck).toEqual({
-      query: {
-        id: 'categories'
-      }
-    })
   })
 
   it('should default rateLimit to true', () => {
-    const forge = createForgeContractBuilder({})
+    const forge = createForgeContractBuilder()
     const contract = forge
       .query({
         description: 'Test rateLimit default',
@@ -62,7 +43,7 @@ describe('createForgeContractBuilder Type Constraints', () => {
           OK: z.string()
         }
       })
-      .callback(async function ({ response }) {
+      .callback(async ({ response }) => {
         return response.ok('test')
       })
 
@@ -71,7 +52,7 @@ describe('createForgeContractBuilder Type Constraints', () => {
   })
 
   it('should set rateLimit to false if explicitly defined', () => {
-    const forge = createForgeContractBuilder({})
+    const forge = createForgeContractBuilder()
     const contract = forge
       .query({
         description: 'Test rateLimit false',
@@ -80,11 +61,22 @@ describe('createForgeContractBuilder Type Constraints', () => {
           OK: z.string()
         }
       })
-      .callback(async function ({ response }) {
+      .callback(async ({ response }) => {
         return response.ok('test')
       })
 
     const val = contract.getValue()
     expect(val.rateLimit).toBe(false)
+  })
+
+  it('should expose a typed existsIn bound to the module schema', () => {
+    const users = pgTable('users', { id: uuid('id').primaryKey() })
+    const forge = createForgeContractBuilder({
+      schema: { tables: { users }, relations: () => ({}) }
+    })
+
+    const schema = z.string()
+
+    expect(forge.existsIn(schema, users)).toBe(schema)
   })
 })

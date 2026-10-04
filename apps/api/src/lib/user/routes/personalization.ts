@@ -1,6 +1,10 @@
+import { eq } from 'drizzle-orm'
 import z from 'zod'
 
+import { fileReferenceSchema } from '@lifeforge/file-storage'
+
 import forge from '../forge'
+import { users } from '../schema.drizzle'
 
 export const updateBgImage = forge
   .mutation({
@@ -12,46 +16,46 @@ export const updateBgImage = forge
       }
     },
     output: {
-      OK: z.object({
-        collectionId: z.string(),
-        recordId: z.string(),
-        fieldId: z.string()
-      })
+      OK: fileReferenceSchema
     }
   })
-  .callback(
-    async ({
-      pb,
-      media: { file },
-      core: {
-        media: { retrieveMedia }
-      },
-      response
-    }) => {
-      const userRecord = await pb.getFirstListItem.collection('users').execute()
-
-      const newRecord = await pb.update
-        .collection('users')
-        .id(userRecord.id)
-        .data({
-          ...(await retrieveMedia('bgImage', file)),
-          backdropFilters: {
-            brightness: 100,
-            blur: 'none',
-            contrast: 100,
-            saturation: 100,
-            overlayOpacity: 50
-          }
-        })
-        .execute()
-
-      return response.ok({
-        collectionId: newRecord.collectionId,
-        recordId: newRecord.id,
-        fieldId: newRecord.bgImage
-      })
+  .callback(async ({ db, media: { file }, core, response }) => {
+    if (typeof file === 'string') {
+      return response.badRequest('A valid background image must be uploaded')
     }
-  )
+
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const bgImageRef = await core.storage.save({
+      file,
+      currentKey: user.bgImage || undefined
+    })
+
+    if (!bgImageRef) {
+      return response.badRequest('Failed to save background image')
+    }
+
+    await db
+      .update(users)
+      .set({
+        bgImage: bgImageRef.key,
+        backdropFilters: {
+          brightness: 100,
+          blur: 'none',
+          contrast: 100,
+          saturation: 100,
+          overlayOpacity: 50
+        },
+        updated: new Date()
+      })
+      .where(eq(users.id, user.id))
+
+    return response.ok(bgImageRef)
+  })
 
 export const deleteBgImage = forge
   .mutation({
@@ -61,16 +65,24 @@ export const deleteBgImage = forge
       NO_CONTENT: true
     }
   })
-  .callback(async ({ pb, response }) => {
-    const userRecord = await pb.getFirstListItem.collection('users').execute()
+  .callback(async ({ db, core, response }) => {
+    const user = await db.query.users.findFirst()
 
-    await pb.update
-      .collection('users')
-      .id(userRecord.id)
-      .data({
-        bgImage: null
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    if (user.bgImage) {
+      await core.storage.delete(user.bgImage)
+    }
+
+    await db
+      .update(users)
+      .set({
+        bgImage: null,
+        updated: new Date()
       })
-      .execute()
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -95,12 +107,17 @@ export const updatePersonalization = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      BAD_REQUEST: z.string()
+      NO_CONTENT: true
     }
   })
-  .callback(async ({ pb, body: { data }, response }) => {
-    const toBeUpdated: { [key: string]: unknown } = {}
+  .callback(async ({ db, body: { data }, response }) => {
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const toBeUpdated: Record<string, unknown> = {}
 
     for (const item of [
       'fontFamily',
@@ -123,13 +140,9 @@ export const updatePersonalization = forge
       return response.badRequest('No data to update')
     }
 
-    const userRecord = await pb.getFirstListItem.collection('users').execute()
+    toBeUpdated.updated = new Date()
 
-    await pb.update
-      .collection('users')
-      .id(userRecord.id)
-      .data(toBeUpdated)
-      .execute()
+    await db.update(users).set(toBeUpdated).where(eq(users.id, user.id))
 
     return response.noContent()
   })

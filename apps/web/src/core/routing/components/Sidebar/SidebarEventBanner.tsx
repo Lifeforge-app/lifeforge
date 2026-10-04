@@ -69,7 +69,7 @@ export default function SidebarEventBanner() {
   const { userData } = useAuth()
 
   const eventType = useMemo(
-    () => getEventType(userData?.dateOfBirth),
+    () => getEventType(userData?.dateOfBirth ?? undefined),
     [userData?.dateOfBirth]
   )
 
@@ -103,7 +103,11 @@ export default function SidebarEventBanner() {
             <Icon icon="mingcute:christmas-hat-line" size="1.5em" />
           )}
           <Text as="p" lineClamp={2} whiteSpace="normal">
-            {getEventMessage(eventType, userData.name, userData.dateOfBirth)}
+            {getEventMessage(
+              eventType,
+              userData.name ?? '',
+              userData.dateOfBirth ?? ''
+            )}
           </Text>
         </Flex>
         <Icon icon={getEventIcon(eventType)} size="1.5em" />

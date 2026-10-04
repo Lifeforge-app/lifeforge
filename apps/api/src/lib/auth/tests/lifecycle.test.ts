@@ -29,7 +29,7 @@ describe('Full lifecycle', () => {
     const cookies1 = extractCookies(login.headers['set-cookie'])
 
     setAccessToken(accessToken1)
-    const me1 = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const me1 = await forgeAPI.user.me.queryRaw({ raw: true })
 
     expect(me1.status).toBe(200)
     expect(unwrap(me1).userData.email).toBe(email)
@@ -45,7 +45,7 @@ describe('Full lifecycle', () => {
     const cookies2 = extractCookies(refresh1.headers['set-cookie'])
 
     setAccessToken(accessToken2)
-    const me2 = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const me2 = await forgeAPI.user.me.queryRaw({ raw: true })
 
     expect(me2.status).toBe(200)
 

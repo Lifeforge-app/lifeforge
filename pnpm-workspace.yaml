@@ -16,3 +16,7 @@ allowBuilds:
   sharp: true
   tesseract.js: true
   zipfile: true
+
+minimumReleaseAgeExclude:
+  - '@aws-sdk/lib-storage@3.1145.0'
+  - '@aws-sdk/s3-request-presigner@3.1145.0'

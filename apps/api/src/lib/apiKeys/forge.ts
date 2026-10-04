@@ -1,7 +1,9 @@
-import { createForge } from '@lifeforge/server-utils'
+import { createForgeContractBuilder } from '@lifeforge/server-utils'
 
-import schema from './schema'
+import type { CoreRelations } from '@/core/drizzle'
 
-const forge = createForge(schema, 'api_keys')
+const forge = createForgeContractBuilder<CoreRelations>({
+  moduleId: 'apiKeys'
+})
 
 export default forge

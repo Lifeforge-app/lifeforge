@@ -1,0 +1,27 @@
+{
+  "name": "@lifeforge/drizzle",
+  "version": "0.0.1",
+  "description": "Drizzle ORM glue for the LifeForge server",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build && tsc --project tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@lifeforge/configs": "workspace:*",
+    "@types/node": "^25.0.6"
+  }
+}

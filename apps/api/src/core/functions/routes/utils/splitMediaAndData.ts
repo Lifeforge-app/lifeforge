@@ -1,17 +1,18 @@
 import { coreLogger } from '@functions/logging'
 import chalk from 'chalk'
 
+import type { StagedFile } from '@lifeforge/file-storage'
 import { MediaConfig } from '@lifeforge/server-utils'
 
 type MediaResponse = Record<
   string,
-  Express.Multer.File | Express.Multer.File[] | undefined
+  StagedFile | StagedFile[] | undefined
 >
 
 export const splitMediaAndData = (
   _media: MediaConfig | null,
   data: Record<string, any>,
-  requestFiles: Record<string, Express.Multer.File[]>
+  requestFiles: Record<string, StagedFile[]>
 ): {
   data: Record<string, any>
   media: MediaResponse

@@ -1,30 +1,23 @@
-import { getPB } from '@lib/auth/constants/pb'
+import { eq } from 'drizzle-orm'
 import z from 'zod'
 
 import forge from '../forge'
+import { fontsPinnedFonts } from '../schema.drizzle'
 
 export const list = forge
   .query({
     description: 'Retrieve pinned Google Fonts',
     input: {},
     output: {
-      OK: z.array(z.string()),
-      UNAUTHORIZED: true
+      OK: z.array(z.string())
     }
   })
-  .callback(async ({ response }) => {
-    const pb = await getPB('user')
+  .callback(async ({ db, response }) => {
+    const pins = await db.query.fontsPinnedFonts.findMany({
+      orderBy: { created: 'asc' }
+    })
 
-    const user = await pb.getFirstListItem
-      .collection('users')
-      .execute()
-      .catch(() => null)
-
-    if (!user) {
-      return response.unauthorized()
-    }
-
-    return response.ok((user.pinnedFontFamilies || []) as string[])
+    return response.ok(pins.map(pin => pin.family))
   })
 
 export const toggle = forge
@@ -36,35 +29,18 @@ export const toggle = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
-  .callback(async ({ body: { family }, response }) => {
-    const pb = await getPB('user')
+  .callback(async ({ db, body: { family }, response }) => {
+    const deleted = await db
+      .delete(fontsPinnedFonts)
+      .where(eq(fontsPinnedFonts.family, family))
+      .returning()
 
-    const user = await pb.getFirstListItem
-      .collection('users')
-      .execute()
-      .catch(() => null)
-
-    if (!user) {
-      return response.unauthorized()
+    if (deleted.length === 0) {
+      await db.insert(fontsPinnedFonts).values({ family }).onConflictDoNothing()
     }
-
-    const pinnedFontFamilies: string[] = user.pinnedFontFamilies || []
-
-    const updatedPinnedFontFamilies = pinnedFontFamilies.includes(family)
-      ? pinnedFontFamilies.filter(f => f !== family)
-      : [...pinnedFontFamilies, family]
-
-    await pb.update
-      .collection('users')
-      .id(user.id)
-      .data({
-        pinnedFontFamilies: updatedPinnedFontFamilies
-      })
-      .execute()
 
     return response.noContent()
   })

@@ -45,7 +45,9 @@ function AvatarColumn() {
   const deleteAvatarMutation = useMutation(
     forgeAPI.user.settings.deleteAvatar.mutationOptions({
       onSuccess: () => {
-        setUserData(userData => (userData ? { ...userData, avatar: '' } : null))
+        setUserData(userData =>
+          userData ? { ...userData, avatar: null } : null
+        )
         toast.success('Avatar removed successfully')
       },
       onError: () => {
@@ -84,7 +86,7 @@ function AvatarColumn() {
         r="full"
         width="3em"
       >
-        {userData.avatar !== '' ? (
+        {userData.avatar ? (
           <Box
             asChild
             height="100%"
@@ -103,7 +105,7 @@ function AvatarColumn() {
         <Button
           flex="1"
           icon="tabler:photo-hexagon"
-          variant={userData.avatar !== '' ? 'secondary' : 'primary'}
+          variant={userData.avatar ? 'secondary' : 'primary'}
           onClick={() =>
             open(FilePickerModal, {
               mimeTypes: {
@@ -125,7 +127,7 @@ function AvatarColumn() {
         >
           select
         </Button>
-        {userData.avatar !== '' && (
+        {userData.avatar && (
           <Button
             dangerous
             icon="tabler:trash"

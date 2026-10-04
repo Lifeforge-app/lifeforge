@@ -16,11 +16,9 @@ import type {
 
 type ProxyTreeLeaf = {
   getMedia: (params: {
-    collectionId: string
-    recordId: string
-    fieldId: string
+    key: string
     thumb?: string
-    token?: string
+    download?: string
   }) => string
   key: (string | Record<string, any> | null)[]
   schema: { query?: z.ZodTypeAny; body?: z.ZodTypeAny }

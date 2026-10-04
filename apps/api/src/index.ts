@@ -12,11 +12,10 @@ import chalk from 'chalk'
 import { program } from 'commander'
 import dotenv from 'dotenv'
 import type { Express } from 'express'
-import fs from 'fs'
 import { createServer } from 'node:http'
 import path from 'node:path'
 
-import { checkDB } from '@lifeforge/pocketbase'
+import { sweepStagingDir } from '@lifeforge/file-storage/server'
 import { traceRouteStack } from '@lifeforge/server-utils'
 
 dotenv.config({
@@ -50,12 +49,6 @@ if (opts.logLevel) {
   }
 }
 
-function ensureDirectories(): void {
-  if (!fs.existsSync('./medium')) {
-    fs.mkdirSync('./medium')
-  }
-}
-
 function startServer(
   server: ReturnType<typeof createServer>,
   app: Express
@@ -73,14 +66,16 @@ function startServer(
 }
 
 async function main(): Promise<void> {
+  createServiceLogger('Database').info(`DB initialization successful`)
+
+  await sweepStagingDir()
+
   // Import the app after loading env so module-level env reads (e.g. JWT secret)
   // are populated regardless of how the server is spawned.
   const { default: app } = await import('./core/app')
 
   LocaleService.validateAndLoad()
-  ensureDirectories()
   ensureCredentials()
-  await checkDB()
 
   const server = createSocketServer(app)
 

@@ -11,8 +11,7 @@ export const logout = forge
     encrypted: false,
     input: {},
     output: {
-      OK: z.boolean(),
-      UNAUTHORIZED: true
+      OK: z.boolean()
     }
   })
   .callback(async ({ req, res, response }) => {
