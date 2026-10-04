@@ -8,7 +8,10 @@ import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -50,6 +53,8 @@ export interface DateInputProps {
   endDate?: Date
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
 /**
@@ -70,7 +75,8 @@ export function DateInput({
   errorMsg,
   startDate,
   endDate,
-  onEnter
+  onEnter,
+  wrapperProps
 }: DateInputProps & InputVariants) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -121,12 +127,14 @@ export function DateInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={ref}
       style={{
-        cursor: 'pointer'
+        cursor: 'pointer',
+        ...wrapperProps?.style
       }}
       variant={variant}
       onClick={handleOpen}

@@ -7,7 +7,10 @@ import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -26,6 +29,8 @@ export interface IconInputProps {
   errorMsg?: string
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
 export function IconInput({
@@ -38,7 +43,8 @@ export function IconInput({
   autoFocus = false,
   namespace,
   errorMsg,
-  onEnter
+  onEnter,
+  wrapperProps
 }: IconInputProps & InputVariants) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -50,6 +56,7 @@ export function IconInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={ref}

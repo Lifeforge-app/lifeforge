@@ -5,7 +5,10 @@ import { vars } from '@/system'
 
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -36,6 +39,8 @@ export type TextAreaInputProps = {
   errorMsg?: string
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 } & InputVariants
 
 export function TextAreaInput({
@@ -51,7 +56,8 @@ export function TextAreaInput({
   className,
   namespace,
   errorMsg,
-  onEnter
+  onEnter,
+  wrapperProps
 }: TextAreaInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const ref = useRef<HTMLTextAreaElement>(null)
@@ -65,6 +71,7 @@ export function TextAreaInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}

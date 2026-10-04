@@ -7,7 +7,10 @@ import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -37,6 +40,8 @@ export interface ColorInputProps {
   errorMsg?: string
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
 export function ColorInput({
@@ -51,7 +56,8 @@ export function ColorInput({
   className,
   namespace,
   errorMsg,
-  onEnter
+  onEnter,
+  wrapperProps
 }: ColorInputProps & InputVariants) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -60,6 +66,7 @@ export function ColorInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}

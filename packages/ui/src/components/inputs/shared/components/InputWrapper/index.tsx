@@ -30,6 +30,22 @@ export type InputWrapperProps = {
   errorMsg?: string
 } & FlexProps
 
+/**
+ * Props that are forwarded to the underlying `InputWrapper` (a `Flex`).
+ * Excludes the props each input manages itself.
+ */
+export type InputWrapperPassthrough = Omit<
+  InputWrapperProps,
+  | 'children'
+  | 'variant'
+  | 'size'
+  | 'disabled'
+  | 'errorMsg'
+  | 'inputRef'
+  | 'onFocus'
+  | 'className'
+>
+
 export function InputWrapper({
   className = '',
   variant = 'classic',

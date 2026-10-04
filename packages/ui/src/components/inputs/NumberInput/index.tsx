@@ -4,6 +4,7 @@ import { NumericFormat } from 'react-number-format'
 
 import { Button } from '../Button'
 import { TextInput } from '../TextInput'
+import type { InputWrapperPassthrough } from '../shared/components/InputWrapper'
 import type { InputVariants } from '../shared/types'
 
 export interface NumberInputProps {
@@ -37,6 +38,8 @@ export interface NumberInputProps {
   actionButtonProps?: React.ComponentProps<typeof Button>
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
 function NumberTextInputAdapter(props: any) {
@@ -81,7 +84,8 @@ export function NumberInput({
   max,
   placeholder = '123',
   actionButtonProps,
-  onEnter
+  onEnter,
+  wrapperProps
 }: NumberInputProps & InputVariants<true>) {
   return (
     <NumericFormat
@@ -99,6 +103,7 @@ export function NumberInput({
       size={size as never}
       value={value}
       variant={variant as never}
+      wrapperProps={wrapperProps}
       onBlur={() => {
         let numericValue = value
 

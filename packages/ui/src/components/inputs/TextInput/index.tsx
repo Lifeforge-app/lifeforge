@@ -7,7 +7,10 @@ import { Flex } from '@/components/primitives'
 import { Button } from '../Button'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
 import { TextInputBox } from './components/TextInputBox'
@@ -31,6 +34,7 @@ export type TextInputProps = {
   errorMsg?: string
   inputRef?: React.RefObject<HTMLInputElement | null>
   onEnter?: () => void
+  wrapperProps?: InputWrapperPassthrough
 } & Omit<React.HTMLAttributes<HTMLInputElement>, 'onChange'> &
   InputVariants<true>
 
@@ -54,6 +58,7 @@ export function _TextInput({
   autoFocus = false,
   inputRef: externalInputRef,
   onEnter,
+  wrapperProps,
   ...inputProps
 }: TextInputProps) {
   const [showPassword, setShowPassword] = useState(false)
@@ -70,6 +75,7 @@ export function _TextInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}
