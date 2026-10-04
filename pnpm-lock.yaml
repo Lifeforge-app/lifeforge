@@ -1515,6 +1515,9 @@ importers:
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
