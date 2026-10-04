@@ -11,7 +11,6 @@ import {
   OptionsColumn,
   Text,
   WithQuery,
-  surface,
   usePersonalization
 } from '@lifeforge/ui'
 
@@ -41,7 +40,6 @@ function LanguageSelector() {
         {langs => (
           <Flex align="center" gap="sm" width="100%">
             <Listbox
-              bg={surface.lightInteractive}
               minWidth="16em"
               mr="sm"
               renderContent={() => (

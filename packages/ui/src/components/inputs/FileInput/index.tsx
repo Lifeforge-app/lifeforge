@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { Flex, Icon, Text } from '@/components/primitives'
 import { useModalStore } from '@/providers'
-import { colorWithOpacity } from '@/system'
+import { surface } from '@/system'
 
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import { FilePickerModal } from './FilePickerModal'
@@ -124,10 +124,7 @@ export function FileInput({
     <Flex direction="column" gap="sm" width="100%">
       <Flex
         shadow
-        bg={{
-          base: colorWithOpacity('bg-200', '50%'),
-          dark: colorWithOpacity('bg-800', '70%')
-        }}
+        bg={surface.lightInteractive}
         className="__file-input"
         direction="column"
         p="lg"

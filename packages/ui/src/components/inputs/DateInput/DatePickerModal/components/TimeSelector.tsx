@@ -28,7 +28,6 @@ export function TimeSelector() {
     <Flex align="center" direction={{ base: 'column', sm: 'row' }} gap="sm">
       <Flex align="center" gap="sm" width="100%">
         <Listbox
-          bg={surface.lightInteractive}
           flex="1"
           gap="sm"
           height="auto"
@@ -62,7 +61,6 @@ export function TimeSelector() {
           :
         </Text>
         <Listbox
-          bg={surface.lightInteractive}
           flex="1"
           gap="sm"
           height="auto"

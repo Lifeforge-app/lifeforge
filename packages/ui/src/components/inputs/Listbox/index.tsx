@@ -51,7 +51,7 @@ export function Listbox<T>({
           asChild
           shadow
           align="center"
-          bg={rest.bg ?? surface.defaultInteractive}
+          bg={rest.bg ?? surface.lightInteractive}
           gap="lg"
           justify="between"
           minWidth="0"

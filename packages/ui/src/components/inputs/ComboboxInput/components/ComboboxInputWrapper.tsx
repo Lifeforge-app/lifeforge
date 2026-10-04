@@ -5,7 +5,7 @@ import { inputWrapperRecipe } from '@/components/inputs/shared/components/InputW
 import { InputFocusProvider } from '@/components/inputs/shared/contexts/InputFocusContext'
 import type { InputVariant } from '@/components/inputs/shared/types'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
-import { colorWithOpacity } from '@/system'
+import { surface } from '@/system'
 
 import * as styles from './ComboboxInputWrapper.css'
 
@@ -41,12 +41,7 @@ export function ComboboxInputWrapper<T>({
         <Flex
           asChild
           align="center"
-          bg={{
-            base: colorWithOpacity('bg-200', '50%'),
-            dark: colorWithOpacity('bg-800', '70%'),
-            hover: 'bg-200',
-            darkHover: 'bg-800'
-          }}
+          bg={surface.lightInteractive}
           gap="xs"
           position="relative"
           shadow={variant === 'classic'}

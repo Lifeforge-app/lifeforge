@@ -6,8 +6,7 @@ import {
   Flex,
   Listbox,
   ListboxOption,
-  Text,
-  surface
+  Text
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/core/providers/features/UserPersonalizationProvider'
@@ -35,7 +34,6 @@ function DefaultBgTempSelector({
 
   return (
     <Listbox
-      bg={surface.lightInteractive}
       minWidth="12em"
       renderContent={() => (
         <Flex
