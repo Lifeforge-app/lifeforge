@@ -6,7 +6,7 @@ interface BorderRadiusIconProps {
 }
 
 function BorderRadiusIcon({ radius }: BorderRadiusIconProps) {
-  const r = Math.min(radius * 2, 6.5)
+  const r = Math.min(radius * 2.5, 7)
 
   return (
     <Box asChild flexShrink="0" height="1.25em" mr="sm" width="1.25em">

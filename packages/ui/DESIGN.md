@@ -51,16 +51,34 @@ Spacing scales are defined under `vars.space` and scale with font size to keep v
 
 ### B. Border Radius (Rounding) Tokens
 
-Border corners are defined under `vars.radii` and scale with the user's corner multiplier:
+Border corners are defined under `vars.radii` and scale with the user's corner multiplier (`--custom-border-radius-multiplier`; independent of font scale). Each radius is a whole multiple of the spacing unit (`0.25rem` - i.e. `--spacing` at the default font scale) so nested corners stay concentric.
 
-- `none`: `'0'`
-- `sm`: `var(--radius-sm)`
-- `md`: `var(--radius-md)`
-- `lg`: `var(--radius-lg)`
-- `xl`: `var(--radius-xl)`
-- `2xl`: `var(--radius-2xl)`
-- `3xl`: `var(--radius-3xl)`
-- `full`: `'9999px'`
+| Token  | Raw value           | Multiple of `0.25rem` | Rendered at `:root` 14px |
+| :----- | :------------------ | :-------------------- | :----------------------- |
+| `none` | `0`                 | -                     | `0`                      |
+| `sm`   | `var(--radius-sm)`  | `1`                   | `3.5px`                  |
+| `md`   | `var(--radius-md)`  | `2`                   | `7px`                    |
+| `lg`   | `var(--radius-lg)`  | `3`                   | `10.5px`                 |
+| `xl`   | `var(--radius-xl)`  | `4`                   | `14px`                   |
+| `2xl`  | `var(--radius-2xl)` | `6`                   | `21px`                   |
+| `3xl`  | `var(--radius-3xl)` | `8`                   | `28px`                   |
+| `full` | `9999px`            | -                     | pill                     |
+
+#### Concentric nested corners
+
+When a rounded element sits inside another one with padding, keep the corners concentric using `inner radius = outer radius - padding`. Because all radius and spacing tokens share the `0.25rem` unit, the result usually maps to another token:
+
+| Outer radius | Padding | Inner radius |
+| :----------- | :------ | :----------- |
+| `md`         | `xs`    | `sm`         |
+| `lg`         | `xs`    | `md`         |
+| `lg`         | `sm`    | `sm`         |
+| `xl`         | `xs`    | `lg`         |
+| `xl`         | `sm`    | `md`         |
+| `2xl`        | `sm`    | `xl`         |
+| `3xl`        | `sm`    | `2xl`        |
+
+When the outer radius is less than or equal to the padding, the inner element should use `r="none"` - a square inner corner reads as concentric because it never crosses the outer corner's curve.
 
 ### C. Typography Scales
 
@@ -173,11 +191,15 @@ import { surface } from '@lifeforge/ui'
 
 // Light static surface - for non-interactive light backgrounds
 surface.light
-// => { base: 'bg-100', dark: 'bg-800' }
+// => { base: colorWithOpacity('bg-200', '50%'), dark: colorWithOpacity('bg-800', '50%') }
 
-// Light interactive surface - for controls (Listbox, SearchInput, selectable Cards)
+// Light interactive surface - the unified background for all inputs/controls
+// (TextInput, CurrencyInput, NumberInput, DateInput, ColorInput, IconInput,
+//  TextAreaInput, TagsInput, Listbox, ListboxInput, ComboboxInput, SearchInput,
+//  FileInput, and selectable Cards)
 surface.lightInteractive
-// => { base: 'bg-100', hover: 'bg-200', dark: 'bg-800', darkHover: colorWithOpacity('bg-700', '50%') }
+// => { base: colorWithOpacity('bg-200', '50%'), dark: colorWithOpacity('bg-800', '70%'),
+//      hover: colorWithOpacity('bg-200', '70%'), darkHover: colorWithOpacity('bg-700', '50%') }
 
 // Default surface - for static Cards
 surface.default
@@ -185,18 +207,21 @@ surface.default
 
 // Default interactive surface - for clickable Cards
 surface.defaultInteractive
-// => { base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }
+// => { base: 'bg-50', dark: 'bg-900', hover: colorWithOpacity('bg-50', '70%'), darkHover: 'bg-800' }
 ```
 
 These are `as const` objects that can be spread or passed directly into the `bg` prop:
 
 ```tsx
-<Listbox bg={surface.lightInteractive} ... />
+<Listbox bg={surface.light} ... />
 <Card bg={surface.lightInteractive} ... />    {/* Override Card's default */}
 <Card isInteractive ... />                    {/* Uses surface.defaultInteractive automatically */}
 ```
 
-> The `surface.default` and `surface.defaultInteractive` presets already serve as the built-in defaults for the `Card` component - you only need to pass them explicitly when overriding or when using them on non-Card primitives.
+> **Inputs** default to `surface.lightInteractive`; every `*Input` component accepts a
+> `wrapperProps` prop that is forwarded to its `InputWrapper` (a `Flex`), e.g.
+> `<DateInput wrapperProps={{ bg: surface.default }} />`. The `Card` component defaults to
+> `surface.default` / `surface.defaultInteractive`.
 
 ### B. Opacity Modifiers (`colorWithOpacity`)
 
