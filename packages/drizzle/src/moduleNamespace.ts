@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 const MODULE_PATH = /\/modules\/([^/]+)\//
 
 /** Detects the calling module id (folder name) from the stack. */
@@ -25,9 +27,9 @@ export function deriveModuleNamespace(moduleId: string): string {
 
   const author = separator === -1 ? '' : moduleId.slice(0, separator)
 
-  const moduleName = (
+  const moduleName = _.snakeCase(
     separator === -1 ? moduleId : moduleId.slice(separator + 2)
-  ).replace(/-/g, '_')
+  )
 
   if (!author || author === 'lifeforge') {
     return moduleName

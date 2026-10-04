@@ -14,7 +14,7 @@ import * as userSchema from '../lib/user/schema.drizzle'
 
 const connectionString = process.env.DATABASE_URL!
 
-const client = postgres(connectionString, { max: 1 })
+const client = postgres(connectionString, { max: 10, prepare: false })
 
 const coreTables = {
   ...userSchema.tables,
