@@ -59,17 +59,11 @@ export function PrintArea({
     .filter(Boolean)
     .join(' ')
 
-  const isBackgroundStyle = (key: string) =>
-    key === 'background' || key === 'background-color'
-
   const nonBackgroundStyles = Object.fromEntries(
-    Object.entries(bodyStyles).filter(([key]) => !isBackgroundStyle(key))
+    Object.entries(bodyStyles).filter(
+      ([key]) => key !== 'background' && key !== 'background-color'
+    )
   )
-
-  const backgroundStylesCss = Object.entries(bodyStyles)
-    .filter(([key]) => isBackgroundStyle(key))
-    .map(([key, value]) => `${key}: ${value} !important;`)
-    .join('\n')
 
   const rootStylesCss = Object.entries(nonBackgroundStyles)
     .map(([key, value]) => `${key}: ${value} !important;`)
@@ -92,11 +86,9 @@ export function PrintArea({
           ${rootStylesCss}
         }
         @media print {
-          :root {
-            ${backgroundStylesCss}
-          }
           .lf-statement-print-wrapper {
             display: block !important;
+            color: black !important;
           }
            .lf-statement-print-wrapper > * {
             height: auto !important;
