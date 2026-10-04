@@ -1,8 +1,8 @@
 # Media (PocketBase files → file-storage SDK)
 
 PB `file` fields store a filename (or a comma-separated list). The new schema
-stores a **storage key** in a text column; the client fetches it via
-`getMedia({ key, thumb })`.
+stores a **storage key** in a text column **and** a metadata row in the central
+`files` table; the client fetches it via `getMedia({ key, thumb })`.
 
 ## Fetching from PocketBase
 
@@ -18,28 +18,32 @@ GET {PB_HOST}/api/files/{collection}/{recordId}/{filename}
 ## Storing via the new SDK
 
 ```ts
-const storage = createModuleStorage(info.storageId) // lib/files.ts
+const { db, client } = createMigrationDb()
+const storage = createModuleStorage(info.storageId, db) // lib/files.ts
 const key = await migrateFileField({
   storage,
   pbCollection: table.pgName,
   recordId: pbRow.id,
   filename: pbRow.file,
-  table: table.pgName,   // used only to build the key
-  field: 'fileKey',      // target column DB name
   thumbs: pbField.thumbs // from `_collections` fields (e.g. ['256x0'])
 })
 mappedRow.fileKey = key
 ```
 
-- `createModuleStorage` uses `createProvider()` from `@lifeforge/file-storage`.
-  With no `FILE_STORAGE_PROVIDER` set it writes to the **local** provider at
-  `<repoRoot>/storage`, matching the running server.
-- Storage keys look like `<moduleId>/<table>/<field>-<uuid>.<ext>`. `moduleId` is
-  the module folder name for app modules (`lifeforge--wallet`) and the lib name
-  for core (`user`, `fonts`) — matching `getCallerModuleId`.
+- `createModuleStorage(moduleId, db)` returns a `FileStorage` backed by
+  the migration db, so each migrated file also writes a `files` metadata row
+  (original name, mime, size, thumbs). `createProvider()` from
+  `@lifeforge/file-storage` is used; with no `FILE_STORAGE_PROVIDER` set it
+  writes to the **local** provider at `<repoRoot>/storage`, matching the running
+  server.
+- Storage keys are opaque: `<moduleId>/<uuid>.<ext>`. `moduleId` is the module
+  folder name for app modules (`lifeforge--wallet`) and the lib name for core
+  (`user`, `fonts`) — matching `getCallerModuleId`. The original PB filename is
+  kept in the `files` table, not in the key.
 - **Regenerate thumbnails** from the original; do not copy PB's pre-generated
   thumbs. Pass the PB field's `thumbs` array (e.g. avatar `['256x0']`).
-- The generated keys are the source of truth; store them in the mapped row.
+- `migrateFileField` returns the generated key (or `null`); store it in the
+  mapped row.
 
 ## Multi-file fields
 
@@ -53,6 +57,6 @@ through `migrateFileField`.
 After migration, each key must resolve through the app endpoint:
 
 ```
-GET {VITE_API_HOST}/files?key=<key>
-GET {VITE_API_HOST}/files?key=<key>&thumb=256x0
+GET {VITE_API_HOST}/files/get?key=<key>
+GET {VITE_API_HOST}/files/get?key=<key>&thumb=256x0
 ```

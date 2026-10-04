@@ -39,7 +39,7 @@ importers:
         version: 17.4.2
       drizzle-orm:
         specifier: 1.0.0-rc.4
-        version: 1.0.0-rc.4(postgres@3.4.9)(zod@4.3.5)
+        version: 1.0.0-rc.4(@electric-sql/pglite@0.5.8)(postgres@3.4.9)(zod@4.3.5)
       i18next:
         specifier: ^26.3.6
         version: 26.3.6
@@ -248,6 +248,9 @@ importers:
       commander:
         specifier: ^15.0.0
         version: 15.0.0
+      content-disposition:
+        specifier: ^3.0.0
+        version: 3.0.0
       cookie-parser:
         specifier: ^1.4.7
         version: 1.4.7
@@ -266,6 +269,9 @@ importers:
       express-rate-limit:
         specifier: ^7.4.1
         version: 7.5.1(express@4.22.2(supports-color@10.2.2))
+      file-type:
+        specifier: ^22.1.1
+        version: 22.1.1(supports-color@10.2.2)
       groq-sdk:
         specifier: ^1.3.0
         version: 1.3.0
@@ -599,9 +605,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -660,6 +672,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -749,6 +764,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -836,9 +854,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -878,9 +902,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -930,6 +960,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -955,6 +988,9 @@ importers:
         specifier: ^9.22.6
         version: 9.22.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
     devDependencies:
+      '@types/jsdom':
+        specifier: ^30.0.0
+        version: 30.0.0
       '@types/language-name-map':
         specifier: ^0.3.4
         version: 0.3.4
@@ -970,9 +1006,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -998,6 +1040,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -1032,6 +1077,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -1063,9 +1111,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -1094,9 +1148,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -1134,9 +1194,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -1220,6 +1286,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -1247,6 +1316,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -1299,9 +1371,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -1354,9 +1432,15 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
@@ -1425,6 +1509,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -1509,6 +1596,9 @@ importers:
 
   packages/drizzle:
     devDependencies:
+      '@electric-sql/pglite':
+        specifier: ^0.5.8
+        version: 0.5.8
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../configs
@@ -1530,15 +1620,30 @@ importers:
       '@aws-sdk/client-s3':
         specifier: ^3.758.0
         version: 3.1144.0
+      '@aws-sdk/lib-storage':
+        specifier: ^3.1145.0
+        version: 3.1145.0(@aws-sdk/client-s3@3.1144.0)
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../drizzle
       '@lifeforge/log':
         specifier: workspace:*
         version: link:../log
+      drizzle-orm:
+        specifier: 1.0.0-rc.4
+        version: 1.0.0-rc.4(@electric-sql/pglite@0.5.8)(postgres@3.4.9)(zod@4.3.5)
+      file-type:
+        specifier: ^22.1.1
+        version: 22.1.1(supports-color@10.2.2)
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
+      multer:
+        specifier: ^2.2.0
+        version: 2.2.0
       path-is-inside:
         specifier: ^1.0.2
         version: 1.0.2
@@ -1548,7 +1653,13 @@ importers:
       uuid:
         specifier: ^11.1.0
         version: 11.1.1
+      zod:
+        specifier: ^4.3.5
+        version: 4.3.5
     devDependencies:
+      '@electric-sql/pglite':
+        specifier: ^0.5.8
+        version: 0.5.8
       '@types/express':
         specifier: ^4.17.23
         version: 4.17.25
@@ -1647,6 +1758,9 @@ importers:
         specifier: ^11.1.0
         version: 11.1.1
     devDependencies:
+      '@electric-sql/pglite':
+        specifier: ^0.5.8
+        version: 0.5.8
       '@types/crypto-js':
         specifier: ^4.2.2
         version: 4.2.2
@@ -1963,6 +2077,12 @@ packages:
     resolution: {integrity: sha512-/y9WvNtlcPBGLR0qc1a+9J/xtYZfVczvLUOuXaVWylzttH7ewsxwHtjmiJSolNrVSDorIxHGHMU61CbonRkmwA==}
     engines: {node: '>=20.0.0'}
 
+  '@aws-sdk/lib-storage@3.1145.0':
+    resolution: {integrity: sha512-sM6n9AYlOLpRt+qovDJWYZk2dDGS18dHaOB1QCJIibXKbEuM1lz/flf1WstHCbyrteX4ldgMRFLw0xxjbfSkAQ==}
+    engines: {node: '>=20.0.0'}
+    peerDependencies:
+      '@aws-sdk/client-s3': ^3.1145.0
+
   '@aws-sdk/middleware-sdk-s3@3.972.77':
     resolution: {integrity: sha512-E7W2UOeUoc+lg3uIfR/dM7ZwusHwhBQrKMnlkRv4EXRR+C0YtV1pg25xC7GdZIhXH+NAMgZPCbE7o5to2cjFiw==}
     engines: {node: '>=20.0.0'}
@@ -2107,6 +2227,9 @@ packages:
     resolution: {integrity: sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA==}
     engines: {node: '>=6.9.0'}
 
+  '@borewit/text-codec@0.2.2':
+    resolution: {integrity: sha512-DDaRehssg1aNrH4+2hnj1B7vnUGEjU6OIlyRdkMd0aUdIUvKXrJfXsy8LVtXAy7DRvYVluWbMspsRhz2lcW0mQ==}
+
   '@braintree/sanitize-url@7.1.2':
     resolution: {integrity: sha512-jigsZK+sMF/cuiB7sERuo9V7N9jx+dhmHHnQyDSVdpZwVutaBu7WvNYqMDLSgFgfB30n452TP3vjDAvFC973mA==}
 
@@ -2189,6 +2312,9 @@ packages:
 
   '@drizzle-team/brocli@0.12.1':
     resolution: {integrity: sha512-yHwomvolVafvUXhy5TdiJVkuNCxXn+bKOs2aWiWEQh/5YaV97Oa/abJz3dmx7lxgIUsUlS1Jl4mEfvJPo3YsVw==}
+
+  '@electric-sql/pglite@0.5.8':
+    resolution: {integrity: sha512-n9tsbUOhwx2epK1V0ZG9Ar4SHWUju04dhmzZXiSBXwBoleOvIfals33NAaWgagQVAL4Rbvx/Ptsu3P+pA09f6Q==}
 
   '@emnapi/core@1.11.1':
     resolution: {integrity: sha512-RSvbQmHzdKzNsLYa/wHrbc3KN4sYLKAdPZxqiM2HATqv/SBk2/ENSHpvXGaLOMcsAyz0poEGqkmmKYG3OWiJEQ==}
@@ -4288,6 +4414,13 @@ packages:
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
 
+  '@tokenizer/inflate@0.4.1':
+    resolution: {integrity: sha512-2mAv+8pkG6GIZiF1kNg1jAjh27IDxEPKwdGul3snfztFerfPGI1LjDezZp3i7BElXompqEtPmoPx6c2wgtWsOA==}
+    engines: {node: '>=18'}
+
+  '@tokenizer/token@0.3.0':
+    resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
+
   '@tootallnate/quickjs-emscripten@0.23.0':
     resolution: {integrity: sha512-C5Mc6rdnsaJDjO3UpGW/CQTHtCKaYlScZTly4JIu97Jxo/odCiH0ITnDXSJPTOrEKk/ycSZ0AOgTmkDtkOsvIA==}
 
@@ -4548,6 +4681,9 @@ packages:
 
   '@types/jsdom@28.0.3':
     resolution: {integrity: sha512-/HQ2uFoetFTXuye8vzIcHw2z6Fwi7Hi/qcgC+RoS9NCyewiqxhVGqlG+ViGB6lkax481R6dmhf1I7lIGlzJStQ==}
+
+  '@types/jsdom@30.0.0':
+    resolution: {integrity: sha512-uAHGxujGE0cDaKGdK28zgDotFtNA7MKq5DXl8LrfdxdCI8VHcg15oJz+amHTChPNI5JpgEPQWc2xFdrw3em/nQ==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -5654,6 +5790,9 @@ packages:
   buffer-from@1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
 
+  buffer@5.6.0:
+    resolution: {integrity: sha512-/gDYp/UtU0eA1ys8bOs9J6a+E/KWIY+DZ+Q2WESNUA0jFRsJOc0SNUO6xJ5SGA1xueg3NL65W6s+NY5l9cunuw==}
+
   builtin-modules@3.3.0:
     resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
     engines: {node: '>=6'}
@@ -5954,6 +6093,10 @@ packages:
   content-disposition@0.5.4:
     resolution: {integrity: sha512-FveZTNuGw04cxlAiWbzi6zTAL/lhehaWbTtgluJh4/E95DqMwTmha3KZN1aAWA8cFIhHzMZUvLevkw5Rqk+tSQ==}
     engines: {node: '>= 0.6'}
+
+  content-disposition@3.0.0:
+    resolution: {integrity: sha512-ZH/0Xs9rMIFWCOmGdmS9eHBTF62qqQYNz4nVjQhkdIO/a0fCP4UIM3mRz/wiqL0L14YgAz/1xio4OaSY4+ON/A==}
+    engines: {node: '>=22'}
 
   content-type@1.0.5:
     resolution: {integrity: sha512-nTjqfcBFEipKdXCv4YDQWCfmcLZKm81ldF0pAopTvyrFGVbcR6P/VAAd5G7N+0tTr8QqiU0tFadD6FK4NtJwOA==}
@@ -7027,6 +7170,10 @@ packages:
   events-universal@1.0.1:
     resolution: {integrity: sha512-LUd5euvbMLpwOF8m6ivPCbhQeSiYVNb8Vs0fQ8QjXo0JTkEHpz8pxdQf0gStltaPpw0Cca8b39KxvK9cfKRiAw==}
 
+  events@3.3.0:
+    resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
+    engines: {node: '>=0.8.x'}
+
   expect-type@1.4.0:
     resolution: {integrity: sha512-KfYbmpRm0VbLjEvVa9yGwCi9GI34xvi7A/HXYWQO65CSD2u3MczUJSuwXKFIxlGsgBQizV9q5J9NHj4VG0n+pA==}
     engines: {node: '>=12.0.0'}
@@ -7129,6 +7276,10 @@ packages:
 
   file-type-mime@0.4.7:
     resolution: {integrity: sha512-qrewzVfFZo8Z9jbrEQMeUeBuqhoWxp5pWOJ6X3U4MrNVu3fKVe9y55U8uMstBFN/9PLYxvf+nW4bqGBul5FNBg==}
+
+  file-type@22.1.1:
+    resolution: {integrity: sha512-sEB0oStmeLGtpmSAD88RDNuLsvhv4iC3u0lE25CUvfCULvj49xoQ3l3K525Vn+ZzsZ6DOLajQCV6RmhwwhqiJg==}
+    engines: {node: '>=22'}
 
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
@@ -7558,6 +7709,9 @@ packages:
 
   idb-keyval@6.3.0:
     resolution: {integrity: sha512-um+2dgAWmYsu615EXpWVwSmapJhON0G43t3Ka/EVaohzPQXSMqKEqeDK/oIW3Ow+BXaF2PvSc+oBTFp793A5Ow==}
+
+  ieee754@1.2.1:
+    resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
 
   ignore-walk@3.0.4:
     resolution: {integrity: sha512-PY6Ii8o1jMRA1z4F2hRkH/xN59ox43DavKvD3oDpfurRlOJyAHpifIwpbdv1n4jt4ov0jSpw3kQ4GhJnpBL6WQ==}
@@ -9890,6 +10044,9 @@ packages:
       vite-plus:
         optional: true
 
+  stream-browserify@3.0.0:
+    resolution: {integrity: sha512-H73RAHsVBapbim0tU2JwwOiXUj+fikfiaoYAKHF3VJfA0pe2BCzkhAHBlLG6REzE+2WNZcxOXjK7lkso+9euLA==}
+
   streamsearch@1.1.0:
     resolution: {integrity: sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==}
     engines: {node: '>=10.0.0'}
@@ -9980,6 +10137,10 @@ packages:
   strip-json-comments@5.0.3:
     resolution: {integrity: sha512-1tB5mhVo7U+ETBKNf92xT4hrQa3pm0MZ0PQvuDnWgAAGHDsfp4lPSpiS6psrSiet87wyGPh9ft6wmhOMQ0hDiw==}
     engines: {node: '>=14.16'}
+
+  strtok3@10.3.5:
+    resolution: {integrity: sha512-ki4hZQfh5rX0QDLLkOCj+h+CVNkqmp/CMf8v8kZpkNVK6jGQooMytqzLZYUVYIZcFZ6yDB70EfD8POcFXiF5oA==}
+    engines: {node: '>=18'}
 
   style-to-js@1.1.21:
     resolution: {integrity: sha512-RjQetxJrrUJLQPHbLku6U/ocGtzyjbJMP9lCNK7Ag0CNh690nSH8woqWH9u16nMjYBAok+i7JO1NP2pOy8IsPQ==}
@@ -10148,6 +10309,10 @@ packages:
   toidentifier@1.0.1:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}
     engines: {node: '>=0.6'}
+
+  token-types@6.1.2:
+    resolution: {integrity: sha512-dRXchy+C0IgK8WPC6xvCHFRIWYUbqqdEIKPaKo/AcTUNzwLTK6AH7RjdLWsEZcAN/TBdtfUw3PYEgPr5VPr6ww==}
+    engines: {node: '>=14.16'}
 
   totalist@3.0.1:
     resolution: {integrity: sha512-sf4i37nQ2LBx4m3wB74y+ubopq6W/dIzXg0FDGjsYnZHVa1Da8FH853wlL2gtUhg+xJXjfk3kUZS3BRoQeoQBQ==}
@@ -10326,6 +10491,10 @@ packages:
     engines: {node: '>=0.8.0'}
     hasBin: true
 
+  uint8array-extras@1.6.0:
+    resolution: {integrity: sha512-8iAasVS4wUx0gPLjH8Xtz2PeDzTSiy8QiLGu2DT3X5GU+egFEQhpnbtkehbAwjvDcxIERmCYcysiODFmE3Ud0Q==}
+    engines: {node: '>=18'}
+
   unbox-primitive@1.1.0:
     resolution: {integrity: sha512-nWJ91DjeOkej/TA8pXQ3myruKpKEYgqvpw9lz4OPHj/NWFNluYrjbz9j01CJ8yKQd2g4jFoOkINCTW2I5LEEyw==}
     engines: {node: '>= 0.4'}
@@ -10343,6 +10512,9 @@ packages:
 
   undici-types@7.24.6:
     resolution: {integrity: sha512-WRNW+sJgj5OBN4/0JpHFqtqzhpbnV0GuB+OozA9gCL7a993SmU+1JBZCzLNxYsbMfIeDL+lTsphD5jN5N+n0zg==}
+
+  undici-types@8.11.2:
+    resolution: {integrity: sha512-iMVNmWZ0leK/goS6eXMizSzmm9CDWtyphwbaCms3DNLqRxDL+mMoNVcZMTyyVgXP0N+Z8neAMzDoUOUJL8veKg==}
 
   undici@7.28.0:
     resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
@@ -11101,6 +11273,16 @@ snapshots:
       '@smithy/types': 4.19.0
       tslib: 2.8.1
 
+  '@aws-sdk/lib-storage@3.1145.0(@aws-sdk/client-s3@3.1144.0)':
+    dependencies:
+      '@aws-sdk/client-s3': 3.1144.0
+      '@smithy/core': 3.35.1
+      '@smithy/types': 4.19.0
+      buffer: 5.6.0
+      events: 3.3.0
+      stream-browserify: 3.0.0
+      tslib: 2.8.1
+
   '@aws-sdk/middleware-sdk-s3@3.972.77':
     dependencies:
       '@aws-sdk/core': 3.978.1
@@ -11310,6 +11492,8 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
+  '@borewit/text-codec@0.2.2': {}
+
   '@braintree/sanitize-url@7.1.2': {}
 
   '@bramus/specificity@2.4.2':
@@ -11386,6 +11570,8 @@ snapshots:
       tslib: 2.8.1
 
   '@drizzle-team/brocli@0.12.1': {}
+
+  '@electric-sql/pglite@0.5.8': {}
 
   '@emnapi/core@1.11.1':
     dependencies:
@@ -13052,6 +13238,15 @@ snapshots:
     dependencies:
       '@testing-library/dom': 10.4.1
 
+  '@tokenizer/inflate@0.4.1(supports-color@10.2.2)':
+    dependencies:
+      debug: 4.4.3(supports-color@10.2.2)
+      token-types: 6.1.2
+    transitivePeerDependencies:
+      - supports-color
+
+  '@tokenizer/token@0.3.0': {}
+
   '@tootallnate/quickjs-emscripten@0.23.0': {}
 
   '@trivago/prettier-plugin-sort-imports@6.0.2(prettier@3.9.5)(supports-color@10.2.2)':
@@ -13342,6 +13537,13 @@ snapshots:
       '@types/tough-cookie': 4.0.5
       parse5: 8.0.1
       undici-types: 7.24.6
+
+  '@types/jsdom@30.0.0':
+    dependencies:
+      '@types/node': 25.9.5
+      '@types/tough-cookie': 4.0.5
+      parse5: 8.0.1
+      undici-types: 8.11.2
 
   '@types/json-schema@7.0.15': {}
 
@@ -14658,6 +14860,11 @@ snapshots:
 
   buffer-from@1.1.2: {}
 
+  buffer@5.6.0:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
+
   builtin-modules@3.3.0: {}
 
   bundle-name@4.1.0:
@@ -14941,6 +15148,8 @@ snapshots:
   content-disposition@0.5.4:
     dependencies:
       safe-buffer: 5.2.1
+
+  content-disposition@3.0.0: {}
 
   content-type@1.0.5: {}
 
@@ -15498,8 +15707,9 @@ snapshots:
       get-tsconfig: 4.14.3
       jiti: 2.7.0
 
-  drizzle-orm@1.0.0-rc.4(postgres@3.4.9)(zod@4.3.5):
+  drizzle-orm@1.0.0-rc.4(@electric-sql/pglite@0.5.8)(postgres@3.4.9)(zod@4.3.5):
     optionalDependencies:
+      '@electric-sql/pglite': 0.5.8
       postgres: 3.4.9
       zod: 4.3.5
 
@@ -16201,6 +16411,8 @@ snapshots:
     transitivePeerDependencies:
       - bare-abort-controller
 
+  events@3.3.0: {}
+
   expect-type@1.4.0: {}
 
   express-rate-limit@7.5.1(express@4.22.2(supports-color@10.2.2)):
@@ -16324,6 +16536,15 @@ snapshots:
       tslib: 2.8.1
 
   file-type-mime@0.4.7: {}
+
+  file-type@22.1.1(supports-color@10.2.2):
+    dependencies:
+      '@tokenizer/inflate': 0.4.1(supports-color@10.2.2)
+      strtok3: 10.3.5
+      token-types: 6.1.2
+      uint8array-extras: 1.6.0
+    transitivePeerDependencies:
+      - supports-color
 
   fill-range@7.1.1:
     dependencies:
@@ -16925,6 +17146,8 @@ snapshots:
       safer-buffer: 2.1.2
 
   idb-keyval@6.3.0: {}
+
+  ieee754@1.2.1: {}
 
   ignore-walk@3.0.4:
     dependencies:
@@ -19872,6 +20095,11 @@ snapshots:
       - react
       - utf-8-validate
 
+  stream-browserify@3.0.0:
+    dependencies:
+      inherits: 2.0.4
+      readable-stream: 3.6.2
+
   streamsearch@1.1.0: {}
 
   streamx@2.28.1:
@@ -19999,6 +20227,10 @@ snapshots:
   strip-json-comments@3.1.1: {}
 
   strip-json-comments@5.0.3: {}
+
+  strtok3@10.3.5:
+    dependencies:
+      '@tokenizer/token': 0.3.0
 
   style-to-js@1.1.21:
     dependencies:
@@ -20207,6 +20439,12 @@ snapshots:
   toggle-selection@1.0.6: {}
 
   toidentifier@1.0.1: {}
+
+  token-types@6.1.2:
+    dependencies:
+      '@borewit/text-codec': 0.2.2
+      '@tokenizer/token': 0.3.0
+      ieee754: 1.2.1
 
   totalist@3.0.1: {}
 
@@ -20425,6 +20663,8 @@ snapshots:
   uglify-js@3.19.3:
     optional: true
 
+  uint8array-extras@1.6.0: {}
+
   unbox-primitive@1.1.0:
     dependencies:
       call-bound: 1.0.4
@@ -20445,6 +20685,8 @@ snapshots:
   undici-types@6.21.0: {}
 
   undici-types@7.24.6: {}
+
+  undici-types@8.11.2: {}
 
   undici@7.28.0: {}
 

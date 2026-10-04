@@ -23,11 +23,14 @@ export function createGetMediaHelper(apiHost: string | undefined) {
     key: string
     /** Optional thumbnail size (e.g., '200x0', '200x200') */
     thumb?: string
+    /** Set to 'true' to force a file download (Content-Disposition: attachment) */
+    download?: string
   }): string => {
     const searchParams = new URLSearchParams()
 
     searchParams.append('key', params.key)
     if (params.thumb) searchParams.append('thumb', params.thumb)
+    if (params.download) searchParams.append('download', params.download)
 
     const fullPath = `files/get?${searchParams.toString()}`
 

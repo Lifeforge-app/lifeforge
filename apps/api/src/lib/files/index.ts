@@ -1,5 +1,6 @@
 import { create as createContentDisposition } from 'content-disposition'
 import { eq } from 'drizzle-orm'
+import path from 'node:path'
 import { z } from 'zod'
 
 import { generateThumbKey } from '@lifeforge/file-storage'
@@ -26,18 +27,6 @@ const get = forge
     output: 'custom'
   })
   .callback(async ({ db, query: { key, thumb, download }, res }) => {
-    const [row] = await db
-      .select()
-      .from(files)
-      .where(eq(files.key, key))
-      .limit(1)
-
-    if (!row) {
-      res.status(404).json({ error: 'File not found' })
-
-      return
-    }
-
     const targetKey = thumb ? generateThumbKey(key, thumb) : key
     const fileStream = await storageProvider.get(targetKey)
 
@@ -47,16 +36,31 @@ const get = forge
       return
     }
 
-    res.setHeader('Content-Type', row.mimeType)
+    res.setHeader('Content-Type', fileStream.mimeType)
 
     if (fileStream.size > 0) {
       res.setHeader('Content-Length', fileStream.size)
     }
 
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable')
+
+    let downloadName = path.basename(targetKey)
+
+    if (download === 'true') {
+      const [row] = await db
+        .select({ originalName: files.originalName })
+        .from(files)
+        .where(eq(files.key, key))
+        .limit(1)
+
+      if (row) {
+        downloadName = row.originalName
+      }
+    }
+
     res.setHeader(
       'Content-Disposition',
-      createContentDisposition(row.originalName, {
+      createContentDisposition(downloadName, {
         type: download === 'true' ? 'attachment' : 'inline'
       })
     )
