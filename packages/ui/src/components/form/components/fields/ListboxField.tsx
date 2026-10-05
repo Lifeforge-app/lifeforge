@@ -189,7 +189,15 @@ export function ListboxField<TFieldValues extends FieldValues, TOption>({
             color={color}
             icon={optIcon}
             label={text}
-            selected={JSON.stringify(v) === JSON.stringify(field.value)}
+            selected={
+              multiple
+                ? Array.isArray(field.value) &&
+                  field.value.some(
+                    (item: unknown) =>
+                      JSON.stringify(item) === JSON.stringify(v)
+                  )
+                : JSON.stringify(v) === JSON.stringify(field.value)
+            }
             value={v}
           />
         )

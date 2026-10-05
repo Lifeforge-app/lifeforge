@@ -11,6 +11,9 @@ import {
   WithDivide
 } from '@/components/primitives'
 
+import { Checkbox } from '../../Checkbox'
+import { useListboxMultiple } from '../contexts/ListboxMultipleContext'
+
 export function ListboxOption({
   value,
   label,
@@ -35,6 +38,8 @@ export function ListboxOption({
   selected?: boolean
   onClick?: () => void
 }) {
+  const isMultiple = useListboxMultiple()
+
   const convertedColor = color?.startsWith('oklch(')
     ? formatHex(parse(color))
     : color
@@ -145,8 +150,12 @@ export function ListboxOption({
                         </Text>
                       </Flex>
                     </Text>
-                    {finalSelected && (
-                      <Icon color="primary" icon="tabler:check" size="lg" />
+                    {isMultiple ? (
+                      <Checkbox checked={finalSelected} />
+                    ) : (
+                      finalSelected && (
+                        <Icon color="primary" icon="tabler:check" size="lg" />
+                      )
                     )}
                   </>
                 )
