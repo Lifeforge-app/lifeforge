@@ -17,6 +17,7 @@ import { deepseekProvider } from './providers/deepseek.provider'
 import { groqProvider } from './providers/groq.provider'
 import { ollamaProvider } from './providers/ollama.provider'
 import { openaiProvider } from './providers/openai.provider'
+import { openrouterProvider } from './providers/openrouter.provider'
 
 const logger = createServiceLogger('AI')
 
@@ -24,6 +25,7 @@ registerProvider('openai', openaiProvider)
 registerProvider('groq', groqProvider)
 registerProvider('ollama', ollamaProvider)
 registerProvider('deepseek', deepseekProvider)
+registerProvider('openrouter', openrouterProvider)
 
 async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
   provider,
@@ -31,7 +33,7 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
   messages,
   structure
 }: {
-  provider: 'groq' | 'openai' | 'ollama' | 'deepseek'
+  provider: 'groq' | 'openai' | 'ollama' | 'deepseek' | 'openrouter'
   model: string
   messages: OpenAI.ChatCompletionMessageParam[]
   structure?: T
