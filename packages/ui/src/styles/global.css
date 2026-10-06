@@ -9,6 +9,7 @@
   scrollbar-color: transparent transparent;
   scrollbar-width: thin;
   interpolate-size: allow-keywords;
+  user-select: none;
 
   &:disabled {
     cursor: not-allowed;
@@ -29,6 +30,7 @@ input,
 textarea {
   border: none;
   caret-color: var(--color-custom-500) !important;
+  user-select: text;
 }
 
 button {
