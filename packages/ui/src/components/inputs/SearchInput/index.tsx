@@ -166,8 +166,8 @@ export function SearchInput({
   const handleBlur = (e: React.FocusEvent) => {
     if (
       containerRef.current &&
-      !containerRef.current.contains(e.relatedTarget as Node) &&
-      !childrenRef.current?.contains(e.relatedTarget as Node)
+      !containerRef.current.contains(e.relatedTarget) &&
+      !childrenRef.current?.contains(e.relatedTarget)
     ) {
       setIsFocused(false)
     }
@@ -246,6 +246,7 @@ export function SearchInput({
                     })
               }
               style={{
+                minWidth: '0',
                 caretColor: COLORS['custom-500'],
                 paddingRight: actionButtonProps ? '5rem' : '2.5rem'
               }}
