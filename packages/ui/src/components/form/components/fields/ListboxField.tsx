@@ -15,6 +15,7 @@ type ListboxOptionType<TOption> = {
   text: string
   icon?: string
   color?: string
+  disabled?: boolean
 }
 
 type ListboxFieldProps<TFieldValues extends FieldValues, TOption> = {
@@ -76,7 +77,7 @@ function ListboxButtonContent<TOption>({
 }) {
   if (multiple === true && Array.isArray(value)) {
     return (
-      <Flex align="center" gap="md" wrap="wrap">
+      <Flex align="center" gap="sm" wrap="wrap">
         {value.length > 0 &&
           value.map(function (item: TOption, i: number) {
             const target = options.find(function (l) {
@@ -84,7 +85,7 @@ function ListboxButtonContent<TOption>({
             })
 
             return (
-              <Flex key={String(item)} align="center" gap="xs" minWidth="0">
+              <Flex key={String(item)} align="center" gap="sm" minWidth="0">
                 <Icon
                   icon={target?.icon ?? ''}
                   style={{
@@ -182,11 +183,18 @@ export function ListboxField<TFieldValues extends FieldValues, TOption>({
       value={field.value}
       onChange={handleListboxChange}
     >
-      {options.map(function ({ text, color, icon: optIcon, value: v }) {
+      {options.map(function ({
+        text,
+        color,
+        icon: optIcon,
+        value: v,
+        disabled
+      }) {
         return (
           <ListboxOption
             key={String(v)}
             color={color}
+            disabled={disabled}
             icon={optIcon}
             label={text}
             selected={

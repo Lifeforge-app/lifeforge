@@ -23,6 +23,7 @@ export function ListboxOption({
   className,
   renderColorAndIcon,
   selected,
+  disabled = false,
   onClick
 }: {
   value: unknown
@@ -36,6 +37,7 @@ export function ListboxOption({
     icon?: string | React.ReactElement
   }) => React.ReactNode
   selected?: boolean
+  disabled?: boolean
   onClick?: () => void
 }) {
   const isMultiple = useListboxMultiple()
@@ -51,18 +53,23 @@ export function ListboxOption({
           <Flex
             asChild
             align="center"
-            bg={{ hover: 'bg-200', darkHover: 'bg-700' }}
+            bg={disabled ? undefined : { hover: 'bg-200', darkHover: 'bg-700' }}
             className={className}
             justify="between"
             minWidth="0"
             p="md"
             position="relative"
             style={{
-              cursor: 'pointer'
+              cursor: disabled ? 'not-allowed' : 'pointer',
+              opacity: disabled ? 0.5 : undefined
             }}
             width="100%"
           >
-            <HeadlessListboxOption value={value} onClick={onClick}>
+            <HeadlessListboxOption
+              disabled={disabled}
+              value={value}
+              onClick={onClick}
+            >
               {({ selected: innerSelected }) => {
                 const finalSelected =
                   typeof selected === 'boolean' ? selected : innerSelected
@@ -72,11 +79,15 @@ export function ListboxOption({
                     <Text
                       asChild
                       color={
-                        finalSelected
-                          ? { base: 'bg-800', dark: 'bg-100' }
-                          : undefined
+                        disabled
+                          ? { base: 'bg-400', dark: 'bg-600' }
+                          : finalSelected
+                            ? { base: 'bg-800', dark: 'bg-100' }
+                            : undefined
                       }
-                      weight={finalSelected ? 'semibold' : undefined}
+                      weight={
+                        finalSelected && !disabled ? 'semibold' : undefined
+                      }
                     >
                       <Flex
                         align="center"
