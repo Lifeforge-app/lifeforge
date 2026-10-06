@@ -105,7 +105,6 @@ export function TextAreaInput({
             minHeight="4rem"
             p={variant === 'classic' ? 'xl' : 'none'}
             pl={variant === 'classic' ? 'none' : undefined}
-            r="lg"
             style={
               variant === 'classic'
                 ? { paddingBottom: vars.radii.md }
