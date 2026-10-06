@@ -11,8 +11,13 @@ import {
  */
 export function Scrollbar({
   children,
+  hideHorizontal = false,
   ...props
-}: { children: React.ReactNode; usePaddingRight?: boolean } & ScrollbarsProps) {
+}: {
+  children: React.ReactNode
+  usePaddingRight?: boolean
+  hideHorizontal?: boolean
+} & ScrollbarsProps) {
   return (
     <Scrollbars
       {...props}
@@ -35,17 +40,30 @@ export function Scrollbar({
           style={{ ...props.style, display: 'block' }}
         />
       )}
-      renderView={p => (
-        <Flex
-          {...p}
-          direction="column"
-          flex="1"
-          minHeight="0"
-          minWidth="0"
-          style={{ ...p.style }}
-          width="100%"
-        />
-      )}
+      renderView={p => {
+        const viewStyle = { ...p.style }
+
+        if (hideHorizontal) {
+          viewStyle.overflowX = 'clip'
+          viewStyle.marginRight = 0
+          viewStyle.marginBottom = 0
+
+          if (props.autoHeight) {
+            viewStyle.maxHeight = props.autoHeightMax
+          }
+        }
+
+        return (
+          <Flex
+            {...p}
+            direction="column"
+            flex="1"
+            minHeight="0"
+            minWidth="0"
+            style={viewStyle}
+          />
+        )
+      }}
     >
       {children}
     </Scrollbars>

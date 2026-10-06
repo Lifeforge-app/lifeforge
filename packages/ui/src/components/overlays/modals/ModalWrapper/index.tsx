@@ -1,5 +1,6 @@
 import { createPortal } from 'react-dom'
 
+import { Scrollbar } from '@/components/layout/Scrollbar'
 import { Box, Flex } from '@/components/primitives'
 import { Transition } from '@/components/primitives/Transition'
 
@@ -69,8 +70,7 @@ export function ModalWrapper({
               sm: 'calc(100vw - 8rem)'
             }}
             minWidth="0"
-            overflowX="hidden"
-            overflowY="auto"
+            overflow="hidden"
             p="lg"
             position="absolute"
             r="xl"
@@ -85,7 +85,13 @@ export function ModalWrapper({
               base: '100%'
             }}
           >
-            {children}
+            <Scrollbar
+              autoHeight
+              hideHorizontal
+              autoHeightMax="calc(100dvh - 11rem)"
+            >
+              {children}
+            </Scrollbar>
           </Flex>
         </Transition>
       </Box>
