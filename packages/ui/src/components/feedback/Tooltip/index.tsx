@@ -68,5 +68,5 @@ export function Tooltip({
       />
     </Box>,
     document.getElementById('app') ?? document.body
-  ) as React.ReactPortal
+  )
 }
