@@ -57,7 +57,7 @@ export function SidebarItemWrapper({
               justify="between"
               pl="md"
               position="relative"
-              pr="md"
+              pr="xs"
               r="lg"
               role="button"
               style={{
