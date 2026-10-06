@@ -632,9 +632,6 @@ importers:
       human-number:
         specifier: ^2.0.6
         version: 2.0.12
-      nodemailer:
-        specifier: ^7.0.9
-        version: 7.0.13
       pdf-page-counter:
         specifier: ^1.0.3
         version: 1.0.3(supports-color@10.2.2)
@@ -648,9 +645,6 @@ importers:
       '@types/human-number':
         specifier: ^1.0.2
         version: 1.0.2
-      '@types/nodemailer':
-        specifier: ^7.0.2
-        version: 7.0.12
 
   modules/lifeforge--calendar:
     dependencies:
@@ -4733,9 +4727,6 @@ packages:
   '@types/node@25.9.5':
     resolution: {integrity: sha512-OScDchr2fwuUmWdf4kZ9h7PcJiYDVInhJizG/biAq3cAvqwYktuy/TYGGdZNMtNTFUP7rnb0NU4TUdm82kt4Rg==}
 
-  '@types/nodemailer@7.0.12':
-    resolution: {integrity: sha512-80vKwiIsVSyFA1rRovH59jNPLBOuc6dRZIHEu40gXTkBkZnQv8vog1xSGEb9j5q/tdMAs5ivvDR2pLTU0hGHXA==}
-
   '@types/opentype.js@1.3.10':
     resolution: {integrity: sha512-F67EFyk6j02okHz5JCgata3ZRAcZi9GLnzmkHw/rzJq3OCc8/ZVdoKrxMTYjcQP6IYHGBz2cav1cpzkOkPiPCQ==}
 
@@ -8736,10 +8727,6 @@ packages:
   node-releases@2.0.51:
     resolution: {integrity: sha512-wRNIrw4DmVLKQlbgOMdkMx27Wrpzes2hh5Jtbi2bjPd+4wJstWIqP5A+lscnqbm0xxmT5Bpg8Lec5ItEBwx6BQ==}
     engines: {node: '>=18'}
-
-  nodemailer@7.0.13:
-    resolution: {integrity: sha512-PNDFSJdP+KFgdsG3ZzMXCgquO7I6McjY2vlqILjtJd0hy8wEvtugS9xKRF2NWlPNGxvLCXlTNIae4serI7dinw==}
-    engines: {node: '>=6.0.0'}
 
   nopt@4.0.3:
     resolution: {integrity: sha512-CvaGwVMztSMJLOeXPrez7fyfObdZqNUK1cPAEzLHrTybIua9pMdmmPR5YwtfNftIOMv3DPUhFaxsZMNTQO20Kg==}
@@ -13597,10 +13584,6 @@ snapshots:
     dependencies:
       undici-types: 7.24.6
 
-  '@types/nodemailer@7.0.12':
-    dependencies:
-      '@types/node': 25.9.5
-
   '@types/opentype.js@1.3.10': {}
 
   '@types/pako@2.0.4': {}
@@ -18407,8 +18390,6 @@ snapshots:
     optional: true
 
   node-releases@2.0.51: {}
-
-  nodemailer@7.0.13: {}
 
   nopt@4.0.3:
     dependencies:
