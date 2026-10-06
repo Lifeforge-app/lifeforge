@@ -205,6 +205,9 @@ export function SearchInput({
           width="100%"
           onClick={e => {
             if (disabled) return
+
+            if ((e.target as HTMLElement).closest('button')) return
+
             e.currentTarget.querySelector('input')?.focus()
           }}
           {...props}
