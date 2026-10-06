@@ -44,7 +44,6 @@ export function PrintArea({
     rawThemeColor,
     bgTemp,
     bordered,
-    fontScale,
     borderRadiusMultiplier
   } = usePersonalization()
 
@@ -81,7 +80,7 @@ export function PrintArea({
     >
       <style>{`
         :root {
-          --custom-font-scale: ${fontScale} !important;
+          --custom-font-scale: 1 !important;
           --custom-border-radius-multiplier: ${borderRadiusMultiplier} !important;
           ${rootStylesCss}
         }
