@@ -32,9 +32,7 @@ export function Tooltip({
   const { sidebarExpanded } = useMainSidebarState()
 
   return createPortal(
-    <Box
-      zIndex={zIndex ?? { base: sidebarExpanded ? '-1' : '9999', lg: '9999' }}
-    >
+    <Box zIndex={zIndex ?? { base: sidebarExpanded ? '-1' : '1', lg: '1' }}>
       <ReactTooltip
         noArrow
         className={tooltip}
