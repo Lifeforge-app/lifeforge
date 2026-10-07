@@ -16,7 +16,7 @@ export function Tooltip({
   children,
   contentProps,
   render,
-  zIndex,
+  zIndex = '10',
   ...tooltipProps
 }: {
   /** The unique identifier for the tooltip element. Must match the `data-tooltip-id` of its trigger. */
@@ -26,13 +26,13 @@ export function Tooltip({
   /** Optional additional props to apply to the tooltip's content container. */
   contentProps?: React.ComponentProps<typeof Box>
   /** The z-index of the tooltip's portal container. Defaults to a value above modals/sidebars. */
-  zIndex?: React.ComponentProps<typeof Box>['zIndex']
+  zIndex?: string
   /** Additional properties to pass to the underlying ReactTooltip component. */
 } & React.ComponentProps<typeof ReactTooltip>) {
   const { sidebarExpanded } = useMainSidebarState()
 
   return createPortal(
-    <Box zIndex={zIndex ?? { base: sidebarExpanded ? '-1' : '1', lg: '1' }}>
+    <Box zIndex={{ base: sidebarExpanded ? '-1' : zIndex, lg: zIndex }}>
       <ReactTooltip
         noArrow
         className={tooltip}
