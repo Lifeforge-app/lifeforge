@@ -1,4 +1,4 @@
-import { Suspense, useMemo } from 'react'
+import { Suspense } from 'react'
 import { Responsive as ResponsiveGridLayout } from 'react-grid-layout'
 import { useTranslation } from 'react-i18next'
 
@@ -16,22 +16,8 @@ import {
 
 import { useUserPersonalization } from '@/core/providers/features/UserPersonalizationProvider'
 
+import useWidgetDimension from '../hooks/useWidgetDimension'
 import { useWidgets } from '../providers/WidgetProvider'
-import NotFoundWidget from './NotFoundWidget'
-
-function getBreakpointFromWidth(width: number) {
-  if (width >= 1200) {
-    return 'lg'
-  } else if (width >= 996) {
-    return 'md'
-  } else if (width >= 768) {
-    return 'sm'
-  } else if (width >= 480) {
-    return 'xs'
-  } else {
-    return 'xxs'
-  }
-}
 
 function DashboardGrid({
   wrapperRef,
@@ -41,22 +27,8 @@ function DashboardGrid({
   canLayoutChange: boolean
 }) {
   const { t } = useTranslation('common.dashboard')
-  const { widgets, loading } = useWidgets()
-
-  const COMPONENTS = useMemo(
-    () =>
-      Object.fromEntries(
-        Object.entries(widgets).map(([key, value]) => [
-          key,
-          {
-            component: value.component,
-            name: value.moduleName
-          }
-        ])
-      ),
-    [widgets]
-  )
-
+  const { loading, getComponent } = useWidgets()
+  const { getDimension } = useWidgetDimension()
   const { width, height } = useDivSize(wrapperRef)
   const { dashboardLayout: enabledWidgets } = usePersonalization()
   const { changeDashboardLayout } = useUserPersonalization()
@@ -65,7 +37,7 @@ function DashboardGrid({
     return <LoadingScreen message={t('loading')} />
   }
 
-  if (Object.values(enabledWidgets || {}).every(e => e.length === 0)) {
+  if (Object.values(enabledWidgets).every(e => e.length === 0)) {
     return (
       <Box asChild flex="1">
         <EmptyStateScreen
@@ -99,12 +71,12 @@ function DashboardGrid({
         rowHeight={100}
         width={width}
         onLayoutChange={(_, layouts) => {
-          changeDashboardLayout(layouts as never)
+          changeDashboardLayout(layouts)
         }}
       >
         {[
           ...new Set(
-            Object.values(enabledWidgets || {})
+            Object.values(enabledWidgets)
               .map(widgetArray => widgetArray.map(widget => widget.i))
               .flat()
           )
@@ -125,41 +97,33 @@ function DashboardGrid({
                 return (
                   <Card centered height="100%" width="100%">
                     <Icon
-                      color="muted"
-                      icon="svg-spinners:ring-resize"
-                      size="2em"
+                      color={colorWithOpacity('muted', '50%')}
+                      icon="si:widget-fill"
+                      size="3em"
                     />
                   </Card>
                 )
               }
 
-              const target = COMPONENTS[widgetId as keyof typeof COMPONENTS]
+              const { component: Component, name } = getComponent(widgetId)
 
-              const Component = (target?.component ||
-                NotFoundWidget) as React.FC<{
-                dimension: { w: number; h: number }
-                widgetId?: string
-              }>
-
-              const dimension = (
-                enabledWidgets[getBreakpointFromWidth(width)] || []
-              ).find(l => l.i === widgetId)
+              const dimension = getDimension(widgetId, width)
 
               return (
                 <ModuleMetadataProvider
                   value={{
                     icon: '',
                     title: '',
-                    name: target?.name
+                    name
                   }}
                 >
                   <Suspense
                     fallback={
                       <Card centered height="100%" width="100%">
                         <Icon
-                          color="muted"
-                          icon="svg-spinners:ring-resize"
-                          size="2em"
+                          color={colorWithOpacity('muted', '50%')}
+                          icon="si:widget-fill"
+                          size="3em"
                         />
                       </Card>
                     }
