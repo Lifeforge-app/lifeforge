@@ -38,7 +38,7 @@ function DashboardContent() {
               }}
             />
             <ContextMenuItem
-              icon="tabler:apps"
+              icon="si:widget-fill"
               label="Manage Widgets"
               namespace="common.dashboard"
               onClick={handleManageWidget}
