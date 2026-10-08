@@ -31,7 +31,7 @@ function ManageWidgetsModal({
   return (
     <Box minWidth="40vw">
       <ModalHeader
-        icon="tabler:apps"
+        icon="si:widget-fill"
         namespace="common.dashboard"
         title="Manage Widgets"
         onClose={onClose}
