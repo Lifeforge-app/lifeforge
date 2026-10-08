@@ -544,6 +544,9 @@ importers:
       '@lifeforge/configs':
         specifier: workspace:*
         version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
       '@lifeforge/federation':
         specifier: workspace:*
         version: link:../../packages/federation
@@ -559,6 +562,9 @@ importers:
       leaflet:
         specifier: ^1.9.4
         version: 1.9.4
+      puppeteer-core:
+        specifier: ^24.23.0
+        version: 24.43.1(supports-color@10.2.2)
       recharts:
         specifier: ^2.15.0
         version: 2.15.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
