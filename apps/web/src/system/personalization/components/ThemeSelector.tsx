@@ -27,23 +27,25 @@ function ThemeSelector() {
       title={t('themeSelector.title')}
     >
       <Grid gap="lg" px="sm" templateCols={{ md: 2, lg: 3 }}>
-        {[
-          {
-            id: 'system',
-            name: t('themeSelector.theme.system'),
-            Image: '/assets/mockup/system.png'
-          },
-          {
-            id: 'light',
-            name: t('themeSelector.theme.light'),
-            Image: '/assets/mockup/light.png'
-          },
-          {
-            id: 'dark',
-            name: t('themeSelector.theme.dark'),
-            Image: '/assets/mockup/dark.png'
-          }
-        ].map(({ id, name, Image }) => (
+        {(
+          [
+            {
+              id: 'system',
+              name: t('themeSelector.theme.system'),
+              Image: '/assets/mockup/system.png'
+            },
+            {
+              id: 'light',
+              name: t('themeSelector.theme.light'),
+              Image: '/assets/mockup/light.png'
+            },
+            {
+              id: 'dark',
+              name: t('themeSelector.theme.dark'),
+              Image: '/assets/mockup/dark.png'
+            }
+          ] as const
+        ).map(({ id, name, Image }) => (
           <Flex key={id} align="center" direction="column" gap="sm">
             <Transition>
               <Bordered
@@ -62,7 +64,7 @@ function ThemeSelector() {
                 r={{ base: 'lg', lg: 'xl' }}
                 type="button"
                 onClick={() => {
-                  changeTheme(id as 'system' | 'light' | 'dark')
+                  changeTheme(id)
                 }}
               >
                 <Box p="sm" position="relative" r={{ base: 'md', lg: 'lg' }}>

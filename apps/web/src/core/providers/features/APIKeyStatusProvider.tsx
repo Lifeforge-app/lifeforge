@@ -73,7 +73,7 @@ function APIKeyStatusProvider({
                           <Text as="p" color="muted" mt="xs">
                             {
                               APIKeyAccess?.[key as keyof typeof APIKeyAccess]
-                                .usage
+                                ?.usage
                             }
                           </Text>
                         </Card>

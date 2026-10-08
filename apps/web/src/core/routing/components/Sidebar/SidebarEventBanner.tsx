@@ -17,7 +17,7 @@ function addNumberSuffix(number: number): string {
 
   const v = number % 100
 
-  return number + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
+  return number + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0] || 'th')
 }
 
 const getEventType = (userDOB: string | undefined): string => {

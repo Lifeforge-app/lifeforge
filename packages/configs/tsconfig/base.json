@@ -12,6 +12,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "noUnusedLocals": false,

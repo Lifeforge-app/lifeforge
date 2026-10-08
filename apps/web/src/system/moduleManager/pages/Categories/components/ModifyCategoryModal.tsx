@@ -105,7 +105,7 @@ function ModifyCategoryModal({
   async function handleAiTranslate(catIndex: number) {
     const cat = categories[catIndex]
 
-    if (!cat.key.trim()) {
+    if (!cat || !cat.key.trim()) {
       toast.error('Please fill in the category key')
 
       return

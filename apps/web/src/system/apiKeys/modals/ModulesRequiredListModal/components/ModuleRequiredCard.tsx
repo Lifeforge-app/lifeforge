@@ -54,12 +54,12 @@ function ModuleRequiredCard({
             {t('title')}
           </Text>
           <Text as="p" color="muted" mt="xs">
-            {module.APIKeyAccess?.[keyId].usage}
+            {module.APIKeyAccess?.[keyId]?.usage}
           </Text>
         </Box>
       </Flex>
 
-      {module.APIKeyAccess?.[keyId].required ? (
+      {module.APIKeyAccess?.[keyId]?.required ? (
         <TagChip
           color={TAILWIND_PALETTE.red['500']}
           flexShrink="0"
