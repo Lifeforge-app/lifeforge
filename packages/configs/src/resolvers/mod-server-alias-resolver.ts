@@ -109,6 +109,10 @@ export function serverAliasResolver(dirname: string): Plugin {
           ? parts.slice(0, 2).join('/')
           : parts[0]
 
+        if (!packageName) {
+          return null
+        }
+
         // 5. Determine if this package is a shared core dependency dynamically
         const isCoreExternal =
           packageName.startsWith('@lifeforge/') ||
