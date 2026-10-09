@@ -6,7 +6,7 @@ import {
   moduleSchema,
   moduleWidgetSchema
 } from '@lifeforge/configs'
-import { ModuleRegistry } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-registry'
 
 import forge from '../forge'
 

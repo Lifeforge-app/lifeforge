@@ -61,5 +61,3 @@ export {
   type Route,
   type RouteStackLayer
 } from './routes/traceRouteStack'
-
-export { ModuleRegistry } from './registry/ModuleRegistry'

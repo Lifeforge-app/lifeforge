@@ -1,6 +1,9 @@
 import { pgTableCreator } from 'drizzle-orm/pg-core'
 
-import { deriveModuleNamespace, detectCallerModuleId } from './moduleNamespace'
+import {
+  deriveModuleNamespace,
+  resolveCallerModuleId
+} from '@lifeforge/module-registry'
 
 /**
  * Returns a `pgTable` builder that auto-prefixes DB table names with the module
@@ -20,11 +23,11 @@ export function createModuleTable(prefix?: string) {
     prefix !== undefined
       ? `${prefix.replace(/-/g, '_')}__`
       : (() => {
-          const moduleId = detectCallerModuleId()
+          const moduleId = resolveCallerModuleId()
 
           if (!moduleId) {
             throw new Error(
-              'createModuleTable: could not detect the caller module id; pass a prefix explicitly'
+              'createModuleTable: could not resolve the caller module id; pass a prefix explicitly'
             )
           }
 

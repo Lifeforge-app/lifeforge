@@ -24,6 +24,7 @@
     "@lifeforge/drizzle": "workspace:*",
     "@lifeforge/file-storage": "workspace:*",
     "@lifeforge/log": "workspace:*",
+    "@lifeforge/module-registry": "workspace:*",
     "chalk": "^5.6.2",
     "crypto-js": "^4.2.0",
     "express": "^4.21.2",

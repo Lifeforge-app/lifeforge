@@ -1,4 +1,4 @@
-import { ModuleRegistry } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-registry'
 
 export async function checkModulesAvailability(
   moduleId: string

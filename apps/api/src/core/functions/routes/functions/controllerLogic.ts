@@ -18,11 +18,11 @@ import type { Request, Response, Router } from 'express'
 
 import { scopeDbForModule } from '@lifeforge/drizzle'
 import { fieldsUploadMiddleware } from '@lifeforge/file-storage/server'
+import { ModuleRegistry } from '@lifeforge/module-registry'
 import {
   BaseResponse,
   ForgeContract,
   MediaConfig,
-  ModuleRegistry,
   checkRecordExistence,
   getStatusMessage,
   mapDatabaseError,

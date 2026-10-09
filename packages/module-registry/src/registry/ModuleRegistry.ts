@@ -4,7 +4,24 @@ import type {
   ModuleManifest,
   ModuleWidget
 } from '@lifeforge/configs'
-import type { ModuleSchemaDefinition } from '@lifeforge/drizzle'
+
+import type { ModuleSchemaDefinition } from '../types'
+
+const normalizePath = (value: string): string => value.replace(/\\/g, '/')
+
+/** Resolves the longest registered module directory containing `filePath`. */
+function findModulePath(
+  entries: Iterable<[string, string]>,
+  filePath: string
+): string | undefined {
+  for (const [moduleDir] of entries) {
+    if (filePath === moduleDir || filePath.startsWith(`${moduleDir}/`)) {
+      return moduleDir
+    }
+  }
+
+  return undefined
+}
 
 export class ModuleRegistry {
   private static registeredModules: ModuleEntry[] = []
@@ -18,10 +35,7 @@ export class ModuleRegistry {
     ModuleRegistry.registeredModules.push(entry)
 
     if (absolutePath) {
-      ModuleRegistry.modulePaths.set(
-        absolutePath.replace(/\\/g, '/'),
-        entry.name
-      )
+      ModuleRegistry.registerPath(absolutePath, entry.name)
     }
   }
 
@@ -102,6 +116,11 @@ export class ModuleRegistry {
     return list
   }
 
+  /** Registers an absolute module directory against its official module id. */
+  static registerPath(moduleDir: string, moduleId: string): void {
+    ModuleRegistry.modulePaths.set(normalizePath(moduleDir), moduleId)
+  }
+
   static getPath(moduleIdOrName: string): string | undefined {
     for (const [modPath, name] of ModuleRegistry.modulePaths.entries()) {
       if (name === moduleIdOrName || name.endsWith('/' + moduleIdOrName)) {
@@ -115,15 +134,26 @@ export class ModuleRegistry {
   static getModuleByPath(
     filePath: string
   ): { source: 'app'; id: string } | undefined {
-    const normalizedPath = filePath.replace(/\\/g, '/')
+    const id = ModuleRegistry.getModuleIdByPath(filePath)
 
-    for (const [modPath, name] of ModuleRegistry.modulePaths.entries()) {
-      if (normalizedPath.startsWith(modPath)) {
-        return { source: 'app', id: name }
-      }
-    }
+    return id ? { source: 'app', id } : undefined
+  }
 
-    return undefined
+  /**
+   * Resolves the official module id for a file inside a registered module. Only
+   * matches at a directory boundary so `/modules/foo` never matches a file in
+   * `/modules/foo-bar`.
+   */
+  static getModuleIdByPath(filePath: string): string | undefined {
+    const normalizedPath = normalizePath(filePath)
+
+    const matches = [...ModuleRegistry.modulePaths.entries()].sort(
+      ([a], [b]) => b.length - a.length
+    )
+
+    const moduleDir = findModulePath(matches, normalizedPath)
+
+    return moduleDir ? ModuleRegistry.modulePaths.get(moduleDir) : undefined
   }
 
   /** Registers a module's drizzle schema part (keyed by module id / 'core'). */
@@ -139,4 +169,9 @@ export class ModuleRegistry {
   static get schemaParts(): readonly ModuleSchemaDefinition[] {
     return [...ModuleRegistry.registeredSchemaParts.values()]
   }
+}
+
+/** Registers an absolute module directory against its official module id. */
+export function registerModulePath(moduleDir: string, moduleId: string): void {
+  ModuleRegistry.registerPath(moduleDir, moduleId)
 }

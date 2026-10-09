@@ -19,6 +19,9 @@
     "test:watch": "vitest",
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
+  "dependencies": {
+    "@lifeforge/module-registry": "workspace:*"
+  },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
     "@lifeforge/configs": "workspace:*",
