@@ -157,6 +157,10 @@ export const upload = forge
           .where(eq(fontsFontFamilyUpload.id, id))
           .returning()
 
+        if (!updated) {
+          return response.notFound()
+        }
+
         return response.ok({
           id: updated.id,
           displayName: updated.displayName,
@@ -177,6 +181,10 @@ export const upload = forge
           file: fileKey.key
         })
         .returning()
+
+      if (!created) {
+        return response.badRequest('Failed to create font')
+      }
 
       return response.ok({
         id: created.id,

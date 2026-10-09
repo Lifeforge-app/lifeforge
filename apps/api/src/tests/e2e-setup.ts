@@ -1,4 +1,5 @@
 import { notInArray } from 'drizzle-orm'
+
 import { db } from '../core/drizzle'
 import { authRefreshTokens } from '../lib/auth/schema.drizzle'
 import { forgeAPI } from './utils'
@@ -46,9 +47,7 @@ export async function initAuthTests(): Promise<{
   const TEST_USER_PASSWORD = process.env.VITE_TEST_USER_PASSWORD
 
   if (!TEST_USER_PASSWORD) {
-    throw new Error(
-      'TEST_USER_PASSWORD must be set in env/.env.local.'
-    )
+    throw new Error('TEST_USER_PASSWORD must be set in env/.env.local.')
   }
 
   const existingTokens = await db.query.authRefreshTokens.findMany()
@@ -57,22 +56,19 @@ export async function initAuthTests(): Promise<{
 
   const allUsers = await db.query.users.findMany()
 
-  if (allUsers.length === 0) {
-    throw new Error(
-      'No users found in database. Create a user first.'
-    )
+  const firstUser = allUsers[0]
+
+  if (!firstUser) {
+    throw new Error('No users found in database. Create a user first.')
   }
 
-  const firstUser = allUsers[0]
   cachedEmail = firstUser.email
   cachedUsername = firstUser.username
   cachedName = firstUser.name || ''
   cachedPassword = TEST_USER_PASSWORD
 
   if (!firstUser.auth_password_hash) {
-    throw new Error(
-      `User ${cachedEmail} has no auth_password_hash.`
-    )
+    throw new Error(`User ${cachedEmail} has no auth_password_hash.`)
   }
 
   console.log(`\nTesting with user: ${cachedEmail} (${cachedName})\n`)

@@ -4,10 +4,7 @@ import chalk from 'chalk'
 import type { StagedFile } from '@lifeforge/file-storage'
 import { MediaConfig } from '@lifeforge/server-utils'
 
-type MediaResponse = Record<
-  string,
-  StagedFile | StagedFile[] | undefined
->
+type MediaResponse = Record<string, StagedFile | StagedFile[] | undefined>
 
 export const splitMediaAndData = (
   _media: MediaConfig | null,
@@ -22,16 +19,18 @@ export const splitMediaAndData = (
   const result: Record<string, any> = {}
 
   for (const key in requestFiles) {
-    if (key in (_media || {})) {
-      if (!requestFiles[key] || requestFiles[key].length === 0) {
-        media[key] = undefined
-      }
+    const config = _media?.[key]
 
-      if (_media![key].multiple) {
-        media[key] = requestFiles[key]
-      } else {
-        media[key] = requestFiles[key][0]
-      }
+    if (!config) continue
+
+    const files = requestFiles[key]
+
+    if (!files || files.length === 0) {
+      media[key] = undefined
+    } else if (config.multiple) {
+      media[key] = files
+    } else {
+      media[key] = files[0]
     }
   }
 
@@ -43,9 +42,13 @@ export const splitMediaAndData = (
     }
   }
 
-  for (const key in _media) {
-    if (!media[key]) {
-      media[key] = _media[key].multiple ? [] : undefined
+  if (_media) {
+    for (const key in _media) {
+      const config = _media[key]
+
+      if (config && !media[key]) {
+        media[key] = config.multiple ? [] : undefined
+      }
     }
   }
 

@@ -70,8 +70,12 @@ export async function fetchUserEmail(
 
   if (config.emailStrategy === 'id_token') {
     const idToken = tokens.idToken()
+    const payloadSegment = idToken.split('.')[1]
+
+    if (!payloadSegment) return null
+
     const payload = JSON.parse(
-      Buffer.from(idToken.split('.')[1], 'base64').toString('utf-8')
+      Buffer.from(payloadSegment, 'base64').toString('utf-8')
     )
 
     return payload.email || null

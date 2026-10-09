@@ -130,6 +130,10 @@ const create = forge
         })
         .returning()
 
+      if (!entry) {
+        return response.badRequest('Failed to create API key entry')
+      }
+
       return response.created({
         ...entry,
         key: key.slice(-4),
