@@ -1,6 +1,10 @@
 export { ModuleRegistry, registerModulePath } from './registry/ModuleRegistry'
 
-export { deriveModuleNamespace, resolveCallerModuleId } from './moduleNamespace'
+export {
+  deriveModuleNamespace,
+  resolveCallerModuleId,
+  resolveModuleId
+} from './moduleNamespace'
 
 export type {
   BuiltModuleSchema,

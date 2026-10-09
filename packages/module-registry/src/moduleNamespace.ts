@@ -4,10 +4,8 @@ import path from 'path'
 
 import { ModuleRegistry } from './registry/ModuleRegistry'
 
-/** Extracts the calling module's absolute directory from the current stack. */
-function detectCallerModuleDir(): string | undefined {
-  const stack = new Error().stack
-
+/** Extracts a module's absolute directory from a stack trace. */
+function detectCallerModuleDir(stack: string | undefined): string | undefined {
   for (const line of stack?.split('\n') ?? []) {
     const normalized = line.replace(/\\/g, '/')
 
@@ -43,19 +41,30 @@ function readModuleIdFromPackageJson(moduleDir: string): string | undefined {
 }
 
 /**
- * Resolves the official module id (its package.json `name`) of the module that
- * is currently being loaded, preferring the module registry and falling back to
- * the on-disk package.json (e.g. when schema files are loaded by tooling).
+ * Resolves a module directory to its official module id (its package.json
+ * `name`), preferring the module registry and falling back to the on-disk
+ * package.json.
  */
-export function resolveCallerModuleId(): string | undefined {
-  const moduleDir = detectCallerModuleDir()
-
-  if (!moduleDir) return undefined
-
+export function resolveModuleId(moduleDir: string): string | undefined {
   return (
     ModuleRegistry.getModuleIdByPath(moduleDir) ??
     readModuleIdFromPackageJson(moduleDir)
   )
+}
+
+/**
+ * Resolves the official module id of the module that is currently being loaded.
+ * The module directory is derived from the stack; the id itself comes from the
+ * registry or the module's package.json - never from the directory name.
+ */
+export function resolveCallerModuleId(
+  stack: string | undefined = new Error().stack
+): string | undefined {
+  const moduleDir = detectCallerModuleDir(stack)
+
+  if (!moduleDir) return undefined
+
+  return resolveModuleId(moduleDir)
 }
 
 /**
