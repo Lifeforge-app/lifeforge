@@ -33,6 +33,13 @@ export function parsePackageName(
 
   const [username, moduleName] = withoutScope.split('--', 2)
 
+  if (moduleName === undefined) {
+    logger.error(
+      `Invalid package name: ${chalk.blue(packageName)}. Package name must include a module name.`
+    )
+    process.exit(1)
+  }
+
   return {
     username: username === 'lifeforge' ? undefined : username,
     moduleName: moduleName.replace(/-/g, '_')

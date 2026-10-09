@@ -23,6 +23,8 @@ export default async function getConcurrentServices(
   for (const service of SERVICES_TO_START) {
     const config = SERVICE_COMMANDS[service]
 
+    if (!config) continue
+
     const command =
       config.command instanceof Function
         ? await config.command()
