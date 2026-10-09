@@ -150,8 +150,15 @@ describe('POST /auth/login', () => {
     const segments = token.split('.')
 
     expect(segments.length).toBe(3)
-    expect(() => JSON.parse(atob(segments[0]))).not.toThrow()
-    expect(() => JSON.parse(atob(segments[1]))).not.toThrow()
+
+    const [headerSegment, payloadSegment] = segments
+
+    if (!headerSegment || !payloadSegment) {
+      throw new Error('Expected a three-segment JWT')
+    }
+
+    expect(() => JSON.parse(atob(headerSegment))).not.toThrow()
+    expect(() => JSON.parse(atob(payloadSegment))).not.toThrow()
   })
 
   it('cookie has httpOnly, SameSite=Lax, Path=/auth in development', async () => {

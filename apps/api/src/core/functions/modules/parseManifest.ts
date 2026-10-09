@@ -34,7 +34,10 @@ function findImportPath(node: ts.Node): string | null {
   ) {
     const arg = node.arguments[0]
 
-    if (ts.isStringLiteral(arg) || ts.isNoSubstitutionTemplateLiteral(arg)) {
+    if (
+      arg &&
+      (ts.isStringLiteral(arg) || ts.isNoSubstitutionTemplateLiteral(arg))
+    ) {
       return arg.text
     }
   }

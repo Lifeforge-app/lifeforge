@@ -150,8 +150,15 @@ describe('parseManifest AST parser', () => {
     expect(result.hidden).toBeUndefined()
     expect(result.subsection).toBeUndefined()
     expect(result.widgets).toHaveLength(1)
-    expect(result.widgets[0].filePath).toBe(widgetFilePath)
-    expect(result.widgets[0].config).toEqual({
+
+    const widget = result.widgets[0]
+
+    if (!widget) {
+      throw new Error('Expected a parsed widget')
+    }
+
+    expect(widget.filePath).toBe(widgetFilePath)
+    expect(widget.config).toEqual({
       id: 'iss-tracker',
       icon: 'tabler:satellite',
       minW: 2,

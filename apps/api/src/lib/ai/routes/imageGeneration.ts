@@ -41,7 +41,7 @@ export const generateImage = forge
         size: '1536x1024'
       })
 
-      const image_base64 = r.data?.[0].b64_json
+      const image_base64 = r.data?.[0]?.b64_json
 
       if (!image_base64) {
         return response.badRequest('No image generated')

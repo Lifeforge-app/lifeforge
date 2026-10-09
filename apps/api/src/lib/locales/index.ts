@@ -8,9 +8,14 @@ import path from 'path'
 import z from 'zod'
 
 import { ModuleRegistry } from '@lifeforge/module-registry'
-import { createForge, forgeRouter } from '@lifeforge/server-utils'
+import {
+  createForgeContractBuilder,
+  forgeRouter
+} from '@lifeforge/server-utils'
 
-const forge = createForge({ moduleId: 'locales' })
+import type { CoreRelations } from '@/core/drizzle'
+
+const forge = createForgeContractBuilder<CoreRelations>({ moduleId: 'locales' })
 
 const appsDir = path.join(ROOT_DIR, 'modules')
 
@@ -145,6 +150,8 @@ const getLocale = forge
     ) {
       const targetToBeInjected = subnamespace ? data : data.sidebar
 
+      const systemLocales = LocaleService.getSystemLocales()[finalLang] ?? {}
+
       targetToBeInjected.apps = {
         ...Object.fromEntries(
           moduleApps
@@ -187,7 +194,7 @@ const getLocale = forge
             .filter(e => e.length > 0)
         ),
         ...Object.fromEntries(
-          Object.entries(LocaleService.getSystemLocales()[finalLang])
+          Object.entries(systemLocales)
             .filter(e => 'title' in e[1])
             .map(e => [
               e[0],

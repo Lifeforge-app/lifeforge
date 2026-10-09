@@ -4,6 +4,10 @@ export default function restoreFormDataType(value: string): any {
 
   const [meta, raw] = value.split(';', 2)
 
+  if (meta === undefined || raw === undefined) {
+    return value
+  }
+
   const type = meta.replace('__type:', '')
 
   const parsed = JSON.parse(raw)
