@@ -3,15 +3,15 @@ import { type PgTable } from 'drizzle-orm/pg-core'
 import type { RequestHandler } from 'express'
 import type { z } from 'zod'
 
+import { defineModuleSchema } from '@lifeforge/drizzle'
 import {
   type BuiltModuleSchema,
-  type ModuleSchema,
-  defineModuleSchema
-} from '@lifeforge/drizzle'
+  ModuleRegistry,
+  type ModuleSchema
+} from '@lifeforge/module-registry'
 
 import { getCallerModuleId } from '..'
 import { type ExistsInFor, existsIn } from '../database'
-import { ModuleRegistry } from '../registry/ModuleRegistry'
 import {
   type OutputDefinition,
   type ResponseObject,

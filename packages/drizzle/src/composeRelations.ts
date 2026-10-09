@@ -1,6 +1,6 @@
 import { defineRelations } from 'drizzle-orm'
 
-import type { ModuleSchemaDefinition } from './types'
+import type { ModuleSchemaDefinition } from '@lifeforge/module-registry'
 
 /**
  * Merges every registered schema part into the single global relations config

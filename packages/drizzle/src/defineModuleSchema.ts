@@ -4,7 +4,7 @@ import {
   getTableName
 } from 'drizzle-orm'
 
-import type { ModuleSchemaDefinition } from './types'
+import type { ModuleSchemaDefinition } from '@lifeforge/module-registry'
 
 /**
  * Scopes the relations helper so bare table keys resolve to their namespaced

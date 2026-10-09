@@ -5,7 +5,7 @@ import path from 'path'
 import { pathToFileURL } from 'url'
 
 import type { ModuleEntry } from '@lifeforge/configs'
-import { ModuleRegistry } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-registry'
 
 import gatherModuleMetadata from './gatherModuleMetadata'
 import { moduleLoaderLogger } from './moduleLoaderLogger'

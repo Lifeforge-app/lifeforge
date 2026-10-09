@@ -7,11 +7,8 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import {
-  ModuleRegistry,
-  createForge,
-  forgeRouter
-} from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-registry'
+import { createForge, forgeRouter } from '@lifeforge/server-utils'
 
 const forge = createForge({ moduleId: 'locales' })
 

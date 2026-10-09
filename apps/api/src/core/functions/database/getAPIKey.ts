@@ -5,7 +5,8 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { ModuleRegistry } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-registry'
+
 import { db } from '../../drizzle'
 
 const logger = createServiceLogger('API Key Vault')

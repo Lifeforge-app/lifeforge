@@ -5,7 +5,7 @@ import postgres from 'postgres'
 
 import { composeRelations, defineModuleSchema } from '@lifeforge/drizzle'
 import { filesSchema } from '@lifeforge/file-storage/server'
-import { ModuleRegistry } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-registry'
 
 import * as apiKeysSchema from '../lib/apiKeys/schema.drizzle'
 import * as authSchema from '../lib/auth/schema.drizzle'

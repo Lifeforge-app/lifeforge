@@ -1,7 +1,7 @@
 {
-  "name": "@lifeforge/drizzle",
+  "name": "@lifeforge/module-registry",
   "version": "0.0.1",
-  "description": "Drizzle ORM glue for the LifeForge server",
+  "description": "Shared module identity and path registry for the LifeForge server",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,11 +20,12 @@
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@lifeforge/module-registry": "workspace:*"
+    "drizzle-orm": "1.0.0-rc.4",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@electric-sql/pglite": "^0.5.8",
     "@lifeforge/configs": "workspace:*",
+    "@types/lodash": "^4.17.21",
     "@types/node": "^25.0.6"
   }
 }

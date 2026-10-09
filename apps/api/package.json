@@ -33,6 +33,7 @@
     "@lifeforge/drizzle": "workspace:*",
     "@lifeforge/file-storage": "workspace:*",
     "@lifeforge/log": "workspace:*",
+    "@lifeforge/module-registry": "workspace:*",
     "@lifeforge/server-utils": "workspace:*",
     "@types/multer": "^2.2.0",
     "@typescript/typescript6": "^6.0.2",
