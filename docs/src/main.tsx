@@ -1,12 +1,12 @@
 import ReactDOM from 'react-dom/client'
 
-import { APIEndpointProvider, createForgeProxy } from '@lifeforge/api'
+import { APIEndpointProvider, contract, createForgeProxy } from '@lifeforge/api'
 import { ModalProvider, PersonalizationProvider } from '@lifeforge/ui'
 
 import App from './App'
 import './index.css'
 
-const forgeAPI = createForgeProxy({})
+const forgeAPI = createForgeProxy(contract)
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <APIEndpointProvider endpoint={import.meta.env.VITE_API_URL}>
