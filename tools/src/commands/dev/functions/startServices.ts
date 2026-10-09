@@ -25,6 +25,10 @@ export async function startSingleService(
   if (service in SERVICE_COMMANDS) {
     const config = SERVICE_COMMANDS[service]
 
+    if (!config) {
+      throw new Error(`Unknown service: ${service}`)
+    }
+
     if (config.requiresEnv) {
       getEnvVars(config.requiresEnv)
     }

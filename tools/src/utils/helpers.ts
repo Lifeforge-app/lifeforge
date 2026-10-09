@@ -95,7 +95,11 @@ export function killExistingProcess(
         `Killed process matching keyword: ${chalk.blue(processKeywordOrPID)} (PID: ${chalk.blue(pids.join(', '))})`
       )
 
-      return parseInt(pids[0], 10)
+      const [firstPid] = pids
+
+      if (firstPid) {
+        return parseInt(firstPid, 10)
+      }
     }
   } catch {
     // No existing server instance found

@@ -20,7 +20,11 @@ export function getRegistryUrl(): string {
     const match = content.match(/@lifeforge:registry=(.+)/)
 
     if (match) {
-      return match[1].trim()
+      const [, registryUrl] = match
+
+      if (registryUrl) {
+        return registryUrl.trim()
+      }
     }
   }
 

@@ -19,8 +19,16 @@ import Code from "@/components/Code";
 ### 📖 Documentation & Tooling
 `
 
+const [rootDir] = import.meta.dirname.split(/tools[\\/]/)
+
+if (rootDir === undefined) {
+  throw new Error(
+    'Could not resolve the project root directory from import.meta.dirname'
+  )
+}
+
 const CHANGELOG_PATH = path.resolve(
-  import.meta.dirname.split(/tools[\\/]/)[0],
+  rootDir,
   'docs/src/contents/04.progress/versions'
 )
 

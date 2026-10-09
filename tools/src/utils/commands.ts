@@ -46,6 +46,10 @@ export default function executeCommand(
 
     const [toBeExecuted, ...args] = cmd.split(' ')
 
+    if (toBeExecuted === undefined) {
+      throw new Error('No command to execute')
+    }
+
     const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
       encoding: 'utf8',
       shell: true,
