@@ -82,6 +82,18 @@ describe('scopeDbForModule (real PGlite)', () => {
     expect(await scoped.select().from(events)).toHaveLength(1)
   })
 
+  it('keeps the transaction callback scoped', async () => {
+    const scoped: any = scopeDbForModule(db, appSchema.keyMap)
+
+    const title = await scoped.transaction(async (tx: any) => {
+      const rows = await tx.query.events.findMany({ with: { category: true } })
+
+      return rows[0].title
+    })
+
+    expect(title).toBe('Standup')
+  })
+
   it('leaves keys not in the keyMap unresolved', () => {
     const scoped: any = scopeDbForModule(db, appSchema.keyMap)
 
