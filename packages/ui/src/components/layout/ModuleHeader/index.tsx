@@ -28,7 +28,7 @@ function getTKeys(
   return [
     ...withPrefix('subsections.'),
     ...withPrefix(''),
-    `common.${title}:${target}`,
+    ...(namespace ? [`${namespace}:${target}`] : []),
     target
   ]
 }
@@ -52,7 +52,7 @@ export function ModuleHeader({
   icon = icon ?? innerIcon
 
   const { t } = useModuleTranslation(
-    namespace === false ? [] : [`common.${title}`, namespace ?? '']
+    typeof namespace === 'string' ? [namespace] : []
   )
 
   const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
