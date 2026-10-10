@@ -69,12 +69,30 @@ function useFontFamily(
           }
 
           if (!fontData.file) {
+            document.body.style.fontFamily = 'Onest, sans-serif'
+
             return
           }
 
           const fileUrl = forgeAPI.getMedia({
             key: fontData.file.key
           })
+
+          // Verify the font file can actually be loaded (e.g. it may have been
+          // deleted from storage, causing the request to 404)
+          try {
+            const probe = new FontFace(fontData.family, `url('${fileUrl}')`, {
+              weight: String(fontData.weight),
+              style: 'normal'
+            })
+
+            await probe.load()
+          } catch {
+            styleTag!.textContent = ''
+            document.body.style.fontFamily = 'Onest, sans-serif'
+
+            return
+          }
 
           // Create @font-face rule for the custom font
           const fontFace = `@font-face {
