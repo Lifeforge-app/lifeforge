@@ -77,25 +77,23 @@ export function ModuleHeader({
             />
           </Box>
         )}
-        {icon !== undefined && (
-          <Flex
-            align="center"
-            bg={colorWithOpacity('custom-500', '20%')}
-            flexShrink="0"
-            height={{
-              base: '3.5em',
-              sm: '4em'
-            }}
-            justify="center"
-            r="lg"
-            width={{
-              base: '3.5em',
-              sm: '4em'
-            }}
-          >
-            <Icon color="primary" icon={icon} size="2rem" />
-          </Flex>
-        )}
+        <Flex
+          align="center"
+          bg={colorWithOpacity('custom-500', '20%')}
+          flexShrink="0"
+          height={{
+            base: '3.5em',
+            sm: '4em'
+          }}
+          justify="center"
+          r="lg"
+          width={{
+            base: '3.5em',
+            sm: '4em'
+          }}
+        >
+          <Icon color="primary" icon={icon} size="2rem" />
+        </Flex>
         <Flex direction="column" gap="xs" minWidth="0" width="100%">
           <Text
             asChild
@@ -112,7 +110,7 @@ export function ModuleHeader({
             >
               <Text truncate display="block">
                 {namespace === false
-                  ? (title?.toString() ?? '')
+                  ? title
                   : t(getTKeys(namespace, title, 'title'))}
               </Text>
             </Flex>
@@ -125,7 +123,7 @@ export function ModuleHeader({
               whiteSpace="nowrap"
             >
               {namespace === false
-                ? `Description for ${title?.toString() ?? ''}`
+                ? `Description for ${title}`
                 : t(getTKeys(namespace, title, 'description'))}
             </Text>
           </Box>
