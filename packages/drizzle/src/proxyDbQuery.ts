@@ -28,11 +28,25 @@ export function proxyDbQuery<TDb extends object>(
         })
       }
 
+      if (prop === 'transaction') {
+        const transaction = Reflect.get(target, prop) as (
+          callback: (tx: TDb) => unknown,
+          ...args: unknown[]
+        ) => unknown
+
+        return (callback: (tx: TDb) => unknown, ...args: unknown[]) =>
+          transaction.call(
+            target,
+            (tx: TDb) => callback(proxyDbQuery(tx, keyMap)),
+            ...args
+          )
+      }
+
       const value = Reflect.get(target, prop)
 
       return typeof value === 'function' ? value.bind(target) : value
     }
-  }) as TDb
+  })
 }
 
 /**
