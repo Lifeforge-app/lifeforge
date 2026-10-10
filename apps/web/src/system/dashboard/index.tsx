@@ -27,6 +27,7 @@ function DashboardContent() {
   return (
     <Flex ref={wrapperRef} direction="column" flex="1" mb="2xl">
       <ModuleHeader
+        namespace="common.dashboard"
         trailing={
           <ContextMenu>
             <ContextMenuItem

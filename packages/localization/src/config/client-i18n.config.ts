@@ -49,7 +49,7 @@ export function clientI18nConfig({
             .map(e => e.name)
             .flat()
             .includes(langs[0] ?? '') ||
-          !namespaces.filter(e => e && e !== 'undefined').length
+          !namespaces.filter(Boolean).length
         ) {
           return
         }

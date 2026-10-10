@@ -7,7 +7,7 @@ import PersonalInfoTab from './tabs/PersonalInfoTab'
 function AccountSettings() {
   return (
     <TabbedView.Root>
-      <ModuleHeader />
+      <ModuleHeader namespace="common.account-settings" />
       <TabbedView.Selector />
       <Stack mb="xl" mt="md">
         <TabbedView.When tabId="personal-info">
