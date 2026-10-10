@@ -1,9 +1,9 @@
 import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Box, Flex, type FlexProps, Icon, Text } from '@/components/primitives'
 
-interface EmptyStateScreenProps {
+interface EmptyStateScreenProps extends FlexProps {
   /** Props for the call-to-action button. Refer to the Button component for available props. */
   CTAButtonProps?: React.ComponentProps<typeof Button>
   /** The message to display in the empty state.
@@ -38,7 +38,8 @@ export function EmptyStateScreen({
   CTAButtonProps,
   message,
   icon,
-  smaller = false
+  smaller = false,
+  ...props
 }: EmptyStateScreenProps) {
   const { t } = useModuleTranslation(
     'namespace' in message && message.namespace
@@ -55,6 +56,7 @@ export function EmptyStateScreen({
         justify="center"
         style={{ gap: smaller ? '0.75rem' : '1.5rem' }}
         width="100%"
+        {...props}
       >
         {icon !== undefined &&
           (typeof icon === 'string' ? (
