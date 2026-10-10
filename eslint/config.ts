@@ -21,7 +21,8 @@ const config: Linter.Config[] = [
       '**/dist/',
       'dist/',
       'tools/src/templates/**',
-      '**/storybook-static/'
+      '**/storybook-static/',
+      'modules/melvinchia3636--truckers-log/client/src/lib/'
     ]
   },
   {
