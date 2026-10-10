@@ -55,8 +55,8 @@ describe('deriveModuleNamespace', () => {
 
   it('prefixes non-official authors with a triple underscore', () => {
     expect(
-      deriveModuleNamespace('@lifeforge/melvinchia3636--ets2-record')
-    ).toBe('melvinchia3636___ets_2_record')
+      deriveModuleNamespace('@lifeforge/melvinchia3636--truckers-log')
+    ).toBe('melvinchia3636___truckers_log')
     expect(deriveModuleNamespace('melvinchia3636--invoice-maker')).toBe(
       'melvinchia3636___invoice_maker'
     )
@@ -85,12 +85,12 @@ describe('resolveModuleId', () => {
     const moduleId = resolveModuleId(
       createModuleDir(
         'another-folder',
-        '@lifeforge/melvinchia3636--ets2-record'
+        '@lifeforge/melvinchia3636--truckers-log'
       )
     )
 
     expect(moduleId && deriveModuleNamespace(moduleId)).toBe(
-      'melvinchia3636___ets_2_record'
+      'melvinchia3636___truckers_log'
     )
   })
 
