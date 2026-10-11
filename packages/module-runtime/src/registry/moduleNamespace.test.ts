@@ -77,7 +77,7 @@ describe('resolveModuleId', () => {
 
     const moduleId = resolveModuleId(moduleDir)
 
-    expect(moduleId).toBe('@lifeforge/lifeforge--calendar')
+    expect(moduleId).toBe('lifeforge--calendar')
     expect(moduleId && deriveModuleNamespace(moduleId)).toBe('calendar')
   })
 
@@ -100,14 +100,9 @@ describe('resolveModuleId', () => {
       '@lifeforge/lifeforge--from-package'
     )
 
-    ModuleRegistry.registerPath(
-      moduleDir,
-      '@lifeforge/lifeforge--from-registry'
-    )
+    ModuleRegistry.registerPath(moduleDir, 'lifeforge--from-registry')
 
-    expect(resolveModuleId(moduleDir)).toBe(
-      '@lifeforge/lifeforge--from-registry'
-    )
+    expect(resolveModuleId(moduleDir)).toBe('lifeforge--from-registry')
   })
 
   it('returns undefined when there is no package.json', () => {
@@ -126,7 +121,7 @@ describe('resolveCallerModuleId', () => {
 
     const moduleId = resolveCallerModuleId(stack)
 
-    expect(moduleId).toBe('@lifeforge/lifeforge--calendar')
+    expect(moduleId).toBe('lifeforge--calendar')
     expect(moduleId && deriveModuleNamespace(moduleId)).toBe('calendar')
   })
 

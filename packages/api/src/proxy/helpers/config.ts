@@ -30,7 +30,7 @@ export const CORE_HELPERS = {
   checkModuleAvailability: {
     path: 'modules/checkModuleAvailability',
     schema: {
-      input: z.object({ moduleId: z.string() }),
+      input: z.object({ id: z.string() }),
       output: z.boolean()
     }
   },

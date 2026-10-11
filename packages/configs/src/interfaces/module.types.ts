@@ -80,7 +80,8 @@ export const moduleWidgetSchema = widgetConfigSchema.extend({
 
 export const moduleEntrySchema = z.object({
   name: z.string(),
-  moduleId: z.string(),
+  id: z.string(),
+  remoteId: z.string(),
   displayName: z.string(),
   version: z.string(),
   description: z.string(),
@@ -108,7 +109,8 @@ export const moduleEntrySchema = z.object({
 export const moduleManifestSchema = moduleEntrySchema
   .pick({
     name: true,
-    moduleId: true,
+    id: true,
+    remoteId: true,
     displayName: true,
     icon: true,
     category: true,
@@ -124,7 +126,8 @@ export const moduleManifestSchema = moduleEntrySchema
 
 export const moduleSchema = moduleEntrySchema.pick({
   name: true,
-  moduleId: true,
+  id: true,
+  remoteId: true,
   displayName: true,
   version: true,
   description: true,
@@ -153,7 +156,8 @@ export interface ModuleGroup {
   title: string
   items: (ModuleConfig & {
     name: string
-    moduleId?: string
+    id?: string
+    remoteId?: string
     icon: string
     category: string
     APIKeyAccess?: Record<string, { usage: string; required: boolean }>

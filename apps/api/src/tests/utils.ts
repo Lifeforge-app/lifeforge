@@ -8,7 +8,7 @@ import {
 } from '@lifeforge/api'
 
 globalProxyRegistry.set(contract, {
-  moduleId: '',
+  remoteId: '',
   apiHost: 'http://localhost:3636'
 })
 

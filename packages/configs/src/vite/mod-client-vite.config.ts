@@ -56,8 +56,8 @@ export function defineModuleClientConfig(
     )
 
   const moduleName = pkg.name.replace('@lifeforge/', '')
-  const moduleId = crypto.createHash('sha256').update(pkg.name).digest('hex')
-  const remoteName = `m_${moduleId}`
+  const remoteId = crypto.createHash('sha256').update(pkg.name).digest('hex')
+  const remoteName = `m_${remoteId}`
 
   return defineConfig(configEnv => {
     const isDev = configEnv.command === 'serve'

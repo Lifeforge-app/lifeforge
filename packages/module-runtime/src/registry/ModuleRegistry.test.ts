@@ -4,7 +4,8 @@ import type { ModuleEntry } from '@lifeforge/configs'
 
 import { ModuleRegistry } from './ModuleRegistry'
 
-const entry = (name: string): ModuleEntry => ({ name }) as ModuleEntry
+const entry = (name: string): ModuleEntry =>
+  ({ name, id: name.replace(/^@lifeforge\//, '') }) as ModuleEntry
 
 describe('ModuleRegistry path resolution', () => {
   it('resolves the module id only at a directory boundary', () => {
@@ -19,11 +20,11 @@ describe('ModuleRegistry path resolution', () => {
 
     expect(
       ModuleRegistry.getModuleIdByPath('/repo/modules/foo-bar/server/index.ts')
-    ).toBe('@lifeforge/lifeforge--foo-bar')
+    ).toBe('lifeforge--foo-bar')
 
     expect(
       ModuleRegistry.getModuleIdByPath('/repo/modules/foo/server/index.ts')
-    ).toBe('@lifeforge/lifeforge--foo')
+    ).toBe('lifeforge--foo')
   })
 
   it('returns undefined for paths outside any module', () => {

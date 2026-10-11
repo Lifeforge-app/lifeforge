@@ -2968,13 +2968,13 @@ export const contract = {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "object",
           "properties": {
-            "moduleId": {
+            "id": {
               "type": "string",
               "minLength": 1
             }
           },
           "required": [
-            "moduleId"
+            "id"
           ],
           "additionalProperties": false
         }
@@ -3004,7 +3004,10 @@ export const contract = {
               "name": {
                 "type": "string"
               },
-              "moduleId": {
+              "id": {
+                "type": "string"
+              },
+              "remoteId": {
                 "type": "string"
               },
               "displayName": {
@@ -3028,7 +3031,8 @@ export const contract = {
             },
             "required": [
               "name",
-              "moduleId",
+              "id",
+              "remoteId",
               "displayName",
               "version",
               "description",
@@ -3062,7 +3066,10 @@ export const contract = {
                   "name": {
                     "type": "string"
                   },
-                  "moduleId": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "remoteId": {
                     "type": "string"
                   },
                   "displayName": {
@@ -3131,7 +3138,8 @@ export const contract = {
                 },
                 "required": [
                   "name",
-                  "moduleId",
+                  "id",
+                  "remoteId",
                   "displayName",
                   "icon",
                   "category",

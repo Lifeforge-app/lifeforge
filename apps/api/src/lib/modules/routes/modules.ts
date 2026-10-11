@@ -37,15 +37,15 @@ export const checkModuleAvailability = forge
     description: 'Check if a module is available (installed)',
     input: {
       query: z.object({
-        moduleId: z.string().min(1)
+        id: z.string().min(1)
       })
     },
     output: {
       OK: z.boolean()
     }
   })
-  .callback(async ({ query: { moduleId }, response }) =>
-    response.ok(ModuleRegistry.isAvailable(moduleId))
+  .callback(async ({ query: { id }, response }) =>
+    response.ok(ModuleRegistry.isAvailable(id))
   )
 
 export const widgets = forge

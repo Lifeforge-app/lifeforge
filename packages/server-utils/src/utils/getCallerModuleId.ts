@@ -35,8 +35,6 @@ export default function getCallerModuleId():
     const registeredCaller = ModuleRegistry.getModuleByPath(filePath)
 
     if (registeredCaller) {
-      registeredCaller.id = registeredCaller.id.replace(/^@lifeforge\//, '')
-
       return registeredCaller
     }
 

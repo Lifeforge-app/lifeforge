@@ -75,7 +75,7 @@ export async function bootstrapModules(
       continue
     }
 
-    const remoteName = `m_${mod.moduleId}`
+    const remoteName = `m_${mod.remoteId}`
     registeredRemotesSet.add(remoteName)
 
     remotes.push({
@@ -90,7 +90,8 @@ export async function bootstrapModules(
       rawModule: FederatedModule
     } = {
       name: mod.name,
-      moduleId: mod.moduleId,
+      id: mod.id,
+      remoteId: mod.remoteId,
       icon: mod.icon,
       category: mod.category,
       routes: {},

@@ -79,7 +79,8 @@ export async function loadRemoteModuleConfig(
 
   const moduleConfig: ModuleGroup['items'][number] = {
     name: mod.name,
-    moduleId: mod.moduleId,
+    id: mod.id,
+    remoteId: mod.remoteId,
     icon: mod.icon,
     category: mod.category,
     routes: unwrapped.routes,
@@ -95,7 +96,7 @@ export async function loadRemoteModuleConfig(
 
   if (unwrapped.contract) {
     globalProxyRegistry.set(unwrapped.contract, {
-      moduleId: mod.moduleId
+      remoteId: mod.remoteId
     })
   }
 
@@ -108,7 +109,7 @@ export const registeredRemotesSet = new Set<string>()
  * Loads module config via federation (from remoteEntry.js)
  */
 async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
-  const remoteName = `m_${mod.moduleId}`
+  const remoteName = `m_${mod.remoteId}`
 
   if (!registeredRemotesSet.has(remoteName)) {
     const remoteConfig = {

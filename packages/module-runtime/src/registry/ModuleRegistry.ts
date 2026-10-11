@@ -26,10 +26,7 @@ function findModulePath(
 export class ModuleRegistry {
   private static registeredModules: ModuleEntry[] = []
   private static modulePaths = new Map<string, string>()
-  private static registeredSchemaParts = new Map<
-    string,
-    ResolvedModuleSchema
-  >()
+  private static registeredSchemaParts = new Map<string, ResolvedModuleSchema>()
 
   static register(entry: ModuleEntry, absolutePath?: string): void {
     const existingIndex = ModuleRegistry.registeredModules.findIndex(
@@ -43,7 +40,7 @@ export class ModuleRegistry {
     }
 
     if (absolutePath) {
-      ModuleRegistry.registerPath(absolutePath, entry.name)
+      ModuleRegistry.registerPath(absolutePath, entry.id)
     }
   }
 
@@ -54,18 +51,14 @@ export class ModuleRegistry {
       m => m.name !== name
     )
 
-    for (const [modPath, modName] of ModuleRegistry.modulePaths.entries()) {
-      if (modName === name) {
-        ModuleRegistry.modulePaths.delete(modPath)
-      }
-    }
-
     if (entry) {
-      // Schema parts are keyed by the scope-stripped module id (the same id
-      // `getCallerModuleId` yields and `registerSchemaPart` receives).
-      ModuleRegistry.unregisterSchemaPart(
-        entry.name.replace(/^@lifeforge\//, '')
-      )
+      for (const [modPath, modId] of ModuleRegistry.modulePaths.entries()) {
+        if (modId === entry.id) {
+          ModuleRegistry.modulePaths.delete(modPath)
+        }
+      }
+
+      ModuleRegistry.unregisterSchemaPart(entry.id)
     }
   }
 
@@ -75,9 +68,9 @@ export class ModuleRegistry {
 
   /** Whether a module (by full name or short id) is currently registered. */
   static isAvailable(nameOrId: string): boolean {
-    const name = nameOrId.startsWith('@') ? nameOrId : `@lifeforge/${nameOrId}`
-
-    return ModuleRegistry.isRegistered(name)
+    return ModuleRegistry.registeredModules.some(
+      m => m.id === nameOrId || m.name === nameOrId
+    )
   }
 
   static get entries(): ModuleEntry[] {
@@ -96,7 +89,8 @@ export class ModuleRegistry {
 
       list.push({
         name: mod.name,
-        moduleId: mod.moduleId,
+        id: mod.id,
+        remoteId: mod.remoteId,
         displayName: mod.displayName,
         icon: mod.icon,
         category: mod.category,
@@ -118,7 +112,8 @@ export class ModuleRegistry {
     for (const mod of ModuleRegistry.registeredModules) {
       list.push({
         name: mod.name,
-        moduleId: mod.moduleId,
+        id: mod.id,
+        remoteId: mod.remoteId,
         displayName: mod.displayName,
         version: mod.version,
         description: mod.description,
@@ -141,14 +136,14 @@ export class ModuleRegistry {
     return list
   }
 
-  /** Registers an absolute module directory against its official module id. */
-  static registerPath(moduleDir: string, moduleId: string): void {
-    ModuleRegistry.modulePaths.set(normalizePath(moduleDir), moduleId)
+  /** Registers an absolute module directory against its module id. */
+  static registerPath(moduleDir: string, id: string): void {
+    ModuleRegistry.modulePaths.set(normalizePath(moduleDir), id)
   }
 
-  static getPath(moduleIdOrName: string): string | undefined {
-    for (const [modPath, name] of ModuleRegistry.modulePaths.entries()) {
-      if (name === moduleIdOrName || name.endsWith('/' + moduleIdOrName)) {
+  static getPath(id: string): string | undefined {
+    for (const [modPath, modId] of ModuleRegistry.modulePaths.entries()) {
+      if (modId === id) {
         return modPath
       }
     }

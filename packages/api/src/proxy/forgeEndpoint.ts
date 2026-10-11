@@ -69,7 +69,7 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     if (ctx) {
       return {
         apiHost: ctx.apiHost,
-        prefix: ctx.moduleId ? `modules/${ctx.moduleId}` : ''
+        prefix: ctx.remoteId ? `modules/${ctx.remoteId}` : ''
       }
     }
 

@@ -11,7 +11,7 @@ import gatherModuleMetadata from './gatherModuleMetadata'
 import { loaderLogger } from './logger'
 import registerDevResolverHooks from './registerDevResolverHooks'
 
-/** Cache of moduleId -> imported server route tree, reused across reloads. */
+/** Cache of remoteId -> imported server route tree, reused across reloads. */
 const routeTrees = new Map<string, ModuleEntry>()
 
 let hooksRegistered = false
@@ -39,7 +39,7 @@ export async function loadModuleRoutes(options: {
   if (!fs.existsSync(modulesDir)) {
     for (const entry of ModuleRegistry.entries) {
       ModuleRegistry.unregister(entry.name)
-      routeTrees.delete(entry.moduleId)
+      routeTrees.delete(entry.remoteId)
     }
 
     loaderLogger.warn('Modules directory not found, no module routes loaded')
@@ -49,11 +49,11 @@ export async function loadModuleRoutes(options: {
 
   // Drop modules whose directory has been removed from disk.
   for (const entry of ModuleRegistry.entries) {
-    const moduleDir = ModuleRegistry.getPath(entry.name)
+    const moduleDir = ModuleRegistry.getPath(entry.id)
 
     if (!moduleDir || !fs.existsSync(moduleDir)) {
       ModuleRegistry.unregister(entry.name)
-      routeTrees.delete(entry.moduleId)
+      routeTrees.delete(entry.remoteId)
 
       loaderLogger.info(
         `Unregistered removed module ${chalk.yellow(entry.displayName)}`
@@ -114,7 +114,7 @@ export async function loadModuleRoutes(options: {
     ModuleRegistry.register(entry, moduleDir)
 
     // Already imported in a previous load: reuse the cached route tree.
-    if (routeTrees.has(metadata.moduleId)) {
+    if (routeTrees.has(metadata.remoteId)) {
       continue
     }
 
@@ -123,7 +123,7 @@ export async function loadModuleRoutes(options: {
       const mod = await import(`${pathToFileURL(modulePath).href}?v=${version}`)
 
       if (mod.default) {
-        routeTrees.set(metadata.moduleId, mod.default)
+        routeTrees.set(metadata.remoteId, mod.default)
       } else {
         ModuleRegistry.unregister(entry.name)
         loaderLogger.warn(

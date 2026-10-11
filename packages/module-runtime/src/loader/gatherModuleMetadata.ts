@@ -85,7 +85,9 @@ export default async function gatherModuleMetadata(
 
     const { package: packageJSON } = bundledMetadata
 
-    const moduleId = crypto
+    const id = packageJSON.name.replace(/^@lifeforge\//, '')
+
+    const remoteId = crypto
       .createHash('sha256')
       .update(packageJSON.name)
       .digest('hex')
@@ -129,7 +131,8 @@ export default async function gatherModuleMetadata(
     }))
 
     return {
-      moduleId,
+      id,
+      remoteId,
       name: packageJSON.name,
       displayName: packageJSON.displayName,
       version: packageJSON.version,

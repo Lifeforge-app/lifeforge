@@ -1,12 +1,12 @@
 class ProxyRegistry {
-  private contexts = new WeakMap<any, { moduleId: string }>()
+  private contexts = new WeakMap<any, { remoteId: string }>()
   public apiHost = ''
 
-  set(contract: any, value: { moduleId: string; apiHost?: string }) {
+  set(contract: any, value: { remoteId: string; apiHost?: string }) {
     if (value.apiHost) {
       this.apiHost = value.apiHost
     }
-    this.contexts.set(contract, { moduleId: value.moduleId })
+    this.contexts.set(contract, { remoteId: value.remoteId })
   }
 
   get(contract: any) {
@@ -15,7 +15,7 @@ class ProxyRegistry {
     if (!ctx) return undefined
 
     return {
-      moduleId: ctx.moduleId,
+      remoteId: ctx.remoteId,
       apiHost: this.apiHost
     }
   }

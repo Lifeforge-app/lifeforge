@@ -53,14 +53,7 @@ const listLanguages = forge
     }
   })
   .callback(async ({ response }) => {
-    return response.ok(
-      LocaleService.getLangManifests() as unknown as {
-        name: string
-        alternative?: string[]
-        icon: string
-        displayName: string
-      }[]
-    )
+    return response.ok(LocaleService.getLangManifests())
   })
 
 const getLocale = forge
@@ -96,14 +89,16 @@ const getLocale = forge
 
     if (namespace === 'apps') {
       const target = moduleApps.find(modulePath => {
-        const moduleName = ModuleRegistry.getModuleIdByPath(modulePath)
+        const entry = ModuleRegistry.entries.find(
+          module => module.id === ModuleRegistry.getModuleIdByPath(modulePath)
+        )
 
-        if (!moduleName) {
+        if (!entry) {
           return false
         }
 
         return (
-          moduleName ===
+          entry.name ===
           (subnamespace.startsWith('@lifeforge/')
             ? subnamespace
             : `@lifeforge/${subnamespace}`)
@@ -167,8 +162,10 @@ const getLocale = forge
               )
 
               const moduleName =
-                ModuleRegistry.getModuleIdByPath(modulePath) ??
-                path.basename(modulePath)
+                ModuleRegistry.entries.find(
+                  module =>
+                    module.id === ModuleRegistry.getModuleIdByPath(modulePath)
+                )?.name ?? path.basename(modulePath)
 
               return [
                 moduleName,

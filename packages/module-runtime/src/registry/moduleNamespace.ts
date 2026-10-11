@@ -27,14 +27,14 @@ function detectCallerModuleDir(stack: string | undefined): string | undefined {
   return undefined
 }
 
-/** Reads a module's official id straight from its package.json as a fallback. */
+/** Reads a module's id (scope-stripped name) from its package.json as a fallback. */
 function readModuleIdFromPackageJson(moduleDir: string): string | undefined {
   try {
     const pkg = JSON.parse(
       fs.readFileSync(path.join(moduleDir, 'package.json'), 'utf-8')
     ) as { name?: string }
 
-    return pkg.name
+    return pkg.name?.replace(/^@lifeforge\//, '')
   } catch {
     return undefined
   }
