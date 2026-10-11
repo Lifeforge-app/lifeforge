@@ -3,7 +3,8 @@ import os from 'os'
 import path from 'path'
 
 import { installDeps } from './commands'
-import { downloadArchive } from './github'
+import { downloadArchive, readRepoSlug } from './github'
+import { assertKebabRepo } from './kebab'
 import logger from './logger'
 import type { LockKind } from './moduleLock'
 import { addDependency } from './packageJson'
@@ -38,6 +39,8 @@ export async function installFromGithub({
     throw new Error(`No release commit recorded for ${id}@${version}`)
   }
 
+  assertKebabRepo(entry.repo)
+
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'forge-pkg-'))
 
   try {
@@ -51,7 +54,6 @@ export async function installFromGithub({
 
     const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8')) as {
       name: string
-      repository?: string | { url?: string }
     }
 
     const expectedName = `@lifeforge/${id}`
@@ -62,14 +64,11 @@ export async function installFromGithub({
       )
     }
 
-    const repoUrl =
-      typeof pkg.repository === 'string'
-        ? pkg.repository
-        : (pkg.repository?.url ?? '')
+    const slug = readRepoSlug(tempDir)
 
-    if (repoUrl && !repoUrl.includes(entry.repo)) {
+    if (slug && slug.toLowerCase() !== entry.repo.toLowerCase()) {
       throw new Error(
-        `Repository check failed for ${id}: expected ${entry.repo}, got ${repoUrl}`
+        `Repository check failed for ${id}: expected ${entry.repo}, got ${slug}`
       )
     }
 

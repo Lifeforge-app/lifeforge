@@ -3,13 +3,13 @@ import fs from 'fs'
 import path from 'path'
 import semver from 'semver'
 
-import executeCommand from '@/utils/commands'
 import { isDockerMode } from '@/utils/helpers'
 import { installFromGithub } from '@/utils/installSource'
 import logger from '@/utils/logger'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
+import { resolveModuleSchemaFile, syncModuleSchema } from '@/utils/schema'
 
 import cleanModuleSource from '../functions/cleanModuleSource'
 import listModules from '../functions/listModules'
@@ -171,15 +171,24 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     await buildModuleHandler(id, { docker: true, buildServer: false })
   }
 
-  // Push database schema for upgraded modules (skip in Docker environment)
+  // Sync the database schema for upgraded modules (only their own objects)
   if (!isDockerMode()) {
     for (const { id } of upgraded) {
       const { targetDir } = normalizePackage(id)
 
-      if (fs.existsSync(path.join(targetDir, 'server', 'schema.drizzle.ts'))) {
-        logger.debug(`Pushing database schema for ${id}...`)
-        executeCommand('pnpm --filter @lifeforge/server db:push')
-        break
+      if (!resolveModuleSchemaFile(targetDir)) {
+        continue
+      }
+
+      logger.debug(`Syncing database schema for ${id}...`)
+
+      try {
+        await syncModuleSchema(targetDir)
+      } catch (error) {
+        logger.warn(
+          `Could not sync the database schema for ${id} automatically.`
+        )
+        logger.debug(`Error details: ${error}`)
       }
     }
   }

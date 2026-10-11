@@ -26,7 +26,7 @@ export default function initGitRepository(targetDir: string): void {
 
   const repoUrl = pkg.repository?.url
 
-  if (!repoUrl || pkg.repository?.type !== 'git') {
+  if (!repoUrl) {
     return
   }
 

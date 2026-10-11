@@ -6,6 +6,7 @@ import bumpPackageVersion, {
 } from '@/utils/bumpPackageVersion'
 import executeCommand from '@/utils/commands'
 import { getRepoSlug, getTagCommit, updateRegistryIndex } from '@/utils/github'
+import { assertKebabRepo } from '@/utils/kebab'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 
@@ -49,6 +50,8 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
     executeCommand('git push --tags', { cwd: targetDir })
 
     const repo = getRepoSlug(targetDir)
+
+    assertKebabRepo(repo)
 
     const commitSha = getTagCommit(repo, `v${newVersion}`)
 
