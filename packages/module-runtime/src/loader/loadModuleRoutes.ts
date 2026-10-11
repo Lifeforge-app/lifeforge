@@ -6,7 +6,7 @@ import { pathToFileURL } from 'url'
 import type { ModuleEntry } from '@lifeforge/configs'
 
 import { ModuleRegistry } from '../registry/ModuleRegistry'
-
+import { setLoadingModuleId } from '../registry/loadingModule'
 import gatherModuleMetadata from './gatherModuleMetadata'
 import { loaderLogger } from './logger'
 import registerDevResolverHooks from './registerDevResolverHooks'
@@ -120,7 +120,18 @@ export async function loadModuleRoutes(options: {
 
     try {
       const version = fs.statSync(modulePath).mtimeMs
-      const mod = await import(`${pathToFileURL(modulePath).href}?v=${version}`)
+
+      // Expose the module id to the code that runs during the import (schema
+      // registration, route definitions) so it doesn't need stack parsing.
+      setLoadingModuleId(entry.id)
+
+      let mod
+
+      try {
+        mod = await import(`${pathToFileURL(modulePath).href}?v=${version}`)
+      } finally {
+        setLoadingModuleId(undefined)
+      }
 
       if (mod.default) {
         routeTrees.set(metadata.remoteId, mod.default)

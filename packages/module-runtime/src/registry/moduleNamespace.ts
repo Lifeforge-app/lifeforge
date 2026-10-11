@@ -1,70 +1,14 @@
-import fs from 'fs'
 import _ from 'lodash'
-import path from 'path'
 
-import { ModuleRegistry } from './ModuleRegistry'
-
-/** Extracts a module's absolute directory from a stack trace. */
-function detectCallerModuleDir(stack: string | undefined): string | undefined {
-  for (const line of stack?.split('\n') ?? []) {
-    const normalized = line.replace(/\\/g, '/')
-
-    const pathMatch =
-      normalized.match(/\((.+?):\d+:\d+\)/) ||
-      normalized.match(/at (.+?):\d+:\d+/)
-
-    const filePath = pathMatch?.[1]?.replace(/^file:\/\//, '')
-
-    if (!filePath) continue
-
-    const moduleMatch = filePath.match(/^(.*\/modules\/[^/]+)\//)
-
-    if (moduleMatch) {
-      return moduleMatch[1]
-    }
-  }
-
-  return undefined
-}
-
-/** Reads a module's id (scope-stripped name) from its package.json as a fallback. */
-function readModuleIdFromPackageJson(moduleDir: string): string | undefined {
-  try {
-    const pkg = JSON.parse(
-      fs.readFileSync(path.join(moduleDir, 'package.json'), 'utf-8')
-    ) as { name?: string }
-
-    return pkg.name?.replace(/^@lifeforge\//, '')
-  } catch {
-    return undefined
-  }
-}
-
-/**
- * Resolves a module directory to its official module id (its package.json
- * `name`), preferring the module registry and falling back to the on-disk
- * package.json.
- */
-export function resolveModuleId(moduleDir: string): string | undefined {
-  return (
-    ModuleRegistry.getModuleIdByPath(moduleDir) ??
-    readModuleIdFromPackageJson(moduleDir)
-  )
-}
+import { getLoadingModuleId } from './loadingModule'
 
 /**
  * Resolves the official module id of the module that is currently being loaded.
- * The module directory is derived from the stack; the id itself comes from the
- * registry or the module's package.json - never from the directory name.
+ * The loader sets this around its dynamic `import()`, so schema files can
+ * resolve their namespace without parsing a stack trace.
  */
-export function resolveCallerModuleId(
-  stack: string | undefined = new Error().stack
-): string | undefined {
-  const moduleDir = detectCallerModuleDir(stack)
-
-  if (!moduleDir) return undefined
-
-  return resolveModuleId(moduleDir)
+export function resolveCallerModuleId(): string | undefined {
+  return getLoadingModuleId()
 }
 
 /**

@@ -8,8 +8,6 @@ export {
   type ForgeRouter
 } from './routes/forgeRouter'
 
-export { default as getCallerModuleId } from './utils/getCallerModuleId'
-
 export {
   default as createForgeContractBuilder,
   default as createForge,

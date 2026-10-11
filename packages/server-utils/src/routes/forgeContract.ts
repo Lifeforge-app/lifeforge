@@ -6,11 +6,11 @@ import type { z } from 'zod'
 import { defineModuleSchema } from '@lifeforge/drizzle'
 import {
   type BuiltModuleSchema,
+  getLoadingModuleId,
   ModuleRegistry,
   type ModuleSchema
 } from '@lifeforge/module-runtime/registry'
 
-import { getCallerModuleId } from '..'
 import { type ExistsInFor, existsIn } from '../database'
 import {
   type OutputDefinition,
@@ -84,14 +84,13 @@ function makeBuilder<
           context: ForgeContext<TQuery, TBody, TOutput, TMedia, TSchema>
         ) => Promise<ResponseObject<TOutput>>
       ): ForgeContract {
-        const caller = getCallerModuleId()
+        const loadingModuleId = getLoadingModuleId()
 
-        const actualCallerModule =
-          caller?.source === 'app'
-            ? caller
-            : callerModule
-              ? { source: 'core', id: callerModule }
-              : undefined
+        const actualCallerModule = loadingModuleId
+          ? { source: 'app' as const, id: loadingModuleId }
+          : callerModule
+            ? { source: 'core' as const, id: callerModule }
+            : undefined
 
         return {
           __isForgeContract: true as const,
@@ -204,18 +203,16 @@ export function createForgeContractBuilder<
   const { schema, moduleId, modulePathAlias } = options ?? {}
 
   if (schema) {
-    const caller = getCallerModuleId()
-
-    const moduleId = caller?.source === 'app' ? caller.id : undefined
+    const callerModuleId = getLoadingModuleId()
 
     const definition = defineModuleSchema(
       schema.tables,
       schema.relations as any,
-      moduleId
+      callerModuleId
     )
 
-    if (moduleId) {
-      ModuleRegistry.registerSchemaPart(moduleId, definition)
+    if (callerModuleId) {
+      ModuleRegistry.registerSchemaPart(callerModuleId, definition)
     }
   }
 

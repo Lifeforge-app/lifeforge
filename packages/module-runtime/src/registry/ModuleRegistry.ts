@@ -23,20 +23,49 @@ function findModulePath(
   return undefined
 }
 
-export class ModuleRegistry {
-  private static registeredModules: ModuleEntry[] = []
-  private static modulePaths = new Map<string, string>()
-  private static registeredSchemaParts = new Map<string, ResolvedModuleSchema>()
+interface RegistryState {
+  registeredModules: ModuleEntry[]
+  modulePaths: Map<string, string>
+  registeredSchemaParts: Map<string, ResolvedModuleSchema>
+}
 
+/**
+ * The registry state is kept on `globalThis` so that every instance of this
+ * package shares a single store — even when the package is both bundled into
+ * one consumer and resolved from node_modules by another (e.g. the API bundle
+ * inlining it while the external `server-utils`/`drizzle` import it).
+ */
+const REGISTRY_STATE_KEY = Symbol.for('lifeforge.module-registry.state')
+
+function state(): RegistryState {
+  const globalObject = globalThis as unknown as Record<
+    symbol,
+    RegistryState | undefined
+  >
+
+  if (!globalObject[REGISTRY_STATE_KEY]) {
+    globalObject[REGISTRY_STATE_KEY] = {
+      registeredModules: [],
+      modulePaths: new Map(),
+      registeredSchemaParts: new Map()
+    }
+  }
+
+  return globalObject[REGISTRY_STATE_KEY]
+}
+
+export class ModuleRegistry {
   static register(entry: ModuleEntry, absolutePath?: string): void {
-    const existingIndex = ModuleRegistry.registeredModules.findIndex(
+    const { registeredModules } = state()
+
+    const existingIndex = registeredModules.findIndex(
       m => m.name === entry.name
     )
 
     if (existingIndex === -1) {
-      ModuleRegistry.registeredModules.push(entry)
+      registeredModules.push(entry)
     } else {
-      ModuleRegistry.registeredModules[existingIndex] = entry
+      registeredModules[existingIndex] = entry
     }
 
     if (absolutePath) {
@@ -45,16 +74,18 @@ export class ModuleRegistry {
   }
 
   static unregister(name: string): void {
-    const entry = ModuleRegistry.registeredModules.find(m => m.name === name)
+    const store = state()
 
-    ModuleRegistry.registeredModules = ModuleRegistry.registeredModules.filter(
+    const entry = store.registeredModules.find(m => m.name === name)
+
+    store.registeredModules = store.registeredModules.filter(
       m => m.name !== name
     )
 
     if (entry) {
-      for (const [modPath, modId] of ModuleRegistry.modulePaths.entries()) {
+      for (const [modPath, modId] of store.modulePaths.entries()) {
         if (modId === entry.id) {
-          ModuleRegistry.modulePaths.delete(modPath)
+          store.modulePaths.delete(modPath)
         }
       }
 
@@ -63,22 +94,22 @@ export class ModuleRegistry {
   }
 
   static isRegistered(name: string): boolean {
-    return ModuleRegistry.registeredModules.some(m => m.name === name)
+    return state().registeredModules.some(m => m.name === name)
   }
 
   /** Whether a module (by full name or short id) is currently registered. */
   static isAvailable(nameOrId: string): boolean {
-    return ModuleRegistry.registeredModules.some(
+    return state().registeredModules.some(
       m => m.id === nameOrId || m.name === nameOrId
     )
   }
 
   static get entries(): ModuleEntry[] {
-    return [...ModuleRegistry.registeredModules]
+    return [...state().registeredModules]
   }
 
   static get manifests(): ModuleManifest[] {
-    return ModuleRegistry.registeredModules.map(mod => ({
+    return state().registeredModules.map(mod => ({
       name: mod.name,
       id: mod.id,
       remoteId: mod.remoteId,
@@ -96,7 +127,7 @@ export class ModuleRegistry {
   static get list(): Module[] {
     const list: Module[] = []
 
-    for (const mod of ModuleRegistry.registeredModules) {
+    for (const mod of state().registeredModules) {
       list.push({
         name: mod.name,
         id: mod.id,
@@ -116,7 +147,7 @@ export class ModuleRegistry {
   static get widgets(): ModuleWidget[] {
     const list: ModuleWidget[] = []
 
-    for (const mod of ModuleRegistry.registeredModules) {
+    for (const mod of state().registeredModules) {
       list.push(...mod.widgets)
     }
 
@@ -125,11 +156,11 @@ export class ModuleRegistry {
 
   /** Registers an absolute module directory against its module id. */
   static registerPath(moduleDir: string, id: string): void {
-    ModuleRegistry.modulePaths.set(normalizePath(moduleDir), id)
+    state().modulePaths.set(normalizePath(moduleDir), id)
   }
 
   static getPath(id: string): string | undefined {
-    for (const [modPath, modId] of ModuleRegistry.modulePaths.entries()) {
+    for (const [modPath, modId] of state().modulePaths.entries()) {
       if (modId === id) {
         return modPath
       }
@@ -142,9 +173,7 @@ export class ModuleRegistry {
   static getModuleByPath(filePath: string): ModuleEntry | undefined {
     const id = ModuleRegistry.getModuleIdByPath(filePath)
 
-    return id
-      ? ModuleRegistry.registeredModules.find(m => m.id === id)
-      : undefined
+    return id ? state().registeredModules.find(m => m.id === id) : undefined
   }
 
   /**
@@ -153,33 +182,35 @@ export class ModuleRegistry {
    * `/modules/foo-bar`.
    */
   static getModuleIdByPath(filePath: string): string | undefined {
+    const store = state()
+
     const normalizedPath = normalizePath(filePath)
 
-    const matches = [...ModuleRegistry.modulePaths.entries()].sort(
+    const matches = [...store.modulePaths.entries()].sort(
       ([a], [b]) => b.length - a.length
     )
 
     const moduleDir = findModulePath(matches, normalizedPath)
 
-    return moduleDir ? ModuleRegistry.modulePaths.get(moduleDir) : undefined
+    return moduleDir ? store.modulePaths.get(moduleDir) : undefined
   }
 
   /** Registers a module's drizzle schema part (keyed by module id / 'core'). */
   static registerSchemaPart(id: string, part: ResolvedModuleSchema): void {
-    ModuleRegistry.registeredSchemaParts.set(id, part)
+    state().registeredSchemaParts.set(id, part)
   }
 
   /** Removes a module's drizzle schema part (no-op for 'core' or unknown ids). */
   static unregisterSchemaPart(id: string): void {
-    ModuleRegistry.registeredSchemaParts.delete(id)
+    state().registeredSchemaParts.delete(id)
   }
 
   /** Bare table key -> namespaced key for a module, if it registered one. */
   static getModuleKeyMap(id: string): Record<string, string> | undefined {
-    return ModuleRegistry.registeredSchemaParts.get(id)?.keyMap
+    return state().registeredSchemaParts.get(id)?.keyMap
   }
 
   static get schemaParts(): readonly ResolvedModuleSchema[] {
-    return [...ModuleRegistry.registeredSchemaParts.values()]
+    return [...state().registeredSchemaParts.values()]
   }
 }

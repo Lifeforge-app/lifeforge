@@ -12,7 +12,7 @@ import {
 } from '@functions/auth/encryption'
 import { createCache } from '@functions/cache'
 import getAPIKeyFactory from '@functions/database/getAPIKey'
-import fetchAI from '@functions/external/ai'
+import createFetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'
 import convertPDFToImage from '@functions/media/convertPDFToImage'
@@ -70,7 +70,7 @@ export function createCoreContext({
       logging
     ),
     api: {
-      fetchAI,
+      fetchAI: createFetchAI(module),
       searchLocations,
       getAPIKey: getAPIKeyFactory(module)
     },
