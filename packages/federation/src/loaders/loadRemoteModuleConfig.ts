@@ -55,9 +55,19 @@ export async function loadRemoteModuleConfig(
     const devImport = getDevModeImport(mod.name, devModeImports, devModePkgs)
 
     if (devImport) {
-      const devModule = await devImport()
+      try {
+        const devModule = await devImport()
 
-      unwrapped = devModule.default
+        unwrapped = devModule.default
+      } catch (error) {
+        // Source may have been removed (e.g. the module was installed and
+        // cleaned). Fall back to the built federation bundle.
+        console.warn(
+          `Dev mode import failed for ${mod.name}, falling back to federation:`,
+          error
+        )
+        unwrapped = await loadFromFederation(mod)
+      }
     } else {
       console.warn(
         `Dev mode import not found for ${mod.name}, falling back to federation`

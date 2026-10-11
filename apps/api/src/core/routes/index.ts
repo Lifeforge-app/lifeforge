@@ -43,8 +43,13 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
   // Serve file securely using the root sandbox parameter
-  res.sendFile(filePath, { root: moduleDistPath }, () => {
-    next()
+  res.sendFile(filePath, { root: moduleDistPath }, err => {
+    // Only fall through when the file could not be sent. Calling next() after a
+    // successful response (or a client abort mid-stream) would let later
+    // handlers respond again and raise ERR_HTTP_HEADERS_SENT.
+    if (err && !res.headersSent) {
+      next()
+    }
   })
 })
 
