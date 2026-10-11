@@ -35,7 +35,7 @@ export default function getCallerModuleId():
     const registeredCaller = ModuleRegistry.getModuleByPath(filePath)
 
     if (registeredCaller) {
-      return registeredCaller
+      return { source: 'app', id: registeredCaller.id }
     }
 
     const coreMatch = filePath.match(

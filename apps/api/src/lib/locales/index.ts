@@ -89,9 +89,7 @@ const getLocale = forge
 
     if (namespace === 'apps') {
       const target = moduleApps.find(modulePath => {
-        const entry = ModuleRegistry.entries.find(
-          module => module.id === ModuleRegistry.getModuleIdByPath(modulePath)
-        )
+        const entry = ModuleRegistry.getModuleByPath(modulePath)
 
         if (!entry) {
           return false
@@ -162,10 +160,8 @@ const getLocale = forge
               )
 
               const moduleName =
-                ModuleRegistry.entries.find(
-                  module =>
-                    module.id === ModuleRegistry.getModuleIdByPath(modulePath)
-                )?.name ?? path.basename(modulePath)
+                ModuleRegistry.getModuleByPath(modulePath)?.name ??
+                path.basename(modulePath)
 
               return [
                 moduleName,

@@ -151,12 +151,13 @@ export class ModuleRegistry {
     return undefined
   }
 
-  static getModuleByPath(
-    filePath: string
-  ): { source: 'app'; id: string } | undefined {
+  /** Resolves the registered module entry that contains `filePath`. */
+  static getModuleByPath(filePath: string): ModuleEntry | undefined {
     const id = ModuleRegistry.getModuleIdByPath(filePath)
 
-    return id ? { source: 'app', id } : undefined
+    return id
+      ? ModuleRegistry.registeredModules.find(m => m.id === id)
+      : undefined
   }
 
   /**
