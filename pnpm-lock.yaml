@@ -524,30 +524,6 @@ importers:
 
   locales/lang-zh-tw: {}
 
-  modules/lifeforge--achievements:
-    dependencies:
-      '@lifeforge/api':
-        specifier: workspace:*
-        version: link:../../packages/api
-      '@lifeforge/configs':
-        specifier: workspace:*
-        version: link:../../packages/configs
-      '@lifeforge/drizzle':
-        specifier: workspace:*
-        version: link:../../packages/drizzle
-      '@lifeforge/federation':
-        specifier: workspace:*
-        version: link:../../packages/federation
-      '@lifeforge/localization':
-        specifier: workspace:*
-        version: link:../../packages/localization
-      '@lifeforge/server-utils':
-        specifier: workspace:*
-        version: link:../../packages/server-utils
-      '@lifeforge/ui':
-        specifier: workspace:*
-        version: link:../../packages/ui
-
   modules/lifeforge-module-invoiceMaker:
     dependencies:
       '@lifeforge/api':

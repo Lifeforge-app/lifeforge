@@ -62,7 +62,7 @@ export default function setup(program: Command): void {
 
   command
     .command('publish')
-    .description('Publish a LifeFordge module to the registry')
+    .description('Publish a LifeForge module to the registry')
     .argument('<module>', 'Module to publish from modules/')
     .option(
       '--official',

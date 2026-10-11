@@ -3,51 +3,74 @@ import fs from 'fs'
 import path from 'path'
 import semver from 'semver'
 
-import executeCommand, { installPackage } from '@/utils/commands'
-import { smartReloadServer } from '@/utils/docker'
+import executeCommand from '@/utils/commands'
 import { isDockerMode } from '@/utils/helpers'
+import { installFromGithub } from '@/utils/installSource'
 import logger from '@/utils/logger'
+import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
-import { getPackageLatestVersion } from '@/utils/registry'
+import { resolveEntry } from '@/utils/registryIndex'
 
 import cleanModuleSource from '../functions/cleanModuleSource'
 import listModules from '../functions/listModules'
 import { buildModuleHandler } from './buildModuleHandler'
+
+interface UpgradeResult {
+  version: string
+  repo: string
+  commitSha: string
+}
 
 /**
  * Upgrades a single module to its latest registry version.
  *
  * Creates a backup before upgrading and restores it if the upgrade fails.
  *
- * @returns true if upgraded, false if already up to date or failed
+ * @returns the upgrade result, or `false` if already up to date / failed
  */
 async function upgradeModule(
   packageName: string,
   currentVersion: string
-): Promise<boolean> {
-  const { fullName, targetDir } = normalizePackage(packageName)
+): Promise<UpgradeResult | false> {
+  const { shortName, targetDir } = normalizePackage(packageName)
 
-  const latestVersion = await getPackageLatestVersion(fullName)
+  const entry = await resolveEntry('modules', shortName)
 
-  if (!latestVersion) {
-    logger.warn(`Could not check registry for ${chalk.blue(fullName)}`)
+  if (!entry) {
+    logger.warn(`Could not find ${chalk.blue(shortName)} in the registry`)
+
+    return false
+  }
+
+  const latestVersion = entry.latest
+  const commitSha = entry.versions[latestVersion]
+
+  if (!commitSha) {
+    logger.warn(
+      `Registry has no release commit for ${chalk.blue(shortName)}@${latestVersion}`
+    )
 
     return false
   }
 
   if (semver.eq(currentVersion, latestVersion)) {
     logger.print(
-      `  ${chalk.dim('•')} ${chalk.blue(packageName)} ${chalk.dim(`v${currentVersion} is up to date`)}`
+      `  ${chalk.dim('•')} ${chalk.blue(shortName)} ${chalk.dim(`v${currentVersion} is up to date`)}`
     )
 
     return false
   }
 
+  verifyLocked('modules', shortName, latestVersion, commitSha)
+
   logger.debug(
-    `Upgrading ${chalk.blue(packageName)} from ${currentVersion} to ${latestVersion}...`
+    `Upgrading ${chalk.blue(shortName)} from ${currentVersion} to ${latestVersion}...`
   )
 
-  const backupPath = path.join(path.dirname(targetDir), `${packageName}.backup`)
+  const backupPath = path.join(
+    path.dirname(targetDir),
+    `${shortName}.backup`
+  )
 
   try {
     if (fs.existsSync(backupPath)) {
@@ -57,24 +80,23 @@ async function upgradeModule(
     fs.cpSync(targetDir, backupPath, { recursive: true })
     fs.rmSync(targetDir, { recursive: true, force: true })
 
-    installPackage(fullName, targetDir)
-
-    // Restore gitignore to .gitignore (npm excludes .gitignore during publish)
-    const gitignorePath = path.join(targetDir, 'gitignore')
-
-    if (fs.existsSync(gitignorePath)) {
-      fs.renameSync(gitignorePath, path.join(targetDir, '.gitignore'))
-    }
+    await installFromGithub({
+      kind: 'modules',
+      id: shortName,
+      entry,
+      targetDir,
+      version: latestVersion
+    })
 
     fs.rmSync(backupPath, { recursive: true, force: true })
 
     logger.print(
-      `  ${chalk.green('↑')} ${chalk.blue(packageName)} ${chalk.dim(`${currentVersion} →`)} ${chalk.green(latestVersion)}`
+      `  ${chalk.green('↑')} ${chalk.blue(shortName)} ${chalk.dim(`${currentVersion} →`)} ${chalk.green(latestVersion)}`
     )
 
-    return true
+    return { version: latestVersion, repo: entry.repo, commitSha }
   } catch (error) {
-    logger.error(`Failed to upgrade ${chalk.blue(fullName)}.`)
+    logger.error(`Failed to upgrade ${chalk.blue(shortName)}.`)
     logger.debug(`Error details: ${error}`)
 
     if (fs.existsSync(backupPath)) {
@@ -91,13 +113,13 @@ async function upgradeModule(
  *
  * After successful upgrades:
  * - Builds module client bundles for federation (both dist and dist-docker)
- * - Generates database migrations if schema.ts exists
- * - Reloads the server
+ * - Pushes the database schema if a schema exists
+ * - Removes source and updates the lockfile
  */
 export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   const modules = listModules()
 
-  const upgraded: string[] = []
+  const upgraded: { id: string; result: UpgradeResult }[] = []
 
   if (moduleName) {
     const { fullName } = normalizePackage(moduleName)
@@ -105,16 +127,17 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     const mod = modules[fullName]
 
     if (!mod) {
-      logger.error(
-        `Module ${chalk.blue(moduleName)} not found in modules/package.json`
-      )
+      logger.error(`Module ${chalk.blue(moduleName)} is not installed`)
       process.exit(1)
     }
 
-    const wasUpgraded = await upgradeModule(fullName, mod.version)
+    const result = await upgradeModule(fullName, mod.version)
 
-    if (wasUpgraded) {
-      upgraded.push(fullName)
+    if (result) {
+      upgraded.push({
+        id: fullName.replace('@lifeforge/', ''),
+        result
+      })
     }
   } else {
     logger.print(
@@ -122,10 +145,10 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     )
 
     for (const [name, { version }] of Object.entries(modules)) {
-      const wasUpgraded = await upgradeModule(name, version)
+      const result = await upgradeModule(name, version)
 
-      if (wasUpgraded) {
-        upgraded.push(name)
+      if (result) {
+        upgraded.push({ id: name.replace('@lifeforge/', ''), result })
       }
     }
   }
@@ -140,26 +163,21 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   }
 
   // Build module client bundles for federation (both dist and dist-docker)
-  for (const mod of upgraded) {
-    logger.debug(`Building ${chalk.blue(mod)} bundles...`)
+  for (const { id } of upgraded) {
+    logger.debug(`Building ${chalk.blue(id)} bundles...`)
 
-    // Build regular dist
-    await buildModuleHandler(mod)
+    await buildModuleHandler(id)
 
-    // Build dist-docker
-    await buildModuleHandler(mod, { docker: true })
+    await buildModuleHandler(id, { docker: true, buildServer: false })
   }
 
   // Push database schema for upgraded modules (skip in Docker environment)
   if (!isDockerMode()) {
-    for (const mod of upgraded) {
-      const { targetDir } = normalizePackage(mod)
+    for (const { id } of upgraded) {
+      const { targetDir } = normalizePackage(id)
 
-      if (
-        fs.existsSync(path.join(targetDir, 'server', 'schema.drizzle.ts')) ||
-        fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))
-      ) {
-        logger.debug(`Pushing database schema for ${mod}...`)
+      if (fs.existsSync(path.join(targetDir, 'server', 'schema.drizzle.ts'))) {
+        logger.debug(`Pushing database schema for ${id}...`)
         executeCommand('pnpm --filter @lifeforge/server db:push')
         break
       }
@@ -169,10 +187,16 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   // Clean source code (upgrades always run in production mode)
   logger.debug('Cleaning source code...')
 
-  for (const mod of upgraded) {
-    const { targetDir } = normalizePackage(mod)
+  for (const { id } of upgraded) {
+    cleanModuleSource(normalizePackage(id).targetDir)
+  }
 
-    cleanModuleSource(targetDir)
+  for (const { id, result } of upgraded) {
+    setLocked('modules', id, {
+      repo: result.repo,
+      version: result.version,
+      commitSha: result.commitSha
+    })
   }
 
   logger.info('Source code removed. Only built bundles retained.')
@@ -180,6 +204,4 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   logger.success(
     `Upgraded ${chalk.blue(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
   )
-
-  smartReloadServer()
 }

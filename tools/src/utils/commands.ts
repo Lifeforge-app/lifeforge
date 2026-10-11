@@ -1,12 +1,9 @@
 import chalk from 'chalk'
 import { type IOType, spawnSync } from 'child_process'
-import fs from 'fs'
-import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 
 import logger from './logger'
-import { addDependency, removeDependency } from './packageJson'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
@@ -98,55 +95,4 @@ export function installDeps() {
   executeCommand('pnpm install --ignore-scripts', {
     cwd: ROOT_DIR
   })
-}
-
-/**
- * Installs a package from the registry and copies it to the target directory.
- *
- * Downloads the package using `pnpm add` at root, copies from node_modules to the target
- * directory, adds it as a dependency to the appropriate package.json (apps or locales),
- * removes it from root package.json, and runs `pnpm install`.
- *
- * @param fullName - The full package name (e.g., `@lifeforge/lifeforge--calendar`)
- * @param targetDir - The absolute path to copy the package to
- * @param target - The package.json target to add the dependency to (defaults to 'modules')
- */
-export function installPackage(
-  fullName: string,
-  targetDir: string,
-  target: 'modules' | 'locales' = 'modules'
-) {
-  if (fs.existsSync(targetDir)) {
-    fs.rmSync(targetDir, { recursive: true, force: true })
-  }
-
-  logger.debug(`Installing ${chalk.blue(fullName)} from registry...`)
-
-  executeCommand(`pnpm add ${fullName}@latest --ignore-scripts`, {
-    cwd: ROOT_DIR
-  })
-
-  const installedPath = path.join(ROOT_DIR, 'node_modules', fullName)
-
-  if (!fs.existsSync(installedPath)) {
-    logger.error(
-      `Failed to find installed package at ${chalk.blue(installedPath)}`
-    )
-    process.exit(1)
-  }
-
-  logger.debug(`Copying ${chalk.blue(fullName)} to ${chalk.blue(targetDir)}...`)
-  fs.cpSync(installedPath, targetDir, { recursive: true, dereference: true })
-
-  // Add to target package.json (apps or locales)
-  addDependency(fullName, target)
-
-  // Remove from root package.json to keep it clean
-  removeDependency(fullName, 'root')
-
-  if (fs.existsSync(installedPath)) {
-    fs.rmSync(installedPath, { recursive: true, force: true })
-  }
-
-  installDeps()
 }

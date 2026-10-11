@@ -2,11 +2,13 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import executeCommand, { installPackage } from '@/utils/commands'
+import executeCommand from '@/utils/commands'
 import initGitRepository from '@/utils/initGitRepository'
+import { installFromGithub } from '@/utils/installSource'
 import logger from '@/utils/logger'
+import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
-import { checkPackageExists } from '@/utils/registry'
+import { resolveEntry } from '@/utils/registryIndex'
 
 import cleanModuleSource from '../functions/cleanModuleSource'
 import { buildModuleHandler } from './buildModuleHandler'
@@ -15,20 +17,26 @@ interface InstallOptions {
   dev?: boolean
 }
 
+interface InstalledModule {
+  id: string
+  version: string
+  repo: string
+  commitSha: string
+}
+
 /**
- * Installs one or more modules from the registry.
+ * Installs one or more modules from the LifeForge registry (a GitHub-hosted index).
  *
  * For each module:
  * 1. Validates it doesn't already exist locally
- * 2. Checks it exists in the registry
- * 3. Downloads and extracts to modules/
- * 4. Initializes git repository (if --dev)
- * 5. Builds both dist and dist-docker bundles
- * 6. Removes source code (unless --dev is passed)
+ * 2. Resolves it in the registry index
+ * 3. Downloads the GitHub archive at the pinned release commit
+ * 4. Verifies identity, links it, and (optionally) initializes git
  *
  * After installation:
  * - Builds module client bundles for federation (both modes)
- * - Generates database migrations if schema.ts exists
+ * - Pushes the database schema if a schema exists
+ * - Removes source (unless --dev) and records the lockfile entry
  */
 export async function installModuleHandler(
   moduleNames: string[],
@@ -36,7 +44,7 @@ export async function installModuleHandler(
 ): Promise<void> {
   const isDevMode = options?.dev ?? false
 
-  const installed: string[] = []
+  const installed: InstalledModule[] = []
 
   for (const moduleName of moduleNames) {
     const { fullName, shortName, targetDir } = normalizePackage(moduleName)
@@ -53,55 +61,72 @@ export async function installModuleHandler(
       continue
     }
 
-    if (!(await checkPackageExists(fullName))) {
-      logger.error(`Module ${chalk.blue(fullName)} does not exist in registry`)
+    const entry = await resolveEntry('modules', shortName)
+
+    if (!entry) {
+      logger.error(
+        `Module ${chalk.blue(shortName)} was not found in the registry`
+      )
       continue
     }
 
-    logger.debug(`Installing ${chalk.blue(fullName)}...`)
+    const version = entry.latest
+    const commitSha = entry.versions[version]
 
-    installPackage(fullName, targetDir, 'modules')
-
-    // Restore gitignore to .gitignore (npm excludes .gitignore during publish)
-    const gitignorePath = path.join(targetDir, 'gitignore')
-
-    if (fs.existsSync(gitignorePath)) {
-      fs.renameSync(gitignorePath, path.join(targetDir, '.gitignore'))
+    if (!commitSha) {
+      logger.error(
+        `Registry has no release commit for ${chalk.blue(shortName)}@${version}`
+      )
+      continue
     }
 
-    if (isDevMode) {
-      initGitRepository(targetDir)
+    verifyLocked('modules', shortName, version, commitSha)
+
+    logger.debug(
+      `Installing ${chalk.blue(fullName)} v${version} from ${entry.repo}...`
+    )
+
+    try {
+      await installFromGithub({
+        kind: 'modules',
+        id: shortName,
+        entry,
+        targetDir,
+        version
+      })
+
+      if (isDevMode) {
+        initGitRepository(targetDir)
+      }
+
+      installed.push({ id: shortName, version, repo: entry.repo, commitSha })
+
+      logger.success(`Installed ${chalk.blue(fullName)} v${version}`)
+    } catch (error) {
+      logger.error(`Failed to install ${chalk.blue(fullName)}`)
+      logger.debug(`Error details: ${error}`)
     }
-
-    installed.push(moduleName)
-
-    logger.success(`Installed ${chalk.blue(fullName)}`)
   }
 
   if (installed.length === 0) {
     return
   }
 
-  // Build module client bundles for federation (both dist and dist-docker)
-  for (const moduleName of installed) {
-    logger.debug(`Building ${chalk.blue(moduleName)} bundles...`)
+  // Build module client bundles for federation (both modes)
+  for (const { id } of installed) {
+    logger.debug(`Building ${chalk.blue(id)} bundles...`)
 
-    // Build regular dist for client and server
-    await buildModuleHandler(moduleName)
+    await buildModuleHandler(id)
 
-    // Build dist-docker for client only
-    await buildModuleHandler(moduleName, { docker: true, buildServer: false })
+    await buildModuleHandler(id, { docker: true, buildServer: false })
   }
 
   // Push database schema for new modules if schema exists
-  for (const moduleName of installed) {
-    const { targetDir } = normalizePackage(moduleName)
+  for (const { id } of installed) {
+    const { targetDir } = normalizePackage(id)
 
-    if (
-      fs.existsSync(path.join(targetDir, 'server', 'schema.drizzle.ts')) ||
-      fs.existsSync(path.join(targetDir, 'server', 'schema.ts'))
-    ) {
-      logger.debug(`Pushing database schema for ${moduleName}...`)
+    if (fs.existsSync(path.join(targetDir, 'server', 'schema.drizzle.ts'))) {
+      logger.debug(`Pushing database schema for ${id}...`)
       executeCommand('pnpm --filter @lifeforge/server db:push')
       break
     }
@@ -111,12 +136,14 @@ export async function installModuleHandler(
   if (!isDevMode) {
     logger.debug('Cleaning source code (production mode)...')
 
-    for (const moduleName of installed) {
-      const { targetDir } = normalizePackage(moduleName)
-
-      cleanModuleSource(targetDir)
+    for (const { id } of installed) {
+      cleanModuleSource(normalizePackage(id).targetDir)
     }
 
     logger.info('Source code removed. Only built bundles retained.')
+  }
+
+  for (const { id, version, repo, commitSha } of installed) {
+    setLocked('modules', id, { repo, version, commitSha })
   }
 }

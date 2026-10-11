@@ -3,13 +3,13 @@ import path from 'path'
 import z from 'zod'
 
 import { validateMaintainerAccess } from '@/utils/github-cli'
+import { getGithubLogin } from '@/utils/github'
 import logger from '@/utils/logger'
-import { checkAuth } from '@/utils/registry'
 
 import { packageJSONSchema } from './packageJSONSchema'
 
 export default async function validateModuleAuthor(modulePath: string) {
-  const auth = await checkAuth()
+  const username = getGithubLogin()
 
   const packageJson = z.safeParse(
     packageJSONSchema,
@@ -27,12 +27,12 @@ export default async function validateModuleAuthor(modulePath: string) {
 
   const usernamePrefix = nameWithoutScope.split('--')[0]
 
-  if (usernamePrefix && usernamePrefix !== auth.username) {
+  if (usernamePrefix && usernamePrefix !== username) {
     if (usernamePrefix === 'lifeforge') {
-      validateMaintainerAccess(auth.username || '')
+      validateMaintainerAccess(username)
     } else {
       logger.error(
-        `Cannot publish as "${auth.username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${auth.username}--`
+        `Cannot publish as "${username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${username}--`
       )
       process.exit(1)
     }

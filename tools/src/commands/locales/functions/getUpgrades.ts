@@ -1,49 +1,35 @@
 import chalk from 'chalk'
 
 import logger from '@/utils/logger'
-import { getRegistryUrl } from '@/utils/registry'
+import { resolveEntry, type RegistryEntry } from '@/utils/registryIndex'
 
-interface LocaleUpgrade {
+export interface LocaleUpgrade {
+  id: string
   name: string
   current: string
   latest: string
-}
-
-async function getLatestLocaleVersion(
-  packageName: string
-): Promise<string | null> {
-  try {
-    const registryUrl = getRegistryUrl()
-
-    const response = await fetch(`${registryUrl}/${packageName}`)
-
-    if (!response.ok) {
-      return null
-    }
-
-    const data = (await response.json()) as {
-      'dist-tags'?: { latest?: string }
-    }
-
-    return data['dist-tags']?.latest || null
-  } catch {
-    return null
-  }
+  entry: RegistryEntry
 }
 
 async function getUpgrades(
   packagesToCheck: { name: string; version: string }[]
-) {
+): Promise<LocaleUpgrade[]> {
   const upgrades: LocaleUpgrade[] = []
 
   for (const pkg of packagesToCheck) {
-    const latestVersion = await getLatestLocaleVersion(pkg.name)
+    const entry = await resolveEntry('locales', pkg.name)
 
-    if (latestVersion && latestVersion !== pkg.version) {
+    if (!entry) {
+      continue
+    }
+
+    if (entry.latest && entry.latest !== pkg.version) {
       upgrades.push({
+        id: pkg.name,
         name: pkg.name,
         current: pkg.version,
-        latest: latestVersion
+        latest: entry.latest,
+        entry
       })
     }
   }
@@ -54,9 +40,9 @@ async function getUpgrades(
   }
 
   logger.info('Available upgrades:')
-  upgrades.forEach(u =>
+  upgrades.forEach(upgrade =>
     logger.print(
-      `  ${chalk.blue(u.name)}: ${u.current} → ${chalk.green(u.latest)}`
+      `  ${chalk.blue(upgrade.name)}: ${upgrade.current} → ${chalk.green(upgrade.latest)}`
     )
   )
 

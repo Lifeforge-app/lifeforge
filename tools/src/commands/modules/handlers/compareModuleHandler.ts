@@ -2,14 +2,11 @@ import chalk from 'chalk'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import { Readable } from 'stream'
-import { pipeline } from 'stream/promises'
-import { extract } from 'tar'
-import { createGunzip } from 'zlib'
 
+import { downloadArchive } from '@/utils/github'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
-import { checkPackageExists, getPackageTarballUrl } from '@/utils/registry'
+import { resolveEntry } from '@/utils/registryIndex'
 
 import listModules from '../functions/listModules'
 
@@ -67,12 +64,12 @@ function compareFileContent(file1: string, file2: string): boolean {
 }
 
 /**
- * Compares local and registry directories to find differences.
+ * Compares local and remote directories to find differences.
  */
-function compareDirectories(localDir: string, registryDir: string): FileDiff {
+function compareDirectories(localDir: string, remoteDir: string): FileDiff {
   const localFiles = new Set(getAllFiles(localDir))
 
-  const registryFiles = new Set(getAllFiles(registryDir))
+  const remoteFiles = new Set(getAllFiles(remoteDir))
 
   const added: string[] = []
 
@@ -81,48 +78,26 @@ function compareDirectories(localDir: string, registryDir: string): FileDiff {
   const deleted: string[] = []
 
   for (const file of localFiles) {
-    if (!registryFiles.has(file)) {
+    if (!remoteFiles.has(file)) {
       added.push(file)
     } else {
       const localPath = path.join(localDir, file)
 
-      const registryPath = path.join(registryDir, file)
+      const remotePath = path.join(remoteDir, file)
 
-      if (!compareFileContent(localPath, registryPath)) {
+      if (!compareFileContent(localPath, remotePath)) {
         modified.push(file)
       }
     }
   }
 
-  for (const file of registryFiles) {
+  for (const file of remoteFiles) {
     if (!localFiles.has(file)) {
       deleted.push(file)
     }
   }
 
   return { added, modified, deleted }
-}
-
-/**
- * Downloads and extracts a package tarball.
- */
-async function downloadAndExtractTarball(
-  tarballUrl: string,
-  extractDir: string
-): Promise<void> {
-  const response = await fetch(tarballUrl)
-
-  if (!response.ok || !response.body) {
-    throw new Error(`Failed to download tarball: ${response.statusText}`)
-  }
-
-  fs.mkdirSync(extractDir, { recursive: true })
-
-  const nodeStream = Readable.fromWeb(
-    response.body as Parameters<typeof Readable.fromWeb>[0]
-  )
-
-  await pipeline(nodeStream, createGunzip(), extract({ cwd: extractDir }))
 }
 
 /**
@@ -186,12 +161,12 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
 }
 
 /**
- * Compares a single module against its registry version.
+ * Compares a single module against its published (registry) version.
  *
  * @returns true if has changes, false if in sync, null if comparison failed
  */
 async function compareModule(packageName: string): Promise<boolean | null> {
-  const { fullName, shortName, targetDir } = normalizePackage(packageName)
+  const { shortName, targetDir } = normalizePackage(packageName)
 
   if (!fs.existsSync(targetDir)) {
     logger.error(`Module ${chalk.blue(shortName)} is not installed`)
@@ -199,7 +174,9 @@ async function compareModule(packageName: string): Promise<boolean | null> {
     return null
   }
 
-  if (!(await checkPackageExists(fullName))) {
+  const entry = await resolveEntry('modules', shortName)
+
+  if (!entry) {
     logger.print(
       `  ${chalk.dim('○')} ${chalk.blue(shortName)} ${chalk.dim('(not published)')}`
     )
@@ -207,10 +184,10 @@ async function compareModule(packageName: string): Promise<boolean | null> {
     return null
   }
 
-  const tarballUrl = await getPackageTarballUrl(fullName)
+  const commitSha = entry.versions[entry.latest]
 
-  if (!tarballUrl) {
-    logger.warn(`Could not get tarball URL for ${chalk.blue(fullName)}`)
+  if (!commitSha) {
+    logger.warn(`Could not resolve release commit for ${chalk.blue(shortName)}`)
 
     return null
   }
@@ -218,17 +195,11 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'forge-compare-'))
 
   try {
-    logger.debug(`Downloading ${chalk.blue(fullName)} from registry...`)
+    logger.debug(`Downloading ${chalk.blue(entry.repo)}@${commitSha}...`)
 
-    await downloadAndExtractTarball(tarballUrl, tempDir)
+    await downloadArchive(entry.repo, commitSha, tempDir)
 
-    const extractedDir = path.join(tempDir, 'package')
-
-    if (!fs.existsSync(extractedDir)) {
-      throw new Error('Extracted tarball does not contain a package directory')
-    }
-
-    const diff = compareDirectories(targetDir, extractedDir)
+    const diff = compareDirectories(targetDir, tempDir)
 
     return printDiff(shortName, diff)
   } finally {
@@ -237,7 +208,7 @@ async function compareModule(packageName: string): Promise<boolean | null> {
 }
 
 /**
- * Compares one or all modules against their registry versions.
+ * Compares one or all modules against their published versions.
  *
  * Shows which files have been added, modified, or deleted locally
  * compared to the published version in the registry.
@@ -260,7 +231,7 @@ export async function compareModuleHandler(moduleName?: string): Promise<void> {
   }
 
   logger.print(
-    `\nComparing ${chalk.blue(String(Object.keys(modules).length))} modules with registry...\n`
+    `\nComparing ${chalk.blue(String(Object.keys(modules).length))} modules with the registry...\n`
   )
 
   let changedCount = 0

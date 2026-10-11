@@ -1,10 +1,12 @@
 import chalk from 'chalk'
 import fs from 'fs'
 
-import { installPackage } from '@/utils/commands'
 import initGitRepository from '@/utils/initGitRepository'
+import { installFromGithub } from '@/utils/installSource'
 import logger from '@/utils/logger'
+import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
+import { resolveEntry } from '@/utils/registryIndex'
 
 import setFirstLangInDB from '../functions/setFirstLangInDB'
 
@@ -29,13 +31,45 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
     process.exit(1)
   }
 
-  logger.info(`Installing ${chalk.blue(fullName)}...`)
+  const entry = await resolveEntry('locales', shortName)
+
+  if (!entry) {
+    logger.error(`Locale ${chalk.blue(shortName)} was not found in the registry`)
+    process.exit(1)
+  }
+
+  const version = entry.latest
+  const commitSha = entry.versions[version]
+
+  if (!commitSha) {
+    logger.error(
+      `Registry has no release commit for ${chalk.blue(shortName)}@${version}`
+    )
+    process.exit(1)
+  }
+
+  verifyLocked('locales', shortName, version, commitSha)
+
+  logger.info(`Installing ${chalk.blue(fullName)} v${version}...`)
 
   try {
-    installPackage(fullName, targetDir, 'locales')
+    await installFromGithub({
+      kind: 'locales',
+      id: shortName,
+      entry,
+      targetDir,
+      version
+    })
+
     initGitRepository(targetDir)
 
     await setFirstLangInDB(shortName)
+
+    setLocked('locales', shortName, {
+      repo: entry.repo,
+      version,
+      commitSha
+    })
 
     logger.success(`Installed ${chalk.blue(fullName)}`)
   } catch (error) {

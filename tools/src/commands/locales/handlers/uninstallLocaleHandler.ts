@@ -5,6 +5,7 @@ import path from 'path'
 import { ROOT_DIR } from '@/constants/constants'
 import { installDeps } from '@/utils/commands'
 import logger from '@/utils/logger'
+import { removeLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
 
@@ -34,6 +35,8 @@ export async function uninstallLocaleHandler(langCode: string): Promise<void> {
   fs.rmSync(targetDir, { recursive: true, force: true })
 
   removeDependency(fullName)
+
+  removeLocked('locales', shortName)
 
   installDeps()
 

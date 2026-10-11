@@ -1,22 +1,20 @@
 import chalk from 'chalk'
 import type { Command } from 'commander'
 
+import { REGISTRY_REPO, getGithubLogin } from '@/utils/github'
 import logger from '@/utils/logger'
-import { checkAuth, getRegistryUrl } from '@/utils/registry'
 
 export default function setup(program: Command): void {
   program
     .command('whoami')
-    .description('Show the currently authenticated user on the registry')
+    .description('Show the authenticated GitHub user')
     .action(whoamiHandler)
 }
 
 async function whoamiHandler() {
-  const registry = getRegistryUrl()
+  logger.debug(`Registry: ${chalk.blue(REGISTRY_REPO)}`)
 
-  logger.debug(`Registry: ${chalk.blue(registry)}`)
+  const login = getGithubLogin()
 
-  const { username } = await checkAuth()
-
-  logger.info(`Logged in as: ${chalk.blue(username)}`)
+  logger.info(`Logged in as: ${chalk.blue(login)}`)
 }
