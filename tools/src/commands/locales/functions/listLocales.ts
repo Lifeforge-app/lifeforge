@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { LOCALES_DIR } from '@/constants/constants'
+import { LOCALES_DIR } from '@/utils/constants'
 
 export function listLocales(): string[] {
   return fs.readdirSync(LOCALES_DIR).filter(dir => {

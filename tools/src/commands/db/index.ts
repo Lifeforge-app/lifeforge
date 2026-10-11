@@ -1,39 +1,9 @@
-import { log } from '@clack/prompts'
 import type { Command } from 'commander'
 
-import { ROOT_DIR } from '@/constants/constants'
 import executeCommand from '@/utils/commands'
-import { pushSchemaFiles } from '@/utils/pushSchema'
-import { collectAllSchemaFiles } from '@/utils/schema'
-import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
+import { ROOT_DIR } from '@/utils/constants'
 
-async function pushHandler(): Promise<void> {
-  startSpinner('Pushing schema to the database...')
-
-  try {
-    const { applied, failures } = await pushSchemaFiles(collectAllSchemaFiles())
-
-    if (failures.length > 0) {
-      failSpinner(`Failed to apply ${failures.length} statement(s):`)
-
-      for (const failure of failures) {
-        log.error(`  - ${failure}`)
-      }
-
-      process.exit(1)
-    }
-
-    stopSpinner(
-      applied === 0
-        ? 'Database is already in sync'
-        : `Applied ${applied} statement${applied === 1 ? '' : 's'}`
-    )
-  } catch (error) {
-    failSpinner(`Failed to push schema: ${(error as Error).message}`)
-
-    process.exit(1)
-  }
-}
+import { pushSchemaHandler } from './handlers/pushSchemaHandler'
 
 export default function setup(program: Command): void {
   const command = program
@@ -43,7 +13,7 @@ export default function setup(program: Command): void {
   command
     .command('push')
     .description('Push local Drizzle schemas to PostgreSQL database')
-    .action(pushHandler)
+    .action(pushSchemaHandler)
 
   command
     .command('generate')

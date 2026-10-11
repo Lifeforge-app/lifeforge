@@ -2,7 +2,7 @@ import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 
-import { ROOT_DIR } from '@/constants/constants'
+import { ROOT_DIR } from '@/utils/constants'
 
 interface PackageJson {
   name?: string

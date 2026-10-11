@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { ROOT_DIR } from '@/constants/constants'
+import { ROOT_DIR } from '@/utils/constants'
 
 import { pushSchemaFiles } from './pushSchema'
 

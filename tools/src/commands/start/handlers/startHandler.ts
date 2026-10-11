@@ -4,7 +4,7 @@ import path from 'node:path'
 import concurrently from 'concurrently'
 import type { Command } from 'commander'
 
-import { ROOT_DIR } from '@/constants/constants'
+import { ROOT_DIR } from '@/utils/constants'
 import executeCommand from '@/utils/commands'
 
 /**

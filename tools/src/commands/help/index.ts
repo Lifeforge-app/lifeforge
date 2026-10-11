@@ -1,6 +1,6 @@
 import { log } from '@clack/prompts'
 import chalk from 'chalk'
-import { Command } from 'commander'
+import type { Command } from 'commander'
 
 const LOGO = chalk.bold.green(`
 ██╗     ██╗███████╗███████╗███████╗ ██████╗ ██████╗  ██████╗ ███████╗
@@ -44,7 +44,7 @@ function formatArgument(name: string, description: string): string {
   return `   ${chalk.magenta(paddedName)} ${chalk.dim('│')} ${chalk.white(description)}`
 }
 
-export function configureHelp(program: Command): void {
+export default function setup(program: Command): void {
   program.configureHelp({
     formatHelp: (cmd, helper) => {
       const output: string[] = []

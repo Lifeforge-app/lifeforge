@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { ROOT_DIR } from '@/constants/constants'
+import { ROOT_DIR } from '@/utils/constants'
 import { installDeps } from '@/utils/commands'
 import { removeLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'

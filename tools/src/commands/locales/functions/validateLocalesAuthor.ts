@@ -2,8 +2,7 @@ import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 
-import { getGithubLogin } from '@/utils/github'
-import { validateMaintainerAccess } from '@/utils/github-cli'
+import { getGithubLogin, validateMaintainerAccess } from '@/utils/github'
 
 export default async function validateLocalesAuthor(modulePath: string) {
   const username = getGithubLogin()

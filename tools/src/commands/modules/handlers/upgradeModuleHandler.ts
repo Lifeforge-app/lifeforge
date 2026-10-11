@@ -4,12 +4,15 @@ import fs from 'fs'
 import path from 'path'
 import semver from 'semver'
 
+import {
+  resolveModuleSchemaFile,
+  syncModuleSchema
+} from '@/commands/db/functions/schema'
 import { isDockerMode } from '@/utils/helpers'
 import { installFromGithub } from '@/utils/installSource'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
-import { resolveModuleSchemaFile, syncModuleSchema } from '@/utils/schema'
 import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import cleanModuleSource from '../functions/cleanModuleSource'
@@ -64,10 +67,7 @@ async function upgradeModule(
 
   verifyLocked('modules', shortName, latestVersion, commitSha)
 
-  const backupPath = path.join(
-    path.dirname(targetDir),
-    `${shortName}.backup`
-  )
+  const backupPath = path.join(path.dirname(targetDir), `${shortName}.backup`)
 
   startSpinner(`Upgrading ${chalk.blue(shortName)}...`)
 

@@ -3,8 +3,7 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { getGithubLogin } from '@/utils/github'
-import { validateMaintainerAccess } from '@/utils/github-cli'
+import { getGithubLogin, validateMaintainerAccess } from '@/utils/github'
 
 import { packageJSONSchema } from './packageJSONSchema'
 

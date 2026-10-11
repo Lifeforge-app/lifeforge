@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import { pathToFileURL } from 'node:url'
-
 import postgres from 'postgres'
 
 /** Errors we can safely ignore (object already exists). */

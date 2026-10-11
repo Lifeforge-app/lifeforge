@@ -3,7 +3,7 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { ROOT_DIR } from '@/constants/constants'
+import { ROOT_DIR } from '@/utils/constants'
 import bumpPackageVersion, {
   revertPackageVersion
 } from '@/utils/bumpPackageVersion'

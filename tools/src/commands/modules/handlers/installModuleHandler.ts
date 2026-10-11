@@ -2,12 +2,15 @@ import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 
+import {
+  resolveModuleSchemaFile,
+  syncModuleSchema
+} from '@/commands/db/functions/schema'
 import initGitRepository from '@/utils/initGitRepository'
 import { installFromGithub } from '@/utils/installSource'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
-import { resolveModuleSchemaFile, syncModuleSchema } from '@/utils/schema'
 import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import cleanModuleSource from '../functions/cleanModuleSource'

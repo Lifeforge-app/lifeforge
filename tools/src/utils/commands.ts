@@ -2,7 +2,7 @@ import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import { type IOType, spawnSync } from 'child_process'
 
-import { ROOT_DIR } from '@/constants/constants'
+import { ROOT_DIR } from '@/utils/constants'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
