@@ -34,6 +34,16 @@ function getEntityInputs(serverDir: string): Record<string, string> {
 }
 
 /**
+ * Resolves the module's drizzle schema file (`server/schema.drizzle.ts`) so it
+ * is emitted as a standalone `schema.js` used by drizzle-kit for `db:push`.
+ */
+function getSchemaInput(serverDir: string): string | null {
+  const schemaFile = path.join(serverDir, 'schema.drizzle.ts')
+
+  return fs.existsSync(schemaFile) ? schemaFile : null
+}
+
+/**
  * Creates a standard Vite configuration for module server-side builds.
  *
  * Auto-externalizes all npm/workspace packages (anything that doesn't
@@ -43,8 +53,11 @@ function getEntityInputs(serverDir: string): Record<string, string> {
 export function defineModuleServerConfig(dirname: string) {
   const entityInputs = getEntityInputs(dirname)
 
+  const schemaInput = getSchemaInput(dirname)
+
   const input: Record<string, string> = {
     index: `${dirname}/index.ts`,
+    ...(schemaInput ? { schema: schemaInput } : {}),
     ...entityInputs
   }
 
@@ -64,10 +77,16 @@ export function defineModuleServerConfig(dirname: string) {
       rollupOptions: {
         input,
         output: {
-          banner:
-            "import { createRequire as __createRequire } from 'node:module'; globalThis.require = __createRequire(import.meta.url);",
+          banner(chunk) {
+            // `schema.js` is consumed by drizzle-kit (via jiti); keep it free
+            // of the `globalThis.require` shim so it loads cleanly.
+            if (chunk.name === 'schema') return ''
+
+            return "import { createRequire as __createRequire } from 'node:module'; globalThis.require = __createRequire(import.meta.url);"
+          },
           entryFileNames(chunk) {
             if (chunk.name === 'index') return 'index.js'
+            if (chunk.name === 'schema') return 'schema.js'
             if (chunk.name === 'entity') return 'entity.js'
             return `schemas/${chunk.name}.js`
           }

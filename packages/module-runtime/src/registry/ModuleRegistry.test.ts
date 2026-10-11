@@ -41,3 +41,33 @@ describe('ModuleRegistry path resolution', () => {
     expect(ModuleRegistry.getPath('lifeforge--bar')).toBe('/repo/modules/bar')
   })
 })
+
+describe('ModuleRegistry schema parts', () => {
+  it('registers and resolves a schema part by the short module id', () => {
+    ModuleRegistry.registerSchemaPart('lifeforge--baz', {
+      tables: {},
+      relations: () => ({}),
+      keyMap: { items: 'baz__items' }
+    })
+
+    expect(ModuleRegistry.getModuleKeyMap('lifeforge--baz')).toEqual({
+      items: 'baz__items'
+    })
+  })
+
+  it('removes the schema part on unregister (keyed by short id)', () => {
+    ModuleRegistry.register(
+      entry('@lifeforge/lifeforge--baz'),
+      '/repo/modules/baz'
+    )
+    ModuleRegistry.registerSchemaPart('lifeforge--baz', {
+      tables: {},
+      relations: () => ({}),
+      keyMap: { items: 'baz__items' }
+    })
+
+    ModuleRegistry.unregister('@lifeforge/lifeforge--baz')
+
+    expect(ModuleRegistry.getModuleKeyMap('lifeforge--baz')).toBeUndefined()
+  })
+})

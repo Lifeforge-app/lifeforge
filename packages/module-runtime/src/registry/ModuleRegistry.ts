@@ -61,7 +61,11 @@ export class ModuleRegistry {
     }
 
     if (entry) {
-      ModuleRegistry.unregisterSchemaPart(entry.moduleId)
+      // Schema parts are keyed by the scope-stripped module id (the same id
+      // `getCallerModuleId` yields and `registerSchemaPart` receives).
+      ModuleRegistry.unregisterSchemaPart(
+        entry.name.replace(/^@lifeforge\//, '')
+      )
     }
   }
 
