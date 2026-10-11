@@ -1,11 +1,6 @@
-import chalk from 'chalk'
 import { Command, program } from 'commander'
 import fs from 'fs'
 import path from 'path'
-
-import { LOG_LEVELS } from '@lifeforge/log'
-
-import logger, { setLogLevel } from '@/utils/logger'
 
 import { commands } from './commands'
 import { configureHelp } from './help'
@@ -37,35 +32,11 @@ export function setupCLI(): void {
     .description('Build and manage the LifeForge ecosystem')
     .version(getVersion())
     .enablePositionalOptions()
-    .option(
-      '-l, --log-level <level>',
-      `Set log level (${LOG_LEVELS.join(', ')})`,
-      'info'
-    )
     .option('--host', 'Expose frontend client on the local network')
     .option(
       '--port <port>',
       'Specify the port for the client dev server (default: 5173)'
     )
-    .hook('preAction', (thisCommand, actionCommand) => {
-      const level = thisCommand.opts().logLevel as (typeof LOG_LEVELS)[number]
-
-      if (LOG_LEVELS.includes(level)) {
-        setLogLevel(level)
-      }
-
-      // Build full command path (e.g., "modules list")
-      const commandPath: string[] = []
-
-      let cmd: Command | null = actionCommand
-
-      while (cmd && cmd !== program) {
-        commandPath.unshift(cmd.name())
-        cmd = cmd.parent
-      }
-
-      logger.info(`Executing command "${chalk.green(commandPath.join(' '))}"`)
-    })
 
   setupCommands(program)
 }

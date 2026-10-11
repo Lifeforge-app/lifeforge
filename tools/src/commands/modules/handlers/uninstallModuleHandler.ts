@@ -1,13 +1,14 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 import { installDeps } from '@/utils/commands'
-import logger from '@/utils/logger'
 import { removeLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
+import { withSpinner } from '@/utils/spinner'
 
 /**
  * Uninstalls one or more modules.
@@ -30,31 +31,47 @@ export async function uninstallModuleHandler(
     const { targetDir, fullName, shortName } = normalizePackage(moduleName)
 
     if (!findPackageName(fullName, 'modules')) {
-      logger.error(
+      log.error(
         `Module ${chalk.blue(fullName)} not found in modules/package.json`
       )
       continue
     }
 
-    logger.debug(`Uninstalling ${chalk.blue(fullName)}...`)
-
-    removeDependency(fullName, 'modules')
-
     const symlinkPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
-    fs.rmSync(symlinkPath, { recursive: true, force: true })
-    fs.rmSync(targetDir, { recursive: true, force: true })
+    try {
+      await withSpinner(
+        `Uninstalling ${chalk.blue(fullName)}...`,
+        () => {
+          removeDependency(fullName, 'modules')
 
-    removeLocked('modules', shortName)
+          fs.rmSync(symlinkPath, { recursive: true, force: true })
+          fs.rmSync(targetDir, { recursive: true, force: true })
 
-    uninstalled.push(moduleName)
+          removeLocked('modules', shortName)
+        },
+        {
+          success: `Uninstalled ${chalk.blue(fullName)}`,
+          fail: `Failed to uninstall ${chalk.blue(fullName)}`
+        }
+      )
 
-    logger.success(`Uninstalled ${chalk.blue(fullName)}`)
+      uninstalled.push(moduleName)
+    } catch {
+      // Already reported by the spinner
+    }
   }
 
   if (uninstalled.length === 0) {
     return
   }
 
-  installDeps()
+  try {
+    await withSpinner('Installing dependencies...', () => installDeps(), {
+      success: 'Dependencies installed'
+    })
+  } catch {
+    log.error('Failed to install dependencies')
+    process.exit(1)
+  }
 }

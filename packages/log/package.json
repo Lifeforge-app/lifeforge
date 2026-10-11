@@ -11,12 +11,6 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./cli": {
-      "types": "./dist/loggers/cliLogger.d.ts",
-      "import": "./dist/loggers/cliLogger.js",
-      "require": "./dist/loggers/cliLogger.js",
-      "default": "./dist/loggers/cliLogger.js"
     }
   },
   "scripts": {

@@ -1,10 +1,11 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 
 import { confirmAction } from '@/utils/helpers'
 import { installFromGithub } from '@/utils/installSource'
-import logger from '@/utils/logger'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import getPackagesToCheck from '../functions/getPackagesToCheck'
 import getUpgrades from '../functions/getUpgrades'
@@ -24,7 +25,7 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
     const commitSha = upgrade.entry.versions[upgrade.latest]
 
     if (!commitSha) {
-      logger.warn(
+      log.warn(
         `Registry has no release commit for ${chalk.blue(shortName)}@${upgrade.latest}`
       )
       continue
@@ -32,7 +33,7 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
 
     verifyLocked('locales', shortName, upgrade.latest, commitSha)
 
-    logger.info(`Upgrading ${chalk.blue(shortName)}...`)
+    startSpinner(`Upgrading ${chalk.blue(shortName)}...`)
 
     try {
       await installFromGithub({
@@ -49,16 +50,15 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
         commitSha
       })
 
-      logger.success(`Upgraded ${chalk.blue(shortName)}`)
+      stopSpinner(`Upgraded ${chalk.blue(shortName)}`)
       upgradedCount++
-    } catch (error) {
-      logger.error(`Failed to upgrade ${chalk.blue(shortName)}`)
-      logger.debug(`Error details: ${error}`)
+    } catch {
+      failSpinner(`Failed to upgrade ${chalk.blue(shortName)}`)
     }
   }
 
   if (upgradedCount > 0) {
-    logger.success(
+    log.success(
       `Upgraded ${upgradedCount} locale${upgradedCount > 1 ? 's' : ''}`
     )
   }

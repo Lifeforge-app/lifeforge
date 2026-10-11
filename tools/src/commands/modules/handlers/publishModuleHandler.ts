@@ -1,3 +1,4 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -9,8 +10,8 @@ import bumpPackageVersion, {
 import executeCommand from '@/utils/commands'
 import { getRepoSlug, getTagCommit, updateRegistryIndex } from '@/utils/github'
 import { assertKebabRepo } from '@/utils/kebab'
-import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
@@ -30,25 +31,23 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
   const modulePath = path.join(ROOT_DIR, 'modules', moduleName)
 
   if (!fs.existsSync(targetDir) && !fs.existsSync(modulePath)) {
-    logger.error(`Module ${chalk.blue(moduleName)} not found in modules/`)
+    log.error(`Module ${chalk.blue(moduleName)} not found in modules/`)
     process.exit(1)
   }
 
   const dir = fs.existsSync(targetDir) ? targetDir : modulePath
 
-  logger.debug('Validating module structure...')
   await validateModuleStructure(dir)
 
-  logger.debug('Validating module author...')
   await validateModuleAuthor(dir)
 
   const { oldVersion, newVersion } = bumpPackageVersion(dir)
 
-  logger.print(
+  log.message(
     `  Version: ${chalk.dim(oldVersion)} ${chalk.dim('→')} ${chalk.green(newVersion)}`
   )
 
-  logger.debug(`Publishing ${chalk.blue(shortName)}...`)
+  startSpinner(`Publishing ${chalk.blue(shortName)}...`)
 
   try {
     executeCommand(`git add package.json`, { cwd: dir })
@@ -63,8 +62,6 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
 
     const commitSha = getTagCommit(repo, `v${newVersion}`)
 
-    logger.debug(`Updating registry index (${repo}@${commitSha.slice(0, 8)})...`)
-
     updateRegistryIndex('modules', {
       id: shortName,
       repo,
@@ -72,14 +69,13 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
       commitSha
     })
 
-    logger.success(
+    stopSpinner(
       `Published ${chalk.blue(shortName)} ${chalk.dim(`v${newVersion}`)}`
     )
-  } catch (error) {
+  } catch {
     revertPackageVersion(dir, oldVersion)
 
-    logger.error(`Publish failed for ${chalk.blue(shortName)}`)
-    logger.debug(`Error: ${error}`)
+    failSpinner(`Publish failed for ${chalk.blue(shortName)}`)
     process.exit(1)
   }
 }

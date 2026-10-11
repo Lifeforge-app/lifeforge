@@ -1,9 +1,8 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
-
-import logger from './logger'
 
 export type LockKind = 'modules' | 'locales'
 
@@ -71,7 +70,7 @@ export function verifyLocked(
   const locked = getLocked(kind, id)
 
   if (locked && locked.version === version && locked.commitSha !== commitSha) {
-    logger.error(
+    log.error(
       `Integrity check failed for ${id}@${version}: lockfile pins ${locked.commitSha}, registry has ${commitSha}`
     )
 

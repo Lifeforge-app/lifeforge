@@ -1,8 +1,8 @@
 import chalk from 'chalk'
 import type { Command } from 'commander'
 
-import { REGISTRY_REPO, getGithubLogin } from '@/utils/github'
-import logger from '@/utils/logger'
+import { getGithubLogin } from '@/utils/github'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 export default function setup(program: Command): void {
   program
@@ -12,9 +12,15 @@ export default function setup(program: Command): void {
 }
 
 async function whoamiHandler() {
-  logger.debug(`Registry: ${chalk.blue(REGISTRY_REPO)}`)
+  startSpinner('Fetching GitHub user...')
 
-  const login = getGithubLogin()
+  try {
+    const login = getGithubLogin()
 
-  logger.info(`Logged in as: ${chalk.blue(login)}`)
+    stopSpinner(`Logged in as: ${chalk.blue(login)}`)
+  } catch {
+    failSpinner('Failed to fetch GitHub user')
+
+    process.exit(1)
+  }
 }

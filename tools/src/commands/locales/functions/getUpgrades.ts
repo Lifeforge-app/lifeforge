@@ -1,6 +1,6 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 
-import logger from '@/utils/logger'
 import { resolveEntry, type RegistryEntry } from '@/utils/registryIndex'
 
 export interface LocaleUpgrade {
@@ -35,13 +35,13 @@ async function getUpgrades(
   }
 
   if (!upgrades.length) {
-    logger.info('All locales are up to date')
+    log.step('All locales are up to date')
     process.exit(0)
   }
 
-  logger.info('Available upgrades:')
+  log.step('Available upgrades:')
   upgrades.forEach(upgrade =>
-    logger.print(
+    log.message(
       `  ${chalk.blue(upgrade.name)}: ${upgrade.current} → ${chalk.green(upgrade.latest)}`
     )
   )

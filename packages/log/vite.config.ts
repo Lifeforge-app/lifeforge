@@ -6,8 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: {
-        index: './src/index.ts',
-        'loggers/cliLogger': './src/loggers/cliLogger.ts'
+        index: './src/index.ts'
       },
       formats: ['es']
     },

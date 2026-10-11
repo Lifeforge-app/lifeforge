@@ -1,10 +1,11 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
 import executeCommand from '@/utils/commands'
-import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
+import { withSpinner } from '@/utils/spinner'
 
 import listModules from '../functions/listModules'
 
@@ -45,7 +46,7 @@ export async function buildModuleHandler(
   let skippedCount = 0
 
   if (isDocker) {
-    logger.info('Building for Docker (output: dist-docker, base: /api)')
+    log.step('Building for Docker (output: dist-docker, base: /api)')
   }
 
   for (const mod of moduleNames) {
@@ -53,7 +54,7 @@ export async function buildModuleHandler(
 
     // Check if module folder exists
     if (!fs.existsSync(targetDir)) {
-      logger.error(`Module ${chalk.blue(shortName)} not found at ${targetDir}`)
+      log.error(`Module ${chalk.blue(shortName)} not found at ${targetDir}`)
       continue
     }
 
@@ -66,7 +67,6 @@ export async function buildModuleHandler(
     const hasServer = fs.existsSync(serverIndexPath)
 
     if (!hasClient && !hasServer) {
-      logger.debug(`Skipping ${shortName} (no client or server)`)
       skippedCount++
       continue
     }
@@ -74,46 +74,55 @@ export async function buildModuleHandler(
     // Build client
     if (hasClient && buildClient) {
       if (!isDocker && !process.env.VITE_API_HOST) {
-        logger.warn(`VITE_API_HOST not set. Skipping local build.`)
+        log.warn(`VITE_API_HOST not set. Skipping local build.`)
       } else {
-        logger.info(`Building ${chalk.blue(shortName)} client...`)
-
         try {
-          executeCommand('pnpm run build:client', {
-            cwd: targetDir,
-            env: isDocker ? { ...process.env, DOCKER_BUILD: 'true' } : undefined
-          })
+          await withSpinner(
+            `Building ${chalk.blue(shortName)} client...`,
+            () =>
+              executeCommand('pnpm run build:client', {
+                cwd: targetDir,
+                env: isDocker
+                  ? { ...process.env, DOCKER_BUILD: 'true' }
+                  : undefined
+              }),
+            {
+              success: `Built ${chalk.blue(shortName)} client`,
+              fail: `Failed to build ${chalk.blue(shortName)} client`
+            }
+          )
           clientBuiltCount++
-        } catch (error) {
-          logger.error(`Failed to build ${shortName} client.`)
-          logger.debug(`Error details: ${error}`)
+        } catch {
+          // Already reported by the spinner
         }
       }
     }
 
     // Build server
     if (hasServer && buildServer) {
-      logger.info(`Building ${chalk.blue(shortName)} server...`)
-
       try {
-        executeCommand('pnpm run build:server', {
-          cwd: targetDir
-        })
+        await withSpinner(
+          `Building ${chalk.blue(shortName)} server...`,
+          () => executeCommand('pnpm run build:server', { cwd: targetDir }),
+          {
+            success: `Built ${chalk.blue(shortName)} server`,
+            fail: `Failed to build ${chalk.blue(shortName)} server`
+          }
+        )
         serverBuiltCount++
-      } catch (error) {
-        logger.error(`Failed to build ${shortName} server.`)
-        logger.debug(`Error details: ${error}`)
+      } catch {
+        // Already reported by the spinner
       }
     }
   }
 
   if (clientBuiltCount > 0 || serverBuiltCount > 0) {
-    logger.success(
+    log.success(
       `Built ${chalk.blue(String(clientBuiltCount))} client bundle${clientBuiltCount !== 1 ? 's' : ''}, ${chalk.blue(String(serverBuiltCount))} server bundle${serverBuiltCount !== 1 ? 's' : ''}`
     )
   }
 
   if (skippedCount > 0 && !moduleName) {
-    logger.info(`Skipped ${skippedCount} modules without builds`)
+    log.step(`Skipped ${skippedCount} modules without builds`)
   }
 }

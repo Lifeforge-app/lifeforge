@@ -1,9 +1,8 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
-
-import logger from './logger'
 
 interface PackageJson {
   name?: string
@@ -57,17 +56,13 @@ function ensurePackageJsonExists(target: PackageJsonTarget): void {
   }
 
   if (target === 'root') {
-    logger.error('Root package.json not found')
+    log.error('Root package.json not found')
     process.exit(1)
   }
-
-  logger.debug(`Creating ${target}/package.json with default template...`)
 
   const defaultContent = DEFAULT_PACKAGE_JSON[target]
 
   fs.writeFileSync(filePath, JSON.stringify(defaultContent, null, 4) + '\n')
-
-  logger.debug(`Created ${target}/package.json`)
 }
 
 /**
@@ -91,11 +86,7 @@ export function writePackageJson(
 ): void {
   const filePath = getPackageJsonPath(target)
 
-  logger.debug(`Writing package.json to ${target}`)
-
   fs.writeFileSync(filePath, JSON.stringify(packageJson, null, 4) + '\n')
-
-  logger.debug(`Wrote package.json to ${target}`)
 }
 
 /**
@@ -106,8 +97,6 @@ export function addDependency(
   target: PackageJsonTarget = 'modules',
   version = 'workspace:*'
 ): void {
-  logger.debug(`Adding dependency ${packageName} to ${target}`)
-
   const packageJson = readPackageJson(target)
 
   if (!packageJson.dependencies) {
@@ -117,8 +106,6 @@ export function addDependency(
   packageJson.dependencies[packageName] = version
 
   writePackageJson(target, packageJson)
-
-  logger.debug(`Added dependency ${packageName} to ${target}`)
 }
 
 /**
@@ -128,16 +115,12 @@ export function removeDependency(
   packageName: string,
   target: PackageJsonTarget = 'modules'
 ): void {
-  logger.debug(`Removing dependency ${packageName} from ${target}`)
-
   const packageJson = readPackageJson(target)
 
   if (packageJson.dependencies?.[packageName]) {
     delete packageJson.dependencies[packageName]
     writePackageJson(target, packageJson)
   }
-
-  logger.debug(`Removed dependency ${packageName} from ${target}`)
 }
 
 /**
@@ -147,21 +130,15 @@ export function findPackageName(
   name: string,
   target: PackageJsonTarget = 'modules'
 ): string | null {
-  logger.debug(`Finding package ${name} in ${target}`)
-
   const packageJson = readPackageJson(target)
 
   const dependencies = packageJson.dependencies || {}
 
   for (const dep of Object.keys(dependencies)) {
     if (dep === name) {
-      logger.debug(`Found package ${name} in ${target}`)
-
       return dep
     }
   }
-
-  logger.debug(`Package ${name} not found in ${target}`)
 
   return null
 }

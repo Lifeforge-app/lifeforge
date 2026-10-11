@@ -1,3 +1,4 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 
 import executeCommand from '@/utils/commands'
@@ -6,7 +7,6 @@ import {
   delay,
   killExistingProcess
 } from '@/utils/helpers'
-import logger from '@/utils/logger'
 
 /**
  * Service command configurations
@@ -29,7 +29,7 @@ export const SERVICE_COMMANDS: Record<string, ServiceConfig> = {
       const PORT = process.env.PORT || '3636'
 
       if (await checkPortInUse(Number(PORT))) {
-        logger.error(`Port ${PORT} is already in use.`)
+        log.error(`Port ${PORT} is already in use.`)
         process.exit(1)
       }
 

@@ -1,3 +1,4 @@
+import { log } from '@clack/prompts'
 import path from 'node:path'
 
 import concurrently from 'concurrently'
@@ -5,7 +6,6 @@ import type { Command } from 'commander'
 
 import { ROOT_DIR } from '@/constants/constants'
 import executeCommand from '@/utils/commands'
-import logger from '@/utils/logger'
 
 /**
  * Builds (unless `--no-build`) and starts the API server and the web client in
@@ -24,7 +24,7 @@ export function startHandler(this: Command): void {
   const port = globalOptions?.port
 
   if (build) {
-    logger.info('Building LifeForge for production...')
+    log.step('Building LifeForge for production...')
 
     // Build only the core (framework packages + server + client). Installed
     // modules are already built (and cleaned) — building them would fail.
@@ -39,7 +39,7 @@ export function startHandler(this: Command): void {
   if (host) clientArgs.push('--host')
   if (port) clientArgs.push('--port', port)
 
-  logger.info('Starting production services...')
+  log.step('Starting production services...')
 
   const { result } = concurrently(
     [
@@ -63,9 +63,8 @@ export function startHandler(this: Command): void {
     }
   )
 
-  result.catch(error => {
-    logger.error('Failed to start production services')
-    logger.debug(`Error details: ${error}`)
+  result.catch(() => {
+    log.error('Failed to start production services')
     process.exit(1)
   })
 }

@@ -5,7 +5,6 @@ import path from 'path'
 import { installDeps } from './commands'
 import { downloadArchive, readRepoSlug } from './github'
 import { assertKebabRepo } from './kebab'
-import logger from './logger'
 import type { LockKind } from './moduleLock'
 import { addDependency } from './packageJson'
 import type { RegistryEntry } from './registryIndex'
@@ -77,8 +76,6 @@ export async function installFromGithub({
 
     addDependency(expectedName, kind)
     installDeps()
-
-    logger.debug(`Installed ${expectedName} from ${entry.repo}@${commitSha}`)
 
     return { commitSha, name: pkg.name }
   } finally {

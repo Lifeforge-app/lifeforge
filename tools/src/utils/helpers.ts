@@ -1,9 +1,8 @@
+import { cancel, confirm, isCancel, log } from '@clack/prompts'
 import chalk from 'chalk'
 import net from 'node:net'
-import prompts from 'prompts'
 
 import executeCommand from './commands'
-import logger from './logger'
 
 /**
  * Validates and retrieves multiple required environment variables.
@@ -34,9 +33,7 @@ export function getEnvVars<const T extends readonly string[]>(
   }
 
   if (missing.length > 0) {
-    logger.error(
-      `Missing required environment variables: ${missing.join(', ')}`
-    )
+    log.error(`Missing required environment variables: ${missing.join(', ')}`)
     process.exit(1)
   }
 
@@ -62,7 +59,7 @@ export function getEnvVar(varName: string, fallback?: string): string {
     return fallback
   }
 
-  logger.error(`Missing required environment variable: ${chalk.red(varName)}`)
+  log.error(`Missing required environment variable: ${chalk.red(varName)}`)
   process.exit(1)
 }
 
@@ -79,10 +76,6 @@ export function killExistingProcess(
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
 
-      logger.debug(
-        `Killed process with PID: ${chalk.blue(String(processKeywordOrPID))}`
-      )
-
       return
     }
 
@@ -90,10 +83,6 @@ export function killExistingProcess(
 
     if (pids.length > 0) {
       killProcessesByPids(pids)
-
-      logger.debug(
-        `Killed process matching keyword: ${chalk.blue(processKeywordOrPID)} (PID: ${chalk.blue(pids.join(', '))})`
-      )
 
       const [firstPid] = pids
 
@@ -287,21 +276,17 @@ export async function checkAddressInUse(
   address: string,
   port: string
 ): Promise<boolean> {
-  logger.debug(
-    `Checking if address ${chalk.blue(address)}:${chalk.blue(port)} is in use...`
-  )
-
   const inUse = await isPortInUse(Number(port))
 
   if (inUse) {
     const info = getPortProcessInfo(Number(port))
 
     if (info) {
-      logger.error(
+      log.error(
         `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(info)}`
       )
     } else {
-      logger.error(
+      log.error(
         `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but no process info found.`
       )
     }
@@ -335,12 +320,19 @@ export function isDockerMode(): boolean {
  * @returns True if the user confirms, false otherwise
  */
 export async function confirmAction(message: string): Promise<boolean> {
-  const response = await prompts({
-    type: 'confirm',
-    name: 'confirmed',
+  if (!process.stdout.isTTY || isDockerMode()) {
+    return false
+  }
+
+  const confirmed = await confirm({
     message,
-    initial: false
+    initialValue: false
   })
 
-  return response.confirmed
+  if (isCancel(confirmed)) {
+    cancel('Operation cancelled.')
+    process.exit(0)
+  }
+
+  return confirmed
 }

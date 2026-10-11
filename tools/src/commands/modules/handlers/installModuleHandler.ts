@@ -1,13 +1,14 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 
 import initGitRepository from '@/utils/initGitRepository'
 import { installFromGithub } from '@/utils/installSource'
-import logger from '@/utils/logger'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
 import { resolveModuleSchemaFile, syncModuleSchema } from '@/utils/schema'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import cleanModuleSource from '../functions/cleanModuleSource'
 import { buildModuleHandler } from './buildModuleHandler'
@@ -49,23 +50,21 @@ export async function installModuleHandler(
     const { fullName, shortName, targetDir } = normalizePackage(moduleName)
 
     if (!/^@lifeforge\/[a-z0-9-_]+--[a-z0-9-_]+$/i.test(fullName)) {
-      logger.error(
+      log.error(
         `Invalid module name: ${chalk.blue(moduleName)}. Module names can only contain letters, numbers, hyphens, and underscores.`
       )
       continue
     }
 
     if (fs.existsSync(targetDir)) {
-      logger.error(`Module already exists at modules/${shortName}`)
+      log.error(`Module already exists at modules/${shortName}`)
       continue
     }
 
     const entry = await resolveEntry('modules', shortName)
 
     if (!entry) {
-      logger.error(
-        `Module ${chalk.blue(shortName)} was not found in the registry`
-      )
+      log.error(`Module ${chalk.blue(shortName)} was not found in the registry`)
       continue
     }
 
@@ -73,7 +72,7 @@ export async function installModuleHandler(
     const commitSha = entry.versions[version]
 
     if (!commitSha) {
-      logger.error(
+      log.error(
         `Registry has no release commit for ${chalk.blue(shortName)}@${version}`
       )
       continue
@@ -81,9 +80,7 @@ export async function installModuleHandler(
 
     verifyLocked('modules', shortName, version, commitSha)
 
-    logger.debug(
-      `Installing ${chalk.blue(fullName)} v${version} from ${entry.repo}...`
-    )
+    startSpinner(`Installing ${chalk.blue(fullName)} v${version}...`)
 
     try {
       await installFromGithub({
@@ -100,10 +97,9 @@ export async function installModuleHandler(
 
       installed.push({ id: shortName, version, repo: entry.repo, commitSha })
 
-      logger.success(`Installed ${chalk.blue(fullName)} v${version}`)
-    } catch (error) {
-      logger.error(`Failed to install ${chalk.blue(fullName)}`)
-      logger.debug(`Error details: ${error}`)
+      stopSpinner(`Installed ${chalk.blue(fullName)} v${version}`)
+    } catch {
+      failSpinner(`Failed to install ${chalk.blue(fullName)}`)
     }
   }
 
@@ -113,8 +109,6 @@ export async function installModuleHandler(
 
   // Build module client bundles for federation (both modes)
   for (const { id } of installed) {
-    logger.debug(`Building ${chalk.blue(id)} bundles...`)
-
     await buildModuleHandler(id)
 
     await buildModuleHandler(id, { docker: true, buildServer: false })
@@ -128,27 +122,23 @@ export async function installModuleHandler(
       continue
     }
 
-    logger.debug(`Syncing database schema for ${id}...`)
+    startSpinner(`Syncing database schema for ${chalk.blue(id)}...`)
 
     try {
       await syncModuleSchema(targetDir)
-    } catch (error) {
-      logger.warn(
-        `Could not sync the database schema for ${id} automatically.`
-      )
-      logger.debug(`Error details: ${error}`)
+      stopSpinner(`Synced database schema for ${chalk.blue(id)}`)
+    } catch {
+      failSpinner(`Could not sync the database schema for ${id} automatically.`)
     }
   }
 
   // Clean source code if not in dev mode
   if (!isDevMode) {
-    logger.debug('Cleaning source code (production mode)...')
-
     for (const { id } of installed) {
       cleanModuleSource(normalizePackage(id).targetDir)
     }
 
-    logger.info('Source code removed. Only built bundles retained.')
+    log.step('Source code removed. Only built bundles retained.')
   }
 
   for (const { id, version, repo, commitSha } of installed) {

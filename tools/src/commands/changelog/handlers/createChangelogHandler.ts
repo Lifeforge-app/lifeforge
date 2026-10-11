@@ -1,9 +1,8 @@
+import { log } from '@clack/prompts'
 import dayjs from 'dayjs'
 import weekOfYear from 'dayjs/plugin/weekOfYear'
 import fs from 'fs'
 import path from 'path'
-
-import logger from '@/utils/logger'
 
 dayjs.extend(weekOfYear)
 
@@ -38,7 +37,7 @@ export default function createChangelogHandler(year?: string, week?: string) {
   const currentWeek = Number(week) || dayjs().week()
 
   if (!fs.existsSync(CHANGELOG_PATH)) {
-    logger.error(`Changelog directory not found at path: ${CHANGELOG_PATH}`)
+    log.error(`Changelog directory not found at path: ${CHANGELOG_PATH}`)
     process.exit(1)
   }
 
@@ -51,7 +50,7 @@ export default function createChangelogHandler(year?: string, week?: string) {
   const filePath = `${yearPath}/${String(currentWeek).padStart(2, '0')}.mdx`
 
   if (fs.existsSync(filePath)) {
-    logger.error(
+    log.error(
       `Changelog file for year ${targetYear} week ${currentWeek} already exists at path: ${filePath}`
     )
     process.exit(1)
@@ -59,5 +58,5 @@ export default function createChangelogHandler(year?: string, week?: string) {
 
   fs.writeFileSync(filePath, boilerPlate)
 
-  logger.success(`Created changelog file at path: ${filePath}`)
+  log.success(`Created changelog file at path: ${filePath}`)
 }

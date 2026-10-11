@@ -1,12 +1,13 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
 import { downloadArchive } from '@/utils/github'
-import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import listModules from '../functions/listModules'
 
@@ -110,50 +111,50 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
     diff.added.length > 0 || diff.modified.length > 0 || diff.deleted.length > 0
 
   if (!hasChanges) {
-    logger.print(
+    log.message(
       `  ${chalk.green('✓')} ${chalk.blue(moduleName)} ${chalk.dim('is in sync')}`
     )
 
     return false
   }
 
-  logger.print(`  ${chalk.yellow('!')} ${chalk.blue(moduleName)}`)
+  log.message(`  ${chalk.yellow('!')} ${chalk.blue(moduleName)}`)
 
   if (diff.added.length > 0) {
-    logger.print(chalk.green(`      + ${diff.added.length} added locally`))
+    log.message(chalk.green(`      + ${diff.added.length} added locally`))
 
     for (const file of diff.added.slice(0, 5)) {
-      logger.print(chalk.dim(`        ${file}`))
+      log.message(chalk.dim(`        ${file}`))
     }
 
     if (diff.added.length > 5) {
-      logger.print(chalk.dim(`        ... and ${diff.added.length - 5} more`))
+      log.message(chalk.dim(`        ... and ${diff.added.length - 5} more`))
     }
   }
 
   if (diff.modified.length > 0) {
-    logger.print(chalk.yellow(`      ~ ${diff.modified.length} modified`))
+    log.message(chalk.yellow(`      ~ ${diff.modified.length} modified`))
 
     for (const file of diff.modified.slice(0, 5)) {
-      logger.print(chalk.dim(`        ${file}`))
+      log.message(chalk.dim(`        ${file}`))
     }
 
     if (diff.modified.length > 5) {
-      logger.print(
+      log.message(
         chalk.dim(`        ... and ${diff.modified.length - 5} more`)
       )
     }
   }
 
   if (diff.deleted.length > 0) {
-    logger.print(chalk.red(`      - ${diff.deleted.length} deleted locally`))
+    log.message(chalk.red(`      - ${diff.deleted.length} deleted locally`))
 
     for (const file of diff.deleted.slice(0, 5)) {
-      logger.print(chalk.dim(`        ${file}`))
+      log.message(chalk.dim(`        ${file}`))
     }
 
     if (diff.deleted.length > 5) {
-      logger.print(chalk.dim(`        ... and ${diff.deleted.length - 5} more`))
+      log.message(chalk.dim(`        ... and ${diff.deleted.length - 5} more`))
     }
   }
 
@@ -169,7 +170,7 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const { shortName, targetDir } = normalizePackage(packageName)
 
   if (!fs.existsSync(targetDir)) {
-    logger.error(`Module ${chalk.blue(shortName)} is not installed`)
+    log.error(`Module ${chalk.blue(shortName)} is not installed`)
 
     return null
   }
@@ -177,7 +178,7 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const entry = await resolveEntry('modules', shortName)
 
   if (!entry) {
-    logger.print(
+    log.message(
       `  ${chalk.dim('○')} ${chalk.blue(shortName)} ${chalk.dim('(not published)')}`
     )
 
@@ -187,21 +188,27 @@ async function compareModule(packageName: string): Promise<boolean | null> {
   const commitSha = entry.versions[entry.latest]
 
   if (!commitSha) {
-    logger.warn(`Could not resolve release commit for ${chalk.blue(shortName)}`)
+    log.warn(`Could not resolve release commit for ${chalk.blue(shortName)}`)
 
     return null
   }
 
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'forge-compare-'))
 
-  try {
-    logger.debug(`Downloading ${chalk.blue(entry.repo)}@${commitSha}...`)
+  startSpinner(`Downloading ${chalk.blue(shortName)} from the registry...`)
 
+  try {
     await downloadArchive(entry.repo, commitSha, tempDir)
+
+    stopSpinner()
 
     const diff = compareDirectories(targetDir, tempDir)
 
     return printDiff(shortName, diff)
+  } catch (error) {
+    failSpinner(`Failed to compare ${chalk.blue(shortName)}`)
+
+    throw error
   } finally {
     fs.rmSync(tempDir, { recursive: true, force: true })
   }
@@ -215,9 +222,9 @@ async function compareModule(packageName: string): Promise<boolean | null> {
  */
 export async function compareModuleHandler(moduleName?: string): Promise<void> {
   if (moduleName) {
-    logger.print('')
+    log.message('')
     await compareModule(moduleName)
-    logger.print('')
+    log.message('')
 
     return
   }
@@ -225,12 +232,12 @@ export async function compareModuleHandler(moduleName?: string): Promise<void> {
   const modules = listModules()
 
   if (Object.keys(modules).length === 0) {
-    logger.print('No modules installed')
+    log.message('No modules installed')
 
     return
   }
 
-  logger.print(
+  log.message(
     `\nComparing ${chalk.blue(String(Object.keys(modules).length))} modules with the registry...\n`
   )
 
@@ -244,12 +251,12 @@ export async function compareModuleHandler(moduleName?: string): Promise<void> {
     }
   }
 
-  logger.print('')
+  log.message('')
 
   if (changedCount === 0) {
-    logger.success('All modules are in sync with the registry')
+    log.success('All modules are in sync with the registry')
   } else {
-    logger.warn(
+    log.warn(
       `${chalk.blue(String(changedCount))} module${changedCount > 1 ? 's' : ''} have local changes`
     )
   }

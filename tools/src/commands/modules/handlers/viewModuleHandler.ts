@@ -1,10 +1,11 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import _ from 'lodash'
 
 import { run } from '@/utils/github'
-import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
+import { startSpinner, stopSpinner } from '@/utils/spinner'
 
 /**
  * Views module information from the registry (GitHub-hosted index).
@@ -17,34 +18,38 @@ export async function viewModuleHandler(moduleName: string): Promise<void> {
   const entry = await resolveEntry('modules', shortName)
 
   if (!entry) {
-    logger.error(`Module ${chalk.blue(shortName)} was not found in the registry`)
+    log.error(`Module ${chalk.blue(shortName)} was not found in the registry`)
     process.exit(1)
   }
 
   let pkg: Record<string, unknown> = {}
+
+  startSpinner('Fetching package info...')
 
   try {
     const content = run(`gh api repos/${entry.repo}/contents/package.json --jq .content`)
 
     pkg = JSON.parse(Buffer.from(content, 'base64').toString('utf-8'))
   } catch {
-    logger.debug('Could not fetch package.json from GitHub; showing index info')
+    // Could not fetch package.json from GitHub; show index info only
   }
+
+  stopSpinner()
 
   const versions = Object.keys(entry.versions)
 
-  logger.print('')
-  logger.print(
+  log.message('')
+  log.message(
     pkg.displayName
       ? `${chalk.bold.blue(String(pkg.displayName))} ${chalk.dim(`(@lifeforge/${shortName})`)}`
       : chalk.bold.blue(`@lifeforge/${shortName}`)
   )
 
   if (typeof pkg.description === 'string') {
-    logger.print(pkg.description)
+    log.message(pkg.description)
   }
 
-  logger.print('')
+  log.message('')
 
   const fields = [
     ['version', chalk.green(entry.latest)],
@@ -59,17 +64,17 @@ export async function viewModuleHandler(moduleName: string): Promise<void> {
   fields
     .filter(([, value]) => value)
     .forEach(([label, value]) => {
-      logger.print(`${chalk.dim(label.padEnd(14))} ${value}`)
+      log.message(`${chalk.dim(label.padEnd(14))} ${value}`)
     })
 
   if (versions.length > 1) {
-    logger.print('')
-    logger.print(chalk.dim(`versions (${versions.length})`))
+    log.message('')
+    log.message(chalk.dim(`versions (${versions.length})`))
 
     _.chunk(versions, 8).forEach((chunk: string[]) => {
-      logger.print(`  ${chunk.join(chalk.dim(' · '))}`)
+      log.message(`  ${chunk.join(chalk.dim(' · '))}`)
     })
   }
 
-  logger.print('')
+  log.message('')
 }

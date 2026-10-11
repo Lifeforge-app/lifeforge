@@ -1,9 +1,9 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 
-import { validateMaintainerAccess } from '@/utils/github-cli'
 import { getGithubLogin } from '@/utils/github'
-import logger from '@/utils/logger'
+import { validateMaintainerAccess } from '@/utils/github-cli'
 
 export default async function validateLocalesAuthor(modulePath: string) {
   const username = getGithubLogin()
@@ -20,7 +20,7 @@ export default async function validateLocalesAuthor(modulePath: string) {
     if (usernamePrefix === 'lifeforge') {
       validateMaintainerAccess(username)
     } else {
-      logger.error(
+      log.error(
         `Cannot publish as "${username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${username}--`
       )
       process.exit(1)

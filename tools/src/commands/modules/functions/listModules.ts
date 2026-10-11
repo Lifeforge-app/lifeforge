@@ -1,7 +1,7 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 
-import logger from '@/utils/logger'
 import { readPackageJson } from '@/utils/packageJson'
 
 import normalizePackage from '../../../utils/normalizePackage'
@@ -47,7 +47,7 @@ export default function listModules(
   }
 
   if (exitIfNoModule && Object.keys(modules).length === 0) {
-    logger.info('No @lifeforge/* modules found. Exiting...')
+    log.step('No @lifeforge/* modules found. Exiting...')
     process.exit(0)
   }
 

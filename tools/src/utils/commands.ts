@@ -1,9 +1,8 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import { type IOType, spawnSync } from 'child_process'
 
 import { ROOT_DIR } from '@/constants/constants'
-
-import logger from './logger'
 
 interface CommandExecutionOptions {
   stdio?: IOType | [IOType, IOType, IOType]
@@ -30,37 +29,23 @@ export default function executeCommand(
 
   try {
     cmd = typeof command === 'function' ? command() : command
-  } catch (error) {
-    logger.error(`Failed to generate command.`)
-    logger.debug(`Error details: ${chalk.grey(String(error))}`)
+  } catch {
+    log.error(`Failed to generate command.`)
     process.exit(1)
   }
 
   try {
-    logger.debug(
-      `Executing command ${chalk.blue(cmd)} with arguments: ${chalk.blue(_arguments.length ? _arguments.join(' ') : `${chalk.red('none')}`)}`
-    )
+    // `shell: true` concatenates arguments anyway, and passing an args array
+    // alongside it is deprecated (Node DEP0190). Build the full command string.
+    const fullCommand =
+      _arguments.length > 0 ? `${cmd} ${_arguments.join(' ')}` : cmd
 
-    const [toBeExecuted, ...args] = cmd.split(' ')
-
-    if (toBeExecuted === undefined) {
-      throw new Error('No command to execute')
-    }
-
-    const result = spawnSync(toBeExecuted, [...args, ..._arguments], {
+    const result = spawnSync(fullCommand, {
       encoding: 'utf8',
       shell: true,
       ...options,
       stdio: options.stdio ?? 'pipe'
     })
-
-    if (result.stdout) {
-      logger.debug(chalk.grey(result.stdout.toString()))
-    }
-
-    if (result.stderr) {
-      logger.debug(chalk.grey(result.stderr.toString()))
-    }
 
     if (result.error) {
       throw result.error
@@ -70,20 +55,13 @@ export default function executeCommand(
       throw result.status
     }
 
-    if (!options.stdio || options.stdio === 'pipe') {
-      logger.debug(
-        `Command Completed: ${chalk.blue(cmd)}, exit code: ${chalk.blue(String(result.status))}`
-      )
-    }
-
     return result.stdout?.toString().trim() || ''
   } catch (error) {
     if (!options.exitOnError) {
       throw error
     }
 
-    logger.error(`Command execution failed: ${chalk.blue(cmd)}`)
-    logger.debug(`Error details: ${chalk.grey(String(error))}`)
+    log.error(`Command execution failed: ${chalk.blue(cmd)}`)
     process.exit(1)
   }
 }

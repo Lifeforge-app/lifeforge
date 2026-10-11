@@ -1,4 +1,5 @@
-import logger from '@/utils/logger'
+import { log } from '@clack/prompts'
+
 import normalizePackage from '@/utils/normalizePackage'
 
 import { listLocalesWithMeta } from './listLocales'
@@ -7,7 +8,7 @@ function getPackagesToCheck(langCode?: string) {
   const localePackages = listLocalesWithMeta()
 
   if (!localePackages.length) {
-    logger.info('No locales installed')
+    log.step('No locales installed')
 
     process.exit(0)
   }
@@ -19,7 +20,7 @@ function getPackagesToCheck(langCode?: string) {
     : localePackages
 
   if (!packagesToCheck?.length) {
-    logger.error(`Locale "${langCode}" is not installed`)
+    log.error(`Locale "${langCode}" is not installed`)
 
     process.exit(0)
   }

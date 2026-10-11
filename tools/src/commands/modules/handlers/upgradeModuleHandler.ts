@@ -1,3 +1,4 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
@@ -5,11 +6,11 @@ import semver from 'semver'
 
 import { isDockerMode } from '@/utils/helpers'
 import { installFromGithub } from '@/utils/installSource'
-import logger from '@/utils/logger'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
 import { resolveModuleSchemaFile, syncModuleSchema } from '@/utils/schema'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import cleanModuleSource from '../functions/cleanModuleSource'
 import listModules from '../functions/listModules'
@@ -37,7 +38,7 @@ async function upgradeModule(
   const entry = await resolveEntry('modules', shortName)
 
   if (!entry) {
-    logger.warn(`Could not find ${chalk.blue(shortName)} in the registry`)
+    log.warn(`Could not find ${chalk.blue(shortName)} in the registry`)
 
     return false
   }
@@ -46,7 +47,7 @@ async function upgradeModule(
   const commitSha = entry.versions[latestVersion]
 
   if (!commitSha) {
-    logger.warn(
+    log.warn(
       `Registry has no release commit for ${chalk.blue(shortName)}@${latestVersion}`
     )
 
@@ -54,7 +55,7 @@ async function upgradeModule(
   }
 
   if (semver.eq(currentVersion, latestVersion)) {
-    logger.print(
+    log.message(
       `  ${chalk.dim('•')} ${chalk.blue(shortName)} ${chalk.dim(`v${currentVersion} is up to date`)}`
     )
 
@@ -63,14 +64,12 @@ async function upgradeModule(
 
   verifyLocked('modules', shortName, latestVersion, commitSha)
 
-  logger.debug(
-    `Upgrading ${chalk.blue(shortName)} from ${currentVersion} to ${latestVersion}...`
-  )
-
   const backupPath = path.join(
     path.dirname(targetDir),
     `${shortName}.backup`
   )
+
+  startSpinner(`Upgrading ${chalk.blue(shortName)}...`)
 
   try {
     if (fs.existsSync(backupPath)) {
@@ -90,18 +89,16 @@ async function upgradeModule(
 
     fs.rmSync(backupPath, { recursive: true, force: true })
 
-    logger.print(
+    stopSpinner(
       `  ${chalk.green('↑')} ${chalk.blue(shortName)} ${chalk.dim(`${currentVersion} →`)} ${chalk.green(latestVersion)}`
     )
 
     return { version: latestVersion, repo: entry.repo, commitSha }
-  } catch (error) {
-    logger.error(`Failed to upgrade ${chalk.blue(shortName)}.`)
-    logger.debug(`Error details: ${error}`)
+  } catch {
+    failSpinner(`Failed to upgrade ${chalk.blue(shortName)}.`)
 
     if (fs.existsSync(backupPath)) {
       fs.renameSync(backupPath, targetDir)
-      logger.debug('Restored backup after failed upgrade')
     }
 
     return false
@@ -127,7 +124,7 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     const mod = modules[fullName]
 
     if (!mod) {
-      logger.error(`Module ${chalk.blue(moduleName)} is not installed`)
+      log.error(`Module ${chalk.blue(moduleName)} is not installed`)
       process.exit(1)
     }
 
@@ -140,7 +137,7 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
       })
     }
   } else {
-    logger.print(
+    log.message(
       `Checking ${chalk.blue(String(Object.keys(modules).length))} modules for updates...\n`
     )
 
@@ -155,8 +152,8 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
 
   if (upgraded.length === 0) {
     if (!moduleName) {
-      logger.print('')
-      logger.success('All modules are up to date')
+      log.message('')
+      log.success('All modules are up to date')
     }
 
     return
@@ -164,8 +161,6 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
 
   // Build module client bundles for federation (both dist and dist-docker)
   for (const { id } of upgraded) {
-    logger.debug(`Building ${chalk.blue(id)} bundles...`)
-
     await buildModuleHandler(id)
 
     await buildModuleHandler(id, { docker: true, buildServer: false })
@@ -180,22 +175,20 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
         continue
       }
 
-      logger.debug(`Syncing database schema for ${id}...`)
+      startSpinner(`Syncing database schema for ${chalk.blue(id)}...`)
 
       try {
         await syncModuleSchema(targetDir)
-      } catch (error) {
-        logger.warn(
+        stopSpinner(`Synced database schema for ${chalk.blue(id)}`)
+      } catch {
+        failSpinner(
           `Could not sync the database schema for ${id} automatically.`
         )
-        logger.debug(`Error details: ${error}`)
       }
     }
   }
 
   // Clean source code (upgrades always run in production mode)
-  logger.debug('Cleaning source code...')
-
   for (const { id } of upgraded) {
     cleanModuleSource(normalizePackage(id).targetDir)
   }
@@ -208,9 +201,9 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     })
   }
 
-  logger.info('Source code removed. Only built bundles retained.')
+  log.step('Source code removed. Only built bundles retained.')
 
-  logger.success(
+  log.success(
     `Upgraded ${chalk.blue(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
   )
 }

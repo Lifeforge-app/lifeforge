@@ -1,4 +1,4 @@
-import logger from '@/utils/logger'
+import { log } from '@clack/prompts'
 
 import executeCommand from './commands'
 
@@ -21,14 +21,13 @@ export function validateMaintainerAccess(username: string): void {
       return
     }
 
-    logger.warn(
+    log.warn(
       'Failed to verify maintainer access. Ensure you are authenticated with "gh auth login".'
     )
 
     process.exit(1)
-  } catch (error) {
-    logger.error(`Failed to check maintainer access for ${username}.`)
-    logger.debug(`Error details: ${error}`)
+  } catch {
+    log.error(`Failed to check maintainer access for ${username}.`)
 
     process.exit(1)
   }
@@ -68,9 +67,8 @@ export function getGithubUser(): { name: string; email: string } | null {
     }
 
     return null
-  } catch (error) {
-    logger.error(`Failed to fetch GitHub user info.`)
-    logger.debug(`Error details: ${error}`)
+  } catch {
+    log.error(`Failed to fetch GitHub user info.`)
 
     return null
   }

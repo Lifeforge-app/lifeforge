@@ -1,4 +1,4 @@
-import logger from './logger'
+import { log } from '@clack/prompts'
 
 /** Converts a string to dash-case (kebab-case). */
 export function toKebabCase(value: string): string {
@@ -18,7 +18,7 @@ export function assertKebabRepo(repo: string): void {
   const name = repo.split('/').pop() ?? repo
 
   if (!isKebabCase(name)) {
-    logger.error(
+    log.error(
       `Repository name "${name}" must be dash-case (e.g. "lifeforge-module-my-module"). Please rename the GitHub repo.`
     )
 

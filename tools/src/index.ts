@@ -1,11 +1,11 @@
 #!/usr/bin/env node
+import { log } from '@clack/prompts'
 import dotenv from 'dotenv'
 import fs from 'fs'
 import path from 'path'
 
 import { runCLI, setupCLI } from './cli/setup'
 import { ROOT_DIR } from './constants/constants'
-import logger from './utils/logger'
 
 /**
  * LifeForge Forge - Build and development tool for LifeForge projects
@@ -30,5 +30,5 @@ try {
   setupCLI()
   runCLI()
 } catch (error) {
-  logger.error(`Unexpected error occurred: ${error}`)
+  log.error(`Unexpected error occurred: ${error}`)
 }

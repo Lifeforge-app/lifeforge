@@ -1,10 +1,10 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { validateMaintainerAccess } from '@/utils/github-cli'
 import { getGithubLogin } from '@/utils/github'
-import logger from '@/utils/logger'
+import { validateMaintainerAccess } from '@/utils/github-cli'
 
 import { packageJSONSchema } from './packageJSONSchema'
 
@@ -17,7 +17,7 @@ export default async function validateModuleAuthor(modulePath: string) {
   )
 
   if (!packageJson.success) {
-    logger.error(
+    log.error(
       'Invalid package.json. Please refer to the documentation for the correct format.'
     )
     process.exit(1)
@@ -31,7 +31,7 @@ export default async function validateModuleAuthor(modulePath: string) {
     if (usernamePrefix === 'lifeforge') {
       validateMaintainerAccess(username)
     } else {
-      logger.error(
+      log.error(
         `Cannot publish as "${username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${username}--`
       )
       process.exit(1)

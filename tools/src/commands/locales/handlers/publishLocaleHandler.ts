@@ -1,3 +1,4 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 
@@ -7,8 +8,8 @@ import bumpPackageVersion, {
 import executeCommand from '@/utils/commands'
 import { getRepoSlug, getTagCommit, updateRegistryIndex } from '@/utils/github'
 import { assertKebabRepo } from '@/utils/kebab'
-import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import validateLocalesAuthor from '../functions/validateLocalesAuthor'
 import { validateLocaleStructureHandler } from './validateLocaleStructure'
@@ -21,24 +22,23 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
   const { shortName, targetDir } = normalizePackage(langCode, 'locale')
 
   if (!fs.existsSync(targetDir)) {
-    logger.error(`Locale "${langCode}" not found in locales/`)
+    log.error(`Locale "${langCode}" not found in locales/`)
 
     process.exit(1)
   }
 
-  logger.info('Validating locale structure...')
+  log.step('Validating locale structure...')
   validateLocaleStructureHandler(langCode)
 
-  logger.debug('Validating locale author...')
   await validateLocalesAuthor(targetDir)
 
   const { oldVersion, newVersion } = bumpPackageVersion(targetDir)
 
-  logger.info(
+  log.step(
     `Bumped version: ${chalk.blue(oldVersion)} → ${chalk.blue(newVersion)}`
   )
 
-  logger.info(`Publishing ${chalk.blue(shortName)}...`)
+  startSpinner(`Publishing ${chalk.blue(shortName)}...`)
 
   try {
     executeCommand('git add package.json', { cwd: targetDir })
@@ -62,12 +62,11 @@ export async function publishLocaleHandler(langCode: string): Promise<void> {
       commitSha
     })
 
-    logger.success(`Published ${chalk.blue(shortName)}`)
-  } catch (error) {
+    stopSpinner(`Published ${chalk.blue(shortName)}`)
+  } catch {
     revertPackageVersion(targetDir, oldVersion)
 
-    logger.error(`Failed to publish ${chalk.blue(shortName)}`)
-    logger.debug(`Error details: ${error}`)
+    failSpinner(`Failed to publish ${chalk.blue(shortName)}`)
     process.exit(1)
   }
 }
