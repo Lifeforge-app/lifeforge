@@ -78,32 +78,19 @@ export class ModuleRegistry {
   }
 
   static get manifests(): ModuleManifest[] {
-    const list: ModuleManifest[] = []
-
-    for (const mod of ModuleRegistry.registeredModules) {
-      if (process.env.NODE_ENV === 'production' && !mod.hasDist) {
-        continue
-      }
-
-      const isDevMode = process.env.NODE_ENV !== 'production' && !mod.hasDist
-
-      list.push({
-        name: mod.name,
-        id: mod.id,
-        remoteId: mod.remoteId,
-        displayName: mod.displayName,
-        icon: mod.icon,
-        category: mod.category,
-        remoteEntryUrl: mod.remoteEntryUrl,
-        APIKeyAccess: mod.APIKeyAccess,
-        hasProvider: mod.hasProvider,
-        hidden: mod.hidden,
-        subsection: mod.subsection,
-        isDevMode
-      })
-    }
-
-    return list
+    return ModuleRegistry.registeredModules.map(mod => ({
+      name: mod.name,
+      id: mod.id,
+      remoteId: mod.remoteId,
+      displayName: mod.displayName,
+      icon: mod.icon,
+      category: mod.category,
+      remoteEntryUrl: mod.remoteEntryUrl,
+      APIKeyAccess: mod.APIKeyAccess,
+      hasProvider: mod.hasProvider,
+      hidden: mod.hidden,
+      subsection: mod.subsection
+    }))
   }
 
   static get list(): Module[] {

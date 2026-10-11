@@ -99,30 +99,25 @@ export const moduleEntrySchema = z.object({
       })
     )
     .optional(),
-  hasDist: z.boolean(),
   hasProvider: z.boolean(),
   hidden: z.boolean().optional(),
   supportedLangs: z.array(z.string()),
   widgets: z.array(moduleWidgetSchema)
 })
 
-export const moduleManifestSchema = moduleEntrySchema
-  .pick({
-    name: true,
-    id: true,
-    remoteId: true,
-    displayName: true,
-    icon: true,
-    category: true,
-    remoteEntryUrl: true,
-    APIKeyAccess: true,
-    hasProvider: true,
-    hidden: true,
-    subsection: true
-  })
-  .extend({
-    isDevMode: z.boolean()
-  })
+export const moduleManifestSchema = moduleEntrySchema.pick({
+  name: true,
+  id: true,
+  remoteId: true,
+  displayName: true,
+  icon: true,
+  category: true,
+  remoteEntryUrl: true,
+  APIKeyAccess: true,
+  hasProvider: true,
+  hidden: true,
+  subsection: true
+})
 
 export const moduleSchema = moduleEntrySchema.pick({
   name: true,

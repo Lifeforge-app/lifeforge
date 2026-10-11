@@ -3131,9 +3131,6 @@ export const contract = {
                       ],
                       "additionalProperties": false
                     }
-                  },
-                  "isDevMode": {
-                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -3144,8 +3141,7 @@ export const contract = {
                   "icon",
                   "category",
                   "remoteEntryUrl",
-                  "hasProvider",
-                  "isDevMode"
+                  "hasProvider"
                 ],
                 "additionalProperties": false
               }

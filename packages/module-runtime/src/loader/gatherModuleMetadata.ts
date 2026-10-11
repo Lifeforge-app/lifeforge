@@ -101,21 +101,36 @@ export default async function gatherModuleMetadata(
             .map(file => file.substring(0, file.length - 5))
         : []
 
-    const clientDistPath = path.join(
-      moduleDir,
-      'client',
-      'dist',
-      'remoteEntry.js'
-    )
+    // In production the client federation bundle must be present and valid.
+    // (In development, modules are served from source instead.)
+    if (isProduction) {
+      const clientDistPath = path.join(
+        moduleDir,
+        'client',
+        'dist',
+        'remoteEntry.js'
+      )
 
-    let isDistValid = false
+      let isValidDist = false
 
-    if (fs.existsSync(clientDistPath) && fs.statSync(clientDistPath).size > 0) {
-      try {
-        execSync(`node --check "${clientDistPath}"`, { stdio: 'ignore' })
-        isDistValid = true
-      } catch {
-        // syntax/check error
+      if (
+        fs.existsSync(clientDistPath) &&
+        fs.statSync(clientDistPath).size > 0
+      ) {
+        try {
+          execSync(`node --check "${clientDistPath}"`, { stdio: 'ignore' })
+          isValidDist = true
+        } catch {
+          // syntax/check error
+        }
+      }
+
+      if (!isValidDist) {
+        loaderLogger.error(
+          `Skipping module ${packageJSON.displayName}: client/dist/remoteEntry.js is missing or invalid. Rebuild the module.`
+        )
+
+        return null
       }
     }
 
@@ -144,7 +159,6 @@ export default async function gatherModuleMetadata(
       remoteEntryUrl: `/modules/${modDir}/remoteEntry.js`,
       APIKeyAccess: packageJSON.lifeforge.APIKeyAccess,
       subsection: bundledMetadata.subsection,
-      hasDist: isDistValid,
       hasProvider: bundledMetadata.hasProvider,
       hidden: bundledMetadata.hidden,
       widgets,

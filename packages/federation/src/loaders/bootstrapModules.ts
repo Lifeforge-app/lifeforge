@@ -71,10 +71,6 @@ export async function bootstrapModules(
   const remotes: { name: string; entry: string; type: 'module' }[] = []
 
   for (const mod of federatedModuleManifests) {
-    if (!import.meta.env.DEV && mod.isDevMode) {
-      continue
-    }
-
     const remoteName = `m_${mod.remoteId}`
     registeredRemotesSet.add(remoteName)
 
