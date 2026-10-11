@@ -39,6 +39,11 @@ export function startHandler(this: Command): void {
   if (host) clientArgs.push('--host')
   if (port) clientArgs.push('--port', port)
 
+  if (process.stdout.isTTY) {
+    // Clear the screen (scrollback + viewport) before the service logs start.
+    process.stdout.write('\x1b[2J\x1b[3J\x1b[H')
+  }
+
   log.step('Starting production services...')
 
   const { result } = concurrently(
