@@ -4,7 +4,6 @@ import path from 'path'
 
 import { ROOT_DIR } from '@/constants/constants'
 import { installDeps } from '@/utils/commands'
-import { smartReloadServer } from '@/utils/docker'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
 import { findPackageName, removeDependency } from '@/utils/packageJson'
@@ -56,6 +55,4 @@ export async function uninstallModuleHandler(
   }
 
   installDeps()
-
-  smartReloadServer()
 }

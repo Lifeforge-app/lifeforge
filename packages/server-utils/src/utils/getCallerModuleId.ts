@@ -1,4 +1,4 @@
-import { ModuleRegistry } from '@lifeforge/module-registry'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 
 export default function getCallerModuleId():
   | {

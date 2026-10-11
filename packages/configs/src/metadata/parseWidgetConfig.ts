@@ -1,10 +1,9 @@
 import * as ts from '@typescript/typescript6'
 import fs from 'fs'
 
-import { type WidgetConfig, widgetConfigSchema } from '@lifeforge/configs'
+import { type WidgetConfig, widgetConfigSchema } from '../interfaces/widget.types'
 
 import resolveExpressionMap, { findVariableDeclaration } from './ast-utils'
-import { moduleLoaderLogger } from './moduleLoaderLogger'
 
 export default function parseWidgetConfig(
   filePath: string
@@ -25,9 +24,7 @@ export default function parseWidgetConfig(
 
     return widgetConfigSchema.parse(resolveExpressionMap(config))
   } catch (error) {
-    moduleLoaderLogger.error(
-      `Failed to parse widget config for ${filePath}: ${error}`
-    )
+    console.error(`Failed to parse widget config for ${filePath}: ${error}`)
 
     return null
   }

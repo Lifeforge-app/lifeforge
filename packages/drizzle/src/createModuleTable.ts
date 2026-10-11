@@ -3,7 +3,7 @@ import { pgTableCreator } from 'drizzle-orm/pg-core'
 import {
   deriveModuleNamespace,
   resolveCallerModuleId
-} from '@lifeforge/module-registry'
+} from '@lifeforge/module-runtime/registry'
 
 /**
  * Returns a `pgTable` builder that auto-prefixes DB table names with the module

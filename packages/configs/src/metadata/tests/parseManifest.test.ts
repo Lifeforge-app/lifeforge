@@ -2,37 +2,40 @@ import fs from 'fs'
 import path from 'path'
 import { afterEach, describe, expect, it } from 'vitest'
 
+import extractModuleMetadata from '../extractModuleMetadata'
 import parseManifest from '../parseManifest'
 
+const tempDir = path.join(import.meta.dirname, 'temp-module')
+const tempFilePath = path.join(tempDir, 'manifest.ts')
+const widgetDir = path.join(tempDir, 'src', 'widgets')
+const widgetFilePath = path.join(widgetDir, 'ISS.tsx')
+
+function cleanup(): void {
+  if (fs.existsSync(widgetFilePath)) {
+    fs.unlinkSync(widgetFilePath)
+  }
+
+  if (fs.existsSync(widgetDir)) {
+    fs.rmdirSync(widgetDir)
+  }
+
+  const srcDir = path.join(tempDir, 'src')
+
+  if (fs.existsSync(srcDir)) {
+    fs.rmdirSync(srcDir)
+  }
+
+  if (fs.existsSync(tempFilePath)) {
+    fs.unlinkSync(tempFilePath)
+  }
+
+  if (fs.existsSync(tempDir)) {
+    fs.rmdirSync(tempDir)
+  }
+}
+
 describe('parseManifest AST parser', () => {
-  const tempDir = path.join(__dirname, 'temp-module')
-  const tempFilePath = path.join(tempDir, 'manifest.ts')
-  const widgetDir = path.join(tempDir, 'src', 'widgets')
-  const widgetFilePath = path.join(widgetDir, 'ISS.tsx')
-
-  afterEach(() => {
-    if (fs.existsSync(widgetFilePath)) {
-      fs.unlinkSync(widgetFilePath)
-    }
-
-    if (fs.existsSync(widgetDir)) {
-      fs.rmdirSync(widgetDir)
-    }
-
-    const srcDir = path.join(tempDir, 'src')
-
-    if (fs.existsSync(srcDir)) {
-      fs.rmdirSync(srcDir)
-    }
-
-    if (fs.existsSync(tempFilePath)) {
-      fs.unlinkSync(tempFilePath)
-    }
-
-    if (fs.existsSync(tempDir)) {
-      fs.rmdirSync(tempDir)
-    }
-  })
+  afterEach(cleanup)
 
   it('returns empty result for non-existent file', () => {
     expect(parseManifest('non-existent-file.ts')).toEqual({
@@ -163,6 +166,81 @@ describe('parseManifest AST parser', () => {
       icon: 'tabler:satellite',
       minW: 2,
       minH: 2
+    })
+  })
+})
+
+describe('extractModuleMetadata', () => {
+  const moduleDir = path.join(import.meta.dirname, 'temp-extract-module')
+  const clientDir = path.join(moduleDir, 'client')
+  const manifestPath = path.join(clientDir, 'manifest.ts')
+  const widgetDir = path.join(clientDir, 'src', 'widgets')
+  const widgetPath = path.join(widgetDir, 'ISS.tsx')
+  const packageJSONPath = path.join(moduleDir, 'package.json')
+
+  const packageJSON = {
+    name: '@lifeforge/lifeforge--iss',
+    displayName: 'ISS Tracker',
+    version: '1.2.3',
+    description: 'Track the ISS',
+    author: 'lifeforge',
+    lifeforge: {
+      icon: 'tabler:satellite',
+      category: 'Fun'
+    }
+  }
+
+  afterEach(() => {
+    if (fs.existsSync(moduleDir)) {
+      fs.rmSync(moduleDir, { recursive: true, force: true })
+    }
+  })
+
+  it('produces serializable bundled metadata with package + hasServer', () => {
+    fs.mkdirSync(widgetDir, { recursive: true })
+    fs.writeFileSync(
+      manifestPath,
+      `
+      import { createForgeModule } from '@lifeforge/federation'
+      const manifest = createForgeModule({
+        hidden: true,
+        subsection: [{ label: 'Dashboard', icon: 'tabler:dashboard', path: '' }],
+        widgets: [() => import('@/widgets/ISS')],
+        routes: {}
+      })
+      export default manifest
+    `
+    )
+    fs.writeFileSync(
+      widgetPath,
+      `
+      export const config = {
+        id: 'iss-tracker',
+        icon: 'tabler:satellite',
+        minW: 2,
+        minH: 2
+      }
+    `
+    )
+    fs.writeFileSync(packageJSONPath, JSON.stringify(packageJSON))
+
+    const metadata = extractModuleMetadata(moduleDir)
+
+    expect(metadata).toEqual({
+      hasProvider: false,
+      hidden: true,
+      subsection: [{ label: 'Dashboard', icon: 'tabler:dashboard', path: '' }],
+      widgets: [
+        {
+          id: 'iss-tracker',
+          icon: 'tabler:satellite',
+          minW: 2,
+          minH: 2,
+          componentName: 'ISS'
+        }
+      ],
+      package: packageJSON,
+      hasServer: false
     })
   })
 })

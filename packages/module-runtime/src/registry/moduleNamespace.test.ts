@@ -8,13 +8,13 @@ import {
   resolveCallerModuleId,
   resolveModuleId
 } from './moduleNamespace'
-import { ModuleRegistry } from './registry/ModuleRegistry'
+import { ModuleRegistry } from './ModuleRegistry'
 
 const tempRoots: string[] = []
 
 /** Creates a temp `.../modules/<folderName>` dir, optionally with a package.json. */
 function createModuleDir(folderName: string, packageName?: string): string {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'module-registry-'))
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'module-runtime-'))
 
   tempRoots.push(root)
 

@@ -8,12 +8,13 @@ import type {
   View
 } from 'drizzle-orm'
 
-export type SchemaEntry = Table | View
+/** A single table or view in a module's schema. */
+export type ModuleTable = Table | View
 
 /**
- * A module's schema declaration: its tables plus the raw `defineRelations`
- * callback. This is what `schema.drizzle.ts` exports and what
- * `createForgeContractBuilder` accepts to register + type the module.
+ * The raw schema a module declares in `schema.drizzle.ts`: its tables plus the
+ * `defineRelations` callback. Consumed by `defineModuleSchema` /
+ * `createForgeContractBuilder`.
  */
 export interface ModuleSchema<
   TTables extends Record<string, any> = Record<string, any>
@@ -23,12 +24,13 @@ export interface ModuleSchema<
 }
 
 /**
- * A resolved schema definition as stored in `ModuleRegistry`. `tables`/`keyMap`
- * are namespaced when a module id was provided; `relations` is the (possibly
- * proxied) callback. `schemaParts` are composed into the global `db`.
+ * The normalized schema stored in `ModuleRegistry` (produced by
+ * `defineModuleSchema`). When a module id was provided, `tables`/`keyMap` are
+ * namespaced and `relations` is wrapped to resolve bare table keys. Registered
+ * parts are composed into the global `db`.
  */
-export interface ModuleSchemaDefinition<
-  TTables = Record<string, SchemaEntry>,
+export interface ResolvedModuleSchema<
+  TTables = Record<string, ModuleTable>,
   TRelations = (r: any) => Record<string, any>
 > {
   moduleId?: string
@@ -39,8 +41,8 @@ export interface ModuleSchemaDefinition<
 }
 
 /**
- * Resolves a `ModuleSchema` to the built relations type that drizzle's
- * relational query builder (`db.query.*`) expects.
+ * The built relations type produced from a `ModuleSchema`, matching what
+ * drizzle's relational query builder (`db.query.*`) expects.
  */
 export type BuiltModuleSchema<T extends ModuleSchema> =
   ExtractTablesWithRelations<

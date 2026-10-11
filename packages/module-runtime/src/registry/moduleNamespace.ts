@@ -2,7 +2,7 @@ import fs from 'fs'
 import _ from 'lodash'
 import path from 'path'
 
-import { ModuleRegistry } from './registry/ModuleRegistry'
+import { ModuleRegistry } from './ModuleRegistry'
 
 /** Extracts a module's absolute directory from a stack trace. */
 function detectCallerModuleDir(stack: string | undefined): string | undefined {

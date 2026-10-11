@@ -2,10 +2,8 @@ import * as ts from '@typescript/typescript6'
 import fs from 'fs'
 import path from 'path'
 
-import { type WidgetConfig } from '@lifeforge/configs'
-
+import { type WidgetConfig } from '../interfaces/widget.types'
 import resolveExpressionMap, { findNode, parseObjectLiteral } from './ast-utils'
-import { moduleLoaderLogger } from './moduleLoaderLogger'
 import parseWidgetConfig from './parseWidgetConfig'
 
 export interface ParsedSubsection {
@@ -56,13 +54,9 @@ function resolveWidgetFilePath(
   importPath: string,
   manifestDir: string
 ): string | null {
-  let absolutePath = ''
-
-  if (importPath.startsWith('@/')) {
-    absolutePath = path.join(manifestDir, 'src', importPath.slice(2))
-  } else {
-    absolutePath = path.resolve(manifestDir, importPath)
-  }
+  const absolutePath = importPath.startsWith('@/')
+    ? path.join(manifestDir, 'src', importPath.slice(2))
+    : path.resolve(manifestDir, importPath)
 
   const extensions = ['.tsx', '.ts', '/index.tsx', '/index.ts']
 
@@ -193,9 +187,7 @@ export default function parseManifest(manifestPath: string): ParsedManifest {
       widgets: parseWidgets(properties, manifestPath)
     }
   } catch (error) {
-    moduleLoaderLogger.error(
-      `Failed to parse manifest AST for ${manifestPath}: ${error}`
-    )
+    console.error(`Failed to parse manifest AST for ${manifestPath}: ${error}`)
 
     return empty
   }

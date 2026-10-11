@@ -5,7 +5,7 @@ import type {
   ModuleWidget
 } from '@lifeforge/configs'
 
-import type { ModuleSchemaDefinition } from '../types'
+import type { ResolvedModuleSchema } from './types'
 
 const normalizePath = (value: string): string => value.replace(/\\/g, '/')
 
@@ -28,11 +28,19 @@ export class ModuleRegistry {
   private static modulePaths = new Map<string, string>()
   private static registeredSchemaParts = new Map<
     string,
-    ModuleSchemaDefinition
+    ResolvedModuleSchema
   >()
 
   static register(entry: ModuleEntry, absolutePath?: string): void {
-    ModuleRegistry.registeredModules.push(entry)
+    const existingIndex = ModuleRegistry.registeredModules.findIndex(
+      m => m.name === entry.name
+    )
+
+    if (existingIndex === -1) {
+      ModuleRegistry.registeredModules.push(entry)
+    } else {
+      ModuleRegistry.registeredModules[existingIndex] = entry
+    }
 
     if (absolutePath) {
       ModuleRegistry.registerPath(absolutePath, entry.name)
@@ -40,6 +48,8 @@ export class ModuleRegistry {
   }
 
   static unregister(name: string): void {
+    const entry = ModuleRegistry.registeredModules.find(m => m.name === name)
+
     ModuleRegistry.registeredModules = ModuleRegistry.registeredModules.filter(
       m => m.name !== name
     )
@@ -49,10 +59,21 @@ export class ModuleRegistry {
         ModuleRegistry.modulePaths.delete(modPath)
       }
     }
+
+    if (entry) {
+      ModuleRegistry.unregisterSchemaPart(entry.moduleId)
+    }
   }
 
   static isRegistered(name: string): boolean {
     return ModuleRegistry.registeredModules.some(m => m.name === name)
+  }
+
+  /** Whether a module (by full name or short id) is currently registered. */
+  static isAvailable(nameOrId: string): boolean {
+    const name = nameOrId.startsWith('@') ? nameOrId : `@lifeforge/${nameOrId}`
+
+    return ModuleRegistry.isRegistered(name)
   }
 
   static get entries(): ModuleEntry[] {
@@ -157,8 +178,13 @@ export class ModuleRegistry {
   }
 
   /** Registers a module's drizzle schema part (keyed by module id / 'core'). */
-  static registerSchemaPart(id: string, part: ModuleSchemaDefinition): void {
+  static registerSchemaPart(id: string, part: ResolvedModuleSchema): void {
     ModuleRegistry.registeredSchemaParts.set(id, part)
+  }
+
+  /** Removes a module's drizzle schema part (no-op for 'core' or unknown ids). */
+  static unregisterSchemaPart(id: string): void {
+    ModuleRegistry.registeredSchemaParts.delete(id)
   }
 
   /** Bare table key -> namespaced key for a module, if it registered one. */
@@ -166,12 +192,7 @@ export class ModuleRegistry {
     return ModuleRegistry.registeredSchemaParts.get(id)?.keyMap
   }
 
-  static get schemaParts(): readonly ModuleSchemaDefinition[] {
+  static get schemaParts(): readonly ResolvedModuleSchema[] {
     return [...ModuleRegistry.registeredSchemaParts.values()]
   }
-}
-
-/** Registers an absolute module directory against its official module id. */
-export function registerModulePath(moduleDir: string, moduleId: string): void {
-  ModuleRegistry.registerPath(moduleDir, moduleId)
 }

@@ -8,7 +8,7 @@ import {
   type BuiltModuleSchema,
   ModuleRegistry,
   type ModuleSchema
-} from '@lifeforge/module-registry'
+} from '@lifeforge/module-runtime/registry'
 
 import { getCallerModuleId } from '..'
 import { type ExistsInFor, existsIn } from '../database'

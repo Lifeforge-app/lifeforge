@@ -3,7 +3,6 @@ import fs from 'fs'
 import path from 'path'
 
 import executeCommand, { installPackage } from '@/utils/commands'
-import { smartReloadServer } from '@/utils/docker'
 import initGitRepository from '@/utils/initGitRepository'
 import logger from '@/utils/logger'
 import normalizePackage from '@/utils/normalizePackage'
@@ -120,6 +119,4 @@ export async function installModuleHandler(
 
     logger.info('Source code removed. Only built bundles retained.')
   }
-
-  smartReloadServer()
 }

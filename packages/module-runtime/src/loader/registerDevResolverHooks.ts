@@ -1,6 +1,6 @@
 import { registerHooks } from 'node:module'
 
-import { moduleLoaderLogger } from './moduleLoaderLogger'
+import { loaderLogger } from './logger'
 
 /**
  * Registers custom module resolution hooks for development mode,
@@ -32,7 +32,7 @@ export default function registerDevResolverHooks(): void {
       }
     })
   } catch (e) {
-    moduleLoaderLogger.error(
+    loaderLogger.error(
       `Failed to register custom path alias resolver hooks: ${e}`
     )
   }

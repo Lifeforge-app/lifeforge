@@ -224,9 +224,9 @@ importers:
       '@lifeforge/log':
         specifier: workspace:*
         version: link:../../packages/log
-      '@lifeforge/module-registry':
+      '@lifeforge/module-runtime':
         specifier: workspace:*
-        version: link:../../packages/module-registry
+        version: link:../../packages/module-runtime
       '@lifeforge/server-utils':
         specifier: workspace:*
         version: link:../../packages/server-utils
@@ -248,6 +248,9 @@ importers:
       chalk:
         specifier: ^5.4.1
         version: 5.6.2
+      chokidar:
+        specifier: ^4.0.3
+        version: 4.0.3
       commander:
         specifier: ^15.0.0
         version: 15.0.0
@@ -706,9 +709,9 @@ importers:
       '@lifeforge/localization':
         specifier: workspace:*
         version: link:../../packages/localization
-      '@lifeforge/module-registry':
+      '@lifeforge/module-runtime':
         specifier: workspace:*
-        version: link:../../packages/module-registry
+        version: link:../../packages/module-runtime
       '@lifeforge/server-utils':
         specifier: workspace:*
         version: link:../../packages/server-utils
@@ -761,6 +764,13 @@ importers:
         version: 4.2.2
 
   packages/configs:
+    dependencies:
+      '@typescript/typescript6':
+        specifier: ^6.0.2
+        version: 6.0.2
+      zod:
+        specifier: ^4.3.5
+        version: 4.3.5
     devDependencies:
       '@types/react':
         specifier: ^19.2.0
@@ -768,9 +778,9 @@ importers:
 
   packages/drizzle:
     dependencies:
-      '@lifeforge/module-registry':
+      '@lifeforge/module-runtime':
         specifier: workspace:*
-        version: link:../module-registry
+        version: link:../module-runtime
     devDependencies:
       '@electric-sql/pglite':
         specifier: ^0.5.8
@@ -886,18 +896,33 @@ importers:
         specifier: ^25.0.6
         version: 25.9.5
 
-  packages/module-registry:
+  packages/module-runtime:
     dependencies:
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../configs
+      '@lifeforge/log':
+        specifier: workspace:*
+        version: link:../log
+      chalk:
+        specifier: ^5.4.1
+        version: 5.6.2
+      chokidar:
+        specifier: ^4.0.3
+        version: 4.0.3
       drizzle-orm:
         specifier: 1.0.0-rc.4
         version: 1.0.0-rc.4(@electric-sql/pglite@0.5.8)(postgres@3.4.9)(zod@4.3.5)
+      express:
+        specifier: ^4.21.2
+        version: 4.22.2(supports-color@10.2.2)
       lodash:
         specifier: ^4.17.21
         version: 4.18.1
     devDependencies:
-      '@lifeforge/configs':
-        specifier: workspace:*
-        version: link:../configs
+      '@types/express':
+        specifier: ^4.17.23
+        version: 4.17.25
       '@types/lodash':
         specifier: ^4.17.21
         version: 4.17.24
@@ -919,9 +944,9 @@ importers:
       '@lifeforge/log':
         specifier: workspace:*
         version: link:../log
-      '@lifeforge/module-registry':
+      '@lifeforge/module-runtime':
         specifier: workspace:*
-        version: link:../module-registry
+        version: link:../module-runtime
       chalk:
         specifier: ^5.6.2
         version: 5.6.2

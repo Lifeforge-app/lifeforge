@@ -18,11 +18,10 @@ import type { Request, Response, Router } from 'express'
 
 import { scopeDbForModule } from '@lifeforge/drizzle'
 import { fieldsUploadMiddleware } from '@lifeforge/file-storage/server'
-import { ModuleRegistry } from '@lifeforge/module-registry'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 import {
   BaseResponse,
   ForgeContract,
-  MediaConfig,
   checkRecordExistence,
   getStatusMessage,
   mapDatabaseError,
@@ -68,7 +67,7 @@ function createHandler(
     try {
       parseQuery(req, input.query)
 
-      parseBodyPayload(req, (media || {}) as MediaConfig, encrypted, input.body)
+      parseBodyPayload(req, media || {}, encrypted, input.body)
 
       await checkRecordExistence({
         db: req.db,
@@ -224,9 +223,10 @@ export function registerController(
         ? [
             fieldsUploadMiddleware(
               Object.fromEntries(
-                Object.entries(config.media ?? ({} as MediaConfig)).map(
-                  ([key, value]) => [key, value.multiple ? 999 : 1]
-                )
+                Object.entries(config.media ?? {}).map(([key, value]) => [
+                  key,
+                  value.multiple ? 999 : 1
+                ])
               )
             )
           ]

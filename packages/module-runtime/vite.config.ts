@@ -5,13 +5,16 @@ import { externalDependencyRegex } from '@lifeforge/configs/vite'
 export default defineConfig({
   build: {
     lib: {
-      entry: './src/index.ts',
+      entry: {
+        registry: './src/registry/index.ts',
+        loader: './src/loader/index.ts'
+      },
       formats: ['es']
     },
     outDir: 'dist',
     target: 'node22',
     rollupOptions: {
-      output: { entryFileNames: 'index.js' },
+      output: { entryFileNames: '[name]/index.js' },
       external: [externalDependencyRegex]
     }
   }

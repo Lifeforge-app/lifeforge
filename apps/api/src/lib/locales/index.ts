@@ -7,7 +7,7 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { ModuleRegistry } from '@lifeforge/module-registry'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 import {
   createForgeContractBuilder,
   forgeRouter
@@ -96,22 +96,18 @@ const getLocale = forge
 
     if (namespace === 'apps') {
       const target = moduleApps.find(modulePath => {
-        try {
-          const pkgPath = path.join(modulePath, 'package.json')
+        const moduleName = ModuleRegistry.getModuleIdByPath(modulePath)
 
-          if (fs.existsSync(pkgPath)) {
-            const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-
-            return (
-              pkg.name ===
-              (subnamespace.startsWith('@lifeforge/')
-                ? subnamespace
-                : `@lifeforge/${subnamespace}`)
-            )
-          }
-        } catch {
+        if (!moduleName) {
           return false
         }
+
+        return (
+          moduleName ===
+          (subnamespace.startsWith('@lifeforge/')
+            ? subnamespace
+            : `@lifeforge/${subnamespace}`)
+        )
       })
 
       if (!target) {
@@ -170,18 +166,9 @@ const getLocale = forge
                 fs.readFileSync(localePath, 'utf-8')
               )
 
-              const pkgPath = path.join(modulePath, 'package.json')
-
-              let moduleName = path.basename(modulePath)
-
-              if (fs.existsSync(pkgPath)) {
-                try {
-                  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-                  moduleName = pkg.name
-                } catch {
-                  // Do nothing
-                }
-              }
+              const moduleName =
+                ModuleRegistry.getModuleIdByPath(modulePath) ??
+                path.basename(modulePath)
 
               return [
                 moduleName,

@@ -22,12 +22,21 @@
       "import": "./dist/node.js",
       "require": "./dist/node.js"
     },
+    "./metadata": {
+      "types": "./dist/metadata.d.ts",
+      "import": "./dist/metadata.js",
+      "require": "./dist/metadata.js"
+    },
     "./tsconfig/*": "./tsconfig/*",
     "./package.json": "./package.json"
   },
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly",
     "test": "vitest run"
+  },
+  "dependencies": {
+    "@typescript/typescript6": "^6.0.2",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@types/react": "^19.2.0"

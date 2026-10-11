@@ -1,0 +1,42 @@
+{
+  "name": "@lifeforge/module-runtime",
+  "version": "0.0.1",
+  "description": "LifeForge module runtime: identity/path registry and server-side loader",
+  "type": "module",
+  "main": "./dist/registry/index.js",
+  "types": "./dist/registry/index.d.ts",
+  "exports": {
+    "./registry": {
+      "types": "./dist/registry/index.d.ts",
+      "import": "./dist/registry/index.js",
+      "require": "./dist/registry/index.js",
+      "default": "./dist/registry/index.js"
+    },
+    "./loader": {
+      "types": "./dist/loader/index.d.ts",
+      "import": "./dist/loader/index.js",
+      "require": "./dist/loader/index.js",
+      "default": "./dist/loader/index.js"
+    }
+  },
+  "scripts": {
+    "build": "vite build && tsc --project tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@lifeforge/configs": "workspace:*",
+    "@lifeforge/log": "workspace:*",
+    "chalk": "^5.4.1",
+    "chokidar": "^4.0.3",
+    "drizzle-orm": "1.0.0-rc.4",
+    "express": "^4.21.2",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.23",
+    "@types/lodash": "^4.17.21",
+    "@types/node": "^25.0.6"
+  }
+}

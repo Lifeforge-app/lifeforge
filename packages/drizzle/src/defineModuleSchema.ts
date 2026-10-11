@@ -4,7 +4,7 @@ import {
   getTableName
 } from 'drizzle-orm'
 
-import type { ModuleSchemaDefinition } from '@lifeforge/module-registry'
+import type { ResolvedModuleSchema } from '@lifeforge/module-runtime/registry'
 
 /**
  * Scopes the relations helper so bare table keys resolve to their namespaced
@@ -71,7 +71,7 @@ export function defineModuleSchema<
   tables: TTables,
   relations: (r: RelationsBuilder<TTables>) => TConfig,
   moduleId?: string
-): ModuleSchemaDefinition<TTables, (r: RelationsBuilder<TTables>) => TConfig> {
+): ResolvedModuleSchema<TTables, (r: RelationsBuilder<TTables>) => TConfig> {
   if (!moduleId) {
     return { tables, relations }
   }

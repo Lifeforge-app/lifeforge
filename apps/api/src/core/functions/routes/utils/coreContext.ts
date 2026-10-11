@@ -16,7 +16,6 @@ import fetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'
 import convertPDFToImage from '@functions/media/convertPDFToImage'
-import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import {
   addToTaskPool,
   globalTaskPool,
@@ -28,9 +27,14 @@ import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import { FileStorage } from '@lifeforge/file-storage'
 import { createFileMetadataStore } from '@lifeforge/file-storage/server'
 import { type Logger, createLogger } from '@lifeforge/log'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 import { CoreContext } from '@lifeforge/server-utils'
 
 import { storageProvider } from '../../../storage'
+
+async function checkModulesAvailability(moduleId: string): Promise<boolean> {
+  return ModuleRegistry.isAvailable(moduleId)
+}
 
 const loggerCache = createCache<Logger>('loggers')
 

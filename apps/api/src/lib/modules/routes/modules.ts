@@ -1,12 +1,10 @@
-import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import z from 'zod'
-
 import {
   moduleManifestSchema,
   moduleSchema,
   moduleWidgetSchema
 } from '@lifeforge/configs'
-import { ModuleRegistry } from '@lifeforge/module-registry'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 
 import forge from '../forge'
 
@@ -47,7 +45,7 @@ export const checkModuleAvailability = forge
     }
   })
   .callback(async ({ query: { moduleId }, response }) =>
-    response.ok(await checkModulesAvailability(moduleId))
+    response.ok(ModuleRegistry.isAvailable(moduleId))
   )
 
 export const widgets = forge

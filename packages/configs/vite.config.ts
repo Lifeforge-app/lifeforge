@@ -9,7 +9,8 @@ export default defineConfig({
       entry: {
         index: path.resolve(__dirname, 'src/index.ts'),
         vite: path.resolve(__dirname, 'src/vite.ts'),
-        node: path.resolve(__dirname, 'src/node.ts')
+        node: path.resolve(__dirname, 'src/node.ts'),
+        metadata: path.resolve(__dirname, 'src/metadata.ts')
       },
       formats: ['es'],
       fileName: '[name]'

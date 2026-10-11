@@ -20,7 +20,7 @@
     "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@lifeforge/module-registry": "workspace:*"
+    "@lifeforge/module-runtime": "workspace:*"
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",

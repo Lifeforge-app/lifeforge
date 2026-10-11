@@ -80,6 +80,11 @@ async function main(): Promise<void> {
   const server = createSocketServer(app)
 
   startServer(server, app)
+
+  // Routes are already loaded via `./core/app`; start watching for module changes.
+  const { startModuleWatcher } = await import('./core/routes')
+
+  startModuleWatcher()
 }
 
 main()

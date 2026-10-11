@@ -1,11 +1,8 @@
-import { ROOT_DIR } from '@constants'
 import { decrypt2 } from '@functions/auth/encryption'
 import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
-import fs from 'fs'
-import path from 'path'
 
-import { ModuleRegistry } from '@lifeforge/module-registry'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 
 import { db } from '../../drizzle'
 
@@ -21,23 +18,17 @@ export async function validateCallerAccess(
     return
   }
 
-  const modulePath =
-    ModuleRegistry.getPath(callerModule.id) ||
-    path.resolve(ROOT_DIR, 'modules', callerModule.id)
+  const entry = ModuleRegistry.entries.find(
+    candidate =>
+      candidate.name === callerModule.id ||
+      candidate.name.endsWith('/' + callerModule.id)
+  )
 
-  const packageJSONPath = path.join(modulePath, 'package.json')
-
-  if (!fs.existsSync(packageJSONPath)) {
-    throw new Error(`Manifest for ${callerModule.id} not found`)
+  if (!entry) {
+    throw new Error(`Module ${callerModule.id} is not registered`)
   }
 
-  const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, 'utf-8'))
-
-  if (!packageJSON.lifeforge?.APIKeyAccess) {
-    throw new Error(`API access for ${callerModule.id} not found`)
-  }
-
-  const access = packageJSON.lifeforge.APIKeyAccess[id]
+  const access = entry.APIKeyAccess?.[id]
 
   if (!access) {
     throw new Error(`API access for ${id} not found`)

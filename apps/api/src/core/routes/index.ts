@@ -1,29 +1,20 @@
 import { ROOT_DIR } from '@constants'
-import { loadAndRegisterModuleRoutes } from '@functions/modules/loadAndRegisterModuleRoutes'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 import express from 'express'
 import path from 'path'
 
+import { createModuleRuntime } from '@lifeforge/module-runtime/loader'
 import { forgeRouter } from '@lifeforge/server-utils'
 
 import { initDrizzle } from '../drizzle'
 import coreRoutes from './core.routes'
 
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+
 const router = express.Router()
 
-const appRoutes = await loadAndRegisterModuleRoutes()
-
-initDrizzle()
-
-const mainRoutes = forgeRouter({
-  ...coreRoutes,
-  modules: forgeRouter({
-    ...coreRoutes.modules,
-    ...appRoutes
-  })
-})
-
+// Serve module client bundles before the module API routes.
 router.use('/modules/:moduleName/*', (req, res, next) => {
   const moduleName = req.params.moduleName
 
@@ -34,8 +25,7 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
     return next()
   }
 
-  const filePath =
-    (req.params[0 as any as keyof typeof req.params] as string) || ''
+  const filePath = req.params[0 as any as keyof typeof req.params] || ''
 
   // Block null byte injection in filePath
   if (filePath.includes('\0')) {
@@ -53,14 +43,32 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
   // Serve file securely using the root sandbox parameter
-  res.sendFile(filePath, { root: moduleDistPath }, err => {
-    if (err) {
-      next()
-    }
+  res.sendFile(filePath, { root: moduleDistPath }, () => {
+    next()
   })
 })
 
-router.use('/', registerRoutes(mainRoutes))
+const moduleRuntime = createModuleRuntime({
+  modulesDir: path.join(ROOT_DIR, 'modules'),
+  isProduction: IS_PRODUCTION,
+  outerRouter: router,
+  buildRouter: appRoutes => {
+    initDrizzle()
+
+    return registerRoutes(
+      forgeRouter({
+        ...coreRoutes,
+        modules: forgeRouter({
+          ...coreRoutes.modules,
+          ...appRoutes
+        })
+      })
+    )
+  }
+})
+
+// Initial module load + drizzle init.
+await moduleRuntime.reload()
 
 router.get('*', (_, res) => {
   res.set('Cache-Control', 'no-store')
@@ -73,6 +81,9 @@ router.get('*', (_, res) => {
   })
 })
 
-export { mainRoutes }
+/** Starts watching the modules directory and reloading on changes. */
+export function startModuleWatcher(): void {
+  moduleRuntime.watch()
+}
 
 export default router
