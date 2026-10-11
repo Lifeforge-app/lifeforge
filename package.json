@@ -27,7 +27,7 @@
     "lint": "prettier --check . && eslint .",
     "fix": "prettier --write ./ && pnpm lint",
     "test": "turbo test",
-    "db:push": "pnpm --filter @lifeforge/server db:push",
+    "db:push": "pnpm forge db push",
     "db:generate": "pnpm --filter @lifeforge/server db:generate",
     "db:migrate": "pnpm --filter @lifeforge/server db:migrate",
     "postinstall": "turbo build --filter=\"./packages/*\"",
