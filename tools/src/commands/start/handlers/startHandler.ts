@@ -1,17 +1,26 @@
 import { log } from '@clack/prompts'
-import path from 'node:path'
-
-import concurrently from 'concurrently'
+import chalk from 'chalk'
 import type { Command } from 'commander'
 
-import { ROOT_DIR } from '@/utils/constants'
 import executeCommand from '@/utils/commands'
+import { ROOT_DIR } from '@/utils/constants'
+
+import { SERVICE_COMMANDS } from '../config/commands'
+import SERVICES from '../constants/services'
+import {
+  startAllServices,
+  startSingleService
+} from '../functions/startServices'
 
 /**
- * Builds (unless `--no-build`) and starts the API server and the web client in
- * production mode, concurrently.
+ * Builds (unless `--no-build`) and starts the production services. Pass a
+ * service name to start only that service.
  */
-export function startHandler(this: Command): void {
+export function startHandler(
+  this: Command,
+  service?: string,
+  extraArgs: string[] = []
+): void {
   // Prevent forge CLI's --tsconfig from leaking to child processes
   delete process.env.TSX_TSCONFIG_PATH
 
@@ -23,53 +32,48 @@ export function startHandler(this: Command): void {
 
   const port = globalOptions?.port
 
-  if (build) {
-    log.step('Building LifeForge for production...')
+  if (service && !SERVICES.includes(service)) {
+    log.error(`Unknown service: ${service}. Available: ${SERVICES.join(', ')}`)
+    process.exit(1)
+  }
 
-    // Build only the core (framework packages + server + client). Installed
+  if (build) {
+    log.step(
+      `Building LifeForge for production${service ? ` (${service})` : ''}...`
+    )
+
+    // Build only the core (framework packages + server/client). Installed
     // modules are already built (and cleaned) — building them would fail.
+    const buildFilters = (
+      service
+        ? [SERVICE_COMMANDS[service]?.buildFilter]
+        : Object.values(SERVICE_COMMANDS).map(config => config.buildFilter)
+    ).filter((filter): filter is string => Boolean(filter))
+
     executeCommand(
-      'pnpm exec turbo build --filter=@lifeforge/server --filter=@lifeforge/client',
+      `pnpm exec turbo build ${buildFilters.map(filter => `--filter=${filter}`).join(' ')}`,
       { cwd: ROOT_DIR, stdio: 'inherit' }
     )
   }
-
-  const clientArgs: string[] = []
-
-  if (host) clientArgs.push('--host')
-  if (port) clientArgs.push('--port', port)
 
   if (process.stdout.isTTY) {
     // Clear the screen (scrollback + viewport) before the service logs start.
     process.stdout.write('\x1b[2J\x1b[3J\x1b[H')
   }
 
-  log.step('Starting production services...')
+  if (!service) {
+    log.step('Starting production services...')
+    startAllServices(host, port)
 
-  const { result } = concurrently(
-    [
-      {
-        name: 'server',
-        command: 'pnpm run start:prod',
-        cwd: path.join(ROOT_DIR, 'apps/api'),
-        prefixColor: 'green'
-      },
-      {
-        name: 'client',
-        command: ['pnpm run preview', ...clientArgs].join(' '),
-        cwd: path.join(ROOT_DIR, 'apps/web'),
-        prefixColor: 'cyan'
-      }
-    ],
-    {
-      killOthersOn: ['failure', 'success'],
-      prefix: 'name',
-      restartTries: 0
-    }
-  )
+    return
+  }
 
-  result.catch(() => {
-    log.error('Failed to start production services')
+  log.step(`Starting ${chalk.blue(service)} service...`)
+
+  try {
+    startSingleService(service, extraArgs, host, port)
+  } catch {
+    log.error(`Failed to start ${chalk.blue(service)} service`)
     process.exit(1)
-  })
+  }
 }
