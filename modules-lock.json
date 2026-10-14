@@ -1,0 +1,10 @@
+{
+  "modules": {
+    "melvinchia3636--truckers-log": {
+      "repo": "melvinchia3636/lifeforge-module-truckers-log",
+      "version": "0.0.1",
+      "commitSha": "f9d81dd03bf61cee5068e45ec6d6c2030dfa1f75"
+    }
+  },
+  "locales": {}
+}

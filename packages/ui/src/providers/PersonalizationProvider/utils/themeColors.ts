@@ -120,9 +120,9 @@ export function interpolateColors(
 
     const clamped = clampRgb(rgb)
 
-    const r = Math.round((clamped.r ?? 0) * 255)
-    const g = Math.round((clamped.g ?? 0) * 255)
-    const b = Math.round((clamped.b ?? 0) * 255)
+    const r = Math.round(clamped.r * 255)
+    const g = Math.round(clamped.g * 255)
+    const b = Math.round(clamped.b * 255)
 
     rootElement.style.setProperty(
       `--color-${prefix}-${key}`,

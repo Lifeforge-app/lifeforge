@@ -18,7 +18,7 @@ export function createOutputHelpers<
 
     const outputDef = Output[key]
 
-    const status = outputDef?.$status ?? 200
+    const status = outputDef?.$status
 
     const hasPayload =
       outputDef && 'hasPayload' in outputDef

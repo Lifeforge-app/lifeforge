@@ -13,9 +13,7 @@ export async function fetchCategoryOrder(
   apiHost: string
 ): Promise<CategoryOrder> {
   try {
-    return (
-      (await forgeAPI.modules.categories.list.setHost(apiHost).query()) ?? {}
-    )
+    return await forgeAPI.modules.categories.list.setHost(apiHost).query()
   } catch (e) {
     console.warn('Failed to fetch category order:', e)
 
@@ -29,7 +27,7 @@ export async function fetchModuleManifest(
   try {
     const { modules } = await forgeAPI.modules.manifest.setHost(apiHost).query()
 
-    return modules ?? []
+    return modules
   } catch (e) {
     console.warn('Failed to fetch module manifest:', e)
 

@@ -92,7 +92,7 @@ function SidebarItems({ query }: { query: string }) {
                         <MainSidebarItem
                           key={_.kebabCase(subItem.name)}
                           active={location.pathname.startsWith(`/${link}`)}
-                          icon={subItem.icon ?? ''}
+                          icon={subItem.icon}
                           label={subItem.name}
                           link={`/${link}`}
                           sidebarExpanded={sidebarExpanded}

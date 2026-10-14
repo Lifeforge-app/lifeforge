@@ -2,6 +2,8 @@ export * from './response'
 
 export * from './database'
 
+export { ModuleRegistry } from '@lifeforge/module-runtime/registry'
+
 export {
   default as forgeRouter,
   type RouterInput,

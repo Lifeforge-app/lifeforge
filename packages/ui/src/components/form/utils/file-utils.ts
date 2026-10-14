@@ -37,7 +37,7 @@ export function getFormFileFieldInitialData(
     return {
       type: 'existing',
       id: file.key,
-      filename: file.originalName ?? file.key.split('/').pop() ?? file.key,
+      filename: file.originalName,
       preview
     }
   }

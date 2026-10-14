@@ -44,8 +44,8 @@ export function IconSet({
     if (!iconData) return []
 
     const allIcons = [
-      ...(iconData.uncategorized ?? []),
-      ...Object.values(iconData.categories ?? {}).flat()
+      ...iconData.uncategorized,
+      ...Object.values(iconData.categories).flat()
     ]
 
     if (!currentTag) {
@@ -96,7 +96,7 @@ export function IconSet({
         onChange={setSearchTerm}
       />
       <ChipSelector
-        options={Object.keys(iconData.categories ?? {})}
+        options={Object.keys(iconData.categories)}
         value={currentTag}
         onChange={setCurrentTag}
       />

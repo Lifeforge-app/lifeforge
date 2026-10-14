@@ -116,7 +116,7 @@ function createHandler(
         return
       }
 
-      const status = result?.$status ?? 200
+      const status = result?.$status
 
       const payload =
         result && typeof result === 'object' && '$status' in result
