@@ -2,6 +2,12 @@
 >
 > Don't worry, LifeForge is still alive and kicking. 🚀
 >
+> ### Update · 14 Oct 2026
+>
+> LifeForge is now fully independent from PocketBase and it is now fully embracing Drizzle and PostgresQL.
+>
+> Yet, the sole maintainer (currently) has barely any free time to update the documentation yet. But bare with me, it will be updated soon.
+>
 > ### Update · 31 May 2026
 >
 > The UI library rewrite and the subsequent migration away from Tailwind CSS have been successfully completed.
