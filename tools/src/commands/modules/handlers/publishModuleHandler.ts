@@ -1,18 +1,15 @@
 import { log } from '@clack/prompts'
 import chalk from 'chalk'
-import fs from 'fs'
-import path from 'path'
 
-import { ROOT_DIR } from '@/utils/constants'
 import bumpPackageVersion, {
   revertPackageVersion
 } from '@/utils/bumpPackageVersion'
 import executeCommand from '@/utils/commands'
 import { getRepoSlug, getTagCommit, updateRegistryIndex } from '@/utils/github'
 import { assertKebabRepo } from '@/utils/kebab'
-import normalizePackage from '@/utils/normalizePackage'
 import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
+import { resolveModule } from '../functions/listModules'
 import validateModuleAuthor from '../functions/validateModuleAuthor'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
@@ -27,15 +24,14 @@ import validateModuleStructure from '../functions/validateModuleStructure'
  * 4. Updates the registry index with `versions[v] = <commit sha>`
  */
 export async function publishModuleHandler(moduleName: string): Promise<void> {
-  const { shortName, targetDir } = normalizePackage(moduleName)
-  const modulePath = path.join(ROOT_DIR, 'modules', moduleName)
+  const mod = resolveModule(moduleName)
 
-  if (!fs.existsSync(targetDir) && !fs.existsSync(modulePath)) {
+  if (!mod) {
     log.error(`Module ${chalk.blue(moduleName)} not found in modules/`)
     process.exit(1)
   }
 
-  const dir = fs.existsSync(targetDir) ? targetDir : modulePath
+  const { id: shortName, dir } = mod
 
   await validateModuleStructure(dir)
 
@@ -51,7 +47,9 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
 
   try {
     executeCommand(`git add package.json`, { cwd: dir })
-    executeCommand(`git commit -m "chore: release v${newVersion}"`, { cwd: dir })
+    executeCommand(`git commit -m "chore: release v${newVersion}"`, {
+      cwd: dir
+    })
     executeCommand(`git tag v${newVersion}`, { cwd: dir })
     executeCommand('git push', { cwd: dir })
     executeCommand('git push --tags', { cwd: dir })

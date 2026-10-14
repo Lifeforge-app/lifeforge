@@ -4,6 +4,41 @@
       "repo": "melvinchia3636/lifeforge-module-truckers-log",
       "version": "0.0.1",
       "commitSha": "f9d81dd03bf61cee5068e45ec6d6c2030dfa1f75"
+    },
+    "melvinchia3636--cfop-algorithms": {
+      "repo": "melvinchia3636/lifeforge-module-cfop-algorithms",
+      "version": "0.0.2",
+      "commitSha": "95c040097a5b06daeb7bdab96fab69901eaaf5d3"
+    },
+    "melvinchia3636--changi-airport-flight-status": {
+      "repo": "melvinchia3636/lifeforge-module-changi-airport-flight-status",
+      "version": "0.0.2",
+      "commitSha": "1314efe60b3edb3afe2c5b1b8d298f32caaf2aa0"
+    },
+    "melvinchia3636--mrt-map-builder": {
+      "repo": "melvinchia3636/lifeforge-module-mrt-map-builder",
+      "version": "0.0.2",
+      "commitSha": "fc56d0dfe84e0ac914f9949cb203f8a255a66479"
+    },
+    "melvinchia3636--railway-map": {
+      "repo": "melvinchia3636/lifeforge-module-railway-map",
+      "version": "0.0.2",
+      "commitSha": "41fa24cee051a642095cf00856a3af3acc2e7c92"
+    },
+    "melvinchia3636--scores-library": {
+      "repo": "melvinchia3636/lifeforge-module-scores-library",
+      "version": "0.0.2",
+      "commitSha": "41d86ddb3488607d7810c183bd2af303b0495372"
+    },
+    "melvinchia3636--sin-chew-daily": {
+      "repo": "melvinchia3636/lifeforge-module-sin-chew-daily",
+      "version": "0.0.2",
+      "commitSha": "2edcf7195dea66c45c8bc78570a5a3d417568614"
+    },
+    "melvinchia3636--guitar-tuner": {
+      "repo": "melvinchia3636/lifeforge-module-guitar-tuner",
+      "version": "0.0.2",
+      "commitSha": "8366a217a1a28b42120f27cc26b5c9dced048a35"
     }
   },
   "locales": {}

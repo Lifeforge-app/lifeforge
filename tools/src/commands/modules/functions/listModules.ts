@@ -2,47 +2,62 @@ import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 
-import { readPackageJson } from '@/utils/packageJson'
+import { ROOT_DIR } from '@/utils/constants'
 
-import normalizePackage from '../../../utils/normalizePackage'
-
-interface ModuleBasicInfo {
+export interface ModuleBasicInfo {
+  id: string
   name: string
+  dir: string
   displayName: string
   version: string
 }
 
+const MODULES_DIR = path.join(ROOT_DIR, 'modules')
+
 /**
- * Lists all installed modules with their basic info.
- *
- * Parses the root package.json and lists all dependencies that start with `@lifeforge/` (except `@lifeforge/lang-*`),
- * then reads the package.json of each module to get the basic info.
+ * Lists all installed modules by scanning `modules/` and reading each module's
+ * package.json. The result is keyed by the module's package name and each entry
+ * carries its real directory on disk.
  *
  * @param exitIfNoModule - Whether to exit the process if no modules are found
- * @returns Record of module name to module basic info
+ * @returns Record of package name to module basic info
  */
 export default function listModules(
   exitIfNoModule = false
 ): Record<string, ModuleBasicInfo> {
-  const appsPackageJson = readPackageJson('modules')
-
-  const allModules = Object.keys(appsPackageJson.dependencies ?? {})
-    .filter(dep => dep.startsWith('@lifeforge/'))
-    .filter(dep => !dep.replace('@lifeforge/', '').match(/^.*?--lang-.*$/))
-
   const modules: Record<string, ModuleBasicInfo> = {}
 
-  for (const module of allModules) {
-    const { targetDir } = normalizePackage(module)
+  if (fs.existsSync(MODULES_DIR)) {
+    for (const dirent of fs.readdirSync(MODULES_DIR, {
+      withFileTypes: true
+    })) {
+      if (!dirent.isDirectory() || dirent.name.startsWith('.')) {
+        continue
+      }
 
-    const packageJson = JSON.parse(
-      fs.readFileSync(path.join(targetDir, 'package.json'), 'utf-8')
-    )
+      const dir = path.join(MODULES_DIR, dirent.name)
 
-    modules[module] = {
-      name: packageJson.name,
-      displayName: packageJson.displayName,
-      version: packageJson.version
+      const packageJsonPath = path.join(dir, 'package.json')
+
+      if (!fs.existsSync(packageJsonPath)) {
+        continue
+      }
+
+      const packageJson = JSON.parse(
+        fs.readFileSync(packageJsonPath, 'utf-8')
+      ) as {
+        name: string
+        displayName: string
+        version: string
+      }
+
+      modules[packageJson.name] = {
+        id: packageJson.name.replace(/^@lifeforge\//, ''),
+        name: packageJson.name,
+        dir,
+        displayName: packageJson.displayName,
+        version: packageJson.version
+      }
     }
   }
 
@@ -52,4 +67,9 @@ export default function listModules(
   }
 
   return modules
+}
+
+/** Resolves an installed module by its package id (scope-stripped name). */
+export function resolveModule(id: string): ModuleBasicInfo | undefined {
+  return Object.values(listModules()).find(module => module.id === id)
 }

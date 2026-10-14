@@ -17,9 +17,9 @@ export function listLocalesHandler(): void {
 
   log.step(`Installed language packs (${locales.length}):`)
 
-  for (const locale of locales.sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const locale of locales.sort((a, b) => a.id.localeCompare(b.id))) {
     log.message(
-      `  ${chalk.blue(locale.name)} - ${locale.displayName} (v.${locale.version})`
+      `  ${chalk.blue(locale.id)} - ${locale.displayName} (v.${locale.version})`
     )
   }
 }

@@ -4,7 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import normalizePackage from '@/utils/normalizePackage'
+import { resolveLocale } from '../functions/listLocales'
 
 const localesPackageJSONSchema = z.object({
   name: z.string().regex(/^@lifeforge\/.+--lang-.+$/),
@@ -26,13 +26,15 @@ const localesPackageJSONSchema = z.object({
 })
 
 export function validateLocaleStructureHandler(lang: string) {
-  const { targetDir } = normalizePackage(lang, 'locale')
+  const mod = resolveLocale(lang)
 
-  if (!fs.existsSync(targetDir)) {
+  if (!mod) {
     log.error(`Locale "${lang}" not found in locales/`)
 
     process.exit(1)
   }
+
+  const targetDir = mod.dir
 
   const packageJsonPath = path.join(targetDir, 'package.json')
 
@@ -49,17 +51,7 @@ export function validateLocaleStructureHandler(lang: string) {
 
   if (!packageJson.success) {
     log.error('Locale validation failed:')
-    packageJson.error.issues.forEach(issue =>
-      log.error(`  - ${issue.message}`)
-    )
-
-    process.exit(1)
-  }
-
-  if (`@lifeforge/${lang}` !== packageJson.data.name) {
-    log.error(
-      `The folder name "${lang}" does not match the package name "${packageJson.data.name}"`
-    )
+    packageJson.error.issues.forEach(issue => log.error(`  - ${issue.message}`))
 
     process.exit(1)
   }

@@ -11,12 +11,14 @@ import {
 import { isDockerMode } from '@/utils/helpers'
 import { installFromGithub } from '@/utils/installSource'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
-import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
 import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import cleanModuleSource from '../functions/cleanModuleSource'
-import listModules from '../functions/listModules'
+import listModules, {
+  type ModuleBasicInfo,
+  resolveModule
+} from '../functions/listModules'
 import { buildModuleHandler } from './buildModuleHandler'
 
 interface UpgradeResult {
@@ -33,10 +35,10 @@ interface UpgradeResult {
  * @returns the upgrade result, or `false` if already up to date / failed
  */
 async function upgradeModule(
-  packageName: string,
+  mod: ModuleBasicInfo,
   currentVersion: string
 ): Promise<UpgradeResult | false> {
-  const { shortName, targetDir } = normalizePackage(packageName)
+  const { id: shortName, dir: targetDir } = mod
 
   const entry = await resolveEntry('modules', shortName)
 
@@ -80,7 +82,6 @@ async function upgradeModule(
     fs.rmSync(targetDir, { recursive: true, force: true })
 
     await installFromGithub({
-      kind: 'modules',
       id: shortName,
       entry,
       targetDir,
@@ -114,38 +115,33 @@ async function upgradeModule(
  * - Removes source and updates the lockfile
  */
 export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
-  const modules = listModules()
-
-  const upgraded: { id: string; result: UpgradeResult }[] = []
+  const upgraded: { mod: ModuleBasicInfo; result: UpgradeResult }[] = []
 
   if (moduleName) {
-    const { fullName } = normalizePackage(moduleName)
-
-    const mod = modules[fullName]
+    const mod = resolveModule(moduleName)
 
     if (!mod) {
       log.error(`Module ${chalk.blue(moduleName)} is not installed`)
       process.exit(1)
     }
 
-    const result = await upgradeModule(fullName, mod.version)
+    const result = await upgradeModule(mod, mod.version)
 
     if (result) {
-      upgraded.push({
-        id: fullName.replace('@lifeforge/', ''),
-        result
-      })
+      upgraded.push({ mod, result })
     }
   } else {
+    const modules = Object.values(listModules())
+
     log.message(
-      `Checking ${chalk.blue(String(Object.keys(modules).length))} modules for updates...\n`
+      `Checking ${chalk.blue(String(modules.length))} modules for updates...\n`
     )
 
-    for (const [name, { version }] of Object.entries(modules)) {
-      const result = await upgradeModule(name, version)
+    for (const mod of modules) {
+      const result = await upgradeModule(mod, mod.version)
 
       if (result) {
-        upgraded.push({ id: name.replace('@lifeforge/', ''), result })
+        upgraded.push({ mod, result })
       }
     }
   }
@@ -160,41 +156,39 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
   }
 
   // Build module client bundles for federation (both dist and dist-docker)
-  for (const { id } of upgraded) {
-    await buildModuleHandler(id)
+  for (const { mod } of upgraded) {
+    await buildModuleHandler(mod.id)
 
-    await buildModuleHandler(id, { docker: true, buildServer: false })
+    await buildModuleHandler(mod.id, { docker: true, buildServer: false })
   }
 
   // Sync the database schema for upgraded modules (only their own objects)
   if (!isDockerMode()) {
-    for (const { id } of upgraded) {
-      const { targetDir } = normalizePackage(id)
-
-      if (!resolveModuleSchemaFile(targetDir)) {
+    for (const { mod } of upgraded) {
+      if (!resolveModuleSchemaFile(mod.dir)) {
         continue
       }
 
-      startSpinner(`Syncing database schema for ${chalk.blue(id)}...`)
+      startSpinner(`Syncing database schema for ${chalk.blue(mod.id)}...`)
 
       try {
-        await syncModuleSchema(targetDir)
-        stopSpinner(`Synced database schema for ${chalk.blue(id)}`)
+        await syncModuleSchema(mod.dir)
+        stopSpinner(`Synced database schema for ${chalk.blue(mod.id)}`)
       } catch {
         failSpinner(
-          `Could not sync the database schema for ${id} automatically.`
+          `Could not sync the database schema for ${mod.id} automatically.`
         )
       }
     }
   }
 
   // Clean source code (upgrades always run in production mode)
-  for (const { id } of upgraded) {
-    cleanModuleSource(normalizePackage(id).targetDir)
+  for (const { mod } of upgraded) {
+    cleanModuleSource(mod.dir)
   }
 
-  for (const { id, result } of upgraded) {
-    setLocked('modules', id, {
+  for (const { mod, result } of upgraded) {
+    setLocked('modules', mod.id, {
       repo: result.repo,
       version: result.version,
       commitSha: result.commitSha

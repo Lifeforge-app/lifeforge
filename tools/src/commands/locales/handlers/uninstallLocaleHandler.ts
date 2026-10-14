@@ -3,47 +3,39 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { ROOT_DIR } from '@/utils/constants'
 import { installDeps } from '@/utils/commands'
+import { ROOT_DIR } from '@/utils/constants'
 import { removeLocked } from '@/utils/moduleLock'
-import normalizePackage from '@/utils/normalizePackage'
-import { findPackageName, removeDependency } from '@/utils/packageJson'
 import { withSpinner } from '@/utils/spinner'
 
 import ensureLocaleNotInUse from '../functions/ensureLocaleNotInUse'
+import { resolveLocale } from '../functions/listLocales'
 
 export async function uninstallLocaleHandler(langCode: string): Promise<void> {
-  const { fullName, shortName, targetDir } = normalizePackage(
-    langCode,
-    'locale'
-  )
+  const mod = resolveLocale(langCode)
 
-  const found = findPackageName(fullName)
-
-  if (!found) {
-    log.error(`Locale "${shortName}" is not installed`)
+  if (!mod) {
+    log.error(`Locale "${langCode}" is not installed`)
 
     process.exit(1)
   }
 
-  await ensureLocaleNotInUse(shortName)
+  await ensureLocaleNotInUse(mod.code)
 
-  const symlinkPath = path.join(ROOT_DIR, 'node_modules', fullName)
+  const symlinkPath = path.join(ROOT_DIR, 'node_modules', mod.name)
 
   try {
     await withSpinner(
-      `Uninstalling ${chalk.blue(fullName)}...`,
+      `Uninstalling ${chalk.blue(mod.name)}...`,
       () => {
         fs.rmSync(symlinkPath, { recursive: true, force: true })
-        fs.rmSync(targetDir, { recursive: true, force: true })
+        fs.rmSync(mod.dir, { recursive: true, force: true })
 
-        removeDependency(fullName)
-
-        removeLocked('locales', shortName)
+        removeLocked('locales', mod.id)
       },
       {
-        success: `Uninstalled ${chalk.blue(fullName)}`,
-        fail: `Failed to uninstall ${chalk.blue(fullName)}`
+        success: `Uninstalled ${chalk.blue(mod.name)}`,
+        fail: `Failed to uninstall ${chalk.blue(mod.name)}`
       }
     )
   } catch {

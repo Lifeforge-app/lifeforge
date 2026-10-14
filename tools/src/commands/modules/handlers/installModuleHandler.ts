@@ -50,14 +50,14 @@ export async function installModuleHandler(
   const installed: InstalledModule[] = []
 
   for (const moduleName of moduleNames) {
-    const { fullName, shortName, targetDir } = normalizePackage(moduleName)
-
-    if (!/^@lifeforge\/[a-z0-9-_]+--[a-z0-9-_]+$/i.test(fullName)) {
+    if (!/^[a-z0-9-_]+--[a-z0-9-_]+$/i.test(moduleName)) {
       log.error(
-        `Invalid module name: ${chalk.blue(moduleName)}. Module names can only contain letters, numbers, hyphens, and underscores.`
+        `Invalid module id: ${chalk.blue(moduleName)}. Pass the package id (e.g. lifeforge--calendar).`
       )
       continue
     }
+
+    const { fullName, shortName, targetDir } = normalizePackage(moduleName)
 
     if (fs.existsSync(targetDir)) {
       log.error(`Module already exists at modules/${shortName}`)
@@ -87,7 +87,6 @@ export async function installModuleHandler(
 
     try {
       await installFromGithub({
-        kind: 'modules',
         id: shortName,
         entry,
         targetDir,

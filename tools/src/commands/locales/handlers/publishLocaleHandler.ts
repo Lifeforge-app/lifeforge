@@ -1,6 +1,5 @@
 import { log } from '@clack/prompts'
 import chalk from 'chalk'
-import fs from 'fs'
 
 import bumpPackageVersion, {
   revertPackageVersion
@@ -8,9 +7,9 @@ import bumpPackageVersion, {
 import executeCommand from '@/utils/commands'
 import { getRepoSlug, getTagCommit, updateRegistryIndex } from '@/utils/github'
 import { assertKebabRepo } from '@/utils/kebab'
-import normalizePackage from '@/utils/normalizePackage'
 import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
+import { resolveLocale } from '../functions/listLocales'
 import validateLocalesAuthor from '../functions/validateLocalesAuthor'
 import { validateLocaleStructureHandler } from './validateLocaleStructure'
 
@@ -19,13 +18,15 @@ import { validateLocaleStructureHandler } from './validateLocaleStructure'
  * locale's Git repo, pushes, and records the release commit in the index.
  */
 export async function publishLocaleHandler(langCode: string): Promise<void> {
-  const { shortName, targetDir } = normalizePackage(langCode, 'locale')
+  const mod = resolveLocale(langCode)
 
-  if (!fs.existsSync(targetDir)) {
+  if (!mod) {
     log.error(`Locale "${langCode}" not found in locales/`)
 
     process.exit(1)
   }
+
+  const { id: shortName, dir: targetDir } = mod
 
   log.step('Validating locale structure...')
   validateLocaleStructureHandler(langCode)

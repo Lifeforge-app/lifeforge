@@ -3,17 +3,16 @@ import chalk from 'chalk'
 import _ from 'lodash'
 
 import { run } from '@/utils/github'
-import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
 import { startSpinner, stopSpinner } from '@/utils/spinner'
 
 /**
  * Views module information from the registry (GitHub-hosted index).
  *
- * @param moduleName - The module name to view (e.g., calendar or @lifeforge/lifeforge--calendar)
+ * @param moduleName - The module package id to view (e.g., lifeforge--calendar)
  */
 export async function viewModuleHandler(moduleName: string): Promise<void> {
-  const { shortName } = normalizePackage(moduleName)
+  const shortName = moduleName
 
   const entry = await resolveEntry('modules', shortName)
 
@@ -27,7 +26,9 @@ export async function viewModuleHandler(moduleName: string): Promise<void> {
   startSpinner('Fetching package info...')
 
   try {
-    const content = run(`gh api repos/${entry.repo}/contents/package.json --jq .content`)
+    const content = run(
+      `gh api repos/${entry.repo}/contents/package.json --jq .content`
+    )
 
     pkg = JSON.parse(Buffer.from(content, 'base64').toString('utf-8'))
   } catch {

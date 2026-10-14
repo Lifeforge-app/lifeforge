@@ -1,6 +1,7 @@
 import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
+import path from 'path'
 
 import initGitRepository from '@/utils/initGitRepository'
 import { installFromGithub } from '@/utils/installSource'
@@ -17,9 +18,9 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
     'locale'
   )
 
-  if (!/^@lifeforge\/.*?-lang-[a-z]{2}(-[A-Z]{2})?$/i.test(fullName)) {
+  if (!/^[a-z0-9-_]+--lang-[a-z]{2}(-[A-Z]{2})?$/i.test(langCode)) {
     log.error(
-      `Invalid locale name: ${chalk.blue(langCode)}. Locale names should follow the format "xx" or "xx-XX", where "xx" is a two-letter language code and "XX" is a two-letter country code.`
+      `Invalid locale id: ${chalk.blue(langCode)}. Pass the package id (e.g. lifeforge--lang-en or melvinchia3636--lang-zh-CN).`
     )
     process.exit(1)
   }
@@ -56,7 +57,6 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
       `Installing ${chalk.blue(fullName)} v${version}...`,
       async () => {
         await installFromGithub({
-          kind: 'locales',
           id: shortName,
           entry,
           targetDir,
@@ -65,7 +65,13 @@ export async function installLocaleHandler(langCode: string): Promise<void> {
 
         initGitRepository(targetDir)
 
-        await setFirstLangInDB(shortName)
+        const installedPackageJson = JSON.parse(
+          fs.readFileSync(path.join(targetDir, 'package.json'), 'utf-8')
+        ) as { lifeforge?: { code?: string } }
+
+        await setFirstLangInDB(
+          installedPackageJson.lifeforge?.code ?? shortName
+        )
 
         setLocked('locales', shortName, {
           repo: entry.repo,

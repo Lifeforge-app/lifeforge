@@ -20,6 +20,12 @@ const MODULE_STRUCTURE: Array<{
   },
   {
     type: 'folder',
+    name: 'client/src',
+    required: true,
+    errorMessage: 'Missing client/src/ directory (module source)'
+  },
+  {
+    type: 'folder',
     name: 'server',
     required: false,
     errorMessage: 'Missing server/ directory'

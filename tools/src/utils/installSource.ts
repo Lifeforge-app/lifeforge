@@ -5,12 +5,9 @@ import path from 'path'
 import { installDeps } from './commands'
 import { downloadArchive, readRepoSlug } from './github'
 import { assertKebabRepo } from './kebab'
-import type { LockKind } from './moduleLock'
-import { addDependency } from './packageJson'
 import type { RegistryEntry } from './registryIndex'
 
 interface InstallFromGithubOptions {
-  kind: LockKind
   /** Scope-stripped module/locale id (e.g. `lifeforge--wallet`). */
   id: string
   entry: RegistryEntry
@@ -20,13 +17,11 @@ interface InstallFromGithubOptions {
 
 /**
  * Installs a module/locale from its GitHub repo: downloads the archive at the
- * index-pinned commit, verifies its identity, moves it into place, and links it
- * as a workspace dependency.
+ * index-pinned commit, verifies its identity, and moves it into place.
  *
  * @returns The resolved commit SHA and the archive's declared package name.
  */
 export async function installFromGithub({
-  kind,
   id,
   entry,
   targetDir,
@@ -74,7 +69,6 @@ export async function installFromGithub({
     fs.rmSync(targetDir, { recursive: true, force: true })
     fs.cpSync(tempDir, targetDir, { recursive: true })
 
-    addDependency(expectedName, kind)
     installDeps()
 
     return { commitSha, name: pkg.name }

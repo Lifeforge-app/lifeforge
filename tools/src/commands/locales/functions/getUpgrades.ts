@@ -1,7 +1,9 @@
 import { log } from '@clack/prompts'
 import chalk from 'chalk'
 
-import { resolveEntry, type RegistryEntry } from '@/utils/registryIndex'
+import { type RegistryEntry, resolveEntry } from '@/utils/registryIndex'
+
+import type { LocaleInfo } from './listLocales'
 
 export interface LocaleUpgrade {
   id: string
@@ -12,12 +14,12 @@ export interface LocaleUpgrade {
 }
 
 async function getUpgrades(
-  packagesToCheck: { name: string; version: string }[]
+  packagesToCheck: LocaleInfo[]
 ): Promise<LocaleUpgrade[]> {
   const upgrades: LocaleUpgrade[] = []
 
   for (const pkg of packagesToCheck) {
-    const entry = await resolveEntry('locales', pkg.name)
+    const entry = await resolveEntry('locales', pkg.id)
 
     if (!entry) {
       continue
@@ -25,7 +27,7 @@ async function getUpgrades(
 
     if (entry.latest && entry.latest !== pkg.version) {
       upgrades.push({
-        id: pkg.name,
+        id: pkg.id,
         name: pkg.name,
         current: pkg.version,
         latest: entry.latest,

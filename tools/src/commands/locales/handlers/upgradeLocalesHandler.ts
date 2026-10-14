@@ -4,11 +4,11 @@ import chalk from 'chalk'
 import { confirmAction } from '@/utils/helpers'
 import { installFromGithub } from '@/utils/installSource'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
-import normalizePackage from '@/utils/normalizePackage'
 import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import getPackagesToCheck from '../functions/getPackagesToCheck'
 import getUpgrades from '../functions/getUpgrades'
+import { resolveLocale } from '../functions/listLocales'
 
 export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
   const packagesToCheck = getPackagesToCheck(langCode)
@@ -20,7 +20,15 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
   let upgradedCount = 0
 
   for (const upgrade of upgrades) {
-    const { shortName, targetDir } = normalizePackage(upgrade.id, 'locale')
+    const mod = resolveLocale(upgrade.id)
+
+    if (!mod) {
+      log.warn(`Locale ${chalk.blue(upgrade.id)} is not installed`)
+
+      continue
+    }
+
+    const { id: shortName, dir: targetDir } = mod
 
     const commitSha = upgrade.entry.versions[upgrade.latest]
 
@@ -37,7 +45,6 @@ export async function upgradeLocaleHandler(langCode?: string): Promise<void> {
 
     try {
       await installFromGithub({
-        kind: 'locales',
         id: shortName,
         entry: upgrade.entry,
         targetDir,

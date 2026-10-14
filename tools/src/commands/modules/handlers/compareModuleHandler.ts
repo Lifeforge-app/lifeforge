@@ -5,11 +5,13 @@ import os from 'os'
 import path from 'path'
 
 import { downloadArchive } from '@/utils/github'
-import normalizePackage from '@/utils/normalizePackage'
 import { resolveEntry } from '@/utils/registryIndex'
 import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
-import listModules from '../functions/listModules'
+import listModules, {
+  type ModuleBasicInfo,
+  resolveModule
+} from '../functions/listModules'
 
 interface FileDiff {
   added: string[]
@@ -140,9 +142,7 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
     }
 
     if (diff.modified.length > 5) {
-      log.message(
-        chalk.dim(`        ... and ${diff.modified.length - 5} more`)
-      )
+      log.message(chalk.dim(`        ... and ${diff.modified.length - 5} more`))
     }
   }
 
@@ -166,8 +166,8 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
  *
  * @returns true if has changes, false if in sync, null if comparison failed
  */
-async function compareModule(packageName: string): Promise<boolean | null> {
-  const { shortName, targetDir } = normalizePackage(packageName)
+async function compareModule(mod: ModuleBasicInfo): Promise<boolean | null> {
+  const { id: shortName, dir: targetDir } = mod
 
   if (!fs.existsSync(targetDir)) {
     log.error(`Module ${chalk.blue(shortName)} is not installed`)
@@ -222,29 +222,37 @@ async function compareModule(packageName: string): Promise<boolean | null> {
  */
 export async function compareModuleHandler(moduleName?: string): Promise<void> {
   if (moduleName) {
+    const mod = resolveModule(moduleName)
+
+    if (!mod) {
+      log.error(`Module ${chalk.blue(moduleName)} is not installed`)
+
+      return
+    }
+
     log.message('')
-    await compareModule(moduleName)
+    await compareModule(mod)
     log.message('')
 
     return
   }
 
-  const modules = listModules()
+  const modules = Object.values(listModules())
 
-  if (Object.keys(modules).length === 0) {
+  if (modules.length === 0) {
     log.message('No modules installed')
 
     return
   }
 
   log.message(
-    `\nComparing ${chalk.blue(String(Object.keys(modules).length))} modules with the registry...\n`
+    `\nComparing ${chalk.blue(String(modules.length))} modules with the registry...\n`
   )
 
   let changedCount = 0
 
-  for (const name of Object.keys(modules)) {
-    const hasChanges = await compareModule(name)
+  for (const mod of modules) {
+    const hasChanges = await compareModule(mod)
 
     if (hasChanges) {
       changedCount++

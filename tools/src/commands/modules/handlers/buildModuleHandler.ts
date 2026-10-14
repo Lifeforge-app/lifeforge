@@ -4,10 +4,12 @@ import fs from 'fs'
 import path from 'path'
 
 import executeCommand from '@/utils/commands'
-import normalizePackage from '@/utils/normalizePackage'
 import { withSpinner } from '@/utils/spinner'
 
-import listModules from '../functions/listModules'
+import listModules, {
+  type ModuleBasicInfo,
+  resolveModule
+} from '../functions/listModules'
 
 interface BuildOptions {
   docker?: boolean
@@ -22,24 +24,34 @@ interface BuildOptions {
  * - If client/vite.config.ts exists: Runs `pnpm run build:client`
  * - If server/index.ts exists: Runs `pnpm run build:server`
  *
- * @param moduleName - Optional module name to build (builds all if omitted)
+ * @param moduleName - Optional module id to build (builds all if omitted)
  * @param options.docker - If true, builds for Docker (outputs to dist-docker with /api base)
  */
 export async function buildModuleHandler(
   moduleName?: string,
   options?: BuildOptions
 ): Promise<void> {
-  const modules = listModules()
-
   const isDocker = options?.docker ?? false
 
   const buildClient = options?.buildClient ?? true
 
   const buildServer = options?.buildServer ?? true
 
-  const moduleNames = moduleName
-    ? [normalizePackage(moduleName).fullName]
-    : Object.keys(modules)
+  let targets: ModuleBasicInfo[]
+
+  if (moduleName) {
+    const mod = resolveModule(moduleName)
+
+    if (!mod) {
+      log.error(`Module ${chalk.blue(moduleName)} is not installed`)
+
+      return
+    }
+
+    targets = [mod]
+  } else {
+    targets = Object.values(listModules())
+  }
 
   let clientBuiltCount = 0
   let serverBuiltCount = 0
@@ -49,9 +61,7 @@ export async function buildModuleHandler(
     log.step('Building for Docker (output: dist-docker, base: /api)')
   }
 
-  for (const mod of moduleNames) {
-    const { targetDir, shortName } = normalizePackage(mod)
-
+  for (const { id: shortName, dir: targetDir } of targets) {
     // Check if module folder exists
     if (!fs.existsSync(targetDir)) {
       log.error(`Module ${chalk.blue(shortName)} not found at ${targetDir}`)

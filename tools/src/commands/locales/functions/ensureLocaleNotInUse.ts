@@ -1,8 +1,9 @@
 import { log } from '@clack/prompts'
 import postgres from 'postgres'
 
-async function ensureLocaleNotInUse(shortName: string) {
+async function ensureLocaleNotInUse(code: string) {
   const databaseUrl = process.env.DATABASE_URL
+
   if (!databaseUrl) return
 
   try {
@@ -10,9 +11,9 @@ async function ensureLocaleNotInUse(shortName: string) {
     const [user] = await sql`SELECT language FROM users LIMIT 1`
     await sql.end()
 
-    if (user?.language === shortName) {
+    if (user?.language === code) {
       log.error(
-        `Cannot uninstall locale "${shortName}". It is currently selected by the user.`
+        `Cannot uninstall locale "${code}". It is currently selected by the user.`
       )
       process.exit(1)
     }

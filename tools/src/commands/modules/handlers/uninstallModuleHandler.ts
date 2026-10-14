@@ -3,21 +3,21 @@ import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 
-import { ROOT_DIR } from '@/utils/constants'
 import { installDeps } from '@/utils/commands'
+import { ROOT_DIR } from '@/utils/constants'
 import { removeLocked } from '@/utils/moduleLock'
-import normalizePackage from '@/utils/normalizePackage'
-import { findPackageName, removeDependency } from '@/utils/packageJson'
 import { withSpinner } from '@/utils/spinner'
+
+import { resolveModule } from '../functions/listModules'
 
 /**
  * Uninstalls one or more modules.
  *
  * For each module:
- * 1. Validates it exists in package.json
+ * 1. Resolves its directory by scanning `modules/`
  * 2. Removes symlink from node_modules
  * 3. Removes module directory from modules/
- * 4. Removes from package.json dependencies and the lockfile
+ * 4. Removes from the lockfile
  *
  * After uninstallation:
  * - Runs pnpm install to clean up
@@ -28,14 +28,16 @@ export async function uninstallModuleHandler(
   const uninstalled: string[] = []
 
   for (const moduleName of moduleNames) {
-    const { targetDir, fullName, shortName } = normalizePackage(moduleName)
+    const mod = resolveModule(moduleName)
 
-    if (!findPackageName(fullName, 'modules')) {
-      log.error(
-        `Module ${chalk.blue(fullName)} not found in modules/package.json`
-      )
+    if (!mod) {
+      log.error(`Module ${chalk.blue(moduleName)} is not installed`)
       continue
     }
+
+    const { id: shortName, dir: targetDir } = mod
+
+    const fullName = `@lifeforge/${shortName}`
 
     const symlinkPath = path.join(ROOT_DIR, 'node_modules', fullName)
 
@@ -43,8 +45,6 @@ export async function uninstallModuleHandler(
       await withSpinner(
         `Uninstalling ${chalk.blue(fullName)}...`,
         () => {
-          removeDependency(fullName, 'modules')
-
           fs.rmSync(symlinkPath, { recursive: true, force: true })
           fs.rmSync(targetDir, { recursive: true, force: true })
 
