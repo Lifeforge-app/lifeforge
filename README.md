@@ -18,68 +18,25 @@
 >
 > Don't get too comfortable, though. This is definitely not the largest forever. If LifeForge has taught us anything, it's that every "final architecture" eventually becomes tomorrow's migration project. :)
 
-> [!IMPORTANT]
->
-> ## UI Architecture Migration Completed
->
-> Development was previously blocked by a critical styling issue in the module federation architecture.
->
-> ### What happened?
->
-> Both the host application and federated modules were bundling Tailwind CSS independently. This created CSS cascade layer conflicts across module boundaries, resulting in:
->
-> - Unpredictable style overrides
-> - Broken responsive utilities
-> - Cross-module styling interference
-> - Inconsistent rendering behavior between host and remote applications
->
-> When multiple Tailwind CSS bundles coexist within the same runtime, cascade layer ordering becomes difficult to control reliably.
->
-> Each federated module generates its own CSS output, but all styles ultimately converge into a single document cascade. As modules are loaded and composed dynamically, style precedence can become dependent on injection order rather than application intent, creating subtle and difficult-to-debug styling conflicts.
->
-> While Tailwind CSS excels in conventional application architectures, it was never designed with large-scale federated frontend systems as a primary use case.
->
-> **The problem was never subtle.**
->
-> Once multiple Tailwind bundles were introduced into the module federation architecture, styling conflicts became immediately visible and could affect entire sections of the UI. Because the conflict originated from the interaction between independently generated CSS outputs sharing the same cascade, no practical or reliable fix existed without changing the underlying styling model itself.
->
-> The migration away from Tailwind was therefore not a preference change, but an architectural necessity.
->
-> ### Resolution
->
-> PR #93 introduced a complete redesign of the internal UI library and styling architecture.
->
-> The new system is:
->
-> - Token-driven
-> - Component-based
-> - Fully independent of Tailwind CSS
-> - Designed specifically for module federation
-> - Built around a single shared UI contract
->
-> Rather than allowing each module to generate and ship its own CSS, all applications now consume UI primitives, tokens, and styling behavior directly from `@lifeforge/ui`.
->
-> This establishes `@lifeforge/ui` as the single source of truth for visual presentation across the entire platform.
->
-> As a result:
->
-> - Federated modules no longer bundle their own styling systems
-> - Visual behavior remains consistent regardless of module load order
-> - Styling ownership is centralized and predictable
-> - Cross-module cascade conflicts are eliminated by design
->
-> The migration introduced breaking changes and required substantial refactoring across the codebase, but it permanently resolved a class of architectural problems that could not be reliably addressed within the previous model.
 
 > [!TIP]
 >
-> ## Looking for the Legacy Version?
+> ## Looking for Legacy Versions?
 >
-> The final Tailwind-based implementation has been preserved and remains available for reference.
+> Previous implementations and architecture milestones have been preserved for reference:
 >
-> - Legacy Release: https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
-> - Legacy Branch: https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
+> ### PocketBase Version (`pocketbase-final`)
+> Contains the final PocketBase backend implementation prior to the migration to Drizzle and PostgreSQL.
 >
-> The legacy version is no longer actively developed, but it may still be useful for historical reference, migration guidance, or reviewing previous implementations.
+> - Branch: https://github.com/Lifeforge-app/lifeforge/tree/pocketbase-final
+>
+> ### Legacy Tailwind Version (`legacy-final`)
+> The final Tailwind-based UI implementation.
+>
+> - Release: https://github.com/Lifeforge-app/lifeforge/releases/tag/legacy-final
+> - Branch: https://github.com/Lifeforge-app/lifeforge/tree/legacy-final
+>
+> Legacy branches are no longer actively maintained, but remain accessible for historical reference, schema comparisons, or migration guidance.
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/lifeforge-logo.svg" alt="LifeForge Logo" width="240" height="80"/></img>
