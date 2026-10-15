@@ -3,10 +3,27 @@ import babel from '@rolldown/plugin-babel'
 import { vanillaExtractPlugin } from '@vanilla-extract/vite-plugin'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
 import path from 'node:path'
-import { defineConfig } from 'vite'
+import { type Plugin, defineConfig } from 'vite'
 
 import { SHARED_DEPS, SHARED_PACKAGES } from '../constants/shared-packages'
 import { clientAliasResolver } from '../resolvers/client-alias-resolver'
+
+/**
+ * The `modules` directory lives outside the web app's Vite root. Vite only
+ * watches files already in the module graph, so a module installed while the
+ * dev server is running wouldn't be picked up by the dev-mode
+ * `import.meta.glob` (used to resolve modules from source) until a restart.
+ * Watching the directory keeps that glob fresh on install/removal.
+ */
+function watchModulesDir(dirname: string): Plugin {
+  return {
+    name: 'lifeforge:watch-modules',
+    apply: 'serve',
+    configureServer(server) {
+      server.watcher.add(path.resolve(dirname, '../../modules'))
+    }
+  }
+}
 
 /**
  * Creates the standard client/host Vite configuration for LifeForge.
@@ -36,6 +53,7 @@ export function defineCoreClientConfig(dirname: string) {
     return {
       envDir: path.resolve(dirname, '../../env'),
       plugins: [
+        watchModulesDir(dirname),
         {
           name: 'alias-resolver',
           enforce: 'pre',
