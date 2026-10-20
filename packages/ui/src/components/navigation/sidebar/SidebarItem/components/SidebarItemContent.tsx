@@ -142,7 +142,7 @@ export function SidebarItemContent({
           {contextMenuItems}
         </ContextMenu>
       )}
-      {!active && contextMenuItems === undefined && <Box flexShrink="0" />}
+      {contextMenuItems === undefined && <Box flexShrink="0" />}
     </>
   )
 }

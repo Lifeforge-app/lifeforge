@@ -12,7 +12,8 @@ export function SidebarCancelButton({ onClick }: { onClick: () => void }) {
           hover: 'bg-200',
           darkHover: 'bg-700'
         }}
-        p="sm"
+        m="xs"
+        p="xs"
         r="md"
       >
         <Text
