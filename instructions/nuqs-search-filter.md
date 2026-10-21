@@ -13,7 +13,7 @@ Every filterable list page in a LifeForge module follows this structure:
 1. A `useFilter()` hook in `src/hooks/useFilter.ts` manages all URL-bound state
 2. **Search query** (`q`) is a standalone `useQueryState` - kept separate because it is often debounced independently
 3. **All other state** (string filters, boolean toggles, sort order, view mode, page number) is grouped in a single `useQueryStates` call
-4. A single `updateFilter(key, value)` helper is exported for component use
+4. `updateFilter(key, value)` (single key) and `setFilters(updates)` (multiple keys) helpers are exported for component use
 5. Filters feed into a data-fetching hook (e.g., `useQuery`), which rebuilds the API request whenever URL params change
 
 ### How state flows
@@ -71,11 +71,19 @@ export default function useFilter() {
     }))
   }
 
+  const setFilters = (updates: Partial<typeof filter>) => {
+    setFilter(prev => ({
+      ...prev,
+      ...updates
+    }))
+  }
+
   return {
     searchQuery,
     setSearchQuery,
     ...filter,
-    updateFilter
+    updateFilter,
+    setFilters
   }
 }
 ```
@@ -247,20 +255,48 @@ difficulty: parseAsStringEnum(
 
 > Use `''` as the default for optional enum filters so "no selection" is the initial state.
 
-### 5. `updateFilter` is the only public setter for grouped state
+### 5. Use `updateFilter` for one key and `setFilters` for several
 
-Components should **never** call `setFilter` directly. The `updateFilter` helper wraps it for consistency:
+Components should **never** call `setFilter` directly. The hook exposes two public setters: `updateFilter(key, value)` for a single key and `setFilters({ key: value })` for multiple keys in one update.
 
 ```tsx
-// ✅ Correct - goes through the single public setter
+// ✅ Correct - single key
 updateFilter('category', 'fiction')
-updateFilter('page', 3)
+
+// ✅ Correct - several keys in one update
+setFilters({ category: 'fiction', page: 3 })
 
 // ❌ Wrong - bypasses the hook's API
 setFilter(prev => ({ ...prev, category: 'fiction' }))
 ```
 
 > **`value: any`** is intentionally loose. Using `filter[key]`'s value type would be more precise but creates friction when the key is dynamic. The tradeoff is acceptable for a 3-line helper with no runtime validation logic.
+
+### 6. Batch multi-key updates in a single `setFilters` call
+
+Never call `updateFilter` multiple times in a row to change several keys. Each call enqueues a functional updater against the same snapshot, so updates can be dropped depending on render/batching timing - producing the intermittent "I clicked it but the filter didn't change" bug.
+
+```tsx
+// ❌ Wrong - two sequential calls; either update can be lost
+const handleClick = () => {
+  updateFilter('asset', '')
+  updateFilter('inactiveAssets', 'true')
+}
+
+// ✅ Correct - one call, both keys applied atomically
+const handleClick = () => {
+  setFilters({ asset: '', inactiveAssets: 'true' })
+}
+```
+
+This matters whenever selecting one filter must clear another, or when a "reset" clears several params at once:
+
+```tsx
+// ✅ Correct - clearing a whole filter group
+const handleClear = () => setFilters({ category: '', platform: '', page: 1 })
+```
+
+> Rule of thumb: **one URL update per user interaction.** If a handler touches more than one key, reach for `setFilters`.
 
 ---
 
@@ -271,19 +307,19 @@ Two styles exist in the codebase. **Prefer Style A** (spread) - it's more ergono
 ### Style A: Spread (preferred)
 
 ```tsx
-return { searchQuery, setSearchQuery, ...filter, updateFilter }
+return { searchQuery, setSearchQuery, ...filter, updateFilter, setFilters }
 
 // Component usage:
-const { category, sort, page, updateFilter } = useFilter()
+const { category, sort, page, updateFilter, setFilters } = useFilter()
 ```
 
 ### Style B: Object
 
 ```tsx
-return { searchQuery, setSearchQuery, filter, updateFilter }
+return { searchQuery, setSearchQuery, filter, updateFilter, setFilters }
 
 // Component usage:
-const { filter, updateFilter } = useFilter()
+const { filter, updateFilter, setFilters } = useFilter()
 // → filter.category, filter.sort, filter.page
 ```
 
@@ -359,7 +395,8 @@ If filter state belongs in the URL (sharable and back-button-friendly), use nuqs
 - [ ] All other state (filters, toggles, sort, view, page) grouped in one `useQueryStates({...})`
 - [ ] Every parser has `.withDefault(...)` - no `null` returns
 - [ ] Enum parsers use `as const` on the literal array
-- [ ] `updateFilter(key, value)` helper provided and used by all components
+- [ ] `updateFilter(key, value)` and `setFilters(updates)` helpers provided and used by all components
+- [ ] Any handler that changes more than one key uses a single `setFilters` call (never consecutive `updateFilter` calls)
 - [ ] Data-fetching hook consumes filter state from `useFilter()`'s return
 - [ ] Search input is debounced before updating URL state
 - [ ] Page resets to 1 when filters/search change, guarded by `initialLoading`
