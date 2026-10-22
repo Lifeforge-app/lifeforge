@@ -52,7 +52,16 @@ export default function executeCommand(
     }
 
     if (result.status !== 0) {
-      throw result.status
+      const output = [result.stderr, result.stdout]
+        .map(stream => stream?.toString().trim())
+        .filter(Boolean)
+        .join('\n')
+
+      throw new Error(
+        output
+          ? `Command failed with exit code ${result.status}: ${cmd}\n${output}`
+          : `Command failed with exit code ${result.status}: ${cmd}`
+      )
     }
 
     return result.stdout?.toString().trim() || ''

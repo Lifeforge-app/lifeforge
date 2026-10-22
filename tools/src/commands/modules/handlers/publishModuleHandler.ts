@@ -70,10 +70,15 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
     stopSpinner(
       `Published ${chalk.blue(shortName)} ${chalk.dim(`v${newVersion}`)}`
     )
-  } catch {
+  } catch (error) {
     revertPackageVersion(dir, oldVersion)
 
     failSpinner(`Publish failed for ${chalk.blue(shortName)}`)
+
+    log.error(
+      error instanceof Error ? error.message : `Command failed: ${String(error)}`
+    )
+
     process.exit(1)
   }
 }

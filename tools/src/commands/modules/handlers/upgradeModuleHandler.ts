@@ -9,6 +9,7 @@ import {
   syncModuleSchema
 } from '@/commands/db/functions/schema'
 import { isDockerMode } from '@/utils/helpers'
+import initGitRepository from '@/utils/initGitRepository'
 import { installFromGithub } from '@/utils/installSource'
 import { setLocked, verifyLocked } from '@/utils/moduleLock'
 import { resolveEntry } from '@/utils/registryIndex'
@@ -25,6 +26,7 @@ interface UpgradeResult {
   version: string
   repo: string
   commitSha: string
+  isDevMode: boolean
 }
 
 /**
@@ -69,6 +71,8 @@ async function upgradeModule(
 
   verifyLocked('modules', shortName, latestVersion, commitSha)
 
+  const isDevMode = fs.existsSync(path.join(targetDir, '.git'))
+
   const backupPath = path.join(path.dirname(targetDir), `${shortName}.backup`)
 
   startSpinner(`Upgrading ${chalk.blue(shortName)}...`)
@@ -88,13 +92,17 @@ async function upgradeModule(
       version: latestVersion
     })
 
+    if (isDevMode) {
+      initGitRepository(targetDir)
+    }
+
     fs.rmSync(backupPath, { recursive: true, force: true })
 
     stopSpinner(
       `  ${chalk.green('↑')} ${chalk.blue(shortName)} ${chalk.dim(`${currentVersion} →`)} ${chalk.green(latestVersion)}`
     )
 
-    return { version: latestVersion, repo: entry.repo, commitSha }
+    return { version: latestVersion, repo: entry.repo, commitSha, isDevMode }
   } catch {
     failSpinner(`Failed to upgrade ${chalk.blue(shortName)}.`)
 
@@ -182,9 +190,11 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     }
   }
 
-  // Clean source code (upgrades always run in production mode)
-  for (const { mod } of upgraded) {
-    cleanModuleSource(mod.dir)
+  // Clean source code for production modules (dev modules keep their source)
+  for (const { mod, result } of upgraded) {
+    if (!result.isDevMode) {
+      cleanModuleSource(mod.dir)
+    }
   }
 
   for (const { mod, result } of upgraded) {
@@ -195,7 +205,9 @@ export async function upgradeModuleHandler(moduleName?: string): Promise<void> {
     })
   }
 
-  log.step('Source code removed. Only built bundles retained.')
+  if (upgraded.some(({ result }) => !result.isDevMode)) {
+    log.step('Source code removed. Only built bundles retained.')
+  }
 
   log.success(
     `Upgraded ${chalk.blue(String(upgraded.length))} module${upgraded.length > 1 ? 's' : ''}`
