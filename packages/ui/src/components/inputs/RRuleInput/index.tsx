@@ -328,7 +328,7 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
           width="100%"
           wrap="wrap"
         >
-          <Box flex="1" minWidth="12rem">
+          <Box flex="1" minWidth="12em">
             <NumberInput
               required
               icon="tabler:clock"
@@ -343,7 +343,7 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
               }}
             />
           </Box>
-          <Box flex="1" minWidth="12rem">
+          <Box flex="1" minWidth="12em">
             <ListboxInput
               required
               icon="tabler:clock"

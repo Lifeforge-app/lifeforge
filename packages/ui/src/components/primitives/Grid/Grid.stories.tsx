@@ -129,8 +129,8 @@ export const Columns: Story = {
         { columns: 4, label: '4 equal columns' },
         { columns: '200px 1fr 2fr', label: '200px · 1fr · 2fr' },
         {
-          columns: 'repeat(auto-fill, minmax(8rem, 1fr))',
-          label: 'auto-fill minmax(8rem, 1fr)'
+          columns: 'repeat(auto-fill, minmax(8em, 1fr))',
+          label: 'auto-fill minmax(8em, 1fr)'
         }
       ].map(({ columns, label }) => (
         <VariantContainer key={columns} title={`templateCols="${label}"`}>
@@ -165,18 +165,18 @@ export const Rows: Story = {
         p="lg"
         r="lg"
         templateCols={3}
-        templateRows="5rem 8rem 5rem"
+        templateRows="5em 8em 5em"
         width="100%"
       >
-        <Cell label="5rem" />
-        <Cell label="5rem" />
-        <Cell label="5rem" />
-        <Cell accent label="8rem" />
-        <Cell accent label="8rem" />
-        <Cell accent label="8rem" />
-        <Cell label="5rem" />
-        <Cell label="5rem" />
-        <Cell label="5rem" />
+        <Cell label="5em" />
+        <Cell label="5em" />
+        <Cell label="5em" />
+        <Cell accent label="8em" />
+        <Cell accent label="8em" />
+        <Cell accent label="8em" />
+        <Cell label="5em" />
+        <Cell label="5em" />
+        <Cell label="5em" />
       </Grid>
     </Flex>
   )
@@ -253,14 +253,14 @@ export const Align: Story = {
               gap="sm"
               p="md"
               r="lg"
-              style={{ minHeight: '6rem' }}
+              style={{ minHeight: '6em' }}
               templateCols={3}
             >
               {['Short', 'Tall', 'Short'].map((label, i) => (
                 <Cell
                   key={i}
                   accent={label === 'Tall'}
-                  height={label === 'Tall' ? '8rem' : '5rem'}
+                  height={label === 'Tall' ? '8em' : '5em'}
                   label={label}
                 />
               ))}
@@ -335,7 +335,7 @@ export const SpanningCells: Story = {
         p="lg"
         r="lg"
         templateCols={3}
-        templateRows="repeat(3, 5rem)"
+        templateRows="repeat(3, 5em)"
         width="100%"
       >
         <Cell

@@ -74,7 +74,7 @@ export const Default: Story = {
         {...args}
         bg={{ base: 'bg-50', dark: 'bg-800' }}
         r="lg"
-        style={{ width: '20rem' }}
+        style={{ width: '20em' }}
       >
         <PlaceholderContent />
       </Box>
@@ -199,8 +199,8 @@ export const Shadow: Story = {
 
 /**
  * All `SpaceToken` values map directly to padding and margin shorthand props.
- * The token table: `none` = 0, `xs` = 0.25rem, `sm` = 0.5rem, `md` = 1rem,
- * `lg` = 1.5rem, `xl` = 2rem, `2xl` = 3rem, `3xl` = 4rem.
+ * The token table: `none` = 0, `xs` = 0.25em, `sm` = 0.5em, `md` = 1em,
+ * `lg` = 1.5em, `xl` = 2em, `2xl` = 3em, `3xl` = 4em.
  */
 export const Spacing: Story = {
   args: {},
@@ -234,26 +234,26 @@ export const Sizing: Story = {
     <ScrollableStory>
       <Box
         bg={{ base: 'bg-50', dark: 'bg-800' }}
-        height="4rem"
+        height="4em"
         p="md"
         r="md"
         width="100%"
       >
-        <PlaceholderContent asCode label="width='100%' height='4rem'" />
+        <PlaceholderContent asCode label="width='100%' height='4em'" />
       </Box>
 
       <Box
         bg={{ base: 'bg-50', dark: 'bg-800' }}
-        height="8rem"
-        maxWidth="24rem"
-        minWidth="8rem"
+        height="8em"
+        maxWidth="24em"
+        minWidth="8em"
         p="md"
         r="md"
         width="50%"
       >
         <PlaceholderContent
           asCode
-          label="width='50%' minWidth='8rem' maxWidth='24rem'"
+          label="width='50%' minWidth='8em' maxWidth='24em'"
         />
       </Box>
       <Box
@@ -278,7 +278,7 @@ export const Sizing: Story = {
 export const Positioning: Story = {
   args: {},
   render: () => (
-    <Box height="16rem" p="3xl" position="relative" style={{ width: '100%' }}>
+    <Box height="16em" p="3xl" position="relative" style={{ width: '100%' }}>
       <Box
         bg={{ base: 'bg-50', dark: 'bg-800' }}
         height="100%"
@@ -294,7 +294,7 @@ export const Positioning: Story = {
           position="absolute"
           r="md"
           right="0"
-          style={{ margin: '0.5rem' }}
+          style={{ margin: '0.5em' }}
         >
           <PlaceholderContent
             asCode
@@ -316,7 +316,7 @@ export const Overflow: Story = {
     <ScrollableStory>
       <Box
         bg={{ base: 'bg-50', dark: 'bg-800' }}
-        height="5rem"
+        height="5em"
         overflow="hidden"
         p="md"
         r="lg"
@@ -331,7 +331,7 @@ export const Overflow: Story = {
 
       <Box
         bg={{ base: 'bg-50', dark: 'bg-800' }}
-        height="5rem"
+        height="5em"
         overflowY="auto"
         p="md"
         r="lg"
@@ -448,7 +448,7 @@ export const AsChild: Story = {
       <Flex
         direction="column"
         gap="md"
-        style={{ maxWidth: '32rem', width: '100%' }}
+        style={{ maxWidth: '32em', width: '100%' }}
       >
         <Alert type="note">
           Open the browser dev tools to inspect the DOM structure of the given

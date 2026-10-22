@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {},
   render: args => (
-    <Box height="32rem" width="100%">
+    <Box height="32em" width="100%">
       <NotFoundScreen {...args} />
     </Box>
   )
@@ -29,7 +29,7 @@ export const CustomContent: Story = {
     title: 'Ooh no! Resource Not Found'
   },
   render: args => (
-    <Box minHeight="32rem" width="100%">
+    <Box minHeight="32em" width="100%">
       <NotFoundScreen {...args} />
     </Box>
   )

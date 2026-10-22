@@ -50,9 +50,9 @@ export function ModalHeader({
       className={className}
       justify="between"
       mb="md"
-      style={{ gap: '0.75rem' }}
+      style={{ gap: '0.75em' }}
     >
-      <Flex align="center" minWidth="0" style={{ gap: '0.75rem' }} width="100%">
+      <Flex align="center" minWidth="0" style={{ gap: '0.75em' }} width="100%">
         <Icon icon={innerIcon} size={subtitle ? '2em' : '1.5em'} />
         <Flex direction="column" minWidth="0" width="100%">
           <Text asChild size="xl" weight="semibold">
@@ -60,7 +60,7 @@ export function ModalHeader({
               align="center"
               as="h1"
               minWidth="0"
-              style={{ gap: '0.75rem' }}
+              style={{ gap: '0.75em' }}
               width="100%"
             >
               {typeof innerTitle === 'string' ? (
@@ -99,7 +99,7 @@ export function ModalHeader({
         {trailing}
         <Button
           icon="tabler:x"
-          style={{ padding: '0.75rem' }}
+          style={{ padding: '0.75em' }}
           variant="plain"
           onClick={onClose}
         />

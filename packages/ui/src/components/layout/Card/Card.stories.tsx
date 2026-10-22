@@ -37,7 +37,7 @@ export const Default: Story = {
     children: <Box p="md">This is a card</Box>
   },
   render: args => (
-    <Box p="xl" width="24rem">
+    <Box p="xl" width="24em">
       <Card {...args} />
     </Box>
   )
@@ -49,7 +49,7 @@ export const Interactive: Story = {
     isInteractive: true
   },
   render: args => (
-    <Box p="xl" width="24rem">
+    <Box p="xl" width="24em">
       <Card {...args} />
     </Box>
   )
@@ -62,7 +62,7 @@ export const AsButton: Story = {
     onClick: () => alert('Button clicked!')
   },
   render: args => (
-    <Box p="xl" width="24rem">
+    <Box p="xl" width="24em">
       <Card asChild {...args} width="100%">
         <Text align="left" as="button">
           I&apos;m a button card
@@ -87,7 +87,7 @@ export const AsLink: Story = {
     rel: 'noopener noreferrer'
   },
   render: args => (
-    <Box p="xl" width="24rem">
+    <Box p="xl" width="24em">
       <Card asChild {...args} />
     </Box>
   )
@@ -120,7 +120,7 @@ export const WithTitle: Story = {
     children: <></>
   },
   render: () => (
-    <Box p="xl" style={{ width: '20rem' }}>
+    <Box p="xl" style={{ width: '20em' }}>
       <Card>
         <Box p="md">
           <Text as="h2" mb="sm" size="xl" weight="semibold">
@@ -141,7 +141,7 @@ export const WithImage: Story = {
   },
   render: () => (
     <Flex centered p="xl" style={{ width: '60vw' }}>
-      <Card style={{ padding: 0, width: '24rem' }}>
+      <Card style={{ padding: 0, width: '24em' }}>
         <img
           alt="Card Image"
           src="https://placehold.co/1600x900/png"
@@ -171,7 +171,7 @@ export const WithImageAndButton: Story = {
   },
   render: () => (
     <Flex centered p="xl" style={{ width: '60vw' }}>
-      <Card style={{ padding: 0, width: '24rem' }}>
+      <Card style={{ padding: 0, width: '24em' }}>
         <img
           alt="Card Image"
           src="https://placehold.co/1600x900/png"

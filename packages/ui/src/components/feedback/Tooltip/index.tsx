@@ -48,8 +48,8 @@ export function Tooltip({
               <Box
                 shadow
                 bg={{ base: 'bg-50', dark: 'bg-700' }}
-                maxHeight="24rem"
-                maxWidth="24rem"
+                maxHeight="24em"
+                maxWidth="24em"
                 overflowY="auto"
                 p="md"
                 position="relative"

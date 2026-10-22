@@ -248,7 +248,7 @@ export function SearchInput({
               style={{
                 minWidth: '0',
                 caretColor: COLORS['custom-500'],
-                paddingRight: actionButtonProps ? '5rem' : '2.5rem'
+                paddingRight: actionButtonProps ? '5em' : '2.5em'
               }}
               type="text"
               value={displayValue}
@@ -267,7 +267,7 @@ export function SearchInput({
             align="center"
             gap="sm"
             position="absolute"
-            right="1rem"
+            right="1em"
             style={{ transform: 'translateY(-50%)' }}
             top="50%"
           >
@@ -275,11 +275,11 @@ export function SearchInput({
               disabled={disabled}
               icon="tabler:x"
               style={{
-                height: '2rem',
+                height: '2em',
                 opacity: displayValue ? 1 : 0,
                 padding: 0,
                 visibility: displayValue ? 'visible' : 'hidden',
-                width: '2rem'
+                width: '2em'
               }}
               variant="plain"
               onClick={handleClear}
@@ -289,9 +289,9 @@ export function SearchInput({
                 {...actionButtonProps}
                 disabled={disabled || actionButtonProps.disabled}
                 style={{
-                  height: '2rem',
+                  height: '2em',
                   padding: 0,
-                  width: '2rem',
+                  width: '2em',
                   ...actionButtonProps.style
                 }}
                 variant={actionButtonProps.variant || 'plain'}

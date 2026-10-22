@@ -54,7 +54,7 @@ code {
 @media print {
   .print-area footer {
     position: fixed;
-    bottom: -5rem;
+    bottom: -5em;
     width: 100%;
   }
 

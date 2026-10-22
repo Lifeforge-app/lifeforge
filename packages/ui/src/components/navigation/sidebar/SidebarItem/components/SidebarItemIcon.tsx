@@ -48,8 +48,8 @@ export function SidebarItemIcon({
           className={className}
           src={urlString}
           style={{
-            height: '1.5rem',
-            width: '1.5rem'
+            height: '1.5em',
+            width: '1.5em'
           }}
         />
       </Bordered>
@@ -61,7 +61,7 @@ export function SidebarItemIcon({
       className={className}
       color={active ? 'custom-500' : undefined}
       icon={icon}
-      size="1.5rem"
+      size="1.5em"
     />
   )
 }

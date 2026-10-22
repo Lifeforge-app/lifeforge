@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>
 export const Default: Story = {
   args: {},
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <LoadingScreen {...args} />
     </Box>
   )
@@ -27,7 +27,7 @@ export const WithMessage: Story = {
     message: 'Loading your data...'
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <LoadingScreen {...args} />
     </Box>
   )
@@ -38,7 +38,7 @@ export const LongMessage: Story = {
     message: 'Please wait while we load your content. This may take a moment.'
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <LoadingScreen {...args} />
     </Box>
   )

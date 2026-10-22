@@ -52,7 +52,7 @@ export const Default: Story = {
     }
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <EmptyStateScreen {...args} />
     </Box>
   )
@@ -70,7 +70,7 @@ export const CustomContent: Story = {
     }
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <EmptyStateScreen {...args} />
     </Box>
   )
@@ -87,7 +87,7 @@ export const WithoutDescription: Story = {
     }
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <EmptyStateScreen {...args} />
     </Box>
   )
@@ -110,7 +110,7 @@ export const WithCTAButton: Story = {
     }
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <EmptyStateScreen {...args} />
     </Box>
   )
@@ -129,7 +129,7 @@ export const Smaller: Story = {
     smaller: true
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <EmptyStateScreen {...args} />
     </Box>
   )
@@ -147,7 +147,7 @@ export const CustomIcon: Story = {
     }
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <EmptyStateScreen {...args} />
     </Box>
   )

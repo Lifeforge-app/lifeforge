@@ -125,7 +125,7 @@ function UserCreationPage() {
       >
         {t('welcome.desc')}
       </Text>
-      <Stack maxWidth="40rem" mt="2xl" width="100%">
+      <Stack maxWidth="40em" mt="2xl" width="100%">
         <TextInput
           errorMsg={errors.email}
           icon="tabler:mail"

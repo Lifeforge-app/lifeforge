@@ -6,8 +6,8 @@
 .sb-show-main {
   & input[type='radio'] {
     background-color: var(--color-bg-200) !important;
-    height: 1rem;
-    width: 1rem;
+    height: 1em;
+    width: 1em;
     appearance: none;
     border-radius: 9999px;
 
@@ -35,7 +35,7 @@
   margin-bottom: 0 !important;
 
   & + p {
-    margin-top: 0.5rem !important;
+    margin-top: 0.5em !important;
   }
 }
 
@@ -44,7 +44,7 @@
 }
 
 .css-1ije3e2 * {
-  max-width: 18rem;
+  max-width: 18em;
   word-break: break-all !important;
 }
 
@@ -52,7 +52,7 @@
   margin-bottom: 0 !important;
 
   & + p {
-    margin-top: 0.5rem !important;
+    margin-top: 0.5em !important;
   }
 }
 

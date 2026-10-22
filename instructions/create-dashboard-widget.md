@@ -135,10 +135,10 @@ export default function MyDataWidget() {
                       align="center"
                       bg={surface.light}
                       flexShrink="0"
-                      height="2.5rem"
+                      height="2.5em"
                       justify="center"
                       r="md"
-                      width="2.5rem"
+                      width="2.5em"
                     >
                       <Icon color="muted" icon={item.icon}  />
                     </Flex>

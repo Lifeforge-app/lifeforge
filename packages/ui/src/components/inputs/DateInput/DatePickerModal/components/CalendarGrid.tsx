@@ -37,7 +37,7 @@ export function CalendarGrid() {
 
   return (
     <Flex align="center" direction="column" gap="sm" width="100%">
-      <Grid gap="xs" maxWidth="30rem" templateCols={7} width="100%">
+      <Grid gap="xs" maxWidth="30em" templateCols={7} width="100%">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(
           (weekday, index) => {
             return (
@@ -60,7 +60,7 @@ export function CalendarGrid() {
         )}
       </Grid>
 
-      <Grid gap="xs" maxWidth="30rem" templateCols={7} width="100%">
+      <Grid gap="xs" maxWidth="30em" templateCols={7} width="100%">
         {days.map(day => {
           const isCurrentMonth = day.isSame(currentMonth, 'month')
           const isSelected = selectedDate

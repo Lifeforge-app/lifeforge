@@ -32,7 +32,7 @@
 .__file-input {
   & [data-rmiz],
   & [data-rmiz-content] {
-    max-height: 24rem;
+    max-height: 24em;
     width: 100%;
   }
 
@@ -61,8 +61,8 @@ div[data-rmiz-modal-overlay] {
 }
 
 .tabler-icon {
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.5em;
+  width: 1.5em;
   flex-shrink: 0;
 }
 
@@ -86,30 +86,30 @@ aside .sidebar-item .bg-bg-200\/50 > svg:first-child {
 
 .Toastify__toast-container {
   width: 100% !important;
-  padding: 1rem;
+  padding: 1em;
 }
 
 @media (min-width: 640px) {
   .Toastify__toast-container {
-    max-width: 32rem;
+    max-width: 32em;
   }
 }
 
 @media (min-width: 768px) {
   .Toastify__toast-container {
-    max-width: 32rem;
+    max-width: 32em;
   }
 }
 
 @media (min-width: 1024px) {
   .Toastify__toast-container {
-    max-width: 36rem;
+    max-width: 36em;
   }
 }
 
 @media (min-width: 1280px) {
   .Toastify__toast-container {
-    max-width: 42rem;
+    max-width: 42em;
   }
 }
 

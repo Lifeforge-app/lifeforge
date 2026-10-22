@@ -179,7 +179,7 @@ export const MultipleOptions: Story = {
                         <Text
                           asChild
                           color={{ base: 'bg-400', dark: 'bg-600' }}
-                          style={{ height: '0.375rem', width: '0.375rem' }}
+                          style={{ height: '0.375em', width: '0.375em' }}
                         >
                           <Icon icon="tabler:circle-filled" />
                         </Text>

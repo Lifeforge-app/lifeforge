@@ -23,7 +23,7 @@ export const Default: Story = {
     visibilityBreakpoint: false
   },
   render: props => (
-    <Box style={{ height: '12rem' }}>
+    <Box style={{ height: '12em' }}>
       <Fab {...props} />
     </Box>
   )
@@ -39,7 +39,7 @@ export const WithContextMenu: Story = {
   },
   render: props => {
     return (
-      <Box style={{ height: '12rem' }}>
+      <Box style={{ height: '12em' }}>
         <Fab {...props}>
           <ContextMenuItem
             icon="tabler:pencil"

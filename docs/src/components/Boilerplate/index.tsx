@@ -27,10 +27,10 @@ function Boilerplate({ children }: { children: React.ReactNode }) {
   }, [location])
 
   return (
-    <article className="relative h-full min-h-0 flex-1 p-6 !pb-0 sm:p-12 xl:ml-[18rem]">
+    <article className="relative h-full min-h-0 flex-1 p-6 !pb-0 sm:p-12 xl:ml-[18em]">
       <Scrollbar>
         <div
-          className={`flex w-full min-w-0 flex-col sm:pl-8 ${BLACKLISTED_PAGES.some(page => location.pathname.startsWith(page)) ? '' : 'lg:w-[calc(100%-20rem)]'}`}
+          className={`flex w-full min-w-0 flex-col sm:pl-8 ${BLACKLISTED_PAGES.some(page => location.pathname.startsWith(page)) ? '' : 'lg:w-[calc(100%-20em)]'}`}
         >
           {children}
           <NavigationBar />

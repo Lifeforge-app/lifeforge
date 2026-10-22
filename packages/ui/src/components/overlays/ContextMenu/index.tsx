@@ -74,7 +74,7 @@ export function ContextMenu({
           <Bordered
             bg={{ base: 'bg-50', dark: 'bg-800' }}
             borderColor={{ base: 'bg-200', dark: 'bg-700' }}
-            minWidth="14rem"
+            minWidth="14em"
             overflow="hidden"
             r="lg"
             zIndex="9999"

@@ -19,7 +19,7 @@ export function DatePickerModalContent({
   const { onConfirm, hasTime, selectedDate } = useDatePicker()
 
   return (
-    <Box minWidth={{ base: '100%', sm: '24rem' }}>
+    <Box minWidth={{ base: '100%', sm: '24em' }}>
       <ModalHeader
         icon={icon || (hasTime ? 'tabler:clock' : 'tabler:calendar')}
         namespace={namespace}

@@ -48,7 +48,7 @@ export const Default: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -66,7 +66,7 @@ export const WithSideColorStrip: Story = {
   },
   render: () => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           {[
             ['Category 1', TAILWIND_PALETTE.indigo[600]],
@@ -98,7 +98,7 @@ export const WithActionButton: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -130,7 +130,7 @@ export const WithContextMenu: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -166,7 +166,7 @@ export const WithContextMenuAndActionButton: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -184,7 +184,7 @@ export const WithNumberBadge: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -217,7 +217,7 @@ export const WithNumberBadgeAndContextMenu: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -239,7 +239,7 @@ export const WithActiveState: Story = {
 
     return (
       <BrowserRouter>
-        <Flex align="center" height="24rem" justify="center" width="100%">
+        <Flex align="center" height="24em" justify="center" width="100%">
           <SidebarWrapper>
             {['a', 'b', 'c'].map(cat => (
               <SidebarItem
@@ -266,7 +266,7 @@ export const WithCustomSVGIcon: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -286,7 +286,7 @@ export const WithCustomImageIcon: Story = {
 
     return (
       <BrowserRouter>
-        <Flex align="center" height="24rem" justify="center" width="100%">
+        <Flex align="center" height="24em" justify="center" width="100%">
           <SidebarWrapper>
             <SidebarItem
               {...args}
@@ -308,7 +308,7 @@ export const AVeryLongName: Story = {
 
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -325,19 +325,19 @@ export const WithReactElementLabel: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem
             {...args}
             label={
-              <Flex align="center" style={{ gap: '0.5rem' }}>
+              <Flex align="center" style={{ gap: '0.5em' }}>
                 <Text color={{ base: 'bg-800', dark: 'bg-50' }}>Custom</Text>
                 <Text
                   color="primary"
                   style={{
-                    borderRadius: '0.25rem',
-                    fontSize: '0.625rem',
-                    padding: '0.125rem 0.375rem'
+                    borderRadius: '0.25em',
+                    fontSize: '0.625em',
+                    padding: '0.125em 0.375em'
                   }}
                   weight="semibold"
                 >
@@ -361,7 +361,7 @@ export const WithActiveStateNoCancel: Story = {
   },
   render: args => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem {...args} />
         </SidebarWrapper>
@@ -384,7 +384,7 @@ export const WithNumberBadgeAndActiveState: Story = {
 
     return (
       <BrowserRouter>
-        <Flex align="center" height="24rem" justify="center" width="100%">
+        <Flex align="center" height="24em" justify="center" width="100%">
           <SidebarWrapper>
             <SidebarItem
               {...args}
@@ -411,7 +411,7 @@ export const WithSubsection: Story = {
 
     return (
       <BrowserRouter>
-        <Flex align="center" height="24rem" justify="center" width="100%">
+        <Flex align="center" height="24em" justify="center" width="100%">
           <SidebarWrapper>
             <SidebarItem
               {...args}
@@ -459,7 +459,7 @@ export const WithSubsectionAndAmounts: Story = {
 
     return (
       <BrowserRouter>
-        <Flex align="center" height="24rem" justify="center" width="100%">
+        <Flex align="center" height="24em" justify="center" width="100%">
           <SidebarWrapper>
             <SidebarItem
               {...args}
@@ -550,7 +550,7 @@ export const WithAllFeatures: Story = {
 
     return (
       <BrowserRouter>
-        <Flex align="center" height="24rem" justify="center" width="100%">
+        <Flex align="center" height="24em" justify="center" width="100%">
           <SidebarWrapper>
             <SidebarItem
               {...args}
@@ -576,7 +576,7 @@ export const AllStatesComparison: Story = {
 
     return (
       <BrowserRouter>
-        <Flex align="center" height="24rem" justify="center" width="100%">
+        <Flex align="center" height="24em" justify="center" width="100%">
           <SidebarWrapper>
             <SidebarItem
               icon="tabler:circle"

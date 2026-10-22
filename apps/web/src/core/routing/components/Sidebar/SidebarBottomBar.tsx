@@ -57,10 +57,10 @@ function SidebarBottomBar() {
                     dark: 'bg-700'
                   }}
                   flexShrink="0"
-                  height="2.5rem"
+                  height="2.5em"
                   overflow="hidden"
                   r="full"
-                  width="2.5rem"
+                  width="2.5em"
                 >
                   {userData.avatar ? (
                     <Box

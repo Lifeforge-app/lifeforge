@@ -84,7 +84,7 @@ export function Widget({
             direction={variant === 'large-icon' ? 'column' : 'row'}
             gap={variant === 'large-icon' ? 'sm' : undefined}
             minWidth="0"
-            style={variant !== 'large-icon' ? { gap: '0.75rem' } : undefined}
+            style={variant !== 'large-icon' ? { gap: '0.75em' } : undefined}
             width="100%"
           >
             <WidgetIcon

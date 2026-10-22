@@ -53,7 +53,7 @@ export function ComboboxOption({
                       gap={color === undefined ? 'sm' : undefined}
                       justify={iconAtEnd ? 'between' : undefined}
                       style={
-                        color !== undefined ? { gap: '0.75rem' } : undefined
+                        color !== undefined ? { gap: '0.75em' } : undefined
                       }
                       width="100%"
                     >
@@ -85,10 +85,10 @@ export function ComboboxOption({
                             as="span"
                             display="block"
                             flexShrink="0"
-                            height="1rem"
+                            height="1em"
                             r="full"
                             style={{ backgroundColor: color }}
-                            width="1rem"
+                            width="1em"
                           />
                         )
                       )}

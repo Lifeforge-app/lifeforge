@@ -61,27 +61,22 @@ export function SidebarSubsectionItemWithOnClick({
                 }
           }
           gap="md"
-          height="3.5rem"
+          height="3.5em"
           ml="md"
           mr="md"
           r="lg"
-          style={{ paddingLeft: '3rem' }}
+          style={{ paddingLeft: '3em' }}
           width="100%"
           onClick={handleClick}
         >
-          <Flex
-            align="center"
-            height="1.75rem"
-            justify="center"
-            width="1.75rem"
-          >
+          <Flex align="center" height="1.75em" justify="center" width="1.75em">
             {typeof icon === 'string' ? (
-              <Icon icon={icon} size="1.5rem" />
+              <Icon icon={icon} size="1.5em" />
             ) : (
               icon
             )}
           </Flex>
-          <Text truncate style={{ paddingRight: '1rem', width: '100%' }}>
+          <Text truncate style={{ paddingRight: '1em', width: '100%' }}>
             {namespace !== false
               ? t(
                   `apps.${_.camelCase(label.toString())}.subsections.${_.camelCase(

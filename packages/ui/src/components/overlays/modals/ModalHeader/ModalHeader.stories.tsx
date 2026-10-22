@@ -34,7 +34,7 @@ function Shell({ children }: { children: React.ReactNode }) {
     <Box
       bg={{ base: 'bg-50', dark: 'bg-900' }}
       r="xl"
-      style={{ maxWidth: '32rem', padding: '1.5rem' }}
+      style={{ maxWidth: '32em', padding: '1.5em' }}
       width="100%"
     >
       {children}
@@ -93,9 +93,9 @@ export const WithAppendTitle: Story = {
         style={{
           background: 'color-mix(in srgb, currentColor 12%, transparent)',
           borderRadius: '9999px',
-          fontSize: '0.75rem',
+          fontSize: '0.75em',
           fontWeight: 600,
-          padding: '0.125rem 0.5rem'
+          padding: '0.125em 0.5em'
         }}
       >
         12
@@ -172,10 +172,10 @@ export const KitchenSink: Story = {
           background: '#4caf5020',
           borderRadius: '9999px',
           color: '#4caf50',
-          fontSize: '0.7rem',
+          fontSize: '0.7em',
           fontWeight: 700,
           letterSpacing: '0.05em',
-          padding: '0.1rem 0.45rem',
+          padding: '0.1em 0.45em',
           textTransform: 'uppercase'
         }}
       >
@@ -207,7 +207,7 @@ export const ReactNodeTitle: Story = {
     icon: 'tabler:edit',
     onClose: () => {},
     title: (
-      <span style={{ alignItems: 'center', display: 'flex', gap: '0.5rem' }}>
+      <span style={{ alignItems: 'center', display: 'flex', gap: '0.5em' }}>
         Edit <strong style={{ color: '#4caf50' }}>Project Alpha</strong>
       </span>
     )

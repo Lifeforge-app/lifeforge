@@ -162,7 +162,7 @@ export const MultiProperty: Story = {
               r="lg"
               style={{
                 opacity: on ? 1 : 0,
-                transform: on ? 'translateX(0)' : 'translateX(1.5rem)'
+                transform: on ? 'translateX(0)' : 'translateX(1.5em)'
               }}
             >
               <Text color="bg-50" weight="semibold">
@@ -186,7 +186,7 @@ export const MultiProperty: Story = {
               p="lg"
               r="lg"
               style={{
-                height: on ? '8rem' : '3rem',
+                height: on ? '8em' : '3em',
                 overflow: 'hidden',
                 width: on ? '100%' : '50%'
               }}

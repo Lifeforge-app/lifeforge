@@ -92,7 +92,7 @@ export function ModuleHeader({
             sm: '4em'
           }}
         >
-          <Icon color="primary" icon={icon} size="2rem" />
+          <Icon color="primary" icon={icon} size="2em" />
         </Flex>
         <Flex direction="column" gap="xs" minWidth="0" width="100%">
           <Text
@@ -105,7 +105,7 @@ export function ModuleHeader({
               align="end"
               as="h1"
               minWidth="0"
-              style={{ gap: '0.75rem' }}
+              style={{ gap: '0.75em' }}
               width="100%"
             >
               <Text truncate display="block">

@@ -28,14 +28,14 @@ function _CategoryEntry({
             borderColor="primary"
             borderSide="bottom"
             borderWidth="4px"
-            bottom="-0.5rem"
+            bottom="-0.5em"
             left="50%"
             position="absolute"
             style={{
               left: '50%',
               transform: 'translateX(-50%)'
             }}
-            width="2rem"
+            width="2em"
           />
         </Text>
       </Box>

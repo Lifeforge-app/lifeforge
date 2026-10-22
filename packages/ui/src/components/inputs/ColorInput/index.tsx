@@ -101,7 +101,7 @@ export function ColorInput({
               height={variant === 'plain' ? '1.5em' : '1em'}
               r="full"
               style={{
-                marginTop: '0.125rem',
+                marginTop: '0.125em',
                 backgroundColor: value?.match(/^#[0-9A-F]{6}$/i)
                   ? value
                   : undefined

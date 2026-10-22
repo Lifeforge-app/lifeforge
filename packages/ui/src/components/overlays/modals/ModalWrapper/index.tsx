@@ -64,10 +64,10 @@ export function ModalWrapper({
             className={className}
             direction="column"
             left="50%"
-            maxHeight="calc(100dvh - 8rem)"
+            maxHeight="calc(100dvh - 8em)"
             maxWidth={{
-              base: 'calc(100vw - 4rem)',
-              sm: 'calc(100vw - 8rem)'
+              base: 'calc(100vw - 4em)',
+              sm: 'calc(100vw - 8em)'
             }}
             minWidth="0"
             overflow="hidden"
@@ -88,7 +88,7 @@ export function ModalWrapper({
             <Scrollbar
               autoHeight
               hideHorizontal
-              autoHeightMax="calc(100dvh - 11rem)"
+              autoHeightMax="calc(100dvh - 11em)"
             >
               {children}
             </Scrollbar>

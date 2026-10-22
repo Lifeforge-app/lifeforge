@@ -74,7 +74,7 @@ export function LockedScreen({
       width="100%"
     >
       <Text asChild>
-        <Icon icon="tabler:lock-access" size="7rem" />
+        <Icon icon="tabler:lock-access" size="7em" />
       </Text>
       <Text align="center" size="4xl" weight="semibold">
         {t('vault.lockedMessage')}

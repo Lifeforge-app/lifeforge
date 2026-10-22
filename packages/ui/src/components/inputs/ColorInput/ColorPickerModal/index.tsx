@@ -52,7 +52,7 @@ function ColorPickerModal({
   }, [value])
 
   return (
-    <Box minWidth={{ sm: '28rem' }}>
+    <Box minWidth={{ sm: '28em' }}>
       <ModalHeader
         icon="tabler:color-picker"
         title="colorPicker.title"

@@ -45,14 +45,14 @@ export function PreviewContainer({
           p="md"
           position="relative"
           r="lg"
-          style={{ minHeight: '8rem' }}
+          style={{ minHeight: '8em' }}
           width="100%"
         >
           <Flex align="center" justify="between" mb="lg" ml="md">
             <Flex
               align="center"
               minWidth="0"
-              style={{ gap: '0.75rem' }}
+              style={{ gap: '0.75em' }}
               width="100%"
             >
               <Icon
@@ -62,7 +62,7 @@ export function PreviewContainer({
                     finalFileName?.split('.').pop() as keyof typeof FILE_ICONS
                   ] || 'tabler:file'
                 }
-                size="1.5rem"
+                size="1.5em"
               />
               <Text truncate as="p" style={{ width: '100%' }}>
                 {finalFileName}
@@ -81,7 +81,7 @@ export function PreviewContainer({
           <Box
             asChild
             r="md"
-            style={{ maxHeight: '24rem', objectFit: 'contain' }}
+            style={{ maxHeight: '24em', objectFit: 'contain' }}
           >
             <img alt="" src={preview} />
           </Box>
@@ -93,19 +93,19 @@ export function PreviewContainer({
           justify="between"
           mb="lg"
           minWidth="0"
-          style={{ gap: '2rem' }}
+          style={{ gap: '2em' }}
           width="100%"
         >
           <Flex
             align="center"
             minWidth="0"
-            style={{ gap: '0.75rem' }}
+            style={{ gap: '0.75em' }}
             width="100%"
           >
             <Text
               asChild
               color="muted"
-              style={{ height: '1.5rem', width: '1.5rem' }}
+              style={{ height: '1.5em', width: '1.5em' }}
             >
               <Icon
                 icon={
@@ -121,7 +121,7 @@ export function PreviewContainer({
           </Flex>
           <Button
             icon="tabler:x"
-            style={{ padding: '0.5rem' }}
+            style={{ padding: '0.5em' }}
             variant="plain"
             onClick={() => {
               setPreview(null)

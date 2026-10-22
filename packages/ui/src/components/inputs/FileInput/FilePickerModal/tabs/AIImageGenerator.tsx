@@ -63,7 +63,7 @@ export function AIImageGenerator() {
                 disabled={prompt === ''}
                 icon="mage:stars-c"
                 loading={loading}
-                style={{ marginTop: '1.5rem', width: '100%' }}
+                style={{ marginTop: '1.5em', width: '100%' }}
                 onClick={onSubmit}
               >
                 Generate
@@ -78,7 +78,7 @@ export function AIImageGenerator() {
                 justify="center"
                 p="xl"
                 r="lg"
-                style={{ height: '24rem' }}
+                style={{ height: '24em' }}
                 width="100%"
               >
                 <Box
@@ -91,7 +91,7 @@ export function AIImageGenerator() {
               </Flex>
               <Button
                 icon="tabler:refresh"
-                style={{ marginTop: '1.5rem', width: '100%' }}
+                style={{ marginTop: '1.5em', width: '100%' }}
                 variant="secondary"
                 onClick={() => {
                   setFile(null)

@@ -29,7 +29,7 @@ export function ImageTypeFilter({
         <>
           <Icon
             icon={IMAGE_TYPES.find(l => l.id === imageType)?.icon ?? ''}
-            style={{ height: '1.25rem', width: '1.25rem' }}
+            style={{ height: '1.25em', width: '1.25em' }}
           />
           <Text
             truncate

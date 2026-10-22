@@ -78,7 +78,7 @@ export const ClickableTooltip: Story = {
 export const DetailedTooltip: Story = {
   args: {
     children: (
-      <Box maxWidth="20rem">
+      <Box maxWidth="20em">
         <Text
           asChild
           color={{ base: 'bg-800', dark: 'bg-100' }}

@@ -34,7 +34,7 @@ export function CompactFileDisplay({
 
             return FILE_ICONS[ext as keyof typeof FILE_ICONS] || 'tabler:file'
           })()}
-          size="1.5rem"
+          size="1.5em"
         />
         <Text truncate as="p">
           {(() => {

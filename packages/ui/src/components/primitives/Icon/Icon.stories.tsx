@@ -56,9 +56,9 @@ export const IconSet: Story = {
           direction="column"
           gap="sm"
           p="md"
-          style={{ borderRadius: '0.5rem' }}
+          style={{ borderRadius: '0.5em' }}
         >
-          <Icon icon={icon} size="2rem" />
+          <Icon icon={icon} size="2em" />
           <Text color="muted" size="sm">
             {label}
           </Text>
@@ -93,7 +93,7 @@ export const Color: Story = {
   args: {
     color: 'custom-500',
     icon: 'tabler:heart',
-    size: '2rem'
+    size: '2em'
   },
   render: () => (
     <Flex align="center" gap="lg">
@@ -111,7 +111,7 @@ export const Color: Story = {
         ] as const
       ).map(({ color, label }) => (
         <Flex key={label} align="center" direction="column" gap="sm">
-          <Icon color={color} icon="tabler:heart" size="2rem" />
+          <Icon color={color} icon="tabler:heart" size="2em" />
           <Text color="muted" size="sm">
             {label}
           </Text>
@@ -148,7 +148,7 @@ export const WithText: Story = {
 export const Interactive: Story = {
   args: {
     icon: 'tabler:thumb-up',
-    size: '1.75rem'
+    size: '1.75em'
   },
   render: () => (
     <Flex align="center" direction="column" gap="md">
@@ -180,7 +180,7 @@ export const Interactive: Story = {
                   hover: 'custom-500'
                 }}
                 icon={icon}
-                size="1.75rem"
+                size="1.75em"
               />
             </Transition>
             <Text color="muted" size="sm">

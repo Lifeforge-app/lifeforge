@@ -101,8 +101,8 @@ export function TextAreaInput({
           <Box
             asChild
             bg="transparent"
-            maxHeight="32rem"
-            minHeight="4rem"
+            maxHeight="32em"
+            minHeight="4em"
             p={variant === 'classic' ? 'xl' : 'none'}
             pl={variant === 'classic' ? 'none' : undefined}
             style={

@@ -178,13 +178,13 @@ export const Align: Story = {
               mt="sm"
               p="md"
               r="lg"
-              style={{ minHeight: '5rem' }}
+              style={{ minHeight: '5em' }}
             >
               {['Short', 'Tall', 'Short'].map((label, i) => (
                 <Item
                   key={label}
                   flex="1"
-                  height={i === 1 ? '8rem' : 'auto'}
+                  height={i === 1 ? '8em' : 'auto'}
                   label={label}
                 />
               ))}
@@ -268,7 +268,7 @@ export const IndependentGap: Story = {
         gapY="sm"
         p="lg"
         r="lg"
-        style={{ maxWidth: '24rem' }}
+        style={{ maxWidth: '24em' }}
         wrap="wrap"
       >
         {['A', 'B', 'C', 'D', 'E', 'F'].map(letter => (
@@ -295,7 +295,7 @@ export const Wrap: Story = {
             overflow="hidden"
             p="md"
             r="lg"
-            style={{ maxWidth: '20rem' }}
+            style={{ maxWidth: '20em' }}
             wrap={wrap}
           >
             {['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta'].map(
@@ -435,7 +435,7 @@ export const FlexChildProps: Story = {
           flexShrink="0"
           p="md"
           r="md"
-          style={{ width: '6rem' }}
+          style={{ width: '6em' }}
         >
           <Text size="sm">shrink=0</Text>
         </Box>
@@ -454,7 +454,7 @@ export const FlexChildProps: Story = {
           flexShrink="0"
           p="md"
           r="md"
-          style={{ width: '6rem' }}
+          style={{ width: '6em' }}
         >
           <Text size="sm">shrink=0</Text>
         </Box>

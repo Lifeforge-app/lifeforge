@@ -99,7 +99,7 @@ export function Pixabay() {
               align="center"
               direction="column"
               minWidth="0"
-              style={{ gap: '0.5rem' }}
+              style={{ gap: '0.5em' }}
               width="100%"
             >
               <SearchInput

@@ -26,7 +26,7 @@ export const Default: Story = {
       <Flex
         align="center"
         justify="center"
-        style={{ height: '32rem' }}
+        style={{ height: '32em' }}
         width="100%"
       >
         <SidebarWrapper>
@@ -59,7 +59,7 @@ export const WithActionButton: Story = {
       <Flex
         align="center"
         justify="center"
-        style={{ height: '32rem' }}
+        style={{ height: '32em' }}
         width="100%"
       >
         <SidebarWrapper>

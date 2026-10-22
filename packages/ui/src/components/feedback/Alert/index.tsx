@@ -61,12 +61,12 @@ export function Alert({
       width="100%"
     >
       <Flex align="center" gap="sm" style={{ color: STYLES[type].color }}>
-        <Icon icon={STYLES[type].icon} size="1.5rem" />
+        <Icon icon={STYLES[type].icon} size="1.5em" />
         <Text as="h4" size="lg" weight="medium">
           {t(`alert.${type}`, _.startCase(type))}
         </Text>
       </Flex>
-      <Text as="p" size="base" style={{ marginTop: '-0.5rem' }}>
+      <Text as="p" size="base" style={{ marginTop: '-0.5em' }}>
         {children}
       </Text>
     </Flex>

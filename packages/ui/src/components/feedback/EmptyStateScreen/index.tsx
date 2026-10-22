@@ -54,13 +54,13 @@ export function EmptyStateScreen({
         direction="column"
         height="100%"
         justify="center"
-        style={{ gap: smaller ? '0.75rem' : '1.5rem' }}
+        style={{ gap: smaller ? '0.75em' : '1.5em' }}
         width="100%"
         {...props}
       >
         {icon !== undefined &&
           (typeof icon === 'string' ? (
-            <Icon icon={icon} size={smaller ? '4rem' : '8rem'} />
+            <Icon icon={icon} size={smaller ? '4em' : '8em'} />
           ) : (
             icon
           ))}
@@ -69,7 +69,7 @@ export function EmptyStateScreen({
           as="h2"
           color={{ base: 'bg-800', dark: 'bg-100' }}
           size={smaller ? 'xl' : '3xl'}
-          style={{ paddingLeft: '1.5rem', paddingRight: '1.5rem' }}
+          style={{ paddingLeft: '1.5em', paddingRight: '1.5em' }}
           weight="semibold"
         >
           {'id' in message

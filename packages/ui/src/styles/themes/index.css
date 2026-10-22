@@ -27,31 +27,31 @@
 
   --color-dangerous: #ef4444;
 
-  --text-xs: calc(0.75rem * var(--custom-font-scale));
-  --text-sm: calc(0.875rem * var(--custom-font-scale));
-  --text-base: calc(1rem * var(--custom-font-scale));
-  --text-lg: calc(1.125rem * var(--custom-font-scale));
-  --text-xl: calc(1.25rem * var(--custom-font-scale));
-  --text-2xl: calc(1.5rem * var(--custom-font-scale));
-  --text-3xl: calc(1.875rem * var(--custom-font-scale));
-  --text-4xl: calc(2.25rem * var(--custom-font-scale));
-  --text-5xl: calc(3rem * var(--custom-font-scale));
-  --text-6xl: calc(3.75rem * var(--custom-font-scale));
-  --text-7xl: calc(4.5rem * var(--custom-font-scale));
-  --text-8xl: calc(6rem * var(--custom-font-scale));
-  --text-9xl: calc(8rem * var(--custom-font-scale));
+  --text-xs: calc(0.75em * var(--custom-font-scale));
+  --text-sm: calc(0.875em * var(--custom-font-scale));
+  --text-base: calc(1em * var(--custom-font-scale));
+  --text-lg: calc(1.125em * var(--custom-font-scale));
+  --text-xl: calc(1.25em * var(--custom-font-scale));
+  --text-2xl: calc(1.5em * var(--custom-font-scale));
+  --text-3xl: calc(1.875em * var(--custom-font-scale));
+  --text-4xl: calc(2.25em * var(--custom-font-scale));
+  --text-5xl: calc(3em * var(--custom-font-scale));
+  --text-6xl: calc(3.75em * var(--custom-font-scale));
+  --text-7xl: calc(4.5em * var(--custom-font-scale));
+  --text-8xl: calc(6em * var(--custom-font-scale));
+  --text-9xl: calc(8em * var(--custom-font-scale));
 
-  --spacing: calc(0.25rem * var(--custom-font-scale));
+  --spacing: calc(0.25em * var(--custom-font-scale));
 
   /* Border radius variables with multiplier.
-     Values are whole multiples of the spacing unit (0.25rem) so nested
+     Values are whole multiples of the spacing unit (0.25em) so nested
      radius token = outer radius token - padding token stays concentric. */
-  --radius-sm: calc(0.25rem * var(--custom-border-radius-multiplier));
-  --radius-md: calc(0.5rem * var(--custom-border-radius-multiplier));
-  --radius-lg: calc(0.75rem * var(--custom-border-radius-multiplier));
-  --radius-xl: calc(1rem * var(--custom-border-radius-multiplier));
-  --radius-2xl: calc(1.5rem * var(--custom-border-radius-multiplier));
-  --radius-3xl: calc(2rem * var(--custom-border-radius-multiplier));
+  --radius-sm: calc(0.25em * var(--custom-border-radius-multiplier));
+  --radius-md: calc(0.5em * var(--custom-border-radius-multiplier));
+  --radius-lg: calc(0.75em * var(--custom-border-radius-multiplier));
+  --radius-xl: calc(1em * var(--custom-border-radius-multiplier));
+  --radius-2xl: calc(1.5em * var(--custom-border-radius-multiplier));
+  --radius-3xl: calc(2em * var(--custom-border-radius-multiplier));
 
   --text-xs--line-height: calc(1 / 0.75);
   --text-sm--line-height: calc(1.25 / 0.875);

@@ -45,7 +45,7 @@ export function SidebarTitle({
         pb={actionButton !== undefined ? 'sm' : 'md'}
         pl="xl"
         pt="sm"
-        style={{ gap: '0.75rem', paddingRight: '1.25rem' }}
+        style={{ gap: '0.75em', paddingRight: '1.25em' }}
       >
         <Text
           as="h3"

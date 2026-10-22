@@ -51,9 +51,9 @@ Spacing scales are defined under `vars.space` and scale with font size to keep v
 
 ### B. Border Radius (Rounding) Tokens
 
-Border corners are defined under `vars.radii` and scale with the user's corner multiplier (`--custom-border-radius-multiplier`; independent of font scale). Each radius is a whole multiple of the spacing unit (`0.25rem` - i.e. `--spacing` at the default font scale) so nested corners stay concentric.
+Border corners are defined under `vars.radii` and scale with the user's corner multiplier (`--custom-border-radius-multiplier`; independent of font scale). Each radius is a whole multiple of the spacing unit (`0.25em` - i.e. `--spacing` at the default font scale) so nested corners stay concentric.
 
-| Token  | Raw value           | Multiple of `0.25rem` | Rendered at `:root` 14px |
+| Token  | Raw value           | Multiple of `0.25em` | Rendered at `:root` 14px |
 | :----- | :------------------ | :-------------------- | :----------------------- |
 | `none` | `0`                 | -                     | `0`                      |
 | `sm`   | `var(--radius-sm)`  | `1`                   | `3.5px`                  |
@@ -66,7 +66,7 @@ Border corners are defined under `vars.radii` and scale with the user's corner m
 
 #### Concentric nested corners
 
-When a rounded element sits inside another one with padding, keep the corners concentric using `inner radius = outer radius - padding`. Because all radius and spacing tokens share the `0.25rem` unit, the result usually maps to another token:
+When a rounded element sits inside another one with padding, keep the corners concentric using `inner radius = outer radius - padding`. Because all radius and spacing tokens share the `0.25em` unit, the result usually maps to another token:
 
 | Outer radius | Padding | Inner radius |
 | :----------- | :------ | :----------- |
@@ -356,10 +356,10 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
 > **`aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis` are available as props on all primitives** - no inline `style` needed. Always check if a CSS property exists in the `ArbitraryProps` type before resorting to inline styles.
 
 > [!WARNING]
-> **`top`, `right`, `bottom`, `left`, and `inset` accept raw CSS strings** (e.g. `"0.5rem"`, `"8px"`, `"50%"`), not `SpaceToken` values like `sm`, `md`, `lg`.  
+> **`top`, `right`, `bottom`, `left`, and `inset` accept raw CSS strings** (e.g. `"0.5em"`, `"8px"`, `"50%"`), not `SpaceToken` values like `sm`, `md`, `lg`.  
 > Spacing tokens only work with padding (`p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`) and margin (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`) props.  
 > ❌ `top="sm"` - will not resolve  
-> ✅ `top="0.5rem"` - correct
+> ✅ `top="0.5em"` - correct
 >
 > **`top`, `right`, `bottom`, `left`, and `inset` are NOT tokenized.** They do not accept spacing tokens (`sm`, `md`, `lg`) - only raw CSS values. These properties are used for absolute/fixed positioning, which is inherently pixel/length-based and does not benefit from the token system's font-scaling.
 
@@ -381,7 +381,7 @@ rbr?: ResponsiveProp<RadiusToken> // Bottom Right
   p="lg"
   r="xl"
   shadow
-  width={{ base: '100%', md: '50rem' }}
+  width={{ base: '100%', md: '50em' }}
 >
   Box Content
 </Box>
@@ -609,7 +609,7 @@ interface BorderedOwnProps extends BoxOwnProps {
   borderColor={{ base: 'bg-200', dark: 'bg-800' }}
   borderWidth="2px"
   height="100vh"
-  width="16rem"
+  width="16em"
 >
   Sidebar content
 </Bordered>
@@ -1323,7 +1323,7 @@ function UserCreationPage() {
         {t('welcome.desc')}
       </Text>
       // 5. Central form container bounded by max width
-      <Stack maxWidth="40rem" mt="2xl" width="100%">
+      <Stack maxWidth="40em" mt="2xl" width="100%">
         <TextInput
           errorMsg={errors.email}
           icon="tabler:mail"
@@ -1604,7 +1604,7 @@ or fall back to inline/`.css.ts`.
 | `p-8` / `gap-8` / `pb-8`                      | `p="xl"` / `gap="xl"` / `pb="xl"`                                               |
 | `pb-12` (48px)                                | `pb="2xl"`                                                                      |
 | `mr-16` / `mt-16` (64px)                      | `mr="3xl"` / `mt="3xl"`                                                         |
-| `mt-0.5` / `gap-0.5` (2px)                    | no token → inline `{ marginTop: '0.125rem' }` / `{ gap: '0.125rem' }`           |
+| `mt-0.5` / `gap-0.5` (2px)                    | no token → inline `{ marginTop: '0.125em' }` / `{ gap: '0.125em' }`           |
 | `mx-auto` / `mt-auto`                         | `style={{ marginLeft: 'auto', marginRight: 'auto' }}` / `{ marginTop: 'auto' }` |
 | `flex` / `flex-col` / `flex-row`              | `Flex` (`direction="column"`/`"row"`)                                           |
 | `flex-center`                                 | `centered`                                                                      |
@@ -1613,15 +1613,15 @@ or fall back to inline/`.css.ts`.
 | `shrink-0`                                    | `flexShrink="0"`                                                                |
 | `w-full` / `h-full` / `size-full`             | `width="100%"` / `height="100%"`                                                |
 | `w-5/12` / `w-2/12`                           | `width="41.6667%"` / `"16.6667%"`                                               |
-| `max-w-md`                                    | `maxWidth="28rem"`                                                              |
-| `h-96` / `w-32` / `size-16`                   | `height="24rem"` / `width="8rem"` / `height="4rem" width="4rem"`                |
-| `size-5` / `size-6` / `size-7`                | `size="1.25rem"` / `"1.5rem"` / `"1.75rem"` (Icon)                              |
+| `max-w-md`                                    | `maxWidth="28em"`                                                              |
+| `h-96` / `w-32` / `size-16`                   | `height="24em"` / `width="8em"` / `height="4em" width="4em"`                |
+| `size-5` / `size-6` / `size-7`                | `size="1.25em"` / `"1.5em"` / `"1.75em"` (Icon)                              |
 | `aspect-video` / `aspect-square`              | `aspectRatio="16 / 9"` / `aspectRatio="1"`                                      |
 | `rounded-lg` / `rounded-md` / `rounded-full`  | `r="lg"` / `r="md"` / `r="full"`                                                |
 | `shadow-custom` / `shadow-lg`                 | `shadow`                                                                        |
 | `overflow-hidden`                             | `overflow="hidden"`                                                             |
 | `relative` / `absolute` / `static`            | `position="relative"` / `"absolute"` / `"static"`                               |
-| `top-4 right-4` / `inset-0`                   | `top="1rem" right="1rem"` / `inset="0"` (raw strings, **not** tokens)           |
+| `top-4 right-4` / `inset-0`                   | `top="1em" right="1em"` / `inset="0"` (raw strings, **not** tokens)           |
 | `text-bg-500` / `text-custom-500`             | `color="muted"` / `color="primary"`                                             |
 | `text-sm` / `text-lg` / `text-2xl`            | `size="sm"` / `"lg"` / `"2xl"`                                                  |
 | `font-medium` / `font-semibold` / `font-bold` | `weight="medium"` / `"semibold"` / `"bold"`                                     |
@@ -1683,12 +1683,12 @@ Replace breakpoints with responsive props: `hidden md:flex` →
 - **Grids**: `grid grid-cols-1 md:grid-cols-3` → `<Grid templateCols={{ base: 1, md: 3 }}>`.
 - **Overlay buttons**: `<Box as="button" inset="0" position="absolute" />`.
 - **Accent bars** (`border-l-4` / `before:` pseudo bars) → a relative `Box` with an
-  absolute rounded bar (`bg="primary" r="full" width="0.25rem" top="0" bottom="0" left="0"`).
+  absolute rounded bar (`bg="primary" r="full" width="0.25em" top="0" bottom="0" left="0"`).
 - **`*:first-child` / `[&>*:nth-child(2)]`** → usually redundant once the child
   already sets `width="100%"`; otherwise use `.css.ts`.
-- **Modal double-scrollbar**: `ModalWrapper` is `maxHeight="calc(100dvh - 8rem)"`
-  with `p="lg"` (1.5rem), so its content box is `calc(100dvh - 11rem)`. Give the
-  modal's outer container `minHeight="calc(100dvh - 11rem)"` so only the inner
+- **Modal double-scrollbar**: `ModalWrapper` is `maxHeight="calc(100dvh - 8em)"`
+  with `p="lg"` (1.5em), so its content box is `calc(100dvh - 11em)`. Give the
+  modal's outer container `minHeight="calc(100dvh - 11em)"` so only the inner
   `Scrollbar`/`AutoSizer` scrolls.
 
 ### Overlay API notes
@@ -1722,6 +1722,6 @@ Before submitting a pull request, verify that you have adhered to all core desig
 - [ ] **Check ArbitraryProps first:** Before reaching for inline `style` or `.css.ts`, check if the CSS property is available via `ArbitraryProps` (e.g. `aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`).
 - [ ] **Component deconstruction:** If a component's JSX grows beyond a single conceptual block, extract sub-sections into their own component files under a `components/` subdirectory.
 - [ ] **Hooks co-location:** Hooks that are only consumed by a child component should live inside that child component, not in the parent.
-- [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin - no need to define responsive sizes like `mb={{ base: '6rem', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
+- [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin - no need to define responsive sizes like `mb={{ base: '6em', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
 - [ ] **Component organization:** Components are strictly separated into individual files under their respective `components/` folders instead of being grouped together.
 - [ ] **Conventional functions:** All React components use standard function declarations (`export function Component()`) and avoid arrow functions.

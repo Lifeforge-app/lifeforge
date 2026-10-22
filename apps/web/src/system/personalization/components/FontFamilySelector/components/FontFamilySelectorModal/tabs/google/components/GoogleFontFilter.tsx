@@ -28,7 +28,7 @@ function GoogleFontFilter() {
     >
       <Listbox
         bg={surface.lightInteractive}
-        minWidth={{ base: '100%', md: '14rem' }}
+        minWidth={{ base: '100%', md: '14em' }}
         renderContent={() =>
           _.startCase(selectedCategory || '') || 'All category'
         }

@@ -44,7 +44,7 @@ export const Default: Story = {
           bg={{ base: 'bg-50', dark: 'bg-800' }}
           p="xl"
           r="lg"
-          style={{ maxWidth: '28rem', width: '100%' }}
+          style={{ maxWidth: '28em', width: '100%' }}
         >
           <PrintArea contentRef={ref}>
             <Flex direction="column" gap="md">

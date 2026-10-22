@@ -22,7 +22,7 @@ export const Default: Story = {
   },
   render: props => {
     return (
-      <Box height="100vh" minHeight="30rem" position="fixed" width="100vw">
+      <Box height="100vh" minHeight="30em" position="fixed" width="100vw">
         <LockedScreen {...props} />
       </Box>
     )

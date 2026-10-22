@@ -25,7 +25,7 @@ function SimpleModal({
   onClose: () => void
 }) {
   return (
-    <Box minWidth="0" style={{ width: '28rem' }}>
+    <Box minWidth="0" style={{ width: '28em' }}>
       <Flex align="center" justify="between" mb="md">
         <Text size="xl" weight="semibold">
           {data.title}
@@ -55,7 +55,7 @@ function NestedModal({
   const { open } = useModalStore()
 
   return (
-    <Box minWidth="0" style={{ width: '24rem' }}>
+    <Box minWidth="0" style={{ width: '24em' }}>
       <Flex align="center" justify="between" mb="md">
         <Text size="xl" weight="semibold">
           Modal depth {data.depth}
@@ -89,7 +89,7 @@ function SlowModal({
   onClose: () => void
 }) {
   return (
-    <Box minWidth="0" style={{ width: '26rem' }}>
+    <Box minWidth="0" style={{ width: '26em' }}>
       <Flex align="center" justify="between" mb="md">
         <Text size="xl" weight="semibold">
           Async Action

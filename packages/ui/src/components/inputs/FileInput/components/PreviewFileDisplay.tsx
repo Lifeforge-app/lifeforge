@@ -15,14 +15,14 @@ export function PreviewFileDisplay({
   return (
     <Box mt="lg">
       <Zoom zoomMargin={100}>
-        <Box asChild maxHeight="24rem" r="md">
+        <Box asChild maxHeight="24em" r="md">
           <img key={previewUrl} alt="" src={previewUrl} />
         </Box>
       </Zoom>
       <Button
         dangerous
         icon="tabler:x"
-        style={{ marginTop: '1.5rem', width: '100%' }}
+        style={{ marginTop: '1.5em', width: '100%' }}
         onClick={() => onChange({ type: 'empty' })}
       >
         Remove

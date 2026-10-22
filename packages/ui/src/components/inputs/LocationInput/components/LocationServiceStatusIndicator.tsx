@@ -31,7 +31,7 @@ export function LocationServiceStatusIndicator({
         place="top-end"
         positionStrategy="fixed"
       >
-        <Box maxWidth="16rem">
+        <Box maxWidth="16em">
           <Text color={{ base: 'bg-500' }}>
             {t('locationDisabled.description')}{' '}
             <Text

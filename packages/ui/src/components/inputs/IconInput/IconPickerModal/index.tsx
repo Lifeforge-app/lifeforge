@@ -80,7 +80,7 @@ export function IconPickerModal({
                 >
                   <Icon
                     icon="tabler:x"
-                    style={{ height: '1.5rem', width: '1.5rem' }}
+                    style={{ height: '1.5em', width: '1.5em' }}
                   />
                 </button>
               </Text>

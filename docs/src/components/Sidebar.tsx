@@ -26,7 +26,7 @@ function Sidebar({
       <aside
         className={`${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full xl:translate-x-0'
-        } bg-bg-100 dark:bg-bg-900 fixed left-0 z-50 h-[calc(100%-2rem)] w-full flex-1 overflow-y-auto transition-all sm:w-3/4 md:w-1/2 xl:w-80`}
+        } bg-bg-100 dark:bg-bg-900 fixed left-0 z-50 h-[calc(100%-2em)] w-full flex-1 overflow-y-auto transition-all sm:w-3/4 md:w-1/2 xl:w-80`}
       >
         <Scrollbar
           autoHide

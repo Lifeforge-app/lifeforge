@@ -36,7 +36,7 @@ function TailwindCSSColorsModal({
         title="colorPicker.modals.tailwindCssColorPalette"
         onClose={onClose}
       />
-      <Flex direction="column" style={{ gap: '0.75rem' }}>
+      <Flex direction="column" style={{ gap: '0.75em' }}>
         {(
           [...Object.keys(TAILWIND_PALETTE)] as Array<
             keyof typeof TAILWIND_PALETTE
@@ -66,8 +66,8 @@ function TailwindCSSColorsModal({
               <Grid
                 key={index}
                 as="ul"
-                style={{ gap: '0.75rem' }}
-                templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
+                style={{ gap: '0.75em' }}
+                templateCols="repeat(auto-fit, minmax(4em, 1fr))"
                 width="100%"
               >
                 {Object.entries(

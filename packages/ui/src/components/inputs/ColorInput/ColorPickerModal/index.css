@@ -8,16 +8,16 @@
 }
 
 .w-color-editable-input input {
-  font-size: 1rem !important;
+  font-size: 1em !important;
   font-weight: 500 !important;
-  letter-spacing: 0.1rem !important;
+  letter-spacing: 0.1em !important;
   background-color: var(--color-bg-50) !important;
   box-shadow: var(--custom-shadow) !important;
   color: var(--color-bg-800) !important;
-  margin-bottom: 0.5rem !important;
+  margin-bottom: 0.5em !important;
   border-radius: var(--radius-md) !important;
-  padding-top: 0.5rem !important;
-  padding-bottom: 0.5rem !important;
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
   text-align: center;
   outline: none;
 }
@@ -33,5 +33,5 @@
 }
 
 .w-color-editable-input span {
-  font-size: 0.9rem !important;
+  font-size: 0.9em !important;
 }

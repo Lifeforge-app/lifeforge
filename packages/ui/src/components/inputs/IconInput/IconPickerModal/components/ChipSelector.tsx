@@ -58,7 +58,7 @@ export function ChipSelector({
         bg={{ base: 'transparent', hover: 'bg-100', darkHover: 'bg-800' }}
         flexGrow="1"
         flexShrink="0"
-        height="2rem"
+        height="2em"
         justify="center"
         px="sm"
         r="full"
@@ -77,8 +77,8 @@ export function ChipSelector({
             <Icon
               icon="uil:angle-up"
               style={{
-                height: '1.5rem',
-                width: '1.5rem',
+                height: '1.5em',
+                width: '1.5em',
                 transform: expanded ? 'rotate(180deg)' : undefined
               }}
             />

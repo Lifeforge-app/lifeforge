@@ -116,10 +116,10 @@ export function SidebarItem({
             as="span"
             display="block"
             flexShrink="0"
-            height="2rem"
+            height="2em"
             r="full"
             style={{ backgroundColor: sideStripColor }}
-            width="0.25rem"
+            width="0.25em"
           />
         )}
         <SidebarItemIcon

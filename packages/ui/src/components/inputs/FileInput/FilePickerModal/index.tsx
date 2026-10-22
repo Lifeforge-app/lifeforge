@@ -73,7 +73,7 @@ export function FilePickerModal({
         disabled={file === null}
         icon="tabler:check"
         loading={loading}
-        style={{ marginTop: '1rem', width: '100%' }}
+        style={{ marginTop: '1em', width: '100%' }}
         onClick={onClick}
       >
         select

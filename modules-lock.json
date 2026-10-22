@@ -39,6 +39,11 @@
       "repo": "melvinchia3636/lifeforge-module-guitar-tuner",
       "version": "0.0.2",
       "commitSha": "8366a217a1a28b42120f27cc26b5c9dced048a35"
+    },
+    "lifeforge--books-library": {
+      "repo": "Lifeforge-app/lifeforge-module-books-library",
+      "version": "0.0.1",
+      "commitSha": "90f3687689a834ff6aeb9fd0fbb9a891a009e673"
     }
   },
   "locales": {}

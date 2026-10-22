@@ -129,7 +129,7 @@ function CardItem({ item }: { item: SampleItem }) {
             {cardRef.current?.offsetHeight}px
           </Text>
         ) : (
-          <Icon color="primary" icon="svg-spinners:ring-resize" size="1.5rem" />
+          <Icon color="primary" icon="svg-spinners:ring-resize" size="1.5em" />
         )}
       </Flex>
       <Text mt="md" size="lg" weight="semibold">
@@ -189,13 +189,7 @@ export const WiderItems: Story = {
     renderItem: () => <></>
   },
   render: props => (
-    <Box
-      height="100vh"
-      minHeight="30rem"
-      p="3xl"
-      position="fixed"
-      width="100vw"
-    >
+    <Box height="100vh" minHeight="30em" p="3xl" position="fixed" width="100vw">
       <VirtualGrid
         {...props}
         getItemKey={(item: SampleItem) => item.id}

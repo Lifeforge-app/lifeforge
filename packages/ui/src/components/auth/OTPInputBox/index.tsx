@@ -32,8 +32,8 @@ function _OTPInputBox({
                 : { base: 'bg-50', dark: 'bg-900' }
             }
             height="100%"
-            maxHeight={{ base: '3rem', md: '4rem' }}
-            maxWidth={{ base: '3rem', md: '4rem' }}
+            maxHeight={{ base: '3em', md: '4em' }}
+            maxWidth={{ base: '3em', md: '4em' }}
             mx="xs"
             r="md"
             style={{

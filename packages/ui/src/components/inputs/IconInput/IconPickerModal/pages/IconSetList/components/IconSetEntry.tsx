@@ -51,7 +51,7 @@ function _IconSetEntry({
                 key={sampleIcon}
                 color={{ base: 'bg-600', dark: 'bg-400' }}
                 icon={`${iconSet.prefix}:${sampleIcon}`}
-                size={{ base: '1.5rem', sm: '2rem' }}
+                size={{ base: '1.5em', sm: '2em' }}
               />
             ))}
           </Flex>
@@ -70,7 +70,7 @@ function _IconSetEntry({
               borderSide="top"
               mt="md"
               pt="md"
-              style={{ fontSize: '0.875rem' }}
+              style={{ fontSize: '0.875em' }}
             >
               <Text asChild color="muted">
                 <Flex align="center" justify="between">

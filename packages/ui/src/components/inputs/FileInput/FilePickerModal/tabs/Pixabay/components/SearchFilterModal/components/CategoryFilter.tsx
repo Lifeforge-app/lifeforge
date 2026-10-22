@@ -25,7 +25,7 @@ export function CategoryFilter({
         <>
           <Icon
             icon={CATEGORIES.find(l => l.id === category)?.icon ?? ''}
-            style={{ height: '1.25rem', width: '1.25rem' }}
+            style={{ height: '1.25em', width: '1.25em' }}
           />
           <Text
             truncate

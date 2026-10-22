@@ -84,7 +84,7 @@ export function SidebarItemContent({
                 justify="between"
                 minWidth="0"
                 overflow="hidden"
-                style={{ gap: '0.75rem' }}
+                style={{ gap: '0.75em' }}
                 width="100%"
               >
                 <Box asChild minWidth="0" width="100%">

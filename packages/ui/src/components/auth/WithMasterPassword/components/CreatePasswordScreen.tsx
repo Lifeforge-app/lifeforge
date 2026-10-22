@@ -94,7 +94,7 @@ export function CreatePasswordScreen({
       width="100%"
     >
       <Text asChild>
-        <Icon icon="tabler:lock-plus" size="7rem" />
+        <Icon icon="tabler:lock-plus" size="7em" />
       </Text>
       <Text size="4xl" weight="semibold">
         {t('vault.createPassword.title')}

@@ -156,9 +156,9 @@ const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
           align="end"
           direction="column"
           flexShrink="0"
-          style={{ gap: '0.25rem' }}
+          style={{ gap: '0.25em' }}
         >
-          <Flex align="center" style={{ gap: '0.25rem' }}>
+          <Flex align="center" style={{ gap: '0.25em' }}>
             <Text color="primary" weight="semibold">
               $
               {(product.price * (1 - product.discountPercentage / 100)).toFixed(
@@ -172,10 +172,10 @@ const ProductSuggestionItem = ({ product }: { product: ProductElement }) => {
             )}
           </Flex>
           <Text asChild color="muted" size="sm">
-            <Flex align="center" style={{ gap: '0.25rem' }}>
+            <Flex align="center" style={{ gap: '0.25em' }}>
               <Icon
                 icon="tabler:star"
-                style={{ height: '1rem', width: '1rem' }}
+                style={{ height: '1em', width: '1em' }}
               />
               {product.rating.toFixed(1)}
             </Flex>
@@ -242,7 +242,7 @@ function SearchWithSuggestions() {
                 as="div"
                 color="muted"
                 px="md"
-                style={{ paddingBottom: '0.75rem', paddingTop: '0.75rem' }}
+                style={{ paddingBottom: '0.75em', paddingTop: '0.75em' }}
               >
                 No suggestions found.
               </Text>
@@ -276,7 +276,7 @@ function SearchWithSuggestions() {
     })
 
     return (
-      <Box style={{ height: '32rem' }} width="100%">
+      <Box style={{ height: '32em' }} width="100%">
         <SearchInput
           {...args}
           debounceMs={300}
@@ -297,7 +297,7 @@ function SearchWithSuggestions() {
                     as="div"
                     color="muted"
                     px="md"
-                    style={{ paddingBottom: '0.75rem', paddingTop: '0.75rem' }}
+                    style={{ paddingBottom: '0.75em', paddingTop: '0.75em' }}
                   >
                     No suggestions found.
                   </Text>

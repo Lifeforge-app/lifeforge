@@ -10,7 +10,7 @@ export const wrapper = style({
       top: '0',
       left: '0',
       height: '100%',
-      width: '0.25rem',
+      width: '0.25em',
       borderRadius: vars.radii.full,
       backgroundColor: 'var(--_alert-stripe-color)'
     }

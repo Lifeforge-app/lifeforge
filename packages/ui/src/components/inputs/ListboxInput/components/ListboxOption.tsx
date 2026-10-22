@@ -97,7 +97,7 @@ export function ListboxOption({
                         minWidth="0"
                         style={
                           convertedColor !== undefined
-                            ? { gap: '0.75rem' }
+                            ? { gap: '0.75em' }
                             : undefined
                         }
                         width="100%"
@@ -132,8 +132,8 @@ export function ListboxOption({
                                   display="block"
                                   flexShrink="0"
                                   style={{
-                                    height: '1.25rem',
-                                    width: '1.25rem'
+                                    height: '1.25em',
+                                    width: '1.25em'
                                   }}
                                 />
                               ) : (
@@ -149,10 +149,10 @@ export function ListboxOption({
                               as="span"
                               display="block"
                               flexShrink="0"
-                              height="1rem"
+                              height="1em"
                               r="full"
                               style={{ backgroundColor: convertedColor }}
-                              width="1rem"
+                              width="1em"
                             />
                           )
                         )}

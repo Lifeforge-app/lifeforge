@@ -98,10 +98,10 @@ function CustomFontCard({ font }: { font: CustomFont }) {
                 : { base: 'bg-200', dark: 'bg-700' }
             }
             flexShrink="0"
-            height="3rem"
+            height="3em"
             justify="center"
             r="lg"
-            width="3rem"
+            width="3em"
           >
             <Icon
               color={isSelected ? 'custom-500' : 'muted'}

@@ -29,7 +29,7 @@ export function NotFoundScreen({
       px="xl"
       width="100%"
     >
-      <Text color="primary" style={{ fontSize: '10rem', lineHeight: '13rem' }}>
+      <Text color="primary" style={{ fontSize: '10em', lineHeight: '13em' }}>
         ;-;
       </Text>
       <Text align="center" as="h1" size="4xl" weight="semibold">
@@ -38,7 +38,7 @@ export function NotFoundScreen({
       <Text align="center" as="p" color="muted" size="xl">
         {message ?? t('notFound.description')}
       </Text>
-      <Flex centered mt="lg" style={{ gap: '0.75rem' }}>
+      <Flex centered mt="lg" style={{ gap: '0.75em' }}>
         <Button as="a" href="/" icon="tabler:arrow-left">
           Go Back
         </Button>

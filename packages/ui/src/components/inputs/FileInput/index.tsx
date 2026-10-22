@@ -138,7 +138,7 @@ export function FileInput({
       >
         <Text asChild color={errorMsg ? 'dangerous' : 'muted'}>
           <Flex align="center" gap="sm">
-            <Icon icon={icon} size="1.5rem" />
+            <Icon icon={icon} size="1.5em" />
             <Text as="span" color="inherit" weight="medium">
               {inputLabel}{' '}
               {required === true && (
