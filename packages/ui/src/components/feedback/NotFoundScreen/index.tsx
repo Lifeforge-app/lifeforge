@@ -29,7 +29,7 @@ export function NotFoundScreen({
       px="xl"
       width="100%"
     >
-      <Text color="primary" style={{ fontSize: '10em', lineHeight: '13em' }}>
+      <Text color="primary" style={{ fontSize: '10rem', lineHeight: '13rem' }}>
         ;-;
       </Text>
       <Text align="center" as="h1" size="4xl" weight="semibold">
