@@ -1,4 +1,4 @@
-import { Flex, type FlexProps } from '@/components/primitives'
+import { Box, Flex, type FlexProps } from '@/components/primitives'
 import type { TokenizedColor } from '@/system'
 
 import { TitleAndDesc } from './components/TitleAndDesc'
@@ -103,7 +103,9 @@ export function Widget({
           {componentBesideTitle}
         </Flex>
       )}
-      {children}
+      <Box height="100%" minHeight="0">
+        {children}
+      </Box>
     </Flex>
   )
 }
