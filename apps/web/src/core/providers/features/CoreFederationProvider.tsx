@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useAuth } from '@lifeforge/api'
 import { bootstrapModules, useFederation } from '@lifeforge/federation'
 
+import { installDevSharedModules } from '@/core/utils/devSharedModules'
 import { CORE_MODULES } from '@/system'
 
 export default function CoreFederationProvider({
@@ -26,6 +27,8 @@ export default function CoreFederationProvider({
     setError(null)
 
     try {
+      installDevSharedModules()
+
       const result = await bootstrapModules(
         import.meta.env.VITE_API_HOST || '',
         CORE_MODULES
