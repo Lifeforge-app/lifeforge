@@ -65,7 +65,7 @@ async function getTableNames(
  *
  * Destructive statements are never applied, so objects that aren't part of the
  * provided schemas (e.g. tables/enums from modules that are no longer
- * installed) are left untouched — the database is only ever extended.
+ * installed) are left untouched - the database is only ever extended.
  */
 export async function pushSchemaFiles(files: string[]): Promise<PushResult> {
   const databaseUrl = process.env.DATABASE_URL

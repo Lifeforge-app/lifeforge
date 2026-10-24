@@ -16,7 +16,7 @@ route DSL see [`server-dsl-migration.md`](./server-dsl-migration.md).
   them by passing the schema to the forge builder in `server/forge.ts`
   (`createForgeContractBuilder({ schema })`).
 - Route callbacks receive a fully-typed `db` (and `core`) scoped to the module's
-  schema. You never build your own `drizzle()`/`postgres()` client — use the
+  schema. You never build your own `drizzle()`/`postgres()` client - use the
   injected `db`.
 - Use the **relational API** (`db.query.*`) for CRUD, and the **SQL builder**
   (`db.select/insert/update/delete`) for joins and aggregates.
@@ -40,7 +40,7 @@ const entries = await db.query.entries.findMany({
 `drizzle-orm` is imported directly (`pgTable`, `eq`, `sql`, `defineRelations`,
 `RelationsBuilder`, `PostgresJsDatabase`, ...); zod-derived schemas come from
 `drizzle-orm/zod` (`createSelectSchema`, `createInsertSchema`).
-`@lifeforge/drizzle` only exports LifeForge-owned helpers — `createModuleTable`,
+`@lifeforge/drizzle` only exports LifeForge-owned helpers - `createModuleTable`,
 `defineModuleSchema`, `composeRelations`, `scopeDbForModule`, `ModuleSchema`,
 `BuiltModuleSchema`.
 
@@ -109,11 +109,11 @@ export const tables = {
   the previous convention; snake_case is now the default.)
 - **IDs**: `uuid('id').defaultRandom().primaryKey()`.
 - **Timestamps**: `timestamp('created', { mode: 'date' }).defaultNow().notNull()`.
-  They deserialize to `Date`. Return them as-is from routes — output schemas
+  They deserialize to `Date`. Return them as-is from routes - output schemas
   declare `z.date()`, and the framework serializes them to ISO strings on the
   wire (see [Output Serialization](#output-serialization)).
 - **Foreign keys**: `.references(() => target.id)` creates the DB constraint.
-  It does not power `db.query` relations — those need an entry in the
+  It does not power `db.query` relations - those need an entry in the
   `relations` callback (below).
 - **Enums** use `pgEnum(...)`; **JSON** uses `json('col').$type<T>()`.
 - Nullable columns omit `.notNull()`; unique columns add `.unique()`.
@@ -341,7 +341,7 @@ const [updated] = await db
   .returning()
 ```
 
-Use `eq(column, value)` (and friends) in builder `.where()` — the object filter
+Use `eq(column, value)` (and friends) in builder `.where()` - the object filter
 syntax is for `db.query.*` / `TableFilter`, not the builder. Set `updated`
 manually (`new Date()`); there is no DB trigger.
 
@@ -418,7 +418,7 @@ input: {
 ## Output Serialization
 
 `db` returns `Date` objects for timestamp columns, and DTOs keep them as
-`z.date()`. Return the values untouched — the framework JSON-serializes `Date`
+`z.date()`. Return the values untouched - the framework JSON-serializes `Date`
 to an ISO string on the wire, and the generated client contract types the field
 as `string`. Don't hand-convert:
 
@@ -460,7 +460,7 @@ Map only the fields the contract declares. Never leak sensitive columns
   ```
 
 - **Errors**: return the universal `response.*` helpers
-  (`badRequest`/`unauthorized`/`forbidden`/`notFound`/`conflict`) — they are not
+  (`badRequest`/`unauthorized`/`forbidden`/`notFound`/`conflict`) - they are not
   declared in `output`. Unique violations (`23505`) map to `409` and FK
   violations (`23503`) to `404` automatically; don't pre-check uniqueness by hand.
 
@@ -479,7 +479,7 @@ and `modules/**/server`, plus the file-storage schema
 
 ---
 
-## Adding a New Module Table — Checklist
+## Adding a New Module Table - Checklist
 
 1. Create `modules/<module>/server/schema.drizzle.ts` with `pgTable(...)`
    definition(s), namespacing table names (`module__table`).
@@ -505,7 +505,7 @@ and `modules/**/server`, plus the file-storage schema
 4. Write routes with `db.query.*` (CRUD) or `db.select/insert/update/delete`
    (joins/aggregates), deriving DTOs with `drizzle-orm/zod`.
 5. Run `pnpm db:push` (dev) or `pnpm db:generate` + `pnpm db:migrate`.
-6. Restart the dev server — module schemas register automatically; there is no
+6. Restart the dev server - module schemas register automatically; there is no
    central file to edit. If `db.query.<table>` is missing, the schema file was
    not imported (or the module failed to load).
 
@@ -558,8 +558,8 @@ See [`file-storage-sdk.md`](./file-storage-sdk.md) for the full API.
 - **Return `Date` objects as-is**; output schemas keep `z.date()` and the
   framework serializes them to ISO strings for the client. Never override
   timestamp columns to `z.string()` or call `.toISOString()` in a route.
-- **Set `updated` manually** on every update — there is no trigger.
+- **Set `updated` manually** on every update - there is no trigger.
 - **Never expose** password/token/secret columns in outputs.
 - **One connection pool**: don't create additional `drizzle()`/`postgres()`
-  instances in modules — use the injected `db`.
+  instances in modules - use the injected `db`.
 - **Keep output schemas success-only and JSON-Schema-serializable.**

@@ -43,7 +43,7 @@ export function startHandler(
     )
 
     // Build only the core (framework packages + server/client). Installed
-    // modules are already built (and cleaned) — building them would fail.
+    // modules are already built (and cleaned) - building them would fail.
     const buildFilters = (
       service
         ? [SERVICE_COMMANDS[service]?.buildFilter]

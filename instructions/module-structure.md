@@ -308,7 +308,7 @@ Then in the client replace `fetch(...)` effects with
 data with `useMemo`.
 
 and filter array items the same way. On the client, still treat contract-typed
-numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '—'`).
+numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '-'`).
 
 ### Other client conventions
 
@@ -504,7 +504,7 @@ if (![lat, lng, altitude, velocity].every(Number.isFinite)) {
 ```
 
 Filter array items the same way. On the client, still treat contract-typed
-numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '—'`). See
+numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '-'`). See
 [`server-dsl-migration.md`](./server-dsl-migration.md) for the DSL-side rule.
 
 Timestamps are handled for you: DTOs keep `z.date()`, routes return the `Date`

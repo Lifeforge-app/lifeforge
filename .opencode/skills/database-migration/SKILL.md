@@ -21,13 +21,13 @@ redesign, not a mechanical rename.
 - The module has a `schema.drizzle.ts` at `modules/<module>/server/schema.drizzle.ts`
   or `apps/api/src/lib/<name>/schema.drizzle.ts`.
 - The target tables exist in Postgres (`pnpm db:push` has run).
-- PocketBase is still running (`PB_HOST` in `env/.env.local`) — only needed if the
+- PocketBase is still running (`PB_HOST` in `env/.env.local`) - only needed if the
   module has `file` fields.
 
 ## Golden rules
 
 1. **Deterministic ids.** `newId(pbId) = uuidv5(NAMESPACE_ID, pbId)` (`lib/id.ts`).
-   Never use random UUIDs — linkage between tables and across modules depends on
+   Never use random UUIDs - linkage between tables and across modules depends on
    this being a pure function.
 2. **Never guess renames.** Run `inspect.ts` and read the actual `schema.drizzle.ts`.
 3. **Skip** PB `view` collections (`_aggregated`) and `_`-prefixed system collections.
@@ -35,7 +35,7 @@ redesign, not a mechanical rename.
    that have no target.
 5. **Idempotent.** Clear the module's target tables in FK-safe order, then insert
    inside one transaction.
-6. **Always validate** — see `reference/validation.md`.
+6. **Always validate** - see `reference/validation.md`.
 
 ## Ordering
 
@@ -83,10 +83,10 @@ pnpm --filter @lifeforge/server exec tsx scripts/migrations/<module>.ts
   `wallet__transactions*`): the new schema may merge them; write an explicit merge.
 - **Media** (`file` fields): fetch from PB and store via the file-storage SDK.
   See `reference/media.md`.
-- **`geoPoint`, PB `password`/`tokenKey`, multi-file/multi-select**: special —
+- **`geoPoint`, PB `password`/`tokenKey`, multi-file/multi-select**: special -
   transform or override.
 
-## Worked example — `lifeforge--achievements`
+## Worked example - `lifeforge--achievements`
 
 `inspect` yields:
 
@@ -105,7 +105,7 @@ Mapping: `id: newId(pb.id)`, scalars as-is, `difficulty` as-is,
 
 ## References
 
-- `reference/type-mapping.md` — PB field type → drizzle column → conversion.
-- `reference/relations-and-linkage.md` — ids, `One`/`Many`/self/merged, ordering.
-- `reference/media.md` — file fetch + file-storage SDK.
-- `reference/validation.md` — post-migration SQL checks.
+- `reference/type-mapping.md` - PB field type → drizzle column → conversion.
+- `reference/relations-and-linkage.md` - ids, `One`/`Many`/self/merged, ordering.
+- `reference/media.md` - file fetch + file-storage SDK.
+- `reference/validation.md` - post-migration SQL checks.

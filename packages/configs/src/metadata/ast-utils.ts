@@ -2,7 +2,7 @@ import * as ts from '@typescript/typescript6'
 
 /**
  * Reads the properties of an object from parsed code and returns them as a key-value map.
- * Only normal property assignments are included — shorthand or spread are skipped.
+ * Only normal property assignments are included - shorthand or spread are skipped.
  *
  * @param node - The parsed object to read from.
  * @returns An object with property names as keys and their code values as entries.

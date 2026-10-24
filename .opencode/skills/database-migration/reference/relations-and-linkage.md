@@ -7,7 +7,7 @@ newId(pbId) = uuidv5(NAMESPACE_ID, pbId)   // lib/id.ts
 ```
 
 A PB relation value is a PB record id. `newId` turns it into the exact UUID the
-referenced row will have — computed without any lookup table. This is what makes
+referenced row will have - computed without any lookup table. This is what makes
 linkage work across tables, across migration runs, and across modules.
 
 Do **not** use `crypto.randomUUID()` for migrated ids.

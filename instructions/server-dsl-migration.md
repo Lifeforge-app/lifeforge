@@ -180,7 +180,7 @@ output: {
 > ```
 >
 > Filter array items the same way, and keep the client defensive
-> (`Number.isFinite(value) ? value.toFixed(4) : '—'`).
+> (`Number.isFinite(value) ? value.toFixed(4) : '-'`).
 
 ### 4. Input schemas must be plain - no `.transform()` in zod
 
@@ -281,7 +281,7 @@ helpers on every route, regardless of what `output` declares:
 | `response.notFound()`      | 404       |
 | `response.conflict()`      | 409       |
 
-Return them directly from the callback — do **not** declare the matching status in `output`:
+Return them directly from the callback - do **not** declare the matching status in `output`:
 
 ```typescript
 // ❌ Old
@@ -369,7 +369,7 @@ Existence checks are now declared **inside the input schema**, on the field that
 holds the reference. `forge.existsIn` annotates the field with the target table
 (and optionally a column other than the primary key). Before the callback runs,
 the framework verifies that every referenced record exists and returns a `404`
-with a field-targeted message if any is missing — so `NOT_FOUND` no longer needs
+with a field-targeted message if any is missing - so `NOT_FOUND` no longer needs
 to be declared.
 
 ```typescript
@@ -388,7 +388,7 @@ input: {
 
 Rules:
 
-- The target is the **table object** from `schema.drizzle` — not a string name.
+- The target is the **table object** from `schema.drizzle` - not a string name.
 - The checked column defaults to the table's primary key. Pass a column key to
   reference another unique column: `forge.existsIn(z.string(), users, 'email')`.
 - Optional fields are skipped when absent:

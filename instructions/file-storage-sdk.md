@@ -7,23 +7,23 @@ metadata in the shared `files` table. Clients fetch files via `GET /files/get`.
 
 Two entry points:
 
-- **`@lifeforge/file-storage`** — the `core.storage` API, `FileReference`/
+- **`@lifeforge/file-storage`** - the `core.storage` API, `FileReference`/
   `fileReferenceSchema`, and the provider factory.
-- **`@lifeforge/file-storage/server`** — server wiring used by `apps/api`
+- **`@lifeforge/file-storage/server`** - server wiring used by `apps/api`
   (upload middleware, `files` table/store, staging sweep).
 
 ---
 
 ## Concepts
 
-- **`core.storage`** — scoped to the calling module. It will only read, write,
+- **`core.storage`** - scoped to the calling module. It will only read, write,
   or delete keys under `{moduleId}/`, so modules can't touch each other's files.
-- **Staging** — an HTTP upload lands in a temp staging area first and is handed
+- **Staging** - an HTTP upload lands in a temp staging area first and is handed
   to your callback as a `StagedFile`, so you can validate or pre-process it
   before committing.
-- **Keys** — opaque: `{moduleId}/{uuid}.{ext}`. The original name, mime type,
+- **Keys** - opaque: `{moduleId}/{uuid}.{ext}`. The original name, mime type,
   size, and thumbnails live in the `files` table, not in the key.
-- **`FileReference`** — what `save`/`getReference` return; store its `key` in
+- **`FileReference`** - what `save`/`getReference` return; store its `key` in
   your column and return the whole object from routes.
 
 ---
@@ -100,7 +100,7 @@ parse, OCR, transcode) before committing.
 | `null` / `undefined` | same as `'keep'`                                    |
 
 `save` returns a `FileReference` (or `null`). Always persist `ref.key` in your
-column — the key is what the client fetches by.
+column - the key is what the client fetches by.
 
 `thumbs` are generated only for images (non-SVG) and returned in
 `ref.thumbs`.
@@ -130,7 +130,7 @@ forgeAPI.getMedia({ key: ref.key, thumb: '256x0' })
 ### `GET /files/get`
 
 - `?key=<key>&thumb=<size>&download=<bool>`
-- **Public** (no auth) — access is gated only by the opaque key. Keys are
+- **Public** (no auth) - access is gated only by the opaque key. Keys are
   `{moduleId}/{uuid}.{ext}` and effectively unguessable.
 - Streams the file or thumbnail with the correct `Content-Type`,
   `Content-Disposition`, and immutable cache headers.

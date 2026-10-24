@@ -38,7 +38,7 @@ mappedRow.fileKey = key
   server.
 - Storage keys are opaque: `<moduleId>/<uuid>.<ext>`. `moduleId` is the module
   folder name for app modules (`lifeforge--wallet`) and the lib name for core
-  (`user`, `fonts`) — matching `getCallerModuleId`. The original PB filename is
+  (`user`, `fonts`) - matching `getCallerModuleId`. The original PB filename is
   kept in the `files` table, not in the key.
 - **Regenerate thumbnails** from the original; do not copy PB's pre-generated
   thumbs. Pass the PB field's `thumbs` array (e.g. avatar `['256x0']`).

@@ -44,8 +44,8 @@ function readModuleIdFromPackageJson(moduleDir: string): string | undefined {
  * Resolves the official module id of the module that is currently being loaded.
  *
  * Prefers the id the loader sets around its dynamic `import()`. When a schema is
- * loaded outside the loader — e.g. drizzle-kit reading `server/dist/schema.js`
- * for `db:push` — it falls back to detecting the module directory from the
+ * loaded outside the loader - e.g. drizzle-kit reading `server/dist/schema.js`
+ * for `db:push` - it falls back to detecting the module directory from the
  * stack and reading the id from that module's package.json.
  */
 export function resolveCallerModuleId(stack?: string): string | undefined {

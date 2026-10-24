@@ -48,7 +48,7 @@ function findColumn(
 
 /**
  * Best-effort mapping between a PB collection's fields and a drizzle table's
- * columns. This is a *proposal* for the author to review — the per-module
+ * columns. This is a *proposal* for the author to review - the per-module
  * migration script is where the final, correct mapping lives.
  */
 export function proposeMapping(
@@ -146,7 +146,7 @@ export function proposeMapping(
         column: null,
         kind: 'unmapped',
         confidence: 'low',
-        note: 'special — needs override/transform'
+        note: 'special - needs override/transform'
       })
       continue
     }

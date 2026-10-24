@@ -166,7 +166,7 @@ function createHandler(
         res,
         err instanceof Error
           ? cause instanceof Error
-            ? `${err.message} — ${cause.message}`
+            ? `${err.message} - ${cause.message}`
             : err.message
           : String(err),
         callerModule ? `${callerModule.source}:${callerModule.id}` : undefined

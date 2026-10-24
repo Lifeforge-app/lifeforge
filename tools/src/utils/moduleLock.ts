@@ -59,7 +59,7 @@ export function removeLocked(kind: LockKind, id: string): void {
 /**
  * Verifies the index-pinned commit against the lockfile. If the same version was
  * previously locked to a different commit, the source has been tampered with
- * (or a tag was moved) — abort. First-time versions are trust-on-first-use.
+ * (or a tag was moved) - abort. First-time versions are trust-on-first-use.
  */
 export function verifyLocked(
   kind: LockKind,

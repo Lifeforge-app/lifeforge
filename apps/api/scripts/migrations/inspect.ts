@@ -79,7 +79,7 @@ async function main(): Promise<void> {
     }
 
     console.log(
-      `  PB collection: ${collection.name} — ${countPbRows(pb, collection.name)} row(s)`
+      `  PB collection: ${collection.name} - ${countPbRows(pb, collection.name)} row(s)`
     )
 
     const proposal = proposeMapping(table, collection)
@@ -93,7 +93,7 @@ async function main(): Promise<void> {
             : '  '
 
       console.log(
-        `${flag} ${mapping.pbField} (${mapping.pbType}) -> ${mapping.column ?? '—'} [${mapping.kind}]${
+        `${flag} ${mapping.pbField} (${mapping.pbType}) -> ${mapping.column ?? '-'} [${mapping.kind}]${
           mapping.note ? ` (${mapping.note})` : ''
         }`
       )

@@ -16,8 +16,8 @@ alone. Inspect the column with `getTableColumns(table)` (`dataType`,
 | `relation` (maxSelect > 1) | junction / array | `parsePbList(value).map(newId)` |
 | `file` | `varchar` key | media pipeline (`media.md`) |
 | `select` (maxSelect > 1) | array / json | `parsePbList(value)` |
-| `geoPoint` | `json` or two columns | **special** — `parsePbJson` or split `lon`/`lat` |
-| `password` | `auth_password_hash`? | **special** — confirm hash algorithm before mapping |
+| `geoPoint` | `json` or two columns | **special** - `parsePbJson` or split `lon`/`lat` |
+| `password` | `auth_password_hash`? | **special** - confirm hash algorithm before mapping |
 
 ## Notes
 

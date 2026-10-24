@@ -44,7 +44,7 @@ export function openPb(): DatabaseSync {
 /**
  * Reads non-view, non-system collections from `_collections`.
  *
- * - Skips PB views (`_aggregated` collections) — they map to aggregate queries
+ * - Skips PB views (`_aggregated` collections) - they map to aggregate queries
  *   in the new codebase, not tables.
  * - Skips PB system collections (names starting with `_`), but keeps `users`
  *   (an auth collection that the app still owns).

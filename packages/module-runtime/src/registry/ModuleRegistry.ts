@@ -31,7 +31,7 @@ interface RegistryState {
 
 /**
  * The registry state is kept on `globalThis` so that every instance of this
- * package shares a single store — even when the package is both bundled into
+ * package shares a single store - even when the package is both bundled into
  * one consumer and resolved from node_modules by another (e.g. the API bundle
  * inlining it while the external `server-utils`/`drizzle` import it).
  */
