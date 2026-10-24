@@ -30,7 +30,7 @@ function DashboardGrid({
   const { loading, getComponent } = useWidgets()
   const { getDimension } = useWidgetDimension()
   const { width, height } = useDivSize(wrapperRef)
-  const { dashboardLayout: enabledWidgets } = usePersonalization()
+  const { dashboardLayout: enabledWidgets, derivedTheme } = usePersonalization()
   const { changeDashboardLayout } = useUserPersonalization()
 
   if (width === 0) {
@@ -142,7 +142,10 @@ function DashboardGrid({
             {canLayoutChange && (
               <>
                 <Box
-                  bg={colorWithOpacity('bg-900', '30%')}
+                  bg={colorWithOpacity(
+                    derivedTheme === 'dark' ? 'bg-900' : 'bg-100',
+                    '30%'
+                  )}
                   height="100%"
                   left="0"
                   position="absolute"
