@@ -42,6 +42,13 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
 
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
+  // `remoteEntry.js` keeps the same URL across builds, and browsers - mobile
+  // ones especially - readily serve the stored copy instead of revalidating
+  // it. Never store it so a rebuilt module is picked up on the next load.
+  if (filePath === 'remoteEntry.js') {
+    res.setHeader('Cache-Control', 'no-store')
+  }
+
   // Serve file securely using the root sandbox parameter
   res.sendFile(filePath, { root: moduleDistPath }, err => {
     // Only fall through when the file could not be sent. Calling next() after a
