@@ -1,4 +1,5 @@
 import { ROOT_DIR } from '@constants'
+import { watchCoreLocales } from '@functions/initialization/watchCoreLocales'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 import express from 'express'
@@ -93,9 +94,13 @@ router.get('*', (_, res) => {
   })
 })
 
-/** Starts watching the modules directory and reloading on changes. */
-export function startModuleWatcher(): void {
+/**
+ * Starts watching the modules and core locales directories, reloading on
+ * changes.
+ */
+export function startWatchers(): void {
   moduleRuntime.watch()
+  watchCoreLocales(() => moduleRuntime.reload())
 }
 
 export default router

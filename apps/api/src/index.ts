@@ -81,10 +81,11 @@ async function main(): Promise<void> {
 
   startServer(server, app)
 
-  // Routes are already loaded via `./core/app`; start watching for module changes.
-  const { startModuleWatcher } = await import('./core/routes')
+  // Routes are already loaded via `./core/app`; start watching for module and
+  // core locale changes.
+  const { startWatchers } = await import('./core/routes')
 
-  startModuleWatcher()
+  startWatchers()
 }
 
 main()
