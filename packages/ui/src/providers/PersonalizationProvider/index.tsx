@@ -32,7 +32,13 @@ const DEFAULT_VALUE: IPersonalizationData = {
   derivedTheme: 'dark',
   rawThemeColor: 'theme-lime',
   derivedThemeColor: THEME_COLOR_HEX['lime'],
-  getMostReadableColor: () => '#000000',
+  getMostReadableColor: (bg?: string) =>
+    tinycolor
+      .mostReadable(bg ?? THEME_COLOR_HEX['lime'], [
+        BG_THEME.zinc[100],
+        BG_THEME.zinc[800]
+      ])
+      .toHexString(),
   bgTemp: 'bg-neutral',
   bgTempPalette: BG_THEME['zinc'],
   bgImage: '',
@@ -142,17 +148,22 @@ export function PersonalizationProvider({
       ? BG_THEME[bgTemp.replace('bg-', '') as keyof typeof BG_THEME]
       : getColorPalette(bgTemp, 'bg')
   }, [bgTemp, derivedTheme])
-  const getMostReadableColor = useMemo(
-    () =>
-      (bg?: string): string =>
-        tinycolor
-          .mostReadable(bg ?? themeColor, [
-            bgTempPalette[100],
-            bgTempPalette[800]
-          ])
-          .toHexString(),
-    [themeColor, bgTempPalette]
-  )
+  const getMostReadableColor = useMemo(() => {
+    const palette = bgTempPalette as Record<number, string> | undefined
+
+    const lightBg =
+      palette?.[100] && tinycolor(palette[100]).isValid()
+        ? palette[100]
+        : BG_THEME.zinc[100]
+
+    const darkBg =
+      palette?.[800] && tinycolor(palette[800]).isValid()
+        ? palette[800]
+        : BG_THEME.zinc[800]
+
+    return (bg?: string): string =>
+      tinycolor.mostReadable(bg ?? themeColor, [lightBg, darkBg]).toHexString()
+  }, [themeColor, bgTempPalette])
 
   useFontFamily(fontFamily, fontScale, forgeAPI)
   useThemeEffect(rootElement, derivedTheme, rawThemeColor, bgTemp)
