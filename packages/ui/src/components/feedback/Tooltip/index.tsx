@@ -39,31 +39,30 @@ export function Tooltip({
         id={id}
         opacity={1}
         positionStrategy="fixed"
-        render={
-          render ??
-          (({ content }) => {
-            const node = children ?? content
+        render={({ content, activeAnchor }) => {
+          const node = render
+            ? render({ content, activeAnchor })
+            : (children ?? content)
 
-            return node ? (
-              <Box
-                shadow
-                bg={{ base: 'bg-50', dark: 'bg-700' }}
-                maxHeight="24em"
-                maxWidth="24em"
-                overflowY="auto"
-                p="md"
-                position="relative"
-                r="md"
-                style={{ whiteSpace: 'normal' }}
-                {...contentProps}
-              >
-                <Text as="div" color={{ base: 'bg-800', dark: 'bg-100' }}>
-                  {node}
-                </Text>
-              </Box>
-            ) : null
-          })
-        }
+          return node ? (
+            <Box
+              shadow
+              bg={{ base: 'bg-50', dark: 'bg-700' }}
+              maxHeight="24em"
+              maxWidth="24em"
+              overflowY="auto"
+              p="md"
+              position="relative"
+              r="md"
+              style={{ whiteSpace: 'normal' }}
+              {...contentProps}
+            >
+              <Text as="div" color={{ base: 'bg-800', dark: 'bg-100' }}>
+                {node}
+              </Text>
+            </Box>
+          ) : null
+        }}
         style={{
           background: 'transparent'
         }}
