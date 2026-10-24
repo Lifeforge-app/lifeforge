@@ -13,9 +13,11 @@ import {
 import { loaderLogger } from './logger'
 
 /**
- * Resolves a module's complete metadata from its bundle. In production this is
- * read from the build artifact (`client/dist/forge-manifest.json`); otherwise
- * it is extracted live from source using the shared extractor.
+ * Resolves a module's complete metadata. In development, modules that still
+ * have source are read live so manifest changes are picked up without a
+ * rebuild. Modules without source (installed as dist-only) fall back to their
+ * built `client/dist/forge-manifest.json`, exactly like production - otherwise
+ * their subsections, widgets, and provider info would be lost in dev.
  *
  * Returns `null` when the metadata cannot be resolved (a module is rejected).
  */
@@ -24,8 +26,11 @@ async function resolveBundledMetadata(
   displayName: string,
   isProduction: boolean
 ): Promise<ModuleBundledMetadata | null> {
-  if (!isProduction) {
-    const { extractModuleMetadata } = await import('@lifeforge/configs/metadata')
+  const sourceManifestPath = path.join(moduleDir, 'client', 'manifest.ts')
+
+  if (!isProduction && fs.existsSync(sourceManifestPath)) {
+    const { extractModuleMetadata } =
+      await import('@lifeforge/configs/metadata')
 
     return extractModuleMetadata(moduleDir)
   }
