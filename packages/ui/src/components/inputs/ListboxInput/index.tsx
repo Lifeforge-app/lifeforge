@@ -133,31 +133,32 @@ export function ListboxInput<T>({
                   icon={icon}
                 />
               )}
-              {variant === 'classic' && label && (
-                <Box
-                  asChild
-                  pr="3xl"
-                  style={{
-                    paddingLeft: 'calc(var(--spacing) * 14)'
-                  }}
-                >
-                  <InputLabel
-                    active={isActive}
-                    hasError={!!errorMsg}
-                    label={inputLabel}
-                    required={required === true}
-                  />
-                </Box>
-              )}
-              <InputInnerWrapper hasActionButton variant={variant}>
-                <Text asChild align="left">
-                  <Box minHeight="1.5em" minWidth="0" width="100%">
-                    {variant === 'classic'
-                      ? isActive && renderContent?.(value)
-                      : renderContent?.(value)}
+              <Flex
+                align="center"
+                minWidth="0"
+                position="relative"
+                width="100%"
+              >
+                {variant === 'classic' && label && (
+                  <Box asChild pr="3xl">
+                    <InputLabel
+                      active={isActive}
+                      hasError={!!errorMsg}
+                      label={inputLabel}
+                      required={required === true}
+                    />
                   </Box>
-                </Text>
-              </InputInnerWrapper>
+                )}
+                <InputInnerWrapper hasActionButton variant={variant}>
+                  <Text asChild align="left">
+                    <Box minHeight="1.5em" minWidth="0" width="100%">
+                      {variant === 'classic'
+                        ? isActive && renderContent?.(value)
+                        : renderContent?.(value)}
+                    </Box>
+                  </Text>
+                </InputInnerWrapper>
+              </Flex>
             </Flex>
             <Box asChild mr="sm" position="absolute" right="0">
               <InputActionButton

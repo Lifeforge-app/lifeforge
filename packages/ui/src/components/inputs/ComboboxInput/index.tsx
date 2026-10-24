@@ -120,54 +120,50 @@ export function ComboboxInput<T>({
         {variant === 'classic' && icon && (
           <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
         )}
-        {variant === 'classic' && label && (
-          <Box
-            asChild
-            pr="3xl"
-            style={{
-              paddingLeft: 'calc(var(--spacing) * 14)'
-            }}
-          >
-            <InputLabel
-              active={isActive}
-              hasError={!!errorMsg}
-              label={inputLabel}
-              required={required === true}
-            />
-          </Box>
-        )}
-        <InputInnerWrapper
-          hasActionButton
-          mr="none"
-          pr="none"
-          variant={variant}
-        >
-          <Text asChild truncate align="left">
-            <Box
-              asChild
-              p={variant === 'plain' ? 'md' : undefined}
-              pr="3xl"
-              width="100%"
-            >
-              <HeadlessComboboxInput
-                ref={autoFocusableRef(autoFocus)}
-                displayValue={displayValue}
-                onChange={e => {
-                  setQuery(e.target.value)
-
-                  if (e.target.value === '') {
-                    onChange(undefined as unknown as T)
-                  }
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' && onEnter) {
-                    onEnter()
-                  }
-                }}
+        <Flex align="center" minWidth="0" position="relative" width="100%">
+          {variant === 'classic' && label && (
+            <Box asChild pr="3xl">
+              <InputLabel
+                active={isActive}
+                hasError={!!errorMsg}
+                label={inputLabel}
+                required={required === true}
               />
             </Box>
-          </Text>
-        </InputInnerWrapper>
+          )}
+          <InputInnerWrapper
+            hasActionButton
+            mr="none"
+            pr="none"
+            variant={variant}
+          >
+            <Text asChild truncate align="left">
+              <Box
+                asChild
+                p={variant === 'plain' ? 'md' : undefined}
+                pr="3xl"
+                width="100%"
+              >
+                <HeadlessComboboxInput
+                  ref={autoFocusableRef(autoFocus)}
+                  displayValue={displayValue}
+                  onChange={e => {
+                    setQuery(e.target.value)
+
+                    if (e.target.value === '') {
+                      onChange(undefined as unknown as T)
+                    }
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && onEnter) {
+                      onEnter()
+                    }
+                  }}
+                />
+              </Box>
+            </Text>
+          </InputInnerWrapper>
+        </Flex>
       </Flex>
       <InputActionButton hasError={!!errorMsg} icon="" variant={variant}>
         <ComboboxButton>
