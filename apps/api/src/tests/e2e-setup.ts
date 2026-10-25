@@ -74,7 +74,7 @@ export async function initAuthTests(): Promise<{
   console.log(`\nTesting with user: ${cachedEmail} (${cachedName})\n`)
 
   const loginRes = await forgeAPI.auth.login.mutateRaw(
-    { email: cachedEmail, password: cachedPassword },
+    { emailOrUsername: cachedEmail, password: cachedPassword },
     { raw: true }
   )
 

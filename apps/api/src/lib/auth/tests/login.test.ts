@@ -14,7 +14,7 @@ beforeAll(async () => {
 }, 60000)
 
 function creds() {
-  return { email, password }
+  return { emailOrUsername: email, password }
 }
 
 afterAll(cleanupTestTokens)
@@ -51,7 +51,7 @@ describe('POST /auth/login', () => {
 
   it('returns 401 for wrong email', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: 'wrong@lifeforge.test', password },
+      { emailOrUsername: 'wrong@lifeforge.test', password },
       { raw: true }
     )
 
@@ -61,7 +61,7 @@ describe('POST /auth/login', () => {
 
   it('returns 401 for wrong password', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email, password: 'WrongPass999!' },
+      { emailOrUsername: email, password: 'WrongPass999!' },
       { raw: true }
     )
 
@@ -71,7 +71,7 @@ describe('POST /auth/login', () => {
 
   it('returns 401 for non-existent user', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: 'no-such-user@lifeforge.test', password },
+      { emailOrUsername: 'no-such-user@lifeforge.test', password },
       { raw: true }
     )
 
@@ -96,7 +96,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for empty email (min length 1)', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: '', password },
+      { emailOrUsername: '', password },
       { raw: true }
     )
 
@@ -105,7 +105,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for empty password (min length 1)', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email, password: '' },
+      { emailOrUsername: email, password: '' },
       { raw: true }
     )
 
@@ -114,7 +114,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for invalid email format', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: 'not-an-email', password },
+      { emailOrUsername: 'not-an-email', password },
       { raw: true }
     )
 
@@ -123,7 +123,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for SQL injection in email (invalid format)', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: "' OR 1=1 --", password },
+      { emailOrUsername: "' OR 1=1 --", password },
       { raw: true }
     )
 

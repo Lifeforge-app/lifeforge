@@ -14,7 +14,7 @@ beforeAll(async () => {
 })
 
 function creds() {
-  return { email, password }
+  return { emailOrUsername: email, password }
 }
 
 afterAll(cleanupTestTokens)
