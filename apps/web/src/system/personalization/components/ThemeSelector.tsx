@@ -6,6 +6,7 @@ import {
   Flex,
   Grid,
   Icon,
+  Image,
   OptionsColumn,
   Text,
   Transition,
@@ -45,7 +46,7 @@ function ThemeSelector() {
               Image: '/assets/mockup/dark.png'
             }
           ] as const
-        ).map(({ id, name, Image }) => (
+        ).map(({ id, name, Image: imageSrc }) => (
           <Flex key={id} align="center" direction="column" gap="sm">
             <Transition>
               <Bordered
@@ -77,9 +78,7 @@ function ThemeSelector() {
                       />
                     </Box>
                   )}
-                  <Box asChild r="lg">
-                    <img alt={id} src={Image} />
-                  </Box>
+                  <Image alt={id} fallback={null} r="lg" src={imageSrc} />
                 </Box>
               </Bordered>
             </Transition>

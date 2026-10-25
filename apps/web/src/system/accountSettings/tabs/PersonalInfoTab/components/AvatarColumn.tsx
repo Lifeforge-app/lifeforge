@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 
 import { useAuth } from '@lifeforge/api'
 import {
-  Box,
   Button,
   ConfirmationModal,
   FilePickerModal,
   Flex,
   Icon,
+  Image,
   OptionsColumn,
   toast,
   useModalStore
@@ -75,32 +75,19 @@ function AvatarColumn() {
       icon="tabler:camera"
       title={t('settings.title.profilePicture')}
     >
-      <Flex
-        centered
+      <Image
         shadow
+        alt=""
         bg={{ base: 'bg-100', dark: 'bg-800' }}
+        fallback={<Icon color="muted" icon="tabler:user" size="1.5em" />}
+        fit="cover"
         flexShrink="0"
         height="3em"
         mr="md"
-        overflow="hidden"
         r="full"
+        src={userData.avatar ? getAvatarURL() : undefined}
         width="3em"
-      >
-        {userData.avatar ? (
-          <Box
-            asChild
-            height="100%"
-            style={{
-              objectFit: 'cover'
-            }}
-            width="100%"
-          >
-            <img alt="" src={getAvatarURL()} />
-          </Box>
-        ) : (
-          <Icon color="muted" icon="tabler:user" size="1.5em" />
-        )}
-      </Flex>
+      />
       <Flex align="center" gap="sm" width="100%">
         <Button
           flex="1"

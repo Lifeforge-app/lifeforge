@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router'
 
 import { useAuth } from '@lifeforge/api'
 import {
-  Box,
   Card,
   ContextMenu,
   ContextMenuItem,
   Flex,
   Icon,
+  Image,
   Text,
   Transition,
   surface,
@@ -49,51 +49,34 @@ function SidebarBottomBar() {
               width="100%"
             >
               <Flex centered gap="sm" minWidth="0">
-                <Flex
-                  centered
+                <Image
                   shadow
-                  bg={{
-                    base: 'bg-100',
-                    dark: 'bg-700'
-                  }}
+                  alt=""
+                  bg={{ base: 'bg-100', dark: 'bg-700' }}
+                  fallback={<Icon color="muted" icon="tabler:user" />}
+                  fit="cover"
                   flexShrink="0"
                   height="2.5em"
-                  overflow="hidden"
                   r="full"
+                  src={userData.avatar ? getAvatarURL() : undefined}
                   width="2.5em"
-                >
-                  {userData.avatar ? (
-                    <Box
-                      asChild
-                      height="100%"
-                      style={{
-                        objectFit: 'cover'
-                      }}
-                      width="100%"
-                    >
-                      <img alt="" src={getAvatarURL()} />
-                    </Box>
-                  ) : (
-                    <Icon color="muted" icon="tabler:user" />
-                  )}
-                </Flex>
+                />
                 <Flex
                   direction="column"
                   display={sidebarExpanded ? 'flex' : 'none'}
                   minWidth="0"
                 >
                   <Text truncate align="left" weight="semibold">
-                    {userData?.name}
+                    {userData.name}
                   </Text>
                   <Text truncate align="left" as="p" color="muted" size="sm">
-                    {userData?.email}
+                    {userData.email}
                   </Text>
                 </Flex>
               </Flex>
               {sidebarExpanded && (
                 <Icon
                   color={{ base: 'bg-400', dark: 'bg-600' }}
-                  display={sidebarExpanded ? 'flex' : 'none'}
                   icon="ph:caret-up-down-bold"
                 />
               )}

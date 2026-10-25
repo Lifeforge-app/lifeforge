@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { Box, Flex, Text, colorWithOpacity } from '@lifeforge/ui'
+import { Box, Flex, Image, Text, colorWithOpacity } from '@lifeforge/ui'
 
 function AuthSideImage() {
   const { t } = useTranslation('common.auth')
@@ -12,21 +12,14 @@ function AuthSideImage() {
       position="relative"
       width="50%"
     >
-      <img
-        alt="Login"
-        src="/assets/login.jpg"
-        style={{
-          height: '100%',
-          objectFit: 'cover'
-        }}
-      />
-      <div
+      <Image alt="Login" fit="cover" height="100%" src="/assets/login.jpg" />
+      <Box
+        inset="0"
+        position="absolute"
         style={{
           background:
             'linear-gradient(to bottom right, var(--color-custom-100), var(--color-custom-900))',
-          inset: 0,
-          opacity: 0.5,
-          position: 'absolute'
+          opacity: 0.5
         }}
       />
       <Box
