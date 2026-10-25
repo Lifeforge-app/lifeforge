@@ -300,7 +300,7 @@ _How it works under the hood:_ The engine applies `.lf-w` and `.md:lf-w` classes
 
 ## 4. The Core Primitives
 
-Primitives are the architectural blocks from which all higher-level views are constructed. Layout primitives support `as` and `asChild` composition; semantic primitives such as `Table` use fixed elements so their markup stays valid.
+Primitives are the architectural blocks from which all higher-level views are constructed. Layout primitives support `as` and `asChild` composition; semantic primitives such as `Table` and `Image` use fixed elements so their markup stays valid.
 
 ```mermaid
 graph TD
@@ -312,6 +312,8 @@ graph TD
     Box --> Ring
     Box --> Text
     Box --> Table
+    Box --> Image
+    Image --> ZoomableImage
     Table --> TableHeader
     Table --> TableBody
     Table --> TableFooter
@@ -816,6 +818,61 @@ Cells accept `align`, `nowrap`, `bg`, `color`, `width`, `minWidth`, `maxWidth`, 
 
 > [!NOTE]
 > For wide tables, wrap the table in `Scrollbar` (or a `Box` with `overflowX="auto"`) and set `width="max-content"` on the table. Native table tags are prohibited in `apps/web` and modules by the `local/no-native-elements` ESLint rule.
+
+---
+
+### M. Image
+
+The image primitive renders a real `<img>` with consistent fitting, loading and fallback behaviour. It is intentionally a single `<img>` element - use `Box`/`Flex` for frames, aspect ratios, clipping, overlays and fallback placement so the image stays composable with third-party render props, map markers and zoom wrappers.
+
+```tsx
+<Image alt="Movie poster" fit="cover" height="100%" src={poster} width="100%" />
+```
+
+#### Props
+
+- `src?: string` - when empty, `fallback` is rendered.
+- `alt: string` - required; use `""` for decorative images.
+- `fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'` (default `cover`).
+- `fallback?: ReactNode | string` - always rendered behind the image and defaults to `tabler:photo-off`. It acts as a placeholder while loading and shows through when the image is missing or fails. A string is rendered as a subtle Iconify icon (`bg-300` / dark `bg-700`) whose size scales with the frame; a React element is rendered as-is. Pass `null` to disable it. Give the image a sized frame (`width`/`height`/`aspectRatio`) so the fallback layer is visible.
+- The fallback frame defaults to `bg-200` / dark `bg-800`; override it with `bg` (use `bg="transparent"` for transparent images).
+- `objectPosition?: string` - CSS `object-position`.
+- `loading?: 'lazy' | 'eager'` (default `lazy`) and `decoding?: 'async' | 'sync' | 'auto'` (default `async`).
+- Inherits `Box` props (`width`, `height`, `aspectRatio`, `r`, `bg`, margins, ...), native `<img>` props, and forwards `ref`, `onLoad` and `onError`.
+
+```tsx
+<Flex align="center" aspectRatio="1" justify="center" r="lg" width="12em">
+  <Image
+    alt=""
+    fallback="tabler:photo-off"
+    height="100%"
+    src={photo}
+    width="100%"
+  />
+</Flex>
+```
+
+#### ZoomableImage
+
+`ZoomableImage` wraps `Image` with `react-medium-image-zoom`, so modules do not need to import that package directly.
+
+- `zoomSrc?: string` - source for the zoomed image; defaults to `src`.
+- `zoomMargin?: number` - default `40`.
+- `zoomProps?: Omit<UncontrolledProps, 'children' | 'zoomMargin'>` - forwards options such as `ZoomContent`, `IconZoom`, `IconUnzoom` and `zoomImg`.
+
+```tsx
+<ZoomableImage
+  alt="NASA image"
+  fit="cover"
+  height="100%"
+  src={previewUrl}
+  width="100%"
+  zoomSrc={hdUrl}
+/>
+```
+
+> [!NOTE]
+> Native `<img>` tags are prohibited in `apps/web` and modules by the `local/no-native-elements` ESLint rule. Use `Image`/`ZoomableImage` instead. Background images (`BackgroundProvider`, map tiles) are not covered by this primitive.
 
 ---
 
