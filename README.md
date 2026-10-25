@@ -6,7 +6,7 @@
 >
 > LifeForge is now fully independent from PocketBase and it is now fully embracing Drizzle and PostgresQL.
 >
-> Yet, the sole maintainer (currently) has barely any free time to update the documentation yet. But bare with me, it will be updated soon.
+> Yet, the sole maintainer (currently) has barely any free time to update the documentation. But bare with me, it will be updated soon.
 >
 > ### Update · 31 May 2026
 >
