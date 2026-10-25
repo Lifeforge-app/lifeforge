@@ -1,5 +1,7 @@
 export { default as importsConfig } from './imports'
 
+export { default as nativeElementsConfig } from './native-elements'
+
 export { default as reactConfig } from './react'
 
 export { default as sonarConfig } from './sonar'

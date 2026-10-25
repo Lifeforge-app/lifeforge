@@ -6,6 +6,7 @@ import tseslint from 'typescript-eslint'
 
 import {
   importsConfig,
+  nativeElementsConfig,
   reactConfig,
   sonarConfig,
   storiesConfig,
@@ -50,6 +51,7 @@ const config: Linter.Config[] = [
   ...sonarConfig,
   ...importsConfig,
   ...styleConfig,
+  ...nativeElementsConfig,
   ...testsConfig,
   ...storiesConfig
 ]
