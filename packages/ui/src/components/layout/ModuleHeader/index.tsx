@@ -36,6 +36,7 @@ function getTKeys(
 interface ModuleHeaderProps {
   icon?: string
   title?: string
+  description?: string
   trailing?: React.ReactNode
   namespace?: string | false
 }
@@ -43,6 +44,7 @@ interface ModuleHeaderProps {
 export function ModuleHeader({
   icon,
   title,
+  description,
   trailing,
   namespace
 }: ModuleHeaderProps) {
@@ -122,9 +124,10 @@ export function ModuleHeader({
               size={{ base: 'sm', sm: 'base' }}
               whiteSpace="nowrap"
             >
-              {namespace === false
-                ? `Description for ${title}`
-                : t(getTKeys(namespace, title, 'description'))}
+              {description ??
+                (namespace === false
+                  ? `Description for ${title}`
+                  : t(getTKeys(namespace, title, 'description')))}
             </Text>
           </Box>
         </Flex>
