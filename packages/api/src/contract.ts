@@ -2114,10 +2114,8 @@ export const contract = {
           "$schema": "https://json-schema.org/draft/2020-12/schema",
           "type": "object",
           "properties": {
-            "email": {
-              "type": "string",
-              "format": "email",
-              "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            "emailOrUsername": {
+              "type": "string"
             },
             "password": {
               "type": "string",
@@ -2125,7 +2123,7 @@ export const contract = {
             }
           },
           "required": [
-            "email",
+            "emailOrUsername",
             "password"
           ],
           "additionalProperties": false

@@ -30,10 +30,10 @@ interface AuthData {
   auth: boolean
   setAuth: (value: boolean) => void
   authenticate: ({
-    email,
+    emailOrUsername,
     password
   }: {
-    email: string
+    emailOrUsername: string
     password: string
   }) => Promise<string | void>
   logout: () => void
@@ -63,15 +63,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const authenticate = useCallback(
     async ({
-      email,
+      emailOrUsername,
       password
     }: {
-      email: string
+      emailOrUsername: string
       password: string
     }): Promise<string | void> => {
       try {
         const loginData = await forgeAPI.auth.login.mutateRaw({
-          email,
+          emailOrUsername,
           password
         })
 
