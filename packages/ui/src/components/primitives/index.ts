@@ -16,6 +16,8 @@ export * from './Transition'
 
 export * from './Prose'
 
+export * from './Table'
+
 export * from './WithDivide'
 
 export * from './Icon'
