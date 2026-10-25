@@ -51,18 +51,18 @@ function addFoundaTionBg(mode: 'dark' | 'light', components: Element[]) {
  * `.sbdocs-preview` parent containers, ensuring story canvases match the active
  * Storybook theme.
  */
-function styleSbDocsPreviews(context: any) {
+function styleSbDocsPreviews(theme: 'dark' | 'light') {
   const sbDocsPreviewStories = document.querySelectorAll(
     '.sbdocs-preview .docs-story'
   )
 
   sbDocsPreviewStories.forEach(preview => {
     clearBgTextStyles(preview as HTMLElement)
-    applyBgTextStyles(context.globals.theme, preview as HTMLElement)
+    applyBgTextStyles(theme, preview as HTMLElement)
   })
 
   addFoundaTionBg(
-    context.globals.theme,
+    theme,
     Array.from(document.querySelectorAll('.sbdocs-preview'))
   )
 }
@@ -71,8 +71,8 @@ function styleSbDocsPreviews(context: any) {
  * Applies the foundation background color to the `<html>` element and ensures
  * it stretches to full viewport height.
  */
-function styleHTML(context: any) {
-  addFoundaTionBg(context.globals.theme, [document.documentElement])
+function styleHTML(theme: 'dark' | 'light') {
+  addFoundaTionBg(theme, [document.documentElement])
 
   document.documentElement.style.height = '100%'
 }
@@ -82,7 +82,7 @@ function styleHTML(context: any) {
  * smooth transition, and the `theme-custom` class. Also applies bg/text colors when
  * the docs panel is not visible.
  */
-function styleBody(context: any) {
+function styleBody(theme: 'dark' | 'light') {
   const body = document.body
 
   clearBgTextStyles(body)
@@ -95,21 +95,25 @@ function styleBody(context: any) {
   body.classList.add('theme-custom')
 
   if (!document.querySelector('#storybook-docs:not([hidden])')) {
-    applyBgTextStyles(context.globals.theme, body)
+    applyBgTextStyles(theme, body)
   }
 }
 
 /**
  * Storybook decorator hook that synchronises DOM-level theme styles with the
- * active Storybook global theme (`context.globals.theme`).
+ * active Storybook globals.
  *
- * Runs on mount and whenever `context.globals.theme` changes, applying
- * background/color styles to `<html>`, `<body>`, and the docs-preview panels.
+ * Runs on mount and whenever the theme, theme color, background temperature or
+ * font scale changes. Re-running on every global is required because
+ * `PersonalizationProvider` remounts and rewrites the body background inline,
+ * which would otherwise drop Storybook's light/dark canvas styling.
  */
 export function useSBTheme(context: any) {
+  const { bgTemp, fontScale, theme, themeColor } = context.globals
+
   useEffect(() => {
-    styleSbDocsPreviews(context)
-    styleBody(context)
-    styleHTML(context)
-  }, [context.globals.theme])
+    styleSbDocsPreviews(theme)
+    styleBody(theme)
+    styleHTML(theme)
+  }, [bgTemp, fontScale, theme, themeColor])
 }

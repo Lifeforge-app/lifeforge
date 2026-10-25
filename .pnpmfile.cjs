@@ -1,8 +1,10 @@
 function readPackage(pkg, context) {
+  const name = pkg.name ?? ''
+
   if (
-    !pkg.name.startsWith('@lifeforge/') &&
-    !pkg.name.startsWith('lifeforge-') &&
-    pkg.name !== 'lifeforge-monorepo'
+    !name.startsWith('@lifeforge/') &&
+    !name.startsWith('lifeforge-') &&
+    name !== 'lifeforge-monorepo'
   ) {
     if (pkg.peerDependencies && pkg.peerDependencies.typescript) {
       delete pkg.peerDependencies.typescript
