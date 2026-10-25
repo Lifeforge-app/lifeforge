@@ -158,7 +158,10 @@ export function DateInput({
           </Box>
         )}
 
-        <InputInnerWrapper hasActionButton variant={variant}>
+        <InputInnerWrapper
+          hasActionButton={!!value && !disabled}
+          variant={variant}
+        >
           <Placeholder
             color={variant === 'classic' ? 'transparent' : 'default'}
             focusColor="default"
@@ -194,7 +197,7 @@ export function DateInput({
           </Placeholder>
         </InputInnerWrapper>
       </Flex>
-      {!!value && !disabled ? (
+      {!!value && !disabled && (
         <InputActionButton
           hasError={!!errorMsg}
           icon="tabler:x"
@@ -203,13 +206,6 @@ export function DateInput({
             e.stopPropagation()
             onChange(null)
           }}
-        />
-      ) : (
-        <InputActionButton
-          hasError={!!errorMsg}
-          icon={icon || (hasTime ? 'tabler:clock' : 'tabler:calendar')}
-          variant={variant}
-          onClick={handleOpen}
         />
       )}
     </InputWrapper>
