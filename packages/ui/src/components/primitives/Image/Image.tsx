@@ -3,7 +3,7 @@ import { type ReactNode, useState } from 'react'
 
 import { Box, type BoxProps } from '../Box'
 import { Flex } from '../Flex'
-import { imageBase, imageFill, imageFit } from './Image.css'
+import { imageFill, imageFit } from './Image.css'
 import { ImageFallbackLayer } from './ImageFallbackLayer'
 
 export type ImageFit = 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'
@@ -72,7 +72,7 @@ export function Image({
         alt={alt}
         as="img"
         bg={bg}
-        className={clsx(imageBase, imageFit({ fit }), className)}
+        className={clsx(imageFit({ fit }), className)}
         crossOrigin={crossOrigin}
         decoding={decoding}
         fetchPriority={fetchPriority}
@@ -116,7 +116,7 @@ export function Image({
         <Box
           alt={alt}
           as="img"
-          className={clsx(imageBase, imageFill, imageFit({ fit }))}
+          className={clsx(imageFill, imageFit({ fit }))}
           crossOrigin={crossOrigin}
           decoding={decoding}
           fetchPriority={fetchPriority}
