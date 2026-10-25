@@ -78,7 +78,7 @@ export function LocationInput({
   )
 
   return (
-    <Flex align="start" gap="md">
+    <Flex align="center" gap="md">
       <Box width="100%">
         <ComboboxInput<Location | null>
           autoFocus={autoFocus}
@@ -96,8 +96,8 @@ export function LocationInput({
           onChange={location => {
             onChange(location ?? null)
           }}
-          onQueryChanged={setQuery}
           onEnter={onEnter}
+          onQueryChanged={setQuery}
         >
           {query.trim() !== '' &&
             (dataQuery.data ? (

@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import { IconTooltip } from '@/components/feedback/IconTooltip'
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Flex, Icon, Text } from '@/components/primitives'
 
 export function LocationServiceStatusIndicator({
   enabled
@@ -30,24 +30,21 @@ export function LocationServiceStatusIndicator({
         id="location-disabled"
         place="top-end"
         positionStrategy="fixed"
+        zIndex="9999"
       >
-        <Box maxWidth="16em">
-          <Text color={{ base: 'bg-500' }}>
-            {t('locationDisabled.description')}{' '}
-            <Text
-              as="a"
-              color="primary"
-              decoration="underline"
-              href="https://docs.lifeforge.dev/user-guide/api-keys#location"
-              rel="noopener noreferrer"
-              style={{ textDecorationThickness: '2px' }}
-              target="_blank"
-              weight="medium"
-            >
-              API Keys Guide
-            </Text>
-          </Text>
-        </Box>
+        {t('locationDisabled.description')}{' '}
+        <Text
+          as="a"
+          color="primary"
+          decoration="underline"
+          href="https://docs.lifeforge.dev/user-guide/api-keys#location"
+          rel="noopener noreferrer"
+          style={{ textDecorationThickness: '2px' }}
+          target="_blank"
+          weight="medium"
+        >
+          API Keys Guide
+        </Text>
       </IconTooltip>
     </Flex>
   )
