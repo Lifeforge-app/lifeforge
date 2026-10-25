@@ -38,7 +38,7 @@ export function LocationServiceStatusIndicator({
               as="a"
               color="primary"
               decoration="underline"
-              href="https://docs.lifeforge.melvinchia.dev/user-guide/api-keys#location"
+              href="https://docs.lifeforge.dev/user-guide/api-keys#location"
               rel="noopener noreferrer"
               style={{ textDecorationThickness: '2px' }}
               target="_blank"

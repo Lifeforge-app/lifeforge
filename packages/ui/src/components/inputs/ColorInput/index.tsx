@@ -34,7 +34,7 @@ export interface ColorInputProps {
   autoFocus?: boolean
   /** Additional CSS class names to apply to the color input component. */
   className?: string
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
