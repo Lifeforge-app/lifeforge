@@ -97,14 +97,14 @@ function UserCreationPage() {
   return (
     <Flex centered direction="column" px="xl" width="100%">
       <Flex asChild centered gap="sm" mb="xl">
-        <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
-          <Icon color="primary" icon="tabler:hammer" />
-          <div>
+        <Text as="h1" weight="semibold" whiteSpace="nowrap">
+          <Icon color="primary" icon="tabler:hammer" size="2.5em" />
+          <Text size="3xl">
             LifeForge
-            <Text color="primary" size="4xl">
+            <Text color="primary" size="xl">
               .
             </Text>
-          </div>
+          </Text>
         </Text>
       </Flex>
       <Text
