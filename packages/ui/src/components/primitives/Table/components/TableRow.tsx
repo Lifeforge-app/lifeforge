@@ -1,6 +1,7 @@
 import { clsx } from 'clsx'
 import { type ComponentPropsWithRef, useContext } from 'react'
 
+import { usePersonalization } from '@/providers/PersonalizationProvider'
 import type { ColorValue, ThemeConditionProp } from '@/system'
 
 import { bodyRowStripe, headerRowBorder } from '../Table.css'
@@ -19,9 +20,16 @@ export function TableRow({
   style,
   ...rest
 }: TableRowProps) {
-  const colorStyles = resolveTableColorStyles(bg, color)
-
+  const { getMostReadableColor } = usePersonalization()
   const section = useContext(TableSectionContext)
+
+  const autoColor =
+    bg !== undefined && color === undefined ? getMostReadableColor() : undefined
+
+  const colorStyles = resolveTableColorStyles(
+    bg,
+    autoColor === undefined ? color : undefined
+  )
 
   return (
     <tr
@@ -31,7 +39,11 @@ export function TableRow({
         colorStyles.className,
         className
       )}
-      style={{ ...colorStyles.style, ...style }}
+      style={{
+        ...colorStyles.style,
+        ...(autoColor === undefined ? {} : { color: autoColor }),
+        ...style
+      }}
       {...rest}
     />
   )

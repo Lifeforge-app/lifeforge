@@ -809,7 +809,7 @@ Semantic table primitives that replace native table markup in apps and modules. 
 #### Components
 
 - `TableHeader` / `TableBody` / `TableFooter` - semantic sections; all accept `bg` and `color`. `TableHeader` defaults to the muted text color (`bg-500`, dark `bg-400`), which a `TableRow color` prop overrides.
-- `TableRow` - accepts `bg` and `color`. A row with a `bg` prop opts out of the striped background, which is the only supported per-row style override.
+- `TableRow` - accepts `bg` and `color`. A row with a `bg` prop opts out of the striped background, which is the only supported per-row style override. When `bg` is set without `color`, a readable text color is derived automatically from the active theme; pass `color="inherit"` for subtle tinted rows that should keep the page text color.
 - `TableHeaderCell` - `<th>` with `scope="col"` by default; centered, non-wrapping and weight 500.
 - `TableCell` - `<td>` with left alignment and wrapping by default. `variant="total"` applies the accounting total rule (2px solid top border, 6px double bottom border, weight 500).
 - `TableCaption` - `<caption>` with `side?: 'top' | 'bottom'` (default `bottom`).
