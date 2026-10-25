@@ -100,9 +100,9 @@ export function NumberInput({
       namespace={namespace}
       placeholder={placeholder}
       required={required}
-      size={size as never}
+      size={size}
       value={value}
-      variant={variant as never}
+      variant={variant}
       wrapperProps={wrapperProps}
       onBlur={() => {
         let numericValue = value
