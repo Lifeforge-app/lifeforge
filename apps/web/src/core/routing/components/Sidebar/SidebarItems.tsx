@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import { Fragment, useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
 
 import { useAuth } from '@lifeforge/api'
@@ -22,6 +22,8 @@ function SidebarItems({ query }: { query: string }) {
   const location = useLocation()
   const { sidebarExpanded, toggleSidebar } = useMainSidebarState()
   const [resolvedModuleGroups, setResolvedModuleGroups] = useState(moduleGroups)
+  const activeItemRef = useRef<HTMLElement>(null)
+  const hasScrolledToActiveItem = useRef(false)
 
   const filteredRoutes = useMemo(
     () =>
@@ -64,6 +66,15 @@ function SidebarItems({ query }: { query: string }) {
     resolveModuleGroups()
   }, [moduleGroups])
 
+  useEffect(() => {
+    if (hasScrolledToActiveItem.current || !activeItemRef.current) {
+      return
+    }
+
+    hasScrolledToActiveItem.current = true
+    activeItemRef.current.scrollIntoView({ block: 'start' })
+  }, [resolvedModuleGroups])
+
   return (
     <Flex as="ul" direction="column" flex="1" pb="lg">
       <Box asChild flex="1">
@@ -87,11 +98,13 @@ function SidebarItems({ query }: { query: string }) {
                       const link = strippedName.startsWith('lifeforge--')
                         ? strippedName.split('--')[1]
                         : strippedName
+                      const isActive = location.pathname.startsWith(`/${link}`)
 
                       return (
                         <MainSidebarItem
                           key={_.kebabCase(subItem.name)}
-                          active={location.pathname.startsWith(`/${link}`)}
+                          ref={isActive ? activeItemRef : undefined}
+                          active={isActive}
                           icon={subItem.icon}
                           label={subItem.name}
                           link={`/${link}`}

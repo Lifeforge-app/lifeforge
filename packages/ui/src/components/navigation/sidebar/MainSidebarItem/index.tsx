@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useCallback, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router'
 
 import { SidebarItemContent } from '../SidebarItem/components/SidebarItemContent'
 import { SidebarItemIcon } from '../SidebarItem/components/SidebarItemIcon'
@@ -35,6 +35,7 @@ interface MainSidebarItemBaseProps {
   }[]
   sidebarExpanded: boolean
   toggleSidebar: () => void
+  ref?: React.Ref<HTMLElement>
 }
 
 type MainSidebarItemProps = MainSidebarItemAutoActiveProps &
@@ -47,10 +48,23 @@ export function MainSidebarItem({
   subsection,
   sidebarExpanded,
   toggleSidebar,
+  ref,
   active = false
 }: MainSidebarItemProps) {
   const navigate = useNavigate()
+  const location = useLocation()
   const [subsectionExpanded, setSubsectionExpanded] = useState(false)
+
+  const isAnySubsectionActive =
+    subsection?.some(
+      e => `${link}/${e.path}`.replace(/\/\//g, '/') === location.pathname
+    ) ?? false
+
+  useEffect(() => {
+    if (isAnySubsectionActive) {
+      setSubsectionExpanded(true)
+    }
+  }, [isAnySubsectionActive])
 
   const handleNavigation = useCallback(() => {
     setSubsectionExpanded(!subsectionExpanded)
@@ -73,7 +87,7 @@ export function MainSidebarItem({
 
   return (
     <>
-      <SidebarItemWrapper active={active} onClick={handleNavigation}>
+      <SidebarItemWrapper ref={ref} active={active} onClick={handleNavigation}>
         <SidebarItemIcon active={active} icon={icon} />
         <SidebarItemContent
           active={active}
