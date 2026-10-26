@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { ModuleMetadataProvider } from '@lifeforge/federation'
 
-import { Flex } from '@/components/primitives'
+import { Box, Flex } from '@/components/primitives'
 import { ModuleSidebarStateProvider } from '@/providers'
 
 import { Scrollbar } from '../Scrollbar'
@@ -51,6 +51,7 @@ export function ModuleWrapper({
               width="100%"
             >
               {children}
+              <Box aria-hidden flexShrink="0" pb="lg" width="100%" />
             </Flex>
           </Scrollbar>
         </Flex>

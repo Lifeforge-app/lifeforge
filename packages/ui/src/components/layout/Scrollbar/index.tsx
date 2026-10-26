@@ -10,7 +10,8 @@ import {
   useRef
 } from 'react'
 
-import { Flex } from '@/components/primitives'
+import { Box, Flex } from '@/components/primitives'
+import { type ResponsiveProp, type SpaceToken } from '@/system'
 
 const SCROLLBAR_LANE = 12
 
@@ -33,6 +34,12 @@ export interface ScrollbarProps {
   /** Lets the container shrink to its content, up to `autoHeightMax`. */
   autoHeight?: boolean
   autoHeightMax?: number | string
+  /**
+   * Responsive bottom padding rendered as a trailing spacer inside the scroll
+   * content, so the clearance is part of the scrollable area. Defaults to `xs`,
+   * which is just enough to keep the last item's box-shadow from being clipped.
+   */
+  pb?: ResponsiveProp<SpaceToken>
   onScroll?: (event: UIEvent<HTMLElement>) => void
 }
 
@@ -52,6 +59,7 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
       hideHorizontal = false,
       autoHeight = false,
       autoHeightMax,
+      pb,
       onScroll
     },
     ref
@@ -122,8 +130,11 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
           height={autoHeight ? undefined : '100%'}
           minHeight="0"
           minWidth="0"
+          pt="xs"
+          px="sm"
         >
           {children}
+          <Box aria-hidden flexShrink="0" pb={pb ?? 'xs'} width="100%" />
         </Flex>
       </OverlayScrollbarsComponent>
     )

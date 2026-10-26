@@ -14,7 +14,7 @@ export function SidebarWrapper({ children }: { children: React.ReactNode }) {
       bg={{ base: 'bg-50', dark: 'bg-900' }}
       className={isSidebarOpen ? 'sidebar-opening' : 'sidebar-closing'}
       flexShrink="0"
-      height={{ base: '100%', xl: 'calc(100% - 2em)' }}
+      height="100%"
       left={isSidebarOpen ? '0' : '100%'}
       minWidth={{ base: '0', xl: '24em' }}
       position={{ base: 'absolute', xl: 'static' }}

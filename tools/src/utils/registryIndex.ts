@@ -29,5 +29,6 @@ export async function resolveEntry(
 
   const list = await fetchRegistry(kind)
 
+
   return list.find(entry => entry.id === shortId || entry.id === id)
 }
