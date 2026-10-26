@@ -9,6 +9,7 @@ import {
   useState
 } from 'react'
 
+import type { ScrollbarHandle } from '@lifeforge/ui'
 import { usePersonalization } from '@lifeforge/ui'
 
 import forgeAPI from '@/core/utils/forgeAPI'
@@ -27,7 +28,7 @@ interface GoogleFontContextValue {
   >
   page: number
   pinnedFontsQuery: ReturnType<typeof useQuery<string[]>>
-  scrollableRef: React.RefObject<any>
+  scrollableRef: React.RefObject<ScrollbarHandle | null>
   searchQuery: string
   selectedCategory: string | null
   selectedFont: string | null
@@ -54,7 +55,7 @@ function GoogleFontProvider({ children }: { children: ReactNode }) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [page, setPage] = useState(1)
-  const scrollableRef = useRef<any>(null)
+  const scrollableRef = useRef<ScrollbarHandle>(null)
 
   const categories = useMemo(
     () => [...new Set(fontsQuery.data?.items.map(font => font.category))],

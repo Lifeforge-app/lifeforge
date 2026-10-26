@@ -56,10 +56,6 @@ div[data-rmiz-modal-overlay] {
   scrollbar-width: none;
 }
 
-.no-overflow-x > div {
-  overflow-x: hidden !important;
-}
-
 .tabler-icon {
   height: 1.5em;
   width: 1.5em;

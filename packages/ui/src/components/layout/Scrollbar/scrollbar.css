@@ -1,0 +1,42 @@
+/*
+ * Theme for OverlayScrollbars.
+ *
+ * The `theme` option adds this class to every scrollbar element, so the
+ * custom properties must be declared here (the base stylesheet sets
+ * `--os-size: 0` on `.os-scrollbar`, which would otherwise win).
+ */
+
+.os-theme-lifeforge {
+  box-sizing: border-box;
+
+  --os-size: 4px;
+  --os-padding-perpendicular: 0;
+  --os-padding-axis: 0;
+  --os-handle-interactive-area-offset: 4px;
+
+  --os-track-border-radius: 9999px;
+  --os-track-bg: transparent;
+  --os-track-bg-hover: transparent;
+  --os-track-bg-active: transparent;
+  --os-track-border: none;
+  --os-track-border-hover: none;
+  --os-track-border-active: none;
+
+  --os-handle-border-radius: 9999px;
+  --os-handle-min-size: 30px;
+  --os-handle-bg: color-mix(in srgb, var(--color-bg-500) 30%, transparent);
+  --os-handle-bg-hover: color-mix(in srgb, var(--color-bg-500) 50%, transparent);
+  --os-handle-bg-active: color-mix(in srgb, var(--color-bg-500) 60%, transparent);
+  --os-handle-border: none;
+  --os-handle-border-hover: none;
+  --os-handle-border-active: none;
+}
+
+.os-theme-lifeforge.os-scrollbar-vertical {
+  right: 4px;
+}
+
+.os-theme-lifeforge.os-scrollbar-horizontal {
+  bottom: 4px;
+}
+

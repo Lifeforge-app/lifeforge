@@ -24,7 +24,7 @@ export function SidebarWrapper({ children }: { children: React.ReactNode }) {
       width={{ base: '100%', xl: '25%' }}
       zIndex={isSidebarOpen ? '250' : '0'}
     >
-      <Scrollbar usePaddingRight={false}>
+      <Scrollbar>
         <Flex
           align="center"
           display={{ base: 'flex', xl: 'none' }}
