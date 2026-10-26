@@ -45,9 +45,10 @@ function createForgeProxyInternal<T>(
       }
 
       if (path.length === 0 && prop === 'untyped') {
+        // Takes an absolute path, so it deliberately ignores the proxy scope.
         return <TOutput = any, TBody = any, TQuery = any>(url: string) =>
           new ForgeEndpoint<UntypedEndpointType<TOutput, TBody, TQuery>>(
-            scope,
+            {},
             url
           )
       }
