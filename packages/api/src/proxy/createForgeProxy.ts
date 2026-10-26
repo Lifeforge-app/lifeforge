@@ -57,7 +57,7 @@ function createForgeProxyInternal<T>(
       }
 
       if (path.length === 0 && prop in CORE_HELPERS) {
-        return createCoreHelper(scope, prop as keyof typeof CORE_HELPERS)
+        return createCoreHelper(prop as keyof typeof CORE_HELPERS)
       }
 
       if (prop in endpoint && typeof (endpoint as any)[prop] !== 'undefined') {

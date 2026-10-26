@@ -1,6 +1,5 @@
 import type { UntypedEndpointType } from '../../types/proxy'
 import { ForgeEndpoint } from '../forgeEndpoint'
-import type { ProxyScope } from '../scope'
 import {
   CORE_HELPERS,
   type CoreHelperName,
@@ -10,14 +9,13 @@ import {
 /**
  * Factory function that creates a core helper method for a given helper name.
  *
- * @param scope - Routing metadata bound by the host
+ * Core helpers always target the core API, even when called from a module
+ * proxy, so they deliberately use an empty scope instead of the module's.
+ *
  * @param name - The name of the core helper to create
  * @internal Used by createForgeProxy to provide core helper methods
  */
-export function createCoreHelper<T extends CoreHelperName>(
-  scope: ProxyScope,
-  name: T
-) {
+export function createCoreHelper<T extends CoreHelperName>(name: T) {
   const { path } = CORE_HELPERS[name]
 
   return (input: CoreHelperTypes[T]['input']) =>
@@ -27,5 +25,5 @@ export function createCoreHelper<T extends CoreHelperName>(
         never,
         CoreHelperTypes[T]['input']
       >
-    >(scope, path).input(input)
+    >({}, path).input(input)
 }
