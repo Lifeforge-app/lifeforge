@@ -1,9 +1,14 @@
-import { AutoSizer, List } from 'react-virtualized'
+import { useVirtualizer } from '@tanstack/react-virtual'
+import { useRef } from 'react'
 
 import { EmptyStateScreen } from '@/components/feedback'
 import { Flex } from '@/components/primitives'
+import useDivSize from '@/hooks/useDivSize'
 
 import { IconEntry } from './IconEntry'
+
+const ROW_HEIGHT = 120
+const ICON_WIDTH = 120
 
 export function IconList({
   iconList,
@@ -12,50 +17,64 @@ export function IconList({
   iconList: string[]
   onIconSelected: (icon: string) => void
 }) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const { width } = useDivSize(scrollRef)
+
+  const itemsPerRow = Math.max(1, Math.floor(width / ICON_WIDTH))
+  const rowCount = Math.ceil(iconList.length / itemsPerRow)
+
+  const virtualizer = useVirtualizer({
+    count: rowCount,
+    getScrollElement: () => scrollRef.current,
+    estimateSize: () => ROW_HEIGHT,
+    overscan: 3
+  })
+
   return (
     <Flex direction="column" flex="1" minHeight="0" mt="md">
       {iconList.length ? (
-        <AutoSizer>
-          {({ width, height }: { width: number; height: number }) => {
-            const itemsPerRow = Math.floor(width / 120) || 1
+        <div
+          ref={scrollRef}
+          style={{ height: '100%', overflowY: 'auto', width: '100%' }}
+        >
+          <div
+            style={{
+              height: virtualizer.getTotalSize(),
+              position: 'relative',
+              width: '100%'
+            }}
+          >
+            {virtualizer.getVirtualItems().map(row => {
+              const fromIndex = row.index * itemsPerRow
 
-            return (
-              <List
-                height={height - 12}
-                itemsPerRow={Math.floor(width / iconList.length) || 1}
-                rowCount={Math.ceil(iconList.length / itemsPerRow)}
-                rowHeight={120}
-                rowRenderer={({
-                  index,
-                  key,
-                  style
-                }: {
-                  index: number
-                  key: string
-                  style: React.CSSProperties
-                }) => {
-                  const fromIndex = index * itemsPerRow
+              const toIndex = fromIndex + itemsPerRow
 
-                  const toIndex = fromIndex + itemsPerRow
-
-                  return (
-                    <Flex key={key} gap="sm" style={style} width="100%">
-                      {iconList.slice(fromIndex, toIndex).map(icon => (
-                        <IconEntry
-                          key={icon}
-                          icon={icon.split(':').pop() ?? ''}
-                          iconSet={icon.split(':').shift() ?? ''}
-                          onIconSelected={onIconSelected}
-                        />
-                      ))}
-                    </Flex>
-                  )
-                }}
-                width={width}
-              />
-            )
-          }}
-        </AutoSizer>
+              return (
+                <Flex
+                  key={row.key}
+                  gap="sm"
+                  style={{
+                    height: row.size,
+                    left: 0,
+                    position: 'absolute',
+                    top: 0,
+                    transform: `translateY(${row.start}px)`,
+                    width: '100%'
+                  }}
+                >
+                  {iconList.slice(fromIndex, toIndex).map(icon => (
+                    <IconEntry
+                      key={icon}
+                      icon={icon.split(':').pop() ?? ''}
+                      iconSet={icon.split(':').shift() ?? ''}
+                      onIconSelected={onIconSelected}
+                    />
+                  ))}
+                </Flex>
+              )
+            })}
+          </div>
+        </div>
       ) : (
         <Flex align="center" flex="1" height="100%" justify="center">
           <EmptyStateScreen

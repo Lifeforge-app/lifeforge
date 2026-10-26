@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { AutoSizer } from 'react-virtualized'
+import { useRef } from 'react'
 
 import type { FileReference } from '@lifeforge/api'
 import {
@@ -9,6 +9,7 @@ import {
   Scrollbar,
   Stack,
   WithQuery,
+  useDivSize,
   useModalStore
 } from '@lifeforge/ui'
 
@@ -27,6 +28,8 @@ export type CustomFont = {
 
 function CustomFontSelector() {
   const { open } = useModalStore()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { height, width } = useDivSize(containerRef)
   const customFontsQuery = useQuery(forgeAPI.fonts.custom.list.queryOptions())
 
   const handleUploadClick = () => {
@@ -49,23 +52,16 @@ function CustomFontSelector() {
       <WithQuery query={customFontsQuery}>
         {fonts =>
           fonts.length > 0 ? (
-            <Flex direction="column" flex="1">
-              <AutoSizer>
-                {({ width, height }) => (
-                  <Scrollbar
-                    style={{
-                      height: `${height}px`,
-                      width: `${width}px`
-                    }}
-                  >
-                    <Stack p="sm">
-                      {fonts.map(font => (
-                        <CustomFontCard key={font.id} font={font} />
-                      ))}
-                    </Stack>
-                  </Scrollbar>
-                )}
-              </AutoSizer>
+            <Flex ref={containerRef} direction="column" flex="1" minHeight="0">
+              {width > 0 && height > 0 && (
+                <Scrollbar style={{ height, width }}>
+                  <Stack p="sm">
+                    {fonts.map(font => (
+                      <CustomFontCard key={font.id} font={font} />
+                    ))}
+                  </Stack>
+                </Scrollbar>
+              )}
             </Flex>
           ) : (
             <Flex centered flex="1">

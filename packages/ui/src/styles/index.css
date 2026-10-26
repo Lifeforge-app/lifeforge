@@ -1,7 +1,6 @@
 @import '../../node_modules/react-medium-image-zoom/dist/styles.css';
 @import 'react-toastify/dist/ReactToastify.css';
 @import '../../node_modules/react-tooltip/dist/react-tooltip.css';
-@import '../../node_modules/react-virtualized/styles.css';
 @import '../../node_modules/overlayscrollbars/styles/overlayscrollbars.css';
 @import '../components/layout/Scrollbar/scrollbar.css';
 

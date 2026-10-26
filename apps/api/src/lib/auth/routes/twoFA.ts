@@ -1,13 +1,17 @@
 import { decrypt, encrypt } from '@functions/auth/encryption'
 import { eq } from 'drizzle-orm'
-import speakeasy from 'speakeasy'
 import { v4 } from 'uuid'
 import z from 'zod'
 
 import { users } from '../../user/schema.drizzle'
 import { getCookieOptions } from '../constants/cookie'
 import forge from '../forge'
-import { pending2FASessions, pendingTOTPSetups } from '../utils/2fa'
+import {
+  createTOTPSecret,
+  pending2FASessions,
+  pendingTOTPSetups,
+  verifyTOTP
+} from '../utils/2fa'
 import { storeRefreshToken } from '../utils/refreshTokenStore'
 import {
   generateFamily,
@@ -36,11 +40,7 @@ export const generate = forge
       return response.unauthorized()
     }
 
-    const secret = speakeasy.generateSecret({
-      name: user.email,
-      length: 32,
-      issuer: 'LifeForge.'
-    }).base32
+    const secret = createTOTPSecret()
 
     const tid = v4()
 
@@ -75,12 +75,7 @@ export const enable = forge
       return response.unauthorized()
     }
 
-    const verified = speakeasy.totp.verify({
-      secret: pending.secret,
-      encoding: 'base32',
-      token: otp,
-      window: 1
-    })
+    const verified = await verifyTOTP(pending.secret, otp)
 
     if (!verified) {
       return response.unauthorized()
@@ -167,12 +162,7 @@ export const verify = forge
 
     const secret = decrypt(encryptedSecret, MASTER_KEY)
 
-    const verified = speakeasy.totp.verify({
-      secret,
-      encoding: 'base32',
-      token: otp,
-      window: 1
-    })
+    const verified = await verifyTOTP(secret, otp)
 
     if (!verified) {
       return response.unauthorized()

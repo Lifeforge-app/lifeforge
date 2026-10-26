@@ -40,7 +40,6 @@
     "@typescript/typescript6": "^6.0.2",
     "arctic": "^3.7.0",
     "argon2": "^0.44.0",
-    "bcryptjs": "^3.0.2",
     "chalk": "^5.4.1",
     "chokidar": "^4.0.3",
     "commander": "^15.0.0",
@@ -58,10 +57,10 @@
     "multer": "^2.2.0",
     "node-cache": "^5.1.2",
     "openai": "^6.7.0",
+    "otplib": "^13.5.0",
     "pdf2pic": "^3.2.0",
     "postgres": "^3.4.9",
     "socket.io": "^4.8.1",
-    "speakeasy": "^2.0.0",
     "tesseract.js": "^7.0.0",
     "uuid": "^14.0.1"
   },
@@ -73,7 +72,6 @@
     "@types/express-serve-static-core": "4.19.6",
     "@types/jsdom": "^28.0.3",
     "@types/morgan": "^1.9.9",
-    "@types/speakeasy": "^2.0.10",
     "@vitest/ui": "^4.0.2",
     "axios": "^1.18.1"
   }

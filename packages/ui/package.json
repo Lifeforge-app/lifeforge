@@ -62,7 +62,6 @@
     "react-photo-album": "^3.6.0",
     "react-toastify": "^11.0.5",
     "react-tooltip": "^6.0.8",
-    "react-virtualized": "^9.22.6",
     "rrule": "^2.8.1",
     "uuid": "^14.0.1",
     "zustand": "^5.0.8"
@@ -77,7 +76,6 @@
     "@types/raf": "^3.4.3",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
-    "@types/react-virtualized": "^9.22.3",
     "@types/tinycolor2": "^1.4.6",
     "eslint-plugin-react-compiler": "^19.1.0-rc.2",
     "eslint-plugin-storybook": "10.6.3",
