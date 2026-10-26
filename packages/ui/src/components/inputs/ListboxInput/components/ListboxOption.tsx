@@ -165,7 +165,11 @@ export function ListboxOption({
                       <Checkbox checked={finalSelected} />
                     ) : (
                       finalSelected && (
-                        <Icon color="primary" icon="tabler:check" size="lg" />
+                        <Icon
+                          color={{ base: 'bg-800', dark: 'bg-50' }}
+                          icon="tabler:check"
+                          ml="md"
+                        />
                       )
                     )}
                   </>
