@@ -107,9 +107,7 @@ function UserPersonalizationProvider({
   useEffect(() => {
     if (!userData) return
 
-    if (userData.theme) {
-      setTheme(userData.theme as 'light' | 'dark' | 'system')
-    }
+    setTheme(userData.theme)
 
     if (userData.color) {
       setRawThemeColor(
@@ -128,7 +126,9 @@ function UserPersonalizationProvider({
     }
 
     if (userData.backdropFilters) {
-      setBackdropFilters(userData.backdropFilters as IBackdropFilters)
+      setBackdropFilters(
+        userData.backdropFilters as unknown as IBackdropFilters
+      )
     }
 
     if (userData.bgImage) {
@@ -151,17 +151,11 @@ function UserPersonalizationProvider({
       setFontFamily(userData.fontFamily)
     }
 
-    if (userData.fontScale !== undefined) {
-      setFontScale(userData.fontScale)
-    }
+    setFontScale(userData.fontScale)
 
-    if (userData.borderRadiusMultiplier !== undefined) {
-      setBorderRadiusMultiplier(userData.borderRadiusMultiplier)
-    }
+    setBorderRadiusMultiplier(userData.borderRadiusMultiplier)
 
-    if (userData.bordered !== undefined) {
-      setBordered(userData.bordered)
-    }
+    setBordered(userData.bordered)
   }, [userData])
 
   return (

@@ -1,7 +1,10 @@
-import { type InferOutput } from '@lifeforge/api'
-import { contract, createForgeProxy } from '@lifeforge/api'
+import {
+  type CoreContract,
+  type InferOutput,
+  createForgeProxy
+} from '@lifeforge/api'
 
-const forgeAPI = createForgeProxy(contract)
+const forgeAPI = createForgeProxy<CoreContract>()
 
 export type CategoryOrder = Record<string, Record<string, string>>
 

@@ -1,10 +1,13 @@
-import { contract, createForgeProxy, globalProxyRegistry } from '@lifeforge/api'
+import {
+  type CoreContract,
+  configureForge,
+  createForgeProxy
+} from '@lifeforge/api'
 
-globalProxyRegistry.set(contract, {
-  remoteId: '',
+configureForge({
   apiHost: import.meta.env.VITE_API_HOST || 'https://localhost:3000'
 })
 
-const forgeAPI = createForgeProxy(contract)
+const forgeAPI = createForgeProxy<CoreContract>()
 
 export default forgeAPI

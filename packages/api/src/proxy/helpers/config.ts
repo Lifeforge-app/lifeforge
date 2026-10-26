@@ -1,6 +1,4 @@
-import z from 'zod'
-
-import { GetGoogleFontResponseSchema } from '../../types/fonts'
+import type { GetGoogleFontResponse } from '../../types/fonts'
 import type { UntypedEndpointType } from '../../types/proxy'
 import type { ForgeEndpoint } from '../forgeEndpoint'
 
@@ -14,66 +12,56 @@ import type { ForgeEndpoint } from '../forgeEndpoint'
  */
 export const CORE_HELPERS = {
   checkAPIKeys: {
-    path: 'apiKeys/entries/checkKeys',
-    schema: {
-      input: z.object({ keys: z.string() }),
-      output: z.boolean()
-    }
+    path: 'apiKeys/entries/checkKeys'
   },
   getAPIKeys: {
-    path: 'apiKeys/entries/get',
-    schema: {
-      input: z.object({ keyId: z.string() }),
-      output: z.string()
-    }
+    path: 'apiKeys/entries/get'
   },
   checkModuleAvailability: {
-    path: 'modules/checkModuleAvailability',
-    schema: {
-      input: z.object({ id: z.string() }),
-      output: z.boolean()
-    }
+    path: 'modules/checkModuleAvailability'
   },
   corsAnywhere: {
-    path: 'corsAnywhere',
-    schema: {
-      input: z.object({ url: z.string() }),
-      output: z.string()
-    }
+    path: 'corsAnywhere'
   },
   getGoogleFont: {
-    path: 'fonts/google/get',
-    schema: {
-      input: z.object({ family: z.string() }),
-      output: GetGoogleFontResponseSchema
-    }
+    path: 'fonts/google/get'
   }
 } as const
 
 /** Union type of all available core helper names */
 export type CoreHelperName = keyof typeof CORE_HELPERS
 
-/**
- * Mapped type that generates the correct function signature for each core helper.
- *
- * Each helper is a function that takes the schema input and returns a ForgeEndpoint
- * configured for that specific core server route.
- *
- * @example
- * ```typescript
- * forgeAPI.checkAPIKeys({ keys: 'smtp-user,smtp-pass' }).queryOptions()
- * forgeAPI.corsAnywhere({ url: 'https://external-api.com' }).query()
- * forgeAPI.getGoogleFont({ family: 'Roboto' }).query()
- * ```
- */
 export type CoreHelperReturnTypes = {
   [K in CoreHelperName]: (
-    input: z.infer<(typeof CORE_HELPERS)[K]['schema']['input']>
+    input: CoreHelperTypes[K]['input']
   ) => ForgeEndpoint<
     UntypedEndpointType<
-      z.infer<(typeof CORE_HELPERS)[K]['schema']['output']>,
+      CoreHelperTypes[K]['output'],
       never,
-      z.infer<(typeof CORE_HELPERS)[K]['schema']['input']>
+      CoreHelperTypes[K]['input']
     >
   >
+}
+
+export interface CoreHelperTypes {
+  checkAPIKeys: {
+    input: { keys: string }
+    output: boolean
+  }
+  getAPIKeys: {
+    input: { keyId: string }
+    output: string
+  }
+  checkModuleAvailability: {
+    input: { id: string }
+    output: boolean
+  }
+  corsAnywhere: {
+    input: { url: string }
+    output: string
+  }
+  getGoogleFont: {
+    input: { family: string }
+    output: GetGoogleFontResponse
+  }
 }

@@ -1,3494 +1,1313 @@
-export const contract = {
-  "": {
-    "method": "get",
-    "description": "Welcome to LifeForge API",
-    "noAuth": true,
-    "encrypted": false,
-    "isDownloadable": false,
-    "media": null,
-    "input": {},
-    "output": {
-      "OK": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "string",
-        "const": "Get ready to forge your life!"
-      }
+export type EndpointRoot_OutputOK = "Get ready to forge your life!";
+export type EndpointLocalesListLanguages_OutputOK = {
+  name: string;
+  alternative?: string[];
+  icon: string;
+  displayName: string;
+}[];
+export type EndpointLocalesListUnsupportedModules_OutputOK = string[];
+export type EndpointUserExists_OutputOK = boolean;
+export type EndpointUserSettingsDeleteAvatar_OutputNO_CONTENT = void;
+export type EndpointUserSettingsUpdatePassword_OutputNO_CONTENT = void;
+export type EndpointUserSettingsUpdateProfile_OutputNO_CONTENT = void;
+export type EndpointUserPersonalizationDeleteBgImage_OutputNO_CONTENT = void;
+export type EndpointUserPersonalizationUpdatePersonalization_OutputNO_CONTENT = void;
+export type EndpointFontsCustomList_OutputOK = {
+  id: string;
+  displayName: string;
+  family: string;
+  weight: number;
+  created: string;
+  updated: string;
+  file: {
+    key: string;
+    originalName: string;
+    mimeType: string;
+    size: number;
+    thumbs: {
+      size: string;
+      key: string;
+      width: number;
+      height: number;
+    }[];
+  } | null;
+}[];
+export type EndpointFontsCustomRemove_OutputNO_CONTENT = void;
+export type EndpointFontsPinsList_OutputOK = string[];
+export type EndpointFontsPinsToggle_OutputNO_CONTENT = void;
+export type EndpointApiKeysEntriesGet_OutputOK = string | null;
+export type EndpointApiKeysEntriesList_OutputOK = {
+  id: string;
+  keyId: string;
+  name: string;
+  icon: string;
+  key: string;
+  exposable: boolean;
+  created: string;
+  updated: string;
+}[];
+export type EndpointApiKeysEntriesCheckKeys_OutputOK = boolean;
+export type EndpointApiKeysEntriesRemove_OutputNO_CONTENT = void;
+export type EndpointAuth_2FaDisable_OutputNO_CONTENT = void;
+export type EndpointAuth_2FaEnable_OutputNO_CONTENT = void;
+export type EndpointAuthLogin_OutputOK =
+  | {
+      accessToken: string;
     }
-  },
-  "locales": {
-    "listLanguages": {
-      "method": "get",
-      "description": "List all languages",
-      "noAuth": true,
-      "encrypted": false,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "alternative": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "icon": {
-                "type": "string"
-              },
-              "displayName": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "name",
-              "icon",
-              "displayName"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "getLocale": {
-      "method": "get",
-      "description": "Retrieve localization strings for namespace",
-      "noAuth": true,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "lang": {
-              "type": "string"
-            },
-            "namespace": {
-              "type": "string",
-              "enum": [
-                "apps",
-                "common"
-              ]
-            },
-            "subnamespace": {
-              "type": "string",
-              "pattern": "^$|^@[a-zA-Z0-9_.-]+\\/[a-zA-Z0-9_.-]+$|^[a-zA-Z0-9_.-]+$"
-            }
-          },
-          "required": [
-            "lang",
-            "namespace",
-            "subnamespace"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "additionalProperties": {}
-        }
-      }
-    },
-    "listUnsupportedModules": {
-      "method": "get",
-      "description": "List modules that do not support the user's currently selected language",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
+  | {
+      state: "2fa_required";
+      tid: string;
+    };
+export type EndpointAuthLogout_OutputOK = boolean;
+export type EndpointAuthOauthVerify_OutputOK =
+  | {
+      accessToken: string;
     }
-  },
-  "user": {
-    "exists": {
-      "method": "get",
-      "description": "Check if user exists",
-      "noAuth": true,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "boolean"
-        }
-      }
-    },
-    "auth": {
-      "createFirstUser": {
-        "method": "post",
-        "description": "Create the first user (only works when no users exist)",
-        "noAuth": true,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "email": {
-                "type": "string",
-                "format": "email",
-                "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-              },
-              "username": {
-                "type": "string",
-                "minLength": 3
-              },
-              "name": {
-                "type": "string",
-                "minLength": 1
-              },
-              "password": {
-                "type": "string",
-                "minLength": 8
-              }
-            },
-            "required": [
-              "email",
-              "username",
-              "name",
-              "password"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "CREATED": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "state": {
-                "type": "string",
-                "const": "success"
-              }
-            },
-            "required": [
-              "state"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "me": {
-      "method": "get",
-      "description": "Get current user data",
-      "noAuth": false,
-      "encrypted": false,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "userData": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-                },
-                "email": {
-                  "type": "string",
-                  "maxLength": 255
-                },
-                "emailVisibility": {
-                  "type": "boolean"
-                },
-                "verified": {
-                  "type": "boolean"
-                },
-                "username": {
-                  "type": "string",
-                  "maxLength": 150
-                },
-                "name": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "dateOfBirth": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 50
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "theme": {
-                  "type": "string",
-                  "maxLength": 50
-                },
-                "color": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 50
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "bgTemp": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "backdropFilters": {
-                  "anyOf": [
-                    {
-                      "anyOf": [
-                        {
-                          "anyOf": [
-                            {
-                              "type": "string"
-                            },
-                            {
-                              "type": "number"
-                            },
-                            {
-                              "type": "boolean"
-                            },
-                            {
-                              "type": "null"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": {}
-                        },
-                        {
-                          "type": "array",
-                          "items": {}
-                        }
-                      ]
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "fontFamily": {
-                  "anyOf": [
-                    {
-                      "type": "string",
-                      "maxLength": 255
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "dashboardLayout": {
-                  "anyOf": [
-                    {
-                      "anyOf": [
-                        {
-                          "anyOf": [
-                            {
-                              "type": "string"
-                            },
-                            {
-                              "type": "number"
-                            },
-                            {
-                              "type": "boolean"
-                            },
-                            {
-                              "type": "null"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "object",
-                          "additionalProperties": {}
-                        },
-                        {
-                          "type": "array",
-                          "items": {}
-                        }
-                      ]
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "fontScale": {
-                  "type": "number",
-                  "minimum": -8388608,
-                  "maximum": 8388607
-                },
-                "borderRadiusMultiplier": {
-                  "type": "number",
-                  "minimum": -8388608,
-                  "maximum": 8388607
-                },
-                "bordered": {
-                  "type": "boolean"
-                },
-                "language": {
-                  "type": "string",
-                  "maxLength": 50
-                },
-                "avatar": {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "type": "string"
-                        },
-                        "originalName": {
-                          "type": "string"
-                        },
-                        "mimeType": {
-                          "type": "string"
-                        },
-                        "size": {
-                          "type": "number"
-                        },
-                        "thumbs": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "size": {
-                                "type": "string"
-                              },
-                              "key": {
-                                "type": "string"
-                              },
-                              "width": {
-                                "type": "number"
-                              },
-                              "height": {
-                                "type": "number"
-                              }
-                            },
-                            "required": [
-                              "size",
-                              "key",
-                              "width",
-                              "height"
-                            ],
-                            "additionalProperties": false
-                          }
-                        }
-                      },
-                      "required": [
-                        "key",
-                        "originalName",
-                        "mimeType",
-                        "size",
-                        "thumbs"
-                      ],
-                      "additionalProperties": false
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "bgImage": {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "type": "string"
-                        },
-                        "originalName": {
-                          "type": "string"
-                        },
-                        "mimeType": {
-                          "type": "string"
-                        },
-                        "size": {
-                          "type": "number"
-                        },
-                        "thumbs": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "size": {
-                                "type": "string"
-                              },
-                              "key": {
-                                "type": "string"
-                              },
-                              "width": {
-                                "type": "number"
-                              },
-                              "height": {
-                                "type": "number"
-                              }
-                            },
-                            "required": [
-                              "size",
-                              "key",
-                              "width",
-                              "height"
-                            ],
-                            "additionalProperties": false
-                          }
-                        }
-                      },
-                      "required": [
-                        "key",
-                        "originalName",
-                        "mimeType",
-                        "size",
-                        "thumbs"
-                      ],
-                      "additionalProperties": false
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "twoFAEnabled": {
-                  "type": "boolean"
-                },
-                "hasAPIKeysMasterPassword": {
-                  "type": "boolean"
-                }
-              },
-              "required": [
-                "id",
-                "email",
-                "emailVisibility",
-                "verified",
-                "username",
-                "name",
-                "dateOfBirth",
-                "theme",
-                "color",
-                "bgTemp",
-                "backdropFilters",
-                "fontFamily",
-                "dashboardLayout",
-                "fontScale",
-                "borderRadiusMultiplier",
-                "bordered",
-                "language",
-                "avatar",
-                "bgImage",
-                "twoFAEnabled",
-                "hasAPIKeysMasterPassword"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "required": [
-            "userData"
-          ],
-          "additionalProperties": false
-        }
-      }
-    },
-    "settings": {
-      "deleteAvatar": {
-        "method": "post",
-        "description": "Remove user avatar",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "updateAvatar": {
-        "method": "post",
-        "description": "Upload new user avatar",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": {
-          "file": {
-            "optional": false
-          }
-        },
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "originalName": {
-                "type": "string"
-              },
-              "mimeType": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "thumbs": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "size": {
-                      "type": "string"
-                    },
-                    "key": {
-                      "type": "string"
-                    },
-                    "width": {
-                      "type": "number"
-                    },
-                    "height": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "size",
-                    "key",
-                    "width",
-                    "height"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            },
-            "required": [
-              "key",
-              "originalName",
-              "mimeType",
-              "size",
-              "thumbs"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "updatePassword": {
-        "method": "post",
-        "description": "Update user password directly",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "oldPassword": {
-                "type": "string",
-                "minLength": 1
-              },
-              "password": {
-                "type": "string",
-                "minLength": 8
-              },
-              "passwordConfirm": {
-                "type": "string",
-                "minLength": 8
-              }
-            },
-            "required": [
-              "oldPassword",
-              "password",
-              "passwordConfirm"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "updateProfile": {
-        "method": "post",
-        "description": "Update user profile information",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "object",
-                "properties": {
-                  "username": {
-                    "type": "string",
-                    "pattern": "^[a-zA-Z0-9]+$"
-                  },
-                  "email": {
-                    "type": "string",
-                    "format": "email",
-                    "pattern": "^(?!\\.)(?!.*\\.\\.)([A-Za-z0-9_'+\\-\\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "dateOfBirth": {
-                    "type": "string"
-                  }
-                },
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "data"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true
-        }
-      }
-    },
-    "personalization": {
-      "deleteBgImage": {
-        "method": "post",
-        "description": "Remove background image",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "updateBgImage": {
-        "method": "post",
-        "description": "Upload new background image",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": {
-          "file": {
-            "optional": false
-          }
-        },
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "originalName": {
-                "type": "string"
-              },
-              "mimeType": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "thumbs": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "size": {
-                      "type": "string"
-                    },
-                    "key": {
-                      "type": "string"
-                    },
-                    "width": {
-                      "type": "number"
-                    },
-                    "height": {
-                      "type": "number"
-                    }
-                  },
-                  "required": [
-                    "size",
-                    "key",
-                    "width",
-                    "height"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            },
-            "required": [
-              "key",
-              "originalName",
-              "mimeType",
-              "size",
-              "thumbs"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "updatePersonalization": {
-        "method": "post",
-        "description": "Update user personalization preferences",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "object",
-                "properties": {
-                  "fontFamily": {
-                    "type": "string"
-                  },
-                  "theme": {
-                    "type": "string"
-                  },
-                  "color": {
-                    "type": "string"
-                  },
-                  "bgTemp": {
-                    "type": "string"
-                  },
-                  "language": {
-                    "type": "string"
-                  },
-                  "fontScale": {
-                    "type": "number"
-                  },
-                  "borderRadiusMultiplier": {
-                    "type": "number"
-                  },
-                  "bordered": {
-                    "type": "boolean"
-                  },
-                  "dashboardLayout": {
-                    "type": "object",
-                    "additionalProperties": {}
-                  },
-                  "backdropFilters": {
-                    "type": "object",
-                    "additionalProperties": {}
-                  }
-                },
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "data"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true
-        }
-      }
+  | {
+      state: "2fa_required";
+      tid: string;
+    };
+export type EndpointAuthOauthProvidersListEnabled_OutputOK = {
+  provider: string;
+  icon: string;
+  name: string;
+}[];
+export type EndpointAuthOauthProvidersListOptions_OutputOK = {
+  id: string | null;
+  provider: string;
+  configured: boolean;
+  enabled: boolean;
+  icon: string;
+  name: string;
+  updated: string | null;
+}[];
+export type EndpointAuthOauthProvidersRemove_OutputNO_CONTENT = void;
+export type EndpointAuthOauthProvidersToggle_OutputNO_CONTENT = void;
+export type EndpointAuthOauthProvidersUpsert_OutputNO_CONTENT = void;
+export type EndpointAuthQrLoginStatus_OutputOK =
+  | {
+      status: "pending";
+      expiresAt: string;
     }
-  },
-  "fonts": {
-    "google": {
-      "get": {
-        "method": "get",
-        "description": "Get details of a specific Google Font",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "family": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "family"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "enabled": {
-                "type": "boolean"
-              },
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "family": {
-                      "type": "string"
-                    },
-                    "variants": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "subsets": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "version": {
-                      "type": "string"
-                    },
-                    "lastModified": {
-                      "type": "string"
-                    },
-                    "files": {
-                      "type": "object",
-                      "properties": {
-                        "100": {
-                          "type": "string"
-                        },
-                        "200": {
-                          "type": "string"
-                        },
-                        "300": {
-                          "type": "string"
-                        },
-                        "500": {
-                          "type": "string"
-                        },
-                        "600": {
-                          "type": "string"
-                        },
-                        "700": {
-                          "type": "string"
-                        },
-                        "800": {
-                          "type": "string"
-                        },
-                        "900": {
-                          "type": "string"
-                        },
-                        "regular": {
-                          "type": "string"
-                        },
-                        "italic": {
-                          "type": "string"
-                        },
-                        "100italic": {
-                          "type": "string"
-                        },
-                        "200italic": {
-                          "type": "string"
-                        },
-                        "300italic": {
-                          "type": "string"
-                        },
-                        "500italic": {
-                          "type": "string"
-                        },
-                        "600italic": {
-                          "type": "string"
-                        },
-                        "700italic": {
-                          "type": "string"
-                        },
-                        "800italic": {
-                          "type": "string"
-                        },
-                        "900italic": {
-                          "type": "string"
-                        }
-                      },
-                      "additionalProperties": false
-                    },
-                    "category": {
-                      "type": "string",
-                      "enum": [
-                        "display",
-                        "handwriting",
-                        "monospace",
-                        "sans-serif",
-                        "serif"
-                      ]
-                    },
-                    "kind": {
-                      "type": "string",
-                      "const": "webfonts#webfont"
-                    },
-                    "menu": {
-                      "type": "string"
-                    },
-                    "colorCapabilities": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "enum": [
-                          "COLRv0",
-                          "COLRv1",
-                          "SVG"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "family",
-                    "variants",
-                    "subsets",
-                    "version",
-                    "lastModified",
-                    "files",
-                    "category",
-                    "kind",
-                    "menu"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            },
-            "required": [
-              "enabled"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "list": {
-        "method": "get",
-        "description": "Retrieve available Google Fonts",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "enabled": {
-                "type": "boolean"
-              },
-              "items": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "family": {
-                      "type": "string"
-                    },
-                    "variants": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "subsets": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "version": {
-                      "type": "string"
-                    },
-                    "lastModified": {
-                      "type": "string"
-                    },
-                    "files": {
-                      "type": "object",
-                      "properties": {
-                        "100": {
-                          "type": "string"
-                        },
-                        "200": {
-                          "type": "string"
-                        },
-                        "300": {
-                          "type": "string"
-                        },
-                        "500": {
-                          "type": "string"
-                        },
-                        "600": {
-                          "type": "string"
-                        },
-                        "700": {
-                          "type": "string"
-                        },
-                        "800": {
-                          "type": "string"
-                        },
-                        "900": {
-                          "type": "string"
-                        },
-                        "regular": {
-                          "type": "string"
-                        },
-                        "italic": {
-                          "type": "string"
-                        },
-                        "100italic": {
-                          "type": "string"
-                        },
-                        "200italic": {
-                          "type": "string"
-                        },
-                        "300italic": {
-                          "type": "string"
-                        },
-                        "500italic": {
-                          "type": "string"
-                        },
-                        "600italic": {
-                          "type": "string"
-                        },
-                        "700italic": {
-                          "type": "string"
-                        },
-                        "800italic": {
-                          "type": "string"
-                        },
-                        "900italic": {
-                          "type": "string"
-                        }
-                      },
-                      "additionalProperties": false
-                    },
-                    "category": {
-                      "type": "string",
-                      "enum": [
-                        "display",
-                        "handwriting",
-                        "monospace",
-                        "sans-serif",
-                        "serif"
-                      ]
-                    },
-                    "kind": {
-                      "type": "string",
-                      "const": "webfonts#webfont"
-                    },
-                    "menu": {
-                      "type": "string"
-                    },
-                    "colorCapabilities": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "enum": [
-                          "COLRv0",
-                          "COLRv1",
-                          "SVG"
-                        ]
-                      }
-                    }
-                  },
-                  "required": [
-                    "family",
-                    "variants",
-                    "subsets",
-                    "version",
-                    "lastModified",
-                    "files",
-                    "category",
-                    "kind",
-                    "menu"
-                  ],
-                  "additionalProperties": false
-                }
-              }
-            },
-            "required": [
-              "enabled",
-              "items"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "custom": {
-      "get": {
-        "method": "get",
-        "description": "Get a specific custom font by ID",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              },
-              "displayName": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "family": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "weight": {
-                "type": "number",
-                "minimum": -8388608,
-                "maximum": 8388607
-              },
-              "created": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "updated": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "file": {
-                "anyOf": [
-                  {
-                    "type": "object",
-                    "properties": {
-                      "key": {
-                        "type": "string"
-                      },
-                      "originalName": {
-                        "type": "string"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      },
-                      "size": {
-                        "type": "number"
-                      },
-                      "thumbs": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "size": {
-                              "type": "string"
-                            },
-                            "key": {
-                              "type": "string"
-                            },
-                            "width": {
-                              "type": "number"
-                            },
-                            "height": {
-                              "type": "number"
-                            }
-                          },
-                          "required": [
-                            "size",
-                            "key",
-                            "width",
-                            "height"
-                          ],
-                          "additionalProperties": false
-                        }
-                      }
-                    },
-                    "required": [
-                      "key",
-                      "originalName",
-                      "mimeType",
-                      "size",
-                      "thumbs"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            },
-            "required": [
-              "id",
-              "displayName",
-              "family",
-              "weight",
-              "created",
-              "updated",
-              "file"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "list": {
-        "method": "get",
-        "description": "List all custom uploaded fonts",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-                },
-                "displayName": {
-                  "type": "string",
-                  "maxLength": 255
-                },
-                "family": {
-                  "type": "string",
-                  "maxLength": 255
-                },
-                "weight": {
-                  "type": "number",
-                  "minimum": -8388608,
-                  "maximum": 8388607
-                },
-                "created": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "file": {
-                  "anyOf": [
-                    {
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "type": "string"
-                        },
-                        "originalName": {
-                          "type": "string"
-                        },
-                        "mimeType": {
-                          "type": "string"
-                        },
-                        "size": {
-                          "type": "number"
-                        },
-                        "thumbs": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "size": {
-                                "type": "string"
-                              },
-                              "key": {
-                                "type": "string"
-                              },
-                              "width": {
-                                "type": "number"
-                              },
-                              "height": {
-                                "type": "number"
-                              }
-                            },
-                            "required": [
-                              "size",
-                              "key",
-                              "width",
-                              "height"
-                            ],
-                            "additionalProperties": false
-                          }
-                        }
-                      },
-                      "required": [
-                        "key",
-                        "originalName",
-                        "mimeType",
-                        "size",
-                        "thumbs"
-                      ],
-                      "additionalProperties": false
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                }
-              },
-              "required": [
-                "id",
-                "displayName",
-                "family",
-                "weight",
-                "created",
-                "updated",
-                "file"
-              ],
-              "additionalProperties": false
-            }
-          }
-        }
-      },
-      "remove": {
-        "method": "post",
-        "description": "Delete a custom font",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "upload": {
-        "method": "post",
-        "description": "Upload a new custom font",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": {
-          "file": {
-            "optional": false
-          }
-        },
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false
-          },
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "displayName": {
-                "type": "string",
-                "minLength": 1
-              },
-              "family": {
-                "type": "string",
-                "minLength": 1
-              },
-              "weight": {
-                "default": 400,
-                "type": "number",
-                "minimum": 100,
-                "maximum": 900
-              }
-            },
-            "required": [
-              "displayName",
-              "family",
-              "weight"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              },
-              "displayName": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "family": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "weight": {
-                "type": "number",
-                "minimum": -8388608,
-                "maximum": 8388607
-              },
-              "created": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "updated": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "file": {
-                "anyOf": [
-                  {
-                    "type": "object",
-                    "properties": {
-                      "key": {
-                        "type": "string"
-                      },
-                      "originalName": {
-                        "type": "string"
-                      },
-                      "mimeType": {
-                        "type": "string"
-                      },
-                      "size": {
-                        "type": "number"
-                      },
-                      "thumbs": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "size": {
-                              "type": "string"
-                            },
-                            "key": {
-                              "type": "string"
-                            },
-                            "width": {
-                              "type": "number"
-                            },
-                            "height": {
-                              "type": "number"
-                            }
-                          },
-                          "required": [
-                            "size",
-                            "key",
-                            "width",
-                            "height"
-                          ],
-                          "additionalProperties": false
-                        }
-                      }
-                    },
-                    "required": [
-                      "key",
-                      "originalName",
-                      "mimeType",
-                      "size",
-                      "thumbs"
-                    ],
-                    "additionalProperties": false
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
-              }
-            },
-            "required": [
-              "id",
-              "displayName",
-              "family",
-              "weight",
-              "created",
-              "updated",
-              "file"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "pins": {
-      "list": {
-        "method": "get",
-        "description": "Retrieve pinned Google Fonts",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "toggle": {
-        "method": "post",
-        "description": "Pin or unpin a Google Font",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "family": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "family"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true
-        }
-      }
+  | {
+      status: "approved";
+      accessToken: string;
     }
-  },
-  "apiKeys": {
-    "entries": {
-      "get": {
-        "method": "get",
-        "description": "Retrieve API key by key ID. Only exposable keys can be retrieved.",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "keyId": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "keyId"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "list": {
-        "method": "get",
-        "description": "Retrieve all API key entries",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-                },
-                "keyId": {
-                  "type": "string",
-                  "maxLength": 255
-                },
-                "name": {
-                  "type": "string",
-                  "maxLength": 255
-                },
-                "icon": {
-                  "type": "string",
-                  "maxLength": 255
-                },
-                "key": {
-                  "type": "string",
-                  "maxLength": 500
-                },
-                "exposable": {
-                  "type": "boolean"
-                },
-                "created": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "updated": {
-                  "type": "string",
-                  "format": "date-time"
-                }
-              },
-              "required": [
-                "id",
-                "keyId",
-                "name",
-                "icon",
-                "key",
-                "exposable",
-                "created",
-                "updated"
-              ],
-              "additionalProperties": false
-            }
-          }
-        }
-      },
-      "checkKeys": {
-        "method": "get",
-        "description": "Verify if API keys exist.",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "keys": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "keys"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "boolean"
-          }
-        }
-      },
-      "create": {
-        "method": "post",
-        "description": "Create a new API key entry",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "keyId": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "icon": {
-                "type": "string"
-              },
-              "key": {
-                "type": "string"
-              },
-              "exposable": {
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "keyId",
-              "name",
-              "icon",
-              "key",
-              "exposable"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "CREATED": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              },
-              "keyId": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "name": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "icon": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "key": {
-                "type": "string",
-                "maxLength": 500
-              },
-              "exposable": {
-                "type": "boolean"
-              },
-              "created": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "updated": {
-                "type": "string",
-                "format": "date-time"
-              }
-            },
-            "required": [
-              "id",
-              "keyId",
-              "name",
-              "icon",
-              "key",
-              "exposable",
-              "created",
-              "updated"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "update": {
-        "method": "post",
-        "description": "Update an existing API key entry",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id"
-            ],
-            "additionalProperties": false
-          },
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "keyId": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "icon": {
-                "type": "string"
-              },
-              "key": {
-                "type": "string"
-              },
-              "exposable": {
-                "type": "boolean"
-              },
-              "overrideKey": {
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "keyId",
-              "name",
-              "icon",
-              "key",
-              "exposable",
-              "overrideKey"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              },
-              "keyId": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "name": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "icon": {
-                "type": "string",
-                "maxLength": 255
-              },
-              "key": {
-                "type": "string",
-                "maxLength": 500
-              },
-              "exposable": {
-                "type": "boolean"
-              },
-              "created": {
-                "type": "string",
-                "format": "date-time"
-              },
-              "updated": {
-                "type": "string",
-                "format": "date-time"
-              }
-            },
-            "required": [
-              "id",
-              "keyId",
-              "name",
-              "icon",
-              "key",
-              "exposable",
-              "created",
-              "updated"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "remove": {
-        "method": "post",
-        "description": "Delete an API key entry",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true
-        }
-      }
+  | {
+      status: "expired";
     }
-  },
-  "auth": {
-    "2fa": {
-      "disable": {
-        "method": "post",
-        "description": "Disable two-factor authentication",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "enable": {
-        "method": "post",
-        "description": "Verify OTP and enable two-factor authentication",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "otp": {
-                "type": "string"
-              },
-              "tid": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "otp",
-              "tid"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "NO_CONTENT": true
-        }
-      },
-      "generate": {
-        "method": "post",
-        "description": "Generate 2FA authenticator app setup link",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "tid": {
-                "type": "string"
-              },
-              "link": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "tid",
-              "link"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "verify": {
-        "method": "post",
-        "description": "Verify two-factor authentication code during login",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "otp": {
-                "type": "string"
-              },
-              "tid": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "otp",
-              "tid"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "accessToken": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "accessToken"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "login": {
-      "method": "post",
-      "description": "Authenticate user with email and password",
-      "noAuth": true,
-      "encrypted": false,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "body": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "emailOrUsername": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "required": [
-            "emailOrUsername",
-            "password"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "anyOf": [
-            {
-              "type": "object",
-              "properties": {
-                "accessToken": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "accessToken"
-              ],
-              "additionalProperties": false
-            },
-            {
-              "type": "object",
-              "properties": {
-                "state": {
-                  "type": "string",
-                  "const": "2fa_required"
-                },
-                "tid": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "state",
-                "tid"
-              ],
-              "additionalProperties": false
-            }
-          ]
-        }
-      }
-    },
-    "logout": {
-      "method": "post",
-      "description": "Invalidate refresh token and clear session",
-      "noAuth": true,
-      "encrypted": false,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "boolean"
-        }
-      }
-    },
-    "oauth": {
-      "authorize": {
-        "method": "get",
-        "description": "Start OAuth authorization flow",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "provider": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "provider"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "url": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "url",
-              "state"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "verify": {
-        "method": "post",
-        "description": "Verify OAuth authorization callback",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "provider": {
-                "type": "string"
-              },
-              "code": {
-                "type": "string"
-              },
-              "state": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "provider",
-              "code",
-              "state"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "accessToken": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "accessToken"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "state": {
-                    "type": "string",
-                    "const": "2fa_required"
-                  },
-                  "tid": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "state",
-                  "tid"
-                ],
-                "additionalProperties": false
-              }
-            ]
-          }
-        }
-      },
-      "providers": {
-        "listEnabled": {
-          "method": "get",
-          "description": "List enabled OAuth providers for the login portal",
-          "noAuth": true,
-          "encrypted": false,
-          "isDownloadable": false,
-          "media": null,
-          "input": {},
-          "output": {
-            "OK": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "provider": {
-                    "type": "string"
-                  },
-                  "icon": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "provider",
-                  "icon",
-                  "name"
-                ],
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        "listOptions": {
-          "method": "get",
-          "description": "List all available OAuth provider options for configuration",
-          "noAuth": false,
-          "encrypted": true,
-          "isDownloadable": false,
-          "media": null,
-          "input": {},
-          "output": {
-            "OK": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "anyOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  },
-                  "provider": {
-                    "type": "string"
-                  },
-                  "configured": {
-                    "type": "boolean"
-                  },
-                  "enabled": {
-                    "type": "boolean"
-                  },
-                  "icon": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "updated": {
-                    "anyOf": [
-                      {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "id",
-                  "provider",
-                  "configured",
-                  "enabled",
-                  "icon",
-                  "name",
-                  "updated"
-                ],
-                "additionalProperties": false
-              }
-            }
-          }
-        },
-        "remove": {
-          "method": "post",
-          "description": "Delete OAuth provider configuration",
-          "noAuth": false,
-          "encrypted": true,
-          "isDownloadable": false,
-          "media": null,
-          "input": {
-            "query": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "output": {
-            "NO_CONTENT": true
-          }
-        },
-        "toggle": {
-          "method": "post",
-          "description": "Toggle OAuth provider enabled status",
-          "noAuth": false,
-          "encrypted": true,
-          "isDownloadable": false,
-          "media": null,
-          "input": {
-            "query": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "id"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "output": {
-            "NO_CONTENT": true
-          }
-        },
-        "upsert": {
-          "method": "post",
-          "description": "Update OAuth provider configuration",
-          "noAuth": false,
-          "encrypted": true,
-          "isDownloadable": false,
-          "media": null,
-          "input": {
-            "query": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "type": "object",
-              "properties": {
-                "provider": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "provider"
-              ],
-              "additionalProperties": false
-            },
-            "body": {
-              "$schema": "https://json-schema.org/draft/2020-12/schema",
-              "type": "object",
-              "properties": {
-                "clientId": {
-                  "type": "string"
-                },
-                "clientSecret": {
-                  "type": "string"
-                }
-              },
-              "required": [
-                "clientId",
-                "clientSecret"
-              ],
-              "additionalProperties": false
-            }
-          },
-          "output": {
-            "NO_CONTENT": true
-          }
-        }
-      }
-    },
-    "qrLogin": {
-      "approve": {
-        "method": "post",
-        "description": "Approve a QR login request from an authenticated device",
-        "noAuth": false,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              }
-            },
-            "required": [
-              "sessionId"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "browserInfo": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "browserInfo"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "claim": {
-        "method": "post",
-        "description": "Claim approved QR login session and set auth cookie",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              }
-            },
-            "required": [
-              "sessionId"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "accessToken": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "accessToken"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "register": {
-        "method": "post",
-        "description": "Register a new QR login session",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "browserInfo": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "browserInfo"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "CREATED": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string"
-              },
-              "expiresAt": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "sessionId",
-              "expiresAt"
-            ],
-            "additionalProperties": false
-          }
-        }
-      },
-      "status": {
-        "method": "get",
-        "description": "Check QR login session status",
-        "noAuth": true,
-        "encrypted": false,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "query": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "sessionId": {
-                "type": "string",
-                "format": "uuid",
-                "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
-              }
-            },
-            "required": [
-              "sessionId"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "pending"
-                  },
-                  "expiresAt": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "status",
-                  "expiresAt"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "approved"
-                  },
-                  "accessToken": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "status",
-                  "accessToken"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "expired"
-                  }
-                },
-                "required": [
-                  "status"
-                ],
-                "additionalProperties": false
-              },
-              {
-                "type": "object",
-                "properties": {
-                  "status": {
-                    "type": "string",
-                    "const": "not_found"
-                  }
-                },
-                "required": [
-                  "status"
-                ],
-                "additionalProperties": false
-              }
-            ]
-          }
-        }
-      }
-    },
-    "refresh": {
-      "method": "post",
-      "description": "Refresh access token using refresh token cookie",
-      "noAuth": true,
-      "encrypted": false,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "accessToken": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "accessToken"
-          ],
-          "additionalProperties": false
-        }
-      }
-    }
-  },
-  "pixabay": {
-    "searchImages": {
-      "method": "get",
-      "description": "Search for images on Pixabay",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "q": {
-              "type": "string",
-              "minLength": 1
-            },
-            "page": {
-              "default": "1",
-              "type": "string"
-            },
-            "type": {
-              "default": "all",
-              "type": "string",
-              "enum": [
-                "all",
-                "photo",
-                "illustration",
-                "vector"
-              ]
-            },
-            "category": {
-              "type": "string",
-              "enum": [
-                "backgrounds",
-                "fashion",
-                "nature",
-                "science",
-                "education",
-                "feelings",
-                "health",
-                "people",
-                "religion",
-                "places",
-                "animals",
-                "industry",
-                "computer",
-                "food",
-                "sports",
-                "transportation",
-                "travel",
-                "buildings",
-                "business",
-                "music"
-              ]
-            },
-            "colors": {
-              "anyOf": [
-                {
-                  "type": "string",
-                  "enum": [
-                    "grayscale",
-                    "transparent",
-                    "red",
-                    "orange",
-                    "yellow",
-                    "green",
-                    "turquoise",
-                    "blue",
-                    "lilac",
-                    "pink",
-                    "white",
-                    "gray",
-                    "black",
-                    "brown"
-                  ]
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "editors_choice": {
-              "default": "false",
-              "type": "string",
-              "enum": [
-                "true",
-                "false"
-              ]
-            }
-          },
-          "required": [
-            "q",
-            "page",
-            "type",
-            "editors_choice"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "total": {
-              "type": "number"
-            },
-            "hits": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string"
-                  },
-                  "thumbnail": {
-                    "type": "object",
-                    "properties": {
-                      "url": {
-                        "type": "string"
-                      },
-                      "width": {
-                        "type": "number"
-                      },
-                      "height": {
-                        "type": "number"
-                      }
-                    },
-                    "required": [
-                      "url",
-                      "width",
-                      "height"
-                    ],
-                    "additionalProperties": false
-                  },
-                  "imageURL": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "id",
-                  "thumbnail",
-                  "imageURL"
-                ],
-                "additionalProperties": false
-              }
-            }
-          },
-          "required": [
-            "total",
-            "hits"
-          ],
-          "additionalProperties": false
-        }
-      }
-    }
-  },
-  "locations": {
-    "search": {
-      "method": "get",
-      "description": "Search for locations using Google Places API",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "q": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "q"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "formattedAddress": {
-                "type": "string"
-              },
-              "location": {
-                "type": "object",
-                "properties": {
-                  "latitude": {
-                    "type": "number"
-                  },
-                  "longitude": {
-                    "type": "number"
-                  }
-                },
-                "required": [
-                  "latitude",
-                  "longitude"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "name",
-              "formattedAddress",
-              "location"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    }
-  },
-  "modules": {
-    "checkModuleAvailability": {
-      "method": "get",
-      "description": "Check if a module is available (installed)",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "required": [
-            "id"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "boolean"
-        }
-      }
-    },
-    "list": {
-      "method": "get",
-      "description": "List installed modules with metadata",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              },
-              "id": {
-                "type": "string"
-              },
-              "remoteId": {
-                "type": "string"
-              },
-              "displayName": {
-                "type": "string"
-              },
-              "version": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "author": {
-                "type": "string"
-              },
-              "icon": {
-                "type": "string"
-              },
-              "category": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "name",
-              "id",
-              "remoteId",
-              "displayName",
-              "version",
-              "description",
-              "author",
-              "icon",
-              "category"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "manifest": {
-      "method": "get",
-      "description": "Get installed modules manifest for runtime loading",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "modules": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "id": {
-                    "type": "string"
-                  },
-                  "remoteId": {
-                    "type": "string"
-                  },
-                  "displayName": {
-                    "type": "string"
-                  },
-                  "icon": {
-                    "type": "string"
-                  },
-                  "category": {
-                    "type": "string"
-                  },
-                  "remoteEntryUrl": {
-                    "type": "string"
-                  },
-                  "APIKeyAccess": {
-                    "type": "object",
-                    "additionalProperties": {
-                      "type": "object",
-                      "properties": {
-                        "usage": {
-                          "type": "string"
-                        },
-                        "required": {
-                          "type": "boolean"
-                        }
-                      },
-                      "required": [
-                        "usage",
-                        "required"
-                      ],
-                      "additionalProperties": false
-                    }
-                  },
-                  "hasProvider": {
-                    "type": "boolean"
-                  },
-                  "hidden": {
-                    "type": "boolean"
-                  },
-                  "subsection": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "label": {
-                          "type": "string"
-                        },
-                        "icon": {
-                          "type": "string"
-                        },
-                        "path": {
-                          "type": "string"
-                        }
-                      },
-                      "required": [
-                        "label",
-                        "icon",
-                        "path"
-                      ],
-                      "additionalProperties": false
-                    }
-                  }
-                },
-                "required": [
-                  "name",
-                  "id",
-                  "remoteId",
-                  "displayName",
-                  "icon",
-                  "category",
-                  "remoteEntryUrl",
-                  "hasProvider"
-                ],
-                "additionalProperties": false
-              }
-            }
-          },
-          "required": [
-            "modules"
-          ],
-          "additionalProperties": false
-        }
-      }
-    },
-    "widgets": {
-      "method": "get",
-      "description": "Get all available widgets configuration",
-      "noAuth": false,
-      "encrypted": true,
-      "isDownloadable": false,
-      "media": null,
-      "input": {},
-      "output": {
-        "OK": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "icon": {
-                "type": "string"
-              },
-              "minW": {
-                "type": "integer",
-                "exclusiveMinimum": 0,
-                "maximum": 9007199254740991
-              },
-              "minH": {
-                "type": "integer",
-                "exclusiveMinimum": 0,
-                "maximum": 9007199254740991
-              },
-              "maxW": {
-                "type": "integer",
-                "exclusiveMinimum": 0,
-                "maximum": 9007199254740991
-              },
-              "maxH": {
-                "type": "integer",
-                "exclusiveMinimum": 0,
-                "maximum": 9007199254740991
-              },
-              "moduleName": {
-                "type": "string"
-              },
-              "componentName": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "icon",
-              "moduleName",
-              "componentName"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    },
-    "categories": {
-      "aiTranslate": {
-        "method": "post",
-        "description": "Translate a specific category into desired languages",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "key": {
-                "type": "string"
-              },
-              "languages": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              }
-            },
-            "required": [
-              "key",
-              "languages"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "anyOf": [
-              {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              {
-                "type": "null"
-              }
-            ]
-          }
-        }
-      },
-      "list": {
-        "method": "get",
-        "description": "Get the category display order",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {},
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "additionalProperties": {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "update": {
-        "method": "post",
-        "description": "Update the category display order",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "data": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "object",
-                  "additionalProperties": {
-                    "type": "string"
-                  }
-                }
-              }
-            },
-            "required": [
-              "data"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "success": {
-                "type": "boolean"
-              }
-            },
-            "required": [
-              "success"
-            ],
-            "additionalProperties": false
-          }
-        }
-      }
-    }
-  },
-  "ai": {
-    "imageGeneration": {
-      "generateImage": {
-        "method": "post",
-        "description": "Generate image from text prompt using AI",
-        "noAuth": false,
-        "encrypted": true,
-        "isDownloadable": false,
-        "media": null,
-        "input": {
-          "body": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "object",
-            "properties": {
-              "prompt": {
-                "type": "string",
-                "minLength": 1
-              }
-            },
-            "required": [
-              "prompt"
-            ],
-            "additionalProperties": false
-          }
-        },
-        "output": {
-          "OK": {
-            "$schema": "https://json-schema.org/draft/2020-12/schema",
-            "type": "string"
-          }
-        }
-      }
-    }
-  },
-  "files": {
-    "get": {
-      "method": "get",
-      "description": "Retrieve a stored file or thumbnail",
-      "noAuth": true,
-      "encrypted": false,
-      "isDownloadable": false,
-      "media": null,
-      "input": {
-        "query": {
-          "$schema": "https://json-schema.org/draft/2020-12/schema",
-          "type": "object",
-          "properties": {
-            "key": {
-              "type": "string"
-            },
-            "thumb": {
-              "type": "string"
-            },
-            "download": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "key"
-          ],
-          "additionalProperties": false
-        }
-      },
-      "output": "custom"
-    }
-  },
-  "ping": {
-    "method": "post",
-    "description": "Ping the server",
-    "noAuth": true,
-    "encrypted": false,
-    "isDownloadable": false,
-    "media": null,
-    "input": {
-      "body": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "object",
-        "properties": {
-          "timestamp": {
-            "type": "number",
-            "minimum": 0
-          }
-        },
-        "required": [
-          "timestamp"
-        ],
-        "additionalProperties": false
-      }
-    },
-    "output": {
-      "OK": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "string"
-      }
-    }
-  },
-  "status": {
-    "method": "get",
-    "description": "Get server status",
-    "noAuth": true,
-    "encrypted": false,
-    "isDownloadable": false,
-    "media": null,
-    "input": {},
-    "output": {
-      "OK": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "object",
-        "properties": {
-          "environment": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "environment"
-        ],
-        "additionalProperties": false
-      }
-    }
-  },
-  "corsAnywhere": {
-    "method": "get",
-    "description": "CORS Anywhere - Fetch external URL content",
-    "noAuth": false,
-    "encrypted": true,
-    "isDownloadable": false,
-    "media": null,
-    "input": {
-      "query": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "format": "uri"
-          }
-        },
-        "required": [
-          "url"
-        ],
-        "additionalProperties": false
-      }
-    },
-    "output": {
-      "OK": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema"
-      }
-    }
-  },
-  "encryptionPublicKey": {
-    "method": "get",
-    "description": "Get server public key for end-to-end encryption",
-    "noAuth": true,
-    "encrypted": false,
-    "isDownloadable": false,
-    "media": null,
-    "input": {},
-    "output": {
-      "OK": {
-        "$schema": "https://json-schema.org/draft/2020-12/schema",
-        "type": "string"
-      }
-    }
-  }
-} as const
+  | {
+      status: "not_found";
+    };
+export type EndpointLocationsSearch_OutputOK = {
+  name: string;
+  formattedAddress: string;
+  location: {
+    latitude: number;
+    longitude: number;
+  };
+}[];
+export type EndpointModulesCheckModuleAvailability_OutputOK = boolean;
+export type EndpointModulesList_OutputOK = {
+  name: string;
+  id: string;
+  remoteId: string;
+  displayName: string;
+  version: string;
+  description: string;
+  author: string;
+  icon: string;
+  category: string;
+}[];
+export type EndpointModulesWidgets_OutputOK = {
+  id: string;
+  icon: string;
+  minW?: number;
+  minH?: number;
+  maxW?: number;
+  maxH?: number;
+  moduleName: string;
+  componentName: string;
+}[];
+export type EndpointModulesCategoriesAiTranslate_OutputOK = {
+  [k: string]: string;
+} | null;
+export type EndpointAiImageGenerationGenerateImage_OutputOK = string;
+export type EndpointPing_OutputOK = string;
+export type EndpointEncryptionPublicKey_OutputOK = string;
 
-export default contract
+export interface Contract {
+  "": EndpointRoot;
+  locales: {
+    listLanguages: EndpointLocalesListLanguages;
+    getLocale: EndpointLocalesGetLocale;
+    listUnsupportedModules: EndpointLocalesListUnsupportedModules;
+  };
+  user: {
+    exists: EndpointUserExists;
+    auth: {
+      createFirstUser: EndpointUserAuthCreateFirstUser;
+    };
+    me: EndpointUserMe;
+    settings: {
+      deleteAvatar: EndpointUserSettingsDeleteAvatar;
+      updateAvatar: EndpointUserSettingsUpdateAvatar;
+      updatePassword: EndpointUserSettingsUpdatePassword;
+      updateProfile: EndpointUserSettingsUpdateProfile;
+    };
+    personalization: {
+      deleteBgImage: EndpointUserPersonalizationDeleteBgImage;
+      updateBgImage: EndpointUserPersonalizationUpdateBgImage;
+      updatePersonalization: EndpointUserPersonalizationUpdatePersonalization;
+    };
+  };
+  fonts: {
+    google: {
+      get: EndpointFontsGoogleGet;
+      list: EndpointFontsGoogleList;
+    };
+    custom: {
+      get: EndpointFontsCustomGet;
+      list: EndpointFontsCustomList;
+      remove: EndpointFontsCustomRemove;
+      upload: EndpointFontsCustomUpload;
+    };
+    pins: {
+      list: EndpointFontsPinsList;
+      toggle: EndpointFontsPinsToggle;
+    };
+  };
+  apiKeys: {
+    entries: {
+      get: EndpointApiKeysEntriesGet;
+      list: EndpointApiKeysEntriesList;
+      checkKeys: EndpointApiKeysEntriesCheckKeys;
+      create: EndpointApiKeysEntriesCreate;
+      update: EndpointApiKeysEntriesUpdate;
+      remove: EndpointApiKeysEntriesRemove;
+    };
+  };
+  auth: {
+    "2fa": {
+      disable: EndpointAuth_2FaDisable;
+      enable: EndpointAuth_2FaEnable;
+      generate: EndpointAuth_2FaGenerate;
+      verify: EndpointAuth_2FaVerify;
+    };
+    login: EndpointAuthLogin;
+    logout: EndpointAuthLogout;
+    oauth: {
+      authorize: EndpointAuthOauthAuthorize;
+      verify: EndpointAuthOauthVerify;
+      providers: {
+        listEnabled: EndpointAuthOauthProvidersListEnabled;
+        listOptions: EndpointAuthOauthProvidersListOptions;
+        remove: EndpointAuthOauthProvidersRemove;
+        toggle: EndpointAuthOauthProvidersToggle;
+        upsert: EndpointAuthOauthProvidersUpsert;
+      };
+    };
+    qrLogin: {
+      approve: EndpointAuthQrLoginApprove;
+      claim: EndpointAuthQrLoginClaim;
+      register: EndpointAuthQrLoginRegister;
+      status: EndpointAuthQrLoginStatus;
+    };
+    refresh: EndpointAuthRefresh;
+  };
+  pixabay: {
+    searchImages: EndpointPixabaySearchImages;
+  };
+  locations: {
+    search: EndpointLocationsSearch;
+  };
+  modules: {
+    checkModuleAvailability: EndpointModulesCheckModuleAvailability;
+    list: EndpointModulesList;
+    manifest: EndpointModulesManifest;
+    widgets: EndpointModulesWidgets;
+    categories: {
+      aiTranslate: EndpointModulesCategoriesAiTranslate;
+      list: EndpointModulesCategoriesList;
+      update: EndpointModulesCategoriesUpdate;
+    };
+  };
+  ai: {
+    imageGeneration: {
+      generateImage: EndpointAiImageGenerationGenerateImage;
+    };
+  };
+  files: {
+    get: EndpointFilesGet;
+  };
+  ping: EndpointPing;
+  status: EndpointStatus;
+  corsAnywhere: EndpointCorsAnywhere;
+  encryptionPublicKey: EndpointEncryptionPublicKey;
+}
+export interface EndpointRoot {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointRoot_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointLocalesListLanguages {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointLocalesListLanguages_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointLocalesGetLocale {
+  method: "get";
+  input: {
+    query?: EndpointLocalesGetLocale_InputQuery;
+  };
+  output: {
+    OK: EndpointLocalesGetLocale_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointLocalesGetLocale_InputQuery {
+  lang: string;
+  namespace: "apps" | "common";
+  subnamespace: string;
+}
+export interface EndpointLocalesGetLocale_OutputOK {
+  [k: string]: unknown;
+}
+export interface EndpointLocalesListUnsupportedModules {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointLocalesListUnsupportedModules_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointUserExists {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointUserExists_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointUserAuthCreateFirstUser {
+  method: "post";
+  input: {
+    body?: EndpointUserAuthCreateFirstUser_InputBody;
+  };
+  output: {
+    CREATED: EndpointUserAuthCreateFirstUser_OutputCREATED;
+  };
+  media: null;
+}
+export interface EndpointUserAuthCreateFirstUser_InputBody {
+  email: string;
+  username: string;
+  name: string;
+  password: string;
+}
+export interface EndpointUserAuthCreateFirstUser_OutputCREATED {
+  state: "success";
+}
+export interface EndpointUserMe {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointUserMe_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointUserMe_OutputOK {
+  userData: {
+    id: string;
+    email: string;
+    emailVisibility: boolean;
+    verified: boolean;
+    username: string;
+    name: string | null;
+    dateOfBirth: string | null;
+    theme: "system" | "light" | "dark";
+    color: string | null;
+    bgTemp: string | null;
+    backdropFilters:
+      | (
+          | (string | number | boolean | null)
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+        )
+      | null;
+    fontFamily: string | null;
+    dashboardLayout:
+      | (
+          | (string | number | boolean | null)
+          | {
+              [k: string]: unknown;
+            }
+          | unknown[]
+        )
+      | null;
+    fontScale: number;
+    borderRadiusMultiplier: number;
+    bordered: boolean;
+    language: string;
+    avatar: {
+      key: string;
+      originalName: string;
+      mimeType: string;
+      size: number;
+      thumbs: {
+        size: string;
+        key: string;
+        width: number;
+        height: number;
+      }[];
+    } | null;
+    bgImage: {
+      key: string;
+      originalName: string;
+      mimeType: string;
+      size: number;
+      thumbs: {
+        size: string;
+        key: string;
+        width: number;
+        height: number;
+      }[];
+    } | null;
+    twoFAEnabled: boolean;
+    hasAPIKeysMasterPassword: boolean;
+  };
+}
+export interface EndpointUserSettingsDeleteAvatar {
+  method: "post";
+  input: {};
+  output: {
+    NO_CONTENT: EndpointUserSettingsDeleteAvatar_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointUserSettingsUpdateAvatar {
+  method: "post";
+  input: {};
+  output: {
+    OK: EndpointUserSettingsUpdateAvatar_OutputOK;
+  };
+  media: {file: {optional: false}};
+}
+export interface EndpointUserSettingsUpdateAvatar_OutputOK {
+  key: string;
+  originalName: string;
+  mimeType: string;
+  size: number;
+  thumbs: {
+    size: string;
+    key: string;
+    width: number;
+    height: number;
+  }[];
+}
+export interface EndpointUserSettingsUpdatePassword {
+  method: "post";
+  input: {
+    body?: EndpointUserSettingsUpdatePassword_InputBody;
+  };
+  output: {
+    NO_CONTENT: EndpointUserSettingsUpdatePassword_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointUserSettingsUpdatePassword_InputBody {
+  oldPassword: string;
+  password: string;
+  passwordConfirm: string;
+}
+export interface EndpointUserSettingsUpdateProfile {
+  method: "post";
+  input: {
+    body?: EndpointUserSettingsUpdateProfile_InputBody;
+  };
+  output: {
+    NO_CONTENT: EndpointUserSettingsUpdateProfile_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointUserSettingsUpdateProfile_InputBody {
+  data: {
+    username?: string;
+    email?: string;
+    name?: string;
+    dateOfBirth?: string;
+  };
+}
+export interface EndpointUserPersonalizationDeleteBgImage {
+  method: "post";
+  input: {};
+  output: {
+    NO_CONTENT: EndpointUserPersonalizationDeleteBgImage_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointUserPersonalizationUpdateBgImage {
+  method: "post";
+  input: {};
+  output: {
+    OK: EndpointUserPersonalizationUpdateBgImage_OutputOK;
+  };
+  media: {file: {optional: false}};
+}
+export interface EndpointUserPersonalizationUpdateBgImage_OutputOK {
+  key: string;
+  originalName: string;
+  mimeType: string;
+  size: number;
+  thumbs: {
+    size: string;
+    key: string;
+    width: number;
+    height: number;
+  }[];
+}
+export interface EndpointUserPersonalizationUpdatePersonalization {
+  method: "post";
+  input: {
+    body?: EndpointUserPersonalizationUpdatePersonalization_InputBody;
+  };
+  output: {
+    NO_CONTENT: EndpointUserPersonalizationUpdatePersonalization_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointUserPersonalizationUpdatePersonalization_InputBody {
+  data: {
+    fontFamily?: string;
+    theme?: string;
+    color?: string;
+    bgTemp?: string;
+    language?: string;
+    fontScale?: number;
+    borderRadiusMultiplier?: number;
+    bordered?: boolean;
+    dashboardLayout?: {
+      [k: string]: unknown;
+    };
+    backdropFilters?: {
+      [k: string]: unknown;
+    };
+  };
+}
+export interface EndpointFontsGoogleGet {
+  method: "get";
+  input: {
+    query?: EndpointFontsGoogleGet_InputQuery;
+  };
+  output: {
+    OK: EndpointFontsGoogleGet_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFontsGoogleGet_InputQuery {
+  family: string;
+}
+export interface EndpointFontsGoogleGet_OutputOK {
+  enabled: boolean;
+  items?: {
+    family: string;
+    variants: string[];
+    subsets: string[];
+    version: string;
+    lastModified: string;
+    files: {
+      "100"?: string;
+      "200"?: string;
+      "300"?: string;
+      "500"?: string;
+      "600"?: string;
+      "700"?: string;
+      "800"?: string;
+      "900"?: string;
+      regular?: string;
+      italic?: string;
+      "100italic"?: string;
+      "200italic"?: string;
+      "300italic"?: string;
+      "500italic"?: string;
+      "600italic"?: string;
+      "700italic"?: string;
+      "800italic"?: string;
+      "900italic"?: string;
+    };
+    category: "display" | "handwriting" | "monospace" | "sans-serif" | "serif";
+    kind: "webfonts#webfont";
+    menu: string;
+    colorCapabilities?: ("COLRv0" | "COLRv1" | "SVG")[];
+  }[];
+}
+export interface EndpointFontsGoogleList {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointFontsGoogleList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFontsGoogleList_OutputOK {
+  enabled: boolean;
+  items: {
+    family: string;
+    variants: string[];
+    subsets: string[];
+    version: string;
+    lastModified: string;
+    files: {
+      "100"?: string;
+      "200"?: string;
+      "300"?: string;
+      "500"?: string;
+      "600"?: string;
+      "700"?: string;
+      "800"?: string;
+      "900"?: string;
+      regular?: string;
+      italic?: string;
+      "100italic"?: string;
+      "200italic"?: string;
+      "300italic"?: string;
+      "500italic"?: string;
+      "600italic"?: string;
+      "700italic"?: string;
+      "800italic"?: string;
+      "900italic"?: string;
+    };
+    category: "display" | "handwriting" | "monospace" | "sans-serif" | "serif";
+    kind: "webfonts#webfont";
+    menu: string;
+    colorCapabilities?: ("COLRv0" | "COLRv1" | "SVG")[];
+  }[];
+}
+export interface EndpointFontsCustomGet {
+  method: "get";
+  input: {
+    query?: EndpointFontsCustomGet_InputQuery;
+  };
+  output: {
+    OK: EndpointFontsCustomGet_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFontsCustomGet_InputQuery {
+  id: string;
+}
+export interface EndpointFontsCustomGet_OutputOK {
+  id: string;
+  displayName: string;
+  family: string;
+  weight: number;
+  created: string;
+  updated: string;
+  file: {
+    key: string;
+    originalName: string;
+    mimeType: string;
+    size: number;
+    thumbs: {
+      size: string;
+      key: string;
+      width: number;
+      height: number;
+    }[];
+  } | null;
+}
+export interface EndpointFontsCustomList {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointFontsCustomList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFontsCustomRemove {
+  method: "post";
+  input: {
+    query?: EndpointFontsCustomRemove_InputQuery;
+  };
+  output: {
+    NO_CONTENT: EndpointFontsCustomRemove_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointFontsCustomRemove_InputQuery {
+  id: string;
+}
+export interface EndpointFontsCustomUpload {
+  method: "post";
+  input: {
+    query?: EndpointFontsCustomUpload_InputQuery;
+    body?: EndpointFontsCustomUpload_InputBody;
+  };
+  output: {
+    OK: EndpointFontsCustomUpload_OutputOK;
+  };
+  media: {file: {optional: false}};
+}
+export interface EndpointFontsCustomUpload_InputQuery {
+  id?: string;
+}
+export interface EndpointFontsCustomUpload_InputBody {
+  displayName: string;
+  family: string;
+  weight: number;
+}
+export interface EndpointFontsCustomUpload_OutputOK {
+  id: string;
+  displayName: string;
+  family: string;
+  weight: number;
+  created: string;
+  updated: string;
+  file: {
+    key: string;
+    originalName: string;
+    mimeType: string;
+    size: number;
+    thumbs: {
+      size: string;
+      key: string;
+      width: number;
+      height: number;
+    }[];
+  } | null;
+}
+export interface EndpointFontsPinsList {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointFontsPinsList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointFontsPinsToggle {
+  method: "post";
+  input: {
+    body?: EndpointFontsPinsToggle_InputBody;
+  };
+  output: {
+    NO_CONTENT: EndpointFontsPinsToggle_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointFontsPinsToggle_InputBody {
+  family: string;
+}
+export interface EndpointApiKeysEntriesGet {
+  method: "get";
+  input: {
+    query?: EndpointApiKeysEntriesGet_InputQuery;
+  };
+  output: {
+    OK: EndpointApiKeysEntriesGet_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointApiKeysEntriesGet_InputQuery {
+  keyId: string;
+}
+export interface EndpointApiKeysEntriesList {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointApiKeysEntriesList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointApiKeysEntriesCheckKeys {
+  method: "get";
+  input: {
+    query?: EndpointApiKeysEntriesCheckKeys_InputQuery;
+  };
+  output: {
+    OK: EndpointApiKeysEntriesCheckKeys_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointApiKeysEntriesCheckKeys_InputQuery {
+  keys: string;
+}
+export interface EndpointApiKeysEntriesCreate {
+  method: "post";
+  input: {
+    body?: EndpointApiKeysEntriesCreate_InputBody;
+  };
+  output: {
+    CREATED: EndpointApiKeysEntriesCreate_OutputCREATED;
+  };
+  media: null;
+}
+export interface EndpointApiKeysEntriesCreate_InputBody {
+  keyId: string;
+  name: string;
+  icon: string;
+  key: string;
+  exposable: boolean;
+}
+export interface EndpointApiKeysEntriesCreate_OutputCREATED {
+  id: string;
+  keyId: string;
+  name: string;
+  icon: string;
+  key: string;
+  exposable: boolean;
+  created: string;
+  updated: string;
+}
+export interface EndpointApiKeysEntriesUpdate {
+  method: "post";
+  input: {
+    query?: EndpointApiKeysEntriesUpdate_InputQuery;
+    body?: EndpointApiKeysEntriesUpdate_InputBody;
+  };
+  output: {
+    OK: EndpointApiKeysEntriesUpdate_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointApiKeysEntriesUpdate_InputQuery {
+  id: string;
+}
+export interface EndpointApiKeysEntriesUpdate_InputBody {
+  keyId: string;
+  name: string;
+  icon: string;
+  key: string;
+  exposable: boolean;
+  overrideKey: boolean;
+}
+export interface EndpointApiKeysEntriesUpdate_OutputOK {
+  id: string;
+  keyId: string;
+  name: string;
+  icon: string;
+  key: string;
+  exposable: boolean;
+  created: string;
+  updated: string;
+}
+export interface EndpointApiKeysEntriesRemove {
+  method: "post";
+  input: {
+    query?: EndpointApiKeysEntriesRemove_InputQuery;
+  };
+  output: {
+    NO_CONTENT: EndpointApiKeysEntriesRemove_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointApiKeysEntriesRemove_InputQuery {
+  id: string;
+}
+export interface EndpointAuth_2FaDisable {
+  method: "post";
+  input: {};
+  output: {
+    NO_CONTENT: EndpointAuth_2FaDisable_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointAuth_2FaEnable {
+  method: "post";
+  input: {
+    body?: EndpointAuth_2FaEnable_InputBody;
+  };
+  output: {
+    NO_CONTENT: EndpointAuth_2FaEnable_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointAuth_2FaEnable_InputBody {
+  otp: string;
+  tid: string;
+}
+export interface EndpointAuth_2FaGenerate {
+  method: "post";
+  input: {};
+  output: {
+    OK: EndpointAuth_2FaGenerate_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuth_2FaGenerate_OutputOK {
+  tid: string;
+  link: string;
+}
+export interface EndpointAuth_2FaVerify {
+  method: "post";
+  input: {
+    body?: EndpointAuth_2FaVerify_InputBody;
+  };
+  output: {
+    OK: EndpointAuth_2FaVerify_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuth_2FaVerify_InputBody {
+  otp: string;
+  tid: string;
+}
+export interface EndpointAuth_2FaVerify_OutputOK {
+  accessToken: string;
+}
+export interface EndpointAuthLogin {
+  method: "post";
+  input: {
+    body?: EndpointAuthLogin_InputBody;
+  };
+  output: {
+    OK: EndpointAuthLogin_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthLogin_InputBody {
+  emailOrUsername: string;
+  password: string;
+}
+export interface EndpointAuthLogout {
+  method: "post";
+  input: {};
+  output: {
+    OK: EndpointAuthLogout_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthAuthorize {
+  method: "get";
+  input: {
+    query?: EndpointAuthOauthAuthorize_InputQuery;
+  };
+  output: {
+    OK: EndpointAuthOauthAuthorize_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthAuthorize_InputQuery {
+  provider: string;
+}
+export interface EndpointAuthOauthAuthorize_OutputOK {
+  url: string;
+  state: string;
+}
+export interface EndpointAuthOauthVerify {
+  method: "post";
+  input: {
+    body?: EndpointAuthOauthVerify_InputBody;
+  };
+  output: {
+    OK: EndpointAuthOauthVerify_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthVerify_InputBody {
+  provider: string;
+  code: string;
+  state: string;
+}
+export interface EndpointAuthOauthProvidersListEnabled {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointAuthOauthProvidersListEnabled_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthProvidersListOptions {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointAuthOauthProvidersListOptions_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthProvidersRemove {
+  method: "post";
+  input: {
+    query?: EndpointAuthOauthProvidersRemove_InputQuery;
+  };
+  output: {
+    NO_CONTENT: EndpointAuthOauthProvidersRemove_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthProvidersRemove_InputQuery {
+  id: string;
+}
+export interface EndpointAuthOauthProvidersToggle {
+  method: "post";
+  input: {
+    query?: EndpointAuthOauthProvidersToggle_InputQuery;
+  };
+  output: {
+    NO_CONTENT: EndpointAuthOauthProvidersToggle_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthProvidersToggle_InputQuery {
+  id: string;
+}
+export interface EndpointAuthOauthProvidersUpsert {
+  method: "post";
+  input: {
+    query?: EndpointAuthOauthProvidersUpsert_InputQuery;
+    body?: EndpointAuthOauthProvidersUpsert_InputBody;
+  };
+  output: {
+    NO_CONTENT: EndpointAuthOauthProvidersUpsert_OutputNO_CONTENT;
+  };
+  media: null;
+}
+export interface EndpointAuthOauthProvidersUpsert_InputQuery {
+  provider: string;
+}
+export interface EndpointAuthOauthProvidersUpsert_InputBody {
+  clientId: string;
+  clientSecret: string;
+}
+export interface EndpointAuthQrLoginApprove {
+  method: "post";
+  input: {
+    body?: EndpointAuthQrLoginApprove_InputBody;
+  };
+  output: {
+    OK: EndpointAuthQrLoginApprove_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthQrLoginApprove_InputBody {
+  sessionId: string;
+}
+export interface EndpointAuthQrLoginApprove_OutputOK {
+  browserInfo: string;
+}
+export interface EndpointAuthQrLoginClaim {
+  method: "post";
+  input: {
+    body?: EndpointAuthQrLoginClaim_InputBody;
+  };
+  output: {
+    OK: EndpointAuthQrLoginClaim_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthQrLoginClaim_InputBody {
+  sessionId: string;
+}
+export interface EndpointAuthQrLoginClaim_OutputOK {
+  accessToken: string;
+}
+export interface EndpointAuthQrLoginRegister {
+  method: "post";
+  input: {
+    body?: EndpointAuthQrLoginRegister_InputBody;
+  };
+  output: {
+    CREATED: EndpointAuthQrLoginRegister_OutputCREATED;
+  };
+  media: null;
+}
+export interface EndpointAuthQrLoginRegister_InputBody {
+  browserInfo: string;
+}
+export interface EndpointAuthQrLoginRegister_OutputCREATED {
+  sessionId: string;
+  expiresAt: string;
+}
+export interface EndpointAuthQrLoginStatus {
+  method: "get";
+  input: {
+    query?: EndpointAuthQrLoginStatus_InputQuery;
+  };
+  output: {
+    OK: EndpointAuthQrLoginStatus_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthQrLoginStatus_InputQuery {
+  sessionId: string;
+}
+export interface EndpointAuthRefresh {
+  method: "post";
+  input: {};
+  output: {
+    OK: EndpointAuthRefresh_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAuthRefresh_OutputOK {
+  accessToken: string;
+}
+export interface EndpointPixabaySearchImages {
+  method: "get";
+  input: {
+    query?: EndpointPixabaySearchImages_InputQuery;
+  };
+  output: {
+    OK: EndpointPixabaySearchImages_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointPixabaySearchImages_InputQuery {
+  q: string;
+  page: string;
+  type: "all" | "photo" | "illustration" | "vector";
+  category?:
+    | "backgrounds"
+    | "fashion"
+    | "nature"
+    | "science"
+    | "education"
+    | "feelings"
+    | "health"
+    | "people"
+    | "religion"
+    | "places"
+    | "animals"
+    | "industry"
+    | "computer"
+    | "food"
+    | "sports"
+    | "transportation"
+    | "travel"
+    | "buildings"
+    | "business"
+    | "music";
+  colors?:
+    | (
+        | "grayscale"
+        | "transparent"
+        | "red"
+        | "orange"
+        | "yellow"
+        | "green"
+        | "turquoise"
+        | "blue"
+        | "lilac"
+        | "pink"
+        | "white"
+        | "gray"
+        | "black"
+        | "brown"
+      )
+    | null;
+  editors_choice: "true" | "false";
+}
+export interface EndpointPixabaySearchImages_OutputOK {
+  total: number;
+  hits: {
+    id: string;
+    thumbnail: {
+      url: string;
+      width: number;
+      height: number;
+    };
+    imageURL: string;
+  }[];
+}
+export interface EndpointLocationsSearch {
+  method: "get";
+  input: {
+    query?: EndpointLocationsSearch_InputQuery;
+  };
+  output: {
+    OK: EndpointLocationsSearch_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointLocationsSearch_InputQuery {
+  q: string;
+}
+export interface EndpointModulesCheckModuleAvailability {
+  method: "get";
+  input: {
+    query?: EndpointModulesCheckModuleAvailability_InputQuery;
+  };
+  output: {
+    OK: EndpointModulesCheckModuleAvailability_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointModulesCheckModuleAvailability_InputQuery {
+  id: string;
+}
+export interface EndpointModulesList {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointModulesList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointModulesManifest {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointModulesManifest_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointModulesManifest_OutputOK {
+  modules: {
+    name: string;
+    id: string;
+    remoteId: string;
+    displayName: string;
+    icon: string;
+    category: string;
+    remoteEntryUrl: string;
+    APIKeyAccess?: {
+      [k: string]: {
+        usage: string;
+        required: boolean;
+      };
+    };
+    hasProvider: boolean;
+    hidden?: boolean;
+    subsection?: {
+      label: string;
+      icon: string;
+      path: string;
+    }[];
+  }[];
+}
+export interface EndpointModulesWidgets {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointModulesWidgets_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointModulesCategoriesAiTranslate {
+  method: "post";
+  input: {
+    body?: EndpointModulesCategoriesAiTranslate_InputBody;
+  };
+  output: {
+    OK: EndpointModulesCategoriesAiTranslate_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointModulesCategoriesAiTranslate_InputBody {
+  key: string;
+  languages: string[];
+}
+export interface EndpointModulesCategoriesList {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointModulesCategoriesList_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointModulesCategoriesList_OutputOK {
+  [k: string]: {
+    [k: string]: string;
+  };
+}
+export interface EndpointModulesCategoriesUpdate {
+  method: "post";
+  input: {
+    body?: EndpointModulesCategoriesUpdate_InputBody;
+  };
+  output: {
+    OK: EndpointModulesCategoriesUpdate_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointModulesCategoriesUpdate_InputBody {
+  data: {
+    [k: string]: {
+      [k: string]: string;
+    };
+  };
+}
+export interface EndpointModulesCategoriesUpdate_OutputOK {
+  success: boolean;
+}
+export interface EndpointAiImageGenerationGenerateImage {
+  method: "post";
+  input: {
+    body?: EndpointAiImageGenerationGenerateImage_InputBody;
+  };
+  output: {
+    OK: EndpointAiImageGenerationGenerateImage_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointAiImageGenerationGenerateImage_InputBody {
+  prompt: string;
+}
+export interface EndpointFilesGet {
+  method: "get";
+  input: {
+    query?: EndpointFilesGet_InputQuery;
+  };
+  output: any;
+  media: null;
+}
+export interface EndpointFilesGet_InputQuery {
+  key: string;
+  thumb?: string;
+  download?: string;
+}
+export interface EndpointPing {
+  method: "post";
+  input: {
+    body?: EndpointPing_InputBody;
+  };
+  output: {
+    OK: EndpointPing_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointPing_InputBody {
+  timestamp: number;
+}
+export interface EndpointStatus {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointStatus_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointStatus_OutputOK {
+  environment: string;
+}
+export interface EndpointCorsAnywhere {
+  method: "get";
+  input: {
+    query?: EndpointCorsAnywhere_InputQuery;
+  };
+  output: {
+    OK: EndpointCorsAnywhere_OutputOK;
+  };
+  media: null;
+}
+export interface EndpointCorsAnywhere_InputQuery {
+  url: string;
+}
+export interface EndpointCorsAnywhere_OutputOK {
+  [k: string]: unknown;
+}
+export interface EndpointEncryptionPublicKey {
+  method: "get";
+  input: {};
+  output: {
+    OK: EndpointEncryptionPublicKey_OutputOK;
+  };
+  media: null;
+}

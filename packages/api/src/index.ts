@@ -1,4 +1,4 @@
-export { contract } from './contract'
+export type { Contract as CoreContract } from './contract'
 
 export * from './proxy'
 

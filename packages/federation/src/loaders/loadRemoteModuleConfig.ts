@@ -5,7 +5,7 @@ import {
   registerRemotes
 } from '@module-federation/runtime'
 
-import { globalProxyRegistry } from '@lifeforge/api'
+import type { ProxyScope } from '@lifeforge/api'
 import {
   type ModuleConfig,
   type ModuleGroup,
@@ -33,7 +33,7 @@ function getDevModeImport(
     )
 
     if (devModePkgs[pkgPath]?.name === moduleName) {
-      return importFn as () => Promise<{ default: ModuleConfig }>
+      return importFn
     }
   }
 
@@ -100,15 +100,16 @@ export async function loadRemoteModuleConfig(
     disabled: unwrapped.disabled,
     clearQueryOnUnmount: unwrapped.clearQueryOnUnmount,
     APIKeyAccess: mod.APIKeyAccess,
-    widgets: unwrapped.widgets,
-    contract: unwrapped.contract
+    widgets: unwrapped.widgets
   }
 
-  if (unwrapped.contract) {
-    globalProxyRegistry.set(unwrapped.contract, {
-      remoteId: mod.remoteId
-    })
+  const scope = (unwrapped as { __scope?: ProxyScope }).__scope
+
+  if (!scope) {
+    throw new Error(`Module ${mod.name} did not expose a proxy scope`)
   }
+
+  scope.remoteId = mod.remoteId
 
   return moduleConfig
 }
@@ -144,11 +145,11 @@ async function loadFromFederation(mod: FederatedModule): Promise<ModuleConfig> {
   const remoteModule = await loadRemote<{ default: unknown }>(
     `${remoteName}/Manifest`
   )
-  const unwrapped = (remoteModule?.default || remoteModule) as ModuleConfig
+  const remote = remoteModule?.default || remoteModule
 
-  if (!unwrapped) {
+  if (!remote) {
     throw new Error(`Failed to load federated manifest: ${mod.name}`)
   }
 
-  return unwrapped
+  return remote as ModuleConfig
 }

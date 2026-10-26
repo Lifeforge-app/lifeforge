@@ -90,7 +90,7 @@ Key points:
 ```
 client/
 ├── manifest.ts           # Module federation manifest (routes, subsections, widgets)
-├── contract.ts           # AUTO-GENERATED API contract (do not edit by hand)
+├── contract.ts           # AUTO-GENERATED types-only API contract (do not edit)
 ├── index.html            # Empty entry HTML for Vite
 ├── vite.config.ts        # defineModuleClientConfig({ dirname: __dirname })
 ├── tsconfig.json         # extends @lifeforge/configs/tsconfig/module.json
@@ -152,13 +152,15 @@ export { forgeAPI }
 
 ### `contract.ts` (generated)
 
-A large `as const` object describing every endpoint: HTTP `method`,
-`description`, `noAuth`, `encrypted`, `media`, and JSON-schema `input`/`output`.
-It is generated from the server routes by `writeContractFileToClient` (called in
-`server/index.ts`) - **never edit it manually**. No command is required to regenerate
-it as it will be automatically regenerated on every single mutation to the server code
-whenever the server is running. It serves as the single source of truththat gives
-`forgeAPI` full end-to-end type safety.
+A **types-only** declaration describing every endpoint's `method`, `input` and
+`output`. It is generated from the server routes by `writeContractFileToClient`
+(called in `server/index.ts`) - **never edit it manually**. It is automatically
+regenerated whenever the server is running and the route code changes.
+
+There is no runtime contract value. The backend is the single source of truth for
+route metadata (`traceRouteStack` + `ModuleRegistry`), and `forgeAPI` receives its
+routing scope from the host. Import it with `import type { Contract } from './contract'`
+and pass it as a type argument: `createForgeModule<Contract>({ ... })`.
 
 ### `vite.config.ts` & `tsconfig.json`
 
@@ -300,8 +302,8 @@ forge route. When a module has no server yet, scaffold one (mirror
 5. **Generate `client/contract.ts`** by executing the server entry once:
    `pnpm exec tsx modules/<module>/server/index.ts` (it writes `../client/contract.ts`
    as a side effect). Never hand-write the contract.
-6. `client/manifest.ts` - `import contract from './contract'` and pass `contract`
-   to `createForgeModule({ routes, contract })`.
+6. `client/manifest.ts` - `import type { Contract } from './contract'` and call
+   `createForgeModule<Contract>({ routes })`. Do not pass a `contract` prop.
 
 Then in the client replace `fetch(...)` effects with
 `useQuery(forgeAPI.<ns>.<endpoint>.input({...}).queryOptions())` and build derived
@@ -357,7 +359,7 @@ server/
 ### `index.ts`
 
 Assembles all route groups into a single `forgeRouter` and triggers generation
-of the client `contract.ts`:
+of the types-only client `contract.ts`:
 
 ```typescript
 import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
@@ -551,10 +553,11 @@ One JSON file per supported language (`en.json`, `ms.json`, `zh-CN.json`,
 1. `server/schema.ts` defines PocketBase collections (zod + raw).
 2. `server/routes/*.ts` define typed endpoints against that schema using the
    `forge` DSL.
-3. `server/index.ts` assembles them with `forgeRouter` and generates
-   `client/contract.ts`.
-4. `client/manifest.ts` feeds the contract into `createForgeModule`,
-   producing the typed `forgeAPI` and the federation `manifest`.
+3. `server/index.ts` assembles them with `forgeRouter` and generates the
+   types-only `client/contract.ts`.
+4. `client/manifest.ts` passes the contract type to
+   `createForgeModule<Contract>`, producing the typed `forgeAPI` and the
+   federation `manifest`.
 5. Client components import `forgeAPI` from `@/manifest` and call it via
    TanStack Query, with `InferInput`/`InferOutput` giving full type safety.
 6. `locales/` supplies translations; the host shell mounts the module using the

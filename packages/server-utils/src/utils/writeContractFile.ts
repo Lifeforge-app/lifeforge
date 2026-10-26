@@ -1,29 +1,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from 'fs'
+import { compile } from 'json-schema-to-typescript'
 import path from 'path'
 
 import { isSuccessOutputKey } from '../response'
 
-function cleanAdditionalProperties(schema: any): any {
-  if (!schema || typeof schema !== 'object') {
-    return schema
+/**
+ * Params for `toJSONSchema` that let DTOs use `z.date()` on the server while
+ * still emitting a `date-time` string schema for the client. Dates are
+ * unrepresentable in JSON Schema (zod throws), so we fall back to `any` and
+ * rewrite date nodes ourselves.
+ */
+const jsonSchemaParams = {
+  unrepresentable: 'any' as const,
+  override: (ctx: { zodSchema: any; jsonSchema: any }) => {
+    if (ctx.zodSchema?._zod?.def?.type === 'date') {
+      ctx.jsonSchema.type = 'string'
+      ctx.jsonSchema.format = 'date-time'
+    }
   }
-
-  if (Array.isArray(schema)) {
-    return schema.map(cleanAdditionalProperties)
-  }
-
-  const result = { ...schema }
-
-  if ('additionalProperties' in result) {
-    delete result.additionalProperties
-  }
-
-  for (const key of Object.keys(result)) {
-    result[key] = cleanAdditionalProperties(result[key])
-  }
-
-  return result
 }
 
 function fixJSONSchemaRecord(schema: any): any {
@@ -65,39 +60,7 @@ function fixJSONSchemaRecord(schema: any): any {
     delete result.propertyNames
   }
 
-  if (result.allOf && Array.isArray(result.allOf)) {
-    result.allOf = result.allOf.map((sub: any) => {
-      if (sub && typeof sub === 'object') {
-        const cleanedSub = { ...sub }
-
-        if ('additionalProperties' in cleanedSub) {
-          delete cleanedSub.additionalProperties
-        }
-
-        return cleanAdditionalProperties(cleanedSub)
-      }
-
-      return sub
-    })
-  }
-
   return result
-}
-
-/**
- * Params for `toJSONSchema` that let DTOs use `z.date()` on the server while
- * still emitting a `date-time` string schema for the client. Dates are
- * unrepresentable in JSON Schema (zod throws), so we fall back to `any` and
- * rewrite date nodes ourselves.
- */
-const jsonSchemaParams = {
-  unrepresentable: 'any' as const,
-  override: (ctx: { zodSchema: any; jsonSchema: any }) => {
-    if (ctx.zodSchema?._zod?.def?.type === 'date') {
-      ctx.jsonSchema.type = 'string'
-      ctx.jsonSchema.format = 'date-time'
-    }
-  }
 }
 
 export function serializeEndpointValue(val: any): {
@@ -181,22 +144,165 @@ export function serializeRoutes(node: any): any {
   return node
 }
 
-export function writeContractFileToClient(
+// ============================================
+// TypeScript declaration emission
+// ============================================
+
+interface DefinitionMap {
+  [key: string]: unknown
+}
+
+function sanitizeSegment(segment: string): string {
+  return segment.replace(/[^a-zA-Z0-9]/g, '_')
+}
+
+function uniqueKey(definitions: DefinitionMap, base: string): string {
+  let key = base
+  let index = 1
+
+  while (key in definitions) {
+    key = `${base}_${index++}`
+  }
+
+  return key
+}
+
+function reference(key: string): { $ref: string } {
+  return { $ref: `#/definitions/${key}` }
+}
+
+function buildEndpointDefinition(
+  endpoint: any,
+  base: string,
+  definitions: DefinitionMap
+): Record<string, unknown> {
+  const inputProperties: Record<string, unknown> = {}
+
+  for (const part of ['query', 'body'] as const) {
+    const schema = endpoint.input?.[part]
+
+    if (!schema) continue
+
+    const key = uniqueKey(
+      definitions,
+      `${base}_Input${part === 'query' ? 'Query' : 'Body'}`
+    )
+
+    definitions[key] = schema
+    inputProperties[part] = reference(key)
+  }
+
+  let output: unknown = { tsType: 'any' }
+
+  if (endpoint.output && endpoint.output !== 'custom') {
+    const variants = Object.entries(
+      endpoint.output as Record<string, unknown>
+    ).map(([status, schema]) => {
+      const key = uniqueKey(definitions, `${base}_Output${status}`)
+
+      definitions[key] = schema === true ? { tsType: 'void' } : schema
+
+      return {
+        type: 'object',
+        properties: { [status]: reference(key) },
+        required: [status],
+        additionalProperties: false
+      }
+    })
+
+    output = variants.length > 0 ? { anyOf: variants } : { tsType: 'any' }
+  }
+
+  return {
+    type: 'object',
+    properties: {
+      method: { const: endpoint.method },
+      input: {
+        type: 'object',
+        properties: inputProperties,
+        additionalProperties: false
+      },
+      output,
+      media: { const: endpoint.media ?? null }
+    },
+    required: ['method', 'input', 'output', 'media'],
+    additionalProperties: false
+  }
+}
+
+/**
+ * Builds a single composed JSON Schema for the whole route tree. Every endpoint
+ * and every input/output schema becomes a `definition`, referenced with `$ref`,
+ * so `json-schema-to-typescript` owns naming, reference resolution and emission.
+ */
+function buildContractSchema(
+  node: any,
+  pathSegments: string[],
+  definitions: DefinitionMap
+): Record<string, unknown> {
+  if (node && typeof node === 'object' && 'method' in node) {
+    const raw = pathSegments.map(sanitizeSegment).filter(Boolean).join('_')
+
+    const key = uniqueKey(definitions, `Endpoint_${raw || 'root'}`)
+
+    definitions[key] = buildEndpointDefinition(node, key, definitions)
+
+    return reference(key)
+  }
+
+  const properties: Record<string, unknown> = {}
+
+  for (const [key, value] of Object.entries(node as Record<string, any>)) {
+    properties[key] = buildContractSchema(
+      value,
+      [...pathSegments, key],
+      definitions
+    )
+  }
+
+  return {
+    type: 'object',
+    properties,
+    required: Object.keys(properties),
+    additionalProperties: false
+  }
+}
+
+export async function buildContractDeclaration(
+  serialized: Record<string, unknown>
+): Promise<string> {
+  const definitions: DefinitionMap = {}
+
+  const root = buildContractSchema(serialized, [], definitions)
+
+  const source = await compile({ ...root, definitions } as any, 'Contract', {
+    bannerComment: ''
+  })
+
+  return `${source.trim()}
+`
+}
+
+export async function writeContractFileToClient(
   routes: any,
   serverRootDir: string,
   clientDir: string = '../client'
-): void {
+): Promise<void> {
   if (process.env.NODE_ENV === 'production') return
 
-  const serialized = serializeRoutes(routes)
+  try {
+    const serialized = serializeRoutes(routes)
 
-  const content = `export const contract = ${JSON.stringify(serialized, null, 2)} as const\n\nexport default contract\n`
+    const content = await buildContractDeclaration(serialized)
 
-  const clientSrcDir = path.resolve(serverRootDir, clientDir)
+    const clientSrcDir = path.resolve(serverRootDir, clientDir)
 
-  if (!fs.existsSync(clientSrcDir)) {
-    fs.mkdirSync(clientSrcDir, { recursive: true })
+    if (!fs.existsSync(clientSrcDir)) {
+      fs.mkdirSync(clientSrcDir, { recursive: true })
+    }
+
+    fs.writeFileSync(path.join(clientSrcDir, 'contract.ts'), content)
+  } catch (error) {
+    console.error('Failed to generate contract declaration:', error)
   }
-
-  fs.writeFileSync(path.join(clientSrcDir, 'contract.ts'), content)
 }

@@ -2,4 +2,4 @@ export * from './createForgeProxy'
 
 export * from './forgeEndpoint'
 
-export * from './registry'
+export * from './scope'

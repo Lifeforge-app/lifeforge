@@ -18,7 +18,9 @@ export const users = pgTable('users', {
   name: varchar('name', { length: 255 }),
   avatar: varchar('avatar', { length: 255 }),
   dateOfBirth: varchar('date_of_birth', { length: 50 }),
-  theme: varchar('theme', { length: 50 }).default('system').notNull(),
+  theme: varchar('theme', { length: 50, enum: ['system', 'light', 'dark'] })
+    .default('system')
+    .notNull(),
   color: varchar('color', { length: 50 }),
   bgTemp: varchar('bg_temp', { length: 255 }),
   bgImage: varchar('bg_image', { length: 255 }),
@@ -41,4 +43,5 @@ export const users = pgTable('users', {
 })
 
 export const tables = { users }
+
 export const relations = (_r: RelationsBuilder<typeof tables>) => ({})

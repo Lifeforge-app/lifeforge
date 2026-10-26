@@ -1199,7 +1199,7 @@ When migrating from `InferInput<typeof forgeAPI.x.create>['body']`, you might be
 
 Therefore, the Zod schema must **mimic the required shape of the ForgeAPI endpoint exactly**. Use `InferInput<typeof forgeAPI.x.create>['body']` as a reference while writing the schema, or define the schema alongside it.
 
-**Where to find the exact shape:** Each and every module has a `contract.ts` file that defines the API contract as JSON Schema objects. Foe example:
+**Where to find the exact shape:** Each module has a generated, types-only `contract.ts` file with the input/output interfaces for every endpoint. Read those interfaces, or the route definition in `server/routes/` — the generated file no longer contains runtime JSON Schema.
 
 | Codebase     | File                                                  |
 | ------------ | ----------------------------------------------------- |

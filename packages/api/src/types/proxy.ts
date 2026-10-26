@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type z from 'zod'
-
 import type { ForgeEndpoint } from '../proxy/forgeEndpoint'
 import type { CoreHelperReturnTypes } from '../proxy/helpers/config'
 import type {
@@ -21,7 +19,6 @@ type ProxyTreeLeaf = {
     download?: string
   }) => string
   key: (string | Record<string, any> | null)[]
-  schema: { query?: z.ZodTypeAny; body?: z.ZodTypeAny }
   endpoint: string
 }
 

@@ -1,21 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type {
-  ZodIntersection,
-  ZodObject,
-  ZodRawShape,
-  ZodTypeAny,
-  z
-} from 'zod'
-
 import type { ForgeEndpoint } from '../proxy/forgeEndpoint'
 
-type ZodObjectOrIntersection =
-  ZodObject<ZodRawShape> | ZodIntersection<ZodTypeAny, ZodTypeAny>
+type MediaFiles<M> = {
+  [K in keyof M]: M[K] extends { multiple: true }
+    ? M[K] extends { optional: true }
+      ? File[] | undefined
+      : File[]
+    : M[K] extends { optional: true }
+      ? File | string | undefined
+      : File | string
+}
 
 /**
  * Infers the input TypeScript type from a Forge endpoint config object.
- * Uses embedded Zod schema definitions to produce a plain object type.
  */
 export type InferRawInput<T> = T extends {
   __isForgeContract: true
@@ -28,23 +26,9 @@ export type InferRawInput<T> = T extends {
     }
     ? {
         body: M extends null
-          ? B extends ZodObjectOrIntersection
-            ? z.input<B>
-            : B
-          : (B extends ZodObjectOrIntersection
-              ? z.input<B>
-              : B extends undefined
-                ? {}
-                : B) & {
-              [K in keyof M]: M[K] extends { multiple: true }
-                ? M[K] extends { optional: true }
-                  ? File[] | undefined
-                  : File[]
-                : M[K] extends { optional: true }
-                  ? File | string | undefined
-                  : File | string
-            }
-        query: Q extends ZodObjectOrIntersection ? z.input<Q> : Q
+          ? B
+          : (B extends undefined ? {} : B) & MediaFiles<M>
+        query: Q
       }
     : never
   : never
@@ -62,7 +46,7 @@ export type InferRawOutput<T> = T extends {
 /**
  * Extracts the input schema type from a `ForgeEndpoint` instance.
  */
-export type InferInput<T extends ForgeEndpoint<any>> = T['__type'] extends {
+export type InferInput<T extends ForgeEndpoint> = T['__type'] extends {
   __isForgeContract: true
   __input: infer I
   __media: infer M
@@ -73,23 +57,9 @@ export type InferInput<T extends ForgeEndpoint<any>> = T['__type'] extends {
     }
     ? {
         body: M extends null
-          ? B extends ZodObjectOrIntersection
-            ? z.input<B>
-            : B
-          : (B extends ZodObjectOrIntersection
-              ? z.input<B>
-              : B extends undefined
-                ? {}
-                : B) & {
-              [K in keyof M]: M[K] extends { multiple: true }
-                ? M[K] extends { optional: true }
-                  ? File[] | undefined
-                  : File[]
-                : M[K] extends { optional: true }
-                  ? File | string | undefined
-                  : File | string
-            }
-        query: Q extends ZodObjectOrIntersection ? z.input<Q> : Q
+          ? B
+          : (B extends undefined ? {} : B) & MediaFiles<M>
+        query: Q
       }
     : never
   : never
@@ -97,7 +67,7 @@ export type InferInput<T extends ForgeEndpoint<any>> = T['__type'] extends {
 /**
  * Extracts the output (response) type from a `ForgeEndpoint` instance.
  */
-export type InferOutput<T extends ForgeEndpoint<any>> = T['__type'] extends {
+export type InferOutput<T extends ForgeEndpoint> = T['__type'] extends {
   __isForgeContract: true
   __output: infer O
 }

@@ -4,3 +4,5 @@ dist/
 storybook-static/
 **/storybook-static/
 modules/melvinchia3636--truckers-log/client/src/lib/
+packages/api/src/contract.ts
+**/client/contract.ts

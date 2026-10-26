@@ -4,47 +4,26 @@ import { ForgeEndpoint } from './forgeEndpoint'
 import { CORE_HELPERS } from './helpers/config'
 import { createCoreHelper } from './helpers/createCoreHelper'
 import { createGetMediaHelper } from './helpers/getMediaHelper'
-import { globalProxyRegistry } from './registry'
+import { type ProxyScope, forgeConfig } from './scope'
 
 /**
  * Creates a type-safe, proxy-based API client that mirrors your route contract structure.
  *
- * Traverses the generated routes contract statically at type-level using json-schema-to-ts,
- * and dynamically at runtime using Proxy traps.
+ * The generic is the generated `Contract` declaration for this owner (core or a
+ * module). Routing metadata (`remoteId`) is bound by the host after a federated
+ * module loads, so no generated value is needed at runtime.
  */
-export function createForgeProxy<T>(contract: T): ProxyTree<T> {
-  return createForgeProxyInternal(contract, [])
+export function createForgeProxy<T>(scope: ProxyScope = {}): ProxyTree<T> {
+  return createForgeProxyInternal<T>(scope, [])
 }
 
 function createForgeProxyInternal<T>(
-  contract: T,
-  path: string[] | string
+  scope: ProxyScope,
+  path: string[]
 ): ProxyTree<T> {
-  const pathArray = Array.isArray(path) ? path : [path]
+  const getResolvedHost = () => forgeConfig.apiHost
 
-  // Resolve sub-contract for current path traversal
-  let currentContract: any = contract
-
-  for (const part of pathArray) {
-    if (currentContract && typeof currentContract === 'object') {
-      currentContract = currentContract[part]
-    }
-  }
-
-  function getResolvedHost() {
-    return (
-      (contract && globalProxyRegistry.get(contract)?.apiHost) ||
-      globalProxyRegistry.apiHost ||
-      ''
-    )
-  }
-
-  const endpoint = new ForgeEndpoint<any>(
-    getResolvedHost(),
-    pathArray.join('/'),
-    currentContract,
-    contract
-  )
+  const endpoint = new ForgeEndpoint<any>(scope, path.join('/'))
 
   return new Proxy(() => {}, {
     get: (_, prop: string | symbol) => {
@@ -62,16 +41,14 @@ function createForgeProxyInternal<T>(
       }
 
       if (prop === 'toJSON' || prop === 'valueOf' || prop === 'toString') {
-        return () => `[ForgeProxy: ${pathArray.join('/')}]`
+        return () => `[ForgeProxy: ${path.join('/')}]`
       }
 
-      if (pathArray.length === 0 && prop === 'untyped') {
+      if (path.length === 0 && prop === 'untyped') {
         return <TOutput = any, TBody = any, TQuery = any>(url: string) =>
           new ForgeEndpoint<UntypedEndpointType<TOutput, TBody, TQuery>>(
-            getResolvedHost(),
-            url,
-            undefined,
-            contract
+            scope,
+            url
           )
       }
 
@@ -79,11 +56,8 @@ function createForgeProxyInternal<T>(
         return createGetMediaHelper(getResolvedHost())
       }
 
-      if (pathArray.length === 0 && prop in CORE_HELPERS) {
-        return createCoreHelper(
-          getResolvedHost(),
-          prop as keyof typeof CORE_HELPERS
-        )
+      if (path.length === 0 && prop in CORE_HELPERS) {
+        return createCoreHelper(scope, prop as keyof typeof CORE_HELPERS)
       }
 
       if (prop in endpoint && typeof (endpoint as any)[prop] !== 'undefined') {
@@ -92,12 +66,12 @@ function createForgeProxyInternal<T>(
         return typeof value === 'function' ? value.bind(endpoint) : value
       }
 
-      return createForgeProxyInternal(contract, [...pathArray, prop as string])
+      return createForgeProxyInternal<T>(scope, [...path, prop])
     },
 
     apply: () => {
       throw new Error(
-        `Invalid function call on path: ${pathArray.join('.')}. - maybe you meant to use .input(), .queryOptions(), or .getMutationOptions()?`
+        `Invalid function call on path: ${path.join('.')}. - maybe you meant to use .input(), .queryOptions(), or .getMutationOptions()?`
       )
     }
   }) as any

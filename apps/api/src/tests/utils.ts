@@ -1,18 +1,15 @@
 import type { AxiosResponse } from 'axios'
 
 import {
+  type CoreContract,
   type ResponseWrapper,
-  contract,
-  createForgeProxy,
-  globalProxyRegistry
+  configureForge,
+  createForgeProxy
 } from '@lifeforge/api'
 
-globalProxyRegistry.set(contract, {
-  remoteId: '',
-  apiHost: 'http://localhost:3636'
-})
+configureForge({ apiHost: 'http://localhost:3636' })
 
-export const forgeAPI = createForgeProxy(contract)
+export const forgeAPI = createForgeProxy<CoreContract>()
 
 export function extractCookies(
   setCookie: string | string[] | null | undefined

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { UseMutationOptions, UseQueryOptions } from '@tanstack/react-query'
 import type { AxiosResponse } from 'axios'
-import { z } from 'zod'
 
 import {
   type FetchAPIOptions,
@@ -15,7 +14,7 @@ import {
   isEncryptedResponse
 } from '../crypto/encryption'
 import type { InferRawInput, InferRawOutput } from '../types/socket'
-import { globalProxyRegistry } from './registry'
+import { type ProxyScope, forgeConfig } from './scope'
 import { getFormData, hasFile, joinObjectsRecursively } from './utils'
 
 type QueryRawOptions = Omit<FetchAPIOptions, 'method' | 'body'>
@@ -50,48 +49,23 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
 
   /**
    * Creates a new ForgeEndpoint for a specific route.
-   * @param _apiHost - The base URL of the API server (e.g., 'https://api.example.com')
+   * @param _scope - Routing metadata bound by the host (module prefix)
    * @param _route - The endpoint path (e.g., 'users/list')
-   * @param _contract - Optional contract definition containing JSON schemas
    */
+  private _apiHost?: string
+
   constructor(
-    private _apiHost: string = '',
-    private _route: string,
-    private _contract?: any,
-    private _rootContract?: any
+    private _scope: ProxyScope,
+    private _route: string
   ) {}
 
   private get _resolvedConfig() {
-    const ctx = this._rootContract
-      ? globalProxyRegistry.get(this._rootContract)
-      : null
-
-    if (ctx) {
-      return {
-        apiHost: ctx.apiHost,
-        prefix: ctx.remoteId ? `modules/${ctx.remoteId}` : ''
-      }
-    }
-
     return {
       apiHost:
         this._apiHost ||
+        forgeConfig.apiHost ||
         (typeof window !== 'undefined' ? window.location.origin : ''),
-      prefix: ''
-    }
-  }
-
-  /**
-   * Returns Zod schemas derived from the contract's JSON schemas.
-   */
-  public get schema() {
-    return {
-      query: this._contract?.input?.query
-        ? z.fromJSONSchema(this._contract.input.query)
-        : undefined,
-      body: this._contract?.input?.body
-        ? z.fromJSONSchema(this._contract.input.body)
-        : undefined
+      prefix: this._scope.remoteId ? `modules/${this._scope.remoteId}` : ''
     }
   }
 
@@ -290,7 +264,7 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     }
 
     // If not encrypted (shouldn't happen with encrypted endpoints), return as-is
-    return response as unknown as InferRawOutput<T>
+    return response
   }
 
   /**
@@ -459,7 +433,7 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     }
 
     // If not encrypted (shouldn't happen with encrypted endpoints), return as-is
-    return response as unknown as InferRawOutput<T>
+    return response
   }
 
   /**

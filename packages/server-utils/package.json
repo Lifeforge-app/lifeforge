@@ -30,6 +30,7 @@
     "form-data": "^4.0.0",
     "groq-sdk": "^0.20.0",
     "ical.js": "^2.1.0",
+    "json-schema-to-typescript": "^16.0.0",
     "openai": "^4.81.0",
     "pdf2pic": "^3.1.5",
     "socket.io": "^4.8.3",

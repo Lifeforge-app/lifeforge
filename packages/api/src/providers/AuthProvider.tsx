@@ -15,12 +15,12 @@ import {
   getAccessToken,
   setAccessToken
 } from '../client/tokenStore'
-import { contract } from '../contract'
+import type { Contract } from '../contract'
 import { createForgeProxy } from '../proxy'
 
 let bootstrapped = false
 
-const forgeAPI = createForgeProxy(contract)
+const forgeAPI = createForgeProxy<Contract>()
 
 export type UserData = InferOutput<typeof forgeAPI.user.me>['userData']
 
@@ -91,7 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return 'success: ' + userResponse.userData.name
       } catch (err) {
         if (!(err instanceof Error)) {
-          throw new Error('Unknown error')
+          throw err
         }
 
         if (
