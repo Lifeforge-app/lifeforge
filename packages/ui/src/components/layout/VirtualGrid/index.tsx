@@ -16,6 +16,11 @@ interface VirtualGridProps<T> {
   defaultRowHeight?: number
   /** Value that triggers a full re-measurement when it changes (e.g. async content) */
   remeasureKey?: unknown
+  /**
+   * Fixed row height in pixels. Skips the offscreen measurement pass and only
+   * renders visible rows — use for large, uniform grids such as icon pickers.
+   */
+  fixedRowHeight?: number
 }
 
 interface VirtualGridRowProps<T> {
@@ -73,8 +78,11 @@ export function VirtualGrid<T>({
   getItemKey,
   itemMinWidth = 240,
   defaultRowHeight = 320,
-  remeasureKey
+  remeasureKey,
+  fixedRowHeight
 }: VirtualGridProps<T>) {
+  const isFixedHeight = fixedRowHeight !== undefined
+
   const scrollRef = useRef<HTMLDivElement>(null)
   const measureRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
@@ -119,12 +127,19 @@ export function VirtualGrid<T>({
 
   const virtualizer = useVirtualizer({
     count: rowCount,
-    estimateSize: () => defaultRowHeight,
+    estimateSize: () => fixedRowHeight ?? defaultRowHeight,
     getScrollElement: () => scrollRef.current,
     overscan: 3
   })
 
+  useEffect(() => {
+    if (isFixedHeight) {
+      virtualizer.scrollToOffset(0)
+    }
+  }, [items, isFixedHeight, virtualizer])
+
   const needsMeasurement =
+    !isFixedHeight &&
     width > 0 &&
     (measuredWidth !== width ||
       measuredItems !== items ||
@@ -208,8 +223,12 @@ export function VirtualGrid<T>({
             {virtualizer.getVirtualItems().map(row => (
               <div
                 key={row.key}
-                ref={virtualizer.measureElement}
-                data-index={row.index}
+                {...(isFixedHeight
+                  ? {}
+                  : {
+                      ref: virtualizer.measureElement,
+                      'data-index': row.index
+                    })}
                 style={{
                   left: 0,
                   position: 'absolute',
