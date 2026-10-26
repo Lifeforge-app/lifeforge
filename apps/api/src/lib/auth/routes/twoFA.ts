@@ -99,9 +99,7 @@ export const enable = forge
     await db
       .update(users)
       .set({
-        twoFASecret: encrypt(Buffer.from(pending.secret), MASTER_KEY).toString(
-          'base64'
-        ),
+        twoFASecret: encrypt(pending.secret, MASTER_KEY),
         updated: new Date()
       })
       .where(eq(users.id, user.id))
@@ -167,10 +165,7 @@ export const verify = forge
       return response.unauthorized()
     }
 
-    const secret = decrypt(
-      Buffer.from(encryptedSecret, 'base64'),
-      MASTER_KEY
-    ).toString('utf-8')
+    const secret = decrypt(encryptedSecret, MASTER_KEY)
 
     const verified = speakeasy.totp.verify({
       secret,

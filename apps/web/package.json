@@ -29,7 +29,6 @@
     "@types/react-virtualized": "^9.22.3",
     "babel-plugin-react-compiler": "^1.0.0",
     "copy-to-clipboard": "^3.3.3",
-    "crypto-js": "^4.2.0",
     "daisyui": "^5.0.35",
     "dnd-core": "^16.0.1",
     "eslint-plugin-react-compiler": "^19.1.0-rc.2",

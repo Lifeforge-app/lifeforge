@@ -26,7 +26,8 @@
     "typecheck": "tsc -b",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "migrate:crypto": "tsx scripts/migrate-crypto.ts"
   },
   "dependencies": {
     "@lifeforge/configs": "workspace:*",
@@ -46,7 +47,6 @@
     "content-disposition": "^3.0.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "crypto-js": "^4.2.0",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "express-rate-limit": "^7.4.1",
@@ -69,7 +69,6 @@
     "@lifeforge/api": "workspace:*",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.17",
-    "@types/crypto-js": "^4.2.2",
     "@types/express": "^4.17.23",
     "@types/express-serve-static-core": "4.19.6",
     "@types/jsdom": "^28.0.3",

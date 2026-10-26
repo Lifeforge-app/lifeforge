@@ -1,4 +1,4 @@
-import { decrypt2, encrypt2 } from '@functions/auth/encryption'
+import { decrypt, encrypt } from '@functions/auth/encryption'
 import { eq } from 'drizzle-orm'
 import { createSelectSchema } from 'drizzle-orm/zod'
 import z from 'zod'
@@ -37,7 +37,7 @@ const get = forge
     }
 
     try {
-      const decryptedKey = decrypt2(
+      const decryptedKey = decrypt(
         entry.key,
         process.env.MASTER_KEY!
       ).toString()
@@ -66,7 +66,7 @@ const list = forge
       keyId: entry.keyId,
       name: entry.name,
       icon: entry.icon,
-      key: decrypt2(entry.key, process.env.MASTER_KEY!).toString().slice(-4),
+      key: decrypt(entry.key, process.env.MASTER_KEY!).toString().slice(-4),
       exposable: entry.exposable,
       created: entry.created,
       updated: entry.updated
@@ -117,7 +117,7 @@ const create = forge
   })
   .callback(
     async ({ db, body: { keyId, name, icon, key, exposable }, response }) => {
-      const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
+      const encryptedKey = encrypt(key, process.env.MASTER_KEY!)
 
       const [entry] = await db
         .insert(apiKeysEntries)
@@ -170,7 +170,7 @@ const update = forge
       body: { keyId, name, icon, key, exposable, overrideKey },
       response
     }) => {
-      const encryptedKey = encrypt2(key, process.env.MASTER_KEY!)
+      const encryptedKey = encrypt(key, process.env.MASTER_KEY!)
 
       const [updatedEntry] = await db
         .update(apiKeysEntries)

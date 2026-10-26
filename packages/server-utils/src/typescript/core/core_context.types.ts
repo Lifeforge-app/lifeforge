@@ -62,13 +62,9 @@ export type UpdateTaskInPoolFunc = (
   updates: Partial<TaskPoolTask>
 ) => void
 
-export type DecryptFunc = (encrypted: Buffer, key: string) => Buffer
+export type DecryptFunc = (encrypted: string, key: string) => string
 
-export type Decrypt2Func = (encrypted: string, key: string) => string
-
-export type EncryptFunc = (data: Buffer, key: string) => Buffer
-
-export type Encrypt2Func = (data: string, key: string) => string
+export type EncryptFunc = (data: string, key: string) => string
 
 export interface CoreContext {
   logging: Logger
@@ -93,8 +89,6 @@ export interface CoreContext {
   }
   crypto: {
     decrypt: DecryptFunc
-    decrypt2: Decrypt2Func
     encrypt: EncryptFunc
-    encrypt2: Encrypt2Func
   }
 }

@@ -9,19 +9,95 @@
  *
  * All crypto operations use the Web Crypto API for security.
  */
-// Legacy CryptoJS exports (for backward compatibility)
-import CryptoJS from 'crypto-js'
+// ============================================
+// Passphrase-based encryption (AES-256-GCM)
+//
+// Matches the server's `encrypt` / `decrypt` in
+// `apps/api/src/core/functions/auth/encryption.ts`:
+//
+//   key    = SHA-256(passphrase)
+//   payload = "v2:" + base64( iv[12] || tag[16] || ciphertext )
+//
+// These helpers are async because Web Crypto is async. Call sites must await.
+// ============================================
 
-export const encrypt = (text: string, key: string): string => {
-  return CryptoJS.AES.encrypt(text, key).toString()
+const PASSPHRASE_PREFIX = 'v2:'
+const GCM_IV_LENGTH = 12
+const GCM_TAG_LENGTH = 16
+
+async function derivePassphraseKey(passphrase: string): Promise<CryptoKey> {
+  const keyBytes = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(String(passphrase))
+  )
+
+  return crypto.subtle.importKey('raw', keyBytes, { name: 'AES-GCM' }, false, [
+    'encrypt',
+    'decrypt'
+  ])
 }
 
-export const decrypt = (text: string, key: string): string => {
-  return CryptoJS.AES.decrypt(text, key).toString(CryptoJS.enc.Utf8)
+export async function encrypt(text: string, key: string): Promise<string> {
+  const cryptoKey = await derivePassphraseKey(key)
+
+  const iv = crypto.getRandomValues(new Uint8Array(GCM_IV_LENGTH))
+
+  const sealed = new Uint8Array(
+    await crypto.subtle.encrypt(
+      { name: 'AES-GCM', iv, tagLength: GCM_TAG_LENGTH * 8 },
+      cryptoKey,
+      new TextEncoder().encode(text)
+    )
+  )
+
+  // Web Crypto appends the tag to the ciphertext; the server expects
+  // iv || tag || ciphertext.
+  const ciphertext = sealed.slice(0, sealed.length - GCM_TAG_LENGTH)
+
+  const tag = sealed.slice(sealed.length - GCM_TAG_LENGTH)
+
+  const payload = new Uint8Array(iv.length + tag.length + ciphertext.length)
+
+  payload.set(iv, 0)
+  payload.set(tag, iv.length)
+  payload.set(ciphertext, iv.length + tag.length)
+
+  return PASSPHRASE_PREFIX + arrayBufferToBase64(payload.buffer)
+}
+
+export async function decrypt(payload: string, key: string): Promise<string> {
+  if (!payload.startsWith(PASSPHRASE_PREFIX)) {
+    throw new Error('Unsupported encrypted value: expected a v2 payload')
+  }
+
+  const bytes = base64ToUint8Array(payload.slice(PASSPHRASE_PREFIX.length))
+
+  const iv = new Uint8Array(bytes.subarray(0, GCM_IV_LENGTH))
+
+  const tag = new Uint8Array(
+    bytes.subarray(GCM_IV_LENGTH, GCM_IV_LENGTH + GCM_TAG_LENGTH)
+  )
+
+  const ciphertext = new Uint8Array(
+    bytes.subarray(GCM_IV_LENGTH + GCM_TAG_LENGTH)
+  )
+
+  const sealed = new Uint8Array(ciphertext.length + tag.length)
+
+  sealed.set(ciphertext, 0)
+  sealed.set(tag, ciphertext.length)
+
+  const decrypted = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv, tagLength: GCM_TAG_LENGTH * 8 },
+    await derivePassphraseKey(key),
+    sealed
+  )
+
+  return new TextDecoder().decode(decrypted)
 }
 
 // ============================================
-// New RSA + AES Hybrid Encryption
+// RSA + AES Hybrid Encryption
 // ============================================
 
 export interface EncryptedPayload {
@@ -74,7 +150,7 @@ async function importRSAPublicKey(pemKey: string): Promise<CryptoKey> {
 
   return await crypto.subtle.importKey(
     'spki',
-    binaryDer.buffer as ArrayBuffer,
+    binaryDer.buffer,
     {
       name: 'RSA-OAEP',
       hash: 'SHA-256'
@@ -227,9 +303,9 @@ async function encryptWithAES(
   const tag = encryptedArray.slice(ciphertextLength)
 
   return {
-    iv: arrayBufferToBase64(iv.buffer as ArrayBuffer),
-    ciphertext: arrayBufferToBase64(ciphertext.buffer as ArrayBuffer),
-    tag: arrayBufferToBase64(tag.buffer as ArrayBuffer)
+    iv: arrayBufferToBase64(iv.buffer),
+    ciphertext: arrayBufferToBase64(ciphertext.buffer),
+    tag: arrayBufferToBase64(tag.buffer)
   }
 }
 

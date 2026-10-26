@@ -4,12 +4,7 @@
  * This module provides the implementation of core utilities that modules
  * access via the `core` parameter in their callbacks.
  */
-import {
-  decrypt,
-  decrypt2,
-  encrypt,
-  encrypt2
-} from '@functions/auth/encryption'
+import { decrypt, encrypt } from '@functions/auth/encryption'
 import { createCache } from '@functions/cache'
 import getAPIKeyFactory from '@functions/database/getAPIKey'
 import createFetchAI from '@functions/external/ai'
@@ -89,9 +84,7 @@ export function createCoreContext({
     },
     crypto: {
       decrypt,
-      decrypt2,
-      encrypt,
-      encrypt2
+      encrypt
     }
   }
 }

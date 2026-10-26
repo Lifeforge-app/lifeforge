@@ -56,7 +56,7 @@ export function CreatePasswordScreen({
         const challenge = (await challengeController.query()) as string
 
         await createPasswordMutation.mutateAsync({
-          password: encrypt(newPassword, challenge)
+          password: await encrypt(newPassword, challenge)
         } as never)
       }
     })

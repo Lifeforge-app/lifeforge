@@ -32,15 +32,9 @@ export async function getProvider(
   let clientSecret: string
 
   try {
-    clientId = decrypt(
-      Buffer.from(record.client_id, 'base64'),
-      MASTER_KEY
-    ).toString('utf-8')
+    clientId = decrypt(record.client_id, MASTER_KEY)
 
-    clientSecret = decrypt(
-      Buffer.from(record.client_secret, 'base64'),
-      MASTER_KEY
-    ).toString('utf-8')
+    clientSecret = decrypt(record.client_secret, MASTER_KEY)
   } catch {
     return null
   }

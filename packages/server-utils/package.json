@@ -26,7 +26,6 @@
     "@lifeforge/log": "workspace:*",
     "@lifeforge/module-runtime": "workspace:*",
     "chalk": "^5.6.2",
-    "crypto-js": "^4.2.0",
     "express": "^4.21.2",
     "form-data": "^4.0.0",
     "groq-sdk": "^0.20.0",
@@ -39,7 +38,6 @@
   },
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
-    "@types/crypto-js": "^4.2.2",
     "@types/express": "^4.17.23",
     "@types/express-serve-static-core": "4",
     "@types/multer": "^2.2.0"

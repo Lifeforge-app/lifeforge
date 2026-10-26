@@ -105,10 +105,10 @@ export const upsert = forge
     })
 
     const encryptedClientId = body.clientId
-      ? encrypt(Buffer.from(body.clientId), MASTER_KEY).toString('base64')
+      ? encrypt(body.clientId, MASTER_KEY)
       : undefined
     const encryptedClientSecret = body.clientSecret
-      ? encrypt(Buffer.from(body.clientSecret), MASTER_KEY).toString('base64')
+      ? encrypt(body.clientSecret, MASTER_KEY)
       : undefined
 
     if (record) {

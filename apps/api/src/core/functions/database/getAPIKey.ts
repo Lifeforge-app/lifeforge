@@ -1,4 +1,4 @@
-import { decrypt2 } from '@functions/auth/encryption'
+import { decrypt } from '@functions/auth/encryption'
 import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
 
@@ -73,7 +73,7 @@ async function getAPIKey(
         `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`
       )
 
-      const decrypted = decrypt2(record.key, process.env.MASTER_KEY!)
+      const decrypted = decrypt(record.key, process.env.MASTER_KEY!)
       apiKeyCache.set(id, {
         key: decrypted,
         exposable: record.exposable
@@ -90,8 +90,9 @@ async function getAPIKey(
   }
 }
 
-export default function getAPIKeyFactory(
-  callerModule?: { source: 'app' | 'core'; id: string }
-): (id: string) => Promise<string> {
+export default function getAPIKeyFactory(callerModule?: {
+  source: 'app' | 'core'
+  id: string
+}): (id: string) => Promise<string> {
   return (id: string) => getAPIKey(id, callerModule)
 }

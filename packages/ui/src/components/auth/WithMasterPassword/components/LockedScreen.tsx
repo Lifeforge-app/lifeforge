@@ -35,7 +35,7 @@ export function LockedScreen({
       const challenge = (await challengeController.query()) as string
 
       const data = await verifyController.mutate({
-        password: encrypt(masterPassWordInputContent, challenge)
+        password: await encrypt(masterPassWordInputContent, challenge)
       } as never)
 
       if (data === true) {
