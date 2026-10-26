@@ -23,7 +23,7 @@ function RootLayout() {
           sm: '3xl',
           lg: 'none'
         }}
-        overflowX="hidden"
+        overflow="hidden"
         position="relative"
         width="100%"
       >

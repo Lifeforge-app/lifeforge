@@ -76,9 +76,9 @@ function SidebarItems({ query }: { query: string }) {
   }, [resolvedModuleGroups])
 
   return (
-    <Flex as="ul" direction="column" flex="1" pb="lg">
-      <Box asChild flex="1">
-        <Scrollbar usePaddingRight={false}>
+    <Flex as="ul" direction="column" flex="1" minHeight="0" pb="lg">
+      <Box asChild flex="1" minHeight="0">
+        <Scrollbar>
           <Flex direction="column" flex="1" gap="xs">
             {filteredRoutes.length > 0 ? (
               filteredRoutes.map((item, index) => {
@@ -87,7 +87,9 @@ function SidebarItems({ query }: { query: string }) {
                 )
 
                 return (
-                  <Fragment key={`section-${item.title || item.items[0]?.name}`}>
+                  <Fragment
+                    key={`section-${item.title || item.items[0]?.name}`}
+                  >
                     {item.title !== '' &&
                       filteredModules.length > 0 &&
                       sidebarExpanded && (
