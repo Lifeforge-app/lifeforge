@@ -1,5 +1,5 @@
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 
 import { Flex, Grid } from '@/components/primitives'
 
@@ -14,11 +14,9 @@ interface VirtualGridProps<T> {
   itemMinWidth?: number
   /** Estimated height for rows before they are measured. Defaults to 320px */
   defaultRowHeight?: number
-  /** Value that triggers a full re-measurement when it changes (e.g. async content) */
-  remeasureKey?: unknown
   /**
-   * Fixed row height in pixels. Skips the offscreen measurement pass and only
-   * renders visible rows — use for large, uniform grids such as icon pickers.
+   * Fixed row height in pixels. Use for uniform grids such as icon pickers;
+   * rows are not measured and only visible rows are rendered.
    */
   fixedRowHeight?: number
 }
@@ -67,10 +65,9 @@ const VirtualGridRowContentMemo = memo(
 ) as typeof VirtualGridRowContent
 
 /**
- * A virtualized grid component that renders large lists of items with dynamic
- * row heights. Rows are measured offscreen before rendering so the scroll
- * range is final from the start, and live `ResizeObserver` measurements keep
- * rows adapting when their content changes afterwards.
+ * A virtualized grid component that renders large lists of items. Rows are
+ * measured as they enter the viewport; pass `fixedRowHeight` for uniform grids
+ * to skip measurement entirely.
  */
 export function VirtualGrid<T>({
   items,
@@ -78,20 +75,12 @@ export function VirtualGrid<T>({
   getItemKey,
   itemMinWidth = 240,
   defaultRowHeight = 320,
-  remeasureKey,
   fixedRowHeight
 }: VirtualGridProps<T>) {
-  const isFixedHeight = fixedRowHeight !== undefined
-
   const scrollRef = useRef<HTMLDivElement>(null)
-  const measureRef = useRef<HTMLDivElement>(null)
   const [width, setWidth] = useState(0)
-  // The width, items and remeasure key the current measurements were taken for
-  const [measuredWidth, setMeasuredWidth] = useState<number | null>(null)
-  const [measuredItems, setMeasuredItems] = useState<T[] | null>(null)
 
-  const [measuredRemeasureKey, setMeasuredRemeasureKey] =
-    useState<unknown>(null)
+  const isFixedHeight = fixedRowHeight !== undefined
 
   useEffect(() => {
     const element = scrollRef.current
@@ -138,43 +127,6 @@ export function VirtualGrid<T>({
     }
   }, [items, isFixedHeight, virtualizer])
 
-  const needsMeasurement =
-    !isFixedHeight &&
-    width > 0 &&
-    (measuredWidth !== width ||
-      measuredItems !== items ||
-      measuredRemeasureKey !== remeasureKey)
-
-  // Measure every row offscreen and seed the virtualizer so the scroll range
-  // does not change while scrolling. Live measurements still kick in afterwards
-  // if a row's content changes height.
-  useLayoutEffect(() => {
-    if (!needsMeasurement) return
-
-    // Ensure the measurement cache exists before writing to it; resizeItem is
-    // a no-op when measurements haven't been computed yet.
-    virtualizer.getTotalSize()
-
-    const nodes =
-      measureRef.current?.querySelectorAll<HTMLElement>('[data-measure-row]')
-
-    nodes?.forEach(node => {
-      const index = Number(node.dataset.measureRow)
-
-      if (!Number.isNaN(index)) {
-        virtualizer.resizeItem(index, node.getBoundingClientRect().height)
-      }
-    })
-
-    if (measuredItems !== items) {
-      virtualizer.scrollToOffset(0)
-    }
-
-    setMeasuredWidth(width)
-    setMeasuredItems(items)
-    setMeasuredRemeasureKey(remeasureKey)
-  }, [needsMeasurement, width, items, remeasureKey, virtualizer])
-
   return (
     <div
       ref={scrollRef}
@@ -186,69 +138,42 @@ export function VirtualGrid<T>({
         width: '100%'
       }}
     >
-      {needsMeasurement ? (
+      {width > 0 && (
         <div
-          ref={measureRef}
           style={{
-            left: 0,
-            pointerEvents: 'none',
-            position: 'absolute',
-            top: '-100000px',
-            visibility: 'hidden',
+            height: virtualizer.getTotalSize(),
+            position: 'relative',
             width: '100%'
           }}
         >
-          {Array.from({ length: rowCount }, (_, index) => (
-            <div key={index} data-measure-row={index}>
+          {virtualizer.getVirtualItems().map(row => (
+            <div
+              key={row.key}
+              {...(isFixedHeight
+                ? {}
+                : {
+                    ref: virtualizer.measureElement,
+                    'data-index': row.index
+                  })}
+              style={{
+                left: 0,
+                position: 'absolute',
+                top: 0,
+                transform: `translateY(${row.start}px)`,
+                width: '100%'
+              }}
+            >
               <VirtualGridRowContentMemo
-                fromIndex={index * itemsPerRow}
+                fromIndex={row.index * itemsPerRow}
                 getItemKey={getItemKey}
                 items={items}
                 itemsPerRow={itemsPerRow}
                 renderItem={renderItem}
-                toIndex={(index + 1) * itemsPerRow}
+                toIndex={(row.index + 1) * itemsPerRow}
               />
             </div>
           ))}
         </div>
-      ) : (
-        width > 0 && (
-          <div
-            style={{
-              height: virtualizer.getTotalSize(),
-              position: 'relative',
-              width: '100%'
-            }}
-          >
-            {virtualizer.getVirtualItems().map(row => (
-              <div
-                key={row.key}
-                {...(isFixedHeight
-                  ? {}
-                  : {
-                      ref: virtualizer.measureElement,
-                      'data-index': row.index
-                    })}
-                style={{
-                  left: 0,
-                  position: 'absolute',
-                  top: 0,
-                  transform: `translateY(${row.start}px)`,
-                  width: '100%'
-                }}
-              >
-                <VirtualGridRowContentMemo
-                  fromIndex={row.index * itemsPerRow}
-                  getItemKey={getItemKey}
-                  items={items}
-                  itemsPerRow={itemsPerRow}
-                  renderItem={renderItem}
-                  toIndex={(row.index + 1) * itemsPerRow}
-                />
-              </div>
-            ))}
-          </div>
-        )
       )}
     </div>
   )
