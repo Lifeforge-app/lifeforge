@@ -38,6 +38,13 @@ export function ModalWrapper({
       role={role}
       zIndex={String(zIndex)}
       onClose={() => onClose?.()}
+      onKeyDown={(event: React.KeyboardEvent<HTMLElement>) => {
+        // Headless UI closes the dialog on Escape. Modals are dismissed
+        // explicitly, so mark Escape as handled to suppress that.
+        if (event.key === 'Escape') {
+          event.preventDefault()
+        }
+      }}
     >
       <Transition
         property={{
