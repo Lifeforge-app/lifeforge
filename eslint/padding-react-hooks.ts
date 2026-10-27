@@ -19,10 +19,10 @@ const rule: Rule.RuleModule = {
   create(context) {
     const sourceCode = context.sourceCode
 
-    function isHookCall(node: any): boolean {
-      if (!node || node.type !== 'CallExpression') return false
+    function isHookCall(node: TSESTree.Node | null | undefined): boolean {
+      if (node?.type !== 'CallExpression') return false
 
-      const callee = node.callee
+      const callee: TSESTree.Expression = node.callee
 
       if (callee.type === 'Identifier') {
         return /^use[A-Z]/.test(callee.name)
@@ -38,7 +38,7 @@ const rule: Rule.RuleModule = {
       return false
     }
 
-    function isHookStatement(statement: TSESTree.Statement): boolean {
+    function isHookStatement(statement: TSESTree.Node): boolean {
       if (statement.type === 'ExpressionStatement') {
         return isHookCall(statement.expression)
       }
@@ -50,14 +50,14 @@ const rule: Rule.RuleModule = {
       return false
     }
 
-    function isSingleLineHookStatement(statement: TSESTree.Statement): boolean {
+    function isSingleLineHookStatement(statement: TSESTree.Node): boolean {
       return (
         isHookStatement(statement) &&
-        statement.loc?.start.line === statement.loc?.end.line
+        statement.loc.start.line === statement.loc.end.line
       )
     }
 
-    function isConstDeclaration(statement: TSESTree.Statement): boolean {
+    function isConstDeclaration(statement: TSESTree.Node): boolean {
       return (
         statement.type === 'VariableDeclaration' && statement.kind === 'const'
       )
@@ -75,7 +75,7 @@ const rule: Rule.RuleModule = {
       return false
     }
 
-    function checkStatements(statements: TSESTree.Statement[]) {
+    function checkStatements(statements: readonly TSESTree.Node[]) {
       for (let i = 0; i < statements.length - 1; i++) {
         const current = statements[i]
         const next = statements[i + 1]
@@ -89,11 +89,8 @@ const rule: Rule.RuleModule = {
         const currentIsExpr = current.type === 'ExpressionStatement'
         const nextIsExpr = next.type === 'ExpressionStatement'
 
-        const currentEndLine = current.loc?.end.line
-        const nextStartLine = next.loc?.start.line
-
-        if (currentEndLine === undefined || nextStartLine === undefined)
-          continue
+        const currentEndLine = current.loc.end.line
+        const nextStartLine = next.loc.start.line
 
         if (currentIsHook && nextIsHook) {
           if (hasBlankLineBetween(currentEndLine, nextStartLine)) {
@@ -101,12 +98,8 @@ const rule: Rule.RuleModule = {
               node: next,
               messageId: 'noBlankLineBetweenHooks',
               fix(fixer) {
-                const rangeStart = current.range?.[1]
-                const rangeEnd = next.range?.[0]
-
-                if (rangeStart === undefined || rangeEnd === undefined)
-                  return null
-
+                const rangeStart = current.range[1]
+                const rangeEnd = next.range[0]
                 const textBetween = sourceCode.text.slice(rangeStart, rangeEnd)
                 const fixedText = textBetween.replace(/\r?\n\s*\r?\n/g, '\n')
 
@@ -139,10 +132,10 @@ const rule: Rule.RuleModule = {
     }
 
     return {
-      BlockStatement(node: any) {
+      BlockStatement(node: TSESTree.BlockStatement) {
         checkStatements(node.body)
       },
-      Program(node: any) {
+      Program(node: TSESTree.Program) {
         checkStatements(node.body)
       }
     }

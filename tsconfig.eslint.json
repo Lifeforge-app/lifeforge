@@ -3,6 +3,7 @@
   "include": [
     "modules/**/*",
     "packages/**/*",
+    "packages/ui/.storybook/**/*",
     "apps/web/**/*",
     "apps/api/**/*",
     "docs/**/*",

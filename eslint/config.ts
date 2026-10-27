@@ -28,6 +28,10 @@ const config: Linter.Config[] = [
       '**/client/contract.ts',
       'packages/api/src/contract.ts',
       '.pnpmfile.cjs',
+      'apps/web/public/**',
+      'docs/plugins/*.js',
+      'docs/plugins/*.d.ts',
+      'docs/vite.config.d.ts',
       'modules/melvinchia3636--truckers-log/client/src/lib/'
     ]
   },
