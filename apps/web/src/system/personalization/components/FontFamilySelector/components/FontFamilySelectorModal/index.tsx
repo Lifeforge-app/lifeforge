@@ -21,7 +21,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
 
   return (
     <FontFamilySelectorContext value={{ selectedFont, setSelectedFont }}>
-      <Stack gap="md" height="100%" minHeight="80vh" minWidth="60vw">
+      <Stack flex="1" gap="md" height="100%" minHeight="0" minWidth="60vw">
         <ModalHeader
           icon="tabler:text-size"
           namespace="common.personalization"
@@ -30,7 +30,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
         />
         <TabbedView.Root>
           <TabbedView.Selector />
-          <Stack flex="1" width="100%">
+          <Stack flex="1" height="100%" minHeight="0" width="100%">
             {Object.entries(FONT_PICKER_TABS).map(([tabId, { Component }]) => (
               <TabbedView.When
                 key={tabId}

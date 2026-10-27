@@ -81,6 +81,7 @@ export function ModalWrapper({
             base: 'calc(100vw - 4em)',
             sm: 'calc(100vw - 8em)'
           }}
+          minHeight="0"
           minWidth={minWidth}
           overflow="hidden"
           p="lg"
@@ -93,13 +94,7 @@ export function ModalWrapper({
           }}
         >
           <ModalA11yContext value={true}>
-            <Scrollbar
-              autoHeight
-              hideHorizontal
-              autoHeightMax="calc(100dvh - 11em)"
-            >
-              {children}
-            </Scrollbar>
+            <Scrollbar hideHorizontal>{children}</Scrollbar>
           </ModalA11yContext>
         </DialogPanel>
       </Transition>
