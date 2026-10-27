@@ -50,7 +50,7 @@ function ModuleItem({ module }: { module: Module }) {
           <Flex asChild align="center" gap="sm">
             <Text color="muted">
               <Icon icon="tabler:user" size="1.1em" />
-              <span>{module.author.split('<')[0]?.trim()}</span>
+              {module.author.split('<')[0]?.trim()}
             </Text>
           </Flex>
         )}

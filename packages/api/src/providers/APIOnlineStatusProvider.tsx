@@ -29,7 +29,7 @@ async function checkAPIStatus(
     }
 
     return false
-  } catch (err) {
+  } catch {
     return false
   } finally {
     clearTimeout(timeoutId)

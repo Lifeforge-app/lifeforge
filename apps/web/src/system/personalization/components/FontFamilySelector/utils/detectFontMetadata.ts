@@ -50,7 +50,8 @@ export async function detectFontMetadata(
     console.error('Failed to parse font file:', error)
 
     throw new Error(
-      'Failed to parse font file. Please ensure it is a valid font file.'
+      'Failed to parse font file. Please ensure it is a valid font file.',
+      { cause: error }
     )
   }
 }

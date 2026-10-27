@@ -189,7 +189,9 @@ export async function fetchAPI<T>(
             } catch {
               try {
                 data = new TextDecoder().decode(data)
-              } catch {}
+              } catch {
+                // Leave the body as-is; the caller handles the raw bytes.
+              }
             }
           }
 

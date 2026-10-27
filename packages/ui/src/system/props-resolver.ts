@@ -26,7 +26,7 @@ type ResolveResponsiveOutputs<T> = {
 
 type ResolveStylesOptions<
   T extends AnySprinklesFn,
-  TComponentArbitraryProps extends object = {}
+  TComponentArbitraryProps extends object = Record<never, never>
 > = {
   sprinkles: T
   sprinkleProps: Partial<SprinklesProps<T>>
@@ -53,7 +53,7 @@ export function mergeStyle(...styles: ResolvedStyle[]): ResolvedStyle {
 
 export function resolveStyles<
   T extends AnySprinklesFn,
-  TComponentArbitraryProps extends object = {}
+  TComponentArbitraryProps extends object = Record<never, never>
 >({
   sprinkles,
   sprinkleProps,

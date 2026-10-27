@@ -85,7 +85,8 @@ async function getAPIKey(
     }
   } catch (err) {
     throw new Error(
-      `Failed to retrieve API key for ${id}: ${err instanceof Error ? err.message : String(err)}`
+      `Failed to retrieve API key for ${id}: ${err instanceof Error ? err.message : String(err)}`,
+      { cause: err }
     )
   }
 }

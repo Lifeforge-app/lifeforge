@@ -21,10 +21,12 @@ function useThemeEffect(
       document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
     }
 
-    if (rootElement) {
-      rootElement.classList.toggle('dark', isDark)
-      rootElement.style.backgroundColor = bgColor
-    }
+    // The point of this hook is to style the root element handed in by the
+    // provider. React Compiler flags that mutation as a purity violation, but
+    // it is the intended effect, not derived state.
+    /* eslint-disable react-compiler/react-compiler */
+    rootElement.classList.toggle('dark', isDark)
+    rootElement.style.backgroundColor = bgColor
 
     clearCustomColorProperties(rootElement, 'theme')
     clearCustomColorProperties(rootElement, 'bg')

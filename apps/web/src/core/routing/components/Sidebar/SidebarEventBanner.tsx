@@ -41,13 +41,9 @@ const getEventMessage = (
     case 'christmas':
       return 'Merry Christmas!'
     case 'birthday':
-      return (
-        <>
-          Happy {addNumberSuffix(dayjs().year() - dayjs(userDOB).year())}{' '}
-          Birthday, <br />
-          {userName}!
-        </>
-      )
+      return `Happy ${addNumberSuffix(
+        dayjs().year() - dayjs(userDOB).year()
+      )} Birthday,\n${userName}!`
     case 'merdeka':
       return 'Happy Birthday, Malaysia!'
     default:
@@ -104,7 +100,7 @@ export default function SidebarEventBanner() {
           {eventType === 'christmas' && (
             <Icon icon="mingcute:christmas-hat-line" size="1.5em" />
           )}
-          <Text as="p" lineClamp={2} whiteSpace="normal">
+          <Text as="p" lineClamp={2} whiteSpace="pre-line">
             {getEventMessage(
               eventType,
               userData.name ?? '',

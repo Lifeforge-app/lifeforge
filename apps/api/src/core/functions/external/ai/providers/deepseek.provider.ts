@@ -61,7 +61,7 @@ ${JSON.stringify(structure)}`
       )
 
       return parsedResponse as T extends z.ZodTypeAny ? z.infer<T> : string
-    } catch (e) {
+    } catch {
       logger.error('Failed to parse JSON response from DeepSeek model: ' + res)
 
       return null

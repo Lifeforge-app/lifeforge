@@ -87,7 +87,9 @@ function LanguageSelector() {
                   }}
                 >
                   {unsupportedQuery.data.map(name => (
-                    <li key={name}>{name}</li>
+                    <Text key={name} as="li">
+                      {name}
+                    </Text>
                   ))}
                 </Box>
               </IconTooltip>

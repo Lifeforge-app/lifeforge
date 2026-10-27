@@ -1,5 +1,3 @@
-import { useTranslation } from 'react-i18next'
-
 import { NumberInput } from '@/components/inputs'
 import type { FreqSpecificParams } from '@/components/inputs/RRuleInput'
 import { Box } from '@/components/primitives'
@@ -11,8 +9,6 @@ export function MonthlyExactDateForm({
   data: FreqSpecificParams['monthly']
   setData: (data: FreqSpecificParams['monthly']) => void
 }) {
-  const { t } = useTranslation('common.recurring')
-
   return (
     <Box flex="1">
       <NumberInput

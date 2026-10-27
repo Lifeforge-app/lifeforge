@@ -23,6 +23,7 @@ const federationStubPlugin = {
     if (id === 'virtual:__federation__') {
       return '\0virtual:__federation__'
     }
+
     return null
   },
   load(id: string) {
@@ -33,6 +34,7 @@ const federationStubPlugin = {
         export const __federation_method_unwrapDefault = (m) => m?.default ?? m
       `
     }
+
     return null
   }
 }
@@ -67,6 +69,7 @@ const config: StorybookConfig = {
         if (p && typeof p === 'object' && 'name' in p) {
           return !EXCLUDED_PLUGIN_NAMES.has(p.name)
         }
+
         return true
       }),
       federationStubPlugin,
@@ -75,6 +78,7 @@ const config: StorybookConfig = {
     config.build = {
       ...config.build
     }
+
     return {
       ...config
     }
@@ -83,6 +87,6 @@ const config: StorybookConfig = {
 
 export default config
 
-function getAbsolutePath(value: string): any {
+function getAbsolutePath(value: string): string {
   return dirname(require.resolve(join(value, 'package.json')))
 }
