@@ -3,6 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
 import { Scrollbar } from '@/components/layout/Scrollbar'
 import { Box, Flex } from '@/components/primitives'
 import { Transition } from '@/components/primitives/Transition'
+import type { ModalRole } from '@/providers/ModalProvider'
 
 import { ModalA11yContext } from '../ModalA11yContext'
 import * as styles from './ModalWrapper.css'
@@ -24,7 +25,7 @@ export function ModalWrapper({
   zIndex?: number
   onExited?: () => void
   onClose?: () => void
-  role?: 'dialog' | 'alertdialog'
+  role?: ModalRole
 }) {
   return (
     <Dialog

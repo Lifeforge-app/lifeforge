@@ -9,11 +9,23 @@ import {
   useState
 } from 'react'
 
+export type ModalRole = 'dialog' | 'alertdialog'
+
+// Modal data is intentionally unconstrained: each modal component owns its own
+// payload shape, and the stack must hold them side by side.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ModalComponent<P = any> = FC<{
   data: P
   onClose: () => void
-}>
+}> & {
+  /**
+   * ARIA role of the dialog hosting this component. Defaults to `dialog`;
+   * use `alertdialog` for confirmations that interrupt the user.
+   */
+  modalRole?: ModalRole
+}
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ModalInstance<P = any> = {
   id: string
   component: ModalComponent<P>
