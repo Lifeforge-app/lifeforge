@@ -1,6 +1,7 @@
 import { createPortal } from 'react-dom'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
 
+import { useModalPortalContainer } from '@/components/overlays/modals/ModalA11yContext'
 import { Box, Text } from '@/components/primitives'
 import { useMainSidebarState } from '@/providers'
 
@@ -30,6 +31,7 @@ export function Tooltip({
   /** Additional properties to pass to the underlying ReactTooltip component. */
 } & React.ComponentProps<typeof ReactTooltip>) {
   const { sidebarExpanded } = useMainSidebarState()
+  const modalPortalContainer = useModalPortalContainer()
 
   return createPortal(
     <Box zIndex={{ base: sidebarExpanded ? '-1' : zIndex, lg: zIndex }}>
@@ -69,6 +71,6 @@ export function Tooltip({
         {...tooltipProps}
       />
     </Box>,
-    document.getElementById('app') ?? document.body
+    modalPortalContainer ?? document.getElementById('app') ?? document.body
   )
 }

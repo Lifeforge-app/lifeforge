@@ -1,11 +1,15 @@
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
+import { useState } from 'react'
 
 import { Scrollbar } from '@/components/layout/Scrollbar'
 import { Box, Flex } from '@/components/primitives'
 import { Transition } from '@/components/primitives/Transition'
 import type { ModalRole } from '@/providers/ModalProvider'
 
-import { ModalA11yContext } from '../ModalA11yContext'
+import {
+  ModalA11yContext,
+  ModalPortalContainerContext
+} from '../ModalA11yContext'
 import * as styles from './ModalWrapper.css'
 
 export function ModalWrapper({
@@ -27,6 +31,10 @@ export function ModalWrapper({
   onClose?: () => void
   role?: ModalRole
 }) {
+  const [portalContainer, setPortalContainer] = useState<HTMLElement | null>(
+    null
+  )
+
   return (
     <Dialog
       static
@@ -94,10 +102,15 @@ export function ModalWrapper({
           }}
         >
           <ModalA11yContext value={true}>
-            <Scrollbar hideHorizontal>{children}</Scrollbar>
+            <ModalPortalContainerContext value={portalContainer}>
+              <Scrollbar hideHorizontal>{children}</Scrollbar>
+            </ModalPortalContainerContext>
           </ModalA11yContext>
         </DialogPanel>
       </Transition>
+      {/* Portalled overlays land inside the dialog, so Headless UI neither
+          marks them inert nor treats clicks on them as outside clicks. */}
+      <Box ref={setPortalContainer} />
     </Dialog>
   )
 }

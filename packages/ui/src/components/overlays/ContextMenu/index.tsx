@@ -10,6 +10,8 @@ import {
   type IconProps
 } from '@/components/primitives'
 
+import { useModalPortalContainer } from '../modals/ModalA11yContext'
+
 interface MenuProps extends BoxProps {
   /** The content to be displayed inside the menu. Typically one or more `<ContextMenuItem>` components. */
   children: React.ReactNode
@@ -41,6 +43,8 @@ export function ContextMenu({
   side = 'bottom',
   ...rest
 }: MenuProps) {
+  const modalPortalContainer = useModalPortalContainer()
+
   return (
     <DropdownMenuPrimitive.Root onOpenChange={onOpenChange}>
       <DropdownMenuPrimitive.Trigger asChild>
@@ -61,7 +65,11 @@ export function ContextMenu({
           )}
         </Box>
       </DropdownMenuPrimitive.Trigger>
-      <DropdownMenuPrimitive.Portal container={document.getElementById('app')}>
+      <DropdownMenuPrimitive.Portal
+        container={
+          modalPortalContainer ?? document.getElementById('app') ?? undefined
+        }
+      >
         <DropdownMenuPrimitive.Content
           asChild
           avoidCollisions
