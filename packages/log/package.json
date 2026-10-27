@@ -16,7 +16,8 @@
   "scripts": {
     "build": "vite build && tsc --project tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "pino": "^9.6.0",

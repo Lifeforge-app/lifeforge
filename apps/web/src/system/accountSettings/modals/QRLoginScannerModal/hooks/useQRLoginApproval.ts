@@ -12,6 +12,20 @@ interface QRSessionData {
   sessionId: string
 }
 
+function isQRSessionData(value: unknown): value is QRSessionData {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'type' in value &&
+    value.type === 'lifeforge-qr-login' &&
+    'v' in value &&
+    value.v === 1 &&
+    'sessionId' in value &&
+    typeof value.sessionId === 'string' &&
+    value.sessionId.length > 0
+  )
+}
+
 type ModalStep = 'confirm' | 'success' | 'error'
 
 function useQRLoginApproval(scannedData: string) {
@@ -22,17 +36,9 @@ function useQRLoginApproval(scannedData: string) {
 
   const parseSessionData = (): QRSessionData | null => {
     try {
-      const parsed = JSON.parse(scannedData) as QRSessionData
+      const parsed: unknown = JSON.parse(scannedData)
 
-      if (parsed.type !== 'lifeforge-qr-login' || parsed.v !== 1) {
-        return null
-      }
-
-      if (!parsed.sessionId) {
-        return null
-      }
-
-      return parsed
+      return isQRSessionData(parsed) ? parsed : null
     } catch {
       return null
     }

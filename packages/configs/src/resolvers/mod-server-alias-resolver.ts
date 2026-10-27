@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import { builtinModules, createRequire } from 'node:module'
 import path from 'node:path'
-import { type Plugin } from 'vite'
+import { type Alias, type Plugin } from 'vite'
 
 import { findProjectRoot } from '../utils/projectRoot'
 

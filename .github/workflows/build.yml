@@ -4,14 +4,23 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
   pull-requests: write
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
 jobs:
-  build-backend:
-    name: Build Backend
+  lint:
+    name: Lint & Typecheck
     runs-on: blacksmith-4vcpu-ubuntu-2404
+    timeout-minutes: 10
 
     steps:
       - name: Checkout code
@@ -19,6 +28,56 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm typecheck
+
+  build-backend:
+    name: Build Backend
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    needs: [lint]
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -32,6 +91,8 @@ jobs:
   build-frontend:
     name: Build Frontend
     runs-on: blacksmith-4vcpu-ubuntu-2404
+    needs: [lint]
+    timeout-minutes: 15
 
     steps:
       - name: Checkout code
@@ -39,6 +100,20 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Cache Turbo
+        uses: actions/cache@v4
+        with:
+          path: .turbo/cache
+          key: turbo-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -49,8 +124,9 @@ jobs:
   build-summary:
     name: Build Summary
     runs-on: blacksmith-4vcpu-ubuntu-2404
-    needs: [build-backend, build-frontend]
+    needs: [lint, build-backend, build-frontend]
     if: always() && github.event_name == 'pull_request'
+    timeout-minutes: 3
 
     steps:
       - name: Comment PR
@@ -61,9 +137,18 @@ jobs:
             const runId = context.runId;
             const backendResult = '${{ needs.build-backend.result }}';
             const frontendResult = '${{ needs.build-frontend.result }}';
+            const lintResult = '${{ needs.lint.result }}';
 
             let summary = '## 🔨 Build Results\n\n';
             let allSuccess = true;
+
+            // Lint & typecheck status
+            if (lintResult === 'success') {
+              summary += '✅ **Lint & Typecheck**: Passed\n';
+            } else {
+              summary += `❌ **Lint & Typecheck**: Failed (${lintResult})\n`;
+              allSuccess = false;
+            }
 
             // Backend status
             if (backendResult === 'success') {

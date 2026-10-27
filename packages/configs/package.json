@@ -32,7 +32,8 @@
   },
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@typescript/typescript6": "^6.0.2",
