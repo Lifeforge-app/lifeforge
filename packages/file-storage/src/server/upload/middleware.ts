@@ -24,7 +24,7 @@ function createStagingStorage(): multer.StorageEngine {
 
           cb(null, staged as unknown as Express.Multer.File)
         } catch (err) {
-          cb(err as Error)
+          cb(err)
         }
       })()
     },

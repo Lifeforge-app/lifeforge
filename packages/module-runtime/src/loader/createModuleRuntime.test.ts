@@ -27,9 +27,7 @@ function findMountedRouter(outer: express.Router): RouterLike | undefined {
 }
 
 describe('createModuleRuntime', () => {
-  const modulesDir = fs.mkdtempSync(
-    path.join(os.tmpdir(), 'module-runtime-')
-  )
+  const modulesDir = fs.mkdtempSync(path.join(os.tmpdir(), 'module-runtime-'))
 
   afterEach(() => {
     fs.rmSync(modulesDir, { recursive: true, force: true })

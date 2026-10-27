@@ -1,13 +1,12 @@
 import { createReadStream, promises as fs } from 'node:fs'
 import path from 'node:path'
 import { Readable } from 'node:stream'
-
 import sharp from 'sharp'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
 import {
-  fileReferenceSchema,
-  type FileReference
+  type FileReference,
+  fileReferenceSchema
 } from './contract/fileReference'
 import { FileStorage } from './fileStorage'
 import { LocalStorageProvider } from './providers/local'
@@ -41,10 +40,7 @@ async function makeStagedFile(
   originalName: string,
   mimeType: string
 ): Promise<StagedFile> {
-  const filePath = path.join(
-    TEST_DIR,
-    `${crypto.randomUUID()}-${originalName}`
-  )
+  const filePath = path.join(TEST_DIR, `${crypto.randomUUID()}-${originalName}`)
 
   await fs.writeFile(filePath, data)
 
@@ -119,7 +115,10 @@ describe('LocalStorageProvider & FileStorage', () => {
     expect(await provider.get('../../../etc/passwd')).toBeNull()
     expect(await provider.get('....//....//etc/passwd')).toBeNull()
     await expect(
-      provider.save('../../../escape.txt', Readable.from(Buffer.from('malicious')))
+      provider.save(
+        '../../../escape.txt',
+        Readable.from(Buffer.from('malicious'))
+      )
     ).rejects.toThrow('path traversal detected')
   })
 
@@ -329,6 +328,8 @@ describe('LocalStorageProvider & FileStorage', () => {
   })
 
   it('is a no-op when deleting a foreign key', async () => {
-    await expect(storage.delete('lifeforge--other-module/1.txt')).resolves.not.toThrow()
+    await expect(
+      storage.delete('lifeforge--other-module/1.txt')
+    ).resolves.not.toThrow()
   })
 })

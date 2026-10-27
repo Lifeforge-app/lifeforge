@@ -7,10 +7,7 @@ import Version from './Version'
 
 const compiledModules = import.meta.glob('../versions/**/*.mdx', {
   eager: true
-}) as Record<
-  string,
-  { default: React.ComponentType<{ components: typeof components }> }
->
+})
 
 const entries = Object.entries(
   Object.groupBy(

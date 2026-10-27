@@ -3,7 +3,6 @@ import path from 'path'
 
 import { type ModuleBundledMetadata } from '../interfaces/bundledMetadata.types'
 import { modulePackageJSONSchema } from '../interfaces/module.types'
-
 import parseManifest from './parseManifest'
 
 /**

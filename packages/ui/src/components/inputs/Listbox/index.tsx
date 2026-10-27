@@ -43,8 +43,8 @@ export function Listbox<T>({
     <HeadlessListbox
       disabled={disabled}
       multiple={multiple}
-      value={value as never}
-      onChange={onChange as never}
+      value={value}
+      onChange={onChange as (value: T | T[]) => void}
     >
       <Transition property="all">
         <Flex

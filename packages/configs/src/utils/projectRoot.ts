@@ -11,6 +11,7 @@ export function findProjectRoot(startDir?: string): string {
 
   for (const dir of dirsToTry) {
     let current = path.resolve(dir)
+
     while (true) {
       if (
         fs.existsSync(path.join(current, 'pnpm-workspace.yaml')) ||
@@ -19,7 +20,9 @@ export function findProjectRoot(startDir?: string): string {
       ) {
         return current
       }
+
       const parent = path.dirname(current)
+
       if (parent === current) {
         break
       }

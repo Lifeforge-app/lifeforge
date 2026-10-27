@@ -21,7 +21,7 @@ import {
 import { normalizeGridSpan } from '@/system/grid-utils'
 
 import { Slot } from '../Slot'
-import { type RingSprinkles, ringBase, ringSprinkles } from './Ring.css'
+import { ringBase, ringSprinkles } from './Ring.css'
 
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
 type RingProps<T extends ElementType = 'div'> = TokenizedCommonProps &
@@ -114,7 +114,7 @@ export function Ring<T extends ElementType = 'div'>({
   const styles = resolveStyles({
     sprinkles: ringSprinkles,
     sprinkleProps: {
-      display: normalizeResponsiveProp(display) as RingSprinkles['display'],
+      display: normalizeResponsiveProp(display),
       ...resolveCommonSprinkleProps(
         { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
         {

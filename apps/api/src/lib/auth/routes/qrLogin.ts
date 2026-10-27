@@ -156,7 +156,7 @@ export const status = forge
 
     return response.ok({
       status: 'pending' as const,
-      expiresAt: new Date(sessions.expiryTime(sessionId)!).toISOString()
+      expiresAt: new Date(sessions.expiryTime(sessionId)).toISOString()
     })
   })
 

@@ -26,6 +26,7 @@ const config: Linter.Config[] = [
       '**/tsbuild/',
       '**/dist-docker/',
       '**/client/contract.ts',
+      'packages/api/src/contract.ts',
       '.pnpmfile.cjs',
       'modules/melvinchia3636--truckers-log/client/src/lib/'
     ]
@@ -47,7 +48,7 @@ const config: Linter.Config[] = [
   },
 
   // JS/TS Presets
-  js.configs.recommended as Linter.Config,
+  js.configs.recommended,
   ...(tseslint.configs.recommended as Linter.Config[]),
 
   // Feature / Plugin Configs

@@ -35,11 +35,7 @@ export class LocalStorageProvider implements StorageProvider {
     return resolvedPath
   }
 
-  async save(
-    key: string,
-    data: Readable,
-    _options?: ProviderSaveOptions
-  ) {
+  async save(key: string, data: Readable, _options?: ProviderSaveOptions) {
     const filePath = this.getFilePath(key)
 
     if (!filePath) {
@@ -51,10 +47,7 @@ export class LocalStorageProvider implements StorageProvider {
     await pipeline(data, createWriteStream(filePath))
   }
 
-  async get(
-    key: string,
-    _options?: StorageGetOptions
-  ) {
+  async get(key: string, _options?: StorageGetOptions) {
     const filePath = this.getFilePath(key)
 
     if (!filePath) {

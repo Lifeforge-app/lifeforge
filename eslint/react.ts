@@ -32,7 +32,7 @@ const config: Linter.Config[] = [
     rules: {
       'jsx-a11y/no-autofocus': 'off'
     }
-  } as Linter.Config
+  }
 ]
 
 export default config

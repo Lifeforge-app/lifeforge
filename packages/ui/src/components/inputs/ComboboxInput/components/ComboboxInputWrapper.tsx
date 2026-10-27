@@ -26,7 +26,7 @@ export function ComboboxInputWrapper<T>({
   children: React.ReactNode
   className?: string
   disabled?: boolean
-  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void
   errorMsg?: string
   variant?: InputVariant
 }) {

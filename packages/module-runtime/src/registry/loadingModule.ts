@@ -22,7 +22,7 @@ export function setLoadingModuleId(id: string | undefined): void {
 }
 
 export function getLoadingModuleId(): string | undefined {
-  return (
-    globalThis as unknown as Record<symbol, string | undefined>
-  )[LOADING_MODULE_KEY]
+  return (globalThis as unknown as Record<symbol, string | undefined>)[
+    LOADING_MODULE_KEY
+  ]
 }

@@ -82,7 +82,9 @@ export default function createFetchAI(
     args: FetchAIArgs<T>
   ): Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null> {
     if (!callerModule) {
-      throw new Error('Unable to determine caller module for API key validation.')
+      throw new Error(
+        'Unable to determine caller module for API key validation.'
+      )
     }
 
     return fetchAI(callerModule, args)

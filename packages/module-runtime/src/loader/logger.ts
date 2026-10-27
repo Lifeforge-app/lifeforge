@@ -1,4 +1,4 @@
-import { createLogger, type Logger } from '@lifeforge/log'
+import { type Logger, createLogger } from '@lifeforge/log'
 
 export const loaderLogger: Logger = createLogger({ name: 'Module Loader' })
 

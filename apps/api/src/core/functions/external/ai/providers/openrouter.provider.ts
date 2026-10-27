@@ -74,7 +74,7 @@ ${JSON.stringify(structure)}`
 
   const response = await client.chat.completions.create({
     model,
-    messages: messages as never,
+    messages: messages,
     ...reasoning
   })
 

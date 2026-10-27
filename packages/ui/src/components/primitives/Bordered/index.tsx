@@ -22,11 +22,7 @@ import { normalizeGridSpan } from '@/system/grid-utils'
 import { shadowClass } from '@/system/vars.css'
 
 import { Slot } from '../Slot'
-import {
-  type BorderedSprinkles,
-  borderedBase,
-  borderedSprinkles
-} from './Bordered.css'
+import { borderedBase, borderedSprinkles } from './Bordered.css'
 
 type DisplayValue = 'block' | 'inline' | 'inline-block' | 'none' | 'contents'
 
@@ -160,7 +156,7 @@ export function Bordered<T extends ElementType = 'div'>({
   const styles = resolveStyles({
     sprinkles: borderedSprinkles,
     sprinkleProps: {
-      display: normalizeResponsiveProp(display) as BorderedSprinkles['display'],
+      display: normalizeResponsiveProp(display),
       ...resolveCommonSprinkleProps(
         { p, px, py, pt, pr, pb, pl, m, mx, my, mt, mr, mb, ml },
         {

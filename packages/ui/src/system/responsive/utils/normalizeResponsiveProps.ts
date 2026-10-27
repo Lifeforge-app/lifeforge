@@ -20,7 +20,7 @@ import type { Breakpoint } from '../types'
  * normalizeResponsiveProp('start', v => alignMap[v]) // => 'flex-start'
  */
 export function normalizeResponsiveProp<TInput, TOutput = TInput>(
-  prop: ResponsiveProp<TInput, any, 'input'> | undefined,
+  prop: ResponsiveProp<TInput, any> | undefined,
   mapper?: (value: TInput) => TOutput
 ): ResponsiveProp<TInput, TOutput, 'output'> | undefined {
   if (prop == undefined) {

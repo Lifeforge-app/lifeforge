@@ -28,7 +28,7 @@ export function ListboxInputWrapper<T>({
   className?: string
   children: React.ReactNode
   disabled?: boolean
-  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void
   errorMsg?: string
   variant?: InputVariant
   size?: InputSize

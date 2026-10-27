@@ -281,8 +281,8 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
                   <NumberInput
                     required
                     icon="tabler:repeat"
-                    namespace="common.recurring"
                     label="after"
+                    namespace="common.recurring"
                     value={rruleParams.end.after}
                     onChange={value => {
                       setRRuleParams({
@@ -303,8 +303,8 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
                 <DateInput
                   required
                   icon="tabler:calendar"
-                  namespace="common.recurring"
                   label="on"
+                  namespace="common.recurring"
                   value={rruleParams.end.on}
                   onChange={date => {
                     setRRuleParams({
@@ -332,8 +332,8 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
             <NumberInput
               required
               icon="tabler:clock"
-              namespace="common.recurring"
               label="durationAmount"
+              namespace="common.recurring"
               value={duration.amount}
               onChange={amt => {
                 setDuration({
@@ -347,8 +347,8 @@ export function RRuleInput<HasDuration extends boolean = boolean>({
             <ListboxInput
               required
               icon="tabler:clock"
-              namespace="common.recurring"
               label="durationUnit"
+              namespace="common.recurring"
               renderContent={() => <>{t(`durationUnits.${duration.unit}`)}</>}
               value={duration.unit}
               onChange={unit => {

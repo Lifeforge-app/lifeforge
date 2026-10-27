@@ -67,7 +67,7 @@ async function handleAxiosResponse<T>(
   } else if (response.headers['x-lifeforge-downloadable'] === 'true') {
     return new Uint8Array(response.data) as unknown as T
   } else if (contentType.includes('text/plain')) {
-    return response.data as unknown as T
+    return response.data
   }
 
   throw new APIError('Unexpected API response format', response.status)
@@ -128,8 +128,7 @@ export async function fetchAPI<T>(
 
   const config: AxiosRequestConfig = {
     ...overrides,
-    method: method.toUpperCase() as
-      'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH' | 'HEAD' | 'OPTIONS',
+    method: method.toUpperCase(),
     url: isExternal ? endpoint : normalizedEndpoint,
     timeout: overrideTimeout,
     data: body,

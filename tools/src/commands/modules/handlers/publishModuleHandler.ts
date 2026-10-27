@@ -75,7 +75,9 @@ export async function publishModuleHandler(moduleName: string): Promise<void> {
     failSpinner(`Publish failed for ${chalk.blue(shortName)}`)
 
     log.error(
-      error instanceof Error ? error.message : `Command failed: ${String(error)}`
+      error instanceof Error
+        ? error.message
+        : `Command failed: ${String(error)}`
     )
 
     process.exit(1)

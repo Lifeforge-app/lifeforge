@@ -4,7 +4,6 @@ import express from 'express'
 import helmet from 'helmet'
 
 import { db } from './drizzle'
-
 import morganMiddleware from './middlewares/morganMiddleware'
 import rateLimitingMiddleware from './middlewares/rateLimitingMiddleware'
 import router from './routes'

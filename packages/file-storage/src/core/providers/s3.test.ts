@@ -1,6 +1,7 @@
 import { Readable } from 'node:stream'
-
 import { beforeEach, describe, expect, it, vi } from 'vitest'
+
+import { S3StorageProvider } from './s3'
 
 const { sendMock, uploadCtorMock, uploadDoneMock } = vi.hoisted(() => ({
   sendMock: vi.fn(),
@@ -35,8 +36,6 @@ vi.mock('@aws-sdk/lib-storage', () => ({
     }
   }
 }))
-
-import { S3StorageProvider } from './s3'
 
 describe('S3StorageProvider', () => {
   let provider: S3StorageProvider

@@ -61,7 +61,7 @@ export function ContextMenu({
           )}
         </Box>
       </DropdownMenuPrimitive.Trigger>
-      <DropdownMenuPrimitive.Portal container={document.getElementById('app')!}>
+      <DropdownMenuPrimitive.Portal container={document.getElementById('app')}>
         <DropdownMenuPrimitive.Content
           asChild
           avoidCollisions

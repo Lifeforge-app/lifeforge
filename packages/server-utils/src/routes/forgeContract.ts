@@ -6,9 +6,9 @@ import type { z } from 'zod'
 import { defineModuleSchema } from '@lifeforge/drizzle'
 import {
   type BuiltModuleSchema,
-  getLoadingModuleId,
   ModuleRegistry,
-  type ModuleSchema
+  type ModuleSchema,
+  getLoadingModuleId
 } from '@lifeforge/module-runtime/registry'
 
 import { type ExistsInFor, existsIn } from '../database'
@@ -122,14 +122,14 @@ function makeBuilder<
               method,
               middlewares: metadata.middlewares ?? [],
               schema: {
-                query: metadata.input?.query as TQuery,
-                body: metadata.input?.body as TBody
+                query: metadata.input?.query,
+                body: metadata.input?.body
               },
-              output: metadata.output as OutputDefinition | 'custom',
+              output: metadata.output,
               noDefaultResponse: false,
               description: metadata.description,
               isDownloadable: metadata.isDownloadable ?? false,
-              media: (metadata.media ?? null) as TMedia,
+              media: metadata.media ?? null,
               noAuth: metadata.noAuth ?? false,
               encrypted: metadata.encrypted ?? true,
               rateLimit: metadata.rateLimit ?? true,
@@ -161,10 +161,7 @@ function makeBuilder<
       middlewares?: RequestHandler[]
       rateLimit?: boolean
     }) {
-      return buildRoute<'get', TOutput, TQuery, never, TMedia>(
-        'get',
-        metadata as any
-      )
+      return buildRoute<'get', TOutput, TQuery, never, TMedia>('get', metadata)
     },
 
     mutation: function <
@@ -219,7 +216,7 @@ export function createForgeContractBuilder<
   return makeBuilder({
     callerModule: moduleId,
     modulePathAlias
-  }) as unknown as ForgeBuilderFor<TSchema, TOptions>
+  })
 }
 
 export default createForgeContractBuilder

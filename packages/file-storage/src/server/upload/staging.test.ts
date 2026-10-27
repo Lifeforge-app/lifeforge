@@ -1,15 +1,6 @@
 import { promises as fs } from 'node:fs'
 import { Readable } from 'node:stream'
-
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
-
-const { TEST_ROOT } = vi.hoisted(() => ({
-  TEST_ROOT: `${process.cwd()}/temp_test_staging`
-}))
-
-vi.mock('@lifeforge/configs/node', () => ({
-  findProjectRoot: () => TEST_ROOT
-}))
 
 import type { FileReference } from '../../core/contract/fileReference'
 import { FileStorage } from '../../core/fileStorage'
@@ -22,6 +13,14 @@ import {
   stageStream,
   sweepStagingDir
 } from './staging'
+
+const { TEST_ROOT } = vi.hoisted(() => ({
+  TEST_ROOT: `${process.cwd()}/temp_test_staging`
+}))
+
+vi.mock('@lifeforge/configs/node', () => ({
+  findProjectRoot: () => TEST_ROOT
+}))
 
 class MemoryStore implements FileMetadataStore {
   private map = new Map<string, FileReference & { moduleId: string }>()

@@ -157,31 +157,19 @@ export function getRRULEString({
 
   switch (params.freq) {
     case 'yearly':
-      configureYearlyOptions(
-        options,
-        params.data as FreqSpecificParams['yearly']
-      )
+      configureYearlyOptions(options, params.data)
       break
     case 'monthly':
-      configureMonthlyOptions(
-        options,
-        params.data as FreqSpecificParams['monthly']
-      )
+      configureMonthlyOptions(options, params.data)
       break
     case 'weekly':
-      configureWeeklyOptions(
-        options,
-        params.data as FreqSpecificParams['weekly']
-      )
+      configureWeeklyOptions(options, params.data)
       break
     case 'daily':
-      configureDailyOptions(options, params.data as FreqSpecificParams['daily'])
+      configureDailyOptions(options, params.data)
       break
     case 'hourly':
-      configureHourlyOptions(
-        options,
-        params.data as FreqSpecificParams['hourly']
-      )
+      configureHourlyOptions(options, params.data)
       break
   }
 

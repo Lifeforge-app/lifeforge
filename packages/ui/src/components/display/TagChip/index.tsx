@@ -34,7 +34,7 @@ type TagChipProps<T extends ElementType> = Omit<
     onClick?: () => void
   }
   /** Optional click handler for the entire tag chip. */
-  onClick?: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
+  onClick?: (e: React.MouseEvent<HTMLSpanElement>) => void
 } & Omit<
     ComponentPropsWithoutRef<T>,
     | keyof Omit<BorderedOwnProps, 'color' | 'as'>

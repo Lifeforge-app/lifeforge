@@ -48,11 +48,7 @@ export class S3StorageProvider implements StorageProvider {
     return options?.mimeType || mime.lookup(key) || 'application/octet-stream'
   }
 
-  async save(
-    key: string,
-    data: Readable,
-    options?: ProviderSaveOptions
-  ) {
+  async save(key: string, data: Readable, options?: ProviderSaveOptions) {
     const upload = new Upload({
       client: this.client,
       params: {
@@ -132,5 +128,4 @@ export class S3StorageProvider implements StorageProvider {
       // Ignore deletion errors
     }
   }
-
 }

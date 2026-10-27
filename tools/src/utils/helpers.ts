@@ -37,7 +37,7 @@ export function getEnvVars<const T extends readonly string[]>(
     process.exit(1)
   }
 
-  return vars as Record<T[number], string>
+  return vars
 }
 
 /**

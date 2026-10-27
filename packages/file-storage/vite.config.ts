@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+
 import { externalDependencyRegex } from '@lifeforge/configs/vite'
 
 export default defineConfig({

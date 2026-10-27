@@ -9,7 +9,7 @@ import type { ResolvedModuleSchema } from '@lifeforge/module-runtime/registry'
 export function composeRelations(parts: readonly ResolvedModuleSchema[]) {
   const tables = Object.assign({}, ...parts.map(part => part.tables))
 
-  return defineRelations(tables as any, (r: any) =>
+  return defineRelations(tables, (r: any) =>
     Object.assign({}, ...parts.map(part => part.relations(r)))
   )
 }

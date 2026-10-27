@@ -2,11 +2,7 @@ import { log } from '@clack/prompts'
 import fs from 'fs'
 
 import executeCommand from '@/utils/commands'
-import {
-  checkPortInUse,
-  delay,
-  killExistingProcess
-} from '@/utils/helpers'
+import { checkPortInUse, delay, killExistingProcess } from '@/utils/helpers'
 
 /**
  * Service command configurations

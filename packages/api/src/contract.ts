@@ -1,17 +1,26 @@
 export type EndpointRoot_OutputOK = "Get ready to forge your life!";
+
 export type EndpointLocalesListLanguages_OutputOK = {
   name: string;
   alternative?: string[];
   icon: string;
   displayName: string;
 }[];
+
 export type EndpointLocalesListUnsupportedModules_OutputOK = string[];
+
 export type EndpointUserExists_OutputOK = boolean;
+
 export type EndpointUserSettingsDeleteAvatar_OutputNO_CONTENT = void;
+
 export type EndpointUserSettingsUpdatePassword_OutputNO_CONTENT = void;
+
 export type EndpointUserSettingsUpdateProfile_OutputNO_CONTENT = void;
+
 export type EndpointUserPersonalizationDeleteBgImage_OutputNO_CONTENT = void;
+
 export type EndpointUserPersonalizationUpdatePersonalization_OutputNO_CONTENT = void;
+
 export type EndpointFontsCustomList_OutputOK = {
   id: string;
   displayName: string;
@@ -32,10 +41,15 @@ export type EndpointFontsCustomList_OutputOK = {
     }[];
   } | null;
 }[];
+
 export type EndpointFontsCustomRemove_OutputNO_CONTENT = void;
+
 export type EndpointFontsPinsList_OutputOK = string[];
+
 export type EndpointFontsPinsToggle_OutputNO_CONTENT = void;
+
 export type EndpointApiKeysEntriesGet_OutputOK = string | null;
+
 export type EndpointApiKeysEntriesList_OutputOK = {
   id: string;
   keyId: string;
@@ -46,10 +60,15 @@ export type EndpointApiKeysEntriesList_OutputOK = {
   created: string;
   updated: string;
 }[];
+
 export type EndpointApiKeysEntriesCheckKeys_OutputOK = boolean;
+
 export type EndpointApiKeysEntriesRemove_OutputNO_CONTENT = void;
+
 export type EndpointAuth_2FaDisable_OutputNO_CONTENT = void;
+
 export type EndpointAuth_2FaEnable_OutputNO_CONTENT = void;
+
 export type EndpointAuthLogin_OutputOK =
   | {
       accessToken: string;
@@ -58,7 +77,9 @@ export type EndpointAuthLogin_OutputOK =
       state: "2fa_required";
       tid: string;
     };
+
 export type EndpointAuthLogout_OutputOK = boolean;
+
 export type EndpointAuthOauthVerify_OutputOK =
   | {
       accessToken: string;
@@ -67,11 +88,13 @@ export type EndpointAuthOauthVerify_OutputOK =
       state: "2fa_required";
       tid: string;
     };
+
 export type EndpointAuthOauthProvidersListEnabled_OutputOK = {
   provider: string;
   icon: string;
   name: string;
 }[];
+
 export type EndpointAuthOauthProvidersListOptions_OutputOK = {
   id: string | null;
   provider: string;
@@ -81,9 +104,13 @@ export type EndpointAuthOauthProvidersListOptions_OutputOK = {
   name: string;
   updated: string | null;
 }[];
+
 export type EndpointAuthOauthProvidersRemove_OutputNO_CONTENT = void;
+
 export type EndpointAuthOauthProvidersToggle_OutputNO_CONTENT = void;
+
 export type EndpointAuthOauthProvidersUpsert_OutputNO_CONTENT = void;
+
 export type EndpointAuthQrLoginStatus_OutputOK =
   | {
       status: "pending";
@@ -99,6 +126,7 @@ export type EndpointAuthQrLoginStatus_OutputOK =
   | {
       status: "not_found";
     };
+
 export type EndpointLocationsSearch_OutputOK = {
   name: string;
   formattedAddress: string;
@@ -107,7 +135,9 @@ export type EndpointLocationsSearch_OutputOK = {
     longitude: number;
   };
 }[];
+
 export type EndpointModulesCheckModuleAvailability_OutputOK = boolean;
+
 export type EndpointModulesList_OutputOK = {
   name: string;
   id: string;
@@ -119,6 +149,7 @@ export type EndpointModulesList_OutputOK = {
   icon: string;
   category: string;
 }[];
+
 export type EndpointModulesWidgets_OutputOK = {
   id: string;
   icon: string;
@@ -129,11 +160,15 @@ export type EndpointModulesWidgets_OutputOK = {
   moduleName: string;
   componentName: string;
 }[];
+
 export type EndpointModulesCategoriesAiTranslate_OutputOK = {
   [k: string]: string;
 } | null;
+
 export type EndpointAiImageGenerationGenerateImage_OutputOK = string;
+
 export type EndpointPing_OutputOK = string;
+
 export type EndpointEncryptionPublicKey_OutputOK = string;
 
 export interface Contract {
@@ -245,6 +280,7 @@ export interface Contract {
   corsAnywhere: EndpointCorsAnywhere;
   encryptionPublicKey: EndpointEncryptionPublicKey;
 }
+
 export interface EndpointRoot {
   method: "get";
   input: {};
@@ -253,6 +289,7 @@ export interface EndpointRoot {
   };
   media: null;
 }
+
 export interface EndpointLocalesListLanguages {
   method: "get";
   input: {};
@@ -261,6 +298,7 @@ export interface EndpointLocalesListLanguages {
   };
   media: null;
 }
+
 export interface EndpointLocalesGetLocale {
   method: "get";
   input: {
@@ -271,14 +309,17 @@ export interface EndpointLocalesGetLocale {
   };
   media: null;
 }
+
 export interface EndpointLocalesGetLocale_InputQuery {
   lang: string;
   namespace: "apps" | "common";
   subnamespace: string;
 }
+
 export interface EndpointLocalesGetLocale_OutputOK {
   [k: string]: unknown;
 }
+
 export interface EndpointLocalesListUnsupportedModules {
   method: "get";
   input: {};
@@ -287,6 +328,7 @@ export interface EndpointLocalesListUnsupportedModules {
   };
   media: null;
 }
+
 export interface EndpointUserExists {
   method: "get";
   input: {};
@@ -295,6 +337,7 @@ export interface EndpointUserExists {
   };
   media: null;
 }
+
 export interface EndpointUserAuthCreateFirstUser {
   method: "post";
   input: {
@@ -305,15 +348,18 @@ export interface EndpointUserAuthCreateFirstUser {
   };
   media: null;
 }
+
 export interface EndpointUserAuthCreateFirstUser_InputBody {
   email: string;
   username: string;
   name: string;
   password: string;
 }
+
 export interface EndpointUserAuthCreateFirstUser_OutputCREATED {
   state: "success";
 }
+
 export interface EndpointUserMe {
   method: "get";
   input: {};
@@ -322,6 +368,7 @@ export interface EndpointUserMe {
   };
   media: null;
 }
+
 export interface EndpointUserMe_OutputOK {
   userData: {
     id: string;
@@ -385,6 +432,7 @@ export interface EndpointUserMe_OutputOK {
     hasAPIKeysMasterPassword: boolean;
   };
 }
+
 export interface EndpointUserSettingsDeleteAvatar {
   method: "post";
   input: {};
@@ -393,6 +441,7 @@ export interface EndpointUserSettingsDeleteAvatar {
   };
   media: null;
 }
+
 export interface EndpointUserSettingsUpdateAvatar {
   method: "post";
   input: {};
@@ -401,6 +450,7 @@ export interface EndpointUserSettingsUpdateAvatar {
   };
   media: {file: {optional: false}};
 }
+
 export interface EndpointUserSettingsUpdateAvatar_OutputOK {
   key: string;
   originalName: string;
@@ -413,6 +463,7 @@ export interface EndpointUserSettingsUpdateAvatar_OutputOK {
     height: number;
   }[];
 }
+
 export interface EndpointUserSettingsUpdatePassword {
   method: "post";
   input: {
@@ -423,11 +474,13 @@ export interface EndpointUserSettingsUpdatePassword {
   };
   media: null;
 }
+
 export interface EndpointUserSettingsUpdatePassword_InputBody {
   oldPassword: string;
   password: string;
   passwordConfirm: string;
 }
+
 export interface EndpointUserSettingsUpdateProfile {
   method: "post";
   input: {
@@ -438,6 +491,7 @@ export interface EndpointUserSettingsUpdateProfile {
   };
   media: null;
 }
+
 export interface EndpointUserSettingsUpdateProfile_InputBody {
   data: {
     username?: string;
@@ -446,6 +500,7 @@ export interface EndpointUserSettingsUpdateProfile_InputBody {
     dateOfBirth?: string;
   };
 }
+
 export interface EndpointUserPersonalizationDeleteBgImage {
   method: "post";
   input: {};
@@ -454,6 +509,7 @@ export interface EndpointUserPersonalizationDeleteBgImage {
   };
   media: null;
 }
+
 export interface EndpointUserPersonalizationUpdateBgImage {
   method: "post";
   input: {};
@@ -462,6 +518,7 @@ export interface EndpointUserPersonalizationUpdateBgImage {
   };
   media: {file: {optional: false}};
 }
+
 export interface EndpointUserPersonalizationUpdateBgImage_OutputOK {
   key: string;
   originalName: string;
@@ -474,6 +531,7 @@ export interface EndpointUserPersonalizationUpdateBgImage_OutputOK {
     height: number;
   }[];
 }
+
 export interface EndpointUserPersonalizationUpdatePersonalization {
   method: "post";
   input: {
@@ -484,6 +542,7 @@ export interface EndpointUserPersonalizationUpdatePersonalization {
   };
   media: null;
 }
+
 export interface EndpointUserPersonalizationUpdatePersonalization_InputBody {
   data: {
     fontFamily?: string;
@@ -502,6 +561,7 @@ export interface EndpointUserPersonalizationUpdatePersonalization_InputBody {
     };
   };
 }
+
 export interface EndpointFontsGoogleGet {
   method: "get";
   input: {
@@ -512,9 +572,11 @@ export interface EndpointFontsGoogleGet {
   };
   media: null;
 }
+
 export interface EndpointFontsGoogleGet_InputQuery {
   family: string;
 }
+
 export interface EndpointFontsGoogleGet_OutputOK {
   enabled: boolean;
   items?: {
@@ -549,6 +611,7 @@ export interface EndpointFontsGoogleGet_OutputOK {
     colorCapabilities?: ("COLRv0" | "COLRv1" | "SVG")[];
   }[];
 }
+
 export interface EndpointFontsGoogleList {
   method: "get";
   input: {};
@@ -557,6 +620,7 @@ export interface EndpointFontsGoogleList {
   };
   media: null;
 }
+
 export interface EndpointFontsGoogleList_OutputOK {
   enabled: boolean;
   items: {
@@ -591,6 +655,7 @@ export interface EndpointFontsGoogleList_OutputOK {
     colorCapabilities?: ("COLRv0" | "COLRv1" | "SVG")[];
   }[];
 }
+
 export interface EndpointFontsCustomGet {
   method: "get";
   input: {
@@ -601,9 +666,11 @@ export interface EndpointFontsCustomGet {
   };
   media: null;
 }
+
 export interface EndpointFontsCustomGet_InputQuery {
   id: string;
 }
+
 export interface EndpointFontsCustomGet_OutputOK {
   id: string;
   displayName: string;
@@ -624,6 +691,7 @@ export interface EndpointFontsCustomGet_OutputOK {
     }[];
   } | null;
 }
+
 export interface EndpointFontsCustomList {
   method: "get";
   input: {};
@@ -632,6 +700,7 @@ export interface EndpointFontsCustomList {
   };
   media: null;
 }
+
 export interface EndpointFontsCustomRemove {
   method: "post";
   input: {
@@ -642,9 +711,11 @@ export interface EndpointFontsCustomRemove {
   };
   media: null;
 }
+
 export interface EndpointFontsCustomRemove_InputQuery {
   id: string;
 }
+
 export interface EndpointFontsCustomUpload {
   method: "post";
   input: {
@@ -656,14 +727,17 @@ export interface EndpointFontsCustomUpload {
   };
   media: {file: {optional: false}};
 }
+
 export interface EndpointFontsCustomUpload_InputQuery {
   id?: string;
 }
+
 export interface EndpointFontsCustomUpload_InputBody {
   displayName: string;
   family: string;
   weight: number;
 }
+
 export interface EndpointFontsCustomUpload_OutputOK {
   id: string;
   displayName: string;
@@ -684,6 +758,7 @@ export interface EndpointFontsCustomUpload_OutputOK {
     }[];
   } | null;
 }
+
 export interface EndpointFontsPinsList {
   method: "get";
   input: {};
@@ -692,6 +767,7 @@ export interface EndpointFontsPinsList {
   };
   media: null;
 }
+
 export interface EndpointFontsPinsToggle {
   method: "post";
   input: {
@@ -702,9 +778,11 @@ export interface EndpointFontsPinsToggle {
   };
   media: null;
 }
+
 export interface EndpointFontsPinsToggle_InputBody {
   family: string;
 }
+
 export interface EndpointApiKeysEntriesGet {
   method: "get";
   input: {
@@ -715,9 +793,11 @@ export interface EndpointApiKeysEntriesGet {
   };
   media: null;
 }
+
 export interface EndpointApiKeysEntriesGet_InputQuery {
   keyId: string;
 }
+
 export interface EndpointApiKeysEntriesList {
   method: "get";
   input: {};
@@ -726,6 +806,7 @@ export interface EndpointApiKeysEntriesList {
   };
   media: null;
 }
+
 export interface EndpointApiKeysEntriesCheckKeys {
   method: "get";
   input: {
@@ -736,9 +817,11 @@ export interface EndpointApiKeysEntriesCheckKeys {
   };
   media: null;
 }
+
 export interface EndpointApiKeysEntriesCheckKeys_InputQuery {
   keys: string;
 }
+
 export interface EndpointApiKeysEntriesCreate {
   method: "post";
   input: {
@@ -749,6 +832,7 @@ export interface EndpointApiKeysEntriesCreate {
   };
   media: null;
 }
+
 export interface EndpointApiKeysEntriesCreate_InputBody {
   keyId: string;
   name: string;
@@ -756,6 +840,7 @@ export interface EndpointApiKeysEntriesCreate_InputBody {
   key: string;
   exposable: boolean;
 }
+
 export interface EndpointApiKeysEntriesCreate_OutputCREATED {
   id: string;
   keyId: string;
@@ -766,6 +851,7 @@ export interface EndpointApiKeysEntriesCreate_OutputCREATED {
   created: string;
   updated: string;
 }
+
 export interface EndpointApiKeysEntriesUpdate {
   method: "post";
   input: {
@@ -777,9 +863,11 @@ export interface EndpointApiKeysEntriesUpdate {
   };
   media: null;
 }
+
 export interface EndpointApiKeysEntriesUpdate_InputQuery {
   id: string;
 }
+
 export interface EndpointApiKeysEntriesUpdate_InputBody {
   keyId: string;
   name: string;
@@ -788,6 +876,7 @@ export interface EndpointApiKeysEntriesUpdate_InputBody {
   exposable: boolean;
   overrideKey: boolean;
 }
+
 export interface EndpointApiKeysEntriesUpdate_OutputOK {
   id: string;
   keyId: string;
@@ -798,6 +887,7 @@ export interface EndpointApiKeysEntriesUpdate_OutputOK {
   created: string;
   updated: string;
 }
+
 export interface EndpointApiKeysEntriesRemove {
   method: "post";
   input: {
@@ -808,9 +898,11 @@ export interface EndpointApiKeysEntriesRemove {
   };
   media: null;
 }
+
 export interface EndpointApiKeysEntriesRemove_InputQuery {
   id: string;
 }
+
 export interface EndpointAuth_2FaDisable {
   method: "post";
   input: {};
@@ -819,6 +911,7 @@ export interface EndpointAuth_2FaDisable {
   };
   media: null;
 }
+
 export interface EndpointAuth_2FaEnable {
   method: "post";
   input: {
@@ -829,10 +922,12 @@ export interface EndpointAuth_2FaEnable {
   };
   media: null;
 }
+
 export interface EndpointAuth_2FaEnable_InputBody {
   otp: string;
   tid: string;
 }
+
 export interface EndpointAuth_2FaGenerate {
   method: "post";
   input: {};
@@ -841,10 +936,12 @@ export interface EndpointAuth_2FaGenerate {
   };
   media: null;
 }
+
 export interface EndpointAuth_2FaGenerate_OutputOK {
   tid: string;
   link: string;
 }
+
 export interface EndpointAuth_2FaVerify {
   method: "post";
   input: {
@@ -855,13 +952,16 @@ export interface EndpointAuth_2FaVerify {
   };
   media: null;
 }
+
 export interface EndpointAuth_2FaVerify_InputBody {
   otp: string;
   tid: string;
 }
+
 export interface EndpointAuth_2FaVerify_OutputOK {
   accessToken: string;
 }
+
 export interface EndpointAuthLogin {
   method: "post";
   input: {
@@ -872,10 +972,12 @@ export interface EndpointAuthLogin {
   };
   media: null;
 }
+
 export interface EndpointAuthLogin_InputBody {
   emailOrUsername: string;
   password: string;
 }
+
 export interface EndpointAuthLogout {
   method: "post";
   input: {};
@@ -884,6 +986,7 @@ export interface EndpointAuthLogout {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthAuthorize {
   method: "get";
   input: {
@@ -894,13 +997,16 @@ export interface EndpointAuthOauthAuthorize {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthAuthorize_InputQuery {
   provider: string;
 }
+
 export interface EndpointAuthOauthAuthorize_OutputOK {
   url: string;
   state: string;
 }
+
 export interface EndpointAuthOauthVerify {
   method: "post";
   input: {
@@ -911,11 +1017,13 @@ export interface EndpointAuthOauthVerify {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthVerify_InputBody {
   provider: string;
   code: string;
   state: string;
 }
+
 export interface EndpointAuthOauthProvidersListEnabled {
   method: "get";
   input: {};
@@ -924,6 +1032,7 @@ export interface EndpointAuthOauthProvidersListEnabled {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthProvidersListOptions {
   method: "get";
   input: {};
@@ -932,6 +1041,7 @@ export interface EndpointAuthOauthProvidersListOptions {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthProvidersRemove {
   method: "post";
   input: {
@@ -942,9 +1052,11 @@ export interface EndpointAuthOauthProvidersRemove {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthProvidersRemove_InputQuery {
   id: string;
 }
+
 export interface EndpointAuthOauthProvidersToggle {
   method: "post";
   input: {
@@ -955,9 +1067,11 @@ export interface EndpointAuthOauthProvidersToggle {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthProvidersToggle_InputQuery {
   id: string;
 }
+
 export interface EndpointAuthOauthProvidersUpsert {
   method: "post";
   input: {
@@ -969,13 +1083,16 @@ export interface EndpointAuthOauthProvidersUpsert {
   };
   media: null;
 }
+
 export interface EndpointAuthOauthProvidersUpsert_InputQuery {
   provider: string;
 }
+
 export interface EndpointAuthOauthProvidersUpsert_InputBody {
   clientId: string;
   clientSecret: string;
 }
+
 export interface EndpointAuthQrLoginApprove {
   method: "post";
   input: {
@@ -986,12 +1103,15 @@ export interface EndpointAuthQrLoginApprove {
   };
   media: null;
 }
+
 export interface EndpointAuthQrLoginApprove_InputBody {
   sessionId: string;
 }
+
 export interface EndpointAuthQrLoginApprove_OutputOK {
   browserInfo: string;
 }
+
 export interface EndpointAuthQrLoginClaim {
   method: "post";
   input: {
@@ -1002,12 +1122,15 @@ export interface EndpointAuthQrLoginClaim {
   };
   media: null;
 }
+
 export interface EndpointAuthQrLoginClaim_InputBody {
   sessionId: string;
 }
+
 export interface EndpointAuthQrLoginClaim_OutputOK {
   accessToken: string;
 }
+
 export interface EndpointAuthQrLoginRegister {
   method: "post";
   input: {
@@ -1018,13 +1141,16 @@ export interface EndpointAuthQrLoginRegister {
   };
   media: null;
 }
+
 export interface EndpointAuthQrLoginRegister_InputBody {
   browserInfo: string;
 }
+
 export interface EndpointAuthQrLoginRegister_OutputCREATED {
   sessionId: string;
   expiresAt: string;
 }
+
 export interface EndpointAuthQrLoginStatus {
   method: "get";
   input: {
@@ -1035,9 +1161,11 @@ export interface EndpointAuthQrLoginStatus {
   };
   media: null;
 }
+
 export interface EndpointAuthQrLoginStatus_InputQuery {
   sessionId: string;
 }
+
 export interface EndpointAuthRefresh {
   method: "post";
   input: {};
@@ -1046,9 +1174,11 @@ export interface EndpointAuthRefresh {
   };
   media: null;
 }
+
 export interface EndpointAuthRefresh_OutputOK {
   accessToken: string;
 }
+
 export interface EndpointPixabaySearchImages {
   method: "get";
   input: {
@@ -1059,6 +1189,7 @@ export interface EndpointPixabaySearchImages {
   };
   media: null;
 }
+
 export interface EndpointPixabaySearchImages_InputQuery {
   q: string;
   page: string;
@@ -1104,6 +1235,7 @@ export interface EndpointPixabaySearchImages_InputQuery {
     | null;
   editors_choice: "true" | "false";
 }
+
 export interface EndpointPixabaySearchImages_OutputOK {
   total: number;
   hits: {
@@ -1116,6 +1248,7 @@ export interface EndpointPixabaySearchImages_OutputOK {
     imageURL: string;
   }[];
 }
+
 export interface EndpointLocationsSearch {
   method: "get";
   input: {
@@ -1126,9 +1259,11 @@ export interface EndpointLocationsSearch {
   };
   media: null;
 }
+
 export interface EndpointLocationsSearch_InputQuery {
   q: string;
 }
+
 export interface EndpointModulesCheckModuleAvailability {
   method: "get";
   input: {
@@ -1139,9 +1274,11 @@ export interface EndpointModulesCheckModuleAvailability {
   };
   media: null;
 }
+
 export interface EndpointModulesCheckModuleAvailability_InputQuery {
   id: string;
 }
+
 export interface EndpointModulesList {
   method: "get";
   input: {};
@@ -1150,6 +1287,7 @@ export interface EndpointModulesList {
   };
   media: null;
 }
+
 export interface EndpointModulesManifest {
   method: "get";
   input: {};
@@ -1158,6 +1296,7 @@ export interface EndpointModulesManifest {
   };
   media: null;
 }
+
 export interface EndpointModulesManifest_OutputOK {
   modules: {
     name: string;
@@ -1182,6 +1321,7 @@ export interface EndpointModulesManifest_OutputOK {
     }[];
   }[];
 }
+
 export interface EndpointModulesWidgets {
   method: "get";
   input: {};
@@ -1190,6 +1330,7 @@ export interface EndpointModulesWidgets {
   };
   media: null;
 }
+
 export interface EndpointModulesCategoriesAiTranslate {
   method: "post";
   input: {
@@ -1200,10 +1341,12 @@ export interface EndpointModulesCategoriesAiTranslate {
   };
   media: null;
 }
+
 export interface EndpointModulesCategoriesAiTranslate_InputBody {
   key: string;
   languages: string[];
 }
+
 export interface EndpointModulesCategoriesList {
   method: "get";
   input: {};
@@ -1212,11 +1355,13 @@ export interface EndpointModulesCategoriesList {
   };
   media: null;
 }
+
 export interface EndpointModulesCategoriesList_OutputOK {
   [k: string]: {
     [k: string]: string;
   };
 }
+
 export interface EndpointModulesCategoriesUpdate {
   method: "post";
   input: {
@@ -1227,6 +1372,7 @@ export interface EndpointModulesCategoriesUpdate {
   };
   media: null;
 }
+
 export interface EndpointModulesCategoriesUpdate_InputBody {
   data: {
     [k: string]: {
@@ -1234,9 +1380,11 @@ export interface EndpointModulesCategoriesUpdate_InputBody {
     };
   };
 }
+
 export interface EndpointModulesCategoriesUpdate_OutputOK {
   success: boolean;
 }
+
 export interface EndpointAiImageGenerationGenerateImage {
   method: "post";
   input: {
@@ -1247,9 +1395,11 @@ export interface EndpointAiImageGenerationGenerateImage {
   };
   media: null;
 }
+
 export interface EndpointAiImageGenerationGenerateImage_InputBody {
   prompt: string;
 }
+
 export interface EndpointFilesGet {
   method: "get";
   input: {
@@ -1258,11 +1408,13 @@ export interface EndpointFilesGet {
   output: any;
   media: null;
 }
+
 export interface EndpointFilesGet_InputQuery {
   key: string;
   thumb?: string;
   download?: string;
 }
+
 export interface EndpointPing {
   method: "post";
   input: {
@@ -1273,9 +1425,11 @@ export interface EndpointPing {
   };
   media: null;
 }
+
 export interface EndpointPing_InputBody {
   timestamp: number;
 }
+
 export interface EndpointStatus {
   method: "get";
   input: {};
@@ -1284,9 +1438,11 @@ export interface EndpointStatus {
   };
   media: null;
 }
+
 export interface EndpointStatus_OutputOK {
   environment: string;
 }
+
 export interface EndpointCorsAnywhere {
   method: "get";
   input: {
@@ -1297,12 +1453,15 @@ export interface EndpointCorsAnywhere {
   };
   media: null;
 }
+
 export interface EndpointCorsAnywhere_InputQuery {
   url: string;
 }
+
 export interface EndpointCorsAnywhere_OutputOK {
   [k: string]: unknown;
 }
+
 export interface EndpointEncryptionPublicKey {
   method: "get";
   input: {};

@@ -1,4 +1,3 @@
-/* eslint-disable preserve-caught-error */
 import axios from 'axios'
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
@@ -49,11 +48,11 @@ function getHeader(headers: unknown, name: string): string | undefined {
 
   const h = headers as Record<string, unknown>
 
-  if (typeof h[name] === 'string') return h[name] as string
+  if (typeof h[name] === 'string') return h[name]
 
   const lowerName = name.toLowerCase()
 
-  if (typeof h[lowerName] === 'string') return h[lowerName] as string
+  if (typeof h[lowerName] === 'string') return h[lowerName]
 
   if ('get' in h && typeof h.get === 'function') {
     const val = h.get(name) || h.get(lowerName)

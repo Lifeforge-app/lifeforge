@@ -1,8 +1,10 @@
+import express from 'express'
 import { promises as fs } from 'node:fs'
 import { createServer } from 'node:http'
-
-import express from 'express'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
+
+import type { StagedFile } from '../../core/types'
+import fieldsUploadMiddleware from './middleware'
 
 const { TEST_ROOT } = vi.hoisted(() => ({
   TEST_ROOT: `${process.cwd()}/temp_test_upload_middleware`
@@ -11,9 +13,6 @@ const { TEST_ROOT } = vi.hoisted(() => ({
 vi.mock('@lifeforge/configs/node', () => ({
   findProjectRoot: () => TEST_ROOT
 }))
-
-import type { StagedFile } from '../../core/types'
-import fieldsUploadMiddleware from './middleware'
 
 const PNG_BUFFER = Buffer.from(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
@@ -31,7 +30,8 @@ describe('fieldsUploadMiddleware', () => {
     const app = express()
 
     app.post('/upload', fieldsUploadMiddleware({ file: 1 }), (req, res) => {
-      received = (req.files as unknown as Record<string, StagedFile[]>).file?.[0]
+      received = (req.files as unknown as Record<string, StagedFile[]>)
+        .file?.[0]
 
       res.json({ ok: true })
     })
@@ -56,7 +56,10 @@ describe('fieldsUploadMiddleware', () => {
   it('stages the uploaded part into a StagedFile', async () => {
     const form = new FormData()
 
-    form.append('file', new File([PNG_BUFFER], 'pic.png', { type: 'image/png' }))
+    form.append(
+      'file',
+      new File([PNG_BUFFER], 'pic.png', { type: 'image/png' })
+    )
 
     const res = await fetch(`${baseUrl}/upload`, { method: 'POST', body: form })
 

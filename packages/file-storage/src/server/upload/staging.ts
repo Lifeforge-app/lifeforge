@@ -34,9 +34,7 @@ export async function stageStream(
   const ext = path.extname(originalName)
   const filePath = path.join(STAGING_DIR, `${crypto.randomUUID()}${ext}`)
 
-  const detected = await fileTypeStream(
-    Readable.toWeb(stream) as unknown as globalThis.ReadableStream
-  )
+  const detected = await fileTypeStream(Readable.toWeb(stream))
   const fileType = (detected as { fileType?: { ext: string; mime: string } })
     .fileType
 

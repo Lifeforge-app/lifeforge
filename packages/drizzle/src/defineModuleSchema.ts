@@ -85,10 +85,7 @@ export function defineModuleSchema<
   )
 
   const wrappedRelations = (r: RelationsBuilder<TTables>) =>
-    remapRelations(
-      relations(proxyHelper(r, keyMap)) as Record<string, unknown>,
-      keyMap
-    )
+    remapRelations(relations(proxyHelper(r, keyMap)), keyMap)
 
   return {
     moduleId,

@@ -1,8 +1,10 @@
 import * as ts from '@typescript/typescript6'
 import fs from 'fs'
 
-import { type WidgetConfig, widgetConfigSchema } from '../interfaces/widget.types'
-
+import {
+  type WidgetConfig,
+  widgetConfigSchema
+} from '../interfaces/widget.types'
 import resolveExpressionMap, { findVariableDeclaration } from './ast-utils'
 
 export default function parseWidgetConfig(

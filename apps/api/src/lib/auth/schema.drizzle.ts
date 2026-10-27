@@ -27,4 +27,5 @@ export const authOAuthProviders = pgTable('auth__oauth_providers', {
 })
 
 export const tables = { authRefreshTokens, authOAuthProviders }
+
 export const relations = (_r: RelationsBuilder<typeof tables>) => ({})

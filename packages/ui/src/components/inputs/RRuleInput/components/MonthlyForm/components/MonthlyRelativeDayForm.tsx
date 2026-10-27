@@ -21,8 +21,8 @@ export function MonthlyRelativeDayForm({
         <ListboxInput
           required
           icon="tabler:calendar"
-          namespace="common.recurring"
           label="monthly.relativeDay.inputs.onThe"
+          namespace="common.recurring"
           renderContent={() => <>{t(`onThe.${data.onThe}`)}</>}
           value={data.onThe}
           onChange={onThe => setData({ ...data, onThe })}
@@ -36,8 +36,8 @@ export function MonthlyRelativeDayForm({
         <ListboxInput
           required
           icon="tabler:calendar"
-          namespace="common.recurring"
           label="monthly.relativeDay.inputs.onTheDay"
+          namespace="common.recurring"
           renderContent={() => (
             <>
               {t(

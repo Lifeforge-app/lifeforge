@@ -17,4 +17,5 @@ export const fontsPinnedFonts = pgTable('fonts__pinned_fonts', {
 })
 
 export const tables = { fontsFontFamilyUpload, fontsPinnedFonts }
+
 export const relations = (_r: RelationsBuilder<typeof tables>) => ({})

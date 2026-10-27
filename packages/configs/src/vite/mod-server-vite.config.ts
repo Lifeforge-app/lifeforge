@@ -1,6 +1,5 @@
 import fs from 'node:fs'
 import path from 'node:path'
-
 import { defineConfig } from 'vite'
 
 import { serverAliasResolver } from '../resolvers/mod-server-alias-resolver'

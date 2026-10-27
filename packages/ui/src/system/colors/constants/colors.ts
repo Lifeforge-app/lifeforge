@@ -47,7 +47,7 @@ function buildPaletteColors(): Record<TailwindPaletteToken, string> {
     }
   }
 
-  return result as Record<TailwindPaletteToken, string>
+  return result
 }
 
 export const COLORS = {

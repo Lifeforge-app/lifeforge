@@ -25,8 +25,16 @@
   --os-handle-border-radius: 9999px;
   --os-handle-min-size: 30px;
   --os-handle-bg: color-mix(in srgb, var(--color-bg-500) 30%, transparent);
-  --os-handle-bg-hover: color-mix(in srgb, var(--color-bg-500) 50%, transparent);
-  --os-handle-bg-active: color-mix(in srgb, var(--color-bg-500) 60%, transparent);
+  --os-handle-bg-hover: color-mix(
+    in srgb,
+    var(--color-bg-500) 50%,
+    transparent
+  );
+  --os-handle-bg-active: color-mix(
+    in srgb,
+    var(--color-bg-500) 60%,
+    transparent
+  );
   --os-handle-border: none;
   --os-handle-border-hover: none;
   --os-handle-border-active: none;
@@ -39,4 +47,3 @@
 .os-theme-lifeforge.os-scrollbar-horizontal {
   bottom: 4px;
 }
-

@@ -90,9 +90,7 @@ const expressionRules: {
     parse: e => Number((e as ts.NumericLiteral).text)
   },
   {
-    test: e =>
-      ts.isPrefixUnaryExpression(e) &&
-      ts.isNumericLiteral((e).operand),
+    test: e => ts.isPrefixUnaryExpression(e) && ts.isNumericLiteral(e.operand),
     parse: e => {
       const expr = e as ts.PrefixUnaryExpression
       const val = Number((expr.operand as ts.NumericLiteral).text)

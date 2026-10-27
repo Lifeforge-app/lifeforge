@@ -4,7 +4,13 @@ import react from '@vitejs/plugin-react'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
-import { type Plugin, type UserConfig, defineConfig, loadEnv, mergeConfig } from 'vite'
+import {
+  type Plugin,
+  type UserConfig,
+  defineConfig,
+  loadEnv,
+  mergeConfig
+} from 'vite'
 
 import { SHARED_DEPS, SHARED_PACKAGES } from '../constants/shared-packages'
 import extractModuleMetadata from '../metadata/extractModuleMetadata'
@@ -102,8 +108,7 @@ export function defineModuleClientConfig(
               )
             }
           }),
-        !isDev &&
-          emitModuleMetadataPlugin(path.resolve(dirname, '..'))
+        !isDev && emitModuleMetadataPlugin(path.resolve(dirname, '..'))
       ].filter(Boolean),
       resolve: {
         alias: [

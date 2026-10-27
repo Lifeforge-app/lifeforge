@@ -70,7 +70,7 @@ ${JSON.stringify(structure)}`
 
   const response = await client.chat.completions.create({
     model,
-    messages: messages as any
+    messages: messages
   })
 
   const res = response.choices[0]?.message?.content

@@ -38,7 +38,7 @@ export interface ForgeContract {
     encrypted: boolean
     rateLimit: boolean
     callback: (
-      context: ForgeExpressContext<any>
+      context: ForgeExpressContext
     ) => Promise<{ $status: number; payload?: unknown }>
     callerModule?: { source: string; id: string }
   }

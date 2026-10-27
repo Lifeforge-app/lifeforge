@@ -40,15 +40,11 @@ const rule: Rule.RuleModule = {
 
     function isHookStatement(statement: TSESTree.Statement): boolean {
       if (statement.type === 'ExpressionStatement') {
-        return isHookCall(
-          (statement as TSESTree.ExpressionStatement).expression
-        )
+        return isHookCall(statement.expression)
       }
 
       if (statement.type === 'VariableDeclaration') {
-        return (statement as TSESTree.VariableDeclaration).declarations.some(
-          decl => isHookCall(decl.init)
-        )
+        return statement.declarations.some(decl => isHookCall(decl.init))
       }
 
       return false
@@ -63,8 +59,7 @@ const rule: Rule.RuleModule = {
 
     function isConstDeclaration(statement: TSESTree.Statement): boolean {
       return (
-        statement.type === 'VariableDeclaration' &&
-        (statement as TSESTree.VariableDeclaration).kind === 'const'
+        statement.type === 'VariableDeclaration' && statement.kind === 'const'
       )
     }
 

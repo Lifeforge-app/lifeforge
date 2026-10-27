@@ -24,7 +24,7 @@ export function InputFocusProvider({
   const handleBlur = useCallback((e: React.FocusEvent) => {
     if (
       containerRef.current?.contains
-        ? !containerRef.current.contains(e.relatedTarget as Node | null)
+        ? !containerRef.current.contains(e.relatedTarget)
         : true
     ) {
       setIsFocused(false)
@@ -33,7 +33,7 @@ export function InputFocusProvider({
 
   return (
     <span
-      ref={containerRef as React.Ref<HTMLSpanElement>}
+      ref={containerRef}
       style={{ display: 'contents' }}
       onBlur={handleBlur}
       onFocus={handleFocus}
