@@ -6,8 +6,10 @@ import {
   type CSSProperties,
   type UIEvent,
   forwardRef,
+  useEffect,
   useImperativeHandle,
-  useRef
+  useRef,
+  useState
 } from 'react'
 
 import { Box, Flex } from '@/components/primitives'
@@ -65,6 +67,7 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
     ref
   ) {
     const scrollbarRef = useRef<OverlayScrollbarsComponentRef>(null)
+    const [hasVerticalOverflow, setHasVerticalOverflow] = useState(false)
 
     useImperativeHandle(ref, () => {
       const getViewport = (): HTMLElement | null =>
@@ -85,6 +88,17 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
       }
     }, [])
 
+    // The lane is only worth reserving when the scrollbar is actually shown,
+    // otherwise it leaves a visible gap on the right of short content.
+    const lane = hasVerticalOverflow ? SCROLLBAR_LANE : 0
+
+    // Reserving or dropping the lane changes the viewport width without
+    // changing the host's outer size, so the overflow state and handle sizes
+    // have to be measured again explicitly.
+    useEffect(() => {
+      scrollbarRef.current?.osInstance()?.update(true)
+    }, [lane])
+
     const hostStyle: CSSProperties = autoHeight
       ? {
           ...style,
@@ -92,13 +106,13 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
           height: 'auto',
           maxHeight: autoHeightMax ?? '100%',
           minHeight: 0,
-          paddingRight: SCROLLBAR_LANE
+          paddingRight: lane
         }
       : {
           width: '100%',
           height: '100%',
           minHeight: 0,
-          paddingRight: SCROLLBAR_LANE,
+          paddingRight: lane,
           ...style
         }
 
@@ -108,6 +122,9 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
         className={className}
         defer={false}
         events={{
+          updated: instance => {
+            setHasVerticalOverflow(instance.state().hasOverflow.y)
+          },
           scroll: (_instance, event) => {
             onScroll?.(event as unknown as UIEvent<HTMLElement>)
           }
