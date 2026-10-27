@@ -1,14 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
-import { useDebounce } from '@uidotdev/usehooks'
 import { useState } from 'react'
 
 import { useAPIEndpoint } from '@lifeforge/api'
 
-import { ComboboxInput, ComboboxOption } from '@/components/inputs'
+import { WithQueryData } from '@/components/api'
+import { ComboboxInput } from '@/components/inputs'
 import type { InputVariants } from '@/components/inputs/shared/types'
-import { Box, Flex, Icon, Text } from '@/components/primitives'
+import { Box, Flex } from '@/components/primitives'
 import { forgeAPI } from '@/utils/forgeAPI'
 
+import { LocationOptions } from './components/LocationOptions'
 import { LocationServiceStatusIndicator } from './components/LocationServiceStatusIndicator'
 
 export type Location = {
@@ -48,91 +48,41 @@ export function LocationInput({
 }: LocationInputProps & InputVariants) {
   const apiHost = useAPIEndpoint()
   const [query, setQuery] = useState('')
-  const debouncedQuery = useDebounce(query, 500)
-
-  const enabledQuery = useQuery(
-    forgeAPI
-      .checkAPIKeys({
-        keys: 'gcloud'
-      })
-      .setHost(apiHost)
-      .queryOptions()
-  )
-
-  const enabled =
-    typeof enabledQuery.data === 'boolean'
-      ? enabledQuery.data
-      : enabledQuery.isLoading
-        ? 'loading'
-        : false
-
-  const dataQuery = useQuery(
-    forgeAPI.locations.search
-      .setHost(apiHost)
-      .input({
-        q: debouncedQuery
-      })
-      .queryOptions({
-        enabled: debouncedQuery.trim() !== '' && enabledQuery.data === true
-      })
-  )
 
   return (
-    <Flex align="center" gap="md">
-      <Box width="100%">
-        <ComboboxInput<Location | null>
-          autoFocus={autoFocus}
-          className={className}
-          disabled={!enabled || disabled || enabled === 'loading'}
-          displayValue={value => value?.name ?? ''}
-          errorMsg={errorMsg}
-          forcedActiveWhen={(value?.name?.length || 0) > 0}
-          icon={icon}
-          label={label}
-          namespace={namespace}
-          required={required}
-          value={value}
-          variant={variant}
-          onChange={location => {
-            onChange(location ?? null)
-          }}
-          onEnter={onEnter}
-          onQueryChanged={setQuery}
-        >
-          {query.trim() !== '' &&
-            (dataQuery.data ? (
-              <>
-                {dataQuery.data.map((loc: Location) => (
-                  <ComboboxOption
-                    key={JSON.stringify(loc.location)}
-                    label={
-                      <Box minWidth="0" width="100%">
-                        <Text truncate>{loc.name}</Text>
-                        <Text
-                          truncate
-                          as="div"
-                          color={{ base: 'bg-400', dark: 'bg-600' }}
-                        >
-                          {loc.formattedAddress}
-                        </Text>
-                      </Box>
-                    }
-                    value={loc}
-                  />
-                ))}
-              </>
-            ) : (
-              <Flex centered my="3xl">
-                <Icon
-                  color={{ base: 'bg-500' }}
-                  icon="svg-spinners:ring-resize"
-                  size="1.5em"
-                />
-              </Flex>
-            ))}
-        </ComboboxInput>
-      </Box>
-      <LocationServiceStatusIndicator enabled={enabled} />
-    </Flex>
+    <WithQueryData
+      contract={forgeAPI.checkAPIKeys({ keys: 'gcloud' }).setHost(apiHost)}
+    >
+      {enabled => (
+        <Flex align="center" gap="md">
+          <Box width="100%">
+            <ComboboxInput<Location | null>
+              autoFocus={autoFocus}
+              className={className}
+              disabled={!enabled || disabled}
+              displayValue={value => value?.name ?? ''}
+              errorMsg={errorMsg}
+              forcedActiveWhen={(value?.name?.length || 0) > 0}
+              icon={icon}
+              label={label}
+              namespace={namespace}
+              required={required}
+              value={value}
+              variant={variant}
+              onChange={location => {
+                onChange(location ?? null)
+              }}
+              onEnter={onEnter}
+              onQueryChanged={setQuery}
+            >
+              {query.trim() !== '' && (
+                <LocationOptions enabled={enabled} query={query} />
+              )}
+            </ComboboxInput>
+          </Box>
+          <LocationServiceStatusIndicator enabled={enabled} />
+        </Flex>
+      )}
+    </WithQueryData>
   )
 }
