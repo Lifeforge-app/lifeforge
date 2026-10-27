@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
-import { Flex, Icon, Text } from '@/components/primitives'
+import { Box, Flex, Icon, Text } from '@/components/primitives'
 
 import { useInsideModal } from '../ModalA11yContext'
 
@@ -51,20 +51,22 @@ export function ModalHeader({
   const titleContent =
     typeof innerTitle === 'string' ? (
       <>
-        <Text truncate as="span" style={{ minWidth: 0 }}>
-          {namespace === false
-            ? innerTitle
-            : t(
-                [
-                  ...getLocaleKeys(innerTitle),
-                  ...(namespace ? getLocaleKeys(innerTitle, namespace) : []),
-                  ...getLocaleKeys(innerTitle, 'common.modals')
-                ],
-                {
-                  defaultValue: innerTitle
-                }
-              )}
-        </Text>
+        <Box asChild minWidth="0">
+          <Text truncate as="span">
+            {namespace === false
+              ? innerTitle
+              : t(
+                  [
+                    ...getLocaleKeys(innerTitle),
+                    ...(namespace ? getLocaleKeys(innerTitle, namespace) : []),
+                    ...getLocaleKeys(innerTitle, 'common.modals')
+                  ],
+                  {
+                    defaultValue: innerTitle
+                  }
+                )}
+          </Text>
+        </Box>
         {appendTitle}
       </>
     ) : (
@@ -108,12 +110,7 @@ export function ModalHeader({
       </Flex>
       <Flex align="center" gap="sm">
         {trailing}
-        <Button
-          icon="tabler:x"
-          style={{ padding: '0.75em' }}
-          variant="plain"
-          onClick={onClose}
-        />
+        <Button icon="tabler:x" p="sm" variant="plain" onClick={onClose} />
       </Flex>
     </Flex>
   )
