@@ -23,6 +23,10 @@ const config: Linter.Config[] = [
       'dist/',
       'tools/src/templates/**',
       '**/storybook-static/',
+      '**/tsbuild/',
+      '**/dist-docker/',
+      '**/client/contract.ts',
+      '.pnpmfile.cjs',
       'modules/melvinchia3636--truckers-log/client/src/lib/'
     ]
   },

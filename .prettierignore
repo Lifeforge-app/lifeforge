@@ -6,3 +6,8 @@ storybook-static/
 modules/melvinchia3636--truckers-log/client/src/lib/
 packages/api/src/contract.ts
 **/client/contract.ts
+**/dist-docker/
+**/tsbuild/
+pnpm-lock.yaml
+README.md
+.opencode/
