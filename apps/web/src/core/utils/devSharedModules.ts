@@ -40,7 +40,7 @@ function normalizeModule(module: Record<string, unknown>) {
     current = defaultExport as Record<string, unknown>
   }
 
-  return current && Object.getPrototypeOf(current) === null
+  return Object.getPrototypeOf(current) === null
     ? Object.assign({}, current)
     : current
 }
@@ -93,9 +93,6 @@ export function installDevSharedModules() {
   }
 
   const cache = globalObject.__mf_module_cache__
-
-  cache.share ??= {}
-  cache.remote ??= {}
 
   for (const [name, module] of Object.entries(DEV_SHARED_MODULES)) {
     const canonicalName = `default:${name}`

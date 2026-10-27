@@ -102,7 +102,7 @@ export function ColorInput({
               r="full"
               style={{
                 marginTop: '0.125em',
-                backgroundColor: value?.match(/^#[0-9A-F]{6}$/i)
+                backgroundColor: value.match(/^#[0-9A-F]{6}$/i)
                   ? value
                   : undefined
               }}

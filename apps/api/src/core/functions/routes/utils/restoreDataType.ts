@@ -1,4 +1,4 @@
-export default function restoreFormDataType(value: string): any {
+export default function restoreFormDataType(value: string): unknown {
   if (!value.startsWith('__type:'))
     return value === 'undefined' ? undefined : value
 

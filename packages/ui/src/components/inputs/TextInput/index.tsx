@@ -69,7 +69,7 @@ export function _TextInput({
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
   const [actionButtonLoading, handleClick] = usePromiseLoading(
-    (actionButtonProps?.onClick as () => Promise<void>) ||
+    (actionButtonProps?.onClick as (() => Promise<void>) | undefined) ??
       (async (): Promise<void> => {})
   )
 

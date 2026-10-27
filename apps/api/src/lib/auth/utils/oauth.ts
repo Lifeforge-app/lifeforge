@@ -4,6 +4,7 @@ import { OAuth2Tokens } from 'arctic'
 import { db } from '../../../core/drizzle'
 import {
   OAUTH_PROVIDER_CONFIGS,
+  type OAuthClient,
   ProviderConfig
 } from '../constants/oauth_providers'
 
@@ -13,7 +14,7 @@ export async function getProvider(
   providerName: string,
   origin: string
 ): Promise<{
-  client: any
+  client: OAuthClient
   redirectUri: string
   config: ProviderConfig
 } | null> {

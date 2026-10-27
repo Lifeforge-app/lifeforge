@@ -3,6 +3,7 @@ import {
   type RelationsBuilderConfig,
   getTableName
 } from 'drizzle-orm'
+import type { PgTable } from 'drizzle-orm/pg-core'
 
 import type { ResolvedModuleSchema } from '@lifeforge/module-runtime/registry'
 
@@ -65,7 +66,7 @@ function remapRelations(
  * Registration is the caller's job (`ModuleRegistry.registerSchemaPart`).
  */
 export function defineModuleSchema<
-  TTables extends Record<string, any>,
+  TTables extends Record<string, PgTable>,
   TConfig extends RelationsBuilderConfig<TTables>
 >(
   tables: TTables,

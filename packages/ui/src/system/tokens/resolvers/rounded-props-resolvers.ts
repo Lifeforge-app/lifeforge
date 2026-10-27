@@ -1,5 +1,3 @@
-import type { CSSProperties } from '@vanilla-extract/css'
-
 import { normalizeResponsiveProp } from '@/system/responsive'
 
 import type { TokenizedRoundedProps } from '../props'
@@ -10,7 +8,7 @@ export function resolveRoundedSprinklesProps({
   rtr,
   rbl,
   rbr
-}: TokenizedRoundedProps): Partial<Record<keyof CSSProperties, any>> {
+}: TokenizedRoundedProps) {
   return {
     borderRadius: normalizeResponsiveProp(r),
     borderTopLeftRadius: normalizeResponsiveProp(rtl),

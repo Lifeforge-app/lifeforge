@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 
 import { useAuth } from '@lifeforge/api'
+import type { UserData } from '@lifeforge/api'
 import { toast } from '@lifeforge/ui'
 import {
   type IBackdropFilters,
@@ -14,20 +15,18 @@ import { UserPersonalizationContext } from './UserPersonalizationContext'
 
 async function syncUserData(
   data: Record<string, unknown>,
-  setUserData: React.Dispatch<React.SetStateAction<any>>
+  setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
 ) {
   try {
     await forgeAPI.user.personalization.updatePersonalization.mutate({
       data
     })
 
-    if (setUserData) {
-      setUserData((oldData: any) => {
-        if (!oldData) return oldData
+    setUserData(oldData => {
+      if (!oldData) return oldData
 
-        return { ...oldData, ...data }
-      })
-    }
+      return { ...oldData, ...data }
+    })
   } catch {
     toast.error('Failed to update personalization settings')
   }

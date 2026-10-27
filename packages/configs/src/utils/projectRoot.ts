@@ -12,7 +12,7 @@ export function findProjectRoot(startDir?: string): string {
   for (const dir of dirsToTry) {
     let current = path.resolve(dir)
 
-    while (true) {
+    for (;;) {
       if (
         fs.existsSync(path.join(current, 'pnpm-workspace.yaml')) ||
         fs.existsSync(path.join(current, 'pnpm-lock.yaml')) ||

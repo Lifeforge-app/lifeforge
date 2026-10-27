@@ -10,6 +10,14 @@ import { pathToFileURL } from 'node:url'
 
 import { ROOT_DIR } from './constants'
 
+export interface IntrospectedRelation {
+  relationType: 'one' | 'many'
+  sourceColumns?: { name: string }[]
+  targetColumns?: { name: string }[]
+  targetTableName: string
+  throughTable?: Table
+}
+
 export interface ModuleSchemaInfo {
   module: string
   kind: 'app' | 'core'
@@ -19,7 +27,11 @@ export interface ModuleSchemaInfo {
   tables: Record<string, Table>
   builtRelations: Record<
     string,
-    { table: Table; name: string; relations: Record<string, any> }
+    {
+      table: Table
+      name: string
+      relations: Record<string, IntrospectedRelation>
+    }
   >
 }
 
@@ -90,6 +102,7 @@ export async function loadModuleSchema(
   const { schemaPath, kind } = resolveSchemaPath(module)
   const mod = (await import(pathToFileURL(schemaPath).href)) as {
     tables?: Record<string, Table>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     relations?: (r: any) => Record<string, any>
   }
 
@@ -100,7 +113,11 @@ export async function loadModuleSchema(
   const builtRelations = mod.relations
     ? (defineRelations(mod.tables, mod.relations) as unknown as Record<
         string,
-        { table: Table; name: string; relations: Record<string, any> }
+        {
+          table: Table
+          name: string
+          relations: Record<string, IntrospectedRelation>
+        }
       >)
     : Object.fromEntries(
         Object.entries(mod.tables).map(([key, table]) => [
@@ -122,7 +139,7 @@ export async function loadModuleSchema(
 /** Introspects tables -> columns + relations. */
 export function introspectModule(info: ModuleSchemaInfo): TablePlan[] {
   return Object.entries(info.tables).map(([key, table]) => {
-    const cols = getTableColumns(table) as Record<string, any>
+    const cols = getTableColumns(table)
 
     const columns: ColumnPlan[] = Object.entries(cols).map(([jsKey, col]) => ({
       jsKey,
@@ -139,11 +156,11 @@ export function introspectModule(info: ModuleSchemaInfo): TablePlan[] {
     const rel = info.builtRelations[key]?.relations ?? {}
 
     const relations: RelationPlan[] = Object.entries(rel).map(
-      ([name, relation]: [string, any]) => ({
+      ([name, relation]) => ({
         name,
         relationType: relation.relationType,
-        sourceColumns: (relation.sourceColumns ?? []).map((c: any) => c.name),
-        targetColumns: (relation.targetColumns ?? []).map((c: any) => c.name),
+        sourceColumns: (relation.sourceColumns ?? []).map(c => c.name),
+        targetColumns: (relation.targetColumns ?? []).map(c => c.name),
         targetTable: relation.targetTableName,
         throughTable: relation.throughTable
           ? getTableName(relation.throughTable)

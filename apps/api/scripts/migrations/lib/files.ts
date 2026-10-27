@@ -3,6 +3,7 @@ import path from 'node:path'
 import { FileStorage, createProvider } from '@lifeforge/file-storage'
 import { createFileMetadataStore } from '@lifeforge/file-storage/server'
 
+import type { MigrationDb } from './db'
 import { requireEnv } from './env'
 
 const MIME_BY_EXT: Record<string, string> = {
@@ -45,7 +46,10 @@ function mimeFor(filename: string): string {
  * and backed by the migration db, so migrated files also get metadata rows in
  * the `files` table.
  */
-export function createModuleStorage(moduleId: string, db: any): FileStorage {
+export function createModuleStorage(
+  moduleId: string,
+  db: MigrationDb
+): FileStorage {
   const provider = createProvider()
 
   return new FileStorage(provider, createFileMetadataStore(db), moduleId)

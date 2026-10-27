@@ -15,7 +15,7 @@ export const logout = forge
     }
   })
   .callback(async ({ req, res, response }) => {
-    const refreshToken = req.cookies?.refresh_token as string | undefined
+    const refreshToken = req.cookies.refresh_token as string | undefined
 
     if (!refreshToken) {
       return response.unauthorized()

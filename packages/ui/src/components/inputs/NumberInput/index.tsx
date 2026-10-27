@@ -42,6 +42,7 @@ export interface NumberInputProps {
   wrapperProps?: InputWrapperPassthrough
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function NumberTextInputAdapter(props: any) {
   const { onChange, getInputRef, ...rest } = props
 

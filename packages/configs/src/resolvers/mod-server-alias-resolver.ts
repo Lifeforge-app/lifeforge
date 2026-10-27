@@ -45,7 +45,7 @@ const NODE_BUILT_INS = new Set(builtinModules)
  * virtual modules, Node built-ins, and query/hash URL suffixes.
  */
 export function serverAliasResolver(dirname: string): Plugin {
-  let aliases: any[] = []
+  let aliases: Alias[] = []
 
   const coreDeps = getCoreDependencies(dirname)
 
@@ -53,7 +53,7 @@ export function serverAliasResolver(dirname: string): Plugin {
     name: 'externalize-node-modules',
     enforce: 'pre',
     configResolved(config) {
-      aliases = config.resolve.alias || []
+      aliases = config.resolve.alias
     },
     resolveId(source) {
       // 1. Skip Vite virtual modules

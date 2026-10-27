@@ -1,6 +1,8 @@
 import { type Table, sql } from 'drizzle-orm'
 import type { DatabaseSync } from 'node:sqlite'
 
+import type { MigrationDb } from './db'
+
 export interface OrphanCheck {
   label: string
   sourceTable: string
@@ -10,7 +12,10 @@ export interface OrphanCheck {
 }
 
 /** Counts rows in a target Postgres table. */
-export async function countRows(db: any, table: Table): Promise<number> {
+export async function countRows(
+  db: MigrationDb,
+  table: Table
+): Promise<number> {
   const rows = (await db
     .select({ count: sql<number>`CAST(COUNT(*) AS INTEGER)` })
     .from(table)) as Array<{ count: number }>
@@ -29,7 +34,7 @@ export function countPbRows(pb: DatabaseSync, collection: string): number {
 
 /** Counts rows whose foreign key points at a non-existent target row. */
 export async function countOrphanFks(
-  db: any,
+  db: MigrationDb,
   check: OrphanCheck
 ): Promise<number> {
   const query = [

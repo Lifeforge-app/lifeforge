@@ -90,7 +90,7 @@ export function ComboboxInput<T>({
     }
 
     const inputInside = (e.target as HTMLElement).querySelector('input') as
-      HTMLInputElement | HTMLTextAreaElement
+      HTMLInputElement | HTMLTextAreaElement | null
 
     if (inputInside && inputInside instanceof HTMLInputElement) {
       inputInside.focus()

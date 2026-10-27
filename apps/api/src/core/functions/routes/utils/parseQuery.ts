@@ -15,5 +15,5 @@ export default function parseQuery(
     throw new ClientError(JSON.stringify(z.formatError(result.error)), 400)
   }
 
-  req.query = result.data as any
+  req.query = result.data as typeof req.query
 }

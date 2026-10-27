@@ -11,7 +11,7 @@ export function clientError({
   moduleName = 'unknown-module'
 }: {
   res: Response
-  message?: any
+  message?: unknown
   code?: number
   moduleName?: string
 }) {

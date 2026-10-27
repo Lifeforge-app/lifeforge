@@ -38,5 +38,5 @@ export function expectNo2FA<T>(
     throw new Error('Unexpected 2FA response in test')
   }
 
-  return data as any
+  return data as never
 }

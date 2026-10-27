@@ -126,7 +126,7 @@ function CardItem({ item }: { item: SampleItem }) {
       >
         {cardRef.current?.offsetHeight ? (
           <Text size="2xl" style={{ color: '#fff' }} weight="semibold">
-            {cardRef.current?.offsetHeight}px
+            {cardRef.current.offsetHeight}px
           </Text>
         ) : (
           <Icon color="primary" icon="svg-spinners:ring-resize" size="1.5em" />

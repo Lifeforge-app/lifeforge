@@ -8,6 +8,7 @@ import { OutputDefinition, OutputHelpers } from '../../response'
 import { ConvertMedia, MediaConfig } from '../standalone/media.types'
 import { CoreContext } from './core_context.types'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface ForgeExpressContext<TSchema extends AnyRelations = any> {
   req: Request
   res: Response
@@ -49,6 +50,7 @@ export type ForgeContext<
   TBody extends z.ZodTypeAny | undefined,
   TOutput extends OutputDefinition | 'custom',
   TMedia extends MediaConfig | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   TSchema extends AnyRelations = any
 > = {
   response: OutputHelpers<TOutput>

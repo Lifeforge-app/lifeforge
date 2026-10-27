@@ -67,7 +67,7 @@ export async function stageStream(
 }
 
 export async function releaseStaged(file: StagedFile): Promise<void> {
-  if (file?.path) {
+  if (file.path) {
     await fs.unlink(file.path).catch(() => {})
   }
 }

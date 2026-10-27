@@ -92,7 +92,7 @@ function CustomFontUploadModal({
       return
     }
 
-    if (!currentFile?.file || !(currentFile.file instanceof File)) {
+    if (!(currentFile.file instanceof File)) {
       form.setValue('family', '', { shouldValidate: true })
       form.setValue('weight', 500, { shouldValidate: true })
       form.setValue('displayName', 'metadata.family', {
@@ -126,10 +126,6 @@ function CustomFontUploadModal({
       form={form}
       submissionConfig={{
         handler: async formData => {
-          if (!formData.file) {
-            throw new Error('Please select a font file')
-          }
-
           await uploadMutation.mutateAsync({
             displayName: formData.displayName,
             family: formData.family,

@@ -23,7 +23,7 @@ describe('createForgeContractBuilder', () => {
         }
       })
       .callback(async ({ query, response }) => {
-        return response.ok({ message: `Hello ${query?.id}` })
+        return response.ok({ message: `Hello ${query.id}` })
       })
 
     expect(contract.__isForgeContract).toBe(true)

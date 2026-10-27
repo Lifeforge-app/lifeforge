@@ -40,6 +40,7 @@ export const moduleConfigSchema = z.object({
     .array(
       z.custom<
         () => Promise<{
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           default: React.ComponentType<any>
           config: z.infer<typeof widgetConfigSchema>
         }>

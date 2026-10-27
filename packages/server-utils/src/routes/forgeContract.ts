@@ -50,7 +50,7 @@ type ForgeBuilderFor<
 >
 
 function makeBuilder<
-  TSchema extends AnyRelations = any,
+  TSchema extends AnyRelations = AnyRelations,
   TTables extends Record<string, PgTable> = Record<string, PgTable>
 >(config: { callerModule?: string; modulePathAlias?: string }) {
   const { callerModule, modulePathAlias } = config
@@ -115,7 +115,7 @@ function makeBuilder<
                 io: ctx.io,
                 db: ctx.db,
                 core: ctx.core
-              })) as any
+              })) as { $status: number; payload?: unknown }
             }
 
             return {
@@ -194,7 +194,7 @@ function makeBuilder<
 }
 
 export function createForgeContractBuilder<
-  TSchema extends AnyRelations = any,
+  TSchema extends AnyRelations = AnyRelations,
   TOptions extends ForgeContractOptions = ForgeContractOptions
 >(options?: TOptions): ForgeBuilderFor<TSchema, TOptions> {
   const { schema, moduleId, modulePathAlias } = options ?? {}
@@ -204,7 +204,7 @@ export function createForgeContractBuilder<
 
     const definition = defineModuleSchema(
       schema.tables,
-      schema.relations as any,
+      schema.relations,
       callerModuleId
     )
 

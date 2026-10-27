@@ -40,11 +40,7 @@ function collectAliases(routes: RouterInput, scan: AliasScan): void {
       } else {
         scan.hasUnAliasedController = true
       }
-    } else if (
-      typeof value === 'object' &&
-      value !== null &&
-      !isRouter(value)
-    ) {
+    } else if (typeof value === 'object' && !isRouter(value)) {
       collectAliases(value as RouterInput, scan)
     }
   }
@@ -134,7 +130,7 @@ function registerRoutes<T extends RouterInput>(
         registerController(controller, router, finalRoute)
       } else if (isRouter(controller)) {
         router.use(`/${finalRoute}`, controller)
-      } else if (typeof controller === 'object' && controller !== null) {
+      } else if (typeof controller === 'object') {
         const nestedRouter = Router()
 
         registerRoutesRecursive(
@@ -146,7 +142,7 @@ function registerRoutes<T extends RouterInput>(
         router.use(`/${finalRoute}`, nestedRouter)
       } else {
         console.warn(
-          `Skipping route "${route}" at path "${currentPath}": not a valid controller, router, or nested object. Value type: ${typeof controller}, Value: ${JSON.stringify(controller)?.slice(0, 100)}`
+          `Skipping route "${route}" at path "${currentPath}": not a valid controller, router, or nested object. Value type: ${typeof controller}, Value: ${JSON.stringify(controller).slice(0, 100)}`
         )
       }
     }

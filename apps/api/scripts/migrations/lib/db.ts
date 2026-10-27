@@ -12,9 +12,11 @@ export function createMigrationDb() {
   return { db, client }
 }
 
+export type MigrationDb = ReturnType<typeof createMigrationDb>['db']
+
 /** Inserts rows in chunks to stay under parameter limits. */
 export async function insertRows(
-  db: any,
+  db: MigrationDb,
   table: Table,
   rows: Record<string, unknown>[],
   chunkSize = 500
@@ -37,7 +39,10 @@ export async function insertRows(
  * Deletes all rows from the given tables in reverse order (so children are
  * cleared before parents when `tables` is topologically sorted).
  */
-export async function clearTables(db: any, tables: Table[]): Promise<void> {
+export async function clearTables(
+  db: MigrationDb,
+  tables: Table[]
+): Promise<void> {
   for (const table of [...tables].reverse()) {
     await db.delete(table)
   }

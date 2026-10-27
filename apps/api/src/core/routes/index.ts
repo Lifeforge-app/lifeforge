@@ -26,7 +26,7 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
     return next()
   }
 
-  const filePath = req.params[0 as any as keyof typeof req.params] || ''
+  const filePath = (req.params as Record<string, string | undefined>)['0'] || ''
 
   // Block null byte injection in filePath
   if (filePath.includes('\0')) {
@@ -51,7 +51,7 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
   }
 
   // Serve file securely using the root sandbox parameter
-  res.sendFile(filePath, { root: moduleDistPath }, err => {
+  res.sendFile(filePath, { root: moduleDistPath }, (err?: Error) => {
     // Only fall through when the file could not be sent. Calling next() after a
     // successful response (or a client abort mid-stream) would let later
     // handlers respond again and raise ERR_HTTP_HEADERS_SENT.

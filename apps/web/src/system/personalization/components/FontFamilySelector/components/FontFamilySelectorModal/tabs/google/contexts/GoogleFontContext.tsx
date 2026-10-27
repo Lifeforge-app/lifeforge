@@ -17,15 +17,15 @@ import forgeAPI from '@/core/utils/forgeAPI'
 import { useFontFamilySelector } from '../../../contexts/FontFamilySelectorContext'
 import type { FontFamily } from '../index'
 
+type GoogleFontsQueryData = {
+  enabled: boolean
+  items: FontFamily[]
+}
+
 interface GoogleFontContextValue {
   categories: string[]
   filteredFonts: FontFamily[]
-  fontsQuery: ReturnType<
-    typeof useQuery<{
-      enabled: boolean
-      items: FontFamily[]
-    }>
-  >
+  fontsQuery: ReturnType<typeof useQuery<GoogleFontsQueryData>>
   page: number
   pinnedFontsQuery: ReturnType<typeof useQuery<string[]>>
   scrollableRef: React.RefObject<ScrollbarHandle | null>
@@ -43,15 +43,8 @@ const GoogleFontContext = createContext<GoogleFontContextValue | null>(null)
 function GoogleFontProvider({ children }: { children: ReactNode }) {
   const { fontFamily } = usePersonalization()
   const { selectedFont, setSelectedFont } = useFontFamilySelector()
-
-  const fontsQuery = useQuery<{
-    enabled: boolean
-    items: FontFamily[]
-  }>(forgeAPI.fonts.google.list.queryOptions())
-  const pinnedFontsQuery = useQuery<string[]>(
-    forgeAPI.fonts.pins.list.queryOptions()
-  )
-
+  const fontsQuery = useQuery(forgeAPI.fonts.google.list.queryOptions())
+  const pinnedFontsQuery = useQuery(forgeAPI.fonts.pins.list.queryOptions())
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const [page, setPage] = useState(1)

@@ -10,14 +10,14 @@ import { ConfirmationModal } from '@/components/overlays'
 import { Box, Flex, Icon, Text } from '@/components/primitives'
 import { toast, useModalStore } from '@/providers'
 
-export function CreatePasswordScreen({
+export function CreatePasswordScreen<TOnCreateData = unknown>({
   controller,
   challengeController,
   onCreate
 }: {
   controller: ForgeEndpoint
   challengeController: ForgeEndpoint
-  onCreate?: (data: any) => void
+  onCreate?: (data: TOnCreateData) => void
 }) {
   const { open } = useModalStore()
   const { t } = useTranslation('common.vault')
@@ -27,7 +27,7 @@ export function CreatePasswordScreen({
   const createPasswordMutation = useMutation(
     controller.mutationOptions({
       onSuccess: data => {
-        onCreate?.(data)
+        onCreate?.(data as TOnCreateData)
         window.location.reload()
       },
       onError: () => {

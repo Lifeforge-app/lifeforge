@@ -47,7 +47,7 @@ ${JSON.stringify(structure)}`
       ...reasoning
     })
 
-    const res = response.choices[0]?.message?.content
+    const res = response.choices[0]?.message.content
 
     if (!res) {
       logger.error('No structured response received from OpenRouter model.')
@@ -78,7 +78,7 @@ ${JSON.stringify(structure)}`
     ...reasoning
   })
 
-  const res = response.choices[0]?.message?.content
+  const res = response.choices[0]?.message.content
 
   if (!res) {
     logger.error('No text response received from OpenRouter model.')

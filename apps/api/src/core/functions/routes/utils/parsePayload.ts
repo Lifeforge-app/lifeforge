@@ -38,13 +38,13 @@ export default function parseBodyPayload<TMedia extends MediaConfig>(
     ? Object.fromEntries(
         Object.entries(data).map(([key, value]) => [
           key,
-          restoreFormDataType(value)
+          restoreFormDataType(value as string)
         ])
       )
     : data
 
   if (!validator) {
-    req.body = finalData as any
+    req.body = finalData
     req.media = finalMedia
 
     return
@@ -56,6 +56,6 @@ export default function parseBodyPayload<TMedia extends MediaConfig>(
     throw new ClientError(JSON.stringify(z.formatError(result.error)), 400)
   }
 
-  req.body = result.data as any
+  req.body = result.data
   req.media = finalMedia
 }

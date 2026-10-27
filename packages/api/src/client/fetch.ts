@@ -61,9 +61,7 @@ async function handleAxiosResponse<T>(
       )
     }
 
-    if (data.state === 'success') {
-      return data.data as T
-    }
+    return data.data as T
   } else if (response.headers['x-lifeforge-downloadable'] === 'true') {
     return new Uint8Array(response.data) as unknown as T
   } else if (contentType.includes('text/plain')) {

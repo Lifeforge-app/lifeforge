@@ -332,7 +332,7 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
     const { apiHost, prefix } = this._resolvedConfig
 
     const path = this._getPath(prefix)
-    const payloadData = data === undefined ? {} : data
+    const payloadData = data
     const { raw, ...rest } = options
 
     if (raw) {
@@ -403,7 +403,7 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
 
     const path = this._getPath(prefix)
 
-    const payloadData = data === undefined ? {} : data
+    const payloadData = data
 
     // If data contains files, fall back to raw mode (server also disables encryption for media endpoints)
     const isFormData =
@@ -411,7 +411,7 @@ export class ForgeEndpoint<T extends { __isForgeContract: true } = any> {
       (payloadData as any) instanceof FormData
 
     if (isFormData || hasFile(payloadData)) {
-      return this.mutateRaw(payloadData as any)
+      return this.mutateRaw(payloadData)
     }
 
     // Encrypt the request

@@ -27,7 +27,7 @@ export function DnDContainer({
   }, [acceptedMimeTypes])
 
   const pasteFromClipboard = async (e: React.MouseEvent) => {
-    if (!navigator.clipboard) {
+    if (!('clipboard' in navigator)) {
       console.error('Clipboard API not supported')
 
       return

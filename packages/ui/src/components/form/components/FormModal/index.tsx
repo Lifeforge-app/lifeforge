@@ -61,7 +61,7 @@ export function FormModal<T extends FieldValues>({
     try {
       await submissionConfig.handler(values)
 
-      onClose?.()
+      onClose()
     } catch (error) {
       console.error(error)
       toast.error(

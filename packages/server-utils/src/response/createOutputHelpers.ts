@@ -18,10 +18,10 @@ export function createOutputHelpers<
 
     const outputDef = Output[key]
 
-    const status = outputDef?.$status
+    const status = outputDef.$status
 
     const hasPayload =
-      outputDef && 'hasPayload' in outputDef
+      'hasPayload' in outputDef
         ? (outputDef as { hasPayload: boolean }).hasPayload
         : false
 

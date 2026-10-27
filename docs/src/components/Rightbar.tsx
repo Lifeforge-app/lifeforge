@@ -163,11 +163,9 @@ function Rightbar() {
       <a
         className="text-bg-600 dark:text-bg-300 mt-6 flex items-center gap-2 font-medium hover:underline"
         href={`https://github.com/LifeForge-app/lifeforge/edit/main/apps/docs/src/contents/${
-          location.pathname.split('/')?.[1]
+          location.pathname.split('/')[1]
         }/${_.upperFirst(
-          _.camelCase(
-            location.pathname.split('/')?.[2]?.replace(/-/g, ' ') || ''
-          )
+          _.camelCase(location.pathname.split('/')[2]?.replace(/-/g, ' ') || '')
         )}.mdx`}
         rel="noreferrer"
         target="_blank"

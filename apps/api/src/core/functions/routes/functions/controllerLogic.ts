@@ -13,7 +13,6 @@
  * - `registerController`: Function to register a ForgeControllerBuilder with an Express router
  */
 import { encryptResponse } from '@functions/encryption'
-import { coreLogger } from '@functions/logging'
 import type { Request, Response, Router } from 'express'
 
 import { scopeDbForModule } from '@lifeforge/drizzle'
@@ -85,10 +84,6 @@ function createHandler(
         )
       }
 
-      if (!callback) {
-        throw new Error('No callback defined for this controller')
-      }
-
       const result = await callback({
         req,
         res,
@@ -116,10 +111,10 @@ function createHandler(
         return
       }
 
-      const status = result?.$status
+      const status = result.$status
 
       const payload =
-        result && typeof result === 'object' && '$status' in result
+        typeof result === 'object' && '$status' in result
           ? result.payload
           : result
 
@@ -200,13 +195,6 @@ export function registerController(
   routeName: string = ''
 ): void {
   const config = controller.getValue()
-
-  if (!config.callback) {
-    coreLogger.error(
-      `Cannot register controller for route "${routeName}": No callback defined.`
-    )
-    process.exit(1)
-  }
 
   const handler = Object.assign(createHandler(config), {
     meta: {

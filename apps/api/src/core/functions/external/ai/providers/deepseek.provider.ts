@@ -40,12 +40,12 @@ ${JSON.stringify(structure)}`
           content: systemPrompt
         },
         ...messages
-      ] as any,
+      ],
       response_format: { type: 'json_object' },
       reasoning_effort: 'none'
     })
 
-    const res = response.choices[0]?.message?.content
+    const res = response.choices[0]?.message.content
 
     if (!res) {
       logger.error('No structured response received from DeepSeek model.')
@@ -73,7 +73,7 @@ ${JSON.stringify(structure)}`
     messages: messages
   })
 
-  const res = response.choices[0]?.message?.content
+  const res = response.choices[0]?.message.content
 
   if (!res) {
     logger.error('No text response received from DeepSeek model.')

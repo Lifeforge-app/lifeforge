@@ -28,7 +28,7 @@ const MODULE = 'REPLACE_ME' // e.g. lifeforge--achievements
  * - json: `parsePbJson(pbRow.x)`
  * - file: `await migrateFileField({ storage, ... })` (needs an async mapper)
  */
-function mapRow(_pbRow: Record<string, any>): Record<string, unknown> {
+function mapRow(_pbRow: Record<string, unknown>): Record<string, unknown> {
   throw new Error(`TODO: implement mapRow for ${MODULE}`)
 }
 
@@ -48,7 +48,7 @@ async function main(): Promise<void> {
     // Order tables from `inspect.ts` (parents before children).
     for (const table of tables) {
       const pbRows = loadPbRows(pb, table.pgName)
-      const mapped = pbRows.map(row => mapRow(row as Record<string, any>))
+      const mapped = pbRows.map(mapRow)
 
       if (dryRun) {
         console.log(`[dry-run] ${table.pgName}: ${mapped.length} row(s)`)

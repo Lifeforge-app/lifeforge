@@ -17,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <PersonalizationProvider
       defaultValueOverride={{
         rawThemeColor: '#a9d066',
-        theme: (localStorage.getItem('theme') as 'light' | 'dark') || 'system',
+        theme:
+          (localStorage.getItem('theme') as 'light' | 'dark' | null) ||
+          'system',
         fontScale: 1.1
       }}
       forgeAPI={forgeAPI}

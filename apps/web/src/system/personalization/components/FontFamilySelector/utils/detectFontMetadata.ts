@@ -1,3 +1,4 @@
+import type { FontNames } from 'opentype.js'
 import { parse } from 'opentype.js'
 
 export interface FontMetadata {
@@ -16,7 +17,7 @@ export interface FontMetadata {
 export async function detectFontMetadata(
   fileData: File
 ): Promise<FontMetadata> {
-  if (!fileData || !(fileData instanceof File)) {
+  if (!(fileData instanceof File)) {
     throw new Error('No valid file provided')
   }
 
@@ -25,13 +26,14 @@ export async function detectFontMetadata(
 
     const font = parse(arrayBuffer)
 
-    font.names = (font.names as any).windows || font.names
+    font.names =
+      (font.names as unknown as { windows?: FontNames }).windows ?? font.names
 
     // Get font family from name table
     const family =
-      font.names.fontFamily?.en ||
-      font.names.fullName?.en ||
-      font.names.postScriptName?.en ||
+      font.names.fontFamily.en ||
+      font.names.fullName.en ||
+      font.names.postScriptName.en ||
       'Unknown Font'
 
     // Get weight from OS/2 table (usWeightClass)
@@ -39,7 +41,7 @@ export async function detectFontMetadata(
     const weight = font.tables.os2?.usWeightClass || 400
 
     // Get style from name table
-    const style = font.names.fontSubfamily?.en || 'Regular'
+    const style = font.names.fontSubfamily.en || 'Regular'
 
     return {
       family,

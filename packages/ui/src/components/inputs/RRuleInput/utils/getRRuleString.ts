@@ -57,7 +57,7 @@ export const configureYearlyOptions = (
   if (data.type === 'exactDate') {
     options.bymonth = data.month
     options.bymonthday = data.date
-  } else if (data.type === 'relativeDay') {
+  } else {
     options.bysetpos = {
       first: 1,
       second: 2,
@@ -79,7 +79,7 @@ export const configureMonthlyOptions = (
 
   if (data.type === 'exactDate') {
     options.bymonthday = data.onDate
-  } else if (data.type === 'relativeDay') {
+  } else {
     options.bysetpos = {
       first: 1,
       second: 2,
@@ -200,8 +200,6 @@ export function fromRRULEString(rrule: string): {
   }
 
   const options = RRule.parseString(rrule.split('||')[0])
-
-  if (!options) return null
 
   const freq = options.freq
 

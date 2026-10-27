@@ -15,9 +15,14 @@ import forgeAPI from '@/core/utils/forgeAPI'
 
 import NotFoundWidget from '../components/NotFoundWidget'
 
+export interface WidgetProps {
+  dimension: { w: number; h: number }
+  widgetId: string
+}
+
 export interface WidgetEntry {
   moduleName: string
-  component: React.ComponentType<any>
+  component: React.ComponentType<WidgetProps>
   icon: string
   minW: number
   minH: number
@@ -29,7 +34,7 @@ interface WidgetContextValue {
   widgets: Record<string, WidgetEntry>
   loading: boolean
   getComponent: (widgetId: string) => {
-    component: React.ComponentType<any>
+    component: React.ComponentType<WidgetProps>
     name: string | undefined
   }
 }

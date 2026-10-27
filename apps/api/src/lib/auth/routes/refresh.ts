@@ -22,7 +22,7 @@ export const refresh = forge
     }
   })
   .callback(async ({ db, req, res, response }) => {
-    const refreshToken = req.cookies?.refresh_token as string | undefined
+    const refreshToken = req.cookies.refresh_token as string | undefined
 
     if (!refreshToken) {
       return response.unauthorized()

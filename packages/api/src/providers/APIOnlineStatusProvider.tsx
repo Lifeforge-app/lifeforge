@@ -23,9 +23,11 @@ async function checkAPIStatus(
     })
 
     if (res.ok) {
-      const data: any = await res.json()
+      const data = (await res.json()) as {
+        data?: { environment?: 'production' | 'development' }
+      }
 
-      return data.data.environment
+      return data.data?.environment ?? false
     }
 
     return false

@@ -8,15 +8,15 @@ type MediaResponse = Record<string, StagedFile | StagedFile[] | undefined>
 
 export const splitMediaAndData = (
   _media: MediaConfig | null,
-  data: Record<string, any>,
+  data: Record<string, unknown>,
   requestFiles: Record<string, StagedFile[]>
 ): {
-  data: Record<string, any>
+  data: Record<string, unknown>
   media: MediaResponse
 } => {
   const media: MediaResponse = {}
 
-  const result: Record<string, any> = {}
+  const result: Record<string, unknown> = {}
 
   for (const key in requestFiles) {
     const config = _media?.[key]
@@ -36,7 +36,7 @@ export const splitMediaAndData = (
 
   for (const key in data) {
     if (key in (_media || {})) {
-      media[key] = data[key]
+      media[key] = data[key] as MediaResponse[string]
     } else {
       result[key] = data[key]
     }

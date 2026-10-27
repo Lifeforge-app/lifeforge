@@ -76,7 +76,7 @@ export function MainSidebarItem({
     navigate(link)
 
     if (window.innerWidth < 1024) {
-      toggleSidebar?.()
+      toggleSidebar()
     }
   }, [subsectionExpanded, subsection, link, navigate, toggleSidebar])
   const handleToggleSubsection = useCallback(() => {

@@ -59,7 +59,7 @@ export function getResponsiveLayoutStyles(
   for (const [key, value] of Object.entries(props)) {
     const propDef = LAYOUT_PROP_DEFS[key as LayoutPropDefsKey]
 
-    if (!propDef || value === undefined) continue
+    if (value === undefined) continue
 
     const result = getResponsiveStyles(propDef, value)
 
