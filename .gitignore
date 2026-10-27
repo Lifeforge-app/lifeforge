@@ -62,3 +62,6 @@ Thumbs.db
 storage
 medium
 .temp
+
+# local module install state
+modules-lock.json
