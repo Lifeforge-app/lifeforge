@@ -154,9 +154,18 @@ export const status = forge
       })
     }
 
+    const expiresAt = sessions.expiryTime(sessionId)
+
+    // The session existed a moment ago, but its TTL entry can still be gone
+    // (expired between the two lookups). Report it as missing rather than
+    // fabricating an expiry date.
+    if (expiresAt === undefined) {
+      return response.ok({ status: 'not_found' as const })
+    }
+
     return response.ok({
       status: 'pending' as const,
-      expiresAt: new Date(sessions.expiryTime(sessionId)).toISOString()
+      expiresAt: new Date(expiresAt).toISOString()
     })
   })
 
