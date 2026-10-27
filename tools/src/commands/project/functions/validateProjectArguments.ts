@@ -19,7 +19,7 @@ function validateProjects(
 export function validateProjectArguments(projects: string[] | undefined): void {
   const validProjects = Object.keys(PROJECTS)
 
-  if (!projects?.length || !projects) {
+  if (!projects?.length) {
     return
   }
 

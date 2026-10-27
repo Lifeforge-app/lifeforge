@@ -53,7 +53,7 @@ export default function executeCommand(
 
     if (result.status !== 0) {
       const output = [result.stderr, result.stdout]
-        .map(stream => stream?.toString().trim())
+        .map(stream => stream.toString().trim())
         .filter(Boolean)
         .join('\n')
 
@@ -64,7 +64,7 @@ export default function executeCommand(
       )
     }
 
-    return result.stdout?.toString().trim() || ''
+    return result.stdout.toString().trim() || ''
   } catch (error) {
     if (!options.exitOnError) {
       throw error
