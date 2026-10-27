@@ -51,6 +51,7 @@ function StackModal({ item }: { item: ModalInstance }) {
       isOpen={localOpen && !isClosing}
       isTopmost={isTopmost}
       zIndex={zIndex}
+      onClose={onClose}
       onExited={() => {
         if (isClosing) {
           remove(id)

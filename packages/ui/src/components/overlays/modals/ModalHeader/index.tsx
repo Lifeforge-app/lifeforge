@@ -1,3 +1,4 @@
+import { DialogTitle } from '@headlessui/react'
 import { useDebounce } from '@uidotdev/usehooks'
 import _ from 'lodash'
 
@@ -5,6 +6,8 @@ import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
 import { Flex, Icon, Text } from '@/components/primitives'
+
+import { useInsideModal } from '../ModalA11yContext'
 
 function getLocaleKeys(innerTitle: string, namespace?: string) {
   return [
@@ -43,50 +46,58 @@ export function ModalHeader({
   // when the modal is transitioned
   const innerTitle = useDebounce(title, 100)
   const innerIcon = useDebounce(icon, 100)
+  const insideModal = useInsideModal()
+
+  const titleContent =
+    typeof innerTitle === 'string' ? (
+      <>
+        <Text truncate as="span" style={{ minWidth: 0 }}>
+          {namespace === false
+            ? innerTitle
+            : t(
+                [
+                  ...getLocaleKeys(innerTitle),
+                  ...(namespace ? getLocaleKeys(innerTitle, namespace) : []),
+                  ...getLocaleKeys(innerTitle, 'common.modals')
+                ],
+                {
+                  defaultValue: innerTitle
+                }
+              )}
+        </Text>
+        {appendTitle}
+      </>
+    ) : (
+      innerTitle
+    )
 
   return (
     <Flex
       align="center"
       className={className}
+      gap="sm"
       justify="between"
       mb="md"
-      style={{ gap: '0.75em' }}
     >
-      <Flex align="center" minWidth="0" style={{ gap: '0.75em' }} width="100%">
+      <Flex align="center" gap="sm" minWidth="0" width="100%">
         <Icon icon={innerIcon} size={subtitle ? '2em' : '1.5em'} />
         <Flex direction="column" minWidth="0" width="100%">
           <Text asChild size="xl" weight="semibold">
-            <Flex
-              align="center"
-              as="h1"
-              minWidth="0"
-              style={{ gap: '0.75em' }}
-              width="100%"
-            >
-              {typeof innerTitle === 'string' ? (
-                <>
-                  <Text truncate as="span" style={{ minWidth: 0 }}>
-                    {namespace === false
-                      ? innerTitle
-                      : t(
-                          [
-                            ...getLocaleKeys(innerTitle),
-                            ...(namespace
-                              ? getLocaleKeys(innerTitle, namespace)
-                              : []),
-                            ...getLocaleKeys(innerTitle, 'common.modals')
-                          ],
-                          {
-                            defaultValue: innerTitle
-                          }
-                        )}
-                  </Text>
-                  {appendTitle}
-                </>
-              ) : (
-                innerTitle
-              )}
-            </Flex>
+            {insideModal ? (
+              <DialogTitle
+                align="center"
+                as={Flex}
+                gap="sm"
+                minWidth="0"
+                width="100%"
+              >
+                {titleContent}
+              </DialogTitle>
+            ) : (
+              <Flex align="center" as="h1" gap="sm" minWidth="0" width="100%">
+                {titleContent}
+              </Flex>
+            )}
           </Text>
           {subtitle && (
             <Text color="muted" size={{ base: 'sm', sm: 'base' }}>
