@@ -6,7 +6,7 @@ Drizzle ORM (`drizzle-orm@1.0.0-rc.4`) and the `postgres-js` driver. This is a
 `@lifeforge/drizzle` and `@lifeforge/server-utils`.
 
 For file uploads see [`file-storage-sdk.md`](./file-storage-sdk.md); for the
-route DSL see [`server-dsl-migration.md`](./server-dsl-migration.md).
+route DSL see [`server-dsl.md`](./server-dsl.md).
 
 ---
 
@@ -407,7 +407,7 @@ input: {
   server-managed columns (ids, timestamps, relation keys).
 - **Output contracts are success-only** and JSON-Schema-serializable: no
   `z.any()`, `.passthrough()`, `z.custom()`, `z.void()`, `z.unknown()`. See
-  [`server-dsl-migration.md`](./server-dsl-migration.md).
+  [`server-dsl.md`](./server-dsl.md).
 - **Enums**: reuse `createSelectSchema(table).shape.<enumCol>` instead of
   re-declaring the union.
 - **Plain row types**: `typeof table.$inferSelect` / `$inferInsert` when a Zod

@@ -478,13 +478,14 @@ The callback receives a context object, commonly destructuring:
 - `io` - Socket.IO server for pushing progress updates.
 
 `forge.existsIn(z.string(), entries)` marks an input field as a reference; before
-running the callback the framework verifies the record exists and returns a `404`
-if not. It accepts optional (`existsIn(z.string().optional(), …)`) and array
-(`existsIn(z.array(z.string()), …)`) fields, and a non-primary-key column
-(`existsIn(z.string(), users, 'email')`).
+running the callback the framework verifies the record exists (matched on the
+table's single `id` primary key) and returns a `404` if not. It accepts optional
+(`existsIn(z.string().optional(), …)`) and array
+(`existsIn(z.array(z.string()), …)`) fields. Add `{ select: true }` to keep the
+row available to the callback as `existing.one(entries, id)`.
 
-The full DSL and migration notes live in
-[`server-dsl-migration.md`](./server-dsl-migration.md).
+The full DSL and best practices live in
+[`server-dsl.md`](./server-dsl.md).
 
 ### `utils/` and `constants/`
 
@@ -507,7 +508,7 @@ if (![lat, lng, altitude, velocity].every(Number.isFinite)) {
 
 Filter array items the same way. On the client, still treat contract-typed
 numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '-'`). See
-[`server-dsl-migration.md`](./server-dsl-migration.md) for the DSL-side rule.
+[`server-dsl.md`](./server-dsl.md) for the DSL-side rule.
 
 Timestamps are handled for you: DTOs keep `z.date()`, routes return the `Date`
 objects as-is, and the framework serializes them to ISO strings on the wire.
