@@ -52,8 +52,9 @@ export default function executeCommand(
     }
 
     if (result.status !== 0) {
+      // stdout/stderr are null when `stdio` is 'inherit' or 'ignore'.
       const output = [result.stderr, result.stdout]
-        .map(stream => stream.toString().trim())
+        .map(stream => (typeof stream === 'string' ? stream.trim() : ''))
         .filter(Boolean)
         .join('\n')
 
@@ -64,7 +65,7 @@ export default function executeCommand(
       )
     }
 
-    return result.stdout.toString().trim() || ''
+    return typeof result.stdout === 'string' ? result.stdout.trim() : ''
   } catch (error) {
     if (!options.exitOnError) {
       throw error
