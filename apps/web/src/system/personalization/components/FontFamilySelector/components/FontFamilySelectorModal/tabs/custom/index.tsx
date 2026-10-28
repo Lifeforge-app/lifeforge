@@ -52,10 +52,16 @@ function CustomFontSelector() {
       <WithQuery query={customFontsQuery}>
         {fonts =>
           fonts.length > 0 ? (
-            <Flex ref={containerRef} direction="column" flex="1" minHeight="0">
+            <Flex
+              ref={containerRef}
+              direction="column"
+              flex="1"
+              height="100%"
+              minHeight="0"
+            >
               {width > 0 && height > 0 && (
                 <Scrollbar style={{ height, width }}>
-                  <Stack p="sm">
+                  <Stack>
                     {fonts.map(font => (
                       <CustomFontCard key={font.id} font={font} />
                     ))}

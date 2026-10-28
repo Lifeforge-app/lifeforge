@@ -21,7 +21,7 @@ function FontFamilySelectorModal({ onClose }: { onClose: () => void }) {
 
   return (
     <FontFamilySelectorContext value={{ selectedFont, setSelectedFont }}>
-      <Stack flex="1" gap="md" height="100%" minHeight="0" minWidth="60vw">
+      <Stack flex="1" gap="md" height="100%" minHeight="60vh" minWidth="60vw">
         <ModalHeader
           icon="tabler:text-size"
           namespace="common.personalization"
