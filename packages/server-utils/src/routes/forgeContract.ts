@@ -110,6 +110,7 @@ function makeBuilder<
                   ? z.infer<TQuery>
                   : undefined,
                 media: ctx.media as ConvertMedia<TMedia>,
+                existing: ctx.existing,
                 req: ctx.req,
                 res: ctx.res,
                 io: ctx.io,

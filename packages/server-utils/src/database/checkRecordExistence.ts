@@ -8,34 +8,27 @@ import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import type { z } from 'zod'
 
 import ClientError from '../response/ClientError'
+import { ExistingStore } from './existing'
 import { collectExistenceChecks } from './walk'
 
 interface ExistenceGroup {
   table: PgTable
   column: PgColumn
+  key: string
+  select: boolean
   values: Map<unknown, string[]>
 }
 
-function resolveColumn(table: PgTable, column?: string): PgColumn {
+type Row = Record<string, unknown>
+
+function resolveColumn(table: PgTable): PgColumn {
   const tableName = getTableConfig(table).name
-
-  if (column) {
-    const resolved = getTableColumns(table)[column]
-
-    if (!resolved) {
-      throw new Error(
-        `Unknown column "${column}" on table "${tableName}" referenced by existsIn.`
-      )
-    }
-
-    return resolved as PgColumn
-  }
 
   const primary = getTableConfig(table).columns.find(col => col.primary)
 
-  if (!primary) {
+  if (!primary || primary.name !== 'id') {
     throw new Error(
-      `Table "${tableName}" has no primary key to check existence against.`
+      `existsIn requires a single "id" primary key on table "${tableName}".`
     )
   }
 
@@ -43,10 +36,28 @@ function resolveColumn(table: PgTable, column?: string): PgColumn {
 }
 
 /**
+ * Maps a column back to its drizzle property name, which is the key used in the
+ * rows returned by `select()`. These differ when a column's name and property
+ * name are not identical.
+ */
+function resolveColumnKey(table: PgTable, column: PgColumn): string {
+  for (const [key, value] of Object.entries(getTableColumns(table))) {
+    if (value === column) {
+      return key
+    }
+  }
+
+  return column.name
+}
+
+/**
  * Runs every `existsIn` pre-flight check for a parsed request, throwing a
  * `404 ClientError` if any referenced record is missing.
  *
- * Checks are batched per `(table, column)` using a single `IN (...)` query.
+ * Checks are batched per table using a single `IN (...)` query against the
+ * table's primary key. Tables flagged with `{ select: true }` fetch full rows
+ * and are returned in an `ExistingStore` so callbacks can read them through
+ * `existing.one(...)`.
  */
 export async function checkRecordExistence(options: {
   db: PostgresJsDatabase
@@ -54,8 +65,10 @@ export async function checkRecordExistence(options: {
   query?: unknown
   bodySchema?: z.ZodTypeAny
   body?: unknown
-}): Promise<void> {
+}): Promise<ExistingStore> {
   const { db, querySchema, query, bodySchema, body } = options
+
+  const store = new ExistingStore()
 
   const checks = [
     ...collectExistenceChecks(querySchema, query, 'query'),
@@ -63,21 +76,27 @@ export async function checkRecordExistence(options: {
   ]
 
   if (checks.length === 0) {
-    return
+    return store
   }
 
   const groups: ExistenceGroup[] = []
 
   for (const check of checks) {
-    const column = resolveColumn(check.table, check.column)
+    const column = resolveColumn(check.table)
 
-    let group = groups.find(
-      entry => entry.table === check.table && entry.column === column
-    )
+    let group = groups.find(entry => entry.table === check.table)
 
     if (!group) {
-      group = { table: check.table, column, values: new Map() }
+      group = {
+        table: check.table,
+        column,
+        key: resolveColumnKey(check.table, column),
+        select: check.select,
+        values: new Map()
+      }
       groups.push(group)
+    } else {
+      group.select ||= check.select
     }
 
     for (const value of check.values) {
@@ -97,36 +116,44 @@ export async function checkRecordExistence(options: {
 
     const rows = (await (
       db as unknown as {
-        select: (fields: unknown) => {
+        select: (fields?: unknown) => {
           from: (table: PgTable) => {
-            where: (condition: unknown) => Promise<Record<string, unknown>[]>
+            where: (condition: unknown) => Promise<Row[]>
           }
         }
       }
     )
-      .select({ value: group.column })
+      .select(group.select ? undefined : { value: group.column })
       .from(group.table)
-      .where(inArray(group.column, values as never[]))) as {
-      value: unknown
-    }[]
+      .where(inArray(group.column, values as never[]))) as Row[]
 
-    const found = new Set(rows.map(row => row.value))
+    const found = new Set(
+      rows.map(row => (group.select ? row[group.key] : row.value))
+    )
 
     const missing = values.filter(value => !found.has(value))
 
-    if (missing.length === 0) {
-      continue
+    if (missing.length > 0) {
+      const tableName = getTableConfig(group.table).name
+
+      const paths = missing.flatMap(value => group.values.get(value) ?? [])
+
+      throw new ClientError(
+        `Related "${tableName}" record not found (${paths.join(', ')}) for ${group.column.name}: ${missing
+          .map(String)
+          .join(', ')}`,
+        404
+      )
     }
 
-    const tableName = getTableConfig(group.table).name
-
-    const paths = missing.flatMap(value => group.values.get(value) ?? [])
-
-    throw new ClientError(
-      `Related "${tableName}" record not found (${paths.join(', ')}) for ${group.column.name}: ${missing
-        .map(String)
-        .join(', ')}`,
-      404
-    )
+    if (group.select) {
+      store.record({
+        table: group.table,
+        key: group.key,
+        rows
+      })
+    }
   }
+
+  return store
 }

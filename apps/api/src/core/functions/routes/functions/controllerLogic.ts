@@ -68,7 +68,7 @@ function createHandler(
 
       parseBodyPayload(req, media || {}, encrypted, input.body)
 
-      await checkRecordExistence({
+      const existing = await checkRecordExistence({
         db: req.db,
         querySchema: input.query,
         query: req.query,
@@ -97,6 +97,7 @@ function createHandler(
         body: req.body,
         query: req.query,
         media: req.media || {},
+        existing,
         core: createCoreContext({
           module: callerModule as never,
           db: req.db

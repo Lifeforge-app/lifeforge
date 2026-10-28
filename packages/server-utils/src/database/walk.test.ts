@@ -17,8 +17,23 @@ describe('collectExistenceChecks', () => {
     const schema = z.object({ userId: existsIn(z.string(), users) })
 
     expect(collectExistenceChecks(schema, { userId: 'a' }, 'body')).toEqual([
-      { path: 'body.userId', table: users, column: undefined, values: ['a'] }
+      {
+        path: 'body.userId',
+        table: users,
+        select: false,
+        values: ['a']
+      }
     ])
+  })
+
+  it('carries the select flag through', () => {
+    const schema = z.object({
+      userId: existsIn(z.string(), users, { select: true })
+    })
+
+    expect(
+      collectExistenceChecks(schema, { userId: 'a' }, 'body')[0]
+    ).toMatchObject({ select: true, values: ['a'] })
   })
 
   it('collects nested object paths', () => {
@@ -63,20 +78,14 @@ describe('collectExistenceChecks', () => {
     ).toHaveLength(1)
   })
 
-  it('collects array values and custom columns', () => {
+  it('collects array values', () => {
     const schema = z.object({
-      ids: existsIn(z.array(z.string()), categories),
-      email: existsIn(z.string(), users, 'email')
+      ids: existsIn(z.array(z.string()), categories)
     })
 
-    const checks = collectExistenceChecks(
-      schema,
-      { ids: ['a', 'b'], email: 'x@y.z' },
-      'body'
-    )
+    const checks = collectExistenceChecks(schema, { ids: ['a', 'b'] }, 'body')
 
     expect(checks[0]).toMatchObject({ values: ['a', 'b'] })
-    expect(checks[1]).toMatchObject({ column: 'email', values: ['x@y.z'] })
   })
 
   it('returns nothing for schemas without markers', () => {

@@ -10,7 +10,7 @@ import { EXISTS_IN, type ExistenceCheck } from './existsIn'
 export interface CollectedExistenceCheck {
   path: string
   table: PgTable
-  column?: string
+  select: boolean
   values: unknown[]
 }
 
@@ -36,7 +36,7 @@ function walk(
       results.push({
         path: path || 'value',
         table: check.table,
-        column: check.column,
+        select: check.select === true,
         values
       })
     }

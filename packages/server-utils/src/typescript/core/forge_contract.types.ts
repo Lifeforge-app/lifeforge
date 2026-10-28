@@ -4,6 +4,8 @@ import type { Request, RequestHandler, Response } from 'express'
 import type { Server } from 'socket.io'
 import type { z } from 'zod'
 
+import type { ExistingRecords, ExistingStore } from '../../database/existing'
+import type { SelectableTables } from '../../database/existsIn'
 import { OutputDefinition, OutputHelpers } from '../../response'
 import { ConvertMedia, MediaConfig } from '../standalone/media.types'
 import { CoreContext } from './core_context.types'
@@ -18,6 +20,7 @@ export interface ForgeExpressContext<TSchema extends AnyRelations = any> {
   query: unknown
   media: unknown
   core: CoreContext
+  existing: ExistingStore
 }
 
 export interface ForgeContract {
@@ -57,6 +60,10 @@ export type ForgeContext<
   body: TBody extends z.ZodTypeAny ? z.infer<TBody> : undefined
   query: TQuery extends z.ZodTypeAny ? z.infer<TQuery> : undefined
   media: ConvertMedia<TMedia>
+  existing: ExistingRecords<
+    | SelectableTables<TQuery extends z.ZodTypeAny ? TQuery : never>
+    | SelectableTables<TBody extends z.ZodTypeAny ? TBody : never>
+  >
   req: Request
   res: Response
   io: Server

@@ -1,10 +1,11 @@
 import { PGlite } from '@electric-sql/pglite'
-import { pgTable, uuid, varchar } from 'drizzle-orm/pg-core'
+import { pgTable, primaryKey, uuid, varchar } from 'drizzle-orm/pg-core'
 import { drizzle } from 'drizzle-orm/pglite'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import z from 'zod'
 
 import { checkRecordExistence } from './checkRecordExistence'
+import { ExistingStore } from './existing'
 import { existsIn } from './existsIn'
 
 const calendars = pgTable('calendars', {
@@ -15,6 +16,19 @@ const calendars = pgTable('calendars', {
 const users = pgTable('users', {
   id: uuid('id').primaryKey(),
   email: varchar('email')
+})
+
+const memberships = pgTable(
+  'memberships',
+  {
+    userId: uuid('user_id').notNull(),
+    teamId: uuid('team_id').notNull()
+  },
+  table => [primaryKey({ columns: [table.userId, table.teamId] })]
+)
+
+const files = pgTable('files', {
+  key: varchar('key').primaryKey()
 })
 
 const EXISTING = '11111111-1111-1111-1111-111111111111'
@@ -52,7 +66,7 @@ describe('checkRecordExistence', () => {
         bodySchema,
         body: { calendarId: EXISTING }
       })
-    ).resolves.toBeUndefined()
+    ).resolves.toBeInstanceOf(ExistingStore)
   })
 
   it('throws a 404 when the referenced record is missing', async () => {
@@ -76,7 +90,7 @@ describe('checkRecordExistence', () => {
 
     await expect(
       checkRecordExistence({ db: db as never, bodySchema, body: {} })
-    ).resolves.toBeUndefined()
+    ).resolves.toBeInstanceOf(ExistingStore)
   })
 
   it('checks every value in an array field', async () => {
@@ -98,29 +112,33 @@ describe('checkRecordExistence', () => {
         bodySchema,
         body: { ids: [EXISTING] }
       })
-    ).resolves.toBeUndefined()
+    ).resolves.toBeInstanceOf(ExistingStore)
   })
 
-  it('supports custom columns', async () => {
-    const bodySchema = z.object({
-      email: existsIn(z.string(), users, 'email')
+  it('rejects tables without a single "id" primary key', async () => {
+    const composite = z.object({
+      membershipId: existsIn(z.string(), memberships)
     })
 
     await expect(
       checkRecordExistence({
         db: db as never,
-        bodySchema,
-        body: { email: 'work@example.com' }
+        bodySchema: composite,
+        body: { membershipId: EXISTING }
       })
-    ).resolves.toBeUndefined()
+    ).rejects.toThrow('requires a single "id" primary key')
+
+    const nonId = z.object({
+      key: existsIn(z.string(), files)
+    })
 
     await expect(
       checkRecordExistence({
         db: db as never,
-        bodySchema,
-        body: { email: 'nobody@example.com' }
+        bodySchema: nonId,
+        body: { key: 'a' }
       })
-    ).rejects.toMatchObject({ code: 404 })
+    ).rejects.toThrow('requires a single "id" primary key')
   })
 
   it('checks query schemas too', async () => {
@@ -142,6 +160,47 @@ describe('checkRecordExistence', () => {
         bodySchema: z.object({ name: z.string() }),
         body: { name: 'x' }
       })
-    ).resolves.toBeUndefined()
+    ).resolves.toBeInstanceOf(ExistingStore)
+  })
+
+  it('exposes rows guarded with select: true', async () => {
+    const bodySchema = z.object({
+      calendarId: existsIn(z.string(), calendars, { select: true })
+    })
+
+    const store = await checkRecordExistence({
+      db: db as never,
+      bodySchema,
+      body: { calendarId: EXISTING }
+    })
+
+    expect(store.one(calendars, EXISTING)).toMatchObject({
+      id: EXISTING,
+      name: 'Work'
+    })
+    expect(() => store.one(calendars, MISSING)).toThrowError()
+  })
+
+  it('stores rows for every select: true check across query and body', async () => {
+    const querySchema = z.object({
+      calendarId: existsIn(z.string(), calendars, { select: true })
+    })
+
+    const bodySchema = z.object({
+      userId: existsIn(z.string(), users, { select: true })
+    })
+
+    const store = await checkRecordExistence({
+      db: db as never,
+      querySchema,
+      query: { calendarId: EXISTING },
+      bodySchema,
+      body: { userId: EXISTING }
+    })
+
+    expect(store.one(calendars, EXISTING)).toMatchObject({ name: 'Work' })
+    expect(store.one(users, EXISTING)).toMatchObject({
+      email: 'work@example.com'
+    })
   })
 })

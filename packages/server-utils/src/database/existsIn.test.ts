@@ -16,14 +16,25 @@ describe('existsIn', () => {
     expect(existsIn(schema, users)).toBe(schema)
   })
 
-  it('binds the table and optional column to the schema', () => {
+  it('binds the table to the schema', () => {
     const schema = z.string()
 
-    existsIn(schema, users, 'email')
+    existsIn(schema, users)
 
     expect((schema as unknown as Record<symbol, unknown>)[EXISTS_IN]).toEqual({
       table: users,
-      column: 'email'
+      select: false
+    })
+  })
+
+  it('records the select option', () => {
+    const schema = z.string()
+
+    existsIn(schema, users, { select: true })
+
+    expect((schema as unknown as Record<symbol, unknown>)[EXISTS_IN]).toEqual({
+      table: users,
+      select: true
     })
   })
 
