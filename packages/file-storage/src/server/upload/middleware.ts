@@ -45,7 +45,10 @@ const fieldsUploadMiddleware =
       storage: createStagingStorage(),
       limits: {
         fileSize: Number(process.env.FILE_UPLOAD_MAX_BYTES) || 2 * 1024 ** 3
-      }
+      },
+      // Browsers send raw UTF-8 bytes in Content-Disposition. Busboy defaults to
+      // latin1, which turns non-ASCII filenames into mojibake.
+      defParamCharset: 'utf8'
     })
 
     upload.fields(

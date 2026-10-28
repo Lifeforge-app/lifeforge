@@ -70,4 +70,18 @@ describe('fieldsUploadMiddleware', () => {
     expect(received?.size).toBe(PNG_BUFFER.length)
     expect((await fs.stat(received!.path)).isFile()).toBe(true)
   })
+
+  it('decodes non-ASCII filenames as UTF-8', async () => {
+    const form = new FormData()
+
+    form.append(
+      'file',
+      new File([PNG_BUFFER], '世界 建筑.png', { type: 'image/png' })
+    )
+
+    const res = await fetch(`${baseUrl}/upload`, { method: 'POST', body: form })
+
+    expect(res.status).toBe(200)
+    expect(received?.originalName).toBe('世界 建筑.png')
+  })
 })
