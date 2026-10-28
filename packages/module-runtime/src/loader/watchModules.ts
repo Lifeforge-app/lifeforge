@@ -31,9 +31,14 @@ export function watchModules(
 
   const watcher = watch(modulesDir, {
     ignoreInitial: true,
-    // Never descend into per-module dependencies or git data; watching those
-    // exhausts file descriptors (EMFILE).
-    ignored: [/[\\/]node_modules[\\/]/, /[\\/]\.git[\\/]/],
+    // Never descend into per-module dependencies or dot-directories (git data,
+    // caches such as `.cache`); watching those exhausts file descriptors
+    // (EMFILE).
+    ignored: [
+      /[\\/]node_modules[\\/]/,
+      /[\\/]\.[^\\/]+[\\/]/,
+      /[\\/]\.[^\\/]+$/
+    ],
     awaitWriteFinish: {
       stabilityThreshold: 300,
       pollInterval: 100
