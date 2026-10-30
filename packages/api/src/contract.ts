@@ -242,7 +242,6 @@ export interface Contract {
   };
   ping: EndpointPing;
   status: EndpointStatus;
-  corsAnywhere: EndpointCorsAnywhere;
   encryptionPublicKey: EndpointEncryptionPublicKey;
 }
 export interface EndpointRoot {
@@ -1286,22 +1285,6 @@ export interface EndpointStatus {
 }
 export interface EndpointStatus_OutputOK {
   environment: string;
-}
-export interface EndpointCorsAnywhere {
-  method: "get";
-  input: {
-    query?: EndpointCorsAnywhere_InputQuery;
-  };
-  output: {
-    OK: EndpointCorsAnywhere_OutputOK;
-  };
-  media: null;
-}
-export interface EndpointCorsAnywhere_InputQuery {
-  url: string;
-}
-export interface EndpointCorsAnywhere_OutputOK {
-  [k: string]: unknown;
 }
 export interface EndpointEncryptionPublicKey {
   method: "get";

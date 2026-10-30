@@ -1,5 +1,4 @@
 import { getPublicKey } from '@functions/encryption'
-import corsAnywhere from '@lib/corsAnywhere'
 import dayjs from 'dayjs'
 import path from 'path'
 import z from 'zod'
@@ -84,7 +83,6 @@ const coreRoutes = forgeRouter({
   files: (await import('@lib/files')).default,
   ping,
   status,
-  corsAnywhere,
   encryptionPublicKey
 })
 

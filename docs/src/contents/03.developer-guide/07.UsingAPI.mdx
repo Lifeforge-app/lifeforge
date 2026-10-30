@@ -178,16 +178,6 @@ const isAvailable = await forgeAPI
   .query()
 ```
 
-### corsAnywhere
-
-Proxy requests through the server to bypass CORS restrictions:
-
-```typescript
-const proxiedUrl = await forgeAPI
-  .corsAnywhere({ url: 'https://external-api.com/data' })
-  .query()
-```
-
 ### getGoogleFont
 
 Fetch Google Font data for dynamic font loading:

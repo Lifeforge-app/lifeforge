@@ -20,9 +20,6 @@ export const CORE_HELPERS = {
   checkModuleAvailability: {
     path: 'modules/checkModuleAvailability'
   },
-  corsAnywhere: {
-    path: 'corsAnywhere'
-  },
   getGoogleFont: {
     path: 'fonts/google/get'
   }
@@ -55,10 +52,6 @@ export interface CoreHelperTypes {
   checkModuleAvailability: {
     input: { id: string }
     output: boolean
-  }
-  corsAnywhere: {
-    input: { url: string }
-    output: string
   }
   getGoogleFont: {
     input: { family: string }
