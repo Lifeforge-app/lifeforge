@@ -114,7 +114,7 @@ export async function checkRecordExistence(options: {
       continue
     }
 
-    const rows = (await (
+    const rows = await (
       db as unknown as {
         select: (fields?: unknown) => {
           from: (table: PgTable) => {
@@ -125,7 +125,7 @@ export async function checkRecordExistence(options: {
     )
       .select(group.select ? undefined : { value: group.column })
       .from(group.table)
-      .where(inArray(group.column, values as never[]))) as Row[]
+      .where(inArray(group.column, values as never[]))
 
     const found = new Set(
       rows.map(row => (group.select ? row[group.key] : row.value))
