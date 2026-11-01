@@ -37,6 +37,12 @@ export interface ScrollbarProps {
   autoHeight?: boolean
   autoHeightMax?: number | string
   /**
+   * Reserves a lane on the right for the scrollbar when the content overflows.
+   * Set to `false` to let the scrollbar overlay the content instead. Defaults
+   * to `true`.
+   */
+  reserveScrollbarLane?: boolean
+  /**
    * Responsive bottom padding rendered as a trailing spacer inside the scroll
    * content, so the clearance is part of the scrollable area. Defaults to `xs`,
    * which is just enough to keep the last item's box-shadow from being clipped.
@@ -61,6 +67,7 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
       hideHorizontal = false,
       autoHeight = false,
       autoHeightMax,
+      reserveScrollbarLane = true,
       pb,
       onScroll
     },
@@ -90,7 +97,8 @@ export const Scrollbar = forwardRef<ScrollbarHandle, ScrollbarProps>(
 
     // The lane is only worth reserving when the scrollbar is actually shown,
     // otherwise it leaves a visible gap on the right of short content.
-    const lane = hasVerticalOverflow ? SCROLLBAR_LANE : 0
+    const lane =
+      reserveScrollbarLane && hasVerticalOverflow ? SCROLLBAR_LANE : 0
 
     // Reserving or dropping the lane changes the viewport width without
     // changing the host's outer size, so the overflow state and handle sizes

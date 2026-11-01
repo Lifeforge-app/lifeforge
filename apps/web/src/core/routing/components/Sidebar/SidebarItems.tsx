@@ -78,7 +78,7 @@ function SidebarItems({ query }: { query: string }) {
   return (
     <Flex as="ul" direction="column" flex="1" minHeight="0" pb="lg">
       <Box asChild flex="1" minHeight="0">
-        <Scrollbar>
+        <Scrollbar reserveScrollbarLane={false}>
           <Flex direction="column" flex="1" gap="xs">
             {filteredRoutes.length > 0 ? (
               filteredRoutes.map((item, index) => {
