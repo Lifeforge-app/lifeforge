@@ -1,4 +1,4 @@
-import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react'
+import { Dialog, DialogBackdrop, DialogPanel, Portal } from '@headlessui/react'
 import { useState } from 'react'
 
 import { Scrollbar } from '@/components/layout/Scrollbar'
@@ -108,9 +108,9 @@ export function ModalWrapper({
           </ModalA11yContext>
         </DialogPanel>
       </Transition>
-      {/* Portalled overlays land inside the dialog, so Headless UI neither
-          marks them inert nor treats clicks on them as outside clicks. */}
-      <Box ref={setPortalContainer} />
+      <Portal>
+        <Box ref={setPortalContainer} />
+      </Portal>
     </Dialog>
   )
 }
