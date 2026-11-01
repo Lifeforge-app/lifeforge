@@ -10,12 +10,14 @@ export function SidebarItemWrapper({
   active,
   children,
   className,
+  collapsed = false,
   onClick,
   ref
 }: {
   active: boolean
   children: React.ReactNode
   className?: string
+  collapsed?: boolean
   onClick?: () => void
   ref?: Ref<HTMLElement>
 }) {
@@ -32,12 +34,13 @@ export function SidebarItemWrapper({
           as="li"
           className={clsx(
             'sidebar-item',
-            active && styles.listItemActiveIndicator,
+            active && !collapsed && styles.listItemActiveIndicator,
             className
           )}
           justify="center"
           position="relative"
-          px="md"
+          px={collapsed ? 'sm' : 'md'}
+          width="100%"
         >
           <Transition duration="0.1s">
             <Flex
@@ -58,10 +61,10 @@ export function SidebarItemWrapper({
               className="group"
               gap="md"
               height="3.5em"
-              justify="between"
-              pl="md"
+              justify={collapsed ? 'center' : 'between'}
+              pl={collapsed ? 'none' : 'md'}
               position="relative"
-              pr="xs"
+              pr={collapsed ? 'none' : 'xs'}
               r="lg"
               role="button"
               style={{

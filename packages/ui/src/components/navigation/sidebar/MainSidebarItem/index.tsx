@@ -87,7 +87,12 @@ export function MainSidebarItem({
 
   return (
     <>
-      <SidebarItemWrapper ref={ref} active={active} onClick={handleNavigation}>
+      <SidebarItemWrapper
+        ref={ref}
+        active={active}
+        collapsed={!sidebarExpanded}
+        onClick={handleNavigation}
+      >
         <SidebarItemIcon active={active} icon={icon} />
         <SidebarItemContent
           active={active}

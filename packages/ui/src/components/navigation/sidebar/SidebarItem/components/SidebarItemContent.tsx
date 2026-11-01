@@ -45,6 +45,10 @@ export function SidebarItemContent({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  if (isMainSidebarItem && !sidebarExpanded) {
+    return null
+  }
+
   return (
     <>
       <Flex align="center" gap="md" justify="between" minWidth="0" width="100%">
