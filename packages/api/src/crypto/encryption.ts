@@ -436,8 +436,10 @@ export async function encryptRequest<T>(
   // Encrypt the AES key with server's RSA public key
   const encryptedKey = await encryptAESKeyWithRSA(aesKey)
 
-  // Encrypt the data with AES
-  const jsonData = JSON.stringify(data)
+  // Encrypt the data with AES. Mutations without a body pass `undefined`,
+  // which JSON.stringify would otherwise turn into an empty payload that the
+  // server cannot parse.
+  const jsonData = JSON.stringify(data ?? {})
 
   const { iv, ciphertext, tag } = await encryptWithAES(jsonData, aesKey)
 
