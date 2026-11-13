@@ -51,7 +51,7 @@ function AuthForm({ providers }: { providers: string[] }) {
 
     setFormDisabled(true)
 
-    await authenticate({ email: emailOrUsername, password })
+    await authenticate({ emailOrUsername: emailOrUsername, password })
       .then(res => {
         if (res === '2fa_required' || !res) {
           open(TwoFAModal, {})

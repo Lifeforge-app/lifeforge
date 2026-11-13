@@ -4,16 +4,13 @@ import type { Module } from '@lifeforge/configs'
 import { Box, Card, Flex, Icon, Text, colorWithOpacity } from '@lifeforge/ui'
 
 function ModuleItem({ module }: { module: Module }) {
-  // Module name format: @lifeforge/lifeforge--wallet -> lifeforge--wallet
-  const moduleKey = module.name.replace('@lifeforge/', '')
-
   const { t, i18n } = useTranslation([
-    `apps.${moduleKey}`,
+    `apps.${module.name}`,
     'common.module-manager'
   ])
 
-  const translatedTitle = i18n.exists(`apps.${moduleKey}:title`)
-    ? t(`apps.${moduleKey}:title`)
+  const translatedTitle = i18n.exists(`apps.${module.name}:title`)
+    ? t(`apps.${module.name}:title`)
     : module.displayName
 
   return (
@@ -44,16 +41,16 @@ function ModuleItem({ module }: { module: Module }) {
         </Flex>
       </Flex>
       <Text as="p" color="muted" leading="relaxed" lineClamp={2}>
-        {i18n.exists(`apps.${moduleKey}:description`)
-          ? t([`apps.${moduleKey}:description`])
+        {i18n.exists(`apps.${module.name}:description`)
+          ? t([`apps.${module.name}:description`])
           : module.description}
       </Text>
       <Box style={{ marginTop: 'auto' }}>
         {module.author && (
           <Flex asChild align="center" gap="sm">
             <Text color="muted">
-              <Icon icon="tabler:user" size="1.1rem" />
-              <span>{module.author.split('<')[0].trim()}</span>
+              <Icon icon="tabler:user" size="1.1em" />
+              {module.author.split('<')[0]?.trim()}
             </Text>
           </Flex>
         )}

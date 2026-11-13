@@ -1,17 +1,17 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 import os from 'os'
 import path from 'path'
-import { Readable } from 'stream'
-import { pipeline } from 'stream/promises'
-import { extract } from 'tar'
-import { createGunzip } from 'zlib'
 
-import logger from '@/utils/logger'
-import normalizePackage from '@/utils/normalizePackage'
-import { checkPackageExists, getPackageTarballUrl } from '@/utils/registry'
+import { downloadArchive } from '@/utils/github'
+import { resolveEntry } from '@/utils/registryIndex'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
-import listModules from '../functions/listModules'
+import listModules, {
+  type ModuleBasicInfo,
+  resolveModule
+} from '../functions/listModules'
 
 interface FileDiff {
   added: string[]
@@ -67,12 +67,12 @@ function compareFileContent(file1: string, file2: string): boolean {
 }
 
 /**
- * Compares local and registry directories to find differences.
+ * Compares local and remote directories to find differences.
  */
-function compareDirectories(localDir: string, registryDir: string): FileDiff {
+function compareDirectories(localDir: string, remoteDir: string): FileDiff {
   const localFiles = new Set(getAllFiles(localDir))
 
-  const registryFiles = new Set(getAllFiles(registryDir))
+  const remoteFiles = new Set(getAllFiles(remoteDir))
 
   const added: string[] = []
 
@@ -81,48 +81,26 @@ function compareDirectories(localDir: string, registryDir: string): FileDiff {
   const deleted: string[] = []
 
   for (const file of localFiles) {
-    if (!registryFiles.has(file)) {
+    if (!remoteFiles.has(file)) {
       added.push(file)
     } else {
       const localPath = path.join(localDir, file)
 
-      const registryPath = path.join(registryDir, file)
+      const remotePath = path.join(remoteDir, file)
 
-      if (!compareFileContent(localPath, registryPath)) {
+      if (!compareFileContent(localPath, remotePath)) {
         modified.push(file)
       }
     }
   }
 
-  for (const file of registryFiles) {
+  for (const file of remoteFiles) {
     if (!localFiles.has(file)) {
       deleted.push(file)
     }
   }
 
   return { added, modified, deleted }
-}
-
-/**
- * Downloads and extracts a package tarball.
- */
-async function downloadAndExtractTarball(
-  tarballUrl: string,
-  extractDir: string
-): Promise<void> {
-  const response = await fetch(tarballUrl)
-
-  if (!response.ok || !response.body) {
-    throw new Error(`Failed to download tarball: ${response.statusText}`)
-  }
-
-  fs.mkdirSync(extractDir, { recursive: true })
-
-  const nodeStream = Readable.fromWeb(
-    response.body as Parameters<typeof Readable.fromWeb>[0]
-  )
-
-  await pipeline(nodeStream, createGunzip(), extract({ cwd: extractDir }))
 }
 
 /**
@@ -135,50 +113,48 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
     diff.added.length > 0 || diff.modified.length > 0 || diff.deleted.length > 0
 
   if (!hasChanges) {
-    logger.print(
+    log.message(
       `  ${chalk.green('✓')} ${chalk.blue(moduleName)} ${chalk.dim('is in sync')}`
     )
 
     return false
   }
 
-  logger.print(`  ${chalk.yellow('!')} ${chalk.blue(moduleName)}`)
+  log.message(`  ${chalk.yellow('!')} ${chalk.blue(moduleName)}`)
 
   if (diff.added.length > 0) {
-    logger.print(chalk.green(`      + ${diff.added.length} added locally`))
+    log.message(chalk.green(`      + ${diff.added.length} added locally`))
 
     for (const file of diff.added.slice(0, 5)) {
-      logger.print(chalk.dim(`        ${file}`))
+      log.message(chalk.dim(`        ${file}`))
     }
 
     if (diff.added.length > 5) {
-      logger.print(chalk.dim(`        ... and ${diff.added.length - 5} more`))
+      log.message(chalk.dim(`        ... and ${diff.added.length - 5} more`))
     }
   }
 
   if (diff.modified.length > 0) {
-    logger.print(chalk.yellow(`      ~ ${diff.modified.length} modified`))
+    log.message(chalk.yellow(`      ~ ${diff.modified.length} modified`))
 
     for (const file of diff.modified.slice(0, 5)) {
-      logger.print(chalk.dim(`        ${file}`))
+      log.message(chalk.dim(`        ${file}`))
     }
 
     if (diff.modified.length > 5) {
-      logger.print(
-        chalk.dim(`        ... and ${diff.modified.length - 5} more`)
-      )
+      log.message(chalk.dim(`        ... and ${diff.modified.length - 5} more`))
     }
   }
 
   if (diff.deleted.length > 0) {
-    logger.print(chalk.red(`      - ${diff.deleted.length} deleted locally`))
+    log.message(chalk.red(`      - ${diff.deleted.length} deleted locally`))
 
     for (const file of diff.deleted.slice(0, 5)) {
-      logger.print(chalk.dim(`        ${file}`))
+      log.message(chalk.dim(`        ${file}`))
     }
 
     if (diff.deleted.length > 5) {
-      logger.print(chalk.dim(`        ... and ${diff.deleted.length - 5} more`))
+      log.message(chalk.dim(`        ... and ${diff.deleted.length - 5} more`))
     }
   }
 
@@ -186,99 +162,109 @@ function printDiff(moduleName: string, diff: FileDiff): boolean {
 }
 
 /**
- * Compares a single module against its registry version.
+ * Compares a single module against its published (registry) version.
  *
  * @returns true if has changes, false if in sync, null if comparison failed
  */
-async function compareModule(packageName: string): Promise<boolean | null> {
-  const { fullName, shortName, targetDir } = normalizePackage(packageName)
+async function compareModule(mod: ModuleBasicInfo): Promise<boolean | null> {
+  const { id: shortName, dir: targetDir } = mod
 
   if (!fs.existsSync(targetDir)) {
-    logger.error(`Module ${chalk.blue(shortName)} is not installed`)
+    log.error(`Module ${chalk.blue(shortName)} is not installed`)
 
     return null
   }
 
-  if (!(await checkPackageExists(fullName))) {
-    logger.print(
+  const entry = await resolveEntry('modules', shortName)
+
+  if (!entry) {
+    log.message(
       `  ${chalk.dim('○')} ${chalk.blue(shortName)} ${chalk.dim('(not published)')}`
     )
 
     return null
   }
 
-  const tarballUrl = await getPackageTarballUrl(fullName)
+  const commitSha = entry.versions[entry.latest]
 
-  if (!tarballUrl) {
-    logger.warn(`Could not get tarball URL for ${chalk.blue(fullName)}`)
+  if (!commitSha) {
+    log.warn(`Could not resolve release commit for ${chalk.blue(shortName)}`)
 
     return null
   }
 
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'forge-compare-'))
 
+  startSpinner(`Downloading ${chalk.blue(shortName)} from the registry...`)
+
   try {
-    logger.debug(`Downloading ${chalk.blue(fullName)} from registry...`)
+    await downloadArchive(entry.repo, commitSha, tempDir)
 
-    await downloadAndExtractTarball(tarballUrl, tempDir)
+    stopSpinner()
 
-    const extractedDir = path.join(tempDir, 'package')
-
-    if (!fs.existsSync(extractedDir)) {
-      throw new Error('Extracted tarball does not contain a package directory')
-    }
-
-    const diff = compareDirectories(targetDir, extractedDir)
+    const diff = compareDirectories(targetDir, tempDir)
 
     return printDiff(shortName, diff)
+  } catch (error) {
+    failSpinner(`Failed to compare ${chalk.blue(shortName)}`)
+
+    throw error
   } finally {
     fs.rmSync(tempDir, { recursive: true, force: true })
   }
 }
 
 /**
- * Compares one or all modules against their registry versions.
+ * Compares one or all modules against their published versions.
  *
  * Shows which files have been added, modified, or deleted locally
  * compared to the published version in the registry.
  */
 export async function compareModuleHandler(moduleName?: string): Promise<void> {
   if (moduleName) {
-    logger.print('')
-    await compareModule(moduleName)
-    logger.print('')
+    const mod = resolveModule(moduleName)
+
+    if (!mod) {
+      log.error(`Module ${chalk.blue(moduleName)} is not installed`)
+
+      return
+    }
+
+    log.message('')
+    await compareModule(mod)
+    log.message('')
 
     return
   }
 
-  const modules = listModules()
+  const modules = Object.values(listModules())
 
-  if (Object.keys(modules).length === 0) {
-    logger.print('No modules installed')
+  if (modules.length === 0) {
+    log.message('No modules installed')
 
     return
   }
 
-  logger.print(
-    `\nComparing ${chalk.blue(String(Object.keys(modules).length))} modules with registry...\n`
+  log.message(
+    `\nComparing ${chalk.blue(String(modules.length))} modules with the registry...\n`
   )
 
   let changedCount = 0
 
-  for (const name of Object.keys(modules)) {
-    const hasChanges = await compareModule(name)
+  for (const mod of modules) {
+    const hasChanges = await compareModule(mod)
 
     if (hasChanges) {
       changedCount++
     }
   }
 
-  logger.print('')
+  log.message('')
 
   if (changedCount === 0) {
-    logger.success('All modules are in sync with the registry')
+    log.success('All modules are in sync with the registry')
   } else {
-    logger.warn(
+    log.warn(
       `${chalk.blue(String(changedCount))} module${changedCount > 1 ? 's' : ''} have local changes`
     )
   }

@@ -7,7 +7,10 @@ import { Box, Flex, Text } from '@/components/primitives'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -38,6 +41,8 @@ export type CurrencyInputProps = {
   errorMsg?: string
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 } & InputVariants
 
 /** CurrencyInputComponent for entering currency values with two decimal places and comma-separated thousands. */
@@ -54,7 +59,8 @@ export function CurrencyInput({
   className,
   namespace,
   errorMsg,
-  onEnter
+  onEnter,
+  wrapperProps
 }: CurrencyInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
 
@@ -71,6 +77,7 @@ export function CurrencyInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}

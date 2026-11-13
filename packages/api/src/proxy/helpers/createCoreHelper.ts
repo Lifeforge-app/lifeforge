@@ -1,34 +1,29 @@
-import type z from 'zod'
-
 import type { UntypedEndpointType } from '../../types/proxy'
 import { ForgeEndpoint } from '../forgeEndpoint'
-import { CORE_HELPERS, type CoreHelperName } from './config'
+import {
+  CORE_HELPERS,
+  type CoreHelperName,
+  type CoreHelperTypes
+} from './config'
 
 /**
  * Factory function that creates a core helper method for a given helper name.
  *
- * Returns a function that, when called with the appropriate input,
- * returns a ForgeEndpoint configured for that core server route.
+ * Core helpers always target the core API, even when called from a module
+ * proxy, so they deliberately use an empty scope instead of the module's.
  *
- * @template T - The core helper name (checkAPIKeys, corsAnywhere, getGoogleFont)
- * @param apiHost - The base URL of the API server
  * @param name - The name of the core helper to create
- * @returns A function that creates a ForgeEndpoint for the specified core route
- *
  * @internal Used by createForgeProxy to provide core helper methods
  */
-export function createCoreHelper<T extends CoreHelperName>(
-  apiHost: string | undefined,
-  name: T
-) {
-  const { path, schema: _schema } = CORE_HELPERS[name]
+export function createCoreHelper<T extends CoreHelperName>(name: T) {
+  const { path } = CORE_HELPERS[name]
 
-  return (input: z.infer<typeof _schema.input>) =>
+  return (input: CoreHelperTypes[T]['input']) =>
     new ForgeEndpoint<
       UntypedEndpointType<
-        z.infer<typeof _schema.output>,
+        CoreHelperTypes[T]['output'],
         never,
-        z.infer<typeof _schema.input>
+        CoreHelperTypes[T]['input']
       >
-    >(apiHost, path).input(input as never)
+    >({}, path).input(input)
 }

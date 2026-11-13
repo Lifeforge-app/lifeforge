@@ -71,11 +71,7 @@ export async function bootstrapModules(
   const remotes: { name: string; entry: string; type: 'module' }[] = []
 
   for (const mod of federatedModuleManifests) {
-    if (!import.meta.env.DEV && mod.isDevMode) {
-      continue
-    }
-
-    const remoteName = `m_${mod.moduleId}`
+    const remoteName = `m_${mod.remoteId}`
     registeredRemotesSet.add(remoteName)
 
     remotes.push({
@@ -90,11 +86,13 @@ export async function bootstrapModules(
       rawModule: FederatedModule
     } = {
       name: mod.name,
-      moduleId: mod.moduleId,
+      id: mod.id,
+      remoteId: mod.remoteId,
       icon: mod.icon,
       category: mod.category,
       routes: {},
       widgets: [],
+      hidden: mod.hidden,
       APIKeyAccess: mod.APIKeyAccess,
       subsection: mod.subsection,
       rawModule: mod

@@ -1,6 +1,5 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
-
-import logger from '@/utils/logger'
 
 import { listLocalesWithMeta } from '../functions/listLocales'
 
@@ -8,19 +7,19 @@ export function listLocalesHandler(): void {
   const locales = listLocalesWithMeta()
 
   if (locales.length === 0) {
-    logger.info('No language packs installed')
-    logger.info(
+    log.step('No language packs installed')
+    log.step(
       'Use "pnpm forge locales install <lang>" to install a language pack'
     )
 
     return
   }
 
-  logger.info(`Installed language packs (${locales.length}):`)
+  log.step(`Installed language packs (${locales.length}):`)
 
-  for (const locale of locales.sort((a, b) => a.name.localeCompare(b.name))) {
-    logger.print(
-      `  ${chalk.blue(locale.name)} - ${locale.displayName} (v.${locale.version})`
+  for (const locale of locales.sort((a, b) => a.id.localeCompare(b.id))) {
+    log.message(
+      `  ${chalk.blue(locale.id)} - ${locale.displayName} (v.${locale.version})`
     )
   }
 }

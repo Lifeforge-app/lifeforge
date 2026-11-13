@@ -100,8 +100,8 @@ export const Default: Story = {
 }
 
 /**
- * `size` maps to the design-system font-size tokens. From `'sm'` (0.875rem)
- * to `'9xl'` (8rem), all twelve steps are shown.
+ * `size` maps to the design-system font-size tokens. From `'sm'` (0.875em)
+ * to `'9xl'` (8em), all twelve steps are shown.
  */
 export const FontSize: Story = {
   args: {},
@@ -124,7 +124,7 @@ export const FontSize: Story = {
         ] as const
       ).map(size => (
         <Flex key={size} align="baseline" gap="md">
-          <Box asChild flexShrink="0" width="3rem">
+          <Box asChild flexShrink="0" width="3em">
             <Text
               as="code"
               color={{ base: 'bg-400', dark: 'bg-500' }}
@@ -149,7 +149,7 @@ export const FontWeight: Story = {
     <ScrollableStory>
       {(['normal', 'medium', 'semibold', 'bold'] as const).map(weight => (
         <Flex key={weight} align="center" gap="lg">
-          <Box asChild flexShrink="0" width="6rem">
+          <Box asChild flexShrink="0" width="6em">
             <Text
               as="code"
               color={{ base: 'bg-400', dark: 'bg-500' }}
@@ -305,7 +305,7 @@ export const Truncate: Story = {
       <Flex
         direction="column"
         gap="lg"
-        style={{ maxWidth: '24rem' }}
+        style={{ maxWidth: '24em' }}
         width="100%"
       >
         <Text
@@ -541,7 +541,7 @@ export const Tracking: Story = {
       {(['tighter', 'tight', 'normal', 'wide', 'wider', 'widest'] as const).map(
         tracking => (
           <Flex key={tracking} align="baseline" gap="md">
-            <Box asChild flexShrink="0" width="5rem">
+            <Box asChild flexShrink="0" width="5em">
               <Text
                 as="code"
                 color={{ base: 'bg-400', dark: 'bg-500' }}

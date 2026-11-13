@@ -6,8 +6,8 @@ type IDashboardLayout = Record<
     w: number
     h: number
     i: string
-    minW: number
-    minH: number
+    minW?: number
+    minH?: number
   }>
 >
 

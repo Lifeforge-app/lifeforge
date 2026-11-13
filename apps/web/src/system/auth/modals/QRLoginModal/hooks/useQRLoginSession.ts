@@ -42,7 +42,7 @@ export default function useQRLoginSession({
       setAccessToken(accessToken)
 
       try {
-        const meData = await forgeAPI.auth.me.queryRaw()
+        const meData = await forgeAPI.user.me.queryRaw()
 
         setUserData(meData.userData)
         setAuth(true)

@@ -7,7 +7,10 @@ import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -17,6 +20,8 @@ import { ColorPickerModal } from './ColorPickerModal'
 export interface ColorInputProps {
   /** The label text displayed above the color input field. Required for 'classic' style. */
   label?: string
+  /** The icon to display in the input field. Defaults to 'tabler:palette'. */
+  icon?: string
   /** The current color value in hex format (e.g., "#FF0000"). */
   value: string
   /** Callback function called when the color value changes. */
@@ -29,17 +34,20 @@ export interface ColorInputProps {
   autoFocus?: boolean
   /** Additional CSS class names to apply to the color input component. */
   className?: string
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
 export function ColorInput({
   variant = 'classic',
   label,
+  icon = 'tabler:palette',
   value,
   onChange,
   required = false,
@@ -48,7 +56,8 @@ export function ColorInput({
   className,
   namespace,
   errorMsg,
-  onEnter
+  onEnter,
+  wrapperProps
 }: ColorInputProps & InputVariants) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -57,6 +66,7 @@ export function ColorInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}
@@ -64,11 +74,7 @@ export function ColorInput({
       variant={variant}
     >
       {variant === 'classic' && (
-        <InputIcon
-          active={value !== ''}
-          hasError={!!errorMsg}
-          icon="tabler:palette"
-        />
+        <InputIcon active={value !== ''} hasError={!!errorMsg} icon={icon} />
       )}
       <Flex align="center" gap="sm" position="relative" width="100%">
         {variant === 'classic' && label && (
@@ -95,8 +101,8 @@ export function ColorInput({
               height={variant === 'plain' ? '1.5em' : '1em'}
               r="full"
               style={{
-                marginTop: '0.125rem',
-                backgroundColor: value?.match(/^#[0-9A-F]{6}$/i)
+                marginTop: '0.125em',
+                backgroundColor: value.match(/^#[0-9A-F]{6}$/i)
                   ? value
                   : undefined
               }}

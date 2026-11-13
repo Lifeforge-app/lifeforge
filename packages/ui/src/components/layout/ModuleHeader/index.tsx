@@ -28,7 +28,7 @@ function getTKeys(
   return [
     ...withPrefix('subsections.'),
     ...withPrefix(''),
-    `common.${title}:${target}`,
+    ...(namespace ? [`${namespace}:${target}`] : []),
     target
   ]
 }
@@ -36,6 +36,7 @@ function getTKeys(
 interface ModuleHeaderProps {
   icon?: string
   title?: string
+  description?: string
   trailing?: React.ReactNode
   namespace?: string | false
 }
@@ -43,6 +44,7 @@ interface ModuleHeaderProps {
 export function ModuleHeader({
   icon,
   title,
+  description,
   trailing,
   namespace
 }: ModuleHeaderProps) {
@@ -52,7 +54,7 @@ export function ModuleHeader({
   icon = icon ?? innerIcon
 
   const { t } = useModuleTranslation(
-    namespace === false ? [] : [`common.${title}`, namespace ?? '']
+    typeof namespace === 'string' ? [namespace] : []
   )
 
   const { toggleSidebar, sidebarExpanded } = useMainSidebarState()
@@ -77,25 +79,23 @@ export function ModuleHeader({
             />
           </Box>
         )}
-        {icon !== undefined && (
-          <Flex
-            align="center"
-            bg={colorWithOpacity('custom-500', '20%')}
-            flexShrink="0"
-            height={{
-              base: '3.5em',
-              sm: '4em'
-            }}
-            justify="center"
-            r="lg"
-            width={{
-              base: '3.5em',
-              sm: '4em'
-            }}
-          >
-            <Icon color="primary" icon={icon} size="2rem" />
-          </Flex>
-        )}
+        <Flex
+          align="center"
+          bg={colorWithOpacity('custom-500', '20%')}
+          flexShrink="0"
+          height={{
+            base: '3.5em',
+            sm: '4em'
+          }}
+          justify="center"
+          r="lg"
+          width={{
+            base: '3.5em',
+            sm: '4em'
+          }}
+        >
+          <Icon color="primary" icon={icon} size="2em" />
+        </Flex>
         <Flex direction="column" gap="xs" minWidth="0" width="100%">
           <Text
             asChild
@@ -107,12 +107,12 @@ export function ModuleHeader({
               align="end"
               as="h1"
               minWidth="0"
-              style={{ gap: '0.75rem' }}
+              style={{ gap: '0.75em' }}
               width="100%"
             >
               <Text truncate display="block">
                 {namespace === false
-                  ? (title?.toString() ?? '')
+                  ? title
                   : t(getTKeys(namespace, title, 'title'))}
               </Text>
             </Flex>
@@ -124,9 +124,10 @@ export function ModuleHeader({
               size={{ base: 'sm', sm: 'base' }}
               whiteSpace="nowrap"
             >
-              {namespace === false
-                ? `Description for ${title?.toString() ?? ''}`
-                : t(getTKeys(namespace, title, 'description'))}
+              {description ??
+                (namespace === false
+                  ? `Description for ${title}`
+                  : t(getTKeys(namespace, title, 'description')))}
             </Text>
           </Box>
         </Flex>

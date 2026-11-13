@@ -18,10 +18,10 @@ export function EditorsChoiceSwitch({
 
   return (
     <Flex align="center" justify="between" py="sm">
-      <Flex align="center" style={{ gap: '0.5rem' }}>
+      <Flex align="center" style={{ gap: '0.5em' }}>
         <Icon
           icon="tabler:user-star"
-          style={{ height: '1.5rem', width: '1.5rem' }}
+          style={{ height: '1.5em', width: '1.5em' }}
         />
         <Text as="span" size="lg">
           {t('imagePicker.inputs.editorsChoice')}

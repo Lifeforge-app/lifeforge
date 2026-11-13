@@ -7,7 +7,6 @@ export const textInputBoxRecipe = recipe({
     width: '100%',
     backgroundColor: 'transparent',
     letterSpacing: '0.05em',
-    borderRadius: 'var(--radius-lg)',
     outline: 'none'
   },
   variants: {
@@ -20,7 +19,7 @@ export const textInputBoxRecipe = recipe({
       },
       plain: {
         padding: 0,
-        height: '1.75rem'
+        height: '1.75em'
       }
     },
     size: {
@@ -32,7 +31,7 @@ export const textInputBoxRecipe = recipe({
     {
       variants: { variant: 'plain', size: 'small' },
       style: {
-        height: '1.25rem',
+        height: '1.25em',
         fontSize: 'var(--text-sm)'
       }
     }

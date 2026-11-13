@@ -5,7 +5,7 @@ export const JWT_SECRET = process.env.JWT_SIGNING_KEY!
 
 if (!JWT_SECRET) {
   throw new Error(
-    'No JWT_SECRET_KEY found. Please make sure it is set in environment variable.'
+    'No JWT_SIGNING_KEY found. Please make sure it is set in environment variable.'
   )
 }
 

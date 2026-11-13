@@ -13,24 +13,26 @@
  * - `registerController`: Function to register a ForgeControllerBuilder with an Express router
  */
 import { encryptResponse } from '@functions/encryption'
-import { coreLogger } from '@functions/logging'
 import type { Request, Response, Router } from 'express'
 
+import { scopeDbForModule } from '@lifeforge/drizzle'
+import { fieldsUploadMiddleware } from '@lifeforge/file-storage/server'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 import {
   BaseResponse,
   ForgeContract,
-  MediaConfig,
-  getStatusMessage
+  checkRecordExistence,
+  getStatusMessage,
+  mapDatabaseError,
+  serializeEndpointValue
 } from '@lifeforge/server-utils'
 
-import checkRecordExistence from '../utils/checkRecordExistence'
+import authMiddleware from '../../../middlewares/authMiddleware'
 import { createCoreContext } from '../utils/coreContext'
 import getAESKey from '../utils/getAESKey'
 import parseBodyPayload from '../utils/parsePayload'
 import parseQuery from '../utils/parseQuery'
 import { clientError, serverError, success } from '../utils/response'
-import fieldsUploadMiddleware from '../utils/uploadMiddleware'
-import isAuthTokenValid from '../utils/validateAuthToken'
 
 function isClientError(err: unknown): err is Error & { code: number } {
   return err instanceof Error && err.name === 'ClientError' && 'code' in err
@@ -46,10 +48,8 @@ function createHandler(
   const {
     schema: input,
     noDefaultResponse,
-    existenceCheck,
     isDownloadable,
     media,
-    noAuth,
     encrypted,
     callback,
     callerModule,
@@ -61,23 +61,20 @@ function createHandler(
       ? `${callerModule.source}:${callerModule.id}`
       : undefined
 
-    if (!(await isAuthTokenValid(req, res, noAuth))) return
-
     const aesKey = getAESKey(req, res, encrypted, callerModuleId)
 
     try {
       parseQuery(req, input.query)
 
-      parseBodyPayload(req, (media || {}) as MediaConfig, encrypted, input.body)
+      parseBodyPayload(req, media || {}, encrypted, input.body)
 
-      for (const type of ['query', 'body'] as const) {
-        await checkRecordExistence({
-          type,
-          req,
-          existenceCheck,
-          module: callerModule || { id: '' }
-        })
-      }
+      const existing = await checkRecordExistence({
+        db: req.db,
+        querySchema: input.query,
+        query: req.query,
+        bodySchema: input.body,
+        body: req.body
+      })
 
       if (isDownloadable) {
         res.setHeader('X-LifeForge-Downloadable', 'true')
@@ -87,21 +84,23 @@ function createHandler(
         )
       }
 
-      if (!callback) {
-        throw new Error('No callback defined for this controller')
-      }
-
       const result = await callback({
         req,
         res,
         io: req.io,
-        pb: req.pb(callerModule || { id: '' }),
+        db: scopeDbForModule(
+          req.db,
+          callerModule
+            ? ModuleRegistry.getModuleKeyMap(callerModule.id)
+            : undefined
+        ),
         body: req.body,
         query: req.query,
         media: req.media || {},
+        existing,
         core: createCoreContext({
-          pb: req.pb(callerModule || { id: '' }),
-          module: callerModule as never
+          module: callerModule as never,
+          db: req.db
         })
       })
 
@@ -113,10 +112,10 @@ function createHandler(
         return
       }
 
-      const status = result?.$status ?? 200
+      const status = result.$status
 
       const payload =
-        result && typeof result === 'object' && '$status' in result
+        typeof result === 'object' && '$status' in result
           ? result.payload
           : result
 
@@ -137,6 +136,17 @@ function createHandler(
         status
       )
     } catch (err) {
+      const databaseError = mapDatabaseError(err)
+
+      if (databaseError) {
+        return clientError({
+          res,
+          message: databaseError.message,
+          code: databaseError.code,
+          moduleName: callerModuleId
+        })
+      }
+
       if (isClientError(err)) {
         return clientError({
           res,
@@ -146,9 +156,15 @@ function createHandler(
         })
       }
 
+      const cause = err instanceof Error ? err.cause : undefined
+
       serverError(
         res,
-        err instanceof Error ? err.message : String(err),
+        err instanceof Error
+          ? cause instanceof Error
+            ? `${err.message} - ${cause.message}`
+            : err.message
+          : String(err),
         callerModule ? `${callerModule.source}:${callerModule.id}` : undefined
       )
     }
@@ -181,25 +197,25 @@ export function registerController(
 ): void {
   const config = controller.getValue()
 
-  if (!config.callback) {
-    coreLogger.error(
-      `Cannot register controller for route "${routeName}": No callback defined.`
-    )
-    process.exit(1)
-  }
-
-  const handler = createHandler(config)
+  const handler = Object.assign(createHandler(config), {
+    meta: {
+      ...serializeEndpointValue(config),
+      callerModule: config.callerModule
+    }
+  })
 
   router[config.method](
     `/${routeName}`,
     [
+      authMiddleware(config.noAuth),
       ...(Object.keys(config.media ?? {}).length > 0
         ? [
             fieldsUploadMiddleware(
               Object.fromEntries(
-                Object.entries(config.media ?? ({} as MediaConfig)).map(
-                  ([key, value]) => [key, value.multiple ? 999 : 1]
-                )
+                Object.entries(config.media ?? {}).map(([key, value]) => [
+                  key,
+                  value.multiple ? 999 : 1
+                ])
               )
             )
           ]

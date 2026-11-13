@@ -9,6 +9,8 @@ type TailwindPaletteToken = {
 
 const BASE_COLORS = {
   transparent: 'transparent',
+  white: '#ffffff',
+  black: '#000000',
   'bg-50': 'var(--color-bg-50)',
   'bg-100': 'var(--color-bg-100)',
   'bg-200': 'var(--color-bg-200)',
@@ -45,7 +47,7 @@ function buildPaletteColors(): Record<TailwindPaletteToken, string> {
     }
   }
 
-  return result as Record<TailwindPaletteToken, string>
+  return result
 }
 
 export const COLORS = {

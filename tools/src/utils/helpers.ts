@@ -1,9 +1,8 @@
+import { cancel, confirm, isCancel, log } from '@clack/prompts'
 import chalk from 'chalk'
 import net from 'node:net'
-import prompts from 'prompts'
 
 import executeCommand from './commands'
-import logger from './logger'
 
 /**
  * Validates and retrieves multiple required environment variables.
@@ -34,13 +33,11 @@ export function getEnvVars<const T extends readonly string[]>(
   }
 
   if (missing.length > 0) {
-    logger.error(
-      `Missing required environment variables: ${missing.join(', ')}`
-    )
+    log.error(`Missing required environment variables: ${missing.join(', ')}`)
     process.exit(1)
   }
 
-  return vars as Record<T[number], string>
+  return vars
 }
 
 /**
@@ -62,7 +59,7 @@ export function getEnvVar(varName: string, fallback?: string): string {
     return fallback
   }
 
-  logger.error(`Missing required environment variable: ${chalk.red(varName)}`)
+  log.error(`Missing required environment variable: ${chalk.red(varName)}`)
   process.exit(1)
 }
 
@@ -79,10 +76,6 @@ export function killExistingProcess(
     if (typeof processKeywordOrPID === 'number') {
       process.kill(processKeywordOrPID)
 
-      logger.debug(
-        `Killed process with PID: ${chalk.blue(String(processKeywordOrPID))}`
-      )
-
       return
     }
 
@@ -91,11 +84,11 @@ export function killExistingProcess(
     if (pids.length > 0) {
       killProcessesByPids(pids)
 
-      logger.debug(
-        `Killed process matching keyword: ${chalk.blue(processKeywordOrPID)} (PID: ${chalk.blue(pids.join(', '))})`
-      )
+      const [firstPid] = pids
 
-      return parseInt(pids[0], 10)
+      if (firstPid) {
+        return parseInt(firstPid, 10)
+      }
     }
   } catch {
     // No existing server instance found
@@ -115,11 +108,12 @@ export function findProcessIdsByCommandLine(keyword: string): string[] {
 
       const script = `Get-CimInstance Win32_Process | Where-Object { $_.CommandLine -match '${escaped}' } | Select-Object -ExpandProperty ProcessId`
 
-      const output = executeCommand(
-        'powershell',
-        { exitOnError: false },
-        ['-NoProfile', '-NonInteractive', '-Command', script]
-      )
+      const output = executeCommand('powershell', { exitOnError: false }, [
+        '-NoProfile',
+        '-NonInteractive',
+        '-Command',
+        script
+      ])
 
       return output
         .split('\n')
@@ -148,16 +142,12 @@ export function findProcessIdsByCommandLine(keyword: string): string[] {
  */
 export function killProcessesByPids(pids: string[]): void {
   if (process.platform === 'win32') {
-    executeCommand(
-      'powershell',
-      { exitOnError: false },
-      [
-        '-NoProfile',
-        '-NonInteractive',
-        '-Command',
-        `Stop-Process -Id ${pids.join(',')} -Force -ErrorAction SilentlyContinue`
-      ]
-    )
+    executeCommand('powershell', { exitOnError: false }, [
+      '-NoProfile',
+      '-NonInteractive',
+      '-Command',
+      `Stop-Process -Id ${pids.join(',')} -Force -ErrorAction SilentlyContinue`
+    ])
 
     return
   }
@@ -178,7 +168,10 @@ export function killProcessesByPids(pids: string[]): void {
  * @param host - The host to bind to (defaults to 127.0.0.1)
  * @returns True if the port is in use, false otherwise
  */
-export function isPortInUse(port: number, host = '127.0.0.1'): Promise<boolean> {
+export function isPortInUse(
+  port: number,
+  host = '127.0.0.1'
+): Promise<boolean> {
   return new Promise(resolve => {
     const server = net.createServer()
 
@@ -217,11 +210,11 @@ export async function checkPortInUse(port: number): Promise<boolean> {
 export function getPortProcessInfo(port: number): string | null {
   try {
     if (process.platform === 'win32') {
-      const netstatOutput = executeCommand(
-        'netstat',
-        { exitOnError: false },
-        ['-ano', '-p', 'tcp']
-      )
+      const netstatOutput = executeCommand('netstat', { exitOnError: false }, [
+        '-ano',
+        '-p',
+        'tcp'
+      ])
 
       const line = netstatOutput
         .split('\n')
@@ -283,21 +276,17 @@ export async function checkAddressInUse(
   address: string,
   port: string
 ): Promise<boolean> {
-  logger.debug(
-    `Checking if address ${chalk.blue(address)}:${chalk.blue(port)} is in use...`
-  )
-
   const inUse = await isPortInUse(Number(port))
 
   if (inUse) {
     const info = getPortProcessInfo(Number(port))
 
     if (info) {
-      logger.error(
+      log.error(
         `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use by process: ${chalk.blue(info)}`
       )
     } else {
-      logger.error(
+      log.error(
         `Address ${chalk.blue(address)}:${chalk.blue(port)} is in use, but no process info found.`
       )
     }
@@ -331,12 +320,19 @@ export function isDockerMode(): boolean {
  * @returns True if the user confirms, false otherwise
  */
 export async function confirmAction(message: string): Promise<boolean> {
-  const response = await prompts({
-    type: 'confirm',
-    name: 'confirmed',
+  if (!process.stdout.isTTY || isDockerMode()) {
+    return false
+  }
+
+  const confirmed = await confirm({
     message,
-    initial: false
+    initialValue: false
   })
 
-  return response.confirmed
+  if (isCancel(confirmed)) {
+    cancel('Operation cancelled.')
+    process.exit(0)
+  }
+
+  return confirmed
 }

@@ -5,7 +5,10 @@ import { vars } from '@/system'
 
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -30,12 +33,14 @@ export type TextAreaInputProps = {
   autoFocus?: boolean
   /** Additional CSS class names to apply to the textarea element. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 } & InputVariants
 
 export function TextAreaInput({
@@ -51,7 +56,8 @@ export function TextAreaInput({
   className,
   namespace,
   errorMsg,
-  onEnter
+  onEnter,
+  wrapperProps
 }: TextAreaInputProps) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const ref = useRef<HTMLTextAreaElement>(null)
@@ -65,6 +71,7 @@ export function TextAreaInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}
@@ -94,11 +101,10 @@ export function TextAreaInput({
           <Box
             asChild
             bg="transparent"
-            maxHeight="32rem"
-            minHeight="4rem"
+            maxHeight="32em"
+            minHeight="4em"
             p={variant === 'classic' ? 'xl' : 'none'}
             pl={variant === 'classic' ? 'none' : undefined}
-            r="lg"
             style={
               variant === 'classic'
                 ? { paddingBottom: vars.radii.md }

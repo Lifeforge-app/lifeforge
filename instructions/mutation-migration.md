@@ -333,6 +333,12 @@ Always use `forgeAPI`-derived keys instead of hardcoded string arrays. This ensu
 
 > **Why?** The module ID in `forgeAPI.key` is dynamically generated. Hardcoded `['wallet']` would break if the module ID changes. `forgeAPI.key` always resolves correctly.
 
+> **While refactoring a file, fix the keys you touch.** If a `useMutation`, a
+> manual `queryClient.invalidateQueries`, or a `setQueryData` in the same file
+> still uses a hardcoded array (e.g. `['todoList', 'entries']`), replace it with
+> the matching `forgeAPI.<entity>.key` / `forgeAPI.key` even if the mutation
+> itself is out of scope for the current change.
+
 ---
 
 ## Action Convention

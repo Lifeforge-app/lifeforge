@@ -29,8 +29,8 @@ function MorandiColorPaletteModal({
       <Grid
         pb="md"
         px="md"
-        style={{ gap: '0.75rem' }}
-        templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
+        style={{ gap: '0.75em' }}
+        templateCols="repeat(auto-fit, minmax(4em, 1fr))"
       >
         {MORANDI_COLORS.map((morandiColor, index) => (
           <Flex key={index} asChild centered r="md">
@@ -49,8 +49,8 @@ function MorandiColorPaletteModal({
                 <Icon
                   icon="tabler:check"
                   style={{
-                    width: '2rem',
-                    height: '2rem',
+                    width: '2em',
+                    height: '2em',
                     color: getMostReadableColor(morandiColor)
                   }}
                 />

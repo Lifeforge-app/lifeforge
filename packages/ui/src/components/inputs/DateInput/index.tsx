@@ -8,7 +8,10 @@ import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { Placeholder } from '../shared/components/Placeholder'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
@@ -40,7 +43,7 @@ export interface DateInputProps {
   className?: string
   /** Whether the date input includes time selection. */
   hasTime?: boolean
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
@@ -50,6 +53,8 @@ export interface DateInputProps {
   endDate?: Date
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
 /**
@@ -70,7 +75,8 @@ export function DateInput({
   errorMsg,
   startDate,
   endDate,
-  onEnter
+  onEnter,
+  wrapperProps
 }: DateInputProps & InputVariants) {
   const { open } = useModalStore()
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
@@ -121,12 +127,14 @@ export function DateInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}
       inputRef={ref}
       style={{
-        cursor: 'pointer'
+        cursor: 'pointer',
+        ...wrapperProps?.style
       }}
       variant={variant}
       onClick={handleOpen}
@@ -150,7 +158,10 @@ export function DateInput({
           </Box>
         )}
 
-        <InputInnerWrapper hasActionButton variant={variant}>
+        <InputInnerWrapper
+          hasActionButton={!!value && !disabled}
+          variant={variant}
+        >
           <Placeholder
             color={variant === 'classic' ? 'transparent' : 'default'}
             focusColor="default"
@@ -163,7 +174,10 @@ export function DateInput({
               style={{
                 cursor: disabled ? 'not-allowed' : 'pointer',
                 caretColor: 'transparent',
-                userSelect: 'none'
+                userSelect: 'none',
+                width: '100%',
+                minWidth: 0,
+                textOverflow: 'ellipsis'
               }}
               tabIndex={disabled ? -1 : 0}
               value={formattedValue}
@@ -183,7 +197,7 @@ export function DateInput({
           </Placeholder>
         </InputInnerWrapper>
       </Flex>
-      {!!value && !disabled ? (
+      {!!value && !disabled && (
         <InputActionButton
           hasError={!!errorMsg}
           icon="tabler:x"
@@ -192,13 +206,6 @@ export function DateInput({
             e.stopPropagation()
             onChange(null)
           }}
-        />
-      ) : (
-        <InputActionButton
-          hasError={!!errorMsg}
-          icon={icon || (hasTime ? 'tabler:clock' : 'tabler:calendar')}
-          variant={variant}
-          onClick={handleOpen}
         />
       )}
     </InputWrapper>

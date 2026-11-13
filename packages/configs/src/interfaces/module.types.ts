@@ -36,11 +36,11 @@ export const moduleConfigSchema = z.object({
     ])
     .optional(),
   clearQueryOnUnmount: z.boolean().optional(),
-  contract: z.any().optional(),
   widgets: z
     .array(
       z.custom<
         () => Promise<{
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           default: React.ComponentType<any>
           config: z.infer<typeof widgetConfigSchema>
         }>
@@ -80,7 +80,8 @@ export const moduleWidgetSchema = widgetConfigSchema.extend({
 
 export const moduleEntrySchema = z.object({
   name: z.string(),
-  moduleId: z.string(),
+  id: z.string(),
+  remoteId: z.string(),
   displayName: z.string(),
   version: z.string(),
   description: z.string(),
@@ -98,31 +99,30 @@ export const moduleEntrySchema = z.object({
       })
     )
     .optional(),
-  hasDist: z.boolean(),
   hasProvider: z.boolean(),
+  hidden: z.boolean().optional(),
   supportedLangs: z.array(z.string()),
   widgets: z.array(moduleWidgetSchema)
 })
 
-export const moduleManifestSchema = moduleEntrySchema
-  .pick({
-    name: true,
-    moduleId: true,
-    displayName: true,
-    icon: true,
-    category: true,
-    remoteEntryUrl: true,
-    APIKeyAccess: true,
-    hasProvider: true,
-    subsection: true
-  })
-  .extend({
-    isDevMode: z.boolean()
-  })
+export const moduleManifestSchema = moduleEntrySchema.pick({
+  name: true,
+  id: true,
+  remoteId: true,
+  displayName: true,
+  icon: true,
+  category: true,
+  remoteEntryUrl: true,
+  APIKeyAccess: true,
+  hasProvider: true,
+  hidden: true,
+  subsection: true
+})
 
 export const moduleSchema = moduleEntrySchema.pick({
   name: true,
-  moduleId: true,
+  id: true,
+  remoteId: true,
   displayName: true,
   version: true,
   description: true,
@@ -151,7 +151,8 @@ export interface ModuleGroup {
   title: string
   items: (ModuleConfig & {
     name: string
-    moduleId?: string
+    id?: string
+    remoteId?: string
     icon: string
     category: string
     APIKeyAccess?: Record<string, { usage: string; required: boolean }>

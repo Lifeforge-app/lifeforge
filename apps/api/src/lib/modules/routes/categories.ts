@@ -52,7 +52,6 @@ export const aiTranslate = forge
   .callback(
     async ({
       body: { key, languages },
-      pb,
       core: {
         api: { fetchAI }
       },
@@ -60,7 +59,6 @@ export const aiTranslate = forge
     }) =>
       response.ok(
         await fetchAI({
-          pb,
           provider: 'deepseek',
           model: 'deepseek-v4-flash',
           messages: [

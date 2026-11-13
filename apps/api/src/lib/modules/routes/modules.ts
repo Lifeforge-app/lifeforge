@@ -1,4 +1,3 @@
-import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import z from 'zod'
 
 import {
@@ -6,7 +5,7 @@ import {
   moduleSchema,
   moduleWidgetSchema
 } from '@lifeforge/configs'
-import { ModuleRegistry } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 
 import forge from '../forge'
 
@@ -39,15 +38,15 @@ export const checkModuleAvailability = forge
     description: 'Check if a module is available (installed)',
     input: {
       query: z.object({
-        moduleId: z.string().min(1)
+        id: z.string().min(1)
       })
     },
     output: {
       OK: z.boolean()
     }
   })
-  .callback(async ({ query: { moduleId }, response }) =>
-    response.ok(await checkModulesAvailability(moduleId))
+  .callback(async ({ query: { id }, response }) =>
+    response.ok(ModuleRegistry.isAvailable(id))
   )
 
 export const widgets = forge

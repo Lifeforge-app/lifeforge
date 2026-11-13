@@ -1,21 +1,24 @@
-import logger from '@/utils/logger'
-import getPBInstance from '@/utils/pocketbase'
+import { log } from '@clack/prompts'
+import postgres from 'postgres'
 
-async function ensureLocaleNotInUse(shortName: string) {
-  logger.debug('Checking if locale is in use...')
+async function ensureLocaleNotInUse(code: string) {
+  const databaseUrl = process.env.DATABASE_URL
 
-  const { pb, killPB } = await getPBInstance()
+  if (!databaseUrl) return
 
-  const user = await pb.collection('users').getFirstListItem("id != ''")
+  try {
+    const sql = postgres(databaseUrl, { max: 1, timeout: 3 })
+    const [user] = await sql`SELECT language FROM users LIMIT 1`
+    await sql.end()
 
-  killPB?.()
-
-  if (user.language === shortName) {
-    logger.error(
-      `Cannot uninstall locale "${shortName}". It is currently selected by the user.`
-    )
-
-    process.exit(1)
+    if (user?.language === code) {
+      log.error(
+        `Cannot uninstall locale "${code}". It is currently selected by the user.`
+      )
+      process.exit(1)
+    }
+  } catch {
+    // Best-effort check: ignore DB errors
   }
 }
 

@@ -33,10 +33,10 @@ export function SidebarItemSubsectionExpandIcon({
             <Icon
               icon="tabler:chevron-right"
               style={{
-                height: '1.25rem',
+                height: '1.25em',
                 strokeWidth: 2,
                 transform: subsectionExpanded ? 'rotate(90deg)' : undefined,
-                width: '1.25rem'
+                width: '1.25em'
               }}
             />
           </Transition>

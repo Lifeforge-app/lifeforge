@@ -1,88 +1,81 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import _ from 'lodash'
 
-import logger from '@/utils/logger'
-import normalizePackage from '@/utils/normalizePackage'
-import { getPackageMetadata } from '@/utils/registry'
+import { run } from '@/utils/github'
+import { resolveEntry } from '@/utils/registryIndex'
+import { startSpinner, stopSpinner } from '@/utils/spinner'
 
 /**
- * Views package information from the registry.
+ * Views module information from the registry (GitHub-hosted index).
  *
- * @param moduleName - The module name to view (e.g., calendar or @lifeforge/lifeforge--calendar)
+ * @param moduleName - The module package id to view (e.g., lifeforge--calendar)
  */
 export async function viewModuleHandler(moduleName: string): Promise<void> {
-  const { fullName } = normalizePackage(moduleName)
+  const shortName = moduleName
 
-  const data = await getPackageMetadata(fullName)
+  const entry = await resolveEntry('modules', shortName)
 
-  if (!data) {
-    logger.error(`Package ${chalk.blue(fullName)} not found in registry`)
+  if (!entry) {
+    log.error(`Module ${chalk.blue(shortName)} was not found in the registry`)
     process.exit(1)
   }
 
-  const latestVersion = data['dist-tags']?.latest
+  let pkg: Record<string, unknown> = {}
 
-  const latest = latestVersion ? data.versions?.[latestVersion] : undefined
+  startSpinner('Fetching package info...')
 
-  const info = {
-    version: latestVersion,
-    versions: data.versions ? Object.keys(data.versions) : [],
-    deps: latest?.dependencies,
-    author:
-      typeof latest?.author === 'string' ? latest.author : latest?.author?.name,
-    repo:
-      typeof latest?.repository === 'string'
-        ? latest.repository
-        : latest?.repository?.url,
-    displayName: latest?.displayName,
-    description: latest?.description,
-    homepage: latest?.homepage,
-    license: latest?.license
+  try {
+    const content = run(
+      `gh api repos/${entry.repo}/contents/package.json --jq .content`
+    )
+
+    pkg = JSON.parse(Buffer.from(content, 'base64').toString('utf-8'))
+  } catch {
+    // Could not fetch package.json from GitHub; show index info only
   }
 
-  logger.print('')
-  logger.print(
-    info.displayName
-      ? `${chalk.bold.blue(info.displayName)} ${chalk.dim(`(${data.name || fullName})`)}`
-      : chalk.bold.blue(data.name || fullName)
+  stopSpinner()
+
+  const versions = Object.keys(entry.versions)
+
+  log.message('')
+  log.message(
+    pkg.displayName
+      ? `${chalk.bold.blue(String(pkg.displayName))} ${chalk.dim(`(@lifeforge/${shortName})`)}`
+      : chalk.bold.blue(`@lifeforge/${shortName}`)
   )
 
-  logger.print(info.description)
-  logger.print('')
+  if (typeof pkg.description === 'string') {
+    log.message(pkg.description)
+  }
+
+  log.message('')
 
   const fields = [
-    ['version', info.version ? chalk.green(info.version) : undefined],
-    ['license', info.license],
-    ['author', info.author],
-    ['homepage', info.homepage ? chalk.cyan(info.homepage) : undefined],
-    ['repository', info.repo ? chalk.cyan(info.repo) : undefined]
-  ] as const
+    ['version', chalk.green(entry.latest)],
+    ['repository', chalk.cyan(entry.repo)],
+    ['latest commit', chalk.dim(entry.versions[entry.latest] ?? '')],
+    typeof pkg.author === 'string' ? ['author', pkg.author] : undefined,
+    typeof pkg.homepage === 'string'
+      ? ['homepage', chalk.cyan(pkg.homepage)]
+      : undefined
+  ].filter(Boolean) as [string, string][]
 
   fields
-    .filter(([_, value]) => value)
+    .filter(([, value]) => value)
     .forEach(([label, value]) => {
-      logger.print(`${chalk.dim(label.padEnd(12))} ${value}`)
+      log.message(`${chalk.dim(label.padEnd(14))} ${value}`)
     })
 
-  if (info.deps && Object.keys(info.deps).length > 0) {
-    logger.print('')
-    logger.print(chalk.dim('dependencies'))
+  if (versions.length > 1) {
+    log.message('')
+    log.message(chalk.dim(`versions (${versions.length})`))
 
-    Object.entries(info.deps).forEach(([dep, version]) => {
-      logger.print(`  ${dep} ${chalk.dim(version)}`)
-    })
-  }
-
-  if (info.versions.length > 1) {
-    logger.print('')
-    logger.print(chalk.dim(`versions (${info.versions.length})`))
-
-    const chunkedVersions = _.chunk(info.versions, 8)
-
-    chunkedVersions.forEach((chunk: string[]) => {
-      logger.print(`  ${chunk.join(chalk.dim(' · '))}`)
+    _.chunk(versions, 8).forEach((chunk: string[]) => {
+      log.message(`  ${chunk.join(chalk.dim(' · '))}`)
     })
   }
 
-  logger.print('')
+  log.message('')
 }

@@ -1,7 +1,9 @@
 import fs from 'node:fs'
 import { builtinModules, createRequire } from 'node:module'
 import path from 'node:path'
-import { type Plugin } from 'vite'
+import { type Alias, type Plugin } from 'vite'
+
+import { findProjectRoot } from '../utils/projectRoot'
 
 const cjsRequire = createRequire(import.meta.url)
 
@@ -10,29 +12,23 @@ const cjsRequire = createRequire(import.meta.url)
  */
 function getCoreDependencies(dirname: string): Set<string> {
   const deps = new Set<string>()
+  const root = findProjectRoot(dirname)
+  const apiPkgPath = path.join(root, 'apps/api/package.json')
 
-  let currentDir = dirname
-
-  while (currentDir !== path.dirname(currentDir)) {
-    const apiPkgPath = path.join(currentDir, 'apps/api/package.json')
-
-    if (fs.existsSync(apiPkgPath)) {
-      try {
-        const pkg = JSON.parse(fs.readFileSync(apiPkgPath, 'utf8'))
-        const allDeps = {
-          ...pkg.dependencies,
-          ...pkg.devDependencies
-        }
-
-        for (const dep of Object.keys(allDeps)) {
-          deps.add(dep)
-        }
-        break
-      } catch {
-        // Ignore read/parse errors and fallback
+  if (fs.existsSync(apiPkgPath)) {
+    try {
+      const pkg = JSON.parse(fs.readFileSync(apiPkgPath, 'utf8'))
+      const allDeps = {
+        ...pkg.dependencies,
+        ...pkg.devDependencies
       }
+
+      for (const dep of Object.keys(allDeps)) {
+        deps.add(dep)
+      }
+    } catch {
+      // Ignore read/parse errors and fallback
     }
-    currentDir = path.dirname(currentDir)
   }
 
   return deps
@@ -49,7 +45,7 @@ const NODE_BUILT_INS = new Set(builtinModules)
  * virtual modules, Node built-ins, and query/hash URL suffixes.
  */
 export function serverAliasResolver(dirname: string): Plugin {
-  let aliases: any[] = []
+  let aliases: Alias[] = []
 
   const coreDeps = getCoreDependencies(dirname)
 
@@ -57,7 +53,7 @@ export function serverAliasResolver(dirname: string): Plugin {
     name: 'externalize-node-modules',
     enforce: 'pre',
     configResolved(config) {
-      aliases = config.resolve.alias || []
+      aliases = config.resolve.alias
     },
     resolveId(source) {
       // 1. Skip Vite virtual modules
@@ -112,6 +108,10 @@ export function serverAliasResolver(dirname: string): Plugin {
         const packageName = cleanSource.startsWith('@')
           ? parts.slice(0, 2).join('/')
           : parts[0]
+
+        if (!packageName) {
+          return null
+        }
 
         // 5. Determine if this package is a shared core dependency dynamically
         const isCoreExternal =

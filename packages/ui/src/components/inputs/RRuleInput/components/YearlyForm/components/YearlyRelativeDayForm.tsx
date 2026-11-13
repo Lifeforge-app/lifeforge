@@ -21,17 +21,14 @@ export function YearlyRelativeDayForm({
         <ListboxInput
           required
           icon="tabler:calendar"
-          label={t('inputs.yearly.relativeDay.inputs.onThe')}
-          renderContent={() => <>{t(`recurring.onThe.${data.onThe}`)}</>}
+          label="yearly.relativeDay.inputs.onThe"
+          namespace="common.recurring"
+          renderContent={() => <>{t(`onThe.${data.onThe}`)}</>}
           value={data.onThe}
           onChange={value => setData({ ...data, onThe: value })}
         >
           {['first', 'second', 'third', 'fourth', 'last'].map(day => (
-            <ListboxOption
-              key={day}
-              label={t(`recurring.onThe.${day}`)}
-              value={day}
-            />
+            <ListboxOption key={day} label={t(`onThe.${day}`)} value={day} />
           ))}
         </ListboxInput>
       </Box>
@@ -39,13 +36,14 @@ export function YearlyRelativeDayForm({
         <ListboxInput
           required
           icon="tabler:calendar"
-          label={t('inputs.yearly.relativeDay.inputs.onTheDay')}
+          label="yearly.relativeDay.inputs.onTheDay"
+          namespace="common.recurring"
           renderContent={() => (
             <>
               {t(
                 data.onTheDay.length === 3 && data.onTheDay !== 'day'
                   ? `common.misc:dates.days.${DAYS.indexOf(data.onTheDay as (typeof DAYS)[number])}`
-                  : `recurring.onTheDay.${data.onTheDay}`
+                  : `onTheDay.${data.onTheDay}`
               )}
             </>
           )}
@@ -58,7 +56,7 @@ export function YearlyRelativeDayForm({
               label={t(
                 idx < 7
                   ? `common.misc:dates.days.${DAYS.indexOf(day as (typeof DAYS)[number])}`
-                  : `recurring.onTheDay.${day}`
+                  : `onTheDay.${day}`
               )}
               value={day}
             />
@@ -69,7 +67,8 @@ export function YearlyRelativeDayForm({
         <ListboxInput
           required
           icon="tabler:calendar"
-          label={t('inputs.yearly.relativeDay.inputs.ofTheMonth')}
+          label="yearly.relativeDay.inputs.ofTheMonth"
+          namespace="common.recurring"
           renderContent={() => (
             <>{t(`common.misc:dates.months.${data.onTheDayOfMonth - 1}`)}</>
           )}

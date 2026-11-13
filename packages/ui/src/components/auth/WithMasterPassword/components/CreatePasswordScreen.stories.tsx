@@ -20,7 +20,7 @@ export const Default: Story = {
     controller: mockController() as never
   },
   render: props => (
-    <Box height="100vh" minHeight="30rem" position="fixed" width="100vw">
+    <Box height="100vh" minHeight="30em" position="fixed" width="100vw">
       <CreatePasswordScreen {...props} />
     </Box>
   )

@@ -1,4 +1,4 @@
-import logger from '@/utils/logger'
+import { log } from '@clack/prompts'
 
 import { PROJECTS } from '../constants/projects'
 
@@ -19,14 +19,14 @@ function validateProjects(
 export function validateProjectArguments(projects: string[] | undefined): void {
   const validProjects = Object.keys(PROJECTS)
 
-  if (!projects?.length || !projects) {
+  if (!projects?.length) {
     return
   }
 
   const validation = validateProjects(projects, validProjects)
 
   if (!validation.isValid) {
-    logger.error(
+    log.error(
       `Invalid project(s): ${validation.invalidProjects.join(', ')}. Available projects: ${validProjects.join(', ')}`
     )
     process.exit(1)

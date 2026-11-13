@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
+import { queryClient } from '@/storybook/PreviewWrapper'
+import { forgeAPI } from '@/utils/forgeAPI'
+
 import { type Location, LocationInput } from './index'
+
+queryClient.setQueryData(forgeAPI.checkAPIKeys({ keys: 'gcloud' }).key, false)
 
 const meta = {
   argTypes: {

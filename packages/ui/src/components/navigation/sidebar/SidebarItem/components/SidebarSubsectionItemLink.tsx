@@ -57,21 +57,21 @@ export function SidebarSubsectionItemLink({
           pr={!sidebarExpanded ? 'sm' : undefined}
           r="lg"
           shadow={isActive ? true : undefined}
-          style={{ gap: '0.75rem', height: '3.5rem' }}
+          style={{ gap: '0.75em', height: '3.5em' }}
           to={`./${path.replace(/^\//, '')}`}
           width="100%"
           onClick={handleClick}
         >
-          <Flex centered height="1.75rem" width="1.75rem">
+          <Flex centered height="1.75em" width="1.75em">
             {typeof icon === 'string' ? (
-              <Icon icon={icon} size="1.5rem" />
+              <Icon icon={icon} size="1.5em" />
             ) : (
               icon
             )}
           </Flex>
 
           {sidebarExpanded && (
-            <Text truncate style={{ paddingRight: '1rem', width: '100%' }}>
+            <Text truncate style={{ paddingRight: '1em', width: '100%' }}>
               {t(
                 `apps.${label}.subsections.${_.camelCase(subsectionLabel)}.title`
               )}

@@ -1,26 +1,21 @@
 import { ROOT_DIR } from '@constants'
-import { loadAndRegisterModuleRoutes } from '@functions/modules/loadAndRegisterModuleRoutes'
+import { watchCoreLocales } from '@functions/initialization/watchCoreLocales'
 import { registerRoutes } from '@functions/routes/functions/forgeRouter'
 import { clientError } from '@functions/routes/utils/response'
 import express from 'express'
 import path from 'path'
 
+import { createModuleRuntime } from '@lifeforge/module-runtime/loader'
 import { forgeRouter } from '@lifeforge/server-utils'
 
+import { initDrizzle } from '../drizzle'
 import coreRoutes from './core.routes'
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 
 const router = express.Router()
 
-const appRoutes = await loadAndRegisterModuleRoutes()
-
-const mainRoutes = forgeRouter({
-  ...coreRoutes,
-  modules: forgeRouter({
-    ...coreRoutes.modules,
-    ...appRoutes
-  })
-})
-
+// Serve module client bundles before the module API routes.
 router.use('/modules/:moduleName/*', (req, res, next) => {
   const moduleName = req.params.moduleName
 
@@ -31,8 +26,7 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
     return next()
   }
 
-  const filePath =
-    (req.params[0 as any as keyof typeof req.params] as string) || ''
+  const filePath = (req.params as Record<string, string | undefined>)['0'] || ''
 
   // Block null byte injection in filePath
   if (filePath.includes('\0')) {
@@ -49,15 +43,45 @@ router.use('/modules/:moduleName/*', (req, res, next) => {
 
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin')
 
+  // `remoteEntry.js` keeps the same URL across builds, and browsers - mobile
+  // ones especially - readily serve the stored copy instead of revalidating
+  // it. Never store it so a rebuilt module is picked up on the next load.
+  if (filePath === 'remoteEntry.js') {
+    res.setHeader('Cache-Control', 'no-store')
+  }
+
   // Serve file securely using the root sandbox parameter
-  res.sendFile(filePath, { root: moduleDistPath }, err => {
-    if (err) {
+  res.sendFile(filePath, { root: moduleDistPath }, (err?: Error) => {
+    // Only fall through when the file could not be sent. Calling next() after a
+    // successful response (or a client abort mid-stream) would let later
+    // handlers respond again and raise ERR_HTTP_HEADERS_SENT.
+    if (err && !res.headersSent) {
       next()
     }
   })
 })
 
-router.use('/', registerRoutes(mainRoutes))
+const moduleRuntime = createModuleRuntime({
+  modulesDir: path.join(ROOT_DIR, 'modules'),
+  isProduction: IS_PRODUCTION,
+  outerRouter: router,
+  buildRouter: appRoutes => {
+    initDrizzle()
+
+    return registerRoutes(
+      forgeRouter({
+        ...coreRoutes,
+        modules: forgeRouter({
+          ...coreRoutes.modules,
+          ...appRoutes
+        })
+      })
+    )
+  }
+})
+
+// Initial module load + drizzle init.
+await moduleRuntime.reload()
 
 router.get('*', (_, res) => {
   res.set('Cache-Control', 'no-store')
@@ -70,6 +94,13 @@ router.get('*', (_, res) => {
   })
 })
 
-export { mainRoutes }
+/**
+ * Starts watching the modules and core locales directories, reloading on
+ * changes.
+ */
+export function startWatchers(): void {
+  moduleRuntime.watch()
+  watchCoreLocales(() => moduleRuntime.reload())
+}
 
 export default router

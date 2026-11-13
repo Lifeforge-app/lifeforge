@@ -1,11 +1,12 @@
 import { decrypt } from '@functions/auth/encryption'
 import { OAuth2Tokens } from 'arctic'
 
+import { db } from '../../../core/drizzle'
 import {
   OAUTH_PROVIDER_CONFIGS,
+  type OAuthClient,
   ProviderConfig
 } from '../constants/oauth_providers'
-import { getPB } from '../constants/pb'
 
 const MASTER_KEY = process.env.MASTER_KEY!
 
@@ -13,50 +14,37 @@ export async function getProvider(
   providerName: string,
   origin: string
 ): Promise<{
-  client: any
+  client: OAuthClient
   redirectUri: string
   config: ProviderConfig
 } | null> {
-  const pb = await getPB()
+  const record = await db.query.authOAuthProviders.findFirst({
+    where: {
+      provider: providerName,
+      enabled: true
+    }
+  })
 
-  const record = await pb.getFirstListItem
-    .collection('oauth_providers')
-    .filter([
-      {
-        field: 'provider',
-        operator: '=',
-        value: providerName
-      },
-      {
-        field: 'enabled',
-        operator: '=',
-        value: true
-      }
-    ])
-    .execute()
-    .catch(() => null)
-
-  if (!record) {
+  if (!record || !record.client_id || !record.client_secret) {
     return null
   }
 
-  let clientId, clientSecret: string
+  let clientId: string
+  let clientSecret: string
 
   try {
-    clientId = decrypt(
-      Buffer.from(record.client_id, 'base64'),
-      MASTER_KEY
-    ).toString('utf-8')
+    clientId = decrypt(record.client_id, MASTER_KEY)
 
-    clientSecret = decrypt(
-      Buffer.from(record.client_secret, 'base64'),
-      MASTER_KEY
-    ).toString('utf-8')
+    clientSecret = decrypt(record.client_secret, MASTER_KEY)
   } catch {
     return null
   }
 
   const providerConfig = OAUTH_PROVIDER_CONFIGS[record.provider]
+
+  if (!providerConfig) {
+    return null
+  }
 
   const redirectUri = `${origin}/auth`
 
@@ -77,8 +65,12 @@ export async function fetchUserEmail(
 
   if (config.emailStrategy === 'id_token') {
     const idToken = tokens.idToken()
+    const payloadSegment = idToken.split('.')[1]
+
+    if (!payloadSegment) return null
+
     const payload = JSON.parse(
-      Buffer.from(idToken.split('.')[1], 'base64').toString('utf-8')
+      Buffer.from(payloadSegment, 'base64').toString('utf-8')
     )
 
     return payload.email || null

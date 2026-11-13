@@ -4,7 +4,11 @@ import type React from 'react'
 
 import { APIError } from '@lifeforge/api'
 
-import { ErrorScreen, LoadingScreen } from '@/components/feedback'
+import {
+  ErrorScreen,
+  LoadingScreen,
+  NotFoundScreen
+} from '@/components/feedback'
 
 export function WithQuery<T>({
   query,
@@ -15,7 +19,7 @@ export function WithQuery<T>({
   notFoundFallback,
   onNotFound
 }: {
-  query: UseQueryResult<T, Error>
+  query: UseQueryResult<T>
   children: (data: T) => React.ReactNode
   showLoading?: boolean
   showRetryButton?: boolean
@@ -39,8 +43,8 @@ export function WithQuery<T>({
   }
 
   if (query.isError) {
-    if (is404 && notFoundFallback !== undefined) {
-      return <>{notFoundFallback}</>
+    if (is404) {
+      return <>{notFoundFallback || <NotFoundScreen />}</>
     }
 
     return (
@@ -49,10 +53,6 @@ export function WithQuery<T>({
         showRetryButton={showRetryButton}
       />
     )
-  }
-
-  if (query.data == null) {
-    return null
   }
 
   return <>{children(query.data)}</>

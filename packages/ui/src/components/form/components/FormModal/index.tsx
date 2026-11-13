@@ -61,7 +61,7 @@ export function FormModal<T extends FieldValues>({
     try {
       await submissionConfig.handler(values)
 
-      onClose?.()
+      onClose()
     } catch (error) {
       console.error(error)
       toast.error(
@@ -81,7 +81,7 @@ export function FormModal<T extends FieldValues>({
 
   return (
     <NamespaceContext value={namespace}>
-      <Stack gap="sm" minWidth="50vw">
+      <Stack minWidth="50vw">
         <ModalHeader
           icon={icon}
           namespace={namespace}

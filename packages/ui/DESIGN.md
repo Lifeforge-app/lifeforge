@@ -51,16 +51,34 @@ Spacing scales are defined under `vars.space` and scale with font size to keep v
 
 ### B. Border Radius (Rounding) Tokens
 
-Border corners are defined under `vars.radii` and scale with the user's corner multiplier:
+Border corners are defined under `vars.radii` and scale with the user's corner multiplier (`--custom-border-radius-multiplier`; independent of font scale). Each radius is a whole multiple of the spacing unit (`0.25em` - i.e. `--spacing` at the default font scale) so nested corners stay concentric.
 
-- `none`: `'0'`
-- `sm`: `var(--radius-sm)`
-- `md`: `var(--radius-md)`
-- `lg`: `var(--radius-lg)`
-- `xl`: `var(--radius-xl)`
-- `2xl`: `var(--radius-2xl)`
-- `3xl`: `var(--radius-3xl)`
-- `full`: `'9999px'`
+| Token  | Raw value           | Multiple of `0.25em` | Rendered at `:root` 14px |
+| :----- | :------------------ | :------------------- | :----------------------- |
+| `none` | `0`                 | -                    | `0`                      |
+| `sm`   | `var(--radius-sm)`  | `1`                  | `3.5px`                  |
+| `md`   | `var(--radius-md)`  | `2`                  | `7px`                    |
+| `lg`   | `var(--radius-lg)`  | `3`                  | `10.5px`                 |
+| `xl`   | `var(--radius-xl)`  | `4`                  | `14px`                   |
+| `2xl`  | `var(--radius-2xl)` | `6`                  | `21px`                   |
+| `3xl`  | `var(--radius-3xl)` | `8`                  | `28px`                   |
+| `full` | `9999px`            | -                    | pill                     |
+
+#### Concentric nested corners
+
+When a rounded element sits inside another one with padding, keep the corners concentric using `inner radius = outer radius - padding`. Because all radius and spacing tokens share the `0.25em` unit, the result usually maps to another token:
+
+| Outer radius | Padding | Inner radius |
+| :----------- | :------ | :----------- |
+| `md`         | `xs`    | `sm`         |
+| `lg`         | `xs`    | `md`         |
+| `lg`         | `sm`    | `sm`         |
+| `xl`         | `xs`    | `lg`         |
+| `xl`         | `sm`    | `md`         |
+| `2xl`        | `sm`    | `xl`         |
+| `3xl`        | `sm`    | `2xl`        |
+
+When the outer radius is less than or equal to the padding, the inner element should use `r="none"` - a square inner corner reads as concentric because it never crosses the outer corner's curve.
 
 ### C. Typography Scales
 
@@ -173,11 +191,15 @@ import { surface } from '@lifeforge/ui'
 
 // Light static surface - for non-interactive light backgrounds
 surface.light
-// => { base: 'bg-100', dark: 'bg-800' }
+// => { base: colorWithOpacity('bg-200', '50%'), dark: colorWithOpacity('bg-800', '50%') }
 
-// Light interactive surface - for controls (Listbox, SearchInput, selectable Cards)
+// Light interactive surface - the unified background for all inputs/controls
+// (TextInput, CurrencyInput, NumberInput, DateInput, ColorInput, IconInput,
+//  TextAreaInput, TagsInput, Listbox, ListboxInput, ComboboxInput, SearchInput,
+//  FileInput, and selectable Cards)
 surface.lightInteractive
-// => { base: 'bg-100', hover: 'bg-200', dark: 'bg-800', darkHover: colorWithOpacity('bg-700', '50%') }
+// => { base: colorWithOpacity('bg-200', '50%'), dark: colorWithOpacity('bg-800', '70%'),
+//      hover: colorWithOpacity('bg-200', '70%'), darkHover: colorWithOpacity('bg-700', '50%') }
 
 // Default surface - for static Cards
 surface.default
@@ -185,18 +207,21 @@ surface.default
 
 // Default interactive surface - for clickable Cards
 surface.defaultInteractive
-// => { base: 'bg-50', dark: 'bg-900', hover: 'bg-100', darkHover: 'bg-800' }
+// => { base: 'bg-50', dark: 'bg-900', hover: colorWithOpacity('bg-50', '70%'), darkHover: 'bg-800' }
 ```
 
 These are `as const` objects that can be spread or passed directly into the `bg` prop:
 
 ```tsx
-<Listbox bg={surface.lightInteractive} ... />
+<Listbox bg={surface.light} ... />
 <Card bg={surface.lightInteractive} ... />    {/* Override Card's default */}
 <Card isInteractive ... />                    {/* Uses surface.defaultInteractive automatically */}
 ```
 
-> The `surface.default` and `surface.defaultInteractive` presets already serve as the built-in defaults for the `Card` component - you only need to pass them explicitly when overriding or when using them on non-Card primitives.
+> **Inputs** default to `surface.lightInteractive`; every `*Input` component accepts a
+> `wrapperProps` prop that is forwarded to its `InputWrapper` (a `Flex`), e.g.
+> `<DateInput wrapperProps={{ bg: surface.default }} />`. The `Card` component defaults to
+> `surface.default` / `surface.defaultInteractive`.
 
 ### B. Opacity Modifiers (`colorWithOpacity`)
 
@@ -275,7 +300,7 @@ _How it works under the hood:_ The engine applies `.lf-w` and `.md:lf-w` classes
 
 ## 4. The Core Primitives
 
-Primitives are the architectural blocks from which all higher-level views are constructed. They all support `as` and `asChild` composition.
+Primitives are the architectural blocks from which all higher-level views are constructed. Layout primitives support `as` and `asChild` composition; semantic primitives such as `Table` and `Image` use fixed elements so their markup stays valid.
 
 ```mermaid
 graph TD
@@ -286,6 +311,16 @@ graph TD
     Box --> Bordered
     Box --> Ring
     Box --> Text
+    Box --> Table
+    Box --> Image
+    Image --> ZoomableImage
+    Table --> TableHeader
+    Table --> TableBody
+    Table --> TableFooter
+    Table --> TableRow
+    Table --> TableCaption
+    TableRow --> TableHeaderCell
+    TableRow --> TableCell
     Text --> Icon
     Slot --> WithDivide
     Slot --> Transition
@@ -331,10 +366,10 @@ interface BoxOwnProps<T extends ElementType = 'div'> {
 > **`aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis` are available as props on all primitives** - no inline `style` needed. Always check if a CSS property exists in the `ArbitraryProps` type before resorting to inline styles.
 
 > [!WARNING]
-> **`top`, `right`, `bottom`, `left`, and `inset` accept raw CSS strings** (e.g. `"0.5rem"`, `"8px"`, `"50%"`), not `SpaceToken` values like `sm`, `md`, `lg`.  
+> **`top`, `right`, `bottom`, `left`, and `inset` accept raw CSS strings** (e.g. `"0.5em"`, `"8px"`, `"50%"`), not `SpaceToken` values like `sm`, `md`, `lg`.  
 > Spacing tokens only work with padding (`p`, `px`, `py`, `pt`, `pr`, `pb`, `pl`) and margin (`m`, `mx`, `my`, `mt`, `mr`, `mb`, `ml`) props.  
 > ❌ `top="sm"` - will not resolve  
-> ✅ `top="0.5rem"` - correct
+> ✅ `top="0.5em"` - correct
 >
 > **`top`, `right`, `bottom`, `left`, and `inset` are NOT tokenized.** They do not accept spacing tokens (`sm`, `md`, `lg`) - only raw CSS values. These properties are used for absolute/fixed positioning, which is inherently pixel/length-based and does not benefit from the token system's font-scaling.
 
@@ -356,7 +391,7 @@ rbr?: ResponsiveProp<RadiusToken> // Bottom Right
   p="lg"
   r="xl"
   shadow
-  width={{ base: '100%', md: '50rem' }}
+  width={{ base: '100%', md: '50em' }}
 >
   Box Content
 </Box>
@@ -584,7 +619,7 @@ interface BorderedOwnProps extends BoxOwnProps {
   borderColor={{ base: 'bg-200', dark: 'bg-800' }}
   borderWidth="2px"
   height="100vh"
-  width="16rem"
+  width="16em"
 >
   Sidebar content
 </Bordered>
@@ -719,6 +754,125 @@ export function Prose({
   </ul>
 </Prose>
 ```
+
+---
+
+### L. Table
+
+Semantic table primitives that replace native table markup in apps and modules. They render real `<table>`, `<thead>`, `<tbody>`, `<tfoot>`, `<tr>`, `<th>`, `<td>` and `<caption>` elements, and centralize padding, alignment, striping and separators.
+
+```tsx
+<Table width="100%">
+  <TableHeader>
+    <TableRow bg="custom-500" color="bg-50">
+      <TableHeaderCell align="left" width="100%">
+        Account
+      </TableHeaderCell>
+      <TableHeaderCell>Current</TableHeaderCell>
+      <TableHeaderCell>Change</TableHeaderCell>
+    </TableRow>
+  </TableHeader>
+  <TableBody color={{ base: 'bg-500', dark: 'bg-400' }}>
+    <TableRow>
+      <TableCell>Wallet</TableCell>
+      <TableCell align="right" nowrap>
+        14,150.00
+      </TableCell>
+      <TableCell align="right" color="rose-600" nowrap>
+        -2.08%
+      </TableCell>
+    </TableRow>
+  </TableBody>
+  <TableFooter>
+    <TableRow>
+      <TableCell>
+        <Text weight="semibold">Net worth</Text>
+      </TableCell>
+      <TableCell align="right" nowrap variant="total">
+        75,080.00
+      </TableCell>
+      <TableCell align="right" nowrap variant="total">
+        +3.26%
+      </TableCell>
+    </TableRow>
+  </TableFooter>
+  <TableCaption>Balances for the current statement period.</TableCaption>
+</Table>
+```
+
+#### Table props
+
+- Inherits `Box` props (`width`, `minWidth`, margins, `bg`, `r`, ...).
+- Uses a single fixed density: 0.5em vertical padding, 1em horizontal padding and the base font size.
+- Body rows are always striped (`bg-500` at 5% on odd rows). The header and footer are always separated with a 2px bottom border and a 1px top border respectively. There is no prop to switch to a bordered or unstriped table.
+
+#### Components
+
+- `TableHeader` / `TableBody` / `TableFooter` - semantic sections; all accept `bg` and `color`. `TableHeader` defaults to the muted text color (`bg-500`, dark `bg-400`), which a `TableRow color` prop overrides.
+- `TableRow` - accepts `bg` and `color`. A row with a `bg` prop opts out of the striped background, which is the only supported per-row style override. When `bg` is set without `color`, a readable text color is derived automatically from the active theme; pass `color="inherit"` for subtle tinted rows that should keep the page text color.
+- `TableHeaderCell` - `<th>` with `scope="col"` by default; centered, non-wrapping and weight 500.
+- `TableCell` - `<td>` with left alignment and wrapping by default. `variant="total"` applies the accounting total rule (2px solid top border, 6px double bottom border, weight 500).
+- `TableCaption` - `<caption>` with `side?: 'top' | 'bottom'` (default `bottom`).
+
+Cells accept `align`, `nowrap`, `bg`, `color`, `width`, `minWidth`, `maxWidth`, and the native `<td>` / `<th>` attributes (`colSpan`, `rowSpan`, `scope`, `headers`, ...).
+
+> [!NOTE]
+> For wide tables, wrap the table in `Scrollbar` (or a `Box` with `overflowX="auto"`) and set `width="max-content"` on the table. Native table tags are prohibited in `apps/web` and modules by the `local/no-native-elements` ESLint rule.
+
+---
+
+### M. Image
+
+The image primitive renders a real `<img>` with consistent fitting, loading and fallback behaviour. It is intentionally a single `<img>` element - use `Box`/`Flex` for frames, aspect ratios, clipping, overlays and fallback placement so the image stays composable with third-party render props, map markers and zoom wrappers.
+
+```tsx
+<Image alt="Movie poster" fit="cover" height="100%" src={poster} width="100%" />
+```
+
+#### Props
+
+- `src?: string` - when empty, `fallback` is rendered.
+- `alt: string` - required; use `""` for decorative images.
+- `fit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down'` (default `cover`).
+- `fallback?: ReactNode | string` - always rendered behind the image and defaults to `tabler:photo-off`. It acts as a placeholder while loading and shows through when the image is missing or fails. A string is rendered as a subtle Iconify icon (`bg-300` / dark `bg-700`) whose size scales with the frame; a React element is rendered as-is. Pass `null` to disable it. Give the image a sized frame (`width`/`height`/`aspectRatio`) so the fallback layer is visible.
+- The fallback frame defaults to `bg-200` / dark `bg-800`; override it with `bg` (use `bg="transparent"` for transparent images).
+- `objectPosition?: string` - CSS `object-position`.
+- `loading?: 'lazy' | 'eager'` (default `lazy`) and `decoding?: 'async' | 'sync' | 'auto'` (default `async`).
+- Inherits `Box` props (`width`, `height`, `aspectRatio`, `r`, `bg`, margins, ...), native `<img>` props, and forwards `ref`, `onLoad` and `onError`.
+
+```tsx
+<Flex align="center" aspectRatio="1" justify="center" r="lg" width="12em">
+  <Image
+    alt=""
+    fallback="tabler:photo-off"
+    height="100%"
+    src={photo}
+    width="100%"
+  />
+</Flex>
+```
+
+#### ZoomableImage
+
+`ZoomableImage` wraps `Image` with `react-medium-image-zoom`, so modules do not need to import that package directly.
+
+- `zoomSrc?: string` - source for the zoomed image; defaults to `src`.
+- `zoomMargin?: number` - default `40`.
+- `zoomProps?: Omit<UncontrolledProps, 'children' | 'zoomMargin'>` - forwards options such as `ZoomContent`, `IconZoom`, `IconUnzoom` and `zoomImg`.
+
+```tsx
+<ZoomableImage
+  alt="NASA image"
+  fit="cover"
+  height="100%"
+  src={previewUrl}
+  width="100%"
+  zoomSrc={hdUrl}
+/>
+```
+
+> [!NOTE]
+> Native `<img>` tags are prohibited in `apps/web` and modules by the `local/no-native-elements` ESLint rule. Use `Image`/`ZoomableImage` instead. Background images (`BackgroundProvider`, map tiles) are not covered by this primitive.
 
 ---
 
@@ -1134,7 +1288,7 @@ Renders the top panel header block of a workspace module.
 
 - **`APIOnlineStatusWrapper`:** Wraps page routes to verify API availability, showing a connection error screen if the server is offline.
 - **`EncryptionWrapper`:** Displays loader screens while E2E encryption initializes.
-- **`Tooltip`:** Trigger overlay utilizing `react-tooltip` and matching theme outlines.
+- **`Tooltip`:** General-purpose overlay rendered into a portal and attached to any element via a matching `data-tooltip-id`, styled with theme-matching outlines.
 - **`PrintArea`:** Formats viewport sections for printing, copying global CSS variable scopes into a `@media print` style block.
 
 ---
@@ -1298,7 +1452,7 @@ function UserCreationPage() {
         {t('welcome.desc')}
       </Text>
       // 5. Central form container bounded by max width
-      <Stack maxWidth="40rem" mt="2xl" width="100%">
+      <Stack maxWidth="40em" mt="2xl" width="100%">
         <TextInput
           errorMsg={errors.email}
           icon="tabler:mail"
@@ -1542,7 +1696,149 @@ import { Icon } from '@lifeforge/ui'
 
 ---
 
-## 14. Developer Quick-Reference Checklist
+## 14. Migration Guide: Tailwind → UI Primitives
+
+Sections 12 and 13 cover specific legacy classes. This section is the general
+playbook for removing **any** Tailwind from a component.
+
+### Ground rules
+
+1. **No Tailwind, ever.** No utility classes, `@apply`, `@reference`, `@layer`,
+   `theme()`, or `className` strings containing utilities - in any file type.
+2. **Primitives first.** `Box`, `Flex`, `Stack`, `Grid`, `Text`, `Icon`, `Card`,
+   `Bordered`, `TagChip`, `Widget`. Use `asChild` to flatten DOM.
+3. **Inline `style` only for what has no prop**: truly dynamic runtime values,
+   negative margins, `transform`, `fontFamily`, `objectFit`, `whiteSpace`,
+   `wordBreak`, `aspect-ratio` on raw elements, etc.
+4. **`.css.ts` only when primitives and inline style cannot do it**: raw
+   `<table>`/`<svg>`/`<canvas>`, arbitrary breakpoints (`min-[400px]`), keyframes,
+   `:has()`/`::before` selectors, dark-mode color overrides.
+5. **Plain CSS class names are allowed as hooks** for CSS not applied through JSX
+   props (e.g. `.loader`, `.music`, `.pagination`, `.news-article`, range-input
+   pseudo-elements). Keep them.
+6. **Never add `clsx`** just to join props-derived classes.
+
+### Token mapping
+
+Spacing tokens: `xs`=4px, `sm`=8px, `md`=16px, `lg`=24px, `xl`=32px, `2xl`=48px,
+`3xl`=64px. There is **no token for 2px/12px/20px/96px** - pick the nearest token
+or fall back to inline/`.css.ts`.
+
+| Tailwind                                      | Replace with                                                                    |
+| --------------------------------------------- | ------------------------------------------------------------------------------- |
+| `p-2` / `m-2`                                 | `p="sm"` / `m="sm"`                                                             |
+| `p-4` / `mt-4`                                | `p="md"` / `mt="md"`                                                            |
+| `gap-3` (12px)                                | `gap="sm"` (nearest)                                                            |
+| `gap-6` / `p-6` / `mt-6`                      | `gap="lg"` / `p="lg"` / `mt="lg"`                                               |
+| `p-8` / `gap-8` / `pb-8`                      | `p="xl"` / `gap="xl"` / `pb="xl"`                                               |
+| `pb-12` (48px)                                | `pb="2xl"`                                                                      |
+| `mr-16` / `mt-16` (64px)                      | `mr="3xl"` / `mt="3xl"`                                                         |
+| `mt-0.5` / `gap-0.5` (2px)                    | no token → inline `{ marginTop: '0.125em' }` / `{ gap: '0.125em' }`             |
+| `mx-auto` / `mt-auto`                         | `style={{ marginLeft: 'auto', marginRight: 'auto' }}` / `{ marginTop: 'auto' }` |
+| `flex` / `flex-col` / `flex-row`              | `Flex` (`direction="column"`/`"row"`)                                           |
+| `flex-center`                                 | `centered`                                                                      |
+| `flex-between` / `justify-between`            | `justify="between"`                                                             |
+| `flex-1`                                      | `flex="1"`; `flex-1 shrink-0` → `flex="1 0 0%"`                                 |
+| `shrink-0`                                    | `flexShrink="0"`                                                                |
+| `w-full` / `h-full` / `size-full`             | `width="100%"` / `height="100%"`                                                |
+| `w-5/12` / `w-2/12`                           | `width="41.6667%"` / `"16.6667%"`                                               |
+| `max-w-md`                                    | `maxWidth="28em"`                                                               |
+| `h-96` / `w-32` / `size-16`                   | `height="24em"` / `width="8em"` / `height="4em" width="4em"`                    |
+| `size-5` / `size-6` / `size-7`                | `size="1.25em"` / `"1.5em"` / `"1.75em"` (Icon)                                 |
+| `aspect-video` / `aspect-square`              | `aspectRatio="16 / 9"` / `aspectRatio="1"`                                      |
+| `rounded-lg` / `rounded-md` / `rounded-full`  | `r="lg"` / `r="md"` / `r="full"`                                                |
+| `shadow-custom` / `shadow-lg`                 | `shadow`                                                                        |
+| `overflow-hidden`                             | `overflow="hidden"`                                                             |
+| `relative` / `absolute` / `static`            | `position="relative"` / `"absolute"` / `"static"`                               |
+| `top-4 right-4` / `inset-0`                   | `top="1em" right="1em"` / `inset="0"` (raw strings, **not** tokens)             |
+| `text-bg-500` / `text-custom-500`             | `color="muted"` / `color="primary"`                                             |
+| `text-sm` / `text-lg` / `text-2xl`            | `size="sm"` / `"lg"` / `"2xl"`                                                  |
+| `font-medium` / `font-semibold` / `font-bold` | `weight="medium"` / `"semibold"` / `"bold"`                                     |
+| `truncate` / `line-clamp-N`                   | `truncate` / `lineClamp={N}`                                                    |
+| `whitespace-nowrap` / `whitespace-pre-wrap`   | `whiteSpace="nowrap"` / `"pre-wrap"`                                            |
+| `text-center` / `text-right`                  | `align="center"` / `"right"` (Text/Icon only)                                   |
+| `tracking-wide` / `leading-tight`             | `tracking="wide"` / `leading="tight"`                                           |
+| `animate-spin`                                | inline `style={{ animation: 'rotation 1s linear infinite' }}`                   |
+
+Replace breakpoints with responsive props: `hidden md:flex` →
+`display={{ base: 'none', md: 'flex' }}`, `flex-col sm:flex-row` →
+`direction={{ base: 'column', sm: 'row' }}`.
+
+### Colors
+
+- Legacy `component-bg-*` → `surface` presets (see section 12).
+- Opacity (`bg-500/20`, `bg-800/50`) → `colorWithOpacity('bg-500', '20%')` in the
+  `bg` prop or `.css.ts`.
+- Interactive states: `color={{ base: 'bg-500', hover: 'bg-800', darkHover: 'bg-50' }}`.
+- Data-driven colors (from API): inline `style={{ color, backgroundColor: color + '20' }}`.
+- Colored label chips → `TagChip` (`color`, `icon`, `label`, `size="sm"`) instead
+  of a hand-rolled pill.
+- No `white`/`black` token - use `bg-50` / `bg-950`.
+
+### Primitive limitations
+
+- **`Text` (and `Icon`) have no layout props** (`width`, `minWidth`, `flex`,
+  `flexShrink`). Wrap with `Box asChild flex="1"` or use `style={{ width: '100%' }}`.
+  They **do** accept spacing/position/overflow/rounded.
+- **`Box`/`Flex` have `bg` but not `color`.** Put text color on the `Text`/`Icon`
+  children, or use `Bordered` (which accepts `color`).
+- **`Icon` defaults to `1.25em`** - only set `size` when different.
+- **`Card` extends `FlexProps`** (`direction="column"` default) - pass layout
+  props directly, don't wrap children in another `Flex`.
+- **`Widget` `iconColor` is a design token** (e.g. `red-500`), not a hex value. Use
+  `variant="large-icon"` for stat tiles.
+- **Inputs only accept `className`** for layout - wrap in `Box`/`Flex` to control
+  width/flex.
+- **`ContextMenu` has no `classNames` prop** - position its trigger with Box props
+  (`position`, `top`, `right`).
+
+### Third-party & raw elements
+
+- **`<table>`** → sibling `.css.ts` using `COLORS[...]` + `colorWithOpacity(...).toString()`
+  and `.dark &` selectors.
+- **`<svg>`/`<canvas>`/`<circle>`** → `.css.ts` for size/transform and dark colors.
+- **Arbitrary breakpoints** → `.css.ts` `'@media': { '(min-width: 400px)': { … } }`.
+- **Custom animations** → prefer the existing `rotation` keyframe, else
+  `keyframes({...})` in `.css.ts`.
+- **Imperatively-created DOM** → set `el.style.*`; never a Tailwind `className`.
+- **`img`** → inline style for `objectFit`/`width`/`height`.
+- **Third-party `className` overrides** → plain CSS class or inline `style`.
+- **Raw HTML** (`dangerouslySetInnerHTML`) → sanitize first (server
+  `sanitize-html`, or client `dompurify`).
+
+### Recurring layout fixes
+
+- **Lists**: `space-y-N` → `<Stack>`; `flex flex-col gap-N` → `<Flex direction="column" gap="…">`.
+- **Grids**: `grid grid-cols-1 md:grid-cols-3` → `<Grid templateCols={{ base: 1, md: 3 }}>`.
+- **Overlay buttons**: `<Box as="button" inset="0" position="absolute" />`.
+- **Accent bars** (`border-l-4` / `before:` pseudo bars) → a relative `Box` with an
+  absolute rounded bar (`bg="primary" r="full" width="0.25em" top="0" bottom="0" left="0"`).
+- **`*:first-child` / `[&>*:nth-child(2)]`** → usually redundant once the child
+  already sets `width="100%"`; otherwise use `.css.ts`.
+- **Modal double-scrollbar**: `ModalWrapper` is `maxHeight="calc(100dvh - 8em)"`
+  with `p="lg"` (1.5em), so its content box is `calc(100dvh - 11em)`. Give the
+  modal's outer container `minHeight="calc(100dvh - 11em)"` so only the inner
+  `Scrollbar`/`AutoSizer` scrolls.
+
+### Overlay API notes
+
+- `ModalHeader` uses **`trailing`** (ReactNode), not `actionButton`/`headerActions`.
+  `FormModal` maps `uiConfig.headerActions` → `trailing`.
+- Mobile `FAB` + desktop header button: hide the button with
+  `display={{ base: 'none', md: 'flex' }}` and render
+  `<FAB visibilityBreakpoint="md" onClick={…} />`.
+
+### Component hygiene while migrating
+
+- Extract conceptual blocks into their own files; move state/hooks/derived values
+  that only they use.
+- Co-locate a modal's private components under `<ModalName>/components/` with the
+  modal as `<ModalName>/index.tsx`.
+- Update hardcoded `queryKey` arrays you touch to the `forgeAPI.*.key` convention.
+
+---
+
+## 15. Developer Quick-Reference Checklist
 
 Before submitting a pull request, verify that you have adhered to all core design patterns:
 
@@ -1555,6 +1851,6 @@ Before submitting a pull request, verify that you have adhered to all core desig
 - [ ] **Check ArbitraryProps first:** Before reaching for inline `style` or `.css.ts`, check if the CSS property is available via `ArbitraryProps` (e.g. `aspectRatio`, `overflow`, `flex`, `flexGrow`, `flexShrink`, `flexBasis`).
 - [ ] **Component deconstruction:** If a component's JSX grows beyond a single conceptual block, extract sub-sections into their own component files under a `components/` subdirectory.
 - [ ] **Hooks co-location:** Hooks that are only consumed by a child component should live inside that child component, not in the parent.
-- [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin - no need to define responsive sizes like `mb={{ base: '6rem', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
+- [ ] **List spacing:** For vertical lists (`Stack`), `mb="lg"` is the standard bottom margin - no need to define responsive sizes like `mb={{ base: '6em', md: 'lg' }}`. The spacing token `lg` is consistent across breakpoints and is sufficient for all list containers.
 - [ ] **Component organization:** Components are strictly separated into individual files under their respective `components/` folders instead of being grouped together.
 - [ ] **Conventional functions:** All React components use standard function declarations (`export function Component()`) and avoid arrow functions.

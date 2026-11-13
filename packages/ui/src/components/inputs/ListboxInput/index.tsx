@@ -11,6 +11,7 @@ import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
 import { ListboxInputWrapper } from './components/ListboxInputWrapper'
 import { ListboxOptions } from './components/ListboxOptions'
+import { ListboxMultipleContext } from './contexts/ListboxMultipleContext'
 
 interface ListboxInputProps<T> {
   /** The label text displayed above the listbox field. Required for 'classic' style. */
@@ -35,7 +36,7 @@ interface ListboxInputProps<T> {
   customActive?: boolean
   /** The custom content to display in the listbox button. */
   renderContent?: (value: T) => React.ReactNode
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** The error message to display when the field is invalid. */
   errorMsg?: string
@@ -84,7 +85,7 @@ export function ListboxInput<T>({
     }
 
     const inputInside = (e.target as HTMLElement).querySelector('input') as
-      HTMLInputElement | HTMLTextAreaElement
+      HTMLInputElement | HTMLTextAreaElement | null
 
     if (inputInside && inputInside instanceof HTMLInputElement) {
       inputInside.focus()
@@ -92,81 +93,92 @@ export function ListboxInput<T>({
   }, [])
 
   return (
-    <ListboxInputWrapper
-      className={className}
-      disabled={disabled}
-      errorMsg={errorMsg}
-      multiple={multiple}
-      size={size}
-      value={value}
-      variant={variant}
-      onChange={onChange}
-      onClick={focusInput}
-    >
-      <Flex
-        asChild
-        align="center"
-        minWidth="0"
-        position="relative"
-        width="100%"
+    <ListboxMultipleContext value={!!multiple}>
+      <ListboxInputWrapper
+        className={className}
+        disabled={disabled}
+        errorMsg={errorMsg}
+        multiple={multiple}
+        size={size}
+        value={value}
+        variant={variant}
+        onChange={onChange}
+        onClick={focusInput}
       >
-        <ListboxButton>
-          <Flex
-            align="center"
-            minWidth="0"
-            p={
-              variant === 'plain' ? (size === 'small' ? 'xs' : 'md') : undefined
-            }
-            position="relative"
-            width="100%"
-          >
-            {icon && (
-              <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
-            )}
-            {variant === 'classic' && label && (
-              <Box
-                asChild
-                pr="3xl"
-                style={{
-                  paddingLeft: 'calc(var(--spacing) * 14)'
-                }}
-              >
-                <InputLabel
+        <Flex
+          asChild
+          align="center"
+          minWidth="0"
+          position="relative"
+          width="100%"
+        >
+          <ListboxButton>
+            <Flex
+              align="center"
+              minWidth="0"
+              p={
+                variant === 'plain'
+                  ? size === 'small'
+                    ? 'xs'
+                    : 'md'
+                  : undefined
+              }
+              position="relative"
+              width="100%"
+            >
+              {icon && (
+                <InputIcon
                   active={isActive}
                   hasError={!!errorMsg}
-                  label={inputLabel}
-                  required={required === true}
+                  icon={icon}
                 />
-              </Box>
-            )}
-            <InputInnerWrapper hasActionButton variant={variant}>
-              <Text asChild align="left">
-                <Box minHeight="1.5em" minWidth="0" width="100%">
-                  {variant === 'classic'
-                    ? isActive && renderContent?.(value)
-                    : renderContent?.(value)}
-                </Box>
-              </Text>
-            </InputInnerWrapper>
-          </Flex>
-          <Box asChild mr="sm" position="absolute" right="0">
-            <InputActionButton
-              hasError={!!errorMsg}
-              icon="heroicons:chevron-up-down-16-solid"
-              style={{
-                marginRight:
-                  variant === 'classic'
-                    ? '1em'
-                    : size === 'small'
-                      ? '0.25em'
-                      : '0.75em'
-              }}
-              variant={variant}
-            />
-          </Box>
-        </ListboxButton>
-      </Flex>
-      <ListboxOptions portal={!multiple}>{children}</ListboxOptions>
-    </ListboxInputWrapper>
+              )}
+              <Flex
+                align="center"
+                minWidth="0"
+                position="relative"
+                width="100%"
+              >
+                {variant === 'classic' && label && (
+                  <Box asChild pr="3xl">
+                    <InputLabel
+                      active={isActive}
+                      hasError={!!errorMsg}
+                      label={inputLabel}
+                      required={required === true}
+                    />
+                  </Box>
+                )}
+                <InputInnerWrapper hasActionButton variant={variant}>
+                  <Text asChild align="left">
+                    <Box minHeight="1.5em" minWidth="0" width="100%">
+                      {variant === 'classic'
+                        ? isActive && renderContent?.(value)
+                        : renderContent?.(value)}
+                    </Box>
+                  </Text>
+                </InputInnerWrapper>
+              </Flex>
+            </Flex>
+            <Box asChild mr="sm" position="absolute" right="0">
+              <InputActionButton
+                hasError={!!errorMsg}
+                icon="heroicons:chevron-up-down-16-solid"
+                style={{
+                  marginRight:
+                    variant === 'classic'
+                      ? '1em'
+                      : size === 'small'
+                        ? '0.25em'
+                        : '0.75em'
+                }}
+                variant={variant}
+              />
+            </Box>
+          </ListboxButton>
+        </Flex>
+        <ListboxOptions portal={!multiple}>{children}</ListboxOptions>
+      </ListboxInputWrapper>
+    </ListboxMultipleContext>
   )
 }

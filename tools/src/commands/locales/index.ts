@@ -23,7 +23,10 @@ export default function setup(program: Command): void {
     .alias('i')
     .alias('add')
     .description('Install a language pack from the registry')
-    .argument('<lang>', 'Language code, e.g., en, ms, zh-CN, zh-TW')
+    .argument(
+      '<lang>',
+      'Locale package id, e.g., lifeforge--lang-en or melvinchia3636--lang-ms'
+    )
     .action(installLocaleHandler)
 
   command
@@ -32,7 +35,7 @@ export default function setup(program: Command): void {
     .alias('rm')
     .alias('remove')
     .description('Uninstall a language pack')
-    .argument('<lang>', 'Language code to remove')
+    .argument('<lang>', 'Locale package id to remove')
     .action(uninstallLocaleHandler)
 
   command
@@ -42,20 +45,20 @@ export default function setup(program: Command): void {
     .description('Upgrade language packs to latest version')
     .argument(
       '[lang]',
-      'Language code to upgrade (optional, checks all if omitted)'
+      'Locale package id to upgrade (optional, checks all if omitted)'
     )
     .action(upgradeLocaleHandler)
 
   command
     .command('validate')
     .description('Validate a language pack')
-    .argument('<lang>', 'Language code to validate')
+    .argument('<lang>', 'Locale package id to validate')
     .action(validateLocaleStructureHandler)
 
   command
     .command('publish')
     .description('Publish a language pack to the registry')
-    .argument('<lang>', 'Language code to publish from locales/')
+    .argument('<lang>', 'Locale package id to publish from locales/')
     .option(
       '--official',
       'Publish as official locale (requires maintainer access)'

@@ -43,9 +43,9 @@ interface ContextMenuItemProps {
   shouldCloseMenuOnClick?: boolean
   /** Additional CSS class names to apply to the menu item. */
   className?: string
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
-  /** Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** Additional properties for the translation function. Used for dynamic translations. See the [i18n documentation](https://docs.lifeforge.dev) for more details. */
   tProps?: Record<string, unknown>
   /** Callback function called when the menu item is clicked. */
   onClick: () => void

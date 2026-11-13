@@ -4,9 +4,36 @@ import react from '@vitejs/plugin-react'
 import crypto from 'node:crypto'
 import fs from 'node:fs'
 import path from 'node:path'
-import { type UserConfig, defineConfig, loadEnv, mergeConfig } from 'vite'
+import {
+  type Plugin,
+  type UserConfig,
+  defineConfig,
+  loadEnv,
+  mergeConfig
+} from 'vite'
 
 import { SHARED_DEPS, SHARED_PACKAGES } from '../constants/shared-packages'
+import extractModuleMetadata from '../metadata/extractModuleMetadata'
+
+/**
+ * Emits the module's parsed metadata (`forge-manifest.json`) alongside the
+ * build output so the server can read it without parsing source.
+ */
+function emitModuleMetadataPlugin(moduleDir: string): Plugin {
+  return {
+    name: 'lifeforge:emit-module-metadata',
+    apply: 'build',
+    generateBundle() {
+      const metadata = extractModuleMetadata(moduleDir)
+
+      this.emitFile({
+        type: 'asset',
+        fileName: 'forge-manifest.json',
+        source: JSON.stringify(metadata, null, 2)
+      })
+    }
+  }
+}
 
 interface ModuleConfigOptions {
   dirname: string
@@ -35,8 +62,8 @@ export function defineModuleClientConfig(
     )
 
   const moduleName = pkg.name.replace('@lifeforge/', '')
-  const moduleId = crypto.createHash('sha256').update(pkg.name).digest('hex')
-  const remoteName = `m_${moduleId}`
+  const remoteId = crypto.createHash('sha256').update(pkg.name).digest('hex')
+  const remoteName = `m_${remoteId}`
 
   return defineConfig(configEnv => {
     const isDev = configEnv.command === 'serve'
@@ -80,7 +107,8 @@ export function defineModuleClientConfig(
                 ])
               )
             }
-          })
+          }),
+        !isDev && emitModuleMetadataPlugin(path.resolve(dirname, '..'))
       ].filter(Boolean),
       resolve: {
         alias: [

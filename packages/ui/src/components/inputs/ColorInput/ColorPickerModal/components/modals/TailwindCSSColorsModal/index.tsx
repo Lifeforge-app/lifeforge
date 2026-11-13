@@ -19,10 +19,24 @@ function TailwindCSSColorsModal({
     <Box style={{ minWidth: '70vw' }}>
       <ModalHeader
         icon="tabler:brand-tailwind"
-        title="colorPicker.modals.morandiColorPalette"
+        subtitle={
+          <>
+            powered by&nbsp;
+            <Text asChild decoration="underline">
+              <a
+                href="https://tailwindcss.com/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Tailwind CSS
+              </a>
+            </Text>
+          </>
+        }
+        title="colorPicker.modals.tailwindCssColorPalette"
         onClose={onClose}
       />
-      <Flex direction="column" style={{ gap: '0.75rem' }}>
+      <Flex direction="column" style={{ gap: '0.75em' }}>
         {(
           [...Object.keys(TAILWIND_PALETTE)] as Array<
             keyof typeof TAILWIND_PALETTE
@@ -52,8 +66,8 @@ function TailwindCSSColorsModal({
               <Grid
                 key={index}
                 as="ul"
-                style={{ gap: '0.75rem' }}
-                templateCols="repeat(auto-fit, minmax(4rem, 1fr))"
+                style={{ gap: '0.75em' }}
+                templateCols="repeat(auto-fit, minmax(4em, 1fr))"
                 width="100%"
               >
                 {Object.entries(

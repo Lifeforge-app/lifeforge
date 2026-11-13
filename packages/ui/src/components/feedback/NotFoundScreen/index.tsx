@@ -38,7 +38,7 @@ export function NotFoundScreen({
       <Text align="center" as="p" color="muted" size="xl">
         {message ?? t('notFound.description')}
       </Text>
-      <Flex centered mt="lg" style={{ gap: '0.75rem' }}>
+      <Flex centered mt="lg" style={{ gap: '0.75em' }}>
         <Button as="a" href="/" icon="tabler:arrow-left">
           Go Back
         </Button>

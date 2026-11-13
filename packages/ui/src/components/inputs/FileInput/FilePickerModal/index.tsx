@@ -4,7 +4,7 @@ import { usePromiseLoading } from '@lifeforge/api'
 
 import { Button, type FilePickerSourceConfig } from '@/components/inputs'
 import { ModalHeader } from '@/components/overlays'
-import { Box, Flex } from '@/components/primitives'
+import { Flex, Stack } from '@/components/primitives'
 
 import { FilePickerContext } from './contexts/FilePickerContext'
 import { FILE_PICKET_TABS, useTabbedView } from './tabs'
@@ -33,7 +33,7 @@ export function FilePickerModal({
   )
 
   return (
-    <Box minWidth="70vw">
+    <Stack minWidth="70vw">
       <ModalHeader
         icon="tabler:photo"
         title="imagePicker.title"
@@ -54,6 +54,7 @@ export function FilePickerModal({
           <Flex
             direction="column"
             height="100%"
+            minHeight="0"
             my="lg"
             style={{ minHeight: 0 }}
             width="100%"
@@ -73,11 +74,11 @@ export function FilePickerModal({
         disabled={file === null}
         icon="tabler:check"
         loading={loading}
-        style={{ marginTop: '1rem', width: '100%' }}
+        style={{ marginTop: '1em', width: '100%' }}
         onClick={onClick}
       >
         select
       </Button>
-    </Box>
+    </Stack>
   )
 }

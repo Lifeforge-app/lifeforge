@@ -33,7 +33,7 @@ interface SearchInputProps extends Omit<FlexProps<'search'>, 'onChange'> {
   onKeyUp?: (e: React.KeyboardEvent<HTMLInputElement>) => void
   /** Additional CSS class names to apply to the search input container. */
   className?: string
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Optional debounce delay in milliseconds. When set, the onChange callback will be debounced by this amount. */
   debounceMs?: number
@@ -166,8 +166,8 @@ export function SearchInput({
   const handleBlur = (e: React.FocusEvent) => {
     if (
       containerRef.current &&
-      !containerRef.current.contains(e.relatedTarget as Node) &&
-      !childrenRef.current?.contains(e.relatedTarget as Node)
+      !containerRef.current.contains(e.relatedTarget) &&
+      !childrenRef.current?.contains(e.relatedTarget)
     ) {
       setIsFocused(false)
     }
@@ -205,6 +205,9 @@ export function SearchInput({
           width="100%"
           onClick={e => {
             if (disabled) return
+
+            if ((e.target as HTMLElement).closest('button')) return
+
             e.currentTarget.querySelector('input')?.focus()
           }}
           {...props}
@@ -243,8 +246,9 @@ export function SearchInput({
                     })
               }
               style={{
+                minWidth: '0',
                 caretColor: COLORS['custom-500'],
-                paddingRight: actionButtonProps ? '5rem' : '2.5rem'
+                paddingRight: actionButtonProps ? '5em' : '2.5em'
               }}
               type="text"
               value={displayValue}
@@ -263,7 +267,7 @@ export function SearchInput({
             align="center"
             gap="sm"
             position="absolute"
-            right="1rem"
+            right="1em"
             style={{ transform: 'translateY(-50%)' }}
             top="50%"
           >
@@ -271,11 +275,11 @@ export function SearchInput({
               disabled={disabled}
               icon="tabler:x"
               style={{
-                height: '2rem',
+                height: '2em',
                 opacity: displayValue ? 1 : 0,
                 padding: 0,
                 visibility: displayValue ? 'visible' : 'hidden',
-                width: '2rem'
+                width: '2em'
               }}
               variant="plain"
               onClick={handleClear}
@@ -285,9 +289,9 @@ export function SearchInput({
                 {...actionButtonProps}
                 disabled={disabled || actionButtonProps.disabled}
                 style={{
-                  height: '2rem',
+                  height: '2em',
                   padding: 0,
-                  width: '2rem',
+                  width: '2em',
                   ...actionButtonProps.style
                 }}
                 variant={actionButtonProps.variant || 'plain'}

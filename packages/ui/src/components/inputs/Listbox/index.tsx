@@ -43,20 +43,19 @@ export function Listbox<T>({
     <HeadlessListbox
       disabled={disabled}
       multiple={multiple}
-      value={value as never}
-      onChange={onChange as never}
+      value={value}
+      onChange={onChange as (value: T | T[]) => void}
     >
       <Transition property="all">
         <Flex
           asChild
           shadow
           align="center"
-          bg={rest.bg ?? surface.defaultInteractive}
+          bg={rest.bg ?? surface.lightInteractive}
           gap="lg"
-          height="4em"
           justify="between"
           minWidth="0"
-          px="md"
+          p="md"
           r="lg"
           style={disabled ? { opacity: 0.5 } : undefined}
           {...rest}

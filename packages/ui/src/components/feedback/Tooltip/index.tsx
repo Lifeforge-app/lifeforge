@@ -1,69 +1,76 @@
-import _ from 'lodash'
+import { createPortal } from 'react-dom'
 import { Tooltip as ReactTooltip } from 'react-tooltip'
-import tinycolor from 'tinycolor2'
 
-import { Box, Icon, type IconProps, Text } from '@/components/primitives'
-import { usePersonalization } from '@/providers'
+import { useModalPortalContainer } from '@/components/overlays/modals/ModalA11yContext'
+import { Box, Text } from '@/components/primitives'
+import { useMainSidebarState } from '@/providers'
+
+import { tooltip } from './Tooltip.css'
 
 /**
- * A tooltip component that displays informational content when hovering over an icon.
+ * A general-purpose tooltip rendered into a portal. Attach it to any trigger
+ * element by giving the trigger a matching `data-tooltip-id`.
  * For all available props, refer to the ReactTooltip documentation: https://react-tooltip.com/docs/getting-started
  */
 export function Tooltip({
   id,
-  icon,
-  iconProps,
   children,
+  contentProps,
+  render,
+  zIndex = '10',
   ...tooltipProps
 }: {
-  /** The unique identifier for the tooltip element. */
+  /** The unique identifier for the tooltip element. Must match the `data-tooltip-id` of its trigger. */
   id: string
-  /** The icon to display as the tooltip trigger. Should be a valid icon name from Iconify. */
-  icon: string
-  /** Optional additional class name(s) to apply to the icon element. */
-  iconProps?: Omit<IconProps, 'icon'>
-  /** The content to display inside the tooltip when triggered. */
-  children: React.ReactNode
+  /** The content to display inside the tooltip when triggered. Falls back to the trigger's `data-tooltip-content`. */
+  children?: React.ReactNode
+  /** Optional additional props to apply to the tooltip's content container. */
+  contentProps?: React.ComponentProps<typeof Box>
+  /** The z-index of the tooltip's portal container. Defaults to a value above modals/sidebars. */
+  zIndex?: string
   /** Additional properties to pass to the underlying ReactTooltip component. */
 } & React.ComponentProps<typeof ReactTooltip>) {
-  const { derivedTheme, bgTempPalette } = usePersonalization()
+  const { sidebarExpanded } = useMainSidebarState()
+  const modalPortalContainer = useModalPortalContainer()
 
-  return (
-    <>
-      <span data-tooltip-id={`tooltip-${_.kebabCase(id)}`}>
-        <Icon color="muted" icon={icon} {...iconProps} />
-      </span>
-      <Box
-        asChild
-        shadow
-        // Intentionally kept as inline style due to the styling limitation
-        // of react-tooltip
-        style={{
-          background:
-            derivedTheme === 'light'
-              ? 'var(--color-bg-50)'
-              : 'var(--color-bg-800)',
-          borderRadius: '0.5em',
-          zIndex: '9999'
+  return createPortal(
+    <Box zIndex={{ base: sidebarExpanded ? '-1' : zIndex, lg: zIndex }}>
+      <ReactTooltip
+        noArrow
+        className={tooltip}
+        id={id}
+        opacity={1}
+        positionStrategy="fixed"
+        render={({ content, activeAnchor }) => {
+          const node = render
+            ? render({ content, activeAnchor })
+            : (children ?? content)
+
+          return node ? (
+            <Box
+              shadow
+              bg={{ base: 'bg-50', dark: 'bg-700' }}
+              maxHeight="24em"
+              maxWidth="24em"
+              overflowY="auto"
+              p="md"
+              position="relative"
+              r="md"
+              style={{ whiteSpace: 'normal' }}
+              {...contentProps}
+            >
+              <Text as="div" color={{ base: 'bg-800', dark: 'bg-100' }}>
+                {node}
+              </Text>
+            </Box>
+          ) : null
         }}
-      >
-        <ReactTooltip
-          border={`1px solid ${
-            derivedTheme === 'light'
-              ? bgTempPalette[200]
-              : tinycolor(bgTempPalette[700]).setAlpha(0.5).toRgbString()
-          }`}
-          id={`tooltip-${_.kebabCase(id)}`}
-          opacity={1}
-          place="top-start"
-          positionStrategy="fixed"
-          {...tooltipProps}
-        >
-          <Text as="div" color={{ base: 'bg-600', dark: 'bg-400' }} py="sm">
-            {children}
-          </Text>
-        </ReactTooltip>
-      </Box>
-    </>
+        style={{
+          background: 'transparent'
+        }}
+        {...tooltipProps}
+      />
+    </Box>,
+    modalPortalContainer ?? document.getElementById('app') ?? document.body
   )
 }

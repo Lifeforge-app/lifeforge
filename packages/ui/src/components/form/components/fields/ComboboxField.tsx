@@ -59,6 +59,7 @@ export function ComboboxField<TFieldValues extends FieldValues, TOption>({
 
   function handleQueryChange(q: string) {
     setInternalQuery(q)
+
     if (onQueryChanged) {
       onQueryChanged(q)
     }
@@ -68,14 +69,17 @@ export function ComboboxField<TFieldValues extends FieldValues, TOption>({
     if (val === undefined || val === null) {
       return ''
     }
+
     const target = options.find(opt => {
       if (opt.value === val) return true
+
       try {
         return JSON.stringify(opt.value) === JSON.stringify(val)
       } catch {
         return false
       }
     })
+
     return target?.text ?? ''
   }
 
@@ -107,8 +111,8 @@ export function ComboboxField<TFieldValues extends FieldValues, TOption>({
       required={required}
       value={field.value}
       onChange={handleComboboxChange}
-      onQueryChanged={handleQueryChange}
       onEnter={onEnter}
+      onQueryChanged={handleQueryChange}
     >
       {filteredOptions.map(option => (
         <ComboboxOption

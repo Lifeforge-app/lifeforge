@@ -4,13 +4,13 @@ import { COLORS } from '@/system'
 
 export const track = style({
   position: 'relative',
-  height: '1rem',
+  height: '1em',
   borderRadius: '9999px',
   width: '100%'
 })
 
 export const fill = style({
-  height: '1rem',
+  height: '1em',
   borderRadius: '9999px',
   backgroundColor: COLORS['custom-500']
 })

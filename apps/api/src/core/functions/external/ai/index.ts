@@ -6,18 +6,14 @@ import chalk from 'chalk'
 import OpenAI from 'openai'
 import z from 'zod'
 
-import { IPBService } from '@lifeforge/pocketbase'
-import {
-  ClientError,
-  FetchAIFunc,
-  getCallerModuleId
-} from '@lifeforge/server-utils'
+import { ClientError, FetchAIFunc } from '@lifeforge/server-utils'
 
 import { getProvider, registerProvider } from './providers'
 import { deepseekProvider } from './providers/deepseek.provider'
 import { groqProvider } from './providers/groq.provider'
 import { ollamaProvider } from './providers/ollama.provider'
 import { openaiProvider } from './providers/openai.provider'
+import { openrouterProvider } from './providers/openrouter.provider'
 
 const logger = createServiceLogger('AI')
 
@@ -25,26 +21,23 @@ registerProvider('openai', openaiProvider)
 registerProvider('groq', groqProvider)
 registerProvider('ollama', ollamaProvider)
 registerProvider('deepseek', deepseekProvider)
+registerProvider('openrouter', openrouterProvider)
 
-async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
-  pb,
-  provider,
-  model,
-  messages,
-  structure
-}: {
-  pb: IPBService<any>
-  provider: 'groq' | 'openai' | 'ollama' | 'deepseek'
+type CallerModule = { source: 'app' | 'core'; id: string }
+
+type AIProvider = 'groq' | 'openai' | 'ollama' | 'deepseek' | 'openrouter'
+
+type FetchAIArgs<T extends z.ZodTypeAny | undefined = undefined> = {
+  provider: AIProvider
   model: string
   messages: OpenAI.ChatCompletionMessageParam[]
   structure?: T
-}): Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null> {
-  const callerModule = getCallerModuleId()
+}
 
-  if (!callerModule) {
-    throw new Error('Unable to determine caller module for API key validation.')
-  }
-
+async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>(
+  callerModule: CallerModule,
+  { provider, model, messages, structure }: FetchAIArgs<T>
+): Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null> {
   const aiProvider = getProvider(provider)
 
   if (!aiProvider) {
@@ -56,7 +49,7 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
   if (aiProvider.requireAPIKey) {
     await validateCallerAccess(callerModule, provider)
 
-    const fetchedKey = await getAPIKeyFactory(pb, callerModule)(provider)
+    const fetchedKey = await getAPIKeyFactory(callerModule)(provider)
 
     if (!fetchedKey) {
       throw new ClientError(`API key for ${provider} not found.`)
@@ -78,6 +71,26 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>({
   })
 }
 
-export { getProvider, registerProvider } from './providers'
+/**
+ * Binds `fetchAI` to the caller module (resolved from the route context) so it
+ * doesn't need to detect the caller at runtime.
+ */
+export default function createFetchAI(
+  callerModule: CallerModule | undefined
+): FetchAIFunc {
+  function boundFetchAI<T extends z.ZodTypeAny | undefined = undefined>(
+    args: FetchAIArgs<T>
+  ): Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null> {
+    if (!callerModule) {
+      throw new Error(
+        'Unable to determine caller module for API key validation.'
+      )
+    }
 
-export default fetchAI as FetchAIFunc
+    return fetchAI(callerModule, args)
+  }
+
+  return boundFetchAI as FetchAIFunc
+}
+
+export { getProvider, registerProvider } from './providers'

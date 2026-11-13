@@ -60,7 +60,7 @@ export function createViewMode<
   namespace,
   persistInLocalStorage = true,
   defaultValue,
-  useNuqs = true,
+  useNuqs: syncWithQuery = true,
   selectorProps: configSelectorProps,
   contextMenuSelectorProps: configContextMenuSelectorProps
 }: CreateViewModeConfig<TViewModes>) {
@@ -102,7 +102,7 @@ export function createViewMode<
     const [currentMode, setCurrentMode] = useNuqsOrBasicState({
       options: modeValues,
       defaultValue: effectiveDefault,
-      useNuqs: useNuqs ? 'view' : false,
+      useNuqs: syncWithQuery ? 'view' : false,
       controlled: {
         value: controlledMode ?? null,
         setValue: controlledOnModeChange ?? null

@@ -35,12 +35,12 @@ export function ImageURL() {
           asChild
           color={{ base: 'bg-300', dark: 'bg-700' }}
           style={{
-            height: '8rem',
+            height: '8em',
             left: '50%',
             position: 'absolute',
             top: '50%',
             transform: 'translate(-50%, -50%)',
-            width: '8rem',
+            width: '8em',
             zIndex: -1
           }}
         >

@@ -11,18 +11,13 @@
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./cli": {
-      "types": "./dist/loggers/cliLogger.d.ts",
-      "import": "./dist/loggers/cliLogger.js",
-      "require": "./dist/loggers/cliLogger.js",
-      "default": "./dist/loggers/cliLogger.js"
     }
   },
   "scripts": {
     "build": "vite build && tsc --project tsconfig.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "pino": "^9.6.0",

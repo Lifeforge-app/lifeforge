@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next'
 
 import { useAuth } from '@lifeforge/api'
 import {
-  Box,
   Button,
   ConfirmationModal,
   FilePickerModal,
   Flex,
   Icon,
+  Image,
   OptionsColumn,
   toast,
   useModalStore
@@ -45,7 +45,9 @@ function AvatarColumn() {
   const deleteAvatarMutation = useMutation(
     forgeAPI.user.settings.deleteAvatar.mutationOptions({
       onSuccess: () => {
-        setUserData(userData => (userData ? { ...userData, avatar: '' } : null))
+        setUserData(userData =>
+          userData ? { ...userData, avatar: null } : null
+        )
         toast.success('Avatar removed successfully')
       },
       onError: () => {
@@ -73,37 +75,24 @@ function AvatarColumn() {
       icon="tabler:camera"
       title={t('settings.title.profilePicture')}
     >
-      <Flex
-        centered
+      <Image
         shadow
+        alt=""
         bg={{ base: 'bg-100', dark: 'bg-800' }}
+        fallback={<Icon color="muted" icon="tabler:user" size="1.5em" />}
+        fit="cover"
         flexShrink="0"
         height="3em"
         mr="md"
-        overflow="hidden"
         r="full"
+        src={userData.avatar ? getAvatarURL() : undefined}
         width="3em"
-      >
-        {userData.avatar !== '' ? (
-          <Box
-            asChild
-            height="100%"
-            style={{
-              objectFit: 'cover'
-            }}
-            width="100%"
-          >
-            <img alt="" src={getAvatarURL()} />
-          </Box>
-        ) : (
-          <Icon color="muted" icon="tabler:user" size="1.5em" />
-        )}
-      </Flex>
+      />
       <Flex align="center" gap="sm" width="100%">
         <Button
           flex="1"
           icon="tabler:photo-hexagon"
-          variant={userData.avatar !== '' ? 'secondary' : 'primary'}
+          variant={userData.avatar ? 'secondary' : 'primary'}
           onClick={() =>
             open(FilePickerModal, {
               mimeTypes: {
@@ -125,7 +114,7 @@ function AvatarColumn() {
         >
           select
         </Button>
-        {userData.avatar !== '' && (
+        {userData.avatar && (
           <Button
             dangerous
             icon="tabler:trash"

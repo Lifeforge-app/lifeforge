@@ -37,10 +37,10 @@ function FontListItem({
   const queryClient = useQueryClient()
 
   const togglePinMutation = useMutation(
-    forgeAPI.user.personalization.toggleGoogleFontsPin.mutationOptions({
+    forgeAPI.fonts.pins.toggle.mutationOptions({
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ['user', 'personalization', 'listGoogleFontsPin']
+          queryKey: forgeAPI.fonts.pins.list.key
         })
       },
       onError: () => {
@@ -91,8 +91,8 @@ function FontListItem({
             icon={isPinned ? 'tabler:heart-filled' : 'tabler:heart'}
             loading={loadingPin}
             position="absolute"
-            right="0.5rem"
-            top="0.5rem"
+            right="0.5em"
+            top="0.5em"
             variant="plain"
             onClick={e => {
               e.stopPropagation()
@@ -100,7 +100,7 @@ function FontListItem({
             }}
           />
           {selectedFont === font.family && (
-            <Box asChild bottom="0.5rem" position="absolute" right="0.5rem">
+            <Box asChild bottom="0.5em" position="absolute" right="0.5em">
               <Icon
                 color="primary"
                 icon="tabler:circle-check-filled"

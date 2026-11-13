@@ -8,7 +8,10 @@ import { InputActionButton } from '../shared/components/InputActionButton'
 import { InputIcon } from '../shared/components/InputIcon'
 import { InputInnerWrapper } from '../shared/components/InputInnerWrapper'
 import { InputLabel } from '../shared/components/InputLabel'
-import { InputWrapper } from '../shared/components/InputWrapper'
+import {
+  InputWrapper,
+  type InputWrapperPassthrough
+} from '../shared/components/InputWrapper'
 import { useInputLabel } from '../shared/hooks/useInputLabel'
 import type { InputVariants } from '../shared/types'
 
@@ -49,12 +52,14 @@ interface TagsInputProps {
     /** Callback function called when the action button is clicked. */
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void | Promise<void>
   }
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
 /**
@@ -76,7 +81,8 @@ export function TagsInput({
   actionButtonProps,
   namespace,
   errorMsg,
-  onEnter
+  onEnter,
+  wrapperProps
 }: TagsInputProps & InputVariants) {
   const inputLabel = useInputLabel({ namespace, label: label ?? '' })
   const [currentTag, setCurrentTag] = useState<string>('')
@@ -117,6 +123,7 @@ export function TagsInput({
 
   return (
     <InputWrapper
+      {...wrapperProps}
       className={className}
       disabled={disabled}
       errorMsg={errorMsg}

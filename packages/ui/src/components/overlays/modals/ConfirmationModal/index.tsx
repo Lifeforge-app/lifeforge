@@ -1,3 +1,4 @@
+import { Description, DialogTitle } from '@headlessui/react'
 import clsx from 'clsx'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +7,8 @@ import { usePromiseLoading } from '@lifeforge/api'
 
 import { Button, TextInput } from '@/components/inputs'
 import { Box, Flex, Text } from '@/components/primitives'
+
+import { useInsideModal } from '../ModalA11yContext'
 
 export function ConfirmationModal({
   onClose,
@@ -33,6 +36,7 @@ export function ConfirmationModal({
 }) {
   const { t } = useTranslation(['common.modals', 'common.buttons'])
   const [confirmationTextState, setConfirmationTextState] = useState('')
+  const insideModal = useInsideModal()
 
   const handleClick = async () => {
     try {
@@ -47,11 +51,19 @@ export function ConfirmationModal({
 
   return (
     <Box minWidth="40vw">
-      <Text as="h1" size="2xl" weight="semibold">
-        {title}
+      <Text asChild size="2xl" weight="semibold">
+        {insideModal ? (
+          <DialogTitle as="h1">{title}</DialogTitle>
+        ) : (
+          <h1>{title}</h1>
+        )}
       </Text>
-      <Text as="p" color="muted" mt="sm">
-        {description}
+      <Text asChild color="muted" mt="sm">
+        {insideModal ? (
+          <Description>{description}</Description>
+        ) : (
+          <p>{description}</p>
+        )}
       </Text>
       {confirmationPrompt && (
         <Box asChild mt="md">
@@ -130,3 +142,5 @@ export function ConfirmationModal({
     </Box>
   )
 }
+
+ConfirmationModal.modalRole = 'alertdialog' as const

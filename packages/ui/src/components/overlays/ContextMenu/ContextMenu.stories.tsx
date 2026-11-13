@@ -35,7 +35,7 @@ export const Default: Story = {
         width="100%"
       >
         <Flex align="center" justify="between">
-          <Flex align="center" style={{ gap: '0.75rem' }}>
+          <Flex align="center" style={{ gap: '0.75em' }}>
             <Box
               p="sm"
               r="md"
@@ -48,8 +48,8 @@ export const Default: Story = {
                 icon="tabler:cube"
                 style={{
                   color: 'var(--color-custom-500)',
-                  height: '1.5rem',
-                  width: '1.5rem'
+                  height: '1.5em',
+                  width: '1.5em'
                 }}
               />
             </Box>

@@ -1,18 +1,22 @@
 import { useEffect, useRef } from 'react'
 
-import { fetchAPI, useAPIEndpoint } from '@lifeforge/api'
+import type { FileReference } from '@lifeforge/api'
+
+import { forgeAPI as fAPI } from '@/utils/forgeAPI'
 
 interface CustomFontData {
   id: string
   displayName: string
   family: string
   weight: number
-  file: string
-  collectionId: string
+  file: FileReference | null
 }
 
-function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
-  const apiEndpoint = useAPIEndpoint()
+function useFontFamily(
+  fontFamily: string,
+  fontScale: number,
+  forgeAPI: typeof fAPI
+) {
   const abortControllerRef = useRef<AbortController | null>(null)
 
   useEffect(() => {
@@ -43,9 +47,9 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
         // Check if this is a custom font (identified by 'custom:' prefix)
         if (fontFamily.startsWith('custom:')) {
           // Guard: ensure forgeAPI is available before making custom font requests
-          if (!forgeAPI?.user?.customFonts?.get) {
+          if (!forgeAPI?.fonts?.custom?.get) {
             console.warn(
-              'forgeAPI.user.customFonts.get not available yet for custom font loading'
+              'forgeAPI.fonts.custom.get not available yet for custom font loading'
             )
 
             return
@@ -53,7 +57,7 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
 
           const customFontId = fontFamily.replace('custom:', '')
 
-          const fontData: CustomFontData = await forgeAPI.user.customFonts.get
+          const fontData: CustomFontData = await forgeAPI.fonts.custom.get
             .input({
               id: customFontId
             })
@@ -64,12 +68,31 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
             return
           }
 
-          // Construct the PocketBase file URL
+          if (!fontData.file) {
+            document.body.style.fontFamily = 'Onest, sans-serif'
+
+            return
+          }
+
           const fileUrl = forgeAPI.getMedia({
-            collectionId: fontData.collectionId,
-            recordId: fontData.id,
-            fieldId: fontData.file
+            key: fontData.file.key
           })
+
+          // Verify the font file can actually be loaded (e.g. it may have been
+          // deleted from storage, causing the request to 404)
+          try {
+            const probe = new FontFace(fontData.family, `url('${fileUrl}')`, {
+              weight: String(fontData.weight),
+              style: 'normal'
+            })
+
+            await probe.load()
+          } catch {
+            styleTag!.textContent = ''
+            document.body.style.fontFamily = 'Onest, sans-serif'
+
+            return
+          }
 
           // Create @font-face rule for the custom font
           const fontFace = `@font-face {
@@ -88,10 +111,9 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
         }
 
         // Handle Google Fonts (original logic)
-        const data = await fetchAPI<{ enabled: boolean; items: any[] }>(
-          apiEndpoint,
-          `/user/personalization/getGoogleFont?family=${fontFamily.replace(/ /g, '+')}`
-        )
+        const data = await forgeAPI
+          .getGoogleFont({ family: fontFamily })
+          .query()
 
         // Check if this request was aborted
         if (currentController.signal.aborted) {
@@ -146,7 +168,7 @@ function useFontFamily(fontFamily: string, fontScale: number, forgeAPI: any) {
       currentController.abort()
       // Don't remove style tag on cleanup to avoid flicker during re-renders
     }
-  }, [fontFamily, forgeAPI, apiEndpoint])
+  }, [fontFamily, forgeAPI])
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--custom-font-scale',

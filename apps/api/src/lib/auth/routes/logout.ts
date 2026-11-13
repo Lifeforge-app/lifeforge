@@ -11,12 +11,11 @@ export const logout = forge
     encrypted: false,
     input: {},
     output: {
-      OK: z.boolean(),
-      UNAUTHORIZED: true
+      OK: z.boolean()
     }
   })
   .callback(async ({ req, res, response }) => {
-    const refreshToken = req.cookies?.refresh_token as string | undefined
+    const refreshToken = req.cookies.refresh_token as string | undefined
 
     if (!refreshToken) {
       return response.unauthorized()

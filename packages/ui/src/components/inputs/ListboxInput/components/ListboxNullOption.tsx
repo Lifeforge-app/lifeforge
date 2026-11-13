@@ -46,7 +46,7 @@ export function ListboxNullOption({
                     <Flex
                       align="center"
                       gap={hasBgColor ? undefined : 'sm'}
-                      style={hasBgColor ? { gap: '0.75rem' } : undefined}
+                      style={hasBgColor ? { gap: '0.75em' } : undefined}
                     >
                       <Box
                         as="span"

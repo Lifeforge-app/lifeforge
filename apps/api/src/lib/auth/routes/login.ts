@@ -2,7 +2,6 @@ import { verify as argonVerify } from 'argon2'
 import z from 'zod'
 
 import { getCookieOptions } from '../constants/cookie'
-import { getPB } from '../constants/pb'
 import forge from '../forge'
 import { create2FASession } from '../utils/2fa'
 import {
@@ -24,7 +23,7 @@ export const login = forge
     encrypted: false,
     input: {
       body: z.object({
-        email: z.email(),
+        emailOrUsername: z.string(),
         password: z.string().min(1)
       })
     },
@@ -37,76 +36,68 @@ export const login = forge
           state: z.literal('2fa_required'),
           tid: z.string()
         })
-      ]),
-      UNAUTHORIZED: true
-    }
-  })
-  .callback(async ({ body: { email, password }, req, res, response }) => {
-    const ip = req.ip || req.socket.remoteAddress || '127.0.0.1'
-
-    if (!checkLoginRateLimit(ip)) {
-      return response.unauthorized()
-    }
-
-    const pb = await getPB('user')
-
-    const users = await pb.getFullList
-      .collection('users')
-      .filter([
-        {
-          field: 'email',
-          operator: '=',
-          value: email
-        }
       ])
-      .execute()
-
-    if (users.length === 0) {
-      recordFailedLogin(ip)
-
-      return response.unauthorized()
     }
-
-    const user = users[0]
-
-    const passwordHash = user.auth_password_hash
-
-    if (!passwordHash) {
-      recordFailedLogin(ip)
-
-      return response.unauthorized()
-    }
-
-    const valid = await argonVerify(passwordHash, password)
-
-    if (!valid) {
-      recordFailedLogin(ip)
-
-      return response.unauthorized()
-    }
-
-    clearLoginRateLimit(ip)
-
-    if (user.twoFASecret) {
-      const tid = await create2FASession(user.id)
-
-      return response.ok({
-        state: '2fa_required' as const,
-        tid
-      })
-    }
-
-    const accessToken = signAccessToken(user.id)
-    const refreshToken = generateRefreshToken()
-    const family = generateFamily()
-
-    await storeRefreshToken({
-      token: refreshToken,
-      family,
-      ip
-    })
-
-    res.cookie('refresh_token', refreshToken, getCookieOptions(req))
-
-    return response.ok({ accessToken })
   })
+  .callback(
+    async ({ db, body: { emailOrUsername, password }, req, res, response }) => {
+      const ip = req.ip || req.socket.remoteAddress || '127.0.0.1'
+
+      if (!checkLoginRateLimit(ip)) {
+        return response.unauthorized()
+      }
+
+      const user = await db.query.users.findFirst({
+        where: {
+          OR: [{ email: emailOrUsername }, { username: emailOrUsername }]
+        }
+      })
+
+      if (!user) {
+        recordFailedLogin(ip)
+
+        return response.unauthorized()
+      }
+
+      const passwordHash = user.auth_password_hash
+
+      if (!passwordHash) {
+        recordFailedLogin(ip)
+
+        return response.unauthorized()
+      }
+
+      const valid = await argonVerify(passwordHash, password)
+
+      if (!valid) {
+        recordFailedLogin(ip)
+
+        return response.unauthorized()
+      }
+
+      clearLoginRateLimit(ip)
+
+      if (user.twoFASecret) {
+        const tid = await create2FASession(user.id)
+
+        return response.ok({
+          state: '2fa_required' as const,
+          tid
+        })
+      }
+
+      const accessToken = signAccessToken(user.id)
+      const refreshToken = generateRefreshToken()
+      const family = generateFamily()
+
+      await storeRefreshToken({
+        token: refreshToken,
+        family,
+        ip
+      })
+
+      res.cookie('refresh_token', refreshToken, getCookieOptions(req))
+
+      return response.ok({ accessToken })
+    }
+  )

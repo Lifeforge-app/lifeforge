@@ -14,7 +14,7 @@ interface ErrorScreenProps {
 export function ErrorScreen({ message, showRetryButton }: ErrorScreenProps) {
   return (
     <Flex centered direction="column" gap="lg" height="100dvh" width="100%">
-      <Icon color="dangerous" icon="tabler:alert-triangle" size="4rem" />
+      <Icon color="dangerous" icon="tabler:alert-triangle" size="4em" />
       <Text align="center" as="p" color="dangerous" size="lg" weight="medium">
         {message}
       </Text>

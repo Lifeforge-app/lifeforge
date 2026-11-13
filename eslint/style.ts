@@ -34,7 +34,11 @@ const config: Linter.Config[] = [
           varsIgnorePattern: '^_',
           argsIgnorePattern: '^_'
         }
-      ]
+      ],
+      '@typescript-eslint/no-unnecessary-condition': 'error',
+      '@typescript-eslint/no-unnecessary-type-arguments': 'error',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+      '@typescript-eslint/no-extra-non-null-assertion': 'error'
     }
   }
 ]

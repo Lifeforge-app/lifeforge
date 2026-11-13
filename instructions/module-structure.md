@@ -90,7 +90,7 @@ Key points:
 ```
 client/
 ├── manifest.ts           # Module federation manifest (routes, subsections, widgets)
-├── contract.ts           # AUTO-GENERATED API contract (do not edit by hand)
+├── contract.ts           # AUTO-GENERATED types-only API contract (do not edit)
 ├── index.html            # Empty entry HTML for Vite
 ├── vite.config.ts        # defineModuleClientConfig({ dirname: __dirname })
 ├── tsconfig.json         # extends @lifeforge/configs/tsconfig/module.json
@@ -152,13 +152,15 @@ export { forgeAPI }
 
 ### `contract.ts` (generated)
 
-A large `as const` object describing every endpoint: HTTP `method`,
-`description`, `noAuth`, `encrypted`, `media`, and JSON-schema `input`/`output`.
-It is generated from the server routes by `writeContractFileToClient` (called in
-`server/index.ts`) - **never edit it manually**. No command is required to regenerate
-it as it will be automatically regenerated on every single mutation to the server code
-whenever the server is running. It serves as the single source of truththat gives
-`forgeAPI` full end-to-end type safety.
+A **types-only** declaration describing every endpoint's `method`, `input` and
+`output`. It is generated from the server routes by `writeContractFileToClient`
+(called in `server/index.ts`) - **never edit it manually**. It is automatically
+regenerated whenever the server is running and the route code changes.
+
+There is no runtime contract value. The backend is the single source of truth for
+route metadata (`traceRouteStack` + `ModuleRegistry`), and `forgeAPI` receives its
+routing scope from the host. Import it with `import type { Contract } from './contract'`
+and pass it as a type argument: `createForgeModule<Contract>({ ... })`.
 
 ### `vite.config.ts` & `tsconfig.json`
 
@@ -279,6 +281,37 @@ type CreateBody = InferInput<typeof forgeAPI.collections.create>['body']
 > in sync with the server. Manually writing `interface`/`type` shapes that mirror
 > an endpoint's payload is forbidden.
 
+### Moving client-side fetching to the backend
+
+Client components must not `fetch` external APIs directly - proxy them through a
+forge route. When a module has no server yet, scaffold one (mirror
+`modules/lifeforge--sin-chew-daily`):
+
+1. `server/forge.ts` - `export default createForge({})` (no schema needed for
+   stateless proxying).
+2. `server/index.ts` - define the routes and register the contract:
+   ```typescript
+   const routes = forgeRouter({ getCurrencies, getRatesHistory })
+   writeContractFileToClient(routes, import.meta.dirname)
+   export default routes
+   ```
+3. `server/tsconfig.json` (`extends @lifeforge/configs/tsconfig/module-server.json`)
+   and `server/vite.config.ts` (`defineModuleServerConfig(__dirname)`).
+4. `package.json` scripts: `typecheck:client`/`typecheck:server`,
+   `build:client`/`build:server` (both run in `typecheck`/`build`).
+5. **Generate `client/contract.ts`** by executing the server entry once:
+   `pnpm exec tsx modules/<module>/server/index.ts` (it writes `../client/contract.ts`
+   as a side effect). Never hand-write the contract.
+6. `client/manifest.ts` - `import type { Contract } from './contract'` and call
+   `createForgeModule<Contract>({ routes })`. Do not pass a `contract` prop.
+
+Then in the client replace `fetch(...)` effects with
+`useQuery(forgeAPI.<ns>.<endpoint>.input({...}).queryOptions())` and build derived
+data with `useMemo`.
+
+and filter array items the same way. On the client, still treat contract-typed
+numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '-'`).
+
 ### Other client conventions
 
 - **Forms**: use the composition pattern - `useForm()` (react-hook-form) +
@@ -297,6 +330,19 @@ type CreateBody = InferInput<typeof forgeAPI.collections.create>['body']
 - **Localization**: `useModuleTranslation()` + `t()`. Many `@lifeforge/ui`
   components (`Button`, `ModuleHeader`, form fields, `ContextMenuItem` with
   `label`) auto-resolve i18n internally - only use `t()` where they don't.
+  **Never prefix keys with `apps.<module>:`** - `useModuleTranslation()` already
+  scopes to the module namespace, so use `t('inputs.audio')`, not
+  `t('apps.momentVault:inputs.audio')`. When adding a key, add it to **all**
+  locale files (`en`, `ms`, `zh-CN`, `zh-TW`).
+- **Styling**: Tailwind is prohibited. Use the `@lifeforge/ui` primitives and
+  see `packages/ui/DESIGN.md` (section 14, "Migration Guide: Tailwind → UI
+  Primitives") for the full mapping and gotchas (inline style exceptions,
+  `.css.ts` cases, responsive props).
+- **Third-party dependencies**: do not import raw third-party UI libraries in a
+  module when the library already re-exports the component. When a new
+  cross-cutting library is needed, re-export it from `@lifeforge/ui` (see
+  `components/feedback/index.ts`) and consume it from there, so the dependency
+  lives in one place.
 
 ## Server Side (`server/`)
 
@@ -313,7 +359,7 @@ server/
 ### `index.ts`
 
 Assembles all route groups into a single `forgeRouter` and triggers generation
-of the client `contract.ts`:
+of the types-only client `contract.ts`:
 
 ```typescript
 import { forgeRouter, writeContractFileToClient } from '@lifeforge/server-utils'
@@ -382,8 +428,9 @@ export default cleanSchemas(schemas)
 Each file exports named endpoints built with the `forge` DSL. Endpoints are
 `forge.query(...)` (reads) or `forge.mutation(...)` (writes), followed by
 `.callback(...)`. The config object declares `description`, `input` (zod
-`query`/`body`), `existenceCheck`, `media`, and `output` (a status→schema map;
-`true` means an empty-body status like `NOT_FOUND` / `NO_CONTENT`).
+`query`/`body`), `media`, and `output` (a success-only status→schema map; `true`
+means a no-payload status like `NO_CONTENT`). Referenced records are validated
+with `forge.existsIn(...)` inside the input schema.
 
 ```typescript
 import z from 'zod'
@@ -430,18 +477,70 @@ The callback receives a context object, commonly destructuring:
   `convertPDFToImage`, `core.api.getAPIKey`, `core.tasks`.
 - `io` - Socket.IO server for pushing progress updates.
 
-`existenceCheck` validates that referenced records exist before running the
-callback: `{ query: { id: 'entries' }, body: { collection: '[collections]' } }`
-(brackets indicate relation/array fields).
+`forge.existsIn(z.string(), entries)` marks an input field as a reference; before
+running the callback the framework verifies the record exists (matched on the
+table's single `id` primary key) and returns a `404` if not. It accepts optional
+(`existsIn(z.string().optional(), …)`) and array
+(`existsIn(z.array(z.string()), …)`) fields. Add `{ select: true }` to keep the
+row available to the callback as `existing.one(entries, id)`.
 
-The full DSL and migration notes live in
-[`server-dsl-migration.md`](./server-dsl-migration.md).
+The full DSL and best practices live in
+[`server-dsl.md`](./server-dsl.md).
 
 ### `utils/` and `constants/`
 
 - `utils/` - server-only helpers (thumbnail generation, downloads, date ranges,
   external API scraping) imported by routes.
 - `constants/` - static data such as AI prompt templates.
+
+### Output serialization pitfalls
+
+Output schemas do **not** guarantee runtime JSON safety. `NaN`/`Infinity`
+serialize to `null`, so a computed numeric field (e.g. a coordinate from a math
+library such as `satellite.js`) can reach the client as `null` even though the
+schema says `z.number()`. Guard computed values before returning:
+
+```typescript
+if (![lat, lng, altitude, velocity].every(Number.isFinite)) {
+  return response.ok(EMPTY_RESULT)
+}
+```
+
+Filter array items the same way. On the client, still treat contract-typed
+numbers defensively (`Number.isFinite(value) ? value.toFixed(4) : '-'`). See
+[`server-dsl.md`](./server-dsl.md) for the DSL-side rule.
+
+Timestamps are handled for you: DTOs keep `z.date()`, routes return the `Date`
+objects as-is, and the framework serializes them to ISO strings on the wire.
+Never re-declare timestamp columns as `z.string()` or call `.toISOString()` in a
+route.
+
+### Sanitizing scraped / external HTML
+
+When a route returns HTML that the client renders with
+`dangerouslySetInnerHTML`, sanitize it in the route with `sanitize-html`
+(add it to the module `dependencies`). Use `allowedTags`/`allowedAttributes`,
+a `textFilter` for boilerplate strings, and `exclusiveFilter` to drop whole
+elements (e.g. hidden tracking links):
+
+```typescript
+const sanitized = sanitizeHtml(html, {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    img: ['src', 'alt']
+  },
+  textFilter: text =>
+    ['ADVERTISEMENT', '打开全文'].includes(text) ? '' : text.trim(),
+  exclusiveFilter: frame =>
+    frame.tag === 'a' &&
+    frame.text.replace(/\s/g, '').toLowerCase() === 'hidden'
+})
+```
+
+For HTML that reaches the client unsanitized (e.g. a third-party JSON API),
+sanitize on the client with `dompurify` (`DOMPurify.sanitize(html)`) before
+passing it to `dangerouslySetInnerHTML`.
 
 ## `locales/`
 
@@ -455,10 +554,11 @@ One JSON file per supported language (`en.json`, `ms.json`, `zh-CN.json`,
 1. `server/schema.ts` defines PocketBase collections (zod + raw).
 2. `server/routes/*.ts` define typed endpoints against that schema using the
    `forge` DSL.
-3. `server/index.ts` assembles them with `forgeRouter` and generates
-   `client/contract.ts`.
-4. `client/manifest.ts` feeds the contract into `createForgeModule`,
-   producing the typed `forgeAPI` and the federation `manifest`.
+3. `server/index.ts` assembles them with `forgeRouter` and generates the
+   types-only `client/contract.ts`.
+4. `client/manifest.ts` passes the contract type to
+   `createForgeModule<Contract>`, producing the typed `forgeAPI` and the
+   federation `manifest`.
 5. Client components import `forgeAPI` from `@/manifest` and call it via
    TanStack Query, with `InferInput`/`InferOutput` giving full type safety.
 6. `locales/` supplies translations; the host shell mounts the module using the

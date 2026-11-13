@@ -12,7 +12,7 @@ beforeAll(async () => {
 })
 
 function creds() {
-  return { email, password }
+  return { emailOrUsername: email, password }
 }
 
 function loginAndCookies() {

@@ -8,4 +8,6 @@ export * from './LoadingScreen'
 
 export * from './NotFoundScreen'
 
+export * from './IconTooltip'
+
 export * from './Tooltip'

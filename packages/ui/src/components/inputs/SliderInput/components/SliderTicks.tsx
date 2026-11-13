@@ -26,7 +26,7 @@ export function SliderTicks({
             bg={{ base: 'bg-300', dark: 'bg-700' }}
             position="relative"
             r="full"
-            style={{ height: '0.5rem', width: '0.125rem' }}
+            style={{ height: '0.5em', width: '0.125em' }}
           >
             <Text
               asChild
@@ -37,7 +37,7 @@ export function SliderTicks({
               <Box
                 position="absolute"
                 style={{
-                  bottom: '-1.25rem',
+                  bottom: '-1.25em',
                   left: '50%',
                   transform: 'translateX(-50%)'
                 }}

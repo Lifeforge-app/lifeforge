@@ -50,7 +50,9 @@ function StackModal({ item }: { item: ModalInstance }) {
     <ModalWrapper
       isOpen={localOpen && !isClosing}
       isTopmost={isTopmost}
+      role={item.component.modalRole}
       zIndex={zIndex}
+      onClose={onClose}
       onExited={() => {
         if (isClosing) {
           remove(id)

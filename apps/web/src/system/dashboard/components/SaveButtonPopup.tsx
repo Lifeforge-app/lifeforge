@@ -33,7 +33,7 @@ function SaveButtonPopup({
       zIndex="50"
     >
       <Flex align="center" gap="md">
-        <Icon color="muted" icon="tabler:pencil" size="2em" />
+        <Icon color="muted" icon="tabler:pencil" />
         <Stack>
           <Text as="p" weight="medium" whiteSpace="nowrap">
             {t('messages.editingLayout')}

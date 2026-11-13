@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useRoutes } from 'react-router'
 
-import type { ModuleGroup } from '@lifeforge/configs'
+import type { ModuleConfig, ModuleGroup } from '@lifeforge/configs'
 import {
   type FederatedModule,
   loadRemoteModuleConfig
@@ -19,10 +19,9 @@ export default function LazyRouteLoader({
   item: ModuleGroup['items'][number] & { rawModule?: FederatedModule }
   loadingMessage: string
 }) {
-  const [resolvedRoutes, setResolvedRoutes] = useState<Record<
-    string,
-    any
-  > | null>(null)
+  const [resolvedRoutes, setResolvedRoutes] = useState<
+    ModuleConfig['routes'] | null
+  >(null)
 
   const [error, setError] = useState<string | null>(null)
 
@@ -41,7 +40,7 @@ export default function LazyRouteLoader({
 
         if (!active) return
 
-        setResolvedRoutes(unwrapped.routes || {})
+        setResolvedRoutes(unwrapped.routes)
       } catch (err) {
         if (!active) return
 

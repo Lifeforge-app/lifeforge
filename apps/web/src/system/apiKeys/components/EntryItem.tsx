@@ -157,43 +157,45 @@ function EntryItem({ entry }: { entry: APIKeyEntry }) {
         </>
       }
     >
-      <Box mr="sm">
-        <Flex align="center" gap="sm" justify={{ base: 'start', md: 'end' }}>
-          {Array(12)
-            .fill(0)
-            .map((_, i) => (
-              <Icon key={i} icon="tabler:circle-filled" size="4px" />
-            ))}
-          <Text size="lg">{entry.key}</Text>
+      <Flex align="center" gap="lg" justify="between" width="100%">
+        <Box mr="sm">
+          <Flex align="center" gap="sm" justify={{ base: 'start', md: 'end' }}>
+            {Array(12)
+              .fill(0)
+              .map((_, i) => (
+                <Icon key={i} icon="tabler:circle-filled" size="4px" />
+              ))}
+            <Text size="lg">{entry.key}</Text>
+          </Flex>
+          <Text as="code" color="muted">
+            {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}
+          </Text>
+        </Box>
+        <Flex>
+          {entry.exposable && (
+            <Button
+              icon="tabler:copy"
+              loading={isCopying}
+              variant="plain"
+              onClick={() => {
+                copyKey().catch(console.error)
+              }}
+            />
+          )}
+          <ContextMenu>
+            <ContextMenuItem
+              icon="tabler:pencil"
+              label="edit"
+              onClick={handleUpdateEntry}
+            />
+            <ContextMenuItem
+              dangerous
+              icon="tabler:trash"
+              label="delete"
+              onClick={handleDeleteEntry}
+            />
+          </ContextMenu>
         </Flex>
-        <Text as="code" color="muted">
-          {t('misc.lastUpdated', { time: dayjs(entry.updated).fromNow() })}
-        </Text>
-      </Box>
-      <Flex gap="sm">
-        {entry.exposable && (
-          <Button
-            icon="tabler:copy"
-            loading={isCopying}
-            variant="plain"
-            onClick={() => {
-              copyKey().catch(console.error)
-            }}
-          />
-        )}
-        <ContextMenu>
-          <ContextMenuItem
-            icon="tabler:pencil"
-            label="edit"
-            onClick={handleUpdateEntry}
-          />
-          <ContextMenuItem
-            dangerous
-            icon="tabler:trash"
-            label="delete"
-            onClick={handleDeleteEntry}
-          />
-        </ContextMenu>
       </Flex>
     </OptionsColumn>
   )

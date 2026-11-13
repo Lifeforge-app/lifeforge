@@ -1,19 +1,15 @@
 import type { AxiosResponse } from 'axios'
-import PocketBase from 'pocketbase'
 
 import {
+  type CoreContract,
   type ResponseWrapper,
-  contract,
-  createForgeProxy,
-  globalProxyRegistry
+  configureForge,
+  createForgeProxy
 } from '@lifeforge/api'
 
-globalProxyRegistry.set(contract, {
-  moduleId: '',
-  apiHost: 'http://localhost:3636'
-})
+configureForge({ apiHost: 'http://localhost:3636' })
 
-export const forgeAPI = createForgeProxy(contract)
+export const forgeAPI = createForgeProxy<CoreContract>()
 
 export function extractCookies(
   setCookie: string | string[] | null | undefined
@@ -42,30 +38,5 @@ export function expectNo2FA<T>(
     throw new Error('Unexpected 2FA response in test')
   }
 
-  return data as any
-}
-
-let pbInstance: PocketBase | null = null
-
-export async function authenticateSuperuser(
-  pbHost: string,
-  email: string,
-  password: string
-): Promise<PocketBase> {
-  const pb = new PocketBase(pbHost)
-  pb.autoCancellation(false)
-
-  await pb.collection('_superusers').authWithPassword(email, password)
-
-  pbInstance = pb
-
-  return pb
-}
-
-export function getPB(): PocketBase {
-  if (!pbInstance) {
-    throw new Error('PB not authenticated. Call authenticateSuperuser() first.')
-  }
-
-  return pbInstance
+  return data as never
 }

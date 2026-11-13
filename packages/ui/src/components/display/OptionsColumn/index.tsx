@@ -1,4 +1,4 @@
-import { Tooltip } from '@/components/feedback'
+import { IconTooltip } from '@/components/feedback/IconTooltip'
 import { Card, type CardProps } from '@/components/layout'
 import { Flex, Icon, Text } from '@/components/primitives'
 import type { ResponsiveProp, SpaceToken } from '@/system'
@@ -77,9 +77,12 @@ export function OptionsColumn({
               {title}
             </Text>
             {tooltip !== undefined && (
-              <Tooltip icon="tabler:info-circle" id={title?.toString() || ''}>
+              <IconTooltip
+                icon="tabler:info-circle"
+                id={title?.toString() || ''}
+              >
                 {tooltip}
-              </Tooltip>
+              </IconTooltip>
             )}
           </Flex>
           {typeof description === 'string' ? (

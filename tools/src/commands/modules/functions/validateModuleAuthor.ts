@@ -1,15 +1,14 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { validateMaintainerAccess } from '@/utils/github-cli'
-import logger from '@/utils/logger'
-import { checkAuth } from '@/utils/registry'
+import { getGithubLogin, validateMaintainerAccess } from '@/utils/github'
 
 import { packageJSONSchema } from './packageJSONSchema'
 
 export default async function validateModuleAuthor(modulePath: string) {
-  const auth = await checkAuth()
+  const username = getGithubLogin()
 
   const packageJson = z.safeParse(
     packageJSONSchema,
@@ -17,7 +16,7 @@ export default async function validateModuleAuthor(modulePath: string) {
   )
 
   if (!packageJson.success) {
-    logger.error(
+    log.error(
       'Invalid package.json. Please refer to the documentation for the correct format.'
     )
     process.exit(1)
@@ -27,12 +26,12 @@ export default async function validateModuleAuthor(modulePath: string) {
 
   const usernamePrefix = nameWithoutScope.split('--')[0]
 
-  if (usernamePrefix && usernamePrefix !== auth.username) {
+  if (usernamePrefix && usernamePrefix !== username) {
     if (usernamePrefix === 'lifeforge') {
-      validateMaintainerAccess(auth.username || '')
+      validateMaintainerAccess(username)
     } else {
-      logger.error(
-        `Cannot publish as "${auth.username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${auth.username}--`
+      log.error(
+        `Cannot publish as "${username}" - package belongs to "${usernamePrefix}". You can only publish packages starting with @lifeforge/${username}--`
       )
       process.exit(1)
     }

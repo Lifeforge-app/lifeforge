@@ -14,7 +14,7 @@ beforeAll(async () => {
 }, 60000)
 
 function creds() {
-  return { email, password }
+  return { emailOrUsername: email, password }
 }
 
 afterAll(cleanupTestTokens)
@@ -34,11 +34,11 @@ describe('POST /auth/login', () => {
     expect(cookies).toContain('refresh_token=')
   })
 
-  it('returns the correct user data via /auth/me after login', async () => {
+  it('returns the correct user data via /user/me after login', async () => {
     const login = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
     setAccessToken(expectNo2FA(unwrap(login)).accessToken)
 
-    const meRes = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const meRes = await forgeAPI.user.me.queryRaw({ raw: true })
     const meData = unwrap(meRes)
 
     expect(meRes.status).toBe(200)
@@ -51,7 +51,7 @@ describe('POST /auth/login', () => {
 
   it('returns 401 for wrong email', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: 'wrong@lifeforge.test', password },
+      { emailOrUsername: 'wrong@lifeforge.test', password },
       { raw: true }
     )
 
@@ -61,7 +61,7 @@ describe('POST /auth/login', () => {
 
   it('returns 401 for wrong password', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email, password: 'WrongPass999!' },
+      { emailOrUsername: email, password: 'WrongPass999!' },
       { raw: true }
     )
 
@@ -71,7 +71,7 @@ describe('POST /auth/login', () => {
 
   it('returns 401 for non-existent user', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: 'no-such-user@lifeforge.test', password },
+      { emailOrUsername: 'no-such-user@lifeforge.test', password },
       { raw: true }
     )
 
@@ -96,7 +96,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for empty email (min length 1)', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: '', password },
+      { emailOrUsername: '', password },
       { raw: true }
     )
 
@@ -105,7 +105,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for empty password (min length 1)', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email, password: '' },
+      { emailOrUsername: email, password: '' },
       { raw: true }
     )
 
@@ -114,7 +114,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for invalid email format', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: 'not-an-email', password },
+      { emailOrUsername: 'not-an-email', password },
       { raw: true }
     )
 
@@ -123,7 +123,7 @@ describe('POST /auth/login', () => {
 
   it('returns 400 for SQL injection in email (invalid format)', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(
-      { email: "' OR 1=1 --", password },
+      { emailOrUsername: "' OR 1=1 --", password },
       { raw: true }
     )
 
@@ -135,10 +135,10 @@ describe('POST /auth/login', () => {
     const login2 = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
 
     setAccessToken(expectNo2FA(unwrap(login1)).accessToken)
-    const me1 = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const me1 = await forgeAPI.user.me.queryRaw({ raw: true })
 
     setAccessToken(expectNo2FA(unwrap(login2)).accessToken)
-    const me2 = await forgeAPI.auth.me.queryRaw({ raw: true })
+    const me2 = await forgeAPI.user.me.queryRaw({ raw: true })
 
     expect(me1.status).toBe(200)
     expect(me2.status).toBe(200)
@@ -150,8 +150,15 @@ describe('POST /auth/login', () => {
     const segments = token.split('.')
 
     expect(segments.length).toBe(3)
-    expect(() => JSON.parse(atob(segments[0]))).not.toThrow()
-    expect(() => JSON.parse(atob(segments[1]))).not.toThrow()
+
+    const [headerSegment, payloadSegment] = segments
+
+    if (!headerSegment || !payloadSegment) {
+      throw new Error('Expected a three-segment JWT')
+    }
+
+    expect(() => JSON.parse(atob(headerSegment))).not.toThrow()
+    expect(() => JSON.parse(atob(payloadSegment))).not.toThrow()
   })
 
   it('cookie has httpOnly, SameSite=Lax, Path=/auth in development', async () => {

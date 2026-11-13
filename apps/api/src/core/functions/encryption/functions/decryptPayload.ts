@@ -63,7 +63,7 @@ function decryptAESData(
  */
 export default function decryptPayload<T = unknown>(payload: unknown): T {
   if (!isEncryptedPayload(payload)) {
-    return payload as unknown as T
+    return payload as T
   }
 
   try {

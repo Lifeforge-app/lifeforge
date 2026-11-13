@@ -50,7 +50,7 @@ export function SidebarItemSubsection({
           }
           direction="column"
           r="lg"
-          style={{ gap: '0.125rem' }}
+          style={{ gap: '0.125em' }}
           width="100%"
         >
           {subsection.map(

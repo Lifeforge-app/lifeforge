@@ -41,7 +41,7 @@ interface ComboboxInputProps<T> {
   forcedActiveWhen?: boolean
   /** Additional CSS class names to apply to the combobox. Use `!` suffix for Tailwind CSS class overrides. */
   className?: string
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
@@ -90,7 +90,7 @@ export function ComboboxInput<T>({
     }
 
     const inputInside = (e.target as HTMLElement).querySelector('input') as
-      HTMLInputElement | HTMLTextAreaElement
+      HTMLInputElement | HTMLTextAreaElement | null
 
     if (inputInside && inputInside instanceof HTMLInputElement) {
       inputInside.focus()
@@ -120,54 +120,50 @@ export function ComboboxInput<T>({
         {variant === 'classic' && icon && (
           <InputIcon active={isActive} hasError={!!errorMsg} icon={icon} />
         )}
-        {variant === 'classic' && label && (
-          <Box
-            asChild
-            pr="3xl"
-            style={{
-              paddingLeft: 'calc(var(--spacing) * 14)'
-            }}
-          >
-            <InputLabel
-              active={isActive}
-              hasError={!!errorMsg}
-              label={inputLabel}
-              required={required === true}
-            />
-          </Box>
-        )}
-        <InputInnerWrapper
-          hasActionButton
-          mr="none"
-          pr="none"
-          variant={variant}
-        >
-          <Text asChild truncate align="left">
-            <Box
-              asChild
-              p={variant === 'plain' ? 'md' : undefined}
-              pr="3xl"
-              width="100%"
-            >
-              <HeadlessComboboxInput
-                ref={autoFocusableRef(autoFocus)}
-                displayValue={displayValue}
-                onChange={e => {
-                  setQuery(e.target.value)
-
-                  if (e.target.value === '') {
-                    onChange(undefined as unknown as T)
-                  }
-                }}
-                onKeyDown={e => {
-                  if (e.key === 'Enter' && onEnter) {
-                    onEnter()
-                  }
-                }}
+        <Flex align="center" minWidth="0" position="relative" width="100%">
+          {variant === 'classic' && label && (
+            <Box asChild pr="3xl">
+              <InputLabel
+                active={isActive}
+                hasError={!!errorMsg}
+                label={inputLabel}
+                required={required === true}
               />
             </Box>
-          </Text>
-        </InputInnerWrapper>
+          )}
+          <InputInnerWrapper
+            hasActionButton
+            mr="none"
+            pr="none"
+            variant={variant}
+          >
+            <Text asChild truncate align="left">
+              <Box
+                asChild
+                p={variant === 'plain' ? 'md' : undefined}
+                pr="3xl"
+                width="100%"
+              >
+                <HeadlessComboboxInput
+                  ref={autoFocusableRef(autoFocus)}
+                  displayValue={displayValue}
+                  onChange={e => {
+                    setQuery(e.target.value)
+
+                    if (e.target.value === '') {
+                      onChange(undefined as unknown as T)
+                    }
+                  }}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' && onEnter) {
+                      onEnter()
+                    }
+                  }}
+                />
+              </Box>
+            </Text>
+          </InputInnerWrapper>
+        </Flex>
       </Flex>
       <InputActionButton hasError={!!errorMsg} icon="" variant={variant}>
         <ComboboxButton>

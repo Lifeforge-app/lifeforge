@@ -21,11 +21,25 @@ function FlatUIColorsModal({
     <Box style={{ minWidth: '60vw' }}>
       <ModalHeader
         icon="tabler:palette"
+        subtitle={
+          <>
+            powered by&nbsp;
+            <Text asChild decoration="underline">
+              <a
+                href="https://flatuicolors.com/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Flat UI Colors
+              </a>
+            </Text>
+          </>
+        }
         title="colorPicker.modals.flatUiColors"
         onClose={onClose}
       />
       <Grid
-        style={{ gap: '0.75rem' }}
+        style={{ gap: '0.75em' }}
         templateCols={{
           base: 1,
           sm: 'repeat(auto-fill, minmax(300px, 1fr))'
@@ -33,13 +47,13 @@ function FlatUIColorsModal({
       >
         {PALETTES.map(({ name, icon, colors }) => (
           <Card key={name} bg={{ base: 'bg-100', dark: 'bg-800' }}>
-            <Flex align="center" mb="md" style={{ gap: '0.75rem' }}>
-              <Icon icon={icon || 'tabler:palette'} size="1.5rem" />
+            <Flex align="center" mb="md" style={{ gap: '0.75em' }}>
+              <Icon icon={icon || 'tabler:palette'} size="1.5em" />
               <Text as="span" size="lg" weight="medium">
                 {name}
               </Text>
             </Flex>
-            <Grid style={{ gap: '0.5rem' }} templateCols={5}>
+            <Grid style={{ gap: '0.5em' }} templateCols={5}>
               {colors.map((flatUiColor, index) => (
                 <Flex
                   key={index}
@@ -63,8 +77,8 @@ function FlatUIColorsModal({
                       <Icon
                         icon="tabler:check"
                         style={{
-                          width: '2rem',
-                          height: '2rem',
+                          width: '2em',
+                          height: '2em',
                           color: getMostReadableColor(flatUiColor)
                         }}
                       />

@@ -5,6 +5,7 @@ import { Box, Flex } from '@/components/primitives'
 import { useModalStore } from '@/providers'
 
 import { useColorPickerModalStore } from '../stores/useColorPickerModalStore'
+import { ChineseTraditionalColorsModal } from './modals/ChineseTraditionalColorsModal'
 import { FlatUIColorsModal } from './modals/FlatUIColorsModal'
 import { MorandiColorPaletteModal } from './modals/ModandiColorPaletteModal'
 import { TailwindCSSColorsModal } from './modals/TailwindCSSColorsModal'
@@ -14,18 +15,20 @@ export function PaletteButtons() {
   const { innerColor, setInnerColor } = useColorPickerModalStore()
 
   const handleColorPaletteModalOpen = useCallback(
-    (type: 'morandi' | 'tailwind' | 'flatUiColors') => () =>
-      open(
-        {
-          morandi: MorandiColorPaletteModal,
-          tailwind: TailwindCSSColorsModal,
-          flatUiColors: FlatUIColorsModal
-        }[type],
-        {
-          color: innerColor,
-          setColor: setInnerColor
-        }
-      ),
+    (type: 'morandi' | 'tailwind' | 'flatUiColors' | 'chineseTraditional') =>
+      () =>
+        open(
+          {
+            morandi: MorandiColorPaletteModal,
+            tailwind: TailwindCSSColorsModal,
+            flatUiColors: FlatUIColorsModal,
+            chineseTraditional: ChineseTraditionalColorsModal
+          }[type],
+          {
+            color: innerColor,
+            setColor: setInnerColor
+          }
+        ),
     [innerColor]
   )
 
@@ -39,6 +42,16 @@ export function PaletteButtons() {
           onClick={handleColorPaletteModalOpen('flatUiColors')}
         >
           colorPicker.buttons.flatUiColors
+        </Button>
+      </Box>
+      <Box asChild width="100%">
+        <Button
+          icon="tabler:brush"
+          namespace="common.modals"
+          variant="secondary"
+          onClick={handleColorPaletteModalOpen('chineseTraditional')}
+        >
+          colorPicker.buttons.chineseTraditionalColors
         </Button>
       </Box>
       <Box asChild width="100%">

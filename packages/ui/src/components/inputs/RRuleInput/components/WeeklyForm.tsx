@@ -24,6 +24,7 @@ export function WeeklyForm({
             required
             icon="tabler:repeat"
             label="weekly.inputs.every"
+            namespace="common.recurring"
             value={data.every}
             onChange={every => setData({ ...data, every })}
           />
@@ -36,6 +37,7 @@ export function WeeklyForm({
         customActive={data.onDays.length > 0}
         icon="tabler:calendar"
         label="weekly.inputs.onDays"
+        namespace="common.recurring"
         renderContent={() => (
           <>
             {data.onDays

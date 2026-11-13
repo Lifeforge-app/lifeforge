@@ -1,10 +1,10 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import logger from '@/utils/logger'
-import normalizePackage from '@/utils/normalizePackage'
+import { resolveLocale } from '../functions/listLocales'
 
 const localesPackageJSONSchema = z.object({
   name: z.string().regex(/^@lifeforge\/.+--lang-.+$/),
@@ -26,18 +26,20 @@ const localesPackageJSONSchema = z.object({
 })
 
 export function validateLocaleStructureHandler(lang: string) {
-  const { targetDir } = normalizePackage(lang, 'locale')
+  const mod = resolveLocale(lang)
 
-  if (!fs.existsSync(targetDir)) {
-    logger.error(`Locale "${lang}" not found in locales/`)
+  if (!mod) {
+    log.error(`Locale "${lang}" not found in locales/`)
 
     process.exit(1)
   }
 
+  const targetDir = mod.dir
+
   const packageJsonPath = path.join(targetDir, 'package.json')
 
   if (!fs.existsSync(packageJsonPath)) {
-    logger.error(`Locale "${lang}" is missing package.json`)
+    log.error(`Locale "${lang}" is missing package.json`)
 
     process.exit(1)
   }
@@ -48,18 +50,8 @@ export function validateLocaleStructureHandler(lang: string) {
   )
 
   if (!packageJson.success) {
-    logger.error('Locale validation failed:')
-    packageJson.error.issues.forEach(issue =>
-      logger.error(`  - ${issue.message}`)
-    )
-
-    process.exit(1)
-  }
-
-  if (`@lifeforge/${lang}` !== packageJson.data.name) {
-    logger.error(
-      `The folder name "${lang}" does not match the package name "${packageJson.data.name}"`
-    )
+    log.error('Locale validation failed:')
+    packageJson.error.issues.forEach(issue => log.error(`  - ${issue.message}`))
 
     process.exit(1)
   }
@@ -75,7 +67,7 @@ export function validateLocaleStructureHandler(lang: string) {
         file.endsWith('.json')
     )
   ) {
-    logger.error(`Locale "${lang}" contains non-JSON files`)
+    log.error(`Locale "${lang}" contains non-JSON files`)
 
     process.exit(1)
   }
@@ -86,11 +78,11 @@ export function validateLocaleStructureHandler(lang: string) {
     try {
       JSON.parse(fs.readFileSync(filePath, 'utf-8'))
     } catch {
-      logger.error(`Locale "${lang}" contains invalid JSON files "${file}"`)
+      log.error(`Locale "${lang}" contains invalid JSON files "${file}"`)
 
       process.exit(1)
     }
   }
 
-  logger.success(`Locale ${chalk.blue(lang)} is valid`)
+  log.success(`Locale ${chalk.blue(lang)} is valid`)
 }

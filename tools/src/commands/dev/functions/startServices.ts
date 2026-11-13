@@ -1,10 +1,9 @@
-import chalk from 'chalk'
+import { log } from '@clack/prompts'
 import concurrently from 'concurrently'
 
 import { PROJECTS } from '@/commands/project/constants/projects'
 import executeCommand from '@/utils/commands'
 import { getEnvVars } from '@/utils/helpers'
-import logger from '@/utils/logger'
 
 import { SERVICE_COMMANDS } from '../config/commands'
 import getConcurrentServices from './getConcurrentServices'
@@ -25,6 +24,10 @@ export async function startSingleService(
   if (service in SERVICE_COMMANDS) {
     const config = SERVICE_COMMANDS[service]
 
+    if (!config) {
+      throw new Error(`Unknown service: ${service}`)
+    }
+
     if (config.requiresEnv) {
       getEnvVars(config.requiresEnv)
     }
@@ -35,8 +38,6 @@ export async function startSingleService(
         : config.command
 
     const cwd = config.cwd instanceof Function ? config.cwd() : config.cwd
-
-    logger.debug(`Current Working Directory: ${chalk.blue(cwd)}`)
 
     // Add --host and --port flags for client service if provided
     const finalExtraArgs = [...extraArgs]
@@ -89,9 +90,8 @@ export async function startAllServices(
     })
 
     await result
-  } catch (error) {
-    logger.error('Failed to start all services')
-    logger.debug(`Error details: ${error}`)
+  } catch {
+    log.error('Failed to start all services')
     process.exit(1)
   }
 }

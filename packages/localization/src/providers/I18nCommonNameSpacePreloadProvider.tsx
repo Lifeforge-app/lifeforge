@@ -8,8 +8,8 @@ export function I18nCommonNameSpacePreloadProvider({
 }) {
   const i18n = getI18n()
 
-  i18n?.on?.('loaded', () => {
-    const loadedLangs = i18n.languages || ['en']
+  i18n.on('loaded', () => {
+    const loadedLangs = i18n.languages
 
     for (const lang of loadedLangs) {
       const commonBundle = i18n.getResourceBundle(lang, 'common') as
@@ -26,7 +26,7 @@ export function I18nCommonNameSpacePreloadProvider({
           i18n.addResourceBundle(
             lang,
             `common.${sub}`,
-            (commonBundle[sub] as Record<string, unknown>) || {},
+            commonBundle[sub] ?? {},
             true,
             true
           )

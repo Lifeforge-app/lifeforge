@@ -7,8 +7,7 @@ import {
   Flex,
   Listbox,
   ListboxOption,
-  Text,
-  surface
+  Text
 } from '@lifeforge/ui'
 
 import { useUserPersonalization } from '@/core/providers/features/UserPersonalizationProvider'
@@ -46,7 +45,6 @@ function DefaultThemeColorSelector({
 
   return (
     <Listbox
-      bg={surface.lightInteractive}
       minWidth="16em"
       renderContent={() => (
         <Flex align="center" gap="sm" maxWidth="16em" minWidth="0">
@@ -68,7 +66,7 @@ function DefaultThemeColorSelector({
                       themeColor
                         .split('-')
                         .slice(1)
-                        .map(e => e[0].toUpperCase() + e.slice(1))
+                        .map(e => e.charAt(0).toUpperCase() + e.slice(1))
                         .join(' ')
                     )
                   : 'custom'
@@ -90,7 +88,7 @@ function DefaultThemeColorSelector({
             `themeColorSelector.colors.${_.camelCase(
               color
                 .split('-')
-                .map(e => e[0].toUpperCase() + e.slice(1))
+                .map(e => e.charAt(0).toUpperCase() + e.slice(1))
                 .join(' ')
             )}`
           )}

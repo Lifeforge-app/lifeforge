@@ -60,7 +60,7 @@ export function createTabbedView<
   tabs,
   defaultValue,
   namespace,
-  useNuqs = false,
+  useNuqs: syncWithQuery = false,
   enabled,
   selectorProps: configSelectorProps
 }: CreateTabbedViewConfig<TTabItems>) {
@@ -90,7 +90,7 @@ export function createTabbedView<
       TTabItems[number]['id']
     >({
       options: tabValues,
-      useNuqs: useNuqs ? 'tab' : false,
+      useNuqs: syncWithQuery ? 'tab' : false,
       defaultValue: effectiveDefault,
       controlled: {
         value: controlledTab ?? null,

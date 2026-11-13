@@ -17,7 +17,7 @@ export function CalendarHeader() {
         align="center"
         gap="sm"
         justify="between"
-        maxWidth="30rem"
+        maxWidth="30em"
         pb="sm"
         px="xs"
         width="100%"

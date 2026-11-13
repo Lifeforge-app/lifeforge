@@ -3,7 +3,7 @@ import { Flex, Icon, Text } from '@/components/primitives'
 interface LoadingScreenProps {
   /** An optional message to display below the loading indicator. */
   message?: string
-  /** An optional size for the loading indicator. Default to 2.5rem. */
+  /** An optional size for the loading indicator. Default to 2.5em. */
   loaderSize?: string
 }
 
@@ -23,7 +23,7 @@ export function LoadingScreen({ message, loaderSize }: LoadingScreenProps) {
           icon="svg-spinners:ring-resize"
           style={{
             // Deliberately defined explicitly to prevent styling issue
-            fontSize: loaderSize || '2rem'
+            fontSize: loaderSize || '2em'
           }}
         />
         {message && (

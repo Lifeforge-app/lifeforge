@@ -1,6 +1,7 @@
-import { createContext, useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { useAuth } from '@lifeforge/api'
+import type { UserData } from '@lifeforge/api'
 import { toast } from '@lifeforge/ui'
 import {
   type IBackdropFilters,
@@ -10,35 +11,22 @@ import {
 
 import forgeAPI from '@/core/utils/forgeAPI'
 
-const UserPersonalizationContext = createContext<{
-  changeFontFamily: (font: string) => Promise<void>
-  changeFontScale: (scale: number) => Promise<void>
-  changeTheme: (theme: 'light' | 'dark' | 'system') => Promise<void>
-  changeThemeColor: (color: string) => Promise<void>
-  changeBgTemp: (color: string) => Promise<void>
-  changeBackdropFilters: (filters: IBackdropFilters) => Promise<void>
-  changeLanguage: (language: string) => Promise<void>
-  changeDashboardLayout: (layout: IDashboardLayout) => Promise<void>
-  changeBorderRadiusMultiplier: (multiplier: number) => Promise<void>
-  changeBordered: (bordered: boolean) => Promise<void>
-}>({} as any)
+import { UserPersonalizationContext } from './UserPersonalizationContext'
 
 async function syncUserData(
   data: Record<string, unknown>,
-  setUserData: React.Dispatch<React.SetStateAction<any>>
+  setUserData: React.Dispatch<React.SetStateAction<UserData | null>>
 ) {
   try {
     await forgeAPI.user.personalization.updatePersonalization.mutate({
       data
     })
 
-    if (setUserData) {
-      setUserData((oldData: any) => {
-        if (!oldData) return oldData
+    setUserData(oldData => {
+      if (!oldData) return oldData
 
-        return { ...oldData, ...data }
-      })
-    }
+      return { ...oldData, ...data }
+    })
   } catch {
     toast.error('Failed to update personalization settings')
   }
@@ -118,9 +106,7 @@ function UserPersonalizationProvider({
   useEffect(() => {
     if (!userData) return
 
-    if (userData.theme) {
-      setTheme(userData.theme as 'light' | 'dark' | 'system')
-    }
+    setTheme(userData.theme)
 
     if (userData.color) {
       setRawThemeColor(
@@ -139,15 +125,15 @@ function UserPersonalizationProvider({
     }
 
     if (userData.backdropFilters) {
-      setBackdropFilters(userData.backdropFilters as IBackdropFilters)
+      setBackdropFilters(
+        userData.backdropFilters as unknown as IBackdropFilters
+      )
     }
 
     if (userData.bgImage) {
       setBgImage(
         forgeAPI.getMedia({
-          collectionId: userData.collectionId,
-          recordId: userData.id,
-          fieldId: userData.bgImage
+          key: userData.bgImage.key
         })
       )
     }
@@ -160,21 +146,15 @@ function UserPersonalizationProvider({
       setDashboardLayout(userData.dashboardLayout as IDashboardLayout)
     }
 
-    if (userData.fontFamily !== undefined) {
+    if (userData.fontFamily) {
       setFontFamily(userData.fontFamily)
     }
 
-    if (userData.fontScale !== undefined) {
-      setFontScale(userData.fontScale)
-    }
+    setFontScale(userData.fontScale)
 
-    if (userData.borderRadiusMultiplier !== undefined) {
-      setBorderRadiusMultiplier(userData.borderRadiusMultiplier)
-    }
+    setBorderRadiusMultiplier(userData.borderRadiusMultiplier)
 
-    if (userData.bordered !== undefined) {
-      setBordered(userData.bordered)
-    }
+    setBordered(userData.bordered)
   }, [userData])
 
   return (
@@ -199,14 +179,4 @@ function UserPersonalizationProvider({
 
 export default UserPersonalizationProvider
 
-export function useUserPersonalization() {
-  const context = useContext(UserPersonalizationContext)
-
-  if (!context) {
-    throw new Error(
-      'useUserPersonalization must be used within a UserPersonalizationProvider'
-    )
-  }
-
-  return context
-}
+export { useUserPersonalization } from './UserPersonalizationContext'

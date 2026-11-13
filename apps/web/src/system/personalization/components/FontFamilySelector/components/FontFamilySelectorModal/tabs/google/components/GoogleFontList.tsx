@@ -1,5 +1,3 @@
-import { AutoSizer } from 'react-virtualized'
-
 import {
   Box,
   EmptyStateScreen,
@@ -59,46 +57,36 @@ function GoogleFontList({
   }
 
   return (
-    <Box flex="1" height="100%" width="100%">
-      <AutoSizer>
-        {({ height, width }) => (
-          <Scrollbar
-            ref={scrollableRef}
-            style={{
-              height: `${height}px`,
-              width: `${width}px`
+    <Box flex="1" height="100%" minHeight="0">
+      <Scrollbar>
+        <Stack px="sm">
+          <Pagination
+            page={page}
+            totalPages={Math.ceil(filteredFonts.length / 10)}
+            onPageChange={page => {
+              setPage(page)
+              scrollableRef.current?.scrollToTop()
             }}
-          >
-            <Stack px="sm">
-              <Pagination
-                page={page}
-                totalPages={Math.ceil(filteredFonts!.length / 10)}
-                onPageChange={page => {
-                  setPage(page)
-                  scrollableRef.current?.scrollToTop()
-                }}
-              />
-              {filteredFonts?.slice((page - 1) * 10, page * 10).map(font => (
-                <FontListItem
-                  key={font.family}
-                  font={font}
-                  isPinned={pinnedFonts.some(pf => pf === font.family)}
-                  selectedFont={selectedFont}
-                  setSelectedFont={setSelectedFont}
-                />
-              ))}
-              <Pagination
-                page={page}
-                totalPages={Math.ceil(filteredFonts!.length / 10)}
-                onPageChange={page => {
-                  setPage(page)
-                  scrollableRef.current?.scrollToTop()
-                }}
-              />
-            </Stack>
-          </Scrollbar>
-        )}
-      </AutoSizer>
+          />
+          {filteredFonts.slice((page - 1) * 10, page * 10).map(font => (
+            <FontListItem
+              key={font.family}
+              font={font}
+              isPinned={pinnedFonts.some(pf => pf === font.family)}
+              selectedFont={selectedFont}
+              setSelectedFont={setSelectedFont}
+            />
+          ))}
+          <Pagination
+            page={page}
+            totalPages={Math.ceil(filteredFonts.length / 10)}
+            onPageChange={page => {
+              setPage(page)
+              scrollableRef.current?.scrollToTop()
+            }}
+          />
+        </Stack>
+      </Scrollbar>
     </Box>
   )
 }

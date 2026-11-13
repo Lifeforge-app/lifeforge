@@ -47,7 +47,7 @@ interface SidebarItemProps {
     wrapper?: string
     icon?: string
   }
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Optional subsection items to display when expanded. */
   subsection?: {
@@ -84,7 +84,7 @@ export function SidebarItem({
   subsection
 }: SidebarItemProps) {
   const { setIsSidebarOpen } = useModuleSidebarState()
-  const [subsectionExpanded, setSubsectionExpanded] = useState(active ?? false)
+  const [subsectionExpanded, setSubsectionExpanded] = useState(active)
 
   const handleNavigation = useCallback(() => {
     if (onClick === 'expand' && subsection?.length) {
@@ -116,10 +116,10 @@ export function SidebarItem({
             as="span"
             display="block"
             flexShrink="0"
-            height="2rem"
+            height="2em"
             r="full"
             style={{ backgroundColor: sideStripColor }}
-            width="0.25rem"
+            width="0.25em"
           />
         )}
         <SidebarItemIcon

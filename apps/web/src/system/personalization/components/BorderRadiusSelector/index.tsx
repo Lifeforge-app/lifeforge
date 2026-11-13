@@ -6,7 +6,6 @@ import {
   ListboxOption,
   OptionsColumn,
   Text,
-  surface,
   usePersonalization
 } from '@lifeforge/ui'
 
@@ -36,7 +35,6 @@ function BorderRadiusSelector() {
       title={t('borderRadiusSelector.title')}
     >
       <Listbox
-        bg={surface.lightInteractive}
         minWidth="12em"
         renderContent={() => (
           <Flex align="center" gap="sm" maxWidth="12em" minWidth="0">

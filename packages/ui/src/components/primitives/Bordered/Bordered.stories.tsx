@@ -59,7 +59,7 @@ export const Default: Story = {
   },
   render: args => (
     <Flex align="center" height="100%" justify="center" p="3xl">
-      <Bordered {...args} p="lg" r="lg" width="20rem">
+      <Bordered {...args} p="lg" r="lg" width="20em">
         <Text as="p" color={{ base: 'bg-600', dark: 'bg-400' }}>
           A simple bordered container using the default neutral border color
           that adapts between light and dark themes automatically.

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { isColorWithOpacity } from '@/system/colors/color-with-opacity'
 import { surface } from '@/system/colors/surfaces'
 
 import { Flex, type FlexProps } from '../../primitives'
@@ -22,7 +23,7 @@ export function Card<T extends React.ElementType = 'div'>({
       r="lg"
       {...(props as FlexProps<T>)}
       bg={
-        typeof props.bg === 'string'
+        typeof props.bg === 'string' || isColorWithOpacity(props.bg)
           ? props.bg
           : {
               ...(isInteractive ? surface.defaultInteractive : surface.default),

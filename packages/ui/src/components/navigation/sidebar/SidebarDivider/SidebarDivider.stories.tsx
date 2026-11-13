@@ -23,7 +23,7 @@ export const Default: Story = {
   args: {},
   render: props => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem icon="tabler:cube" label="Item 1" />
           <SidebarItem icon="tabler:cube" label="Item 2" />
@@ -45,7 +45,7 @@ export const WithoutMargins: Story = {
   },
   render: props => (
     <BrowserRouter>
-      <Flex align="center" height="24rem" justify="center" width="100%">
+      <Flex align="center" height="24em" justify="center" width="100%">
         <SidebarWrapper>
           <SidebarItem icon="tabler:cube" label="Item 1" />
           <SidebarItem icon="tabler:cube" label="Item 2" />

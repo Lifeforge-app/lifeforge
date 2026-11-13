@@ -1,5 +1,7 @@
+import type { StagedFile } from '@lifeforge/file-storage'
+
 export type ReplaceFileWithMulter<T> = T extends File
-  ? Express.Multer.File
+  ? StagedFile
   : T extends (infer U)[]
     ? ReplaceFileWithMulter<U>[]
     : T extends ReadonlyArray<infer U>
@@ -23,8 +25,8 @@ export type ConvertMedia<TMedia extends MediaConfig | null> =
     ? Record<string, never>
     : {
         [K in keyof TMedia]: TMedia[K] extends { multiple: true }
-          ? Express.Multer.File[]
+          ? StagedFile[]
           : TMedia[K] extends { optional: true }
-            ? Express.Multer.File | string | undefined
-            : Express.Multer.File | string
+            ? StagedFile | string | undefined
+            : StagedFile | string
       }

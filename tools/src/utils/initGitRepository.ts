@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import executeCommand from '@/utils/commands'
-import logger from '@/utils/logger'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 /**
  * Initializes a git repository in the target directory and sets up the remote.
@@ -26,11 +26,11 @@ export default function initGitRepository(targetDir: string): void {
 
   const repoUrl = pkg.repository?.url
 
-  if (!repoUrl || pkg.repository?.type !== 'git') {
+  if (!repoUrl) {
     return
   }
 
-  logger.info(`Initializing git repository...`)
+  startSpinner('Initializing git repository...')
 
   try {
     executeCommand('git init', { cwd: targetDir, exitOnError: false })
@@ -53,9 +53,8 @@ export default function initGitRepository(targetDir: string): void {
       { cwd: targetDir, exitOnError: false }
     )
 
-    logger.debug(`Git repository initialized with remote: ${repoUrl}`)
-  } catch (error) {
-    logger.error(`Failed to initialize git repository.`)
-    logger.debug(`Error details: ${error}`)
+    stopSpinner('Initialized git repository')
+  } catch {
+    failSpinner('Failed to initialize git repository.')
   }
 }

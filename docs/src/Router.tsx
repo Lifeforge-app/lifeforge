@@ -1,7 +1,10 @@
 import _ from 'lodash'
+import type { ComponentType } from 'react'
 import type { RouteObject } from 'react-router'
 
 import { components as COMPONENTS } from './components/MdxComponents'
+
+type MdxPageProps = { components: typeof COMPONENTS }
 
 const modules = import.meta.glob(['./contents/*/*.mdx'])
 
@@ -20,7 +23,9 @@ const routePromises = Object.entries(sectionItems).map(
 
       if (!importer) throw new Error(`Module not found: ${path}`)
 
-      const mod = (await importer()) as { default: any }
+      const mod = (await importer()) as {
+        default: ComponentType<MdxPageProps>
+      }
 
       return [
         _.kebabCase(

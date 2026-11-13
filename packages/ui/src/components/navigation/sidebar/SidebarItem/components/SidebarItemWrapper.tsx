@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { type Ref } from 'react'
 
 import { Flex, Text, Transition } from '@/components/primitives'
 import { colorWithOpacity } from '@/system/colors/color-with-opacity'
@@ -9,12 +10,16 @@ export function SidebarItemWrapper({
   active,
   children,
   className,
-  onClick
+  collapsed = false,
+  onClick,
+  ref
 }: {
   active: boolean
   children: React.ReactNode
   className?: string
+  collapsed?: boolean
   onClick?: () => void
+  ref?: Ref<HTMLElement>
 }) {
   return (
     <Transition>
@@ -24,16 +29,18 @@ export function SidebarItemWrapper({
         weight={active ? 'semibold' : undefined}
       >
         <Flex
+          ref={ref}
           align="center"
           as="li"
           className={clsx(
             'sidebar-item',
-            active && styles.listItemActiveIndicator,
+            active && !collapsed && styles.listItemActiveIndicator,
             className
           )}
           justify="center"
           position="relative"
-          px="md"
+          px={collapsed ? 'sm' : 'md'}
+          width="100%"
         >
           <Transition duration="0.1s">
             <Flex
@@ -54,10 +61,10 @@ export function SidebarItemWrapper({
               className="group"
               gap="md"
               height="3.5em"
-              justify="between"
-              pl="md"
+              justify={collapsed ? 'center' : 'between'}
+              pl={collapsed ? 'none' : 'md'}
               position="relative"
-              pr="md"
+              pr={collapsed ? 'none' : 'xs'}
               r="lg"
               role="button"
               style={{

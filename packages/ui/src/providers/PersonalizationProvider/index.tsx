@@ -2,8 +2,9 @@ import _ from 'lodash'
 import { createContext, useContext, useMemo, useState } from 'react'
 import tinycolor from 'tinycolor2'
 
-import type { ProxyTree } from '@lifeforge/api'
 import { useLanguageEffect } from '@lifeforge/localization'
+
+import { forgeAPI as coreForgeAPI } from '@/utils/forgeAPI'
 
 import { BG_THEME } from './constants/bg_theme'
 import THEME_COLOR_HEX from './constants/theme_color_hex'
@@ -31,7 +32,13 @@ const DEFAULT_VALUE: IPersonalizationData = {
   derivedTheme: 'dark',
   rawThemeColor: 'theme-lime',
   derivedThemeColor: THEME_COLOR_HEX['lime'],
-  getMostReadableColor: () => '#000000',
+  getMostReadableColor: (bg?: string) =>
+    tinycolor
+      .mostReadable(bg ?? THEME_COLOR_HEX['lime'], [
+        BG_THEME.zinc[100],
+        BG_THEME.zinc[800]
+      ])
+      .toHexString(),
   bgTemp: 'bg-neutral',
   bgTempPalette: BG_THEME['zinc'],
   bgImage: '',
@@ -66,7 +73,7 @@ export function PersonalizationProvider({
   defaultValueOverride = {},
   children
 }: {
-  forgeAPI: ProxyTree<any>
+  forgeAPI: typeof coreForgeAPI
   defaultValueOverride?: Partial<IPersonalizationData>
   children: React.ReactNode
 }) {
@@ -139,19 +146,24 @@ export function PersonalizationProvider({
   const bgTempPalette = useMemo(() => {
     return !bgTemp.startsWith('#')
       ? BG_THEME[bgTemp.replace('bg-', '') as keyof typeof BG_THEME]
-      : getColorPalette(bgTemp, 'bg', derivedTheme)
-  }, [bgTemp])
-  const getMostReadableColor = useMemo(
-    () =>
-      (bg?: string): string =>
-        tinycolor
-          .mostReadable(bg ?? themeColor, [
-            bgTempPalette[100],
-            bgTempPalette[800]
-          ])
-          .toHexString(),
-    [themeColor, bgTempPalette]
-  )
+      : getColorPalette(bgTemp, 'bg')
+  }, [bgTemp, derivedTheme])
+  const getMostReadableColor = useMemo(() => {
+    const palette = bgTempPalette as Record<number, string> | undefined
+
+    const lightBg =
+      palette?.[100] && tinycolor(palette[100]).isValid()
+        ? palette[100]
+        : BG_THEME.zinc[100]
+
+    const darkBg =
+      palette?.[800] && tinycolor(palette[800]).isValid()
+        ? palette[800]
+        : BG_THEME.zinc[800]
+
+    return (bg?: string): string =>
+      tinycolor.mostReadable(bg ?? themeColor, [lightBg, darkBg]).toHexString()
+  }, [themeColor, bgTempPalette])
 
   useFontFamily(fontFamily, fontScale, forgeAPI)
   useThemeEffect(rootElement, derivedTheme, rawThemeColor, bgTemp)

@@ -5,6 +5,8 @@ const fontRuleMap = new Map<string, number[]>()
 const addFontToStylesheet = (font: FontFamily) => {
   const sheet = window.document.styleSheets[0]
 
+  if (!sheet) return
+
   const ruleIndices: number[] = []
 
   Object.entries(font.files).forEach(([variant, url]) => {
@@ -47,6 +49,8 @@ const removeFontFromStylesheet = (fontFamily: string) => {
   if (!ruleIndices) return
 
   const sheet = window.document.styleSheets[0]
+
+  if (!sheet) return
 
   ruleIndices
     .sort((a, b) => b - a)

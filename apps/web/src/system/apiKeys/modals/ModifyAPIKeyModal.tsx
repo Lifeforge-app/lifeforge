@@ -32,7 +32,7 @@ const schema = z
     exposable: z.boolean()
   })
   .superRefine(({ _type, overrideKey, key }, ctx) => {
-    if (_type === 'create' || (_type === 'update' && overrideKey)) {
+    if (_type === 'create' || overrideKey) {
       if (!key || key.length === 0) {
         ctx.addIssue({
           code: 'custom',

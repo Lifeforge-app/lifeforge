@@ -35,6 +35,7 @@ function APIKeys() {
   return (
     <>
       <ModuleHeader
+        namespace="common.api-keys"
         trailing={
           <Button
             display={{ base: 'none', lg: 'flex' }}

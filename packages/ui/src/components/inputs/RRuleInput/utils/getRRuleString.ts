@@ -57,7 +57,7 @@ export const configureYearlyOptions = (
   if (data.type === 'exactDate') {
     options.bymonth = data.month
     options.bymonthday = data.date
-  } else if (data.type === 'relativeDay') {
+  } else {
     options.bysetpos = {
       first: 1,
       second: 2,
@@ -79,7 +79,7 @@ export const configureMonthlyOptions = (
 
   if (data.type === 'exactDate') {
     options.bymonthday = data.onDate
-  } else if (data.type === 'relativeDay') {
+  } else {
     options.bysetpos = {
       first: 1,
       second: 2,
@@ -157,31 +157,19 @@ export function getRRULEString({
 
   switch (params.freq) {
     case 'yearly':
-      configureYearlyOptions(
-        options,
-        params.data as FreqSpecificParams['yearly']
-      )
+      configureYearlyOptions(options, params.data)
       break
     case 'monthly':
-      configureMonthlyOptions(
-        options,
-        params.data as FreqSpecificParams['monthly']
-      )
+      configureMonthlyOptions(options, params.data)
       break
     case 'weekly':
-      configureWeeklyOptions(
-        options,
-        params.data as FreqSpecificParams['weekly']
-      )
+      configureWeeklyOptions(options, params.data)
       break
     case 'daily':
-      configureDailyOptions(options, params.data as FreqSpecificParams['daily'])
+      configureDailyOptions(options, params.data)
       break
     case 'hourly':
-      configureHourlyOptions(
-        options,
-        params.data as FreqSpecificParams['hourly']
-      )
+      configureHourlyOptions(options, params.data)
       break
   }
 
@@ -212,8 +200,6 @@ export function fromRRULEString(rrule: string): {
   }
 
   const options = RRule.parseString(rrule.split('||')[0])
-
-  if (!options) return null
 
   const freq = options.freq
 

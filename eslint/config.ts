@@ -6,6 +6,7 @@ import tseslint from 'typescript-eslint'
 
 import {
   importsConfig,
+  nativeElementsConfig,
   reactConfig,
   sonarConfig,
   storiesConfig,
@@ -21,7 +22,17 @@ const config: Linter.Config[] = [
       '**/dist/',
       'dist/',
       'tools/src/templates/**',
-      '**/storybook-static/'
+      '**/storybook-static/',
+      '**/tsbuild/',
+      '**/dist-docker/',
+      '**/client/contract.ts',
+      'packages/api/src/contract.ts',
+      '.pnpmfile.cjs',
+      'apps/web/public/**',
+      'docs/plugins/*.js',
+      'docs/plugins/*.d.ts',
+      'docs/vite.config.d.ts',
+      'modules/melvinchia3636--truckers-log/client/src/lib/'
     ]
   },
   {
@@ -41,7 +52,7 @@ const config: Linter.Config[] = [
   },
 
   // JS/TS Presets
-  js.configs.recommended as Linter.Config,
+  js.configs.recommended,
   ...(tseslint.configs.recommended as Linter.Config[]),
 
   // Feature / Plugin Configs
@@ -49,6 +60,7 @@ const config: Linter.Config[] = [
   ...sonarConfig,
   ...importsConfig,
   ...styleConfig,
+  ...nativeElementsConfig,
   ...testsConfig,
   ...storiesConfig
 ]

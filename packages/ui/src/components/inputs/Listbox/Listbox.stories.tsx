@@ -160,8 +160,8 @@ export const MultipleOptions: Story = {
         multiple
         renderContent={() => (
           <Flex align="center" gap="sm" wrap="wrap">
-            {(value as string[]).length > 0
-              ? (value as string[]).map((v, index) => {
+            {value.length > 0
+              ? value.map((v, index) => {
                   const option = OPTIONS.find(o => o.value === v)
 
                   return (
@@ -175,11 +175,11 @@ export const MultipleOptions: Story = {
                         />
                         <Text whiteSpace="nowrap">{option?.label}</Text>
                       </Flex>
-                      {index !== (value as string[]).length - 1 && (
+                      {index !== value.length - 1 && (
                         <Text
                           asChild
                           color={{ base: 'bg-400', dark: 'bg-600' }}
-                          style={{ height: '0.375rem', width: '0.375rem' }}
+                          style={{ height: '0.375em', width: '0.375em' }}
                         >
                           <Icon icon="tabler:circle-filled" />
                         </Text>

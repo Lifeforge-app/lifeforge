@@ -45,18 +45,17 @@ export function SidebarItemContent({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
+  if (isMainSidebarItem && !sidebarExpanded) {
+    return null
+  }
+
   return (
     <>
       <Flex align="center" gap="md" justify="between" minWidth="0" width="100%">
         {(() => {
           if (!isMainSidebarItem) {
             return (
-              <Box
-                asChild
-                minWidth="0"
-                pr={number !== undefined && !hasSubsection ? '2xl' : 'none'}
-                width="100%"
-              >
+              <Box asChild flexGrow="1" minWidth="0">
                 <Text truncate as="div">
                   {typeof label === 'string' && namespace !== false
                     ? t([
@@ -89,7 +88,7 @@ export function SidebarItemContent({
                 justify="between"
                 minWidth="0"
                 overflow="hidden"
-                style={{ gap: '0.75rem' }}
+                style={{ gap: '0.75em' }}
                 width="100%"
               >
                 <Box asChild minWidth="0" width="100%">
@@ -104,15 +103,7 @@ export function SidebarItemContent({
           )
         })()}
         {number !== undefined && !hasSubsection && (
-          <Box
-            asChild
-            position="absolute"
-            right="1em"
-            style={{
-              transform: 'translateY(-50%)'
-            }}
-            top="50%"
-          >
+          <Box flexShrink="0">
             <Text
               as="span"
               className={
@@ -122,13 +113,13 @@ export function SidebarItemContent({
                   ? styles.numberBadgeGroupHoverHide
                   : undefined
               }
-              pr="sm"
               size="sm"
               style={{
                 display:
                   isMenuOpen || (onCancelButtonClick !== undefined && active)
                     ? 'none'
-                    : undefined
+                    : undefined,
+                whiteSpace: 'nowrap'
               }}
             >
               {number.toLocaleString()}
@@ -155,6 +146,7 @@ export function SidebarItemContent({
           {contextMenuItems}
         </ContextMenu>
       )}
+      {contextMenuItems === undefined && <Box flexShrink="0" />}
     </>
   )
 }

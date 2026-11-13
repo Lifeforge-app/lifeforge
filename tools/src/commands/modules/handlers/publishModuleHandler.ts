@@ -1,104 +1,85 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
-import fs from 'fs'
-import path from 'path'
-
-import { ROOT_DIR } from '@/constants/constants'
-import executeCommand from '@/utils/commands'
-import logger from '@/utils/logger'
 
 import bumpPackageVersion, {
   revertPackageVersion
-} from '../../../utils/bumpPackageVersion'
-import { getRegistryUrl } from '../../../utils/registry'
+} from '@/utils/bumpPackageVersion'
+import executeCommand from '@/utils/commands'
+import { getTagCommit, updateRegistryIndex } from '@/utils/github'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
+
+import { resolveModule } from '../functions/listModules'
 import validateModuleAuthor from '../functions/validateModuleAuthor'
+import validateModuleRepo from '../functions/validateModuleRepo'
 import validateModuleStructure from '../functions/validateModuleStructure'
 
 /**
- * Renames .gitignore to gitignore before publish (npm excludes .gitignore).
- * Returns true if a rename was performed.
- */
-function prepareGitignoreForPublish(modulePath: string): boolean {
-  const gitignorePath = path.join(modulePath, '.gitignore')
-
-  const renamedPath = path.join(modulePath, 'gitignore')
-
-  if (fs.existsSync(gitignorePath)) {
-    fs.renameSync(gitignorePath, renamedPath)
-
-    return true
-  }
-
-  return false
-}
-
-/**
- * Restores gitignore back to .gitignore after publish.
- */
-function restoreGitignoreAfterPublish(modulePath: string): void {
-  const gitignorePath = path.join(modulePath, '.gitignore')
-
-  const renamedPath = path.join(modulePath, 'gitignore')
-
-  if (fs.existsSync(renamedPath)) {
-    fs.renameSync(renamedPath, gitignorePath)
-  }
-}
-
-/**
- * Publishes a module to the registry.
+ * Publishes a module: bumps the version, commits + tags it in the module's Git
+ * repo, pushes, and records the release commit in the GitHub-hosted index.
  *
  * Steps:
  * 1. Validates module structure (required files, package.json format)
- * 2. Validates author permissions
- * 3. Bumps version in package.json
- * 4. Renames .gitignore to gitignore (npm excludes .gitignore)
- * 5. Publishes to LifeForge registry
- * 6. Restores gitignore to .gitignore
- * 7. Reverts version on failure
+ * 2. Validates author permissions (GitHub)
+ * 3. Validates the target repo (repo URL, dash-case name, reachability, upstream)
+ * 4. Bumps version, commits, tags `v<version>`, and pushes
+ * 5. Updates the registry index with `versions[v] = <commit sha>`
  */
 export async function publishModuleHandler(moduleName: string): Promise<void> {
-  const modulePath = path.join(ROOT_DIR, 'modules', moduleName)
+  const mod = resolveModule(moduleName)
 
-  if (!fs.existsSync(modulePath)) {
-    logger.error(`Module ${chalk.blue(moduleName)} not found in modules/`)
+  if (!mod) {
+    log.error(`Module ${chalk.blue(moduleName)} not found in modules/`)
     process.exit(1)
   }
 
-  logger.debug('Validating module structure...')
-  await validateModuleStructure(modulePath)
+  const { id: shortName, dir } = mod
 
-  logger.debug('Validating module author...')
-  await validateModuleAuthor(modulePath)
+  await validateModuleStructure(dir)
 
-  const { oldVersion, newVersion } = bumpPackageVersion(modulePath)
+  await validateModuleAuthor(dir)
 
-  logger.print(
+  const repo = validateModuleRepo(dir)
+
+  const { oldVersion, newVersion } = bumpPackageVersion(dir)
+
+  log.message(
     `  Version: ${chalk.dim(oldVersion)} ${chalk.dim('→')} ${chalk.green(newVersion)}`
   )
 
-  // Rename .gitignore to gitignore (npm excludes .gitignore by default)
-  const gitignoreRenamed = prepareGitignoreForPublish(modulePath)
-
-  logger.debug(`Publishing ${chalk.blue(moduleName)}...`)
+  startSpinner(`Publishing ${chalk.blue(shortName)}...`)
 
   try {
-    executeCommand(`pnpm publish --registry ${getRegistryUrl()}`, {
-      cwd: modulePath
+    executeCommand(`git add package.json`, { cwd: dir })
+    executeCommand(`git commit -m "chore: release v${newVersion}"`, {
+      cwd: dir
+    })
+    executeCommand(`git tag v${newVersion}`, { cwd: dir })
+    executeCommand('git push', { cwd: dir })
+    executeCommand('git push --tags', { cwd: dir })
+
+    const commitSha = getTagCommit(repo, `v${newVersion}`)
+
+    updateRegistryIndex('modules', {
+      id: shortName,
+      repo,
+      version: newVersion,
+      commitSha
     })
 
-    logger.success(
-      `Published ${chalk.blue(moduleName)} ${chalk.dim(`v${newVersion}`)}`
+    stopSpinner(
+      `Published ${chalk.blue(shortName)} ${chalk.dim(`v${newVersion}`)}`
     )
   } catch (error) {
-    revertPackageVersion(modulePath, oldVersion)
+    revertPackageVersion(dir, oldVersion)
 
-    logger.error(`Publish failed for ${chalk.blue(moduleName)}`)
-    logger.debug(`Error: ${error}`)
+    failSpinner(`Publish failed for ${chalk.blue(shortName)}`)
+
+    log.error(
+      error instanceof Error
+        ? error.message
+        : `Command failed: ${String(error)}`
+    )
+
     process.exit(1)
-  } finally {
-    // Always restore .gitignore after publish attempt
-    if (gitignoreRenamed) {
-      restoreGitignoreAfterPublish(modulePath)
-    }
   }
 }

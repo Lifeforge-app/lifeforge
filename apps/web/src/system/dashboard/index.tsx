@@ -27,6 +27,7 @@ function DashboardContent() {
   return (
     <Flex ref={wrapperRef} direction="column" flex="1" mb="2xl">
       <ModuleHeader
+        namespace="common.dashboard"
         trailing={
           <ContextMenu>
             <ContextMenuItem
@@ -38,7 +39,7 @@ function DashboardContent() {
               }}
             />
             <ContextMenuItem
-              icon="tabler:apps"
+              icon="si:widget-fill"
               label="Manage Widgets"
               namespace="common.dashboard"
               onClick={handleManageWidget}

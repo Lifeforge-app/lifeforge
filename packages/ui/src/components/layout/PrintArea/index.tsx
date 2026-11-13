@@ -44,7 +44,6 @@ export function PrintArea({
     rawThemeColor,
     bgTemp,
     bordered,
-    fontScale,
     borderRadiusMultiplier
   } = usePersonalization()
 
@@ -59,7 +58,13 @@ export function PrintArea({
     .filter(Boolean)
     .join(' ')
 
-  const rootStylesCss = Object.entries(bodyStyles)
+  const nonBackgroundStyles = Object.fromEntries(
+    Object.entries(bodyStyles).filter(
+      ([key]) => key !== 'background' && key !== 'background-color'
+    )
+  )
+
+  const rootStylesCss = Object.entries(nonBackgroundStyles)
     .map(([key, value]) => `${key}: ${value} !important;`)
     .join('\n')
 
@@ -68,20 +73,21 @@ export function PrintArea({
       ref={contentRef}
       className={`${themeClasses} ${className} lf-statement-print-wrapper`}
       style={{
-        ...bodyStyles,
+        ...nonBackgroundStyles,
         width: '100%',
         ...style
       }}
     >
       <style>{`
         :root {
-          --custom-font-scale: ${fontScale} !important;
+          --custom-font-scale: 1 !important;
           --custom-border-radius-multiplier: ${borderRadiusMultiplier} !important;
           ${rootStylesCss}
         }
         @media print {
           .lf-statement-print-wrapper {
             display: block !important;
+            color: black !important;
           }
            .lf-statement-print-wrapper > * {
             height: auto !important;

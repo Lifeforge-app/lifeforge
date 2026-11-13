@@ -25,13 +25,9 @@ export function SliderValueModal({
   const schema = useMemo(() => {
     let s = z.number()
 
-    if (min !== undefined) {
-      s = s.min(min, `Value must be at least ${min}`)
-    }
+    s = s.min(min, `Value must be at least ${min}`)
 
-    if (max !== undefined) {
-      s = s.max(max, `Value must be at most ${max}`)
-    }
+    s = s.max(max, `Value must be at most ${max}`)
 
     return z.object({
       value: s

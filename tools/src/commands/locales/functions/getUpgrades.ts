@@ -1,62 +1,50 @@
+import { log } from '@clack/prompts'
 import chalk from 'chalk'
 
-import logger from '@/utils/logger'
-import { getRegistryUrl } from '@/utils/registry'
+import { type RegistryEntry, resolveEntry } from '@/utils/registryIndex'
 
-interface LocaleUpgrade {
+import type { LocaleInfo } from './listLocales'
+
+export interface LocaleUpgrade {
+  id: string
   name: string
   current: string
   latest: string
-}
-
-async function getLatestLocaleVersion(
-  packageName: string
-): Promise<string | null> {
-  try {
-    const registryUrl = getRegistryUrl()
-
-    const response = await fetch(`${registryUrl}/${packageName}`)
-
-    if (!response.ok) {
-      return null
-    }
-
-    const data = (await response.json()) as {
-      'dist-tags'?: { latest?: string }
-    }
-
-    return data['dist-tags']?.latest || null
-  } catch {
-    return null
-  }
+  entry: RegistryEntry
 }
 
 async function getUpgrades(
-  packagesToCheck: { name: string; version: string }[]
-) {
+  packagesToCheck: LocaleInfo[]
+): Promise<LocaleUpgrade[]> {
   const upgrades: LocaleUpgrade[] = []
 
   for (const pkg of packagesToCheck) {
-    const latestVersion = await getLatestLocaleVersion(pkg.name)
+    const entry = await resolveEntry('locales', pkg.id)
 
-    if (latestVersion && latestVersion !== pkg.version) {
+    if (!entry) {
+      continue
+    }
+
+    if (entry.latest && entry.latest !== pkg.version) {
       upgrades.push({
+        id: pkg.id,
         name: pkg.name,
         current: pkg.version,
-        latest: latestVersion
+        latest: entry.latest,
+        entry
       })
     }
   }
 
   if (!upgrades.length) {
-    logger.info('All locales are up to date')
+    log.step('All locales are up to date')
     process.exit(0)
   }
 
-  logger.info('Available upgrades:')
-  upgrades.forEach(u =>
-    logger.print(
-      `  ${chalk.blue(u.name)}: ${u.current} → ${chalk.green(u.latest)}`
+  log.step('Available upgrades:')
+  upgrades.forEach(upgrade =>
+    log.message(
+      `  ${chalk.blue(upgrade.name)}: ${upgrade.current} → ${chalk.green(upgrade.latest)}`
     )
   )
 

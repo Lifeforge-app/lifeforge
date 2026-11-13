@@ -1,8 +1,7 @@
+import { log } from '@clack/prompts'
 import fs from 'fs'
 import path from 'path'
 import z from 'zod'
-
-import logger from '@/utils/logger'
 
 import { packageJSONSchema } from './packageJSONSchema'
 
@@ -18,6 +17,12 @@ const MODULE_STRUCTURE: Array<{
     name: 'client',
     required: true,
     errorMessage: 'Missing client/ directory'
+  },
+  {
+    type: 'folder',
+    name: 'client/src',
+    required: true,
+    errorMessage: 'Missing client/src/ directory (module source)'
   },
   {
     type: 'folder',
@@ -102,9 +107,9 @@ export default async function validateModuleStructure(
   }
 
   if (errors.length > 0) {
-    logger.error('Module validation failed:')
+    log.error('Module validation failed:')
     errors.forEach(error => {
-      logger.error(`  ✗ ${error}`)
+      log.error(`  ✗ ${error}`)
     })
     process.exit(1)
   }

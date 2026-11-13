@@ -1,17 +1,17 @@
 import { decrypt, encrypt } from '@functions/auth/encryption'
-import speakeasy from 'speakeasy'
+import { eq } from 'drizzle-orm'
 import { v4 } from 'uuid'
 import z from 'zod'
 
-import {
-  connectToPocketBase,
-  validateEnvironmentVariables
-} from '@lifeforge/pocketbase'
-
+import { users } from '../../user/schema.drizzle'
 import { getCookieOptions } from '../constants/cookie'
-import { getPB } from '../constants/pb'
 import forge from '../forge'
-import { pending2FASessions, pendingTOTPSetups } from '../utils/2fa'
+import {
+  createTOTPSecret,
+  pending2FASessions,
+  pendingTOTPSetups,
+  verifyTOTP
+} from '../utils/2fa'
 import { storeRefreshToken } from '../utils/refreshTokenStore'
 import {
   generateFamily,
@@ -33,15 +33,14 @@ export const generate = forge
       })
     }
   })
-  .callback(async ({ response }) => {
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
 
-    const secret = speakeasy.generateSecret({
-      name: user.email,
-      length: 32,
-      issuer: 'LifeForge.'
-    }).base32
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const secret = createTOTPSecret()
 
     const tid = v4()
 
@@ -66,41 +65,39 @@ export const enable = forge
       })
     },
     output: {
-      NO_CONTENT: true,
-      UNAUTHORIZED: true
+      NO_CONTENT: true
     }
   })
-  .callback(async ({ body: { otp, tid }, response }) => {
+  .callback(async ({ db, body: { otp, tid }, response }) => {
     const pending = pendingTOTPSetups.get(tid)
 
     if (!pending) {
       return response.unauthorized()
     }
 
-    pendingTOTPSetups.del(tid)
-
-    const verified = speakeasy.totp.verify({
-      secret: pending.secret,
-      encoding: 'base32',
-      token: otp
-    })
+    const verified = await verifyTOTP(pending.secret, otp)
 
     if (!verified) {
       return response.unauthorized()
     }
 
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+    // Only consume the setup session once verification succeeds, so a wrong or
+    // late code can be retried within the TTL.
+    pendingTOTPSetups.del(tid)
 
-    await pb.update
-      .collection('users')
-      .id(user.id)
-      .data({
-        twoFASecret: encrypt(Buffer.from(pending.secret), MASTER_KEY).toString(
-          'base64'
-        )
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    await db
+      .update(users)
+      .set({
+        twoFASecret: encrypt(pending.secret, MASTER_KEY),
+        updated: new Date()
       })
-      .execute()
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -114,15 +111,17 @@ export const disable = forge
       NO_CONTENT: true
     }
   })
-  .callback(async ({ response }) => {
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
 
-    await pb.update
-      .collection('users')
-      .id(user.id)
-      .data({ twoFASecret: '' })
-      .execute()
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    await db
+      .update(users)
+      .set({ twoFASecret: null, updated: new Date() })
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -141,42 +140,37 @@ export const verify = forge
     output: {
       OK: z.object({
         accessToken: z.string()
-      }),
-      UNAUTHORIZED: true
+      })
     }
   })
-  .callback(async ({ body: { otp, tid }, req, res, response }) => {
+  .callback(async ({ db, body: { otp, tid }, req, res, response }) => {
     const pending = pending2FASessions.get(tid)
 
     if (!pending) {
       return response.unauthorized()
     }
 
-    pending2FASessions.del(tid)
+    const user = await db.query.users.findFirst({
+      where: { id: pending.userId }
+    })
 
-    const config = validateEnvironmentVariables()
-    const pb = await connectToPocketBase(config)
-    const user = await pb.collection('users').getOne(pending.userId)
-    const encryptedSecret = user.twoFASecret as string | undefined
+    const encryptedSecret = user?.twoFASecret
 
     if (!encryptedSecret) {
       return response.unauthorized()
     }
 
-    const secret = decrypt(
-      Buffer.from(encryptedSecret, 'base64'),
-      MASTER_KEY
-    ).toString('utf-8')
+    const secret = decrypt(encryptedSecret, MASTER_KEY)
 
-    const verified = speakeasy.totp.verify({
-      secret,
-      encoding: 'base32',
-      token: otp
-    })
+    const verified = await verifyTOTP(secret, otp)
 
     if (!verified) {
       return response.unauthorized()
     }
+
+    // Only consume the login session once verification succeeds, so a wrong or
+    // late code can be retried within the TTL.
+    pending2FASessions.del(tid)
 
     const userId = pending.userId
     const ip = req.ip || req.socket.remoteAddress || '127.0.0.1'

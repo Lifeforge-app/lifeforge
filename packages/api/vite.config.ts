@@ -1,8 +1,9 @@
-import { externalDependencyRegex } from '@lifeforge/configs/vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
 import { defineConfig, esmExternalRequirePlugin } from 'vite'
 import dts from 'vite-plugin-dts'
+
+import { externalDependencyRegex } from '@lifeforge/configs/vite'
 
 export default defineConfig({
   plugins: [

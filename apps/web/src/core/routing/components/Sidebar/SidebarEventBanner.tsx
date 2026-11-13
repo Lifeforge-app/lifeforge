@@ -17,7 +17,9 @@ function addNumberSuffix(number: number): string {
 
   const v = number % 100
 
-  return number + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0])
+  return (
+    number + (suffixes[(v - 20) % 10] || suffixes[v] || suffixes[0] || 'th')
+  )
 }
 
 const getEventType = (userDOB: string | undefined): string => {
@@ -39,13 +41,9 @@ const getEventMessage = (
     case 'christmas':
       return 'Merry Christmas!'
     case 'birthday':
-      return (
-        <>
-          Happy {addNumberSuffix(dayjs().year() - dayjs(userDOB).year())}{' '}
-          Birthday, <br />
-          {userName}!
-        </>
-      )
+      return `Happy ${addNumberSuffix(
+        dayjs().year() - dayjs(userDOB).year()
+      )} Birthday,\n${userName}!`
     case 'merdeka':
       return 'Happy Birthday, Malaysia!'
     default:
@@ -69,7 +67,7 @@ export default function SidebarEventBanner() {
   const { userData } = useAuth()
 
   const eventType = useMemo(
-    () => getEventType(userData?.dateOfBirth),
+    () => getEventType(userData?.dateOfBirth ?? undefined),
     [userData?.dateOfBirth]
   )
 
@@ -102,8 +100,12 @@ export default function SidebarEventBanner() {
           {eventType === 'christmas' && (
             <Icon icon="mingcute:christmas-hat-line" size="1.5em" />
           )}
-          <Text as="p" lineClamp={2} whiteSpace="normal">
-            {getEventMessage(eventType, userData.name, userData.dateOfBirth)}
+          <Text as="p" lineClamp={2} whiteSpace="pre-line">
+            {getEventMessage(
+              eventType,
+              userData.name ?? '',
+              userData.dateOfBirth ?? ''
+            )}
           </Text>
         </Flex>
         <Icon icon={getEventIcon(eventType)} size="1.5em" />

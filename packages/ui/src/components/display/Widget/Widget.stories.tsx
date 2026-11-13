@@ -148,7 +148,6 @@ export const WithActionComponent: Story = {
         <Widget
           actionComponent={
             <Listbox
-              bg={{ base: 'bg-100', dark: 'bg-800' }}
               maxWidth="14em"
               renderContent={() => <>Last 7 Days</>}
               value="last_7_days"

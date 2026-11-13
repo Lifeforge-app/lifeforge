@@ -1,14 +1,14 @@
-import { ROOT_DIR } from '@constants'
-import { decrypt2 } from '@functions/auth/encryption'
+import { decrypt } from '@functions/auth/encryption'
 import { createServiceLogger } from '@functions/logging'
 import chalk from 'chalk'
-import fs from 'fs'
-import path from 'path'
 
-import { IPBService, PBService } from '@lifeforge/pocketbase'
-import { ModuleRegistry } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
+
+import { db } from '../../drizzle'
 
 const logger = createServiceLogger('API Key Vault')
+
+const apiKeyCache = new Map<string, { key: string; exposable: boolean }>()
 
 export async function validateCallerAccess(
   callerModule: { source: 'app' | 'core'; id: string },
@@ -18,23 +18,17 @@ export async function validateCallerAccess(
     return
   }
 
-  const modulePath =
-    ModuleRegistry.getPath(callerModule.id) ||
-    path.resolve(ROOT_DIR, 'modules', callerModule.id)
+  const entry = ModuleRegistry.entries.find(
+    candidate =>
+      candidate.name === callerModule.id ||
+      candidate.name.endsWith('/' + callerModule.id)
+  )
 
-  const packageJSONPath = path.join(modulePath, 'package.json')
-
-  if (!fs.existsSync(packageJSONPath)) {
-    throw new Error(`Manifest for ${callerModule.id} not found`)
+  if (!entry) {
+    throw new Error(`Module ${callerModule.id} is not registered`)
   }
 
-  const packageJSON = JSON.parse(fs.readFileSync(packageJSONPath, 'utf-8'))
-
-  if (!packageJSON.lifeforge?.APIKeyAccess) {
-    throw new Error(`API access for ${callerModule.id} not found`)
-  }
-
-  const access = packageJSON.lifeforge.APIKeyAccess[id]
+  const access = entry.APIKeyAccess?.[id]
 
   if (!access) {
     throw new Error(`API access for ${id} not found`)
@@ -43,7 +37,6 @@ export async function validateCallerAccess(
 
 async function getAPIKey(
   id: string,
-  pb: PBService<{ entries: any }>,
   callerModule?: { source: 'app' | 'core'; id: string }
 ): Promise<string> {
   try {
@@ -53,15 +46,7 @@ async function getAPIKey(
       )
     }
 
-    const rawPb = pb.instance as unknown as {
-      _apiKeyCache?: Map<string, { key: string; exposable: boolean }>
-    }
-
-    if (!rawPb._apiKeyCache) {
-      rawPb._apiKeyCache = new Map()
-    }
-
-    const cached = rawPb._apiKeyCache.get(id)
+    const cached = apiKeyCache.get(id)
 
     if (cached !== undefined) {
       if (!cached.exposable) {
@@ -71,12 +56,13 @@ async function getAPIKey(
       return cached.key
     }
 
-    const record = await pb.instance
-      .collection('api_keys__entries')
-      .getFirstListItem(`keyId = "${id}"`)
-      .catch(err => {
-        throw new Error(`Failed to retrieve API key for ${id}: ${err.message}`)
-      })
+    const record = await db.query.apiKeysEntries.findFirst({
+      where: { keyId: id }
+    })
+
+    if (!record) {
+      throw new Error(`API key for ${id} not found`)
+    }
 
     if (!record.exposable) {
       await validateCallerAccess(callerModule, id)
@@ -87,8 +73,8 @@ async function getAPIKey(
         `API key for ${chalk.blue(id)} retrieved by ${chalk.blue(callerModule.source)}:${chalk.blue(callerModule.id)}`
       )
 
-      const decrypted = decrypt2(record.key, process.env.MASTER_KEY!)
-      rawPb._apiKeyCache.set(id, {
+      const decrypted = decrypt(record.key, process.env.MASTER_KEY!)
+      apiKeyCache.set(id, {
         key: decrypted,
         exposable: record.exposable
       })
@@ -99,15 +85,15 @@ async function getAPIKey(
     }
   } catch (err) {
     throw new Error(
-      `Failed to retrieve API key for ${id}: ${err instanceof Error ? err.message : String(err)}`
+      `Failed to retrieve API key for ${id}: ${err instanceof Error ? err.message : String(err)}`,
+      { cause: err }
     )
   }
 }
 
-export default function getAPIKeyFactory(
-  pb: IPBService<any>,
-  callerModule?: { source: 'app' | 'core'; id: string }
-): (id: string) => Promise<string> {
-  return (id: string) =>
-    getAPIKey(id, pb as PBService<{ entries: any }>, callerModule)
+export default function getAPIKeyFactory(callerModule?: {
+  source: 'app' | 'core'
+  id: string
+}): (id: string) => Promise<string> {
+  return (id: string) => getAPIKey(id, callerModule)
 }

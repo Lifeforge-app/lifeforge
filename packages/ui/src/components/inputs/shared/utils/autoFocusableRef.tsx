@@ -1,9 +1,9 @@
 export function autoFocusableRef<T>(
   autoFocus: boolean,
-  ref?: React.RefObject<T>,
-  onFocus?: (e: NonNullable<T>) => void
-): any {
-  return (e: T) => {
+  ref?: React.RefObject<T | null>,
+  onFocus?: (e: T) => void
+): React.RefCallback<T> {
+  return (e: T | null) => {
     if (ref) {
       ref.current = e
     }

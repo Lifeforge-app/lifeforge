@@ -24,9 +24,7 @@ export function CompactFileDisplay({
                 ? value.filename
                 : value.type === 'upload'
                   ? value.file.name
-                  : value.type === 'url'
-                    ? value.url.split('/').pop()?.split('?')[0] || ''
-                    : ''
+                  : value.url.split('/').pop()?.split('?')[0] || ''
             )
               .split('.')
               .pop()
@@ -34,7 +32,7 @@ export function CompactFileDisplay({
 
             return FILE_ICONS[ext as keyof typeof FILE_ICONS] || 'tabler:file'
           })()}
-          size="1.5rem"
+          size="1.5em"
         />
         <Text truncate as="p">
           {(() => {

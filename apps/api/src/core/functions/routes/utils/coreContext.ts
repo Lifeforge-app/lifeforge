@@ -4,30 +4,32 @@
  * This module provides the implementation of core utilities that modules
  * access via the `core` parameter in their callbacks.
  */
-import {
-  decrypt,
-  decrypt2,
-  encrypt,
-  encrypt2
-} from '@functions/auth/encryption'
+import { decrypt, encrypt } from '@functions/auth/encryption'
 import { createCache } from '@functions/cache'
 import getAPIKeyFactory from '@functions/database/getAPIKey'
-import fetchAI from '@functions/external/ai'
+import createFetchAI from '@functions/external/ai'
 import searchLocations from '@functions/external/location'
 import parseOCR from '@functions/external/ocr'
 import convertPDFToImage from '@functions/media/convertPDFToImage'
-import retrieveMedia from '@functions/media/retrieveMedia'
-import { checkModulesAvailability } from '@functions/modules/checkModulesAvailability'
 import {
   addToTaskPool,
   globalTaskPool,
   updateTaskInPool
 } from '@functions/socketio/taskPool'
 import TempFileManager from '@functions/utils/tempFileManager'
+import type { PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
+import { FileStorage } from '@lifeforge/file-storage'
+import { createFileMetadataStore } from '@lifeforge/file-storage/server'
 import { type Logger, createLogger } from '@lifeforge/log'
-import { IPBService, checkExistence } from '@lifeforge/pocketbase'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
 import { CoreContext } from '@lifeforge/server-utils'
+
+import { storageProvider } from '../../../storage'
+
+async function checkModulesAvailability(moduleId: string): Promise<boolean> {
+  return ModuleRegistry.isAvailable(moduleId)
+}
 
 const loggerCache = createCache<Logger>('loggers')
 
@@ -44,28 +46,34 @@ function getOrCreateLogger(moduleId: string): Logger {
  * Automatically detects the calling module using stack trace analysis.
  */
 export function createCoreContext({
-  pb,
-  module
+  module,
+  db
 }: {
-  pb: IPBService<any>
   module?: { source: 'app' | 'core'; id: string }
+  db: PostgresJsDatabase
 }): CoreContext {
+  const logging = getOrCreateLogger(
+    module ? `${module.source}:${module.id}` : 'unknown-module'
+  )
+
   return {
-    logging: getOrCreateLogger(
-      module ? `${module.source}:${module.id}` : 'unknown-module'
+    logging,
+    storage: new FileStorage(
+      storageProvider,
+      createFileMetadataStore(db),
+      module?.id || 'unknown',
+      logging
     ),
     api: {
-      fetchAI,
+      fetchAI: createFetchAI(module),
       searchLocations,
-      getAPIKey: getAPIKeyFactory(pb, module)
+      getAPIKey: getAPIKeyFactory(module)
     },
     tempFile: TempFileManager,
     validation: {
-      checkRecordExistence: checkExistence,
       checkModulesAvailability
     },
     media: {
-      retrieveMedia,
       convertPDFToImage,
       parseOCR
     },
@@ -76,9 +84,7 @@ export function createCoreContext({
     },
     crypto: {
       decrypt,
-      decrypt2,
-      encrypt,
-      encrypt2
+      encrypt
     }
   }
 }

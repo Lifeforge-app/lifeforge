@@ -22,7 +22,7 @@ import {
 } from '@/system'
 
 import { Slot } from '../Slot'
-import { type TextSprinkles, textBase, textSprinkles } from './Text.css'
+import { textBase, textSprinkles } from './Text.css'
 
 type TextSize =
   | 'xs'
@@ -179,33 +179,19 @@ export function Text<T extends ElementType = 'span'>({
   const styles = resolveStyles({
     sprinkles: textSprinkles,
     sprinkleProps: {
-      fontSize: normalizeResponsiveProp(size) as TextSprinkles['fontSize'],
+      fontSize: normalizeResponsiveProp(size),
       lineHeight: normalizeResponsiveProp(leading ?? size),
       trim: normalizeResponsiveProp(trim, v => trimMap[v]),
-      fontWeight: normalizeResponsiveProp(
-        weight
-      ) as TextSprinkles['fontWeight'],
-      textAlign: normalizeResponsiveProp(align) as TextSprinkles['textAlign'],
-      display: normalizeResponsiveProp(display) as TextSprinkles['display'],
-      textDecoration: normalizeResponsiveProp(
-        decoration
-      ) as TextSprinkles['textDecoration'],
-      textTransform: normalizeResponsiveProp(
-        transform
-      ) as TextSprinkles['textTransform'],
-      textWrap: normalizeResponsiveProp(wrap) as TextSprinkles['textWrap'],
-      whiteSpace: normalizeResponsiveProp(
-        whiteSpace
-      ) as TextSprinkles['whiteSpace'],
-      wordBreak: normalizeResponsiveProp(
-        wordBreak
-      ) as TextSprinkles['wordBreak'],
-      overflowWrap: normalizeResponsiveProp(
-        overflowWrap
-      ) as TextSprinkles['overflowWrap'],
-      letterSpacing: normalizeResponsiveProp(
-        tracking
-      ) as TextSprinkles['letterSpacing'],
+      fontWeight: normalizeResponsiveProp(weight),
+      textAlign: normalizeResponsiveProp(align),
+      display: normalizeResponsiveProp(display),
+      textDecoration: normalizeResponsiveProp(decoration),
+      textTransform: normalizeResponsiveProp(transform),
+      textWrap: normalizeResponsiveProp(wrap),
+      whiteSpace: normalizeResponsiveProp(whiteSpace),
+      wordBreak: normalizeResponsiveProp(wordBreak),
+      overflowWrap: normalizeResponsiveProp(overflowWrap),
+      letterSpacing: normalizeResponsiveProp(tracking),
       ...resolveSpacingSprinklesProps({
         p,
         px,

@@ -20,7 +20,8 @@ export function DailyForm({
         <NumberInput
           required
           icon="tabler:repeat"
-          label={t('inputs.daily.inputs.every')}
+          label="daily.inputs.every"
+          namespace="common.recurring"
           value={data.every}
           onChange={every => setData({ ...data, every })}
         />

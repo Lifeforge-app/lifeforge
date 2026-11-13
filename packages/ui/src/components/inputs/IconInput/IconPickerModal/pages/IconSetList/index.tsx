@@ -73,7 +73,7 @@ export function IconSetList({
       />
       <Box asChild mt="lg">
         <Scrollbar autoHeight autoHeightMax="60vh">
-          <Flex direction="column" gapY="xl" width="100%">
+          <Flex direction="column" gapY="xl" minWidth="0" width="100%">
             {filteredCollections.map(({ category, iconSets }) => (
               <CategoryEntry
                 key={category}

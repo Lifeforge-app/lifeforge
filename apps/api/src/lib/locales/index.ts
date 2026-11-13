@@ -7,9 +7,15 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { ModuleRegistry , createForge, forgeRouter } from '@lifeforge/server-utils'
+import { ModuleRegistry } from '@lifeforge/module-runtime/registry'
+import {
+  createForgeContractBuilder,
+  forgeRouter
+} from '@lifeforge/server-utils'
 
-const forge = createForge({}, 'locales')
+import type { CoreRelations } from '@/core/drizzle'
+
+const forge = createForgeContractBuilder<CoreRelations>({ moduleId: 'locales' })
 
 const appsDir = path.join(ROOT_DIR, 'modules')
 
@@ -47,14 +53,7 @@ const listLanguages = forge
     }
   })
   .callback(async ({ response }) => {
-    return response.ok(
-      LocaleService.getLangManifests() as unknown as {
-        name: string
-        alternative?: string[]
-        icon: string
-        displayName: string
-      }[]
-    )
+    return response.ok(LocaleService.getLangManifests())
   })
 
 const getLocale = forge
@@ -71,8 +70,7 @@ const getLocale = forge
       })
     },
     output: {
-      OK: z.record(z.string(), z.any()),
-      NOT_FOUND: true
+      OK: z.record(z.string(), z.any())
     },
     rateLimit: false
   })
@@ -91,17 +89,18 @@ const getLocale = forge
 
     if (namespace === 'apps') {
       const target = moduleApps.find(modulePath => {
-        try {
-          const pkgPath = path.join(modulePath, 'package.json')
+        const entry = ModuleRegistry.getModuleByPath(modulePath)
 
-          if (fs.existsSync(pkgPath)) {
-            const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-
-            return pkg.name === subnamespace
-          }
-        } catch {
+        if (!entry) {
           return false
         }
+
+        return (
+          entry.name ===
+          (subnamespace.startsWith('@lifeforge/')
+            ? subnamespace
+            : `@lifeforge/${subnamespace}`)
+        )
       })
 
       if (!target) {
@@ -140,6 +139,8 @@ const getLocale = forge
     ) {
       const targetToBeInjected = subnamespace ? data : data.sidebar
 
+      const systemLocales = LocaleService.getSystemLocales()[finalLang] ?? {}
+
       targetToBeInjected.apps = {
         ...Object.fromEntries(
           moduleApps
@@ -158,18 +159,9 @@ const getLocale = forge
                 fs.readFileSync(localePath, 'utf-8')
               )
 
-              const pkgPath = path.join(modulePath, 'package.json')
-
-              let moduleName = path.basename(modulePath)
-
-              if (fs.existsSync(pkgPath)) {
-                try {
-                  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
-                  moduleName = pkg.name
-                } catch {
-                  // Do nothing
-                }
-              }
+              const moduleName =
+                ModuleRegistry.getModuleByPath(modulePath)?.name ??
+                path.basename(modulePath)
 
               return [
                 moduleName,
@@ -182,7 +174,7 @@ const getLocale = forge
             .filter(e => e.length > 0)
         ),
         ...Object.fromEntries(
-          Object.entries(LocaleService.getSystemLocales()[finalLang])
+          Object.entries(systemLocales)
             .filter(e => 'title' in e[1])
             .map(e => [
               e[0],
@@ -200,13 +192,13 @@ const listUnsupportedModules = forge
     description:
       "List modules that do not support the user's currently selected language",
     output: {
-      OK: z.array(z.string()),
-      NOT_FOUND: true
+      OK: z.array(z.string())
     },
     rateLimit: false
   })
-  .callback(async ({ pb, response }) => {
-    const userLanguage = pb.instance.authStore.record?.language
+  .callback(async ({ db, response }) => {
+    const user = await db.query.users.findFirst()
+    const userLanguage = user?.language
 
     if (!userLanguage) {
       return response.notFound()

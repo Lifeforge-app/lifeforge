@@ -18,7 +18,7 @@ function getVariants(hasDescription: boolean, iconColor?: TokenizedColor) {
   const color: ThemeConditionProp<TokenizedColor> =
     iconColor ?? ({ base: 'bg-600', dark: 'bg-400' } as const)
 
-  const size = hasDescription ? '2.75rem' : '2.25rem'
+  const size = hasDescription ? '2.75em' : '2.25em'
 
   return {
     default: {

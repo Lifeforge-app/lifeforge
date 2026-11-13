@@ -57,6 +57,6 @@ export function LocalUpload() {
       isDragActive={isDragActive}
     />
   ) : (
-    <PreviewContainer file={file as File} preview={preview} />
+    <PreviewContainer file={file} preview={preview} />
   )
 }

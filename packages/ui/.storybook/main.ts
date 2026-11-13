@@ -6,12 +6,24 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 const require = createRequire(import.meta.url)
 
+/**
+ * Plugins from `vite.config.ts` that must not run inside Storybook.
+ * `vite:dts` emits type declarations, and `builtin:esm-external-require` marks
+ * every bare import as external (for the library build), which leaves
+ * `react` & friends unresolved in the browser.
+ */
+const EXCLUDED_PLUGIN_NAMES = new Set([
+  'vite:dts',
+  'builtin:esm-external-require'
+])
+
 const federationStubPlugin = {
   name: 'storybook-federation-stub',
   resolveId(id: string) {
     if (id === 'virtual:__federation__') {
       return '\0virtual:__federation__'
     }
+
     return null
   },
   load(id: string) {
@@ -22,6 +34,7 @@ const federationStubPlugin = {
         export const __federation_method_unwrapDefault = (m) => m?.default ?? m
       `
     }
+
     return null
   }
 }
@@ -54,8 +67,9 @@ const config: StorybookConfig = {
     config.plugins = [
       ...(config.plugins ?? []).filter(p => {
         if (p && typeof p === 'object' && 'name' in p) {
-          return p.name !== 'vite:dts'
+          return !EXCLUDED_PLUGIN_NAMES.has(p.name)
         }
+
         return true
       }),
       federationStubPlugin,
@@ -64,6 +78,7 @@ const config: StorybookConfig = {
     config.build = {
       ...config.build
     }
+
     return {
       ...config
     }
@@ -72,6 +87,6 @@ const config: StorybookConfig = {
 
 export default config
 
-function getAbsolutePath(value: string): any {
+function getAbsolutePath(value: string): string {
   return dirname(require.resolve(join(value, 'package.json')))
 }

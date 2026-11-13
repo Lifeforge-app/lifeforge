@@ -24,7 +24,7 @@ export default function cleanModuleSource(targetDir: string): void {
   // Clean server directory - keep only dist
   if (fs.existsSync(serverDir)) {
     for (const item of fs.readdirSync(serverDir)) {
-      if (!['dist', 'assets', 'schema.ts'].includes(item)) {
+      if (!['dist', 'assets'].includes(item)) {
         const itemPath = path.join(serverDir, item)
 
         fs.rmSync(itemPath, { recursive: true, force: true })
@@ -48,5 +48,35 @@ export default function cleanModuleSource(targetDir: string): void {
     if (fs.existsSync(filePath)) {
       fs.rmSync(filePath, { recursive: true, force: true })
     }
+  }
+
+  const packageJsonPath = path.join(targetDir, 'package.json')
+
+  if (fs.existsSync(packageJsonPath)) {
+    const packageJson = JSON.parse(
+      fs.readFileSync(packageJsonPath, 'utf-8')
+    ) as { scripts?: Record<string, string> }
+
+    if (packageJson.scripts) {
+      for (const script of Object.keys(packageJson.scripts)) {
+        if (
+          script === 'build' ||
+          script.startsWith('build:') ||
+          script === 'typecheck' ||
+          script.startsWith('typecheck:')
+        ) {
+          delete packageJson.scripts[script]
+        }
+      }
+
+      if (Object.keys(packageJson.scripts).length === 0) {
+        delete packageJson.scripts
+      }
+    }
+
+    fs.writeFileSync(
+      packageJsonPath,
+      `${JSON.stringify(packageJson, null, 2)}\n`
+    )
   }
 }

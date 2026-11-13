@@ -24,7 +24,7 @@ export function useListboxBlurOnClose() {
 
       requestAnimationFrame(() => {
         if (el.contains(document.activeElement)) {
-          ;(document.activeElement as HTMLElement)?.blur()
+          ;(document.activeElement as HTMLElement | null)?.blur()
         }
       })
     })

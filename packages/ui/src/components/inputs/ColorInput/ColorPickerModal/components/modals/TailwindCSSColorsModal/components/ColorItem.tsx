@@ -38,8 +38,8 @@ function _ColorItem({
             <Icon
               icon="tabler:check"
               style={{
-                width: '2rem',
-                height: '2rem',
+                width: '2em',
+                height: '2em',
                 color: getMostReadableColor(colorHex)
               }}
             />

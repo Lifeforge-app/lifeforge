@@ -31,9 +31,10 @@ function _IconEntry({
         <Icon icon={`${iconSet}:${icon}`} size="2em" />
         <Text
           align="center"
+          color="muted"
           mt="md"
           size="sm"
-          style={{ marginBottom: '-0.125rem' }}
+          style={{ marginBottom: '-0.125em' }}
           tracking="wide"
           weight="medium"
           wordBreak="break-all"

@@ -1,4 +1,4 @@
-import { Flex, type FlexProps } from '@/components/primitives'
+import { Box, Flex, type FlexProps } from '@/components/primitives'
 import type { TokenizedColor } from '@/system'
 
 import { TitleAndDesc } from './components/TitleAndDesc'
@@ -64,6 +64,7 @@ export function Widget({
       direction="column"
       gap="lg"
       height="100%"
+      minWidth="0"
       p="md"
       r="lg"
       width="100%"
@@ -83,7 +84,7 @@ export function Widget({
             direction={variant === 'large-icon' ? 'column' : 'row'}
             gap={variant === 'large-icon' ? 'sm' : undefined}
             minWidth="0"
-            style={variant !== 'large-icon' ? { gap: '0.75rem' } : undefined}
+            style={variant !== 'large-icon' ? { gap: '0.75em' } : undefined}
             width="100%"
           >
             <WidgetIcon
@@ -102,7 +103,9 @@ export function Widget({
           {componentBesideTitle}
         </Flex>
       )}
-      {children}
+      <Box height="100%" minHeight="0">
+        {children}
+      </Box>
     </Flex>
   )
 }

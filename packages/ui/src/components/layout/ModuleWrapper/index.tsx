@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { ModuleMetadataProvider } from '@lifeforge/federation'
 
-import { Flex } from '@/components/primitives'
+import { Box, Flex } from '@/components/primitives'
 import { ModuleSidebarStateProvider } from '@/providers'
 
 import { Scrollbar } from '../Scrollbar'
@@ -41,16 +41,17 @@ export function ModuleWrapper({
     <ModuleMetadataProvider value={{ name, title, icon }}>
       <ModuleSidebarStateProvider>
         <Flex asChild direction="column" minHeight="0">
-          <Scrollbar className="no-overflow-x" usePaddingRight={false}>
+          <Scrollbar hideHorizontal>
             <Flex
               direction="column"
               flex="1"
-              overflowX="hidden"
+              minHeight="0"
               pt="xl"
               px={{ base: 'md', sm: '2xl' }}
               width="100%"
             >
               {children}
+              <Box aria-hidden flexShrink="0" pb="lg" width="100%" />
             </Flex>
           </Scrollbar>
         </Flex>

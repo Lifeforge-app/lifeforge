@@ -13,6 +13,14 @@ allowBuilds:
   es5-ext: true
   esbuild: true
   fsevents: true
+  # gl only backs block-model-renderer's Node/headless path; the browser path
+  # (dist bundle) uses WebGL2 directly, so its native build is not needed.
+  gl: false
   sharp: true
+  skia-canvas: true
   tesseract.js: true
   zipfile: true
+
+minimumReleaseAgeExclude:
+  - '@aws-sdk/lib-storage@3.1145.0'
+  - '@aws-sdk/s3-request-presigner@3.1145.0'

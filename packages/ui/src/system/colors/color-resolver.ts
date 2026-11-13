@@ -47,11 +47,7 @@ export function resolveColorProp(
     ThemeConditionPropName,
     ColorValue
   ][]) {
-    if (colorValue === undefined) continue
-
     const condDef = THEME_CONDITIONS[condition]
-
-    if (!condDef) continue
 
     final = mergeStyle(final, {
       className: `${classBase}${condDef.suffix}`,

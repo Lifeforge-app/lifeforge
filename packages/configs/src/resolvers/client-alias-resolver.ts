@@ -30,7 +30,7 @@ export function clientAliasResolver(
 
   const clientMatch = normalizedImporter.match(/(.+\/(?:client|web))/)
 
-  if (clientMatch) {
+  if (clientMatch && clientMatch[1]) {
     const clientDir = clientMatch[1]
 
     rootDir =
@@ -40,9 +40,10 @@ export function clientAliasResolver(
   } else {
     const srcMatch = normalizedImporter.match(/(.+\/src)/)
 
-    if (!srcMatch) {
+    if (!(srcMatch && srcMatch[1])) {
       return null
     }
+
     rootDir = srcMatch[1]
   }
 

@@ -1,8 +1,12 @@
 import { verify as argonVerify, hash } from 'argon2'
 import dayjs from 'dayjs'
+import { eq } from 'drizzle-orm'
 import z from 'zod'
 
+import { fileReferenceSchema } from '@lifeforge/file-storage'
+
 import forge from '../forge'
+import { users } from '../schema.drizzle'
 
 export const updateAvatar = forge
   .mutation({
@@ -14,31 +18,37 @@ export const updateAvatar = forge
       }
     },
     output: {
-      OK: z.string()
+      OK: fileReferenceSchema
     }
   })
-  .callback(
-    async ({
-      media: { file: rawFile },
-      pb,
-      core: {
-        media: { retrieveMedia }
-      },
-      response
-    }) => {
-      const fileResult = await retrieveMedia('avatar', rawFile)
-
-      const { id } = pb.instance.authStore.record!
-
-      const newRecord = await pb.update
-        .collection('users')
-        .id(id)
-        .data(fileResult)
-        .execute()
-
-      return response.ok(newRecord.avatar)
+  .callback(async ({ media: { file: rawFile }, db, core, response }) => {
+    if (!rawFile || typeof rawFile === 'string') {
+      return response.badRequest('A valid avatar image must be uploaded')
     }
-  )
+
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    const avatarRef = await core.storage.save({
+      file: rawFile,
+      currentKey: user.avatar || undefined,
+      thumbs: ['256x0']
+    })
+
+    if (!avatarRef) {
+      return response.badRequest('Failed to save avatar')
+    }
+
+    await db
+      .update(users)
+      .set({ avatar: avatarRef.key, updated: new Date() })
+      .where(eq(users.id, user.id))
+
+    return response.ok(avatarRef)
+  })
 
 export const deleteAvatar = forge
   .mutation({
@@ -48,16 +58,24 @@ export const deleteAvatar = forge
       NO_CONTENT: true
     }
   })
-  .callback(async ({ pb, response }) => {
-    const { id } = pb.instance.authStore.record!
+  .callback(async ({ db, core, response }) => {
+    const user = await db.query.users.findFirst()
 
-    await pb.update
-      .collection('users')
-      .id(id)
-      .data({
-        avatar: ''
+    if (!user) {
+      return response.unauthorized()
+    }
+
+    if (user.avatar) {
+      await core.storage.delete(user.avatar)
+    }
+
+    await db
+      .update(users)
+      .set({
+        avatar: null,
+        updated: new Date()
       })
-      .execute()
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })
@@ -82,21 +100,22 @@ export const updateProfile = forge
       NO_CONTENT: true
     }
   })
-  .callback(async ({ body: { data }, pb, response }) => {
-    const { id } = pb.instance.authStore.record!
+  .callback(async ({ body: { data }, db, response }) => {
+    const user = await db.query.users.findFirst()
 
-    if (data.email) {
-      await pb.instance.collection('users').requestEmailChange(data.email)
-
-      return response.noContent()
+    if (!user) {
+      return response.unauthorized()
     }
 
     const updateData: {
+      email?: string
       username?: string
       name?: string
       dateOfBirth?: string
+      updated?: Date
     } = {}
 
+    if (data.email) updateData.email = data.email
     if (data.username) updateData.username = data.username
     if (data.name) updateData.name = data.name
 
@@ -105,7 +124,8 @@ export const updateProfile = forge
     }
 
     if (Object.keys(updateData).length > 0) {
-      await pb.update.collection('users').id(id).data(updateData).execute()
+      updateData.updated = new Date()
+      await db.update(users).set(updateData).where(eq(users.id, user.id))
     }
 
     return response.noContent()
@@ -127,12 +147,16 @@ export const updatePassword = forge
         })
     },
     output: {
-      NO_CONTENT: true,
-      BAD_REQUEST: z.string()
+      NO_CONTENT: true
     }
   })
-  .callback(async ({ body: { oldPassword, password }, pb, response }) => {
-    const user = await pb.getFirstListItem.collection('users').execute()
+  .callback(async ({ body: { oldPassword, password }, db, response }) => {
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
+
     const passwordHash = user.auth_password_hash
 
     if (!passwordHash) {
@@ -149,13 +173,13 @@ export const updatePassword = forge
       type: 2 // argon2id
     })
 
-    await pb.update
-      .collection('users')
-      .id(user.id)
-      .data({
-        auth_password_hash: newPasswordHash
+    await db
+      .update(users)
+      .set({
+        auth_password_hash: newPasswordHash,
+        updated: new Date()
       })
-      .execute()
+      .where(eq(users.id, user.id))
 
     return response.noContent()
   })

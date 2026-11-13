@@ -1,22 +1,26 @@
 import chalk from 'chalk'
 import type { Command } from 'commander'
 
-import logger from '@/utils/logger'
-import { checkAuth, getRegistryUrl } from '@/utils/registry'
+import { getGithubLogin } from '@/utils/github'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 export default function setup(program: Command): void {
   program
     .command('whoami')
-    .description('Show the currently authenticated user on the registry')
+    .description('Show the authenticated GitHub user')
     .action(whoamiHandler)
 }
 
 async function whoamiHandler() {
-  const registry = getRegistryUrl()
+  startSpinner('Fetching GitHub user...')
 
-  logger.debug(`Registry: ${chalk.blue(registry)}`)
+  try {
+    const login = getGithubLogin()
 
-  const { username } = await checkAuth()
+    stopSpinner(`Logged in as: ${chalk.blue(login)}`)
+  } catch {
+    failSpinner('Failed to fetch GitHub user')
 
-  logger.info(`Logged in as: ${chalk.blue(username)}`)
+    process.exit(1)
+  }
 }

@@ -31,7 +31,7 @@ export function SearchFilterModal({
         title="Search Filters"
         onClose={onClose}
       />
-      <Flex direction="column" style={{ gap: '0.75rem' }}>
+      <Flex direction="column" style={{ gap: '0.75em' }}>
         <ImageTypeFilter
           imageType={filters.imageType}
           updateFilters={updateFilters}
@@ -48,7 +48,7 @@ export function SearchFilterModal({
       </Flex>
       <Button
         icon="tabler:check"
-        style={{ marginTop: '1.5rem', width: '100%' }}
+        style={{ marginTop: '1.5em', width: '100%' }}
         onClick={onClose}
       >
         Apply Filters

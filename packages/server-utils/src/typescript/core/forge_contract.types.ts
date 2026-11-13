@@ -1,27 +1,26 @@
+import { type AnyRelations } from 'drizzle-orm'
+import { type PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 import type { Request, RequestHandler, Response } from 'express'
 import type { Server } from 'socket.io'
 import type { z } from 'zod'
 
-import { type CleanedSchemas, type IPBService } from '@lifeforge/pocketbase'
-
-import {
-  OutputDefinition,
-  OutputHelpers
-} from '../response/response_helpers.types'
+import type { ExistingRecords, ExistingStore } from '../../database/existing'
+import type { SelectableTables } from '../../database/existsIn'
+import { OutputDefinition, OutputHelpers } from '../../response'
 import { ConvertMedia, MediaConfig } from '../standalone/media.types'
 import { CoreContext } from './core_context.types'
 
-export interface ForgeExpressContext<
-  TSchemas extends CleanedSchemas = CleanedSchemas
-> {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface ForgeExpressContext<TSchema extends AnyRelations = any> {
   req: Request
   res: Response
   io: Server
-  pb: IPBService<TSchemas>
+  db: PostgresJsDatabase<TSchema>
   body: unknown
   query: unknown
   media: unknown
   core: CoreContext
+  existing: ExistingStore
 }
 
 export interface ForgeContract {
@@ -36,10 +35,6 @@ export interface ForgeContract {
     }
     output: OutputDefinition | 'custom'
     noDefaultResponse: boolean
-    existenceCheck: {
-      body?: Record<string, string>
-      query?: Record<string, string>
-    }
     description: string
     isDownloadable: boolean
     media: MediaConfig | null
@@ -54,19 +49,24 @@ export interface ForgeContract {
 }
 
 export type ForgeContext<
-  TSchemas extends CleanedSchemas,
   TQuery extends z.ZodTypeAny | undefined,
   TBody extends z.ZodTypeAny | undefined,
   TOutput extends OutputDefinition | 'custom',
-  TMedia extends MediaConfig | null
+  TMedia extends MediaConfig | null,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TSchema extends AnyRelations = any
 > = {
   response: OutputHelpers<TOutput>
   body: TBody extends z.ZodTypeAny ? z.infer<TBody> : undefined
   query: TQuery extends z.ZodTypeAny ? z.infer<TQuery> : undefined
   media: ConvertMedia<TMedia>
+  existing: ExistingRecords<
+    | SelectableTables<TQuery extends z.ZodTypeAny ? TQuery : never>
+    | SelectableTables<TBody extends z.ZodTypeAny ? TBody : never>
+  >
   req: Request
   res: Response
   io: Server
-  pb: IPBService<TSchemas>
+  db: PostgresJsDatabase<TSchema>
   core: CoreContext
 }

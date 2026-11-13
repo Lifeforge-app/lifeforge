@@ -59,16 +59,37 @@ export const MinimalContent: Story = {
   )
 }
 
-export const WithoutAutoHide: Story = {
+export const NoOverflow: Story = {
   args: {
-    autoHide: false,
     children: <></>
   },
   render: args => (
     <Box height="100%" my="3xl" width="100%">
       <Scrollbar {...args}>
         <Flex direction="column" gap="md">
-          {Array.from({ length: 50 }, (_, i) => (
+          {Array.from({ length: 2 }, (_, i) => (
+            <Card key={i}>Item {i + 1}</Card>
+          ))}
+        </Flex>
+      </Scrollbar>
+    </Box>
+  )
+}
+
+/**
+ * A scrollbar that grows with its content up to `autoHeightMax`.
+ */
+export const AutoHeight: Story = {
+  args: {
+    autoHeight: true,
+    autoHeightMax: 320,
+    children: <></>
+  },
+  render: args => (
+    <Box width="100%">
+      <Scrollbar {...args}>
+        <Flex direction="column" gap="md">
+          {Array.from({ length: 20 }, (_, i) => (
             <Card key={i}>Item {i + 1}</Card>
           ))}
         </Flex>

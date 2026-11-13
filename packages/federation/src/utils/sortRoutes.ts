@@ -63,5 +63,5 @@ export function sortRoutes<T extends ModuleGroup>(
     ...cat,
     title: ['<START>', '<END>'].includes(cat.title) ? '' : cat.title,
     items: cat.items.sort((a, b) => a.name.localeCompare(b.name))
-  })) as unknown as T[]
+  }))
 }

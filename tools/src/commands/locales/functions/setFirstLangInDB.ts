@@ -1,24 +1,33 @@
 import chalk from 'chalk'
+import postgres from 'postgres'
 
-import logger from '@/utils/logger'
-import getPBInstance from '@/utils/pocketbase'
+import { failSpinner, startSpinner, stopSpinner } from '@/utils/spinner'
 
 import { listLocales } from './listLocales'
 
-async function setFirstLangInDB(shortName: string) {
+async function setFirstLangInDB(code: string) {
   const installedLocales = listLocales()
 
   if (installedLocales.length === 1) {
-    logger.debug('This is the first locale, setting as default...')
+    const databaseUrl = process.env.DATABASE_URL
 
-    const { pb, killPB } = await getPBInstance()
+    if (!databaseUrl) return
 
-    const user = await pb.collection('users').getFirstListItem("id != ''")
+    startSpinner(`Setting ${chalk.blue(code)} as default language...`)
 
-    await pb.collection('users').update(user.id, { language: shortName })
+    try {
+      const sql = postgres(databaseUrl, { max: 1, timeout: 3 })
+      const [user] = await sql`SELECT id FROM users LIMIT 1`
 
-    logger.info(`Set ${chalk.blue(shortName)} as default language`)
-    killPB?.()
+      if (user) {
+        await sql`UPDATE users SET language = ${code} WHERE id = ${user.id}`
+      }
+      await sql.end()
+
+      stopSpinner(`Set ${chalk.blue(code)} as default language`)
+    } catch {
+      failSpinner()
+    }
   }
 }
 

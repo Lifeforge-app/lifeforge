@@ -1,3 +1,3 @@
-import { contract, createForgeProxy } from '@lifeforge/api'
+import { type CoreContract, createForgeProxy } from '@lifeforge/api'
 
-export const forgeAPI = createForgeProxy(contract)
+export const forgeAPI = createForgeProxy<CoreContract>()

@@ -33,7 +33,7 @@ async function fetchGroq<
     model
   })
 
-  const res = response.choices[0]?.message?.content
+  const res = response.choices[0]?.message.content
 
   if (!res) {
     logger.error('No response received from Groq model.')

@@ -1,6 +1,7 @@
 import {
   createContext,
   lazy,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -12,9 +13,16 @@ import { loadRemoteModuleConfig, useFederation } from '@lifeforge/federation'
 import { devModeImports, devModePkgs } from '@/core/utils/devModeImports'
 import forgeAPI from '@/core/utils/forgeAPI'
 
+import NotFoundWidget from '../components/NotFoundWidget'
+
+export interface WidgetProps {
+  dimension: { w: number; h: number }
+  widgetId: string
+}
+
 export interface WidgetEntry {
   moduleName: string
-  component: React.ComponentType<any>
+  component: React.ComponentType<WidgetProps>
   icon: string
   minW: number
   minH: number
@@ -25,11 +33,16 @@ export interface WidgetEntry {
 interface WidgetContextValue {
   widgets: Record<string, WidgetEntry>
   loading: boolean
+  getComponent: (widgetId: string) => {
+    component: React.ComponentType<WidgetProps>
+    name: string | undefined
+  }
 }
 
 const defaultValue: WidgetContextValue = {
   widgets: {},
-  loading: true
+  loading: true,
+  getComponent: () => ({ component: NotFoundWidget, name: undefined })
 }
 
 const WidgetContext = createContext<WidgetContextValue>(defaultValue)
@@ -108,12 +121,25 @@ function WidgetProvider({ children }: { children: React.ReactNode }) {
     }
   }, [moduleGroups])
 
+  const getComponent = useCallback(
+    (widgetId: string) => {
+      const widget = federatedWidgets[widgetId]
+
+      return {
+        component: widget?.component ?? NotFoundWidget,
+        name: widget?.moduleName
+      }
+    },
+    [federatedWidgets]
+  )
+
   const value = useMemo(
     () => ({
       widgets: federatedWidgets,
-      loading
+      loading,
+      getComponent
     }),
-    [federatedWidgets, loading]
+    [federatedWidgets, loading, getComponent]
   )
 
   return <WidgetContext value={value}>{children}</WidgetContext>

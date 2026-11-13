@@ -34,7 +34,7 @@ export const Default: Story = {
     message: 'Something went wrong. Please try again later.'
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <ErrorScreen {...args} />
     </Box>
   )
@@ -49,7 +49,7 @@ export const WithRetryButton: Story = {
     showRetryButton: true
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <ErrorScreen {...args} />
     </Box>
   )
@@ -64,7 +64,7 @@ export const NetworkError: Story = {
     showRetryButton: true
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <ErrorScreen {...args} />
     </Box>
   )
@@ -84,7 +84,7 @@ export const ServerError: Story = {
     )
   },
   render: args => (
-    <Box height="24rem" width="100%">
+    <Box height="24em" width="100%">
       <ErrorScreen {...args} />
     </Box>
   )

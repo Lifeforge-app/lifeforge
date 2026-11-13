@@ -29,8 +29,8 @@ function ResultShowcase({
   return (
     <Box
       shadow
-      height="21rem"
-      maxHeight="21rem"
+      height="21em"
+      maxHeight="21em"
       overflow="hidden"
       position="relative"
       r="md"

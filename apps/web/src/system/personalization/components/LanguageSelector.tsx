@@ -5,13 +5,12 @@ import {
   Box,
   Flex,
   Icon,
+  IconTooltip,
   Listbox,
   ListboxOption,
   OptionsColumn,
   Text,
-  Tooltip,
   WithQuery,
-  surface,
   usePersonalization
 } from '@lifeforge/ui'
 
@@ -41,7 +40,6 @@ function LanguageSelector() {
         {langs => (
           <Flex align="center" gap="sm" width="100%">
             <Listbox
-              bg={surface.lightInteractive}
               minWidth="16em"
               mr="sm"
               renderContent={() => (
@@ -72,7 +70,10 @@ function LanguageSelector() {
               ))}
             </Listbox>
             {unsupportedQuery.data && unsupportedQuery.data.length > 0 && (
-              <Tooltip icon="tabler:alert-triangle" id="unsupported-modules">
+              <IconTooltip
+                icon="tabler:alert-triangle"
+                id="unsupported-modules"
+              >
                 {t(
                   'unsupportedModulesWarning',
                   'The following modules do not support the selected language:'
@@ -86,10 +87,12 @@ function LanguageSelector() {
                   }}
                 >
                   {unsupportedQuery.data.map(name => (
-                    <li key={name}>{name}</li>
+                    <Text key={name} as="li">
+                      {name}
+                    </Text>
                   ))}
                 </Box>
-              </Tooltip>
+              </IconTooltip>
             )}
           </Flex>
         )}

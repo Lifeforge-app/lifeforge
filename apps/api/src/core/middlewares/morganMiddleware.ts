@@ -1,7 +1,7 @@
 import { coreLogger } from '@functions/logging'
 import chalk from 'chalk'
-import { Request, Response } from 'express'
-import morgan from 'morgan'
+import { type NextFunction, Request, Response } from 'express'
+import morgan, { type TokenIndexer } from 'morgan'
 
 const METHOD_COLOR = {
   GET: '#34ace0',
@@ -24,14 +24,16 @@ const STATUS_COLOR = {
 
 const m =
   process.env.NODE_ENV !== 'test'
-    ? morgan((tokens: any, req, res) => {
-        const method = tokens.method(req, res)
+    ? morgan((tokens: TokenIndexer, req, res) => {
+        const method = tokens.method?.(req, res) ?? ''
 
-        const responseTime = tokens['response-time'](req, res)
+        const responseTime = Number(tokens['response-time']?.(req, res) ?? 0)
 
-        const status = tokens.status(req, res)
+        const status = tokens.status?.(req, res) ?? ''
 
-        const url = new URL(`http://localhost:3636${tokens.url(req, res)}`)
+        const url = new URL(
+          `http://localhost:3636${tokens.url?.(req, res) ?? ''}`
+        )
 
         const color =
           METHOD_COLOR[method as keyof typeof METHOD_COLOR] || '#ffffff'
@@ -44,7 +46,7 @@ const m =
               : RESPONSE_TIME_COLOR.slow
 
         const statusColor =
-          STATUS_COLOR[status?.toString()?.[0] as keyof typeof STATUS_COLOR] ||
+          STATUS_COLOR[status.toString()[0] as keyof typeof STATUS_COLOR] ||
           '#ffffff'
 
         coreLogger.info(
@@ -55,16 +57,16 @@ const m =
               .bold(
                 url.pathname.split('/').pop() || ''
               )}${chalk.hex('#828282')(url.search)}`,
-            chalk.hex(statusColor).bold(tokens.status(req, res)),
+            chalk.hex(statusColor).bold(tokens.status?.(req, res) ?? ''),
             chalk
               .hex(responseTimeColor)
-              .bold(`${tokens['response-time'](req, res)} ms`)
+              .bold(`${tokens['response-time']?.(req, res) ?? 0} ms`)
           ].join(' ')
         )
 
         return undefined
       })
-    : (req: Request, res: Response, next: any) => {
+    : (req: Request, res: Response, next: NextFunction) => {
         next()
       }
 

@@ -45,7 +45,7 @@ export function useForgeMutation<T extends { __isForgeContract: true }>(
           }
         } else if (options.queryKey) {
           queryClient.invalidateQueries({
-            queryKey: options.queryKey as QueryKey
+            queryKey: options.queryKey
           })
         }
         options.onSuccess?.()

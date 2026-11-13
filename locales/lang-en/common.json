@@ -119,12 +119,27 @@
       "modals": {
         "morandiColorPalette": "Morandi Color Palette",
         "tailwindCssColorPalette": "Tailwind CSS Color Palette",
-        "flatUiColors": "Flat UI Colors"
+        "flatUiColors": "Flat UI Colors",
+        "chineseTraditionalColors": "Chinese Traditional Colors"
       },
       "buttons": {
         "morandiColorPalette": "Morandi Color Palette",
         "tailwindCssColorPalette": "Tailwind CSS Color Palette",
-        "flatUiColors": "Flat UI Colors"
+        "flatUiColors": "Flat UI Colors",
+        "chineseTraditionalColors": "Chinese Traditional Colors"
+      },
+      "groups": {
+        "white": "White",
+        "orange": "Orange",
+        "pink": "Pink",
+        "green": "Green",
+        "cyan": "Cyan",
+        "blue": "Blue",
+        "purple": "Purple",
+        "yellow": "Yellow",
+        "red": "Red",
+        "black": "Black",
+        "brown": "Brown"
       }
     },
     "imagePreview": "Image Preview",

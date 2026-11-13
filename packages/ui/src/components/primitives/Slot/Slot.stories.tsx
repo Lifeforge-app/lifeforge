@@ -49,10 +49,10 @@ export const Default: Story = {
           <button
             style={{
               all: 'unset',
-              borderRadius: '0.5rem',
+              borderRadius: '0.5em',
               cursor: 'pointer',
               display: 'block',
-              padding: '0.75rem 1rem'
+              padding: '0.75em 1em'
             }}
             type="button"
           >
@@ -130,7 +130,7 @@ export const ClassNameMerging: Story = {
     <Flex
       direction="column"
       gap="md"
-      style={{ maxWidth: '32rem', width: '100%' }}
+      style={{ maxWidth: '32em', width: '100%' }}
     >
       <Alert type="note">
         Open the browser dev tools to inspect the DOM structure of the given
@@ -142,9 +142,9 @@ export const ClassNameMerging: Story = {
             className="from-child"
             style={{
               background: COLORS['custom-500'],
-              borderRadius: '0.5rem',
+              borderRadius: '0.5em',
               display: 'block',
-              padding: '0.75rem'
+              padding: '0.75em'
             }}
           >
             className=&quot;from-slot from-child&quot;
@@ -167,7 +167,7 @@ export const StyleMerging: Story = {
     <Flex
       direction="column"
       gap="md"
-      style={{ maxWidth: '32rem', width: '100%' }}
+      style={{ maxWidth: '32em', width: '100%' }}
     >
       <Alert type="note">
         Open the browser dev tools to inspect the DOM structure of the given
@@ -177,7 +177,7 @@ export const StyleMerging: Story = {
         <Slot
           style={{
             outline: `2px dashed ${COLORS['custom-500']}`,
-            padding: '1.5rem'
+            padding: '1.5em'
           }}
         >
           <Box bg={colorWithOpacity('custom-500', '20%')} r="md">

@@ -16,12 +16,14 @@ export default async function getConcurrentServices(
   host?: boolean,
   port?: string
 ): Promise<ConcurrentServiceConfig[]> {
-  const SERVICES_TO_START = ['db', 'server', 'client']
+  const SERVICES_TO_START = ['server', 'client']
 
   const concurrentServices: ConcurrentServiceConfig[] = []
 
   for (const service of SERVICES_TO_START) {
     const config = SERVICE_COMMANDS[service]
+
+    if (!config) continue
 
     const command =
       config.command instanceof Function

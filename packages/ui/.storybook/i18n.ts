@@ -15,7 +15,11 @@ export const i18nConfig = {
     escapeValue: false
   },
   ns: ['common'],
-  returnedObjectHandler: (key: string, value: string, options: any) => {
+  returnedObjectHandler: (
+    key: string,
+    value: string,
+    options: Record<string, unknown>
+  ) => {
     return JSON.stringify({ key, value, options })
   },
   backend: {

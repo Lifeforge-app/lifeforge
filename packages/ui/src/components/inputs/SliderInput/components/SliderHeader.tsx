@@ -63,7 +63,7 @@ export function SliderHeader({
           minWidth="0"
           style={{ letterSpacing: '0.025em' }}
         >
-          <Icon icon={icon} size="1.5rem" />
+          <Icon icon={icon} size="1.5em" />
           <Flex align="center" gap="sm" minWidth="0" width="100%">
             <Text truncate as="div" style={{ width: '100%', minWidth: 0 }}>
               {inputLabel}
@@ -90,7 +90,7 @@ export function SliderHeader({
         >
           {renderValue ? renderValue(value) : value}
         </span>
-        <Text color="muted" style={{ fontSize: '0.75rem' }}>
+        <Text color="muted" style={{ fontSize: '0.75em' }}>
           /{renderValue ? renderValue(max) : max}
         </Text>
       </Flex>

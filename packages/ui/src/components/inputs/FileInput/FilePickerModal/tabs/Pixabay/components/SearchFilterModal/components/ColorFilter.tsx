@@ -26,8 +26,8 @@ export function ColorFilter({ colors, updateFilters }: ColorFilterProps) {
             r="full"
             style={{
               backgroundColor: COLORS.find(l => l.id === colors)?.color,
-              height: '0.75rem',
-              width: '0.75rem'
+              height: '0.75em',
+              width: '0.75em'
             }}
           >
             <div />

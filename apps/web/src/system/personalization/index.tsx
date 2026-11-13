@@ -13,7 +13,7 @@ import ThemeSelector from './components/ThemeSelector'
 function Personalization() {
   return (
     <>
-      <ModuleHeader />
+      <ModuleHeader namespace="common.personalization" />
       <Stack mb="xl">
         <LanguageSelector />
         <ThemeSelector />

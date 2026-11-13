@@ -10,7 +10,7 @@ import {
   Text,
   Transition
 } from '@/components/primitives'
-import { colorWithOpacity } from '@/system'
+import { surface } from '@/system'
 
 import { InputFocusProvider } from '../../contexts/InputFocusContext'
 import type { InputSize, InputVariant } from '../../types'
@@ -29,6 +29,22 @@ export type InputWrapperProps = {
   children: React.ReactNode
   errorMsg?: string
 } & FlexProps
+
+/**
+ * Props that are forwarded to the underlying `InputWrapper` (a `Flex`).
+ * Excludes the props each input manages itself.
+ */
+export type InputWrapperPassthrough = Omit<
+  InputWrapperProps,
+  | 'children'
+  | 'variant'
+  | 'size'
+  | 'disabled'
+  | 'errorMsg'
+  | 'inputRef'
+  | 'onFocus'
+  | 'className'
+>
 
 export function InputWrapper({
   className = '',
@@ -98,12 +114,7 @@ export function InputWrapper({
           <Flex
             shadow
             align="center"
-            bg={{
-              base: colorWithOpacity('bg-200', '70%'),
-              dark: colorWithOpacity('bg-800', '70%'),
-              hover: 'bg-200',
-              darkHover: 'bg-800'
-            }}
+            bg={surface.lightInteractive}
             className={clsx(wrapperClassName, className)}
             flexShrink="0"
             minWidth="0"

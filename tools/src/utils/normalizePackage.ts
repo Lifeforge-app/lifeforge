@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { ROOT_DIR } from '@/constants/constants'
+import { ROOT_DIR } from '@/utils/constants'
 
 type PackageType = 'module' | 'locale'
 

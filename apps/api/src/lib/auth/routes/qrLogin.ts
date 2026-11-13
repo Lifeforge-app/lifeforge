@@ -2,7 +2,6 @@ import { v4 } from 'uuid'
 import z from 'zod'
 
 import { getCookieOptions } from '../constants/cookie'
-import { getPB } from '../constants/pb'
 import forge from '../forge'
 import { sessions } from '../utils/qrLogin'
 import { storeRefreshToken } from '../utils/refreshTokenStore'
@@ -59,12 +58,10 @@ export const approve = forge
     output: {
       OK: z.object({
         browserInfo: z.string()
-      }),
-      NOT_FOUND: true,
-      BAD_REQUEST: z.string()
+      })
     }
   })
-  .callback(async ({ body: { sessionId }, req, response }) => {
+  .callback(async ({ db, body: { sessionId }, req, response }) => {
     const session = sessions.get(sessionId)
 
     if (!session) {
@@ -75,8 +72,11 @@ export const approve = forge
       return response.badRequest('Session already approved')
     }
 
-    const pb = await getPB('user')
-    const user = await pb.getFirstListItem.collection('users').execute()
+    const user = await db.query.users.findFirst()
+
+    if (!user) {
+      return response.unauthorized()
+    }
 
     const accessToken = signAccessToken(user.id)
     const refreshToken = generateRefreshToken()
@@ -154,9 +154,18 @@ export const status = forge
       })
     }
 
+    const expiresAt = sessions.expiryTime(sessionId)
+
+    // The session existed a moment ago, but its TTL entry can still be gone
+    // (expired between the two lookups). Report it as missing rather than
+    // fabricating an expiry date.
+    if (expiresAt === undefined) {
+      return response.ok({ status: 'not_found' as const })
+    }
+
     return response.ok({
       status: 'pending' as const,
-      expiresAt: new Date(sessions.expiryTime(sessionId)!).toISOString()
+      expiresAt: new Date(expiresAt).toISOString()
     })
   })
 
@@ -173,8 +182,7 @@ export const claim = forge
     output: {
       OK: z.object({
         accessToken: z.string()
-      }),
-      NOT_FOUND: true
+      })
     }
   })
   .callback(async ({ body: { sessionId }, req, res, response }) => {

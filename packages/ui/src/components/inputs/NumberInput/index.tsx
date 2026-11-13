@@ -4,6 +4,7 @@ import { NumericFormat } from 'react-number-format'
 
 import { Button } from '../Button'
 import { TextInput } from '../TextInput'
+import type { InputWrapperPassthrough } from '../shared/components/InputWrapper'
 import type { InputVariants } from '../shared/types'
 
 export interface NumberInputProps {
@@ -23,7 +24,7 @@ export interface NumberInputProps {
   autoFocus?: boolean
   /** Additional CSS class names to apply to the number input component. */
   className?: string
-  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.melvinchia.dev) for more details. */
+  /** The i18n namespace for internationalization. See the [main documentation](https://docs.lifeforge.dev) for more details. */
   namespace?: string | false
   /** Error message to display when the input is invalid. */
   errorMsg?: string
@@ -37,8 +38,11 @@ export interface NumberInputProps {
   actionButtonProps?: React.ComponentProps<typeof Button>
   /** Callback function called when Enter is pressed. */
   onEnter?: () => void
+  /** Additional props forwarded to the underlying `InputWrapper`. */
+  wrapperProps?: InputWrapperPassthrough
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function NumberTextInputAdapter(props: any) {
   const { onChange, getInputRef, ...rest } = props
 
@@ -81,7 +85,8 @@ export function NumberInput({
   max,
   placeholder = '123',
   actionButtonProps,
-  onEnter
+  onEnter,
+  wrapperProps
 }: NumberInputProps & InputVariants<true>) {
   return (
     <NumericFormat
@@ -96,9 +101,10 @@ export function NumberInput({
       namespace={namespace}
       placeholder={placeholder}
       required={required}
-      size={size as never}
+      size={size}
       value={value}
-      variant={variant as never}
+      variant={variant}
+      wrapperProps={wrapperProps}
       onBlur={() => {
         let numericValue = value
 

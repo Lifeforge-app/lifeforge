@@ -23,7 +23,7 @@ function FontFamilySelector() {
   const { fontFamily } = usePersonalization()
 
   const customFontQuery = useQuery(
-    forgeAPI.user.customFonts.get
+    forgeAPI.fonts.custom.get
       .input({
         id: fontFamily.replace('custom:', '')
       })

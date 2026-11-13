@@ -34,14 +34,14 @@ function CustomFontCard({ font }: { font: CustomFont }) {
   const isSelected = selectedFont?.replace(/^custom:/, '') === font.id
 
   const deleteMutation = useMutation(
-    forgeAPI.user.customFonts.remove
+    forgeAPI.fonts.custom.remove
       .input({
         id: font.id
       })
       .mutationOptions({
         onSuccess: () => {
           queryClient.invalidateQueries({
-            queryKey: ['user', 'customFonts', 'list']
+            queryKey: forgeAPI.fonts.custom.list.key
           })
           toast.success('Custom font deleted successfully!')
         },
@@ -98,10 +98,10 @@ function CustomFontCard({ font }: { font: CustomFont }) {
                 : { base: 'bg-200', dark: 'bg-700' }
             }
             flexShrink="0"
-            height="3rem"
+            height="3em"
             justify="center"
             r="lg"
-            width="3rem"
+            width="3em"
           >
             <Icon
               color={isSelected ? 'custom-500' : 'muted'}
