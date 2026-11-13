@@ -1,0 +1,89 @@
+import { Alert } from '@lifeforge/ui'
+
+import TextWithIcon from '@/components/TextWithIcon'
+
+###### Installation
+
+# (STUB) Getting Started with LifeForge.
+
+Back in the day, LifeForge used to be a collection of multiple repositories, where the frontend and backend are separated into different repositories. This made it hard for new users and developers to get started with the project, as they had to clone multiple repositories and set up the environment for each of them. To solve this problem, I decided to merge all the repositories into a single monorepo. This way, people only need to clone a single repository and set up the environment once.
+
+---
+
+<section id="manual-installation">
+## Manual Installation
+
+This method gives you more control over the environment and allows you to customize the setup to your liking. However, it also requires more technical knowledge and effort to set up. 
+
+<Alert mt="lg" type="tip">
+
+#### We Recommend Manual Installation, Why?
+
+Manual Installation is the most rigorously tested method of installation. It is the method that I use to develop and test LifeForge, and it is the method that I recommend to all users. It is also the method that I use to deploy LifeForge to production servers.
+
+Since LifeForge has been undergoing rapid development, most user reports that Docker installation is not working are actually caused by rapid changes in the codebase that breaks the current build structure. To have a quick start, I recommend using the manual installation method, as this is the most stable and reliable method of installation.
+
+</Alert>
+
+### Prerequisites
+
+Before you start, make sure you have the following items on hand:
+
+- <TextWithIcon icon="simple-icons:raspberrypi">**A computer running Unix-based systems:**</TextWithIcon> This is the hardware that will be used to host the LifeForge API and database. You can use your own computer, a Raspberry Pi, a virtual private server (VPS), or any other computer that uses Linux or MacOS. Currently, LifeForge is tested on Linux and MacOS running on x86_64 and ARM64 architectures. 
+- <TextWithIcon icon="simple-icons:nodedotjs">**Node.js (at least LTS)**</TextWithIcon> **and** <TextWithIcon icon="simple-icons:pnpm">**PNPM:**</TextWithIcon> LifeForge is a pure TypeScript project, pnpm is an advanced package manager that used as the runtime environment. You can download and install pnpm from [here](https://pnpm.io/installation).
+- <TextWithIcon icon="simple-icons:postgresql">**PostgreSQL:**</TextWithIcon> This is the database that will be used to store all your data. You can download the latest version of PostgreSQL from [here](https://www.postgresql.org/download/) and set it up beforehand.
+- <TextWithIcon icon="tabler:brain">**A functional brain:**</TextWithIcon> You will need to have a basic understanding of how to use a terminal and how to run a Node.js application.
+- <TextWithIcon icon="tabler:coffee">**A cup of coffee or tea:**</TextWithIcon> This is optional, but it's always nice to have a cup of coffee by your side when you're coding.
+
+<Alert mt="lg" type="warning">
+#### Please Don't Use Windows
+
+According to [this site](https://www.enterpriseappstoday.com/stats/linux-statistics.html#Linux_Usage_Statistics), as of 2024,
+
+> A staggering 96.3% of the top one million web servers run on Linux, indicating its dominance in the internet infrastructure.
+
+LifeForge is not an exception. It's been developed and tested primarily on Unix-like systems. Using the system on Windows will be alright, since it's just a web application after all, but when it comes to hosting the backend server and database, things might get tricky.
+
+Therefore, if you're using Windows to host the LifeForge system, you might run into some issues. A Unix-like system such as Linux or macOS is strongly recommended to host the system. If you're using Windows, you can set up a virtual machine running Linux or use the Windows Subsystem for Linux (WSL).
+
+If you ever submit an issue regarding installation or deployment on Windows, please understand that I might simply mark it as "won't fix" since I don't have a Windows machine to test and debug the issues.
+
+</Alert>
+
+### Steps
+
+First, clone the LifeForge monorepo to your local machine or your server. You can do this by running the following command in your terminal:
+
+```bash
+git clone https://github.com/lifeforge-app/lifeforge.git && cd lifeforge
+```
+
+Then, install the dependencies by running the following command:
+
+```bash
+pnpm install --node-linker isolated
+```
+
+<Alert mt="lg" type="warning">
+#### Using `--node-linker isolated`
+
+By default, Pnpm uses a global cache for dependencies. However, in a monorepo setup like LifeForge, this can lead to issues with dependency resolution. To avoid these issues, we recommend using the `--node-linker isolated` flag when installing dependencies. This will ensure that each package in the monorepo has its own isolated set of dependencies to prevent phantom dependency issues.
+
+When doing deployment on a server, make sure to always use the `--node-linker isolated` flag when running `pnpm install`.
+
+</Alert>
+
+---
+
+And that's it! You're all set for the installation process. But before you can fire up the LifeForge system, you'll need to configure it. Let's move on to the **next page** to learn how to do that.
+</section>
+
+---
+
+<section id="docker-installation">
+## Docker Installation
+
+*under construction*
+
+</section>
+
