@@ -1,0 +1,149 @@
+import { Icon } from '@iconify/react'
+
+import { Alert } from "@lifeforge/ui"
+import EnvExample from './components/EnvExample'
+
+###### Configuration
+
+# Linking Everything Together
+
+Time to configure everything together. Don't worry, it's not as hard as it sounds. Just follow the steps below and you'll be good to go.
+
+---
+
+<section id="environment-variables">
+## Environment Variables
+
+Normally in a production environment, you would set up environment variables for storing all sorts of sensitive information like API keys, database URLs, and other secrets. However, in LifeForge, API keys will not be stored in environment variables. Instead, a dedicated collection in the database will be used to store all the encrypted API keys and secrets, so that they can be easily accessed by the modules that need them.
+
+Before proceeding with the database initialization, there are a couple of environment variables that you need to set up beforehand. There are only several environment variables that need to be set up for the system to work properly.
+
+Copy the `.env.example` file to `.env.local` and fill in the values for the environment variables. You can use the following command to do that:
+
+```bash
+cp .env.example .env.local
+```
+
+In the `.env.local` file, you will see several environment variables that need to be set up. 
+
+<EnvExample />
+
+For the client side, the one and only environment variable that needs to be set up is the `VITE_API_HOST`. This variable specifies the base URL for the API server. If you are running the system locally, you can set it to `http://localhost:3636` (or any other port that you are using). If you are deploying the system to a remote server, you can set it to the URL of your server.
+
+For the server side, there are several environment variables that need to be set up:
+
+- `DATABASE_URL`: This will be a PostgreSQL connection string that specifies the database host, port, username, password, and database name. For example: `postgresql://username:password@localhost:5432/postgres`.
+- `MASTER_KEY`: This is a secret key that will be used to encrypt and decrypt the API keys and secrets stored in the database. Make sure to set this to a strong and unique value.
+- `JWT_SIGNING_KEY`: This is a secret key that will be used to sign the JWT tokens for authentication. Make sure to set this to a strong and unique value.
+- `CORS_ALLOWED_ORIGINS`: This is the URL of the origins that are allowed to access the API server.
+- `PORT`: The port where API server will be running. The default value is `3636`. You can change it to any other port that you prefer.
+
+  <Alert className="mt-6" type="caution">
+    **DO NOT LOSE THE MASTER KEY!** If you lose it, all the encrypted data stored in the
+    database will be voided and you will not be able to recover it.
+  </Alert>
+
+</section>
+
+<section id="the-forge-cli">
+## The Forge CLI
+
+The Forge CLI is a command-line interface tool that helps you manage and configure your LifeForge system. It provides a simple way to manage your system and modules. This tool doesn't require any installation, as it's included in the monorepo inside the `tools/` directory. You can run it using bun.
+
+```bash
+pnpm forge
+```
+
+After that, you should see the Forge CLI help menu.
+
+![Forge CLI Help Menu](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/25w52-5.webp)
+
+With that out of the way, let's move on to the configuration.
+
+</section>
+
+<section id="database-configuration">
+## Database Configuration
+
+Assume that on this stage, you already have your `.env.local` file configured, as well as your PostgreSQL database set up and running as well. 
+To set up the database, run the following command:
+
+```bash
+pnpm forge db generate
+```
+
+This will generate the full database schema using `drizzle-kit`. At this stage, you should see a message indicating that where the database schema has been generated.
+
+Next, we will apply the database migrations to create the necessary tables and fields in the database. Run the following command:
+
+```bash
+pnpm forge db migrate
+```
+
+If there are no errors during the migration, you should see a message indicating that the migrations have been applied successfully.
+
+And that's it! Your database is now set up and ready to use. 
+
+## Run The Server & Setting Up Admin User
+
+With all steps above completed, you can now start the Pocketbase server. Run the following command:
+
+```bash
+pnpm forge dev
+```
+
+You should now able to access the Pocketbase admin dashboard by navigating to <a href="http://localhost:5173/_/" target="_blank" rel="noopener noreferrer">http://localhost:5173/_/</a> (or whatever url Vite tells you to use).
+
+Now, we do need to set up an admin user for the system. This user will have full access to the system and will be able to manage all the modules and settings. 
+
+To create an admin user, go to (http://localhost:5173/) and fill in the required fields. After that, you should be able to log in to the admin dashboard using the credentials you just created.
+
+</section>
+
+<section id="starting-individual-components">
+
+<Alert className="mt-6" type="tip">
+#### Starting the API server only
+
+To start the API server only, run the following command:
+
+```bash
+pnpm forge dev server
+```
+
+Once started, you should see an output similar to this:
+
+![API Server Started](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/server-start.webp)
+
+#### Starting the Client only
+
+To start the client application, run the following command:
+
+```bash
+pnpm forge dev client
+```
+
+It will first build the UI and the shared library using Vite, and then start the development server of the client codebase. You should see an output similar to this:
+
+![Client Started](https://raw.githubusercontent.com/LifeForge-app/lifeforge-docs-media/main/assets/configurations/client-start.webp)
+
+If everything is set up correctly, you be able to see the login screen of your LifeForge system by navigating to <a href="http://localhost:5173" target="_blank" rel="noopener noreferrer">http://localhost:5173</a> (or whatever url Vite tells you to use).
+
+<Alert className="mt-6" type="note">
+If your server is up and running but the client application shows that the API is offline, make sure that your client url is added to the list of allowed origins in `.env.local`. By default, only `http:/\/localhost:5173` is allowed. 
+</Alert>
+
+</Alert>
+
+</section>
+
+<section id="setup-oauth2-providers">
+## Setting Up OAuth2 Providers
+*under construction*
+</section>
+
+---
+
+And that's it! You have successfully configured your LifeForge system. Now you should be able to start the system locally and access it from your browser. You may now proceed to the user guide to explore everything that LifeForge has to offer.
+
+If you are ready to make your system available from anywhere, head over to the [Deployment Guide](/getting-started/deployment) to learn how to deploy your system to a cloud server.
