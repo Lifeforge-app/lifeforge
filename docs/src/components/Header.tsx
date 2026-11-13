@@ -45,14 +45,14 @@ function Header({
         >
           <Flex align="center" as={Link} gap="sm" to="/">
             <Icon color="primary" icon="tabler:hammer" size="1.75em" />
-            <Text as="h1" size="2xl" weight="semibold">
+            <Text as="h1" leading="none" size="2xl" weight="semibold">
               <Text display={{ base: 'none', sm: 'inline' }}>
                 LifeForge
-                <Text color="primary" size="3xl">
+                <Text color="primary">
                   .
                 </Text>
               </Text>
-              <Text ml={{ base: 'none', sm: 'sm' }} size="xl" weight="medium">
+              <Text ml={{ base: 'none', sm: 'sm' }} weight="medium">
                 Docs
               </Text>
             </Text>
