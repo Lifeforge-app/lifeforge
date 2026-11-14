@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Zoom, { type UncontrolledProps } from 'react-medium-image-zoom'
 
+import { Box } from '../Box'
 import { Image, type ImageProps } from './Image'
 
 export type ZoomableImageProps = ImageProps & {
@@ -16,39 +17,71 @@ export function ZoomableImage({
   zoomSrc,
   zoomMargin = 40,
   zoomProps,
-  ...imageProps
+  src,
+  alt,
+  fit,
+  fallback,
+  objectPosition,
+  loading,
+  decoding,
+  crossOrigin,
+  fetchPriority,
+  referrerPolicy,
+  sizes,
+  srcSet,
+  bg,
+  onLoad,
+  onError,
+  ...frameProps
 }: ZoomableImageProps) {
   const [failedSrc, setFailedSrc] = useState<string | null>(null)
 
-  const failed = failedSrc !== null && failedSrc === imageProps.src
-
-  if (!imageProps.src) {
-    return <Image {...imageProps} />
-  }
-
-  if (failed) {
-    return <Image {...imageProps} src={undefined} />
-  }
+  const failed = failedSrc !== null && failedSrc === src
 
   const { zoomImg, ...restZoomProps } = zoomProps ?? {}
 
-  return (
-    <Zoom
-      zoomImg={{
-        alt: imageProps.alt,
-        src: zoomSrc ?? imageProps.src,
-        ...zoomImg
+  const image = (
+    <Image
+      alt={alt}
+      bg={bg}
+      crossOrigin={crossOrigin}
+      decoding={decoding}
+      fallback={fallback}
+      fetchPriority={fetchPriority}
+      fit={fit}
+      height="100%"
+      loading={loading}
+      objectPosition={objectPosition}
+      referrerPolicy={referrerPolicy}
+      sizes={sizes}
+      src={failed ? undefined : src}
+      srcSet={srcSet}
+      width="100%"
+      onError={event => {
+        setFailedSrc(src ?? null)
+        onError?.(event)
       }}
-      zoomMargin={zoomMargin}
-      {...restZoomProps}
-    >
-      <Image
-        {...imageProps}
-        onError={event => {
-          setFailedSrc(imageProps.src ?? null)
-          imageProps.onError?.(event)
-        }}
-      />
-    </Zoom>
+      onLoad={onLoad}
+    />
+  )
+
+  return (
+    <Box bg={bg} overflow="hidden" {...frameProps}>
+      {!src || failed ? (
+        image
+      ) : (
+        <Zoom
+          zoomImg={{
+            alt,
+            src: zoomSrc ?? src,
+            ...zoomImg
+          }}
+          zoomMargin={zoomMargin}
+          {...restZoomProps}
+        >
+          {image}
+        </Zoom>
+      )}
+    </Box>
   )
 }
