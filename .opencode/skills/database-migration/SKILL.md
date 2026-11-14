@@ -3,9 +3,9 @@ name: database-migration
 description: >
   Use when migrating PocketBase data (database/pb_data/data.db) into a LifeForge
   module's Postgres/Drizzle schema. Triggers on "migrate <module> data", porting
-  PB collections into schema.drizzle.ts tables, or writing a per-module migration
-  script under apps/api/scripts/migrations/. Do NOT use for authoring schemas,
-  writing routes, or non-migration refactors.
+  PB collections into schema.drizzle.ts tables, or running the migration
+  toolkit under .opencode/skills/database-migration/migrations/. Do NOT use for
+  authoring schemas, writing routes, or non-migration refactors.
 ---
 
 # PocketBase → Postgres module migration
@@ -43,23 +43,48 @@ redesign, not a mechanical rename.
 - A module's **code** migration (`schema.drizzle.ts` + routes) must exist before its
   data migration.
 
+## Toolkit storage
+
+The entire migration toolkit (`inspect.ts`, `_template.ts`, and `lib/`) lives in
+the skill folder:
+
+```
+.opencode/skills/database-migration/migrations/
+```
+
+Do **not** keep the toolkit or any per-module script in
+`apps/api/scripts/migrations/`. Copy the whole folder into the API only while
+running a migration, then delete it.
+
 ## Workflow
 
 ```bash
-# 1. Plan (read-only): proposed mapping, relations, row counts, insert order
+# 1. Copy the toolkit into the API temporarily
+mkdir -p apps/api/scripts
+cp -R .opencode/skills/database-migration/migrations apps/api/scripts/migrations
+
+# 2. Plan (read-only): proposed mapping, relations, row counts, insert order
 pnpm --filter @lifeforge/server exec tsx scripts/migrations/inspect.ts <module>
 
-# 2. Read the module schema + PB collections/rows; decide merges / renames / M2M.
+# 3. Read the module schema + PB collections/rows; decide merges / renames / M2M.
 
-# 3. Copy the template and implement the mapping
-cp apps/api/scripts/migrations/_template.ts apps/api/scripts/migrations/<module>.ts
+# 4. Implement the module mapping from the template
+cp apps/api/scripts/migrations/_template.ts \
+   apps/api/scripts/migrations/<module>.ts
 
-# 4. Dry run, review, then run for real
+# 5. Dry run, review, then run for real
 pnpm --filter @lifeforge/server exec tsx scripts/migrations/<module>.ts --dry-run
 pnpm --filter @lifeforge/server exec tsx scripts/migrations/<module>.ts
+
+# 6. Remove the temporary API copy when done
+rm -rf apps/api/scripts/migrations
 ```
 
-## Helper library (`apps/api/scripts/migrations/lib/`)
+If you need to keep a module's mapping for reference, store it back in the skill
+folder under `.opencode/skills/database-migration/migrations/`, never in the API.
+
+
+## Helper library (`.opencode/skills/database-migration/migrations/lib/`)
 
 | Module | Exports |
 | --- | --- |

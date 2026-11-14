@@ -1,12 +1,16 @@
 /**
  * Per-module migration template.
  *
+ * Toolkit source of truth: `.opencode/skills/database-migration/migrations/`.
+ * Copy the whole toolkit into `apps/api/scripts/migrations/` only while running
+ * a migration, then remove it.
+ *
  *   1. `cp _template.ts <module>.ts`
  *   2. Run `inspect.ts <module>` and review the proposed mapping.
  *   3. Implement `mapRow` (and the media bits) for the module.
  *   4. Order the tables as `inspect.ts` reports, then run `--dry-run` first.
  *
- * Run:
+ * Run (from `apps/api/scripts/migrations/`):
  *   pnpm --filter @lifeforge/server exec tsx scripts/migrations/<module>.ts [--dry-run]
  *
  * Helpers live in ./lib. See the `database-migration` skill for the rules.
