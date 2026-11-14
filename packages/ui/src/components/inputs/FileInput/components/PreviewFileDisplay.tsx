@@ -15,7 +15,7 @@ export function PreviewFileDisplay({
   return (
     <Box mt="lg">
       <Zoom zoomMargin={100}>
-        <Box asChild maxHeight="24em" r="md">
+        <Box asChild maxHeight="24em" maxWidth="100%" r="md">
           <img key={previewUrl} alt="" src={previewUrl} />
         </Box>
       </Zoom>

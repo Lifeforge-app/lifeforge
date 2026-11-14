@@ -33,6 +33,7 @@
   & [data-rmiz],
   & [data-rmiz-content] {
     max-height: 24em;
+    height: auto;
     width: 100%;
   }
 
