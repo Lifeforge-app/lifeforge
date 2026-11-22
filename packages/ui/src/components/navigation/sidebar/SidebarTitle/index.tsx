@@ -3,7 +3,7 @@ import _ from 'lodash'
 import { useModuleTranslation } from '@lifeforge/localization'
 
 import { Button } from '@/components/inputs'
-import { Flex, Text, Transition } from '@/components/primitives'
+import { Flex, type FlexProps, Text, Transition } from '@/components/primitives'
 
 type SidebarTitleProps = {
   /** Label string or React element to display for the sidebar title. */
@@ -26,8 +26,9 @@ export function SidebarTitle({
   label,
   className,
   actionButton,
-  namespace
-}: SidebarTitleProps) {
+  namespace,
+  ...rest
+}: SidebarTitleProps & FlexProps<'li'>) {
   const { t } = useModuleTranslation(
     namespace === false
       ? []
@@ -46,6 +47,7 @@ export function SidebarTitle({
         pl="xl"
         pt="sm"
         style={{ gap: '0.75em', paddingRight: '1.25em' }}
+        {...rest}
       >
         <Text
           as="h3"
