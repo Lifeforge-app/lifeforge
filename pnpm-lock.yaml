@@ -1677,6 +1677,52 @@ importers:
         specifier: ^7.4.3
         version: 7.4.3
 
+  modules/melvinchia3636--perler-beads:
+    dependencies:
+      '@lifeforge/api':
+        specifier: workspace:*
+        version: link:../../packages/api
+      '@lifeforge/configs':
+        specifier: workspace:*
+        version: link:../../packages/configs
+      '@lifeforge/drizzle':
+        specifier: workspace:*
+        version: link:../../packages/drizzle
+      '@lifeforge/federation':
+        specifier: workspace:*
+        version: link:../../packages/federation
+      '@lifeforge/file-storage':
+        specifier: workspace:*
+        version: link:../../packages/file-storage
+      '@lifeforge/localization':
+        specifier: workspace:*
+        version: link:../../packages/localization
+      '@lifeforge/server-utils':
+        specifier: workspace:*
+        version: link:../../packages/server-utils
+      '@lifeforge/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      culori:
+        specifier: ^4.0.2
+        version: 4.0.2
+      konva:
+        specifier: ^10.10.0
+        version: 10.10.0(skia-canvas@3.0.8(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))
+      react-konva:
+        specifier: ~19.2.7
+        version: 19.2.7(@types/react@19.2.17)(konva@10.10.0(skia-canvas@3.0.8(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react-zoom-pan-pinch:
+        specifier: ^4.4.0
+        version: 4.4.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      sharp:
+        specifier: ^0.34.4
+        version: 0.34.5
+    devDependencies:
+      '@types/culori':
+        specifier: ^4.0.1
+        version: 4.0.1
+
   modules/melvinchia3636--railway-map:
     dependencies:
       '@lifeforge/api':
@@ -5172,6 +5218,16 @@ packages:
   '@types/react-grid-layout@1.3.6':
     resolution: {integrity: sha512-Cw7+sb3yyjtmxwwJiXtEXcu5h4cgs+sCGkHwHXsFmPyV30bf14LeD/fa2LwQovuD2HWxCcjIdNhDlcYGj95qGA==}
 
+  '@types/react-reconciler@0.28.9':
+    resolution: {integrity: sha512-HHM3nxyUZ3zAylX8ZEyrDNd2XZOnQ0D5XfunJF5FLQnZbHHYq4UWvW1QfelQNXv1ICNkwYhfxjwfnqivYB6bFg==}
+    peerDependencies:
+      '@types/react': '*'
+
+  '@types/react-reconciler@0.33.1':
+    resolution: {integrity: sha512-0kF59ji2mKuHUd5wytHSpmORybMYVerJvq0K10pz9ZFoOlJ3e+w1LBjLshWpCrokeyQOioRodNbO4PH4ddvRfg==}
+    peerDependencies:
+      '@types/react': '*'
+
   '@types/react-syntax-highlighter@15.5.13':
     resolution: {integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==}
 
@@ -8508,6 +8564,11 @@ packages:
     resolution: {integrity: sha512-H0dkQoCa3b2VEeKQBOxFph+JAbcrQdE7KC0UkqwpLmv2EC4P41QXP+rqo9wYodACiG5/WM5s9oDApTU8utwj9g==}
     engines: {node: '>= 0.4'}
 
+  its-fine@2.1.1:
+    resolution: {integrity: sha512-C5ZoVkeqSt0Aje0tzESO+iT/EQpNFNL39GkP7mCACtoZUFD6GcyerFCr6kp0ZtiII4W9HoYkY48Soy5xE/uHKw==}
+    peerDependencies:
+      react: ^19.0.0
+
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
@@ -8653,6 +8714,20 @@ packages:
 
   kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
+
+  konva@10.10.0:
+    resolution: {integrity: sha512-hPU7xXWxhOqLScPo1gNCtY/PJAH2aXS//Wile6lfWmoO14vkZQbeS2HK5aV6FJ5Q2OzxgdGVSiMhyLspSk4fRw==}
+    peerDependencies:
+      '@napi-rs/canvas': ^1.1.0
+      canvas: ^3.0.0
+      skia-canvas: ^3.0.0 || ^4.0.0
+    peerDependenciesMeta:
+      '@napi-rs/canvas':
+        optional: true
+      canvas:
+        optional: true
+      skia-canvas:
+        optional: true
 
   language-name-map@0.3.0:
     resolution: {integrity: sha512-uoBHtfY6h4S2RoIpyqvQGhynX2hshQu/9S4ySbppGxG5VwEsiWZJ83xSjzx25Mb+Bmc+WxpQC0H54eNZVMWLuA==}
@@ -10039,6 +10114,13 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
+  react-konva@19.2.7:
+    resolution: {integrity: sha512-z/mxVITj2W+MQ8+TeD7ONMnMvy99hj4NJ4UfmWbjJcdeUOm8AZR41cCfwRZTryE3/z4r2/nOyckRNlr0GP+G3w==}
+    peerDependencies:
+      konva: ^8.0.1 || ^7.2.5 || ^9.0.0 || ^10.0.0
+      react: ^19.2.0
+      react-dom: ^19.2.0
+
   react-lifecycles-compat@3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
 
@@ -10081,6 +10163,12 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  react-reconciler@0.33.0:
+    resolution: {integrity: sha512-KetWRytFv1epdpJc3J4G75I4WrplZE5jOL7Yq0p34+OVOKF4Se7WrdIdVC45XsSSmUTlht2FM/fM1FZb1mfQeA==}
+    engines: {node: '>=0.10.0'}
+    peerDependencies:
+      react: ^19.2.0
 
   react-redux@9.3.0:
     resolution: {integrity: sha512-KQopgqFo/p/fgmAs5qz6p5RWaNAzq40WAu7fJIXnQpYxFPbJYtsJPWvGeF2rOBaY/kEuV77AVsX8TsQzKm+A/g==}
@@ -10184,6 +10272,13 @@ packages:
     peerDependencies:
       react: ^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  react-zoom-pan-pinch@4.4.0:
+    resolution: {integrity: sha512-7lMrVmFopsR3KeUNesScTUcc9pNxfEPaqsJfwEH2rkuzLEMqEvwJlPaqEY8gCZ9q2AEpxplZMAZTwr/m7nY05g==}
+    engines: {node: '>=8', npm: '>=5'}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
 
   react@19.2.7:
     resolution: {integrity: sha512-HNe9WslTbXmFK8o8cmwgAeJFSBvt1bPdHCVKtaaV+WlAN36mpT4hcRpwbf3fY56ar2oIXzsBpOAiIRHAdY0OlQ==}
@@ -14466,6 +14561,14 @@ snapshots:
     dependencies:
       '@types/react': 19.2.17
 
+  '@types/react-reconciler@0.28.9(@types/react@19.2.17)':
+    dependencies:
+      '@types/react': 19.2.17
+
+  '@types/react-reconciler@0.33.1(@types/react@19.2.17)':
+    dependencies:
+      '@types/react': 19.2.17
+
   '@types/react-syntax-highlighter@15.5.13':
     dependencies:
       '@types/react': 19.2.17
@@ -18354,6 +18457,13 @@ snapshots:
       has-symbols: 1.1.0
       set-function-name: 2.0.2
 
+  its-fine@2.1.1(@types/react@19.2.17)(react@19.2.7):
+    dependencies:
+      '@types/react-reconciler': 0.28.9(@types/react@19.2.17)
+      react: 19.2.7
+    transitivePeerDependencies:
+      - '@types/react'
+
   jackspeak@3.4.3:
     dependencies:
       '@isaacs/cliui': 8.0.2
@@ -18549,6 +18659,10 @@ snapshots:
   khroma@2.1.0: {}
 
   kolorist@1.8.0: {}
+
+  konva@10.10.0(skia-canvas@3.0.8(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)):
+    optionalDependencies:
+      skia-canvas: 3.0.8(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)
 
   language-name-map@0.3.0: {}
 
@@ -20299,6 +20413,18 @@ snapshots:
 
   react-is@18.3.1: {}
 
+  react-konva@19.2.7(@types/react@19.2.17)(konva@10.10.0(skia-canvas@3.0.8(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2)))(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+    dependencies:
+      '@types/react-reconciler': 0.33.1(@types/react@19.2.17)
+      its-fine: 2.1.1(@types/react@19.2.17)(react@19.2.7)
+      konva: 10.10.0(skia-canvas@3.0.8(debug@4.4.3(supports-color@10.2.2))(supports-color@10.2.2))
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
+      react-reconciler: 0.33.0(react@19.2.7)
+      scheduler: 0.27.0
+    transitivePeerDependencies:
+      - '@types/react'
+
   react-lifecycles-compat@3.0.4: {}
 
   react-markdown@10.1.0(@types/react@19.2.17)(react@19.2.7)(supports-color@10.2.2):
@@ -20352,6 +20478,11 @@ snapshots:
       react: 19.2.7
     optionalDependencies:
       '@types/react': 19.2.17
+
+  react-reconciler@0.33.0(react@19.2.7):
+    dependencies:
+      react: 19.2.7
+      scheduler: 0.27.0
 
   react-redux@9.3.0(@types/react@19.2.17)(react@19.2.7)(redux@5.0.1):
     dependencies:
@@ -20467,6 +20598,11 @@ snapshots:
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
       react-lifecycles-compat: 3.0.4
+
+  react-zoom-pan-pinch@4.4.0(react-dom@19.2.7(react@19.2.7))(react@19.2.7):
+    dependencies:
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
 
   react@19.2.7: {}
 

@@ -84,6 +84,32 @@ export const Percentage: Story = {
   render: args => <SliderStory {...args} />
 }
 
+export const Centered: Story = {
+  args: {
+    center: 0,
+    icon: 'tabler:arrows-horizontal',
+    label: 'Offset',
+    max: 50,
+    min: -50,
+    onChange: () => {},
+    value: 0
+  },
+  render: args => <SliderStory {...args} />
+}
+
+export const CenteredNegative: Story = {
+  args: {
+    center: 0,
+    icon: 'tabler:arrows-horizontal',
+    label: 'Offset',
+    max: 50,
+    min: -50,
+    onChange: () => {},
+    value: -25
+  },
+  render: args => <SliderStory {...args} />
+}
+
 export const StepLarge: Story = {
   args: {
     icon: 'tabler:clock',

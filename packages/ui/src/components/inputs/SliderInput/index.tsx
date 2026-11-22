@@ -22,6 +22,11 @@ export interface SliderInputProps extends Omit<
   className?: string
   namespace?: string | false
   renderValue?: (value: number) => string
+  /**
+   * When provided, the filled track grows outward from this value instead of
+   * from the minimum, allowing two-sided/centre-origin sliders.
+   */
+  center?: number
 }
 
 export function SliderInput({
@@ -37,9 +42,12 @@ export function SliderInput({
   className,
   namespace,
   renderValue,
+  center,
   ...rest
 }: SliderInputProps) {
   const progress = ((value - min) / (max - min)) * 100
+  const centreProgress =
+    center !== undefined ? ((center - min) / (max - min)) * 100 : 0
 
   return (
     <Box width="100%" {...rest}>
@@ -63,7 +71,30 @@ export function SliderInput({
           className
         )}
       >
-        <Box className={styles.fill} style={{ width: `${progress}%` }} />
+        <Box
+          className={styles.fill}
+          style={
+            center !== undefined
+              ? {
+                  bottom: 0,
+                  left: `${Math.min(progress, centreProgress)}%`,
+                  position: 'absolute',
+                  top: 0,
+                  width: `${Math.abs(progress - centreProgress)}%`
+                }
+              : { width: `${progress}%` }
+          }
+        />
+        {center !== undefined && (
+          <Box
+            bg={{ base: 'bg-400', dark: 'bg-600' }}
+            bottom="0"
+            left={`${centreProgress}%`}
+            position="absolute"
+            top="0"
+            width="1px"
+          />
+        )}
         <input
           className={styles.input}
           disabled={disabled}
