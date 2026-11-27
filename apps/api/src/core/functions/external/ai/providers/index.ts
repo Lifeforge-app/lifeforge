@@ -5,6 +5,8 @@ import z from 'zod'
 export interface AIProvider {
   name: string
   requireAPIKey: boolean
+  /** The vault key is used when present, but the call goes ahead without one. */
+  optionalAPIKey?: boolean
   fetch<T extends z.ZodTypeAny | undefined = undefined>(params: {
     model: string
     messages: OpenAI.ChatCompletionMessageParam[]

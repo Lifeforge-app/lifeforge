@@ -11,6 +11,11 @@ import { ClientError, FetchAIFunc } from '@lifeforge/server-utils'
 import { getProvider, registerProvider } from './providers'
 import { deepseekProvider } from './providers/deepseek.provider'
 import { groqProvider } from './providers/groq.provider'
+import {
+  litellmProvider,
+  resolveRoutedLiteLLMModel,
+  shouldRouteThroughLiteLLM
+} from './providers/litellm.provider'
 import { ollamaProvider } from './providers/ollama.provider'
 import { openaiProvider } from './providers/openai.provider'
 import { openrouterProvider } from './providers/openrouter.provider'
@@ -22,10 +27,12 @@ registerProvider('groq', groqProvider)
 registerProvider('ollama', ollamaProvider)
 registerProvider('deepseek', deepseekProvider)
 registerProvider('openrouter', openrouterProvider)
+registerProvider('litellm', litellmProvider)
 
 type CallerModule = { source: 'app' | 'core'; id: string }
 
-type AIProvider = 'groq' | 'openai' | 'ollama' | 'deepseek' | 'openrouter'
+type AIProvider =
+  'groq' | 'openai' | 'ollama' | 'deepseek' | 'openrouter' | 'litellm'
 
 type FetchAIArgs<T extends z.ZodTypeAny | undefined = undefined> = {
   provider: AIProvider
@@ -38,6 +45,35 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>(
   callerModule: CallerModule,
   { provider, model, messages, structure }: FetchAIArgs<T>
 ): Promise<(T extends z.ZodTypeAny ? z.infer<T> : string) | null> {
+  // An operator can send chosen providers through a LiteLLM proxy
+  // (LITELLM_ROUTE_PROVIDERS). The module still needs access to the provider
+  // it asked for; the call then uses the proxy's key.
+  if (shouldRouteThroughLiteLLM(provider)) {
+    await validateCallerAccess(callerModule, provider)
+
+    const litellmKey = await getVaultKey(
+      { source: 'core', id: 'ai' },
+      'litellm'
+    )
+
+    const routedModel = await resolveRoutedLiteLLMModel(
+      provider,
+      model,
+      litellmKey
+    )
+
+    logger.debug(
+      `Routing ${chalk.green(provider)} through LiteLLM as ${chalk.green(routedModel)}.`
+    )
+
+    return litellmProvider.fetch({
+      model: routedModel,
+      messages,
+      apiKey: litellmKey,
+      structure
+    })
+  }
+
   const aiProvider = getProvider(provider)
 
   if (!aiProvider) {
@@ -49,12 +85,14 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>(
   if (aiProvider.requireAPIKey) {
     await validateCallerAccess(callerModule, provider)
 
-    const fetchedKey = await getAPIKeyFactory(callerModule)(provider)
+    const fetchedKey = aiProvider.optionalAPIKey
+      ? await getVaultKey(callerModule, provider)
+      : await getAPIKeyFactory(callerModule)(provider)
 
-    if (!fetchedKey) {
+    if (!fetchedKey && !aiProvider.optionalAPIKey) {
       throw new ClientError(`API key for ${provider} not found.`)
     }
-    apiKey = fetchedKey
+    apiKey = fetchedKey || undefined
   }
 
   logger.debug(
@@ -69,6 +107,23 @@ async function fetchAI<T extends z.ZodTypeAny | undefined = undefined>(
     apiKey,
     structure
   })
+}
+
+/** A vault key, or undefined when the vault has none. */
+async function getVaultKey(
+  callerModule: CallerModule,
+  id: string
+): Promise<string | undefined> {
+  try {
+    return (await getAPIKeyFactory(callerModule)(id)) || undefined
+  } catch (error) {
+    // A missing key is fine here; a key that fails to decrypt is not.
+    if (error instanceof Error && error.message.endsWith('not found')) {
+      return undefined
+    }
+
+    throw error
+  }
 }
 
 /**
