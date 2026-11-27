@@ -7,12 +7,12 @@ function AuthHeader() {
 
   return (
     <>
-      <Flex asChild align="center" gap="sm" mb="lg">
+      <Flex asChild align="center" gap="xs" mb="lg">
         <Text as="h1" size="3xl" weight="semibold" whiteSpace="nowrap">
           <Icon color="primary" icon="tabler:hammer" />
           <Box>
             LifeForge
-            <Text color="primary" size="4xl">
+            <Text color="primary" size="2xl">
               .
             </Text>
           </Box>
