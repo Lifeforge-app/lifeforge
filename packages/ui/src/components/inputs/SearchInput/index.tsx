@@ -248,7 +248,8 @@ export function SearchInput({
               style={{
                 minWidth: '0',
                 caretColor: COLORS['custom-500'],
-                paddingRight: actionButtonProps ? '5em' : '2.5em'
+                paddingRight: actionButtonProps ? '5em' : '2.5em',
+                width: '100%'
               }}
               type="text"
               value={displayValue}
