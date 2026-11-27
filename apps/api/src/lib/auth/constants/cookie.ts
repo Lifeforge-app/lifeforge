@@ -10,7 +10,7 @@ export function getCookieOptions(req: Request) {
     httpOnly: true,
     secure,
     sameSite: secure ? 'none' : 'lax',
-    path: '/auth',
+    path: '/',
     maxAge: 7 * 24 * 60 * 60 * 1000
   } as const
 }
@@ -25,7 +25,7 @@ export function getClearCookieOptions(req: Request) {
     httpOnly: true,
     secure,
     sameSite: secure ? 'none' : 'lax',
-    path: '/auth',
+    path: '/',
     maxAge: 0
   } as const
 }

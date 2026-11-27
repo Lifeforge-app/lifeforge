@@ -161,7 +161,7 @@ describe('POST /auth/login', () => {
     expect(() => JSON.parse(atob(payloadSegment))).not.toThrow()
   })
 
-  it('cookie has httpOnly, SameSite=Lax, Path=/auth in development', async () => {
+  it('cookie has httpOnly, SameSite=Lax, Path=/ in development', async () => {
     const res = await forgeAPI.auth.login.mutateRaw(creds(), { raw: true })
     const cookieHeader = res.headers['set-cookie']
     const setCookie = Array.isArray(cookieHeader)
@@ -170,7 +170,7 @@ describe('POST /auth/login', () => {
 
     expect(setCookie.toLowerCase()).toContain('httponly')
     expect(setCookie.toLowerCase()).toContain('samesite=lax')
-    expect(setCookie).toContain('Path=/auth')
+    expect(setCookie).toContain('Path=/;')
     expect(setCookie).toContain('refresh_token=')
   })
 })
